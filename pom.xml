@@ -6,8 +6,8 @@
     <artifactId>parent-pom</artifactId>
     <version>1.3</version>
   </parent>
-  <artifactId>as2-lib</artifactId>
-  <version>1.0.5-SNAPSHOT</version>
+  <artifactId>peppol-validation-engine</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>peppol-validation-engine</name>
   <description>PEPPOL BIS v2 validation engine</description>
@@ -48,6 +48,21 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-commons</artifactId>
       <version>5.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-ubl</artifactId>
+      <version>3.3.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>com.helger</groupId>
+          <artifactId>ph-ubl20</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.helger</groupId>
+          <artifactId>ph-ubl20-codelists</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <dependency>
