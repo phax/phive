@@ -37,57 +37,57 @@
  */
 package com.helger.peppol.validation;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.List;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
-import com.helger.commons.text.resolve.DefaultTextResolver;
+import org.junit.Test;
 
 /**
- * Contains the names of the CEN BII2 profiles for later translation.
+ * Test class for class {@link EProfile}.
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-@Translatable
-public enum EProfileName implements IHasDisplayText
+public final class EProfileTest
 {
-  BII_MLR ("Message Level Response"),
-  BII01 ("Catalogue Only"),
-  BII02 ("Catalogue Update"),
-  BII03 ("Order Only"),
-  BII04 ("Invoice Only"),
-  BII05 ("Billing"),
-  BII06 ("Procurement"),
-  BII10 ("eNotification"),
-  BII11 ("Qualification"),
-  BII12 ("Tendering Simple"),
-  BII16 ("Catalogue Deletion"),
-  BII17 ("Multi Party Catalogue"),
-  BII21 ("Statement"),
-  BII22 ("Call for Tender"),
-  BII27 ("Advanced Ordering"),
-  BII28 ("Ordering"),
-  BII30 ("Dispatch Only"),
-  BII31 ("Reminder Only"),
-  BII32 ("Simple Ordering"),
-  BII33 ("Catalogue Subscription"),
-  BII34 ("Call for Tender with Catalogue Template"),
-  BII35 ("Tendering Simple with Catalogue");
-
-  private final TextProvider m_aTP;
-
-  private EProfileName (@Nonnull final String sEN)
+  @Test
+  public void testBasic ()
   {
-    m_aTP = TextProvider.create_EN (sEN);
+    for (final EProfile eProfile : EProfile.values ())
+    {
+      assertNotNull (eProfile.getGroup ());
+      assertNotNull (eProfile.getDisplayText (Locale.ENGLISH));
+      // MLR is 0
+      assertTrue (eProfile.getNumber () >= 0);
+      assertNotNull (eProfile.getAllTransactions ());
+      assertFalse (eProfile.getAllTransactions ().isEmpty ());
+      assertSame (eProfile, EProfile.valueOf (eProfile.name ()));
+    }
+    assertEquals (EProfile.values ().length, EProfileName.values ().length);
   }
 
-  @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  @Test
+  public void testGetAllProfilesWithTransaction ()
   {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    for (final ETransaction eTransaction : ETransaction.values ())
+    {
+      final List <EProfile> aList = EProfile.getAllProfilesWithTransaction (eTransaction);
+      assertNotNull (aList);
+      assertTrue (aList.size () > 0);
+    }
+
+    try
+    {
+      EProfile.getAllProfilesWithTransaction (null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
   }
 }

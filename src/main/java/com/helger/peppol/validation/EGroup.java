@@ -50,7 +50,8 @@ import com.helger.commons.lang.EnumHelper;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public enum EGroup implements IHasID <String> {
+public enum EGroup implements IHasID <String>
+{
   ARCHITECTURE ("architecture"),
   NOTIFICATION ("notification"),
   TENDERING ("tendering"),
@@ -59,18 +60,21 @@ public enum EGroup implements IHasID <String> {
 
   private final String m_sID;
 
-  private EGroup (@Nonnull @Nonempty final String sID) {
+  private EGroup (@Nonnull @Nonempty final String sID)
+  {
     m_sID = sID;
   }
 
   @Nonnull
   @Nonempty
-  public String getID () {
+  public String getID ()
+  {
     return m_sID;
   }
 
   @Nullable
-  public static EGroup getFromIDOrNull (@Nullable final String sID) {
+  public static EGroup getFromIDOrNull (@Nullable final String sID)
+  {
     return EnumHelper.getFromIDOrNull (EGroup.class, sID);
   }
 }

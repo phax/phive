@@ -3,6 +3,8 @@ package com.helger.peppol.validation;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.io.IReadableResource;
+import com.helger.commons.io.resource.ClassPathResource;
 
 public enum EStandardValidationArtecfact
 {
@@ -31,8 +33,45 @@ public enum EStandardValidationArtecfact
   ORDERING_ORDER_RESPONSE_RULES ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T76.sch", EBIS.ORDERING, ETransaction.T76),
   ORDERING_ORDER_RESPONSE_OPENPEPPOL ("BIS2.0-ordering28a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T76.sch", EBIS.ORDERING, ETransaction.T76);
 
+  private final ClassPathResource m_aResource;
+  private final EBIS m_eBIS;
+  private final ETransaction m_eTransaction;
+
   private EStandardValidationArtecfact (@Nonnull @Nonempty final String sPath,
                                         @Nonnull final EBIS eBIS,
                                         @Nonnull final ETransaction eTransaction)
-  {}
+  {
+    m_aResource = new ClassPathResource ("/standard/" + sPath);
+    m_eBIS = eBIS;
+    m_eTransaction = eTransaction;
+  }
+
+  /**
+   * @return The Schematron resource descriptor. Never <code>null</code>.
+   */
+  @Nonnull
+  public IReadableResource getSchematronResource ()
+  {
+    return m_aResource;
+  }
+
+  /**
+   * @return The BIS to which the validation artefact belongs. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public EBIS getBIS ()
+  {
+    return m_eBIS;
+  }
+
+  /**
+   * @return The transaction to which the validation artefact belongs. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public ETransaction getTransaction ()
+  {
+    return m_eTransaction;
+  }
 }

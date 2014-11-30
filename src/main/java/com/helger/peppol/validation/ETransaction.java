@@ -60,7 +60,8 @@ import com.helger.commons.string.StringHelper;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public enum ETransaction implements IHasID <String>, IHasName {
+public enum ETransaction implements IHasID <String>, IHasName
+{
   T01 ("Order", 1, null, "2.0", EGroup.POST_AWARD),
   T02 ("Simple Order Response", 2, null, "2.0", EGroup.POST_AWARD),
   T04 ("Counter Offer", 4, null, "2.0", EGroup.POST_AWARD),
@@ -108,7 +109,8 @@ public enum ETransaction implements IHasID <String>, IHasName {
                         @Nonnegative final int nNumber,
                         @Nullable final String sSubNumber,
                         @Nonnull @Nonempty final String sVersion,
-                        @Nonnull final EGroup eGroup) {
+                        @Nonnull final EGroup eGroup)
+  {
     m_sID = name ();
     m_sName = sName;
     m_nNumber = nNumber;
@@ -124,7 +126,8 @@ public enum ETransaction implements IHasID <String>, IHasName {
 
   @Nonnull
   @Nonempty
-  public String getID () {
+  public String getID ()
+  {
     return m_sID;
   }
 
@@ -133,7 +136,8 @@ public enum ETransaction implements IHasID <String>, IHasName {
    */
   @Nonnull
   @Nonempty
-  public String getName () {
+  public String getName ()
+  {
     return m_sName;
   }
 
@@ -143,7 +147,8 @@ public enum ETransaction implements IHasID <String>, IHasName {
    *         the sub numbers A, B and C!
    */
   @Nonnegative
-  public int getNumber () {
+  public int getNumber ()
+  {
     return m_nNumber;
   }
 
@@ -153,7 +158,8 @@ public enum ETransaction implements IHasID <String>, IHasName {
    *         empty string.
    */
   @Nonnull
-  public String getSubNumber () {
+  public String getSubNumber ()
+  {
     return m_sSubNumber;
   }
 
@@ -161,7 +167,8 @@ public enum ETransaction implements IHasID <String>, IHasName {
    * @return The underlying group to which this transaction belongs.
    */
   @Nonnull
-  public EGroup getGroup () {
+  public EGroup getGroup ()
+  {
     return m_eGroup;
   }
 
@@ -171,7 +178,8 @@ public enum ETransaction implements IHasID <String>, IHasName {
    */
   @Nonnull
   @Nonempty
-  public String getTransactionID () {
+  public String getTransactionID ()
+  {
     return m_sTransactionID;
   }
 
@@ -180,12 +188,14 @@ public enum ETransaction implements IHasID <String>, IHasName {
    */
   @Nonnull
   @Nonempty
-  public String getVersionNumber () {
+  public String getVersionNumber ()
+  {
     return m_sVersion;
   }
 
   @Nullable
-  public static ETransaction getFromIDOrNull (@Nullable final String sID) {
+  public static ETransaction getFromIDOrNull (@Nullable final String sID)
+  {
     return EnumHelper.getFromIDOrNull (ETransaction.class, sID);
   }
 }

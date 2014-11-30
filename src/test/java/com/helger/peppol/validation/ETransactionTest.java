@@ -37,57 +37,46 @@
  */
 package com.helger.peppol.validation;
 
-import java.util.Locale;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.junit.Test;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
-import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.string.StringHelper;
 
 /**
- * Contains the names of the CEN BII2 profiles for later translation.
+ * Test class for class {@link ETransaction}.
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-@Translatable
-public enum EProfileName implements IHasDisplayText
+public final class ETransactionTest
 {
-  BII_MLR ("Message Level Response"),
-  BII01 ("Catalogue Only"),
-  BII02 ("Catalogue Update"),
-  BII03 ("Order Only"),
-  BII04 ("Invoice Only"),
-  BII05 ("Billing"),
-  BII06 ("Procurement"),
-  BII10 ("eNotification"),
-  BII11 ("Qualification"),
-  BII12 ("Tendering Simple"),
-  BII16 ("Catalogue Deletion"),
-  BII17 ("Multi Party Catalogue"),
-  BII21 ("Statement"),
-  BII22 ("Call for Tender"),
-  BII27 ("Advanced Ordering"),
-  BII28 ("Ordering"),
-  BII30 ("Dispatch Only"),
-  BII31 ("Reminder Only"),
-  BII32 ("Simple Ordering"),
-  BII33 ("Catalogue Subscription"),
-  BII34 ("Call for Tender with Catalogue Template"),
-  BII35 ("Tendering Simple with Catalogue");
-
-  private final TextProvider m_aTP;
-
-  private EProfileName (@Nonnull final String sEN)
+  @Test
+  public void testBasic ()
   {
-    m_aTP = TextProvider.create_EN (sEN);
-  }
+    // Add one for the MLR which has no transaction ID!
+    assertEquals (33 + 1, ETransaction.values ().length);
 
-  @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
-  {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    for (final ETransaction eTransaction : ETransaction.values ())
+    {
+      assertTrue (StringHelper.hasText (eTransaction.getID ()));
+      assertTrue (StringHelper.hasText (eTransaction.getName ()));
+      assertTrue (eTransaction.getNumber () > 0);
+      assertTrue (eTransaction.getTransactionID ().length () > 0);
+
+      assertSame (eTransaction, ETransaction.valueOf (eTransaction.name ()));
+      assertSame (eTransaction, ETransaction.getFromIDOrNull (eTransaction.getID ()));
+    }
+
+    // Compare with
+    // http://www.cenbii.eu/wp-content/uploads/TransactionCustomisationID.pdf
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", ETransaction.T01.getTransactionID ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", ETransaction.T01.getTransactionID ());
+    assertEquals ("2.0", ETransaction.T01.getVersionNumber ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064A:ver1.0", ETransaction.T64A.getTransactionID ());
+    assertEquals ("1.0", ETransaction.T64A.getVersionNumber ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064C:ver1.0", ETransaction.T64C.getTransactionID ());
+    assertEquals ("1.0", ETransaction.T64C.getVersionNumber ());
   }
 }

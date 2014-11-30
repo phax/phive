@@ -60,7 +60,8 @@ import com.helger.commons.name.IHasDisplayText;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public enum EProfile implements IHasDisplayText {
+public enum EProfile implements IHasDisplayText
+{
   BII_MLR (EProfileName.BII_MLR, 0, ETransaction.T71),
   BII01 (EProfileName.BII01, 1, ETransaction.T19, ETransaction.T58),
   BII02 (EProfileName.BII02, 2, ETransaction.T20, ETransaction.T21, ETransaction.T59),
@@ -89,7 +90,8 @@ public enum EProfile implements IHasDisplayText {
   private final EGroup m_eGroup;
   private final Set <ETransaction> m_aTransactions;
 
-  private void _checkTransactionsSameGroup () {
+  private void _checkTransactionsSameGroup ()
+  {
     for (final ETransaction e : m_aTransactions)
       if (e.getGroup () != m_eGroup)
         throw new IllegalStateException ("Different groups in transactions for " + toString ());
@@ -97,7 +99,8 @@ public enum EProfile implements IHasDisplayText {
 
   private EProfile (@Nonnull final EProfileName eName,
                     @Nonnegative final int nNumber,
-                    @Nonnull @Nonempty final ETransaction... aTransactions) {
+                    @Nonnull @Nonempty final ETransaction... aTransactions)
+  {
     m_aName = eName;
     m_nNumber = nNumber;
     m_eGroup = aTransactions[0].getGroup ();
@@ -111,7 +114,8 @@ public enum EProfile implements IHasDisplayText {
    *         only English is supported.
    */
   @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale) {
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
+  {
     return m_aName.getDisplayText (aContentLocale);
   }
 
@@ -120,7 +124,8 @@ public enum EProfile implements IHasDisplayText {
    *         returns 22 etc.). Only MLR returns 0!
    */
   @Nonnegative
-  public int getNumber () {
+  public int getNumber ()
+  {
     return m_nNumber;
   }
 
@@ -128,7 +133,8 @@ public enum EProfile implements IHasDisplayText {
    * @return The group to which all transaction belong. Never null
    */
   @Nonnull
-  public EGroup getGroup () {
+  public EGroup getGroup ()
+  {
     return m_eGroup;
   }
 
@@ -139,7 +145,8 @@ public enum EProfile implements IHasDisplayText {
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public List <ETransaction> getAllTransactions () {
+  public List <ETransaction> getAllTransactions ()
+  {
     return ContainerHelper.newList (m_aTransactions);
   }
 
@@ -151,7 +158,8 @@ public enum EProfile implements IHasDisplayText {
    * @return <code>true</code> if the passed transaction is contained in this
    *         profile, <code>false</code> otherwise.
    */
-  public boolean containsTransaction (@Nullable final ETransaction eTransaction) {
+  public boolean containsTransaction (@Nullable final ETransaction eTransaction)
+  {
     return m_aTransactions.contains (eTransaction);
   }
 
@@ -166,7 +174,8 @@ public enum EProfile implements IHasDisplayText {
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EProfile> getAllProfilesWithTransaction (@Nonnull final ETransaction eTransaction) {
+  public static List <EProfile> getAllProfilesWithTransaction (@Nonnull final ETransaction eTransaction)
+  {
     ValueEnforcer.notNull (eTransaction, "Transaction");
 
     final List <EProfile> ret = new ArrayList <EProfile> ();

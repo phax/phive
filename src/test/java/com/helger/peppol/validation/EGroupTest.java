@@ -37,57 +37,28 @@
  */
 package com.helger.peppol.validation;
 
-import java.util.Locale;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.junit.Test;
 
-import com.helger.commons.annotations.Translatable;
-import com.helger.commons.name.IHasDisplayText;
-import com.helger.commons.text.impl.TextProvider;
-import com.helger.commons.text.resolve.DefaultTextResolver;
+import com.helger.commons.string.StringHelper;
 
 /**
- * Contains the names of the CEN BII2 profiles for later translation.
- *
+ * Test class for class {@link EGroup}.
+ * 
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-@Translatable
-public enum EProfileName implements IHasDisplayText
+public final class EGroupTest
 {
-  BII_MLR ("Message Level Response"),
-  BII01 ("Catalogue Only"),
-  BII02 ("Catalogue Update"),
-  BII03 ("Order Only"),
-  BII04 ("Invoice Only"),
-  BII05 ("Billing"),
-  BII06 ("Procurement"),
-  BII10 ("eNotification"),
-  BII11 ("Qualification"),
-  BII12 ("Tendering Simple"),
-  BII16 ("Catalogue Deletion"),
-  BII17 ("Multi Party Catalogue"),
-  BII21 ("Statement"),
-  BII22 ("Call for Tender"),
-  BII27 ("Advanced Ordering"),
-  BII28 ("Ordering"),
-  BII30 ("Dispatch Only"),
-  BII31 ("Reminder Only"),
-  BII32 ("Simple Ordering"),
-  BII33 ("Catalogue Subscription"),
-  BII34 ("Call for Tender with Catalogue Template"),
-  BII35 ("Tendering Simple with Catalogue");
-
-  private final TextProvider m_aTP;
-
-  private EProfileName (@Nonnull final String sEN)
+  @Test
+  public void testBasic ()
   {
-    m_aTP = TextProvider.create_EN (sEN);
-  }
-
-  @Nullable
-  public String getDisplayText (@Nonnull final Locale aContentLocale)
-  {
-    return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
+    for (final EGroup eGroup : EGroup.values ())
+    {
+      assertTrue (StringHelper.hasText (eGroup.getID ()));
+      assertSame (eGroup, EGroup.valueOf (eGroup.name ()));
+      assertSame (eGroup, EGroup.getFromIDOrNull (eGroup.getID ()));
+    }
   }
 }
