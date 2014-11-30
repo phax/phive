@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.helger</groupId>
+    <artifactId>parent-pom</artifactId>
+    <version>1.3</version>
+  </parent>
+  <artifactId>as2-lib</artifactId>
+  <version>1.0.5-SNAPSHOT</version>
+  <packaging>bundle</packaging>
+  <name>peppol-validation-engine</name>
+  <description>PEPPOL BIS v2 validation engine</description>
+  <url>https://github.com/phax/peppol-validation-engine</url>
+  <inceptionYear>2014</inceptionYear>
+  
+  <licenses>
+    <license>
+      <name>Apache 2</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+ 
+  <scm>
+    <url>http://github.com/phax/peppol-validation-engine</url>
+    <connection>scm:git:git@github.com:phax/peppol-validation-engine.git</connection>
+    <developerConnection>scm:git:git@github.com:phax/peppol-validation-engine.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  
+  <organization>
+    <name>Philip Helger</name>
+    <url>http://www.helger.com</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <id>philip</id>
+      <name>Philip Helger</name>
+      <email>ph(at)helger.com</email>
+      <url>http://www.helger.com</url>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-commons</artifactId>
+      <version>5.2.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Export-Package>
+              com.helger.peppol.validation.*
+            </Export-Package>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,4 +1,3 @@
-peppol-validation-engine
-========================
+#peppol-validation-engine
 
-PEPPOL BIS v2 validation engine
+PEPPOL BIS v2 validation engine.
