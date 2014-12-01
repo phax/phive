@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation;
+package com.helger.peppol.validation.domain;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;

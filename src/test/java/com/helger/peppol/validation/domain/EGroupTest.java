@@ -14,29 +14,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation;
+package com.helger.peppol.validation.domain;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.helger.commons.string.StringHelper;
+import com.helger.peppol.validation.domain.EGroup;
+
 /**
- * Test class for class {@link EStandardValidationArtecfact}.
- *
+ * Test class for class {@link EGroup}.
+ * 
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public final class EStandardValidationArtecfactTest
+public final class EGroupTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EStandardValidationArtecfact e : EStandardValidationArtecfact.values ())
+    for (final EGroup eGroup : EGroup.values ())
     {
-      assertNotNull (e.getSchematronResource ());
-      assertTrue (e.getSchematronResource ().exists ());
-      assertNotNull (e.getBIS ());
-      assertNotNull (e.getTransaction ());
+      assertTrue (StringHelper.hasText (eGroup.getID ()));
+      assertSame (eGroup, EGroup.valueOf (eGroup.name ()));
+      assertSame (eGroup, EGroup.getFromIDOrNull (eGroup.getID ()));
     }
   }
 }
