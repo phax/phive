@@ -3,8 +3,12 @@ package com.helger.peppol.validation.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.collections.ContainerHelper;
 import com.helger.peppol.validation.domain.TransactionKey;
 
 @Immutable
@@ -48,5 +52,62 @@ public final class CTestFiles
                                             TransactionKey.INVOICE_04_T10));
     s_aTestFiles.add (new StandardTestFile ("BIS04A/Use Case 5_ExampleFile_PEPPOL BIS.xml",
                                             TransactionKey.INVOICE_04_T10));
+
+    s_aTestFiles.add (new StandardTestFile ("BIS05A/Use Case 1.a_CreditNote_PEPPOL BIS.xml",
+                                            TransactionKey.BILLING_05_T14));
+    s_aTestFiles.add (new StandardTestFile ("BIS05A/Use Case 1.b_CreditNote_PEPPOL BIS.xml",
+                                            TransactionKey.BILLING_05_T14));
+    s_aTestFiles.add (new StandardTestFile ("BIS05A/Use Case 2_CreditNote_PEPPOL BIS.xml",
+                                            TransactionKey.BILLING_05_T14));
+    s_aTestFiles.add (new StandardTestFile ("BIS05A/Use Case 3_CreditNote_PEPPOL BIS.xml",
+                                            TransactionKey.BILLING_05_T14));
+    s_aTestFiles.add (new StandardTestFile ("BIS05A/Use Case 4_CreditNote_PEPPOL BIS.xml",
+                                            TransactionKey.BILLING_05_T14));
+    s_aTestFiles.add (new StandardTestFile ("BIS05A/Use Case 5_CreditNote_PEPPOL BIS.xml",
+                                            TransactionKey.BILLING_05_T14));
+
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC1_Order.xml", TransactionKey.ORDERING_28_T01));
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC2_Order.xml", TransactionKey.ORDERING_28_T01));
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC3_Order.xml", TransactionKey.ORDERING_28_T01));
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC4_Order.xml", TransactionKey.ORDERING_28_T01));
+
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC1_Order_response.xml", TransactionKey.ORDERING_28_T76));
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC2_Order_response.xml", TransactionKey.ORDERING_28_T76));
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC3_Order_response.xml", TransactionKey.ORDERING_28_T76));
+    s_aTestFiles.add (new StandardTestFile ("BIS28A/UC4_Order_response.xml", TransactionKey.ORDERING_28_T76));
+
+    s_aTestFiles.add (new StandardTestFile ("BIS30A/UBL-DespatchAdvice-2_1BII2 openPEPPOL BIS_UseCase4.xml",
+                                            TransactionKey.DESPATCH_ADVICE_30_T16));
+    s_aTestFiles.add (new StandardTestFile ("BIS30A/UBL-DespatchAdvice-2_1BII2 openPEPPOL BIS_UseCase5.xml",
+                                            TransactionKey.DESPATCH_ADVICE_30_T16));
+    s_aTestFiles.add (new StandardTestFile ("BIS30A/UBL-DespatchAdvice-2.1BII2 openPEPPOL BIS_UseCase1.xml",
+                                            TransactionKey.DESPATCH_ADVICE_30_T16));
+    s_aTestFiles.add (new StandardTestFile ("BIS30A/UBL-DespatchAdvice-2.1BII2 openPEPPOL BIS_UseCase2.xml",
+                                            TransactionKey.DESPATCH_ADVICE_30_T16));
+    s_aTestFiles.add (new StandardTestFile ("BIS30A/UBL-DespatchAdvice-2.1BII2 openPEPPOL BIS_UseCase3.xml",
+                                            TransactionKey.DESPATCH_ADVICE_30_T16));
+  }
+
+  private CTestFiles ()
+  {}
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <TestFile> getAllTestFiles ()
+  {
+    return ContainerHelper.newList (s_aTestFiles);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <TestFile> getAllTestFiles (@Nonnull final TransactionKey aTransactionKey)
+  {
+    ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
+
+    final List <TestFile> ret = new ArrayList <TestFile> ();
+    for (final TestFile aTF : s_aTestFiles)
+      if (aTF.getTransactionKey ().equals (aTransactionKey))
+        ret.add (aTF);
+    return ret;
   }
 }
