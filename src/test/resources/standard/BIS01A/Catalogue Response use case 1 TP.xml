@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApplicationResponse xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2 UBL-ApplicationResponse-2.0.xsd" xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns058:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii01:ver2.0</cbc:ProfileID>
+	<cbc:ID>1</cbc:ID>
+	<cbc:IssueDate>2013-08-03</cbc:IssueDate>
+	<cac:SenderParty>
+		<cbc:EndpointID schemeID="NO:ORGNR">991825827</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="NO:ORGNR">991825827</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>DIFI</cbc:Name>
+		</cac:PartyName>
+	</cac:SenderParty>
+	<cac:ReceiverParty>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="GLN" >5790000436002</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Office AS</cbc:Name>
+		</cac:PartyName>
+	</cac:ReceiverParty>
+	<cac:DocumentResponse>
+		<cac:Response>
+			<cbc:ResponseCode listID="UNCL4343">AP</cbc:ResponseCode>
+		</cac:Response>
+		<cac:DocumentReference>
+			<cbc:ID>1234</cbc:ID>
+			<cbc:VersionID>1</cbc:VersionID>
+		</cac:DocumentReference>
+	   </cac:DocumentResponse>
+</ApplicationResponse>

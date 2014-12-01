@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OrderResponse xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2"
+    xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+    xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+  <cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns076:ver2.0:extended:urn:www.peppol.eu:bis:peppol28a:ver1.0</cbc:CustomizationID>
+  <cbc:ProfileID>urn:www.cenbii.eu:profile:bii28:ver2.0</cbc:ProfileID>
+  <cbc:ID>101</cbc:ID>
+  <cbc:IssueDate>2013-07-01</cbc:IssueDate>
+  <cbc:IssueTime>06:10:10</cbc:IssueTime>
+  <cbc:OrderResponseCode listID="UNCL1225">30</cbc:OrderResponseCode>
+  <cbc:Note>Response message with amendments in the details</cbc:Note>
+  <cbc:DocumentCurrencyCode listID="ISO4217">EUR</cbc:DocumentCurrencyCode>
+  <cac:OrderReference>
+    <cbc:ID>1</cbc:ID>
+  </cac:OrderReference>
+  <cac:SellerSupplierParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="SE:ORGNR">5546577799</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>The Supplier AB</cbc:Name>
+      </cac:PartyName>
+    </cac:Party>
+  </cac:SellerSupplierParty>
+   <cac:BuyerCustomerParty>
+    <cac:Party>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="SE:ORGNR">5541277711</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>City Hospital</cbc:Name>
+      </cac:PartyName>
+    </cac:Party>
+  </cac:BuyerCustomerParty>
+  <cac:Delivery>
+    <cac:PromisedDeliveryPeriod>
+      <cbc:StartDate>2013-07-15</cbc:StartDate>
+      <cbc:EndDate>2013-07-16</cbc:EndDate>
+    </cac:PromisedDeliveryPeriod>
+  </cac:Delivery>
+  <cac:OrderLine>
+    <cac:LineItem>
+      <cbc:ID>1</cbc:ID>
+      <cbc:LineStatusCode listID="UNCL1225">29</cbc:LineStatusCode>
+	  <cac:Item>
+			<cbc:Name>Brown sauce</cbc:Name>
+			<cac:SellersItemIdentification>
+			  <cbc:ID>SN-33</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>		
+      </cac:LineItem>
+      <cac:OrderLineReference>
+		  <cbc:LineID>1</cbc:LineID>
+      </cac:OrderLineReference>
+  </cac:OrderLine> 
+  <cac:OrderLine>
+    <cac:LineItem>
+      <cbc:ID>2</cbc:ID>
+      <cbc:LineStatusCode listID="UNCL1225">27</cbc:LineStatusCode>
+      <cac:Item>
+			<cbc:Name>White sauce</cbc:Name>
+			<cac:SellersItemIdentification>
+			  <cbc:ID>SN-34</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>		
+      </cac:LineItem>
+      <cac:OrderLineReference>
+		  <cbc:LineID>2</cbc:LineID>
+      </cac:OrderLineReference>
+  </cac:OrderLine> 
+  <cac:OrderLine>
+    <cac:LineItem>
+      <cbc:ID>3</cbc:ID>
+      <cbc:Note>Substituted Item</cbc:Note>
+      <cbc:LineStatusCode listID="UNCL1225">30</cbc:LineStatusCode>
+      <cac:Item>
+			<cbc:Name>Pepper sauce</cbc:Name>
+			<cac:SellersItemIdentification>
+			  <cbc:ID>SN-35</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>		
+    </cac:LineItem>
+		<cac:SellerSubstitutedLineItem>
+		  <cbc:ID>1</cbc:ID>
+		  <cac:Item>
+			<cbc:Name>Pepper sauce</cbc:Name>
+			<cac:SellersItemIdentification>
+			  <cbc:ID>SN-36</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+			  <cbc:ID schemeID="GTIN">8722700577588</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:ClassifiedTaxCategory>
+			  <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				  <cbc:Percent>25</cbc:Percent>
+			  <cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+			  </cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			</cac:Item>
+		</cac:SellerSubstitutedLineItem>
+	<cac:OrderLineReference>
+      <cbc:LineID>3</cbc:LineID>
+    </cac:OrderLineReference>
+  </cac:OrderLine>
+</OrderResponse>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApplicationResponse xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2 UBL-ApplicationResponse-2.0.xsd" xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns058:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii01:ver2.0</cbc:ProfileID>
+	<cbc:ID>5</cbc:ID>
+	<cbc:IssueDate>2013-06-03</cbc:IssueDate>
+	<cac:SenderParty>
+	<!-- Electronic address ID -->
+	<cbc:EndpointID schemeID="GLN">7025800010007</cbc:EndpointID>
+	<!-- Party identifier -->
+		<cac:PartyIdentification>
+		<cbc:ID schemeID="NO:ORGNR">991825827</cbc:ID>
+		</cac:PartyIdentification>
+	<!-- Party name -->
+		<cac:PartyName>
+		<cbc:Name>Office Nordic AS</cbc:Name>
+		</cac:PartyName>
+	</cac:SenderParty>
+	<cac:ReceiverParty>
+	<!-- Electronic address ID -->
+		<cbc:EndpointID schemeID="DK:CVR">DK17472437</cbc:EndpointID>
+		<cac:PartyIdentification>
+	<!-- Party identifier -->
+			<cbc:ID schemeID="DK:CVR">DK17472437</cbc:ID>
+		</cac:PartyIdentification>
+	<!-- Party name -->
+		<cac:PartyName>
+			<cbc:Name>OfficeProvider AS</cbc:Name>
+		</cac:PartyName>
+	</cac:ReceiverParty>
+	<cac:DocumentResponse>
+		<cac:Response>
+	<!-- Coded decision -->
+			<cbc:ResponseCode listID="UNCL4343">AP</cbc:ResponseCode>
+		</cac:Response>
+		<cac:DocumentReference>
+	<!-- Document identifier -->
+			<cbc:ID>4321</cbc:ID>
+	<!-- Document version -->
+			<cbc:VersionID>1</cbc:VersionID>
+		</cac:DocumentReference>
+	   </cac:DocumentResponse>
+</ApplicationResponse>

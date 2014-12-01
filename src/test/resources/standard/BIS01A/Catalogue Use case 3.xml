@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2 ../UBL%202.1%20schema/maindoc/UBL-Catalogue-2.1.xsd">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biicoretrdm019:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii01:ver2.0</cbc:ProfileID>
+	<cbc:ID>1234</cbc:ID>
+	<cbc:ActionCode listID="ACTIONCODE:PEPPOL">Replace</cbc:ActionCode>
+	<cbc:Name>Peppol Test Catalogue</cbc:Name>
+	<cbc:IssueDate>2013-08-20</cbc:IssueDate>
+	<cbc:VersionID>3</cbc:VersionID>
+	<cac:ValidityPeriod>
+		<cbc:StartDate>2013-09-01</cbc:StartDate>
+		<cbc:EndDate>2014-12-31</cbc:EndDate>
+	</cac:ValidityPeriod>
+	<cac:ReferencedContract>
+		<cbc:ID>3299-RA</cbc:ID>
+		<cbc:ContractType>Framework</cbc:ContractType>
+	</cac:ReferencedContract>
+	<cac:ProviderParty>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="GLN" >5790000436002</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Office AS</cbc:Name>
+		</cac:PartyName>
+	</cac:ProviderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="NO:ORGNR">991825827</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="NO:ORGNR">991825827</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>DIFI</cbc:Name>
+		</cac:PartyName>
+	</cac:ReceiverParty>
+	<cac:CatalogueLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>BX</cbc:OrderableUnit>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">20.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Ballpoint pen comes in different colours and tip sizes</cbc:Description>
+			<cbc:PackQuantity unitCode="CT" unitCodeListID="UNECERec20">10</cbc:PackQuantity>
+			<cbc:Name>Ballpoint pen. Blue 0.7 mm</cbc:Name>
+			<cbc:Keyword>writing equipment</cbc:Keyword>
+			<cbc:Keyword>felt pen</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>2451015</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000436057</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:ItemSpecificationDocumentReference>
+				<cbc:ID>12</cbc:ID>
+				<cac:Attachment>
+					<cac:ExternalReference>
+						<cbc:URI>http://anskaffelser.no/imagearchive/Kontrakt_1_3.jpg?w=800</cbc:URI>
+					</cac:ExternalReference>
+				</cac:Attachment>
+			</cac:ItemSpecificationDocumentReference>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">44121701</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:ManufacturerParty>
+				<cac:PartyName>
+					<cbc:Name>FICTIVE INDUSTRY INC.</cbc:Name>
+				</cac:PartyName>
+			</cac:ManufacturerParty>
+			<cac:Certificate>
+				<cbc:ID>NEO</cbc:ID>
+				<cbc:CertificateTypeCode>NA</cbc:CertificateTypeCode>
+				<cbc:CertificateType>Environment</cbc:CertificateType>
+				<cac:IssuerParty>
+					<cac:PartyName>
+						<cbc:Name>NA</cbc:Name>
+					</cac:PartyName>
+				</cac:IssuerParty>
+				<cac:DocumentReference>
+					<cbc:ID>http://www.anskaffelser.no/tema/miljo/mer-om-miljo-i-offentlige-anskaffelser/miljomerker-og-sertifiseringer</cbc:ID>
+				</cac:DocumentReference>
+			</cac:Certificate>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>2</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>BX</cbc:OrderableUnit>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">20.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Ballpoint pen comes in different colours and tip sizes</cbc:Description>
+			<cbc:PackQuantity unitCode="CT" unitCodeListID="UNECERec20">10</cbc:PackQuantity>
+			<cbc:Name>Ballpoint pen. Red 0.7 mm</cbc:Name>
+			<cbc:Keyword>writing equipment</cbc:Keyword>
+			<cbc:Keyword>felt pen</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>2451037</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000436040</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:ItemSpecificationDocumentReference>
+				<cbc:ID>12</cbc:ID>
+				<cac:Attachment>
+					<cac:ExternalReference>
+						<cbc:URI>http://anskaffelser.no/imagearchive/Kontrakt_1_3.jpg?w=800</cbc:URI>
+					</cac:ExternalReference>
+				</cac:Attachment>
+			</cac:ItemSpecificationDocumentReference>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">44121701</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:ManufacturerParty>
+				<cac:PartyName>
+					<cbc:Name>FICTIVE INDUSTRY INC.</cbc:Name>
+				</cac:PartyName>
+			</cac:ManufacturerParty>
+			<cac:Certificate>
+				<cbc:ID>NEO</cbc:ID>
+				<cbc:CertificateTypeCode>NA</cbc:CertificateTypeCode>
+				<cbc:CertificateType>Environment</cbc:CertificateType>
+				<cac:IssuerParty>
+					<cac:PartyName>
+						<cbc:Name>NA</cbc:Name>
+					</cac:PartyName>
+				</cac:IssuerParty>
+				<cac:DocumentReference>
+					<cbc:ID>http://www.anskaffelser.no/tema/miljo/mer-om-miljo-i-offentlige-anskaffelser/miljomerker-og-sertifiseringer</cbc:ID>
+				</cac:DocumentReference>
+			</cac:Certificate>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>3</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>BX</cbc:OrderableUnit>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">20.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Ballpoint pen comes in different colours and tip sizes</cbc:Description>
+			<cbc:PackQuantity unitCode="CT" unitCodeListID="UNECERec20">10</cbc:PackQuantity>
+			<cbc:Name>Ballpoint pen. Black 0.7 mm</cbc:Name>
+			<cbc:Keyword>writing equipment</cbc:Keyword>
+			<cbc:Keyword>felt pen</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>2451027</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000435999</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:ItemSpecificationDocumentReference>
+				<cbc:ID>12</cbc:ID>
+				<cac:Attachment>
+					<cac:ExternalReference>
+						<cbc:URI>http://anskaffelser.no/imagearchive/Kontrakt_1_3.jpg?w=800</cbc:URI>
+					</cac:ExternalReference>
+				</cac:Attachment>
+			</cac:ItemSpecificationDocumentReference>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">44121701</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:ManufacturerParty>
+				<cac:PartyName>
+					<cbc:Name>FICTIVE INDUSTRY INC.</cbc:Name>
+				</cac:PartyName>
+			</cac:ManufacturerParty>
+			<cac:Certificate>
+				<cbc:ID>NEO</cbc:ID>
+				<cbc:CertificateTypeCode>NA</cbc:CertificateTypeCode>
+				<cbc:CertificateType>Environment</cbc:CertificateType>
+				<cac:IssuerParty>
+					<cac:PartyName>
+						<cbc:Name>NA</cbc:Name>
+					</cac:PartyName>
+				</cac:IssuerParty>
+				<cac:DocumentReference>
+					<cbc:ID>http://www.anskaffelser.no/tema/miljo/mer-om-miljo-i-offentlige-anskaffelser/miljomerker-og-sertifiseringer</cbc:ID>
+				</cac:DocumentReference>
+			</cac:Certificate>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>4</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>EA</cbc:OrderableUnit>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">504.50</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Capacity 430 pages by 5% coverage</cbc:Description>
+			<cbc:Name>Ink cartridge T0481 </cbc:Name>
+			<cbc:Keyword>R200/R300/R320/RX500/RX600/RX620</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>1038195</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:ItemSpecificationDocumentReference>
+				<cbc:ID>13</cbc:ID>
+				<cac:Attachment>
+					<cac:ExternalReference>
+						<cbc:URI>http://anskaffelser.no/imagearchive/Kontrakt_1_3.jpg?w=800</cbc:URI>
+					</cac:ExternalReference>
+				</cac:Attachment>
+			</cac:ItemSpecificationDocumentReference>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">44121904</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:ManufacturerParty>
+				<cac:PartyName>
+					<cbc:Name>FICTIVE INDUSTRY INC.</cbc:Name>
+				</cac:PartyName>
+			</cac:ManufacturerParty>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>5</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>CS</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity>2500</cbc:ContentUnitQuantity>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cbc:PackLevelCode listID="GS17009:PEPPOL">TU</cbc:PackLevelCode>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2013-09-01</cbc:StartDate>
+			<cbc:EndDate>2013-12-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">145.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Volume paper for daily printout. To copy and laser printers. Imperishable according to Riksarkivets requirement (ISO 9706)</cbc:Description>
+			<cbc:PackQuantity unitCode="EA" unitCodeListID="UNECERec20">5</cbc:PackQuantity>
+			<cbc:Name>Copy paper A4 80g </cbc:Name>
+			<cbc:Keyword>Copy paper</cbc:Keyword>
+			<cbc:Keyword>Laser paper</cbc:Keyword>
+			<cbc:Keyword>office paper</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>7690213</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:ManufacturersItemIdentification>
+				<cbc:ID>2453005</cbc:ID>
+			</cac:ManufacturersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">14111507</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Size</cbc:Name>
+				<cbc:Value>A4</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Weight</cbc:Name>
+				<cbc:Value>80G</cbc:Value>
+				<cbc:ValueQuantity unitCode="GRM" unitCodeListID="UNECERec20">80</cbc:ValueQuantity>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Colour</cbc:Name>
+				<cbc:Value>White</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Holes</cbc:Name>
+				<cbc:Value>Yes</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:ManufacturerParty>
+				<cac:PartyName>
+					<cbc:Name>FICTIVE INDUSTRY INC.</cbc:Name>
+				</cac:PartyName>
+			</cac:ManufacturerParty>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>6</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>false</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>HUR</cbc:OrderableUnit>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2013-09-01</cbc:StartDate>
+			<cbc:EndDate>2013-12-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">5</cbc:LeadTimeMeasure>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">350.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Service for all contracted Laser printers and copiers every second month</cbc:Description>
+			<cbc:Name>Laser printer service</cbc:Name>
+			<cbc:Keyword>Laser service</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>123</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">80101504</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>7</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>HUR</cbc:OrderableUnit>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2013-09-01</cbc:StartDate>
+			<cbc:EndDate>2013-12-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">5</cbc:LeadTimeMeasure>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">1000.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Strategic planning consultation services</cbc:Description>
+			<cbc:Name>Senior consultant strategic planning</cbc:Name>
+			<cbc:Keyword>Process%BPMN</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>55123</cbc:ID>
+		</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">80101504</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>8</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>KGM</cbc:OrderableUnit>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2013-10-01</cbc:StartDate>
+			<cbc:EndDate>2013-12-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">21.10</cbc:PriceAmount>
+				<cbc:PriceType>CP</cbc:PriceType>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Name>Green apples</cbc:Name>
+			<cbc:BrandName>Pomonax</cbc:BrandName>
+			<cac:SellersItemIdentification>
+				<cbc:ID>4747</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000435944</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:OriginCountry>
+				<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+			</cac:OriginCountry>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">50101634</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>12</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:Certificate>
+				<!-- Label name -->
+				<cbc:ID>Z04</cbc:ID>
+				<!-- Label type code is not used -->
+				<cbc:CertificateTypeCode>NA</cbc:CertificateTypeCode>
+				<!-- Label type typee -->
+				<cbc:CertificateType>Environment</cbc:CertificateType>
+				<cbc:Remarks languageID="sv">KRAV</cbc:Remarks>
+				<cac:IssuerParty>
+					<cac:PartyName>
+						<!-- IssuerParty/PartyName/Name is not used -->
+						<cbc:Name>NA</cbc:Name>
+					</cac:PartyName>
+				</cac:IssuerParty>
+				<cac:DocumentReference>
+					<cbc:ID>http://www.anskaffelser.no/tema/miljo/mer-om-miljo-i-offentlige-anskaffelser/miljomerker-og-sertifiseringer</cbc:ID>
+				</cac:DocumentReference>
+			</cac:Certificate>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>9</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>false</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>BO</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="MLT" unitCodeListID="UNECERec20">250</cbc:ContentUnitQuantity>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cbc:PackLevelCode listID="GS17009:PEPPOL">CU</cbc:PackLevelCode>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2013-09-01</cbc:StartDate>
+			<cbc:EndDate>2013-12-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">35.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Name>Shampoo 250 ml</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>1111</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">53131628</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>PackSize</cbc:Name>
+				<cbc:Value>250 ml</cbc:Value>
+			</cac:AdditionalItemProperty>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>10</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>CS</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="MLT" unitCodeListID="UNECERec20">1500</cbc:ContentUnitQuantity>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cbc:PackLevelCode listID="GS17009:PEPPOL">TU</cbc:PackLevelCode>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2013-09-01</cbc:StartDate>
+			<cbc:EndDate>2013-12-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:ItemComparison>
+			<cbc:PriceAmount currencyID="NOK">33.00</cbc:PriceAmount>
+			<cbc:Quantity unitCode="BO" unitCodeListID="UNECERec20">1</cbc:Quantity>
+		</cac:ItemComparison>
+		<cac:ComponentRelatedItem>
+			<cbc:ID>1111</cbc:ID>
+			<cbc:Quantity unitCode="EA" unitCodeListID="UNECERec20">6</cbc:Quantity>
+		</cac:ComponentRelatedItem>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">198.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:PackQuantity unitCode="EA" unitCodeListID="UNECERec20">6</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>6</cbc:PackSizeNumeric>
+			<cbc:Name>Shampoo 6x250 ml</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>111</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">53131628</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>PackSize</cbc:Name>
+				<cbc:Value>6x250 ml</cbc:Value>
+			</cac:AdditionalItemProperty>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>11</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>PF</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="MLT" unitCodeListID="UNECERec20">27000</cbc:ContentUnitQuantity>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cbc:PackLevelCode listID="GS17009:PEPPOL">DU</cbc:PackLevelCode>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2013-09-01</cbc:StartDate>
+			<cbc:EndDate>2013-12-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:ItemComparison>
+			<cbc:PriceAmount currencyID="NOK">32.00</cbc:PriceAmount>
+			<cbc:Quantity unitCode="BO" unitCodeListID="UNECERec20">1</cbc:Quantity>
+		</cac:ItemComparison>
+		<cac:ComponentRelatedItem>
+			<cbc:ID>111</cbc:ID>
+			<cbc:Quantity unitCode="EA" unitCodeListID="UNECERec20">18</cbc:Quantity>
+		</cac:ComponentRelatedItem>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">3456.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:PackQuantity unitCode="EA" unitCodeListID="UNECERec20">18</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>108</cbc:PackSizeNumeric>
+			<cbc:Name>Shampoo 18x6x250 ml</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>11</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">53131628</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>PackSize</cbc:Name>
+				<cbc:Value>18x6x250 ml</cbc:Value>
+			</cac:AdditionalItemProperty>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>12</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>RO</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="MTK" unitCodeListID="UNECERec20">5.2</cbc:ContentUnitQuantity>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cbc:PackLevelCode listID="GS17009:PEPPOL">CU</cbc:PackLevelCode>
+		<cac:ItemComparison>
+			<cbc:PriceAmount currencyID="NOK">160.58</cbc:PriceAmount>
+			<cbc:Quantity unitCode="MTK" unitCodeListID="UNECERec20">1</cbc:Quantity>
+		</cac:ItemComparison>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="WEE">2</cbc:LeadTimeMeasure>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">160.58</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="MTK"  unitCodeListID="UNECERec20">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>5.1999</cbc:OrderableUnitFactorRate>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Name>Wall paper GRO gold</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>D345gold</cbc:ID>
+			</cac:SellersItemIdentification>
+				<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:AdditionalItemProperty>
+				<cbc:Name languageID="en">Size</cbc:Name>
+				<cbc:Value languageID="en">10mx52cm</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name languageID="en">Quality</cbc:Name>
+				<cbc:Value languageID="en">Non-wowen</cbc:Value>
+			</cac:AdditionalItemProperty>
+		</cac:Item>
+	</cac:CatalogueLine>
+</Catalogue>

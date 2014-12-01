@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2 ../UBL%202.1%20schema/maindoc/UBL-Catalogue-2.1.xsd">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biicoretrdm019:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii01:ver2.0</cbc:ProfileID>
+	<cbc:ID>1234</cbc:ID>
+	<cbc:ActionCode listID="ACTIONCODE:PEPPOL">Update</cbc:ActionCode>
+	<cbc:Name>Peppol Test Catalogue</cbc:Name>
+	<cbc:IssueDate>2013-08-10</cbc:IssueDate>
+	<cbc:VersionID>2</cbc:VersionID>
+	<cac:ValidityPeriod>
+		<cbc:StartDate>2013-09-01</cbc:StartDate>
+		<cbc:EndDate>2014-12-31</cbc:EndDate>
+	</cac:ValidityPeriod>
+	<cac:ReferencedContract>
+		<cbc:ID>3299-RA</cbc:ID>
+		<cbc:ContractType>Framework</cbc:ContractType>
+	</cac:ReferencedContract>
+	<cac:ProviderParty>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="GLN" >5790000436002</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Office AS</cbc:Name>
+		</cac:PartyName>
+	</cac:ProviderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="NO:ORGNR">991825827</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="NO:ORGNR">991825827</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>DIFI</cbc:Name>
+		</cac:PartyName>
+	</cac:ReceiverParty>
+	<cac:CatalogueLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Update</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>BX</cbc:OrderableUnit>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">20.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Ballpoint pen comes in different colours and tip sizes</cbc:Description>
+			<cbc:PackQuantity unitCode="CT" unitCodeListID="UNECERec20">10</cbc:PackQuantity>
+			<cbc:Name>Ballpoint pen. Blue 0.7 mm</cbc:Name>
+			<cbc:Keyword>writing equipment</cbc:Keyword>
+			<cbc:Keyword>felt pen</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>2451015</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000436057</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:ItemSpecificationDocumentReference>
+				<cbc:ID>12</cbc:ID>
+				<cac:Attachment>
+					<cac:ExternalReference>
+						<cbc:URI>http://anskaffelser.no/imagearchive/Kontrakt_1_3.jpg?w=800</cbc:URI>
+					</cac:ExternalReference>
+				</cac:Attachment>
+			</cac:ItemSpecificationDocumentReference>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">44121701</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:ManufacturerParty>
+				<cac:PartyName>
+					<cbc:Name>FICTIVE INDUSTRY INC.</cbc:Name>
+				</cac:PartyName>
+			</cac:ManufacturerParty>
+			<cac:Certificate>
+				<cbc:ID schemeID="NEO">NEO</cbc:ID>
+				<cbc:CertificateTypeCode>NA</cbc:CertificateTypeCode>
+				<cbc:CertificateType>Environment</cbc:CertificateType>
+				<cac:IssuerParty>
+					<cac:PartyName>
+						<cbc:Name>NA</cbc:Name>
+					</cac:PartyName>
+				</cac:IssuerParty>
+				<cac:DocumentReference>
+					<cbc:ID>http://www.anskaffelser.no/tema/miljo/mer-om-miljo-i-offentlige-anskaffelser/miljomerker-og-sertifiseringer</cbc:ID>
+				</cac:DocumentReference>
+			</cac:Certificate>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>2</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>BX</cbc:OrderableUnit>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">20.00</cbc:PriceAmount>
+			</cac:Price>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Ballpoint pen comes in different colours and tip sizes</cbc:Description>
+			<cbc:PackQuantity unitCode="CT" unitCodeListID="UNECERec20">10</cbc:PackQuantity>
+			<cbc:Name>Ballpoint pen. Black 0.7 mm</cbc:Name>
+			<cbc:Keyword>writing equipment</cbc:Keyword>
+			<cbc:Keyword>felt pen</cbc:Keyword>
+			<cac:SellersItemIdentification>
+				<cbc:ID>2451027</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000435999</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:ItemSpecificationDocumentReference>
+				<cbc:ID>12</cbc:ID>
+				<cac:Attachment>
+					<cac:ExternalReference>
+						<cbc:URI>http://anskaffelser.no/imagearchive/Kontrakt_1_3.jpg?w=800</cbc:URI>
+					</cac:ExternalReference>
+				</cac:Attachment>
+			</cac:ItemSpecificationDocumentReference>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC">44121701</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:ManufacturerParty>
+				<cac:PartyName>
+					<cbc:Name>FICTIVE INDUSTRY INC.</cbc:Name>
+				</cac:PartyName>
+			</cac:ManufacturerParty>
+			<cac:Certificate>
+				<cbc:ID schemeID="NEO">NEO</cbc:ID>
+				<cbc:CertificateTypeCode>NA</cbc:CertificateTypeCode>
+				<cbc:CertificateType>Environment</cbc:CertificateType>
+				<cac:IssuerParty>
+					<cac:PartyName>
+						<cbc:Name>NA</cbc:Name>
+					</cac:PartyName>
+				</cac:IssuerParty>
+				<cac:DocumentReference>
+					<cbc:ID>http://www.anskaffelser.no/tema/miljo/mer-om-miljo-i-offentlige-anskaffelser/miljomerker-og-sertifiseringer</cbc:ID>
+				</cac:DocumentReference>
+			</cac:Certificate>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>3</cbc:ID>
+	
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Delete</cbc:ActionCode>
+		<cac:Item>
+		<cbc:Name>Ballpoint pen. Red 0.7 mm</cbc:Name>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000436040</cbc:ID>
+			</cac:StandardItemIdentification>
+		</cac:Item>
+	</cac:CatalogueLine>
+</Catalogue>

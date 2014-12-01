@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2 ../UBL%202.1%20schema/maindoc/UBL-Catalogue-2.1.xsd">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biicoretrdm019:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii01:ver2.0</cbc:ProfileID>
+	<cbc:ID>1234</cbc:ID>
+	<cbc:ActionCode listID="ACTIONCODE:PEPPOL">Delete</cbc:ActionCode>
+	<cbc:Name>Peppol Test Catalogue</cbc:Name>
+	<cbc:IssueDate>2015-01-02</cbc:IssueDate>
+	<cbc:VersionID>4</cbc:VersionID>
+	<cac:ValidityPeriod>
+		<cbc:StartDate>2014-12-31</cbc:StartDate>
+		<cbc:EndDate>2014-12-31</cbc:EndDate>
+	</cac:ValidityPeriod>
+	<cac:ReferencedContract>
+		<cbc:ID>3299-RA</cbc:ID>
+		<cbc:ContractType>Framework</cbc:ContractType>
+	</cac:ReferencedContract>
+	<cac:ProviderParty>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="GLN">5790000436002</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Office AS</cbc:Name>
+		</cac:PartyName>
+	</cac:ProviderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="NO:ORGNR">991825827</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="NO:ORGNR">991825827</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>DIFI</cbc:Name>
+		</cac:PartyName>
+	</cac:ReceiverParty>
+	<cac:CatalogueLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:ActionCode listID="ACTIONCODE:BII2">Delete</cbc:ActionCode>
+		<cac:Item>
+		<cbc:Name>Ballpoint pen. Blue 0.7 mm</cbc:Name>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="GTIN">05790000436057</cbc:ID>
+			</cac:StandardItemIdentification>
+		</cac:Item>
+	</cac:CatalogueLine>
+</Catalogue>

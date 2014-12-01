@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OrderResponse xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns076:ver2.0:extended:urn:www.peppol.eu:bis:peppol28a:ver1.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii28:ver2.0</cbc:ProfileID>
+	<cbc:ID>4552</cbc:ID>
+	<cbc:IssueDate>2013-07-01</cbc:IssueDate>
+	<cbc:IssueTime>06:10:10</cbc:IssueTime>
+	<cbc:OrderResponseCode listID="UNCL1225">30</cbc:OrderResponseCode>
+	<cbc:Note>Response message with amendments in the details</cbc:Note>
+	<cbc:DocumentCurrencyCode listID="ISO4217">EUR</cbc:DocumentCurrencyCode>
+	<cac:OrderReference>
+		<cbc:ID>5</cbc:ID>
+	</cac:OrderReference>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="NO:ORGNR">222333222</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">222333222</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Cod Liver Oil Limited</cbc:Name>
+			</cac:PartyName>
+			<cac:Contact>
+				<cbc:Name>Öystein</cbc:Name>
+				<cbc:Telephone>+47555444333</cbc:Telephone>
+				<cbc:Telefax>+47555444322</cbc:Telefax>
+				<cbc:ElectronicMail>oystein@codliveroil.no</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:BuyerCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="SE:ORGNR">5541277711</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="SE:ORGNR">5541277711</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>City Hospital</cbc:Name>
+			</cac:PartyName>
+		</cac:Party>
+	</cac:BuyerCustomerParty>
+	<cac:Delivery>
+		<cac:PromisedDeliveryPeriod>
+			<cbc:StartDate>2013-07-15</cbc:StartDate>
+			<cbc:EndDate>2013-07-16</cbc:EndDate>
+		</cac:PromisedDeliveryPeriod>
+	</cac:Delivery>
+	<cac:OrderLine>
+		<cac:LineItem>
+			<cbc:ID>1</cbc:ID>
+			<cbc:Note>with changes (price)</cbc:Note>
+			<cbc:LineStatusCode listID="UNCL1225">30</cbc:LineStatusCode>
+			<cbc:Quantity unitCode="NAR" unitCodeListID="UNECERec20">500</cbc:Quantity>
+			<cac:Delivery>
+				<cac:PromisedDeliveryPeriod>
+					<cbc:StartDate>2013-07-15</cbc:StartDate>
+					<cbc:EndDate>2013-07-16</cbc:EndDate>
+				</cac:PromisedDeliveryPeriod>
+			</cac:Delivery>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="EUR" >0.9</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="NAR" unitCodeListID="UNECERec20">10</cbc:BaseQuantity>
+			</cac:Price>
+			<cac:Item>
+				<cbc:Name>Snow shovel</cbc:Name>
+				<cac:SellersItemIdentification>
+					<cbc:ID>SN-33</cbc:ID>
+				</cac:SellersItemIdentification>
+				<cac:StandardItemIdentification>
+					<cbc:ID schemeID="GTIN">09876543211234</cbc:ID>
+				</cac:StandardItemIdentification>
+			</cac:Item>
+		</cac:LineItem>
+		<cac:OrderLineReference>
+			<cbc:LineID>1</cbc:LineID>
+		</cac:OrderLineReference>
+	</cac:OrderLine>
+</OrderResponse>
