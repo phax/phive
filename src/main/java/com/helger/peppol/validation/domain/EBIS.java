@@ -18,13 +18,13 @@ package com.helger.peppol.validation.domain;
 
 public enum EBIS
 {
-  BILLING (5),
-  CATALOGUE (1),
-  DESPATCH_ADVICE (30),
-  INVOICE (4),
-  MLR (36),
-  ORDER (3),
-  ORDERING (28);
+  CATALOGUE_01 (1),
+  ORDER_03 (3),
+  INVOICE_04 (4),
+  BILLING_05 (5),
+  ORDERING_28 (28),
+  DESPATCH_ADVICE_30 (30),
+  MLR_36 (36);
 
   private final int m_nID;
 

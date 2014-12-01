@@ -22,32 +22,45 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
 
+/**
+ * This enum contains all the default OpenPEPPOL Schematron artefacts. They are
+ * ordered ascending by BIS number, second by transaction and third by desired
+ * execution order.
+ *
+ * @author Philip Helger
+ */
 public enum EStandardValidationArtecfact
 {
-  BILLING_CORE ("BIS2.0-billing5a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T14-V1.0.sch", EBIS.BILLING, ETransaction.T14),
-  BILLING_RULES ("BIS2.0-billing5a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T14.sch", EBIS.BILLING, ETransaction.T14),
-  BILLING_OPENPEPPOL ("BIS2.0-billing5a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T14.sch", EBIS.BILLING, ETransaction.T14),
-  CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", EBIS.CATALOGUE, ETransaction.T19),
-  CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", EBIS.CATALOGUE, ETransaction.T19),
-  CATALOGUE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T19.sch", EBIS.CATALOGUE, ETransaction.T19),
-  CATALOGUE_RESPONSE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T58.sch", EBIS.CATALOGUE, ETransaction.T58),
-  CATALOGUE_RESPONSE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T58.sch", EBIS.CATALOGUE, ETransaction.T58),
-  DESPATCH_ADVICE_CORE ("BIS2.0-despatchadvice30a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T16-V1.0.sch", EBIS.DESPATCH_ADVICE, ETransaction.T16),
-  DESPATCH_ADVICE_RULES ("BIS2.0-despatchadvice30a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T16.sch", EBIS.DESPATCH_ADVICE, ETransaction.T16),
-  DESPATCH_ADVICE_OPENPEPPOL ("BIS2.0-despatchadvice30a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T16.sch", EBIS.DESPATCH_ADVICE, ETransaction.T16),
-  INVOICE_CORE ("BIS2.0-invoice4a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T10-V1.0.sch", EBIS.INVOICE, ETransaction.T10),
-  INVOICE_RULES ("BIS2.0-invoice4a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T10.sch", EBIS.INVOICE, ETransaction.T10),
-  INVOICE_OPENPEPPOL ("BIS2.0-invoice4a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T10.sch", EBIS.INVOICE, ETransaction.T10),
-  MLR_RULES ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T71.sch", EBIS.MLR, ETransaction.T71),
-  MLR_OPENPEPPOL ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T71.sch", EBIS.MLR, ETransaction.T71),
-  ORDER_CORE ("BIS2.0-order3a-VA_V2.2/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", EBIS.ORDER, ETransaction.T01),
-  ORDER_RULES ("BIS2.0-order3a-VA_V2.2/Schematron/BII RULES/BIIRULES-UBL-T01.sch", EBIS.ORDER, ETransaction.T01),
-  ORDER_OPENPEPPOL ("BIS2.0-order3a-VA_V2.2/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", EBIS.ORDER, ETransaction.T01),
-  ORDERING_ORDER_CORE ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", EBIS.ORDERING, ETransaction.T01),
-  ORDERING_ORDER_RULES ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T01.sch", EBIS.ORDERING, ETransaction.T01),
-  ORDERING_ORDER_OPENPEPPOL ("BIS2.0-ordering28a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", EBIS.ORDERING, ETransaction.T01),
-  ORDERING_ORDER_RESPONSE_RULES ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T76.sch", EBIS.ORDERING, ETransaction.T76),
-  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("BIS2.0-ordering28a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T76.sch", EBIS.ORDERING, ETransaction.T76);
+  CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", EBIS.CATALOGUE_01, ETransaction.T19),
+  CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", EBIS.CATALOGUE_01, ETransaction.T19),
+  CATALOGUE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T19.sch", EBIS.CATALOGUE_01, ETransaction.T19),
+  CATALOGUE_RESPONSE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T58.sch", EBIS.CATALOGUE_01, ETransaction.T58),
+  CATALOGUE_RESPONSE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T58.sch", EBIS.CATALOGUE_01, ETransaction.T58),
+
+  ORDER_CORE ("BIS2.0-order3a-VA_V2.2/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", EBIS.ORDER_03, ETransaction.T01),
+  ORDER_RULES ("BIS2.0-order3a-VA_V2.2/Schematron/BII RULES/BIIRULES-UBL-T01.sch", EBIS.ORDER_03, ETransaction.T01),
+  ORDER_OPENPEPPOL ("BIS2.0-order3a-VA_V2.2/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", EBIS.ORDER_03, ETransaction.T01),
+
+  INVOICE_CORE ("BIS2.0-invoice4a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T10-V1.0.sch", EBIS.INVOICE_04, ETransaction.T10),
+  INVOICE_RULES ("BIS2.0-invoice4a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T10.sch", EBIS.INVOICE_04, ETransaction.T10),
+  INVOICE_OPENPEPPOL ("BIS2.0-invoice4a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T10.sch", EBIS.INVOICE_04, ETransaction.T10),
+
+  BILLING_CORE ("BIS2.0-billing5a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T14-V1.0.sch", EBIS.BILLING_05, ETransaction.T14),
+  BILLING_RULES ("BIS2.0-billing5a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T14.sch", EBIS.BILLING_05, ETransaction.T14),
+  BILLING_OPENPEPPOL ("BIS2.0-billing5a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T14.sch", EBIS.BILLING_05, ETransaction.T14),
+
+  ORDERING_ORDER_CORE ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", EBIS.ORDERING_28, ETransaction.T01),
+  ORDERING_ORDER_RULES ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T01.sch", EBIS.ORDERING_28, ETransaction.T01),
+  ORDERING_ORDER_OPENPEPPOL ("BIS2.0-ordering28a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", EBIS.ORDERING_28, ETransaction.T01),
+  ORDERING_ORDER_RESPONSE_RULES ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T76.sch", EBIS.ORDERING_28, ETransaction.T76),
+  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("BIS2.0-ordering28a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T76.sch", EBIS.ORDERING_28, ETransaction.T76),
+
+  DESPATCH_ADVICE_CORE ("BIS2.0-despatchadvice30a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T16-V1.0.sch", EBIS.DESPATCH_ADVICE_30, ETransaction.T16),
+  DESPATCH_ADVICE_RULES ("BIS2.0-despatchadvice30a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T16.sch", EBIS.DESPATCH_ADVICE_30, ETransaction.T16),
+  DESPATCH_ADVICE_OPENPEPPOL ("BIS2.0-despatchadvice30a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T16.sch", EBIS.DESPATCH_ADVICE_30, ETransaction.T16),
+
+  MLR_RULES ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T71.sch", EBIS.MLR_36, ETransaction.T71),
+  MLR_OPENPEPPOL ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T71.sch", EBIS.MLR_36, ETransaction.T71);
 
   private final ClassPathResource m_aResource;
   private final EBIS m_eBIS;
