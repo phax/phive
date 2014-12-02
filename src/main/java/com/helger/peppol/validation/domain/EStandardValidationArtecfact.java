@@ -117,7 +117,8 @@ public enum EStandardValidationArtecfact
   }
 
   /**
-   * Get all validation artefacts matching the passed transaction key.
+   * Get all validation artefacts matching the passed transaction key in the
+   * correct execution order.
    *
    * @param aTransactionKey
    *        The transaction to search. May not be <code>null</code>.
@@ -127,7 +128,7 @@ public enum EStandardValidationArtecfact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EStandardValidationArtecfact> getAllMatching (@Nonnull final TransactionKey aTransactionKey)
+  public static List <EStandardValidationArtecfact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 

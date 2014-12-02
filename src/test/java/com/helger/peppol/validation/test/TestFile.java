@@ -6,6 +6,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.IReadableResource;
 import com.helger.peppol.validation.domain.TransactionKey;
+import com.helger.ubl.EUBL21DocumentType;
 
 @Immutable
 public class TestFile
@@ -29,5 +30,11 @@ public class TestFile
   public TransactionKey getTransactionKey ()
   {
     return m_aTransactionKey;
+  }
+
+  @Nonnull
+  public EUBL21DocumentType getUBLDocumentType ()
+  {
+    return m_aTransactionKey.getTransaction ().getUBLDocumentType ();
   }
 }

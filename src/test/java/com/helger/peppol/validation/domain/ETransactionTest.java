@@ -79,9 +79,7 @@ public final class ETransactionTest
       assertNotNull (aTestFile.getResource ().getPath (), aDoc);
 
       // Read as desired type
-      final Object aUBLDocument = UBL21Marshaller.readUBLDocument (aDoc, aTestFile.getTransactionKey ()
-                                                                                  .getTransaction ()
-                                                                                  .getUBLDocumentType ()
+      final Object aUBLDocument = UBL21Marshaller.readUBLDocument (aDoc, aTestFile.getUBLDocumentType ()
                                                                                   .getImplementationClass ());
       assertNotNull (aTestFile.getResource ().getPath (), aUBLDocument);
     }

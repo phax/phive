@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.domain.EStandardValidationArtecfact;
+import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
  * Test class for class {@link EStandardValidationArtecfact}.
@@ -39,6 +39,16 @@ public final class EStandardValidationArtecfactTest
       assertTrue (e.getSchematronResource ().exists ());
       assertNotNull (e.getBIS ());
       assertNotNull (e.getTransaction ());
+    }
+  }
+
+  @Test
+  public void testValidSchematrons ()
+  {
+    for (final EStandardValidationArtecfact e : EStandardValidationArtecfact.values ())
+    {
+      // Check that the passed Schematron is valid
+      assertTrue (new SchematronResourcePure (e.getSchematronResource ()).isValidSchematron ());
     }
   }
 }

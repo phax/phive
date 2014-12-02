@@ -11,6 +11,6 @@ public class StandardTestFile extends TestFile
 {
   public StandardTestFile (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
   {
-    super (new ClassPathResource ("/standard/" + sPath), aTransactionKey);
+    super (new ClassPathResource ("/xml/standard/" + sPath), aTransactionKey);
   }
 }
