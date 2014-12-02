@@ -106,6 +106,9 @@
             <Export-Package>
               com.helger.peppol.validation.*
             </Export-Package>
+            <Import-Package>
+              !javax.annotation.*,*
+            </Import-Package>
           </instructions>
         </configuration>
       </plugin>

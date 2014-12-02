@@ -55,7 +55,6 @@ public final class EStandardValidationArtefactTest
   {
     for (final EStandardValidationArtefact e : EStandardValidationArtefact.values ())
     {
-      System.out.println (e.getSchematronResource ().getPath ());
       // Check that the passed Schematron is valid
       assertTrue (new SchematronResourcePure (e.getSchematronResource ()).isValidSchematron ());
     }
