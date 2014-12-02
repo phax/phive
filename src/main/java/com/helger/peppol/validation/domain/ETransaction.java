@@ -167,6 +167,16 @@ public enum ETransaction implements IHasID <String>, IHasName
   }
 
   /**
+   * @return The unique key. E.g. "T064A" or "T004".
+   */
+  @Nonnull
+  @Nonempty
+  public String getTransactionKey ()
+  {
+    return "T" + StringHelper.getLeadingZero (m_nNumber, 3) + m_sSubNumber;
+  }
+
+  /**
    * @return The version of the transaction. E.g. "1.0" or "2.0".
    */
   @Nonnull

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
@@ -137,5 +138,23 @@ public enum EStandardValidationArtecfact
       if (e.getTransactionKey ().equals (aTransactionKey))
         ret.add (e);
     return ret;
+  }
+
+  /**
+   * Check if at least one standard validatoin artefact contained in this enum
+   * supports the passed trnsaction key.
+   * 
+   * @param aTransactionKey
+   *        The transaction key to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed transaction key is not
+   *         <code>null</code> and a matching artefact is present.
+   */
+  public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey)
+  {
+    if (aTransactionKey != null)
+      for (final EStandardValidationArtecfact e : values ())
+        if (e.getTransactionKey ().equals (aTransactionKey))
+          return true;
+    return false;
   }
 }
