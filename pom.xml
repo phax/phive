@@ -115,7 +115,7 @@
         <configuration>
           <excludes>
             <exclude>src/main/resources/standard/**</exclude>
-            <exclude>src/test/resources/standard/**</exclude>
+            <exclude>src/test/resources/xml/**</exclude>
           </excludes>
         </configuration>
       </plugin>

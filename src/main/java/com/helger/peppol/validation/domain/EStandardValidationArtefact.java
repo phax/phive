@@ -27,15 +27,16 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.ubl.EUBL21DocumentType;
 
 /**
- * This enum contains all the default OpenPEPPOL Schematron artefacts. They are
- * ordered ascending by BIS number, second by transaction and third by desired
- * execution order.
+ * This enumeration contains all the default OpenPEPPOL Schematron artefacts.
+ * They are ordered ascending by BIS number, second by transaction and third by
+ * desired execution order.
  *
  * @author Philip Helger
  */
-public enum EStandardValidationArtecfact
+public enum EStandardValidationArtefact implements IValidationArtefact
 {
   CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", TransactionKey.CATALOGUE_01_T19),
   CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", TransactionKey.CATALOGUE_01_T19),
@@ -71,50 +72,41 @@ public enum EStandardValidationArtecfact
   private final ClassPathResource m_aResource;
   private final TransactionKey m_aTransactionKey;
 
-  private EStandardValidationArtecfact (@Nonnull @Nonempty final String sPath,
+  private EStandardValidationArtefact (@Nonnull @Nonempty final String sPath,
                                         @Nonnull final TransactionKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/standard/" + sPath);
     m_aTransactionKey = aTransactionKey;
   }
 
-  /**
-   * @return The Schematron resource descriptor. Never <code>null</code>.
-   */
   @Nonnull
   public IReadableResource getSchematronResource ()
   {
     return m_aResource;
   }
 
-  /**
-   * @return The transaction key for this standard validation artefact. Never
-   *         <code>null</code>.
-   */
   @Nonnull
   public TransactionKey getTransactionKey ()
   {
     return m_aTransactionKey;
   }
 
-  /**
-   * @return The BIS to which the validation artefact belongs. Never
-   *         <code>null</code>.
-   */
   @Nonnull
   public EBIS getBIS ()
   {
     return m_aTransactionKey.getBIS ();
   }
 
-  /**
-   * @return The transaction to which the validation artefact belongs. Never
-   *         <code>null</code>.
-   */
   @Nonnull
   public ETransaction getTransaction ()
   {
     return m_aTransactionKey.getTransaction ();
+  }
+
+  @Nonnull
+  public EUBL21DocumentType getUBLDocumentType ()
+  {
+    return getTransaction ().getUBLDocumentType ();
   }
 
   /**
@@ -129,21 +121,21 @@ public enum EStandardValidationArtecfact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EStandardValidationArtecfact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey)
+  public static List <EStandardValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 
-    final List <EStandardValidationArtecfact> ret = new ArrayList <EStandardValidationArtecfact> ();
-    for (final EStandardValidationArtecfact e : values ())
+    final List <EStandardValidationArtefact> ret = new ArrayList <EStandardValidationArtefact> ();
+    for (final EStandardValidationArtefact e : values ())
       if (e.getTransactionKey ().equals (aTransactionKey))
         ret.add (e);
     return ret;
   }
 
   /**
-   * Check if at least one standard validatoin artefact contained in this enum
-   * supports the passed trnsaction key.
-   * 
+   * Check if at least one standard validation artefact contained in this
+   * enumeration supports the passed transaction key.
+   *
    * @param aTransactionKey
    *        The transaction key to be checked. May be <code>null</code>.
    * @return <code>true</code> if the passed transaction key is not
@@ -152,7 +144,7 @@ public enum EStandardValidationArtecfact
   public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey)
   {
     if (aTransactionKey != null)
-      for (final EStandardValidationArtecfact e : values ())
+      for (final IValidationArtefact e : values ())
         if (e.getTransactionKey ().equals (aTransactionKey))
           return true;
     return false;
