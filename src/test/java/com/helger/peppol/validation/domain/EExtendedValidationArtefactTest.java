@@ -16,9 +16,7 @@
  */
 package com.helger.peppol.validation.domain;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -26,16 +24,16 @@ import org.junit.Test;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
- * Test class for class {@link EStandardValidationArtefact}.
+ * Test class for class {@link EExtendedValidationArtefact}.
  *
- * @author PEPPOL.AT, BRZ, Philip Helger
+ * @author Philip Helger
  */
-public final class EStandardValidationArtefactTest
+public final class EExtendedValidationArtefactTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EStandardValidationArtefact e : EStandardValidationArtefact.values ())
+    for (final EExtendedValidationArtefact e : EExtendedValidationArtefact.values ())
     {
       assertNotNull (e.getSchematronResource ());
       assertTrue (e.getSchematronResource ().exists ());
@@ -43,19 +41,18 @@ public final class EStandardValidationArtefactTest
       assertNotNull (e.getBIS ());
       assertNotNull (e.getTransaction ());
       assertNotNull (e.getUBLDocumentType ());
-      assertFalse (e.isCountrySpecific ());
-      assertNull (e.getCountryLocale ());
-      assertNull (e.getCountryCode ());
-      assertFalse (e.isSectorSpecific ());
+      assertTrue (e.isCountrySpecific ());
+      assertNotNull (e.getCountryLocale ());
+      assertNotNull (e.getCountryCode ());
+      // May or may not be sector specific
     }
   }
 
   @Test
   public void testValidSchematrons ()
   {
-    for (final EStandardValidationArtefact e : EStandardValidationArtefact.values ())
+    for (final EExtendedValidationArtefact e : EExtendedValidationArtefact.values ())
     {
-      System.out.println (e.getSchematronResource ().getPath ());
       // Check that the passed Schematron is valid
       assertTrue (new SchematronResourcePure (e.getSchematronResource ()).isValidSchematron ());
     }

@@ -16,7 +16,10 @@
  */
 package com.helger.peppol.validation.domain;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.io.IReadableResource;
 import com.helger.ubl.EUBL21DocumentType;
@@ -64,4 +67,30 @@ public interface IValidationArtefact
    */
   @Nonnull
   EUBL21DocumentType getUBLDocumentType ();
+
+  /**
+   * @return <code>true</code> if this validation artefact is country specific,
+   *         <code>false</code> if it is generic.
+   */
+  boolean isCountrySpecific ();
+
+  /**
+   * @return The locale for which this artefact is designed for or
+   *         <code>null</code> if it is country independent validation artefact.
+   */
+  @Nullable
+  Locale getCountryLocale ();
+
+  /**
+   * @return The country code for which this artefact is designed for or
+   *         <code>null</code> if it is country independent validation artefact.
+   */
+  @Nullable
+  String getCountryCode ();
+
+  /**
+   * @return <code>true</code> if this validation artefact is sector specific,
+   *         <code>false</code> if it is not.
+   */
+  boolean isSectorSpecific ();
 }

@@ -18,6 +18,7 @@ package com.helger.peppol.validation.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,6 +42,7 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", TransactionKey.CATALOGUE_01_T19),
   CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", TransactionKey.CATALOGUE_01_T19),
   CATALOGUE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T19.sch", TransactionKey.CATALOGUE_01_T19),
+
   CATALOGUE_RESPONSE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T58.sch", TransactionKey.CATALOGUE_01_T58),
   CATALOGUE_RESPONSE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T58.sch", TransactionKey.CATALOGUE_01_T58),
 
@@ -52,13 +54,14 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   INVOICE_RULES ("BIS2.0-invoice4a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T10.sch", TransactionKey.INVOICE_04_T10),
   INVOICE_OPENPEPPOL ("BIS2.0-invoice4a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T10.sch", TransactionKey.INVOICE_04_T10),
 
-  BILLING_CORE ("BIS2.0-billing5a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T14-V1.0.sch", TransactionKey.BILLING_05_T14),
-  BILLING_RULES ("BIS2.0-billing5a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T14.sch", TransactionKey.BILLING_05_T14),
-  BILLING_OPENPEPPOL ("BIS2.0-billing5a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T14.sch", TransactionKey.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_CORE ("BIS2.0-billing5a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T14-V1.0.sch", TransactionKey.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_RULES ("BIS2.0-billing5a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T14.sch", TransactionKey.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_OPENPEPPOL ("BIS2.0-billing5a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T14.sch", TransactionKey.BILLING_05_T14),
 
   ORDERING_ORDER_CORE ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", TransactionKey.ORDERING_28_T01),
   ORDERING_ORDER_RULES ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T01.sch", TransactionKey.ORDERING_28_T01),
   ORDERING_ORDER_OPENPEPPOL ("BIS2.0-ordering28a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", TransactionKey.ORDERING_28_T01),
+
   ORDERING_ORDER_RESPONSE_RULES ("BIS2.0-ordering28a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T76.sch", TransactionKey.ORDERING_28_T76),
   ORDERING_ORDER_RESPONSE_OPENPEPPOL ("BIS2.0-ordering28a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T76.sch", TransactionKey.ORDERING_28_T76),
 
@@ -73,7 +76,7 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   private final TransactionKey m_aTransactionKey;
 
   private EStandardValidationArtefact (@Nonnull @Nonempty final String sPath,
-                                        @Nonnull final TransactionKey aTransactionKey)
+                                       @Nonnull final TransactionKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/standard/" + sPath);
     m_aTransactionKey = aTransactionKey;
@@ -107,6 +110,28 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   public EUBL21DocumentType getUBLDocumentType ()
   {
     return getTransaction ().getUBLDocumentType ();
+  }
+
+  public boolean isCountrySpecific ()
+  {
+    return false;
+  }
+
+  @Nullable
+  public Locale getCountryLocale ()
+  {
+    return null;
+  }
+
+  @Nullable
+  public String getCountryCode ()
+  {
+    return null;
+  }
+
+  public boolean isSectorSpecific ()
+  {
+    return false;
   }
 
   /**
@@ -144,7 +169,7 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey)
   {
     if (aTransactionKey != null)
-      for (final IValidationArtefact e : values ())
+      for (final EStandardValidationArtefact e : values ())
         if (e.getTransactionKey ().equals (aTransactionKey))
           return true;
     return false;
