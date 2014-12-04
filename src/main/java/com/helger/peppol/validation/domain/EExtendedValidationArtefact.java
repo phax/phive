@@ -123,19 +123,24 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
    *
    * @param aTransactionKey
    *        The transaction to search. May not be <code>null</code>.
+   * @param aExtendedTransactionKey
+   *        The extended transaction to search. May not be <code>null</code>.
    * @return A non-<code>null</code> list with all matching artefacts in the
    *         order they were defined. This list may be empty, if no matching
    *         artefact is present.
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EExtendedValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey)
+  public static List <EExtendedValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey,
+                                                                                      @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
+    ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
 
     final List <EExtendedValidationArtefact> ret = new ArrayList <EExtendedValidationArtefact> ();
     for (final EExtendedValidationArtefact e : values ())
-      if (e.getTransactionKey ().equals (aTransactionKey))
+      if (e.getTransactionKey ().equals (aTransactionKey) &&
+          e.getExtendedTransactionKey ().equals (aExtendedTransactionKey))
         ret.add (e);
     return ret;
   }
@@ -146,14 +151,18 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
    *
    * @param aTransactionKey
    *        The transaction key to be checked. May be <code>null</code>.
+   * @param aExtendedTransactionKey
+   *        The extended transaction to search. May not be <code>null</code>.
    * @return <code>true</code> if the passed transaction key is not
    *         <code>null</code> and a matching artefact is present.
    */
-  public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey)
+  public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey,
+                                                             @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     if (aTransactionKey != null)
       for (final EExtendedValidationArtefact e : values ())
-        if (e.getTransactionKey ().equals (aTransactionKey))
+        if (e.getTransactionKey ().equals (aTransactionKey) &&
+            e.getExtendedTransactionKey ().equals (aExtendedTransactionKey))
           return true;
     return false;
   }

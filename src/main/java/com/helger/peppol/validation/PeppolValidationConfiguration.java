@@ -20,12 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.peppol.validation.domain.EExtendedValidationArtefact;
 import com.helger.peppol.validation.domain.EStandardValidationArtefact;
+import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.IValidationArtefact;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.ubl.EUBL21DocumentType;
@@ -41,11 +44,19 @@ public class PeppolValidationConfiguration
   private static final Logger s_aLogger = LoggerFactory.getLogger (PeppolValidationConfiguration.class);
 
   private final TransactionKey m_aTransactionKey;
+  private final ExtendedTransactionKey m_aExtendedTransactionKey;
   private final List <IValidationArtefact> m_aValidationArtefacts = new ArrayList <IValidationArtefact> ();
 
   public PeppolValidationConfiguration (@Nonnull final TransactionKey aTransactionKey)
   {
+    this (aTransactionKey, null);
+  }
+
+  public PeppolValidationConfiguration (@Nonnull final TransactionKey aTransactionKey,
+                                        @Nullable final ExtendedTransactionKey aExtendedTransactionKey)
+  {
     m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
+    m_aExtendedTransactionKey = aExtendedTransactionKey;
 
     // Get all standard artefacts
     m_aValidationArtefacts.addAll (EStandardValidationArtefact.getAllMatchingValidationArtefacts (aTransactionKey));
@@ -54,6 +65,9 @@ public class PeppolValidationConfiguration
                       aTransactionKey.getBIS ().getID () +
                       " and transaction " +
                       aTransactionKey.getTransaction ().getTransactionKey ());
+    if (aExtendedTransactionKey != null)
+      m_aValidationArtefacts.addAll (EExtendedValidationArtefact.getAllMatchingValidationArtefacts (aTransactionKey,
+                                                                                                    aExtendedTransactionKey));
   }
 
   /**
@@ -70,5 +84,11 @@ public class PeppolValidationConfiguration
   public EUBL21DocumentType getUBLDocumentType ()
   {
     return m_aTransactionKey.getTransaction ().getUBLDocumentType ();
+  }
+
+  @Nullable
+  public ExtendedTransactionKey getExtendedTransactionKey ()
+  {
+    return m_aExtendedTransactionKey;
   }
 }
