@@ -34,15 +34,15 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class CountryKey
+public class ExtendedKey
 {
-  public static final CountryKey AT = new CountryKey ("AT", false);
-  public static final CountryKey AT_SECTOR = new CountryKey ("AT", true);
+  public static final ExtendedKey AT = new ExtendedKey ("AT", false);
+  public static final ExtendedKey AT_SECTOR = new ExtendedKey ("AT", true);
 
   private final Locale m_aCountry;
   private final boolean m_bIsSectorSpecific;
 
-  public CountryKey (@Nonnull @Nonempty final String sCountryCode, final boolean bIsSectorSpecific)
+  public ExtendedKey (@Nonnull @Nonempty final String sCountryCode, final boolean bIsSectorSpecific)
   {
     ValueEnforcer.notEmpty (sCountryCode, "CountryCode");
     m_aCountry = CountryCache.getInstance ().getCountry (sCountryCode);
@@ -76,7 +76,7 @@ public class CountryKey
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final CountryKey rhs = (CountryKey) o;
+    final ExtendedKey rhs = (ExtendedKey) o;
     return m_aCountry.equals (rhs.m_aCountry) && m_bIsSectorSpecific == rhs.m_bIsSectorSpecific;
   }
 

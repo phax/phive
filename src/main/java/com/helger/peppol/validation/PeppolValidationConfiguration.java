@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +27,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.peppol.validation.domain.EExtendedValidationArtefact;
 import com.helger.peppol.validation.domain.EStandardValidationArtefact;
-import com.helger.peppol.validation.domain.CountryKey;
+import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.IValidationArtefact;
-import com.helger.peppol.validation.domain.TransactionKey;
-import com.helger.ubl.EUBL21DocumentType;
 
 /**
  * This class contains the configuration to run a PEPPOL document validation. An
@@ -43,31 +40,21 @@ public class PeppolValidationConfiguration
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (PeppolValidationConfiguration.class);
 
-  private final TransactionKey m_aTransactionKey;
-  private final CountryKey m_aExtendedTransactionKey;
+  private final ExtendedTransactionKey m_aExtendedTransactionKey;
   private final List <IValidationArtefact> m_aValidationArtefacts = new ArrayList <IValidationArtefact> ();
 
-  public PeppolValidationConfiguration (@Nonnull final TransactionKey aTransactionKey)
+  public PeppolValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
-    this (aTransactionKey, null);
-  }
-
-  public PeppolValidationConfiguration (@Nonnull final TransactionKey aTransactionKey,
-                                        @Nullable final CountryKey aExtendedTransactionKey)
-  {
-    m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
-    m_aExtendedTransactionKey = aExtendedTransactionKey;
+    m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
 
     // Get all standard artefacts
-    m_aValidationArtefacts.addAll (EStandardValidationArtefact.getAllMatchingValidationArtefacts (aTransactionKey));
+    m_aValidationArtefacts.addAll (EStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
     if (m_aValidationArtefacts.isEmpty ())
       s_aLogger.warn ("No standard validation artefact supports BIS " +
-                      aTransactionKey.getBIS ().getID () +
+                      aExtendedTransactionKey.getBIS ().getID () +
                       " and transaction " +
-                      aTransactionKey.getTransaction ().getTransactionKey ());
-    if (aExtendedTransactionKey != null)
-      m_aValidationArtefacts.addAll (EExtendedValidationArtefact.getAllMatchingValidationArtefacts (aTransactionKey,
-                                                                                                    aExtendedTransactionKey));
+                      aExtendedTransactionKey.getTransaction ().getTransactionKey ());
+    m_aValidationArtefacts.addAll (EExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
   }
 
   /**
@@ -75,19 +62,7 @@ public class PeppolValidationConfiguration
    *         <code>null</code>.
    */
   @Nonnull
-  public TransactionKey getTransactionKey ()
-  {
-    return m_aTransactionKey;
-  }
-
-  @Nonnull
-  public EUBL21DocumentType getUBLDocumentType ()
-  {
-    return m_aTransactionKey.getTransaction ().getUBLDocumentType ();
-  }
-
-  @Nullable
-  public CountryKey getExtendedTransactionKey ()
+  public ExtendedTransactionKey getExtendedTransactionKey ()
   {
     return m_aExtendedTransactionKey;
   }
