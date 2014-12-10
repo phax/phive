@@ -106,7 +106,7 @@
 			<cbc:ID>NA</cbc:ID>
 			<cac:TransportHandlingUnit>
 				<cbc:ID schemeID="SSCC" schemeAgencyName="GS1">173111000000000020</cbc:ID>
-				<cbc:TransportHandlingUnitTypeCode listID="UNECERec21">UTE</cbc:TransportHandlingUnitTypeCode>
+				<cbc:TransportHandlingUnitTypeCode listID="UNECERec21">TB</cbc:TransportHandlingUnitTypeCode>
 				<cac:MeasurementDimension>
 					<cbc:AttributeID schemeID="UNCL6313">AAB</cbc:AttributeID>
 					<cbc:Measure unitCode="KGM">6.07</cbc:Measure>

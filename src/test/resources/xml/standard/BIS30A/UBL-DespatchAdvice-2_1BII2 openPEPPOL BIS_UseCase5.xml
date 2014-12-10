@@ -196,7 +196,7 @@
 			<cbc:ID>NA</cbc:ID>
 			<cac:TransportHandlingUnit>
 				<cbc:ID schemeID="SSCC" schemeAgencyName="GS1">173111000000000020</cbc:ID>
-				<cbc:TransportHandlingUnitTypeCode listID="UNECERec21">UTE</cbc:TransportHandlingUnitTypeCode>
+				<cbc:TransportHandlingUnitTypeCode listID="UNECERec21">PA</cbc:TransportHandlingUnitTypeCode>
 				<cac:MeasurementDimension>
 					<cbc:AttributeID schemeID="UNCL6313">AAB</cbc:AttributeID>
 					<cbc:Measure unitCode="KGM">3.1</cbc:Measure>
@@ -224,7 +224,7 @@
 			<cbc:ID>NA</cbc:ID>
 			<cac:TransportHandlingUnit>
 				<cbc:ID schemeID="SSCC" schemeAgencyName="GS1">173111000000000037</cbc:ID>
-				<cbc:TransportHandlingUnitTypeCode listID="UNECERec21">UTE</cbc:TransportHandlingUnitTypeCode>
+				<cbc:TransportHandlingUnitTypeCode listID="UNECERec21">PA</cbc:TransportHandlingUnitTypeCode>
 				<cac:MeasurementDimension>
 					<cbc:AttributeID schemeID="UNCL6313">AAB</cbc:AttributeID>
 					<cbc:Measure unitCode="KGM">1.0</cbc:Measure>
