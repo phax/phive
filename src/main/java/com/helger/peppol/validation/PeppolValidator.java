@@ -23,6 +23,7 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.EErrorLevel;
+import com.helger.commons.error.IResourceError;
 import com.helger.commons.error.IResourceErrorGroup;
 import com.helger.commons.error.ResourceError;
 import com.helger.commons.error.ResourceErrorGroup;
@@ -102,12 +103,19 @@ public class PeppolValidator
         if (aSVRL == null)
         {
           // Invalid Schematron - unexpected
-          throw new IllegalStateException ("Unexpected error");
+          for (final IResourceError aErr : aErrorHandler.getAllResourceErrors ())
+            ret.addResourceError (aErr);
         }
-        for (final SVRLFailedAssert aFailedAssert : SVRLUtils.getAllFailedAssertions (aSVRL))
-          ret.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
-        for (final SVRLSuccessfulReport aSuccessfulReport : SVRLUtils.getAllSuccesssfulReports (aSVRL))
-          ret.addResourceError (aSuccessfulReport.getAsResourceError (sResourceName));
+        else
+        {
+          if (!aErrorHandler.getAllResourceErrors ().isEmpty ())
+            throw new IllegalStateException ("Expected no error");
+
+          for (final SVRLFailedAssert aFailedAssert : SVRLUtils.getAllFailedAssertions (aSVRL))
+            ret.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
+          for (final SVRLSuccessfulReport aSuccessfulReport : SVRLUtils.getAllSuccesssfulReports (aSVRL))
+            ret.addResourceError (aSuccessfulReport.getAsResourceError (sResourceName));
+        }
       }
       catch (final Exception ex)
       {
