@@ -28,7 +28,8 @@ import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
- * Base interface for a single validation artefact.
+ * Base interface for a single validation artefact that uses Schematron for
+ * validation.
  *
  * @author Philip Helger
  */

@@ -19,11 +19,24 @@ package com.helger.peppol.validation;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.oclc.purl.dsdl.svrl.SchematronOutputType;
+
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.error.EErrorLevel;
 import com.helger.commons.error.IResourceErrorGroup;
+import com.helger.commons.error.ResourceError;
+import com.helger.commons.error.ResourceErrorGroup;
+import com.helger.commons.error.ResourceLocation;
 import com.helger.commons.io.IInputStreamProvider;
+import com.helger.commons.io.IReadableResource;
 import com.helger.commons.jaxb.validation.CollectingValidationEventHandler;
 import com.helger.commons.xml.transform.TransformSourceFactory;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
+import com.helger.schematron.pure.SchematronResourcePure;
+import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
+import com.helger.schematron.svrl.SVRLFailedAssert;
+import com.helger.schematron.svrl.SVRLSuccessfulReport;
+import com.helger.schematron.svrl.SVRLUtils;
 import com.helger.ubl.UBL21Marshaller;
 
 /**
@@ -51,17 +64,60 @@ public class PeppolValidator
   @Nonnull
   public IResourceErrorGroup applyXSDValidation (@Nonnull final IInputStreamProvider aUBLDocument)
   {
+    // Find the implementation class that is required for the configured
+    // transaction
     final Class <?> aUBLImplementationClass = m_aConfiguration.getExtendedTransactionKey ()
                                                               .getUBLDocumentType ()
                                                               .getImplementationClass ();
+    // Convert to domain object
     final CollectingValidationEventHandler aEventHandler = new CollectingValidationEventHandler ();
     final Object aUBLObject = UBL21Marshaller.readUBLDocument (TransformSourceFactory.create (aUBLDocument),
                                                                aUBLImplementationClass,
                                                                aEventHandler);
+
+    // Collect all the errors
     final IResourceErrorGroup aXSDErrors = aEventHandler.getResourceErrors ();
     if (!aXSDErrors.containsAtLeastOneFailure () && aUBLObject == null)
       throw new IllegalStateException ("Internal inconsistency");
 
     return aXSDErrors.getAllFailures ();
+  }
+
+  @Nonnull
+  public IResourceErrorGroup applySchematronValidation (@Nonnull final IInputStreamProvider aUBLDocument)
+  {
+    final String sResourceName = aUBLDocument instanceof IReadableResource
+                                                                          ? ((IReadableResource) aUBLDocument).getPath ()
+                                                                          : "in-memory-data";
+
+    final ResourceErrorGroup ret = new ResourceErrorGroup ();
+    for (final IValidationArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
+    {
+      final IReadableResource aSCHRes = aArtefact.getSchematronResource ();
+      final CollectingPSErrorHandler aErrorHandler = new CollectingPSErrorHandler ();
+      final SchematronResourcePure aSCH = new SchematronResourcePure (aSCHRes).setErrorHandler (aErrorHandler);
+      try
+      {
+        final SchematronOutputType aSVRL = aSCH.applySchematronValidationToSVRL (aUBLDocument);
+        if (aSVRL == null)
+        {
+          // Invalid Schematron - unexpected
+          throw new IllegalStateException ("Unexpected error");
+        }
+        for (final SVRLFailedAssert aFailedAssert : SVRLUtils.getAllFailedAssertions (aSVRL))
+          ret.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
+        for (final SVRLSuccessfulReport aSuccessfulReport : SVRLUtils.getAllSuccesssfulReports (aSVRL))
+          ret.addResourceError (aSuccessfulReport.getAsResourceError (sResourceName));
+      }
+      catch (final Exception ex)
+      {
+        // Usually an error in the Schematron
+        ret.addResourceError (new ResourceError (new ResourceLocation (aSCHRes.getPath ()),
+                                                 EErrorLevel.ERROR,
+                                                 ex.getMessage (),
+                                                 ex));
+      }
+    }
+    return ret;
   }
 }

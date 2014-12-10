@@ -16,6 +16,7 @@
  */
 package com.helger.peppol.validation;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -31,7 +32,7 @@ import com.helger.peppol.validation.test.TestFile;
 public class PeppolValidatorTest
 {
   @Test
-  public void testXSDValidateAll () throws SAXException
+  public void testApplyXSDValidation () throws SAXException
   {
     for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
     {
@@ -46,7 +47,31 @@ public class PeppolValidatorTest
       // Read as desired type
       final IResourceErrorGroup aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
       if (aTestFile.isGoodCase ())
-        assertTrue (aXSDErrors.isEmpty ());
+        assertTrue (aXSDErrors.toString (), aXSDErrors.isEmpty ());
+      else
+        assertFalse (aXSDErrors.isEmpty ());
+    }
+  }
+
+  @Test
+  public void testApplySchematronValidation () throws SAXException
+  {
+    for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
+    {
+      assertTrue (aTestFile.getResource ().exists ());
+
+      // Read as generic XML
+      final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
+      assertNotNull (aTestFile.getResource ().getPath (), aDoc);
+
+      final PeppolValidator aValidator = new PeppolValidator (new PeppolValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
+
+      // Read as desired type
+      final IResourceErrorGroup aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());
+      if (aTestFile.isGoodCase ())
+        assertTrue (aSCHErrors.getAllErrors ().toString (), aSCHErrors.containsNoError ());
+      else
+        assertTrue (aSCHErrors.containsAtLeastOneError ());
     }
   }
 }
