@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.ubl.EUBL21DocumentType;
 
 /**
  * An immutable pair of BIS of type {@link EBIS} and transaction of type
@@ -30,7 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class TransactionKey
+public class TransactionKey
 {
   // Predefined transaction keys, ordered by BIS and than by transaction
   public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey (EBIS.CATALOGUE_01, ETransaction.T19);
@@ -41,7 +42,7 @@ public final class TransactionKey
   public static final TransactionKey ORDERING_28_T01 = new TransactionKey (EBIS.ORDERING_28, ETransaction.T01);
   public static final TransactionKey ORDERING_28_T76 = new TransactionKey (EBIS.ORDERING_28, ETransaction.T76);
   public static final TransactionKey DESPATCH_ADVICE_30_T16 = new TransactionKey (EBIS.DESPATCH_ADVICE_30,
-                                                                               ETransaction.T16);
+                                                                                  ETransaction.T16);
   public static final TransactionKey MLR_36_T71 = new TransactionKey (EBIS.MLR_36, ETransaction.T71);
 
   private final EBIS m_eBIS;
@@ -63,6 +64,15 @@ public final class TransactionKey
   public ETransaction getTransaction ()
   {
     return m_eTransaction;
+  }
+
+  /**
+   * @return The UBL document type to be used for this transaction.
+   */
+  @Nonnull
+  public EUBL21DocumentType getUBLDocumentType ()
+  {
+    return m_eTransaction.getUBLDocumentType ();
   }
 
   @Override

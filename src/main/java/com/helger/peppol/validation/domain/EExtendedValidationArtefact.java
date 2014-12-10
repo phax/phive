@@ -39,19 +39,19 @@ import com.helger.ubl.EUBL21DocumentType;
  */
 public enum EExtendedValidationArtefact implements IValidationArtefact
 {
-  INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", TransactionKey.INVOICE_04_T10, ExtendedTransactionKey.AT),
-  INVOICE_AT_GOV ("atgov/ATGOV-UBL-T10.sch", TransactionKey.INVOICE_04_T10, ExtendedTransactionKey.AT_SECTOR),
+  INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", TransactionKey.INVOICE_04_T10, CountryKey.AT),
+  INVOICE_AT_GOV ("atgov/ATGOV-UBL-T10.sch", TransactionKey.INVOICE_04_T10, CountryKey.AT_SECTOR),
 
-  BILLING_CREDIT_NOTE_AT_NAT ("atnat/ATNAT-UBL-T14.sch", TransactionKey.BILLING_05_T14, ExtendedTransactionKey.AT),
-  BILLING_CREDIT_NOTE_AT_GOV ("atgov/ATGOV-UBL-T14.sch", TransactionKey.BILLING_05_T14, ExtendedTransactionKey.AT_SECTOR);
+  BILLING_CREDIT_NOTE_AT_NAT ("atnat/ATNAT-UBL-T14.sch", TransactionKey.BILLING_05_T14, CountryKey.AT),
+  BILLING_CREDIT_NOTE_AT_GOV ("atgov/ATGOV-UBL-T14.sch", TransactionKey.BILLING_05_T14, CountryKey.AT_SECTOR);
 
   private final ClassPathResource m_aResource;
   private final TransactionKey m_aTransactionKey;
-  private final ExtendedTransactionKey m_aExtendedTransactionKey;
+  private final CountryKey m_aExtendedTransactionKey;
 
   private EExtendedValidationArtefact (@Nonnull @Nonempty final String sPath,
                                        @Nonnull final TransactionKey aTransactionKey,
-                                       @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+                                       @Nonnull final CountryKey aExtendedTransactionKey)
   {
     m_aResource = new ClassPathResource ("/extended/" + sPath);
     m_aTransactionKey = aTransactionKey;
@@ -89,7 +89,7 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public ExtendedTransactionKey getExtendedTransactionKey ()
+  public CountryKey getExtendedTransactionKey ()
   {
     return m_aExtendedTransactionKey;
   }
@@ -132,7 +132,7 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
   @Nonnull
   @ReturnsMutableCopy
   public static List <EExtendedValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey,
-                                                                                      @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+                                                                                      @Nonnull final CountryKey aExtendedTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
     ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
@@ -157,7 +157,7 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
    *         <code>null</code> and a matching artefact is present.
    */
   public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey,
-                                                             @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+                                                             @Nonnull final CountryKey aExtendedTransactionKey)
   {
     if (aTransactionKey != null)
       for (final EExtendedValidationArtefact e : values ())

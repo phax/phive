@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.peppol.validation.domain.EExtendedValidationArtefact;
 import com.helger.peppol.validation.domain.EStandardValidationArtefact;
-import com.helger.peppol.validation.domain.ExtendedTransactionKey;
+import com.helger.peppol.validation.domain.CountryKey;
 import com.helger.peppol.validation.domain.IValidationArtefact;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.ubl.EUBL21DocumentType;
@@ -44,7 +44,7 @@ public class PeppolValidationConfiguration
   private static final Logger s_aLogger = LoggerFactory.getLogger (PeppolValidationConfiguration.class);
 
   private final TransactionKey m_aTransactionKey;
-  private final ExtendedTransactionKey m_aExtendedTransactionKey;
+  private final CountryKey m_aExtendedTransactionKey;
   private final List <IValidationArtefact> m_aValidationArtefacts = new ArrayList <IValidationArtefact> ();
 
   public PeppolValidationConfiguration (@Nonnull final TransactionKey aTransactionKey)
@@ -53,7 +53,7 @@ public class PeppolValidationConfiguration
   }
 
   public PeppolValidationConfiguration (@Nonnull final TransactionKey aTransactionKey,
-                                        @Nullable final ExtendedTransactionKey aExtendedTransactionKey)
+                                        @Nullable final CountryKey aExtendedTransactionKey)
   {
     m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
     m_aExtendedTransactionKey = aExtendedTransactionKey;
@@ -87,7 +87,7 @@ public class PeppolValidationConfiguration
   }
 
   @Nullable
-  public ExtendedTransactionKey getExtendedTransactionKey ()
+  public CountryKey getExtendedTransactionKey ()
   {
     return m_aExtendedTransactionKey;
   }

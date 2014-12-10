@@ -34,15 +34,15 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class ExtendedTransactionKey
+public class CountryKey
 {
-  public static final ExtendedTransactionKey AT = new ExtendedTransactionKey ("AT", false);
-  public static final ExtendedTransactionKey AT_SECTOR = new ExtendedTransactionKey ("AT", true);
+  public static final CountryKey AT = new CountryKey ("AT", false);
+  public static final CountryKey AT_SECTOR = new CountryKey ("AT", true);
 
   private final Locale m_aCountry;
   private final boolean m_bIsSectorSpecific;
 
-  public ExtendedTransactionKey (@Nonnull @Nonempty final String sCountryCode, final boolean bIsSectorSpecific)
+  public CountryKey (@Nonnull @Nonempty final String sCountryCode, final boolean bIsSectorSpecific)
   {
     ValueEnforcer.notEmpty (sCountryCode, "CountryCode");
     m_aCountry = CountryCache.getInstance ().getCountry (sCountryCode);
@@ -76,7 +76,7 @@ public final class ExtendedTransactionKey
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final ExtendedTransactionKey rhs = (ExtendedTransactionKey) o;
+    final CountryKey rhs = (CountryKey) o;
     return m_aCountry.equals (rhs.m_aCountry) && m_bIsSectorSpecific == rhs.m_bIsSectorSpecific;
   }
 

@@ -22,6 +22,12 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.validation.domain.TransactionKey;
 
+/**
+ * A special standard test file that ships with this library. It just contains a
+ * default path resolution based on a filename.
+ * 
+ * @author Philip Helger
+ */
 @Immutable
 public class StandardTestFile extends TestFile
 {
