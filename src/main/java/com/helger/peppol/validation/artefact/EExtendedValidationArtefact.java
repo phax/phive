@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain;
+package com.helger.peppol.validation.artefact;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,11 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.peppol.validation.domain.EBII2Transaction;
+import com.helger.peppol.validation.domain.EPeppolBIS;
+import com.helger.peppol.validation.domain.ExtendedKey;
+import com.helger.peppol.validation.domain.ExtendedTransactionKey;
+import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**

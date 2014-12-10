@@ -16,10 +16,15 @@
  */
 package com.helger.peppol.validation.test;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.collections.ContainerHelper;
 import com.helger.commons.io.IReadableResource;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.TransactionKey;
@@ -35,17 +40,15 @@ public class TestFile
 {
   private final IReadableResource m_aResource;
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
-
-  public TestFile (@Nonnull final IReadableResource aResource, @Nonnull final TransactionKey aTransactionKey)
-  {
-    this (aResource, new ExtendedTransactionKey (aTransactionKey));
-  }
+  private final Set <String> m_aExpectedErrorIDs;
 
   public TestFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+                   @Nonnull final ExtendedTransactionKey aExtendedTransactionKey,
+                   @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
+    m_aExpectedErrorIDs = ContainerHelper.newSet (aExpectedErrorIDs);
   }
 
   /**
@@ -75,5 +78,17 @@ public class TestFile
   public TransactionKey getTransactionKey ()
   {
     return m_aExtendedTransactionKey.getTransactionKey ();
+  }
+
+  public boolean isGoodCase ()
+  {
+    return ContainerHelper.isEmpty (m_aExpectedErrorIDs);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <String> getAllExpectedErrorIDs ()
+  {
+    return ContainerHelper.newSet (m_aExpectedErrorIDs);
   }
 }

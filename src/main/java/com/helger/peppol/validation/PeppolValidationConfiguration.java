@@ -25,10 +25,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.peppol.validation.domain.EExtendedValidationArtefact;
-import com.helger.peppol.validation.domain.EStandardValidationArtefact;
+import com.helger.commons.annotations.ReturnsMutableCopy;
+import com.helger.commons.collections.ContainerHelper;
+import com.helger.peppol.validation.artefact.EExtendedValidationArtefact;
+import com.helger.peppol.validation.artefact.EStandardValidationArtefact;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
-import com.helger.peppol.validation.domain.IValidationArtefact;
 
 /**
  * This class contains the configuration to run a PEPPOL document validation. An
@@ -65,5 +67,16 @@ public class PeppolValidationConfiguration
   public ExtendedTransactionKey getExtendedTransactionKey ()
   {
     return m_aExtendedTransactionKey;
+  }
+
+  /**
+   * @return All validation artefacts to be applied in the order specified by
+   *         the returned list.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IValidationArtefact> getAllValidationArtefacts ()
+  {
+    return ContainerHelper.newList (m_aValidationArtefacts);
   }
 }

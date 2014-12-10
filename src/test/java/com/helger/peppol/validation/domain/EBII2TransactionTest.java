@@ -22,14 +22,8 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.xml.serialize.DOMReader;
-import com.helger.peppol.validation.test.CTestFiles;
-import com.helger.peppol.validation.test.TestFile;
-import com.helger.ubl.UBL21Marshaller;
 
 /**
  * Test class for class {@link EBII2Transaction}.
@@ -65,24 +59,5 @@ public final class EBII2TransactionTest
     assertEquals ("1.0", EBII2Transaction.T64A.getVersionNumber ());
     assertEquals ("urn:www.cenbii.eu:transaction:biitrns064C:ver1.0", EBII2Transaction.T64C.getTransactionID ());
     assertEquals ("1.0", EBII2Transaction.T64C.getVersionNumber ());
-  }
-
-  @Test
-  public void testGetUBLDocumentType () throws SAXException
-  {
-    for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
-    {
-      assertTrue (aTestFile.getResource ().exists ());
-
-      // Read as generic XML
-      final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
-      assertNotNull (aTestFile.getResource ().getPath (), aDoc);
-
-      // Read as desired type
-      final Object aUBLDocument = UBL21Marshaller.readUBLDocument (aDoc, aTestFile.getExtendedTransactionKey ()
-                                                                                  .getUBLDocumentType ()
-                                                                                  .getImplementationClass ());
-      assertNotNull (aTestFile.getResource ().getPath (), aUBLDocument);
-    }
   }
 }

@@ -16,6 +16,8 @@
  */
 package com.helger.peppol.validation.test;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -30,17 +32,15 @@ import com.helger.peppol.validation.domain.TransactionKey;
  * @author Philip Helger
  */
 @Immutable
-public class StandardTestFile extends TestFile
+public class StandardTestFile
 {
   public static final String STANDARD_PATH = "/xml/standard/";
 
-  public StandardTestFile (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
+  @Nonnull
+  public static TestFile createGoodCase (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
   {
-    super (new ClassPathResource (STANDARD_PATH + sPath), aTransactionKey);
-  }
-
-  public StandardTestFile (@Nonnull final String sPath, @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
-  {
-    super (new ClassPathResource (STANDARD_PATH + sPath), aExtendedTransactionKey);
+    return new TestFile (new ClassPathResource (STANDARD_PATH + sPath),
+                         new ExtendedTransactionKey (aTransactionKey),
+                         (Set <String>) null);
   }
 }
