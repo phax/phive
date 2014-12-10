@@ -55,13 +55,13 @@ public class ExtendedTransactionKey
   }
 
   @Nonnull
-  public EBIS getBIS ()
+  public EPeppolBIS getBIS ()
   {
     return m_aTransactionKey.getBIS ();
   }
 
   @Nonnull
-  public ETransaction getTransaction ()
+  public EBII2Transaction getTransaction ()
   {
     return m_aTransactionKey.getTransaction ();
   }

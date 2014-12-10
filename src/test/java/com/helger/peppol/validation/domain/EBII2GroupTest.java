@@ -22,23 +22,23 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.peppol.validation.domain.EGroup;
+import com.helger.peppol.validation.domain.EBII2Group;
 
 /**
- * Test class for class {@link EGroup}.
+ * Test class for class {@link EBII2Group}.
  * 
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public final class EGroupTest
+public final class EBII2GroupTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EGroup eGroup : EGroup.values ())
+    for (final EBII2Group eGroup : EBII2Group.values ())
     {
       assertTrue (StringHelper.hasText (eGroup.getID ()));
-      assertSame (eGroup, EGroup.valueOf (eGroup.name ()));
-      assertSame (eGroup, EGroup.getFromIDOrNull (eGroup.getID ()));
+      assertSame (eGroup, EBII2Group.valueOf (eGroup.name ()));
+      assertSame (eGroup, EBII2Group.getFromIDOrNull (eGroup.getID ()));
     }
   }
 }

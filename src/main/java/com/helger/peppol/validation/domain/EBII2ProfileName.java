@@ -32,7 +32,7 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
 @Translatable
-public enum EProfileName implements IHasDisplayText
+public enum EBII2ProfileName implements IHasDisplayText
 {
   BII_MLR ("Message Level Response"),
   BII01 ("Catalogue Only"),
@@ -59,7 +59,7 @@ public enum EProfileName implements IHasDisplayText
 
   private final TextProvider m_aTP;
 
-  private EProfileName (@Nonnull final String sEN)
+  private EBII2ProfileName (@Nonnull final String sEN)
   {
     m_aTP = TextProvider.create_EN (sEN);
   }

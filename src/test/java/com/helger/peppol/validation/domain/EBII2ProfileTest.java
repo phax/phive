@@ -28,21 +28,21 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.domain.EProfile;
-import com.helger.peppol.validation.domain.EProfileName;
-import com.helger.peppol.validation.domain.ETransaction;
+import com.helger.peppol.validation.domain.EBII2Profile;
+import com.helger.peppol.validation.domain.EBII2ProfileName;
+import com.helger.peppol.validation.domain.EBII2Transaction;
 
 /**
- * Test class for class {@link EProfile}.
+ * Test class for class {@link EBII2Profile}.
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public final class EProfileTest
+public final class EBII2ProfileTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EProfile eProfile : EProfile.values ())
+    for (final EBII2Profile eProfile : EBII2Profile.values ())
     {
       assertNotNull (eProfile.getGroup ());
       assertNotNull (eProfile.getDisplayText (Locale.ENGLISH));
@@ -50,24 +50,24 @@ public final class EProfileTest
       assertTrue (eProfile.getNumber () >= 0);
       assertNotNull (eProfile.getAllTransactions ());
       assertFalse (eProfile.getAllTransactions ().isEmpty ());
-      assertSame (eProfile, EProfile.valueOf (eProfile.name ()));
+      assertSame (eProfile, EBII2Profile.valueOf (eProfile.name ()));
     }
-    assertEquals (EProfile.values ().length, EProfileName.values ().length);
+    assertEquals (EBII2Profile.values ().length, EBII2ProfileName.values ().length);
   }
 
   @Test
   public void testGetAllProfilesWithTransaction ()
   {
-    for (final ETransaction eTransaction : ETransaction.values ())
+    for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
     {
-      final List <EProfile> aList = EProfile.getAllProfilesWithTransaction (eTransaction);
+      final List <EBII2Profile> aList = EBII2Profile.getAllProfilesWithTransaction (eTransaction);
       assertNotNull (aList);
       assertTrue (aList.size () > 0);
     }
 
     try
     {
-      EProfile.getAllProfilesWithTransaction (null);
+      EBII2Profile.getAllProfilesWithTransaction (null);
       fail ();
     }
     catch (final NullPointerException ex)

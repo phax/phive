@@ -16,7 +16,7 @@
  */
 package com.helger.peppol.validation.domain;
 
-public enum EBIS
+public enum EPeppolBIS
 {
   CATALOGUE_01 (1),
   ORDER_03 (3),
@@ -28,7 +28,7 @@ public enum EBIS
 
   private final int m_nID;
 
-  private EBIS (final int nID)
+  private EPeppolBIS (final int nID)
   {
     m_nID = nID;
   }

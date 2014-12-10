@@ -50,7 +50,7 @@ public interface IValidationArtefact
    *         <code>getTransactionKey().getBIS()</code>.
    */
   @Nonnull
-  EBIS getBIS ();
+  EPeppolBIS getBIS ();
 
   /**
    * @return The transaction to which the validation artefact belongs. Never
@@ -58,7 +58,7 @@ public interface IValidationArtefact
    *         <code>getTransactionKey().getTransaction()</code>.
    */
   @Nonnull
-  ETransaction getTransaction ();
+  EBII2Transaction getTransaction ();
 
   /**
    * @return The UBL document type required for this validation artefact. Never

@@ -76,13 +76,13 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public EBIS getBIS ()
+  public EPeppolBIS getBIS ()
   {
     return m_aExtendedTransactionKey.getBIS ();
   }
 
   @Nonnull
-  public ETransaction getTransaction ()
+  public EBII2Transaction getTransaction ()
   {
     return m_aExtendedTransactionKey.getTransaction ();
   }

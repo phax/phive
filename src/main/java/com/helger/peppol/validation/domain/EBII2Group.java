@@ -29,7 +29,7 @@ import com.helger.commons.lang.EnumHelper;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public enum EGroup implements IHasID <String>
+public enum EBII2Group implements IHasID <String>
 {
   ARCHITECTURE ("architecture"),
   NOTIFICATION ("notification"),
@@ -39,7 +39,7 @@ public enum EGroup implements IHasID <String>
 
   private final String m_sID;
 
-  private EGroup (@Nonnull @Nonempty final String sID)
+  private EBII2Group (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }
@@ -52,8 +52,8 @@ public enum EGroup implements IHasID <String>
   }
 
   @Nullable
-  public static EGroup getFromIDOrNull (@Nullable final String sID)
+  public static EBII2Group getFromIDOrNull (@Nullable final String sID)
   {
-    return EnumHelper.getFromIDOrNull (EGroup.class, sID);
+    return EnumHelper.getFromIDOrNull (EBII2Group.class, sID);
   }
 }

@@ -25,8 +25,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
- * An immutable pair of BIS of type {@link EBIS} and transaction of type
- * {@link ETransaction}.
+ * An immutable pair of BIS of type {@link EPeppolBIS} and transaction of type
+ * {@link EBII2Transaction}.
  *
  * @author Philip Helger
  */
@@ -34,34 +34,34 @@ import com.helger.ubl.EUBL21DocumentType;
 public class TransactionKey
 {
   // Predefined transaction keys, ordered by BIS and than by transaction
-  public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey (EBIS.CATALOGUE_01, ETransaction.T19);
-  public static final TransactionKey CATALOGUE_01_T58 = new TransactionKey (EBIS.CATALOGUE_01, ETransaction.T58);
-  public static final TransactionKey ORDER_03_T01 = new TransactionKey (EBIS.ORDER_03, ETransaction.T01);
-  public static final TransactionKey INVOICE_04_T10 = new TransactionKey (EBIS.INVOICE_04, ETransaction.T10);
-  public static final TransactionKey BILLING_05_T14 = new TransactionKey (EBIS.BILLING_05, ETransaction.T14);
-  public static final TransactionKey ORDERING_28_T01 = new TransactionKey (EBIS.ORDERING_28, ETransaction.T01);
-  public static final TransactionKey ORDERING_28_T76 = new TransactionKey (EBIS.ORDERING_28, ETransaction.T76);
-  public static final TransactionKey DESPATCH_ADVICE_30_T16 = new TransactionKey (EBIS.DESPATCH_ADVICE_30,
-                                                                                  ETransaction.T16);
-  public static final TransactionKey MLR_36_T71 = new TransactionKey (EBIS.MLR_36, ETransaction.T71);
+  public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey (EPeppolBIS.CATALOGUE_01, EBII2Transaction.T19);
+  public static final TransactionKey CATALOGUE_01_T58 = new TransactionKey (EPeppolBIS.CATALOGUE_01, EBII2Transaction.T58);
+  public static final TransactionKey ORDER_03_T01 = new TransactionKey (EPeppolBIS.ORDER_03, EBII2Transaction.T01);
+  public static final TransactionKey INVOICE_04_T10 = new TransactionKey (EPeppolBIS.INVOICE_04, EBII2Transaction.T10);
+  public static final TransactionKey BILLING_05_T14 = new TransactionKey (EPeppolBIS.BILLING_05, EBII2Transaction.T14);
+  public static final TransactionKey ORDERING_28_T01 = new TransactionKey (EPeppolBIS.ORDERING_28, EBII2Transaction.T01);
+  public static final TransactionKey ORDERING_28_T76 = new TransactionKey (EPeppolBIS.ORDERING_28, EBII2Transaction.T76);
+  public static final TransactionKey DESPATCH_ADVICE_30_T16 = new TransactionKey (EPeppolBIS.DESPATCH_ADVICE_30,
+                                                                                  EBII2Transaction.T16);
+  public static final TransactionKey MLR_36_T71 = new TransactionKey (EPeppolBIS.MLR_36, EBII2Transaction.T71);
 
-  private final EBIS m_eBIS;
-  private final ETransaction m_eTransaction;
+  private final EPeppolBIS m_eBIS;
+  private final EBII2Transaction m_eTransaction;
 
-  public TransactionKey (@Nonnull final EBIS eBIS, @Nonnull final ETransaction eTransaction)
+  public TransactionKey (@Nonnull final EPeppolBIS eBIS, @Nonnull final EBII2Transaction eTransaction)
   {
     m_eBIS = ValueEnforcer.notNull (eBIS, "BIS");
     m_eTransaction = ValueEnforcer.notNull (eTransaction, "Transaction");
   }
 
   @Nonnull
-  public EBIS getBIS ()
+  public EPeppolBIS getBIS ()
   {
     return m_eBIS;
   }
 
   @Nonnull
-  public ETransaction getTransaction ()
+  public EBII2Transaction getTransaction ()
   {
     return m_eTransaction;
   }

@@ -20,19 +20,27 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.TransactionKey;
 
 /**
  * A special standard test file that ships with this library. It just contains a
  * default path resolution based on a filename.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
 public class StandardTestFile extends TestFile
 {
+  public static final String STANDARD_PATH = "/xml/standard/";
+
   public StandardTestFile (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
   {
-    super (new ClassPathResource ("/xml/standard/" + sPath), aTransactionKey);
+    super (new ClassPathResource (STANDARD_PATH + sPath), aTransactionKey);
+  }
+
+  public StandardTestFile (@Nonnull final String sPath, @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  {
+    super (new ClassPathResource (STANDARD_PATH + sPath), aExtendedTransactionKey);
   }
 }
