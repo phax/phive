@@ -9,7 +9,7 @@
   <param name="BII2-T76-R006" value="(cbc:ID)"/>
   <param name="BII2-T76-R021" value="(cac:Party/cac:PartyName/cbc:Name) or (cac:Party/cac:PartyIdentification/cbc:ID)"/>
   <param name="BII2-T76-R022" value="(cac:Party/cac:PartyName/cbc:Name) or (cac:Party/cac:PartyIdentification/cbc:ID)"/>
-  <param name="BII2-T76-R032" value="(cac:OrderDocumentReference/cbc:ID)"/>
+  <param name="BII2-T76-R032" value="not(cac:OrderDocumentReference) or (cac:OrderDocumentReference/cbc:ID)"/>
   <param name="BII2-T76-R033" value="(//cbc:ResponseCode)"/>
   <param name="BII2-T76-R034" value="(//cac:OrderLineReference/cbc:LineID)"/>
   <param name="order_response_line" value="//cac:OrderLine"/>

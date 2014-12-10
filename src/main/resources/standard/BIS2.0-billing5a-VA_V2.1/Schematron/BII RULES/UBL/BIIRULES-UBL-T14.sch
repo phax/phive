@@ -30,7 +30,7 @@
   <param name="BII2-T14-R030" value="(cac:TaxCategory/cbc:Percent) or not(cac:TaxCategory/cbc:ID = 'S')"/>
   <param name="BII2-T14-R031" value="(cbc:StartDate and cbc:EndDate) and (number(translate(cbc:StartDate,'-','')) &lt;= number(translate(cbc:EndDate,'-','')))"/>
   <param name="BII2-T14-R032" value="(cac:StandardItemIdentification/cbc:ID/@schemeID) or not(cac:StandardItemIdentification)"/>
-  <param name="BII2-T14-R033" value="(cbc:ItemClassificationCode/@listID)"/>
+  <param name="BII2-T14-R033" value="not(cbc:ItemClassificationCode) or (cbc:ItemClassificationCode/@listID)"/>
   <param name="BII2-T14-R034" value="number(cac:Price/cbc:PriceAmount) &gt;= 0"/>
   <param name="BII2-T14-R035" value="number(cac:LegalMonetaryTotal/cbc:TaxInclusiveAmount) &gt;= 0"/>
   <param name="BII2-T14-R037" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount) &gt;= 0"/>
