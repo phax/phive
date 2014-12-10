@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ import com.helger.peppol.validation.domain.ExtendedTransactionKey;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class PeppolValidationConfiguration
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (PeppolValidationConfiguration.class);

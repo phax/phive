@@ -85,6 +85,11 @@ public class TestFile
     return ContainerHelper.isEmpty (m_aExpectedErrorIDs);
   }
 
+  public boolean isBadCase ()
+  {
+    return ContainerHelper.isNotEmpty (m_aExpectedErrorIDs);
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public Set <String> getAllExpectedErrorIDs ()

@@ -16,24 +16,16 @@
  */
 package com.helger.peppol.validation.test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import org.junit.Test;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.xml.serialize.DOMReader;
+import com.helger.commons.collections.ContainerHelper;
 import com.helger.peppol.validation.domain.TransactionKey;
-import com.helger.ubl.UBL21Marshaller;
 
 @Immutable
 public final class CTestFiles
@@ -117,6 +109,16 @@ public final class CTestFiles
                                                        TransactionKey.DESPATCH_ADVICE_30_T16));
   }
 
+  private CTestFiles ()
+  {}
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <TestFile> getAllTestFiles ()
+  {
+    return ContainerHelper.newList (s_aTestFiles);
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public static List <TestFile> getAllTestFiles (@Nonnull final TransactionKey aTransactionKey)
@@ -128,24 +130,5 @@ public final class CTestFiles
       if (aTF.getTransactionKey ().equals (aTransactionKey))
         ret.add (aTF);
     return ret;
-  }
-
-  @Test
-  public void testReadAllUBLFiles () throws SAXException
-  {
-    for (final TestFile aTestFile : s_aTestFiles)
-    {
-      assertTrue (aTestFile.getResource ().exists ());
-
-      // Read as generic XML
-      final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
-      assertNotNull (aTestFile.getResource ().getPath (), aDoc);
-
-      // Read as desired type
-      final Object aUBLDocument = UBL21Marshaller.readUBLDocument (aDoc, aTestFile.getExtendedTransactionKey ()
-                                                                                  .getUBLDocumentType ()
-                                                                                  .getImplementationClass ());
-      assertNotNull (aTestFile.getResource ().getPath (), aUBLDocument);
-    }
   }
 }
