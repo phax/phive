@@ -25,9 +25,9 @@
     <assert test="$BII2-T10-R037" flag="fatal" id="BII2-T10-R037">[BII2-T10-R037]-Amount due for payment in an invoice MUST NOT be negative</assert>
     <assert test="$BII2-T10-R044" flag="fatal" id="BII2-T10-R044">[BII2-T10-R044]-A seller VAT identifier MUST be provided if the invoice has a VAT total amount</assert>
     <assert test="$BII2-T10-R047" flag="fatal" id="BII2-T10-R047">[BII2-T10-R047]-A buyer VAT identifier MUST be present if the VAT category code is reverse VAT</assert>
+    <assert test="$BII2-T10-R048" flag="fatal" id="BII2-T10-R048">[BII2-T10-R048]-An invoice with a VAT category code of reverse charge MUST NOT contain other VAT categories.</assert>
     <assert test="$BII2-T10-R049" flag="fatal" id="BII2-T10-R049">[BII2-T10-R049]-The invoice total without VAT MUST be equal to the VAT category taxable amount if the VAT category code is reverse charge</assert>
     <assert test="$BII2-T10-R050" flag="fatal" id="BII2-T10-R050">[BII2-T10-R050]-The VAT category tax amount MUST be zero  if the VAT category code is reverse charge (since there is only one VAT category allowed it follows that the invoice tax total for reverse charge invoices is zero)</assert>
-    <assert test="$BII2-T10-R048" flag="fatal" id="BII2-T10-R048">[BII2-T10-R048]-An invoice with a VAT category code of reverse charge MUST NOT contain other VAT categories.</assert>
   </rule>
   <rule context="$Invoice_Line">
     <assert test="$BII2-T10-R017" flag="fatal" id="BII2-T10-R017">[BII2-T10-R017]-Each invoice line MUST have an invoice line identifier</assert>

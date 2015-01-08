@@ -11,14 +11,12 @@
   <param name="BII2-T16-R007" value="(cac:Party/cac:PartyName/cbc:Name)"/>
   <param name="BII2-T16-R008" value="(cac:DeliveryCustomerParty)"/>
   <param name="BII2-T16-R009" value="(cac:Party/cac:PartyName/cbc:Name) or (cac:Party/cac:PartyIdentification/cbc:ID)"/>
-  <param name="BII2-T16-R010" value="(cbc:StreetName) and (cbc:CityName) and (cbc:PostalZone) and (cac:Country/cbc:IdentificationCode)"/>
   <param name="BII2-T16-R011" value="(cbc:ID)"/>
   <param name="BII2-T16-R012" value="(cac:DespatchLine)"/>
   <param name="BII2-T16-R013" value="(cbc:ID)"/>
-  <param name="BII2-T16-R014" value="(cac:OrderLineReference/cbc:LineID)"/>
   <param name="BII2-T16-R016" value="(cac:Item/cbc:Name) or (cac:Item/cac:StandardItemIdentification/cbc:ID) or  (cac:Item/cac:SellersItemIdentification/cbc:ID)"/>
   <param name="BII2-T16-R017" value="(cbc:DeliveredQuantity)"/>
-  <param name="BII2-T16-R018" value="(cac:StandardItemIdentification/cbc:ID/@schemeID) or not(cac:StandardItemIdentification)"/>
+  <param name="BII2-T16-R018" value="(//cac:StandardItemIdentification/cbc:ID/@schemeID) or not(//cac:StandardItemIdentification)"/>
   <param name="BII2-T16-R019" value="number(cbc:DeliveredQuantity) &gt;= 0"/>
   <param name="BII2-T16-R020" value="(cbc:DeliveredQuantity/@unitCode)"/>
   <param name="BII2-T16-R021" value="((cbc:OutstandingQuantity) and (cbc:OutstandingReason)) or not(cbc:OutstandingQuantity)"/>
