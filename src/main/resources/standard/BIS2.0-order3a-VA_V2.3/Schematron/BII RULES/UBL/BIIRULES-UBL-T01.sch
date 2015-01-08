@@ -23,11 +23,6 @@
   <param name="BII2-T01-R020" value="(cbc:Value)"/>
   <param name="BII2-T01-R021" value="(cac:Party/cac:PartyName/cbc:Name) or (cac:Party/cac:PartyIdentification/cbc:ID)"/>
   <param name="BII2-T01-R022" value="(cac:Party/cac:PartyName/cbc:Name) or (cac:Party/cac:PartyIdentification/cbc:ID)"/>
-  <param name="BII2-T01-R023" value="(cac:Party/cac:PostalAddress/cbc:StreetName) and (cac:Party/cac:PostalAddress/cbc:CityName) and (cac:Party/cac:PostalAddress/cbc:PostalZone) and (cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode)  "/>
-  <param name="BII2-T01-R024" value="(cac:Party/cac:PostalAddress/cbc:StreetName) and (cac:Party/cac:PostalAddress/cbc:CityName) and (cac:Party/cac:PostalAddress/cbc:PostalZone) and (cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode)  "/>
-  <param name="BII2-T01-R025" value="(cbc:ID) or ((cbc:CityName) and (cbc:PostalZone) and (cac:Country/cbc:IdentificationCode))"/>
-  <param name="BII2-T01-R026" value="(cac:StandardItemIdentification/cbc:ID/@schemeID) or not(cac:StandardItemIdentification)"/>
-  <param name="BII2-T01-R027" value="(cac:CommodityClassification/cbc:ItemClassificationCode/@listID)"/>
   <param name="BII2-T01-R029" value="(cac:LineItem/cbc:Quantity)"/>
   <param name="BII2-T01-R030" value="(cac:LineItem/cbc:Quantity/@unitCode)"/>
   <param name="BII2-T01-R031" value="(cac:LineItem/cac:Item/cbc:Name) or (cac:LineItem/cac:Item/cac:StandardItemIdentification/cbc:ID) or  (cac:LineItem/cac:Item/cac:SellersItemIdentification/cbc:ID)"/>
@@ -38,6 +33,5 @@
   <param name="Item_property" value="//cac:AdditionalItemProperty"/>
   <param name="Seller" value="//cac:SellerSupplierParty"/>
   <param name="Buyer" value="//cac:BuyerCustomerParty"/>
-  <param name="Delivery_Address" value="//cac:DeliveryLocation/cac:Address"/>
   <param name="Item" value="//cac:Item"/>
 </pattern>

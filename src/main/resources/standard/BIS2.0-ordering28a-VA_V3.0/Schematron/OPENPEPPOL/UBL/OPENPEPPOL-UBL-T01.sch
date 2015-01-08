@@ -4,7 +4,7 @@
 <pattern xmlns="http://purl.oclc.org/dsdl/schematron" is-a="T01" id="UBL-T01">
   <param name="EUGEN-T01-R011" value="@schemeID"/>
   <param name="EUGEN-T01-R012" value="@schemeID"/>
-  <param name="EUGEN-T01-R013" value="@listID='UNCLD1001'"/>
+  <param name="EUGEN-T01-R013" value="@listID='UNCL1001' or @listID='UNCLD1001'"/>
   <param name="EUGEN-T01-R014" value="@listID='ISO4217'"/>
   <param name="EUGEN-T01-R015" value="@listID = 'ISO3166-1:Alpha2'"/>
   <param name="EUGEN-T01-R016" value="not(attribute::unitCode) or (attribute::unitCode and attribute::unitCodeListID = 'UNECERec20')"/>
