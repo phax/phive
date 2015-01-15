@@ -19,6 +19,7 @@ package com.helger.peppol.validation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.ContainerHelper;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.artefact.EExtendedValidationArtefact;
 import com.helger.peppol.validation.artefact.EStandardValidationArtefact;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
@@ -46,6 +48,8 @@ public class PeppolValidationConfiguration
 
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
   private final List <IValidationArtefact> m_aValidationArtefacts = new ArrayList <IValidationArtefact> ();
+  private final int m_nStandardArtefactCount;
+  private final int m_nExtendedArtefactCount;
 
   /**
    * @param aExtendedTransactionKey
@@ -61,9 +65,11 @@ public class PeppolValidationConfiguration
                       aExtendedTransactionKey.getBIS ().getID () +
                       " and transaction " +
                       aExtendedTransactionKey.getTransaction ().getTransactionKey ());
+    m_nStandardArtefactCount = m_aValidationArtefacts.size ();
 
     // Get all extended artefacts
     m_aValidationArtefacts.addAll (EExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
+    m_nExtendedArtefactCount = m_aValidationArtefacts.size () - m_nStandardArtefactCount;
   }
 
   /**
@@ -78,12 +84,44 @@ public class PeppolValidationConfiguration
 
   /**
    * @return All validation artefacts to be applied in the order specified by
-   *         the returned list.
+   *         the returned list. Never <code>null</code>. This list contains both
+   *         the standard validation artefacts as well as the extended
+   *         artefacts.
    */
   @Nonnull
   @ReturnsMutableCopy
   public List <IValidationArtefact> getAllValidationArtefacts ()
   {
     return ContainerHelper.newList (m_aValidationArtefacts);
+  }
+
+  /**
+   * @return How many of the provided artefacts are standard artefacts? Always
+   *         &ge; 0.
+   */
+  @Nonnegative
+  public int getStandardArtefactCount ()
+  {
+    return m_nStandardArtefactCount;
+  }
+
+  /**
+   * @return How many of the provided artefacts are extended artefacts? Always
+   *         &ge; 0.
+   */
+  @Nonnegative
+  public int getExtendedArtefactCount ()
+  {
+    return m_nExtendedArtefactCount;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("extendedTransactionKey", m_aExtendedTransactionKey)
+                                       .append ("validationArtefacts", m_aValidationArtefacts)
+                                       .append ("standardArtefactCount", m_nStandardArtefactCount)
+                                       .append ("extendedArtefactCount", m_nExtendedArtefactCount)
+                                       .toString ();
   }
 }
