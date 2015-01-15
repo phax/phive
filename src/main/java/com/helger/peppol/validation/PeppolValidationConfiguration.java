@@ -47,6 +47,9 @@ public class PeppolValidationConfiguration
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
   private final List <IValidationArtefact> m_aValidationArtefacts = new ArrayList <IValidationArtefact> ();
 
+  /**
+   * @param aExtendedTransactionKey
+   */
   public PeppolValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
@@ -58,6 +61,8 @@ public class PeppolValidationConfiguration
                       aExtendedTransactionKey.getBIS ().getID () +
                       " and transaction " +
                       aExtendedTransactionKey.getTransaction ().getTransactionKey ());
+
+    // Get all extended artefacts
     m_aValidationArtefacts.addAll (EExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
   }
 

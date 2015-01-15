@@ -34,8 +34,10 @@ import com.helger.ubl.EUBL21DocumentType;
 public class TransactionKey
 {
   // Predefined transaction keys, ordered by BIS and than by transaction
-  public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey (EPeppolBIS.CATALOGUE_01, EBII2Transaction.T19);
-  public static final TransactionKey CATALOGUE_01_T58 = new TransactionKey (EPeppolBIS.CATALOGUE_01, EBII2Transaction.T58);
+  public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey (EPeppolBIS.CATALOGUE_01,
+                                                                            EBII2Transaction.T19);
+  public static final TransactionKey CATALOGUE_01_T58 = new TransactionKey (EPeppolBIS.CATALOGUE_01,
+                                                                            EBII2Transaction.T58);
   public static final TransactionKey ORDER_03_T01 = new TransactionKey (EPeppolBIS.ORDER_03, EBII2Transaction.T01);
   public static final TransactionKey INVOICE_04_T10 = new TransactionKey (EPeppolBIS.INVOICE_04, EBII2Transaction.T10);
   public static final TransactionKey BILLING_05_T14 = new TransactionKey (EPeppolBIS.BILLING_05, EBII2Transaction.T14);

@@ -34,8 +34,8 @@ import com.helger.commons.name.IHasDisplayText;
 
 /**
  * Defines the predefined CEN BII2 profiles. Each profile consists of a set of
- * transactions ({@link EBII2Transaction}) and belongs to a group {@link EBII2Group}
- * (derived from the transactions).
+ * transactions ({@link EBII2Transaction}) and belongs to a group
+ * {@link EBII2Group} (derived from the transactions).
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
@@ -77,8 +77,8 @@ public enum EBII2Profile implements IHasDisplayText
   }
 
   private EBII2Profile (@Nonnull final EBII2ProfileName eName,
-                    @Nonnegative final int nNumber,
-                    @Nonnull @Nonempty final EBII2Transaction... aTransactions)
+                        @Nonnegative final int nNumber,
+                        @Nonnull @Nonempty final EBII2Transaction... aTransactions)
   {
     m_aName = eName;
     m_nNumber = nNumber;

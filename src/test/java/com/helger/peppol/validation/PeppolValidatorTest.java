@@ -29,7 +29,12 @@ import com.helger.commons.xml.serialize.DOMReader;
 import com.helger.peppol.validation.test.CTestFiles;
 import com.helger.peppol.validation.test.TestFile;
 
-public class PeppolValidatorTest
+/**
+ * Test validator.
+ *
+ * @author Philip Helger
+ */
+public final class PeppolValidatorTest
 {
   @Test
   public void testApplyXSDValidation () throws SAXException
@@ -42,6 +47,7 @@ public class PeppolValidatorTest
       final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
       assertNotNull (aTestFile.getResource ().getPath (), aDoc);
 
+      // Build validator
       final PeppolValidator aValidator = new PeppolValidator (new PeppolValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
 
       // Read as desired type

@@ -87,11 +87,11 @@ public enum EBII2Transaction implements IHasID <String>, IHasName
   private final EUBL21DocumentType m_eUBLDocumentType;
 
   private EBII2Transaction (@Nonnull @Nonempty final String sName,
-                        @Nonnegative final int nNumber,
-                        @Nullable final String sSubNumber,
-                        @Nonnull @Nonempty final String sVersion,
-                        @Nonnull final EBII2Group eGroup,
-                        @Nonnull final EUBL21DocumentType eUBLDocumentType)
+                            @Nonnegative final int nNumber,
+                            @Nullable final String sSubNumber,
+                            @Nonnull @Nonempty final String sVersion,
+                            @Nonnull final EBII2Group eGroup,
+                            @Nonnull final EUBL21DocumentType eUBLDocumentType)
   {
     m_sID = name ();
     m_sName = sName;

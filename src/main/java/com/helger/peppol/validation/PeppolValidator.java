@@ -87,8 +87,7 @@ public class PeppolValidator
   @Nonnull
   public IResourceErrorGroup applySchematronValidation (@Nonnull final IInputStreamProvider aUBLDocument)
   {
-    final String sResourceName = aUBLDocument instanceof IReadableResource
-                                                                          ? ((IReadableResource) aUBLDocument).getPath ()
+    final String sResourceName = aUBLDocument instanceof IReadableResource ? ((IReadableResource) aUBLDocument).getPath ()
                                                                           : "in-memory-data";
 
     final ResourceErrorGroup ret = new ResourceErrorGroup ();

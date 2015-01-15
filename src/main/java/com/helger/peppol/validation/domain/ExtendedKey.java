@@ -36,6 +36,7 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public class ExtendedKey
 {
+  // Predefined keys
   public static final ExtendedKey AT = new ExtendedKey ("AT", false);
   public static final ExtendedKey AT_SECTOR = new ExtendedKey ("AT", true);
 
@@ -51,12 +52,19 @@ public class ExtendedKey
     m_bIsSectorSpecific = bIsSectorSpecific;
   }
 
+  /**
+   * @return The country locale as specified in the constructor.
+   */
   @Nonnull
   public Locale getCountryLocale ()
   {
     return m_aCountry;
   }
 
+  /**
+   * @return The country code extracted from the contained locale. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   @Nonempty
   public String getCountryCode ()
@@ -64,6 +72,10 @@ public class ExtendedKey
     return m_aCountry.getCountry ();
   }
 
+  /**
+   * @return <code>true</code> if sector specific is enabled, <code>false</code>
+   *         if not.
+   */
   public boolean isSectorSpecific ()
   {
     return m_bIsSectorSpecific;

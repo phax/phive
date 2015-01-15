@@ -16,7 +16,17 @@
  */
 package com.helger.peppol.validation.domain;
 
-public enum EPeppolBIS
+import javax.annotation.Nullable;
+
+import com.helger.commons.id.IHasSimpleIntID;
+import com.helger.commons.lang.EnumHelper;
+
+/**
+ * Enumeration with all OpenPEPPOL BIS
+ *
+ * @author Philip Helger
+ */
+public enum EPeppolBIS implements IHasSimpleIntID
 {
   CATALOGUE_01 (1),
   ORDER_03 (3),
@@ -33,8 +43,17 @@ public enum EPeppolBIS
     m_nID = nID;
   }
 
+  /**
+   * @return The OpenPEPPOL internal number.
+   */
   public int getID ()
   {
     return m_nID;
+  }
+
+  @Nullable
+  public static EPeppolBIS getFromIDOrNull (final int nID)
+  {
+    return EnumHelper.getFromIDOrNull (EPeppolBIS.class, nID);
   }
 }

@@ -28,7 +28,14 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
- * A combination of {@link TransactionKey} and {@link ExtendedKey}.
+ * A combination of {@link TransactionKey} and {@link ExtendedKey}. So this is a
+ * combination of:
+ * <ul>
+ * <li>PEPPOL BIS</li>
+ * <li>BII transaction</li>
+ * <li>Optional country code</li>
+ * <li>Flag whether it is sector specific or not</li>
+ * </ul>
  *
  * @author Philip Helger
  */
@@ -121,7 +128,7 @@ public class ExtendedTransactionKey
   public String toString ()
   {
     return new ToStringGenerator (this).append ("transactionKey", m_aTransactionKey)
-                                       .append ("extendedKey", m_aExtendedKey)
+                                       .appendIfNotNull ("extendedKey", m_aExtendedKey)
                                        .toString ();
   }
 }
