@@ -53,6 +53,8 @@ public class PeppolValidationConfiguration
 
   /**
    * @param aExtendedTransactionKey
+   *        The extended transaction key to be used. May not be
+   *        <code>null</code>.
    */
   public PeppolValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
