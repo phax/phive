@@ -34,34 +34,34 @@ import com.helger.commons.text.resolve.DefaultTextResolver;
 @Translatable
 public enum EBII2ProfileName implements IHasDisplayText
 {
-  BII_MLR ("Message Level Response"),
-  BII01 ("Catalogue Only"),
-  BII02 ("Catalogue Update"),
-  BII03 ("Order Only"),
-  BII04 ("Invoice Only"),
-  BII05 ("Billing"),
-  BII06 ("Procurement"),
-  BII10 ("eNotification"),
-  BII11 ("Qualification"),
-  BII12 ("Tendering Simple"),
-  BII16 ("Catalogue Deletion"),
-  BII17 ("Multi Party Catalogue"),
-  BII21 ("Statement"),
-  BII22 ("Call for Tender"),
-  BII27 ("Advanced Ordering"),
-  BII28 ("Ordering"),
-  BII30 ("Dispatch Only"),
-  BII31 ("Reminder Only"),
-  BII32 ("Simple Ordering"),
-  BII33 ("Catalogue Subscription"),
-  BII34 ("Call for Tender with Catalogue Template"),
-  BII35 ("Tendering Simple with Catalogue");
+  BII_MLR ("Message Level Response", "Message Level Response"),
+  BII01 ("Nur Katalog", "Catalogue Only"),
+  BII02 ("Katalogänderung", "Catalogue Update"),
+  BII03 ("Nur Bestellung", "Order Only"),
+  BII04 ("Nur Rechnung", "Invoice Only"),
+  BII05 ("Rechnung", "Billing"),
+  BII06 ("Beschaffung", "Procurement"),
+  BII10 ("e-Notifikation", "eNotification"),
+  BII11 ("Qualifikation", "Qualification"),
+  BII12 ("Einfache Ausschreibung", "Tendering Simple"),
+  BII16 ("Katalog löschen", "Catalogue Deletion"),
+  BII17 ("Mehrpartei Katalog", "Multi Party Catalogue"),
+  BII21 ("Anweisung", "Statement"),
+  BII22 ("Ausschreibung", "Call for Tender"),
+  BII27 ("Erweiterte Bestellung", "Advanced Ordering"),
+  BII28 ("Bestellung", "Ordering"),
+  BII30 ("Nur Lieferschein", "Dispatch Only"),
+  BII31 ("Nur Mahnung", "Reminder Only"),
+  BII32 ("Einfache Bestellung", "Simple Ordering"),
+  BII33 ("Katalog Anmeldung", "Catalogue Subscription"),
+  BII34 ("Ausschreibung mit Katalogsvorlage", "Call for Tender with Catalogue Template"),
+  BII35 ("Einfache Ausschreibung mit Katalog", "Tendering Simple with Catalogue");
 
   private final TextProvider m_aTP;
 
-  private EBII2ProfileName (@Nonnull final String sEN)
+  private EBII2ProfileName (@Nonnull final String sDE, @Nonnull final String sEN)
   {
-    m_aTP = TextProvider.create_EN (sEN);
+    m_aTP = TextProvider.create_DE_EN (sDE, sEN);
   }
 
   @Nullable

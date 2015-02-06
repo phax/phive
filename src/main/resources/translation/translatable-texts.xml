@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2014-2015 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<translationitems count="22" hashcode="765a35e0">
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII01">
+    <de>Nur Katalog</de>
+    <en>Catalogue Only</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII02">
+    <de>Katalogänderung</de>
+    <en>Catalogue Update</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII03">
+    <de>Nur Bestellung</de>
+    <en>Order Only</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII04">
+    <de>Nur Rechnung</de>
+    <en>Invoice Only</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII05">
+    <de>Rechnung</de>
+    <en>Billing</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII06">
+    <de>Beschaffung</de>
+    <en>Procurement</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII10">
+    <de>e-Notifikation</de>
+    <en>eNotification</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII11">
+    <de>Qualifikation</de>
+    <en>Qualification</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII12">
+    <de>Einfache Ausschreibung</de>
+    <en>Tendering Simple</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII16">
+    <de>Katalog löschen</de>
+    <en>Catalogue Deletion</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII17">
+    <de>Mehrpartei Katalog</de>
+    <en>Multi Party Catalogue</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII21">
+    <de>Anweisung</de>
+    <en>Statement</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII22">
+    <de>Ausschreibung</de>
+    <en>Call for Tender</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII27">
+    <de>Erweiterte Bestellung</de>
+    <en>Advanced Ordering</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII28">
+    <de>Bestellung</de>
+    <en>Ordering</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII30">
+    <de>Nur Lieferschein</de>
+    <en>Dispatch Only</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII31">
+    <de>Nur Mahnung</de>
+    <en>Reminder Only</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII32">
+    <de>Einfache Bestellung</de>
+    <en>Simple Ordering</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII33">
+    <de>Katalog Anmeldung</de>
+    <en>Catalogue Subscription</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII34">
+    <de>Ausschreibung mit Katalogsvorlage</de>
+    <en>Call for Tender with Catalogue Template</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII35">
+    <de>Einfache Ausschreibung mit Katalog</de>
+    <en>Tendering Simple with Catalogue</en>
+  </item>
+  <item id="com.helger.peppol.validation.domain.EBII2ProfileName.BII_MLR">
+    <de>Message Level Response</de>
+    <en>Message Level Response</en>
+  </item>
+</translationitems>
