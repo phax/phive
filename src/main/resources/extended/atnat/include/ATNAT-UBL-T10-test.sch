@@ -47,6 +47,8 @@
   <param name="ATNAT-T10-R004" value="((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT') and (//cac:TaxCategory/cbc:ID = 'AE') and cac:AccountingCustomerParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID) or not ((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT') and (//cac:TaxCategory/cbc:ID = 'AE'))" />
   <param name="ATNAT-T10-R005" value="((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT') and number(//cbc:TaxInclusiveAmount[@currencyID='EUR']) > 400 and cac:AccountingSupplierParty/cac:Party/cac:PartyTaxScheme/cbc:CompanyID) or not ((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT') and number(//cbc:TaxInclusiveAmount[@currencyID='EUR']) > 400)" />
   <param name="ATNAT-T10-R006" value="((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT') and (cac:TaxScheme/cbc:ID = 'VAT') and (cbc:ID = 'AE') and number(../cbc:TaxAmount) = 0) or not ((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT') and (cac:TaxScheme/cbc:ID = 'VAT') and (cbc:ID = 'AE'))" />
+  <param name="ATNAT-T10-R007" value="((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT') and (cac:TaxCategory) and (cac:TaxCategory/cbc:Percent)) or not ((//cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'))" />
   <param name="Invoice" value="/ubl:Invoice" />
   <param name="Tax_Category" value="//cac:TaxCategory" />
+  <param name="AllowanceCharge" value="/ubl:Invoice/cac:AllowanceCharge" />
 </pattern>

@@ -41,6 +41,9 @@
 <!--This file is generated automatically! Do NOT edit!-->
 <!--Abstract Schematron rules for T14-->
 <pattern xmlns="http://purl.oclc.org/dsdl/schematron" abstract="true" id="T14">
+  <rule context="$AllowanceCharge">
+    <assert flag="fatal" test="$ATNAT-T14-R007">[ATNAT-T14-R007]-Allowances and charges on header level need a VAT rate.</assert>
+  </rule>
   <rule context="$CreditNote">
     <assert flag="fatal" test="$ATNAT-T14-R001">[ATNAT-T14-R001]-If the credit note total exceeds € 10.000, the VAT number of the customer MUST be provided, if the supplier has a registered office in Austria.</assert>
     <assert flag="fatal" test="$ATNAT-T14-R003">[ATNAT-T14-R003]-The credit note MUST contain either the actual delivery date or the invoice period.</assert>

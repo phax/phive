@@ -41,6 +41,9 @@
 <!--This file is generated automatically! Do NOT edit!-->
 <!--Abstract Schematron rules for T10-->
 <pattern xmlns="http://purl.oclc.org/dsdl/schematron" abstract="true" id="T10">
+  <rule context="$AllowanceCharge">
+    <assert flag="fatal" test="$ATNAT-T10-R007">[ATNAT-T10-R007]-Allowances and charges on header level need a VAT rate.</assert>
+  </rule>
   <rule context="$Tax_Category">
     <assert flag="fatal" test="$ATNAT-T10-R002">[ATNAT-T10-R002]-If the tax percentage in a tax category is 0% then the tax category identifier MUST be "E" or "AE" (UN-5305).</assert>
     <assert flag="fatal" test="$ATNAT-T10-R006">[ATNAT-T10-R006]-If products or services are subject to the Reverse Charge System (customer has to bear the tax, not the supplier - Austria: UStG § 19) the VAT tax amount must be 0.</assert>
