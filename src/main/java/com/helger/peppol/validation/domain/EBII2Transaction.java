@@ -190,7 +190,7 @@ public enum EBII2Transaction implements IHasID <String>, IHasName
    * @return The expected UBL 2.1 document type. Never <code>null</code>.
    */
   @Nonnull
-  public final EUBL21DocumentType getUBLDocumentType ()
+  public EUBL21DocumentType getUBLDocumentType ()
   {
     return m_eUBLDocumentType;
   }
