@@ -61,6 +61,7 @@ public final class CTestFiles
     s_aTestFiles.add (StandardTestFile.createGoodCase ("BIS03A/UC3_Order.xml", TransactionKey.ORDER_03_T01));
     s_aTestFiles.add (StandardTestFile.createGoodCase ("BIS03A/UC4_Order.xml", TransactionKey.ORDER_03_T01));
 
+    s_aTestFiles.add (StandardTestFile.createGoodCase ("BIS04A/good-zero-amount.xml", TransactionKey.INVOICE_04_T10));
     s_aTestFiles.add (StandardTestFile.createGoodCase ("BIS04A/Use Case 1.a_ExampleFile_PEPPOL BIS.xml",
                                                        TransactionKey.INVOICE_04_T10));
     s_aTestFiles.add (StandardTestFile.createGoodCase ("BIS04A/Use Case 1.b_ExampleFile_PEPPOL BIS.xml",
