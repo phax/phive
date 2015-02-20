@@ -9,10 +9,10 @@
   <param name="BII2-T14-R005" value="(cbc:DocumentCurrencyCode)"/>
   <param name="BII2-T14-R006" value="(cac:AccountingSupplierParty/cac:Party/cac:PartyName/cbc:Name) or (cac:AccountingSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID)"/>
   <param name="BII2-T14-R008" value="(cac:AccountingCustomerParty/cac:Party/cac:PartyName/cbc:Name) or (cac:AccountingCustomerParty/cac:Party/cac:PartyIdentification/cbc:ID)"/>
-  <param name="BII2-T14-R010" value="number(cac:LegalMonetaryTotal/cbc:LineExtensionAmount)"/>
-  <param name="BII2-T14-R011" value="number(cac:LegalMonetaryTotal/cbc:TaxExclusiveAmount)"/>
-  <param name="BII2-T14-R012" value="number(cac:LegalMonetaryTotal/cbc:TaxInclusiveAmount)"/>
-  <param name="BII2-T14-R013" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount)"/>
+  <param name="BII2-T14-R010" value="number(cac:LegalMonetaryTotal/cbc:LineExtensionAmount) = cac:LegalMonetaryTotal/cbc:LineExtensionAmount"/>
+  <param name="BII2-T14-R011" value="number(cac:LegalMonetaryTotal/cbc:TaxExclusiveAmount) = cac:LegalMonetaryTotal/cbc:TaxExclusiveAmount"/>
+  <param name="BII2-T14-R012" value="number(cac:LegalMonetaryTotal/cbc:TaxInclusiveAmount) = cac:LegalMonetaryTotal/cbc:TaxInclusiveAmount"/>
+  <param name="BII2-T14-R013" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount) = cac:LegalMonetaryTotal/cbc:PayableAmount"/>
   <param name="BII2-T14-R014" value="(cac:CreditNoteLine)"/>
   <param name="BII2-T14-R015" value="(cac:TaxTotal[cac:TaxSubtotal/cac:TaxCategory/cac:TaxScheme/cbc:ID = 'VAT']/cbc:TaxAmount) or not(cac:CreditNoteLine/cac:TaxTotal)"/>
   <param name="BII2-T14-R017" value="(cbc:ID)"/>
