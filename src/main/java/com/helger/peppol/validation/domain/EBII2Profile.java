@@ -29,7 +29,7 @@ import com.helger.commons.GlobalDebug;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.ContainerHelper;
+import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.name.IHasDisplayText;
 
 /**
@@ -83,7 +83,7 @@ public enum EBII2Profile implements IHasDisplayText
     m_aName = eName;
     m_nNumber = nNumber;
     m_eGroup = aTransactions[0].getGroup ();
-    m_aTransactions = ContainerHelper.newOrderedSet (aTransactions);
+    m_aTransactions = CollectionHelper.newOrderedSet (aTransactions);
     if (GlobalDebug.isDebugMode ())
       _checkTransactionsSameGroup ();
   }
@@ -126,7 +126,7 @@ public enum EBII2Profile implements IHasDisplayText
   @ReturnsMutableCopy
   public List <EBII2Transaction> getAllTransactions ()
   {
-    return ContainerHelper.newList (m_aTransactions);
+    return CollectionHelper.newList (m_aTransactions);
   }
 
   /**

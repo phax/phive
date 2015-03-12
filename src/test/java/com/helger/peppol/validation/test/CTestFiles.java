@@ -24,7 +24,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.ContainerHelper;
+import com.helger.commons.collections.CollectionHelper;
 import com.helger.peppol.validation.domain.TransactionKey;
 
 @Immutable
@@ -120,7 +120,7 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static List <TestFile> getAllTestFiles ()
   {
-    return ContainerHelper.newList (s_aTestFiles);
+    return CollectionHelper.newList (s_aTestFiles);
   }
 
   @Nonnull

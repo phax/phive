@@ -24,7 +24,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.ContainerHelper;
+import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.io.IReadableResource;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.TransactionKey;
@@ -48,7 +48,7 @@ public class TestFile
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
-    m_aExpectedErrorIDs = ContainerHelper.newSet (aExpectedErrorIDs);
+    m_aExpectedErrorIDs = CollectionHelper.newSet (aExpectedErrorIDs);
   }
 
   /**
@@ -82,18 +82,18 @@ public class TestFile
 
   public boolean isGoodCase ()
   {
-    return ContainerHelper.isEmpty (m_aExpectedErrorIDs);
+    return CollectionHelper.isEmpty (m_aExpectedErrorIDs);
   }
 
   public boolean isBadCase ()
   {
-    return ContainerHelper.isNotEmpty (m_aExpectedErrorIDs);
+    return CollectionHelper.isNotEmpty (m_aExpectedErrorIDs);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public Set <String> getAllExpectedErrorIDs ()
   {
-    return ContainerHelper.newSet (m_aExpectedErrorIDs);
+    return CollectionHelper.newSet (m_aExpectedErrorIDs);
   }
 }
