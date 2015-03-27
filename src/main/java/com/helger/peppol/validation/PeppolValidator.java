@@ -18,6 +18,7 @@ package com.helger.peppol.validation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.validation.Schema;
 
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 
@@ -30,7 +31,7 @@ import com.helger.commons.error.ResourceErrorGroup;
 import com.helger.commons.error.ResourceLocation;
 import com.helger.commons.io.IInputStreamProvider;
 import com.helger.commons.io.IReadableResource;
-import com.helger.commons.jaxb.validation.CollectingValidationEventHandler;
+import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
 import com.helger.commons.xml.transform.TransformSourceFactory;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.schematron.pure.SchematronResourcePure;
@@ -38,7 +39,7 @@ import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.svrl.SVRLUtils;
-import com.helger.ubl.UBL21Marshaller;
+import com.helger.ubl.UBL21DocumentTypes;
 
 /**
  * This is the main validation class to validate PEPPOL UBL 2.1 documents
@@ -70,18 +71,27 @@ public class PeppolValidator
     final Class <?> aUBLImplementationClass = m_aConfiguration.getExtendedTransactionKey ()
                                                               .getUBLDocumentType ()
                                                               .getImplementationClass ();
-    // Convert to domain object
-    final CollectingValidationEventHandler aEventHandler = new CollectingValidationEventHandler ();
-    final Object aUBLObject = UBL21Marshaller.readUBLDocument (TransformSourceFactory.create (aUBLDocument),
-                                                               aUBLImplementationClass,
-                                                               aEventHandler);
 
-    // Collect all the errors
-    final IResourceErrorGroup aXSDErrors = aEventHandler.getResourceErrors ();
-    if (!aXSDErrors.containsAtLeastOneFailure () && aUBLObject == null)
-      throw new IllegalStateException ("Internal inconsistency");
+    final ResourceErrorGroup aErrors = new ResourceErrorGroup ();
 
-    return aXSDErrors.getAllFailures ();
+    // Find the XML schema required for validation
+    // as we don't have a node, we need to trust the implementation class
+    final Schema aSchema = UBL21DocumentTypes.getSchemaOfImplementationClass (aUBLImplementationClass);
+    if (aSchema == null)
+    {
+      aErrors.addResourceError (new ResourceError (null,
+                                                   EErrorLevel.ERROR,
+                                                   "Don't know how to read UBL object of class " +
+                                                       aUBLImplementationClass.getName ()));
+    }
+    else
+    {
+      // Apply the XML schema validation
+      final IResourceErrorGroup aXSDErrors = XMLSchemaValidationHelper.validate (aSchema,
+                                                                                 TransformSourceFactory.create (aUBLDocument));
+      aErrors.addResourceErrorGroup (aXSDErrors);
+    }
+    return aErrors.getAllFailures ();
   }
 
   @Nonnull
