@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 
 /**
@@ -29,7 +28,7 @@ import com.helger.commons.lang.EnumHelper;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public enum EBII2Group implements IHasID <String>
+public enum EBII2Group implements ISpecificationGroup
 {
   ARCHITECTURE ("architecture"),
   NOTIFICATION ("notification"),
