@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.domain.cenbii2.EBII2Transaction;
+import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
@@ -34,7 +34,7 @@ import com.helger.ubl.EUBL21DocumentType;
 @Immutable
 public class TransactionKey
 {
-  // Predefined transaction keys, ordered by BIS and than by transaction
+  // Predefined transaction keys, ordered by BIS and than by BII2 transaction
   public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey (EPeppolBIS.CATALOGUE_01,
                                                                             EBII2Transaction.T19);
   public static final TransactionKey CATALOGUE_01_T58 = new TransactionKey (EPeppolBIS.CATALOGUE_01,
@@ -49,12 +49,12 @@ public class TransactionKey
   public static final TransactionKey MLR_36_T71 = new TransactionKey (EPeppolBIS.MLR_36, EBII2Transaction.T71);
 
   private final EPeppolBIS m_eBIS;
-  private final EBII2Transaction m_eTransaction;
+  private final ISpecificationTransaction m_aTransaction;
 
-  public TransactionKey (@Nonnull final EPeppolBIS eBIS, @Nonnull final EBII2Transaction eTransaction)
+  public TransactionKey (@Nonnull final EPeppolBIS eBIS, @Nonnull final ISpecificationTransaction aTransaction)
   {
     m_eBIS = ValueEnforcer.notNull (eBIS, "BIS");
-    m_eTransaction = ValueEnforcer.notNull (eTransaction, "Transaction");
+    m_aTransaction = ValueEnforcer.notNull (aTransaction, "Transaction");
   }
 
   @Nonnull
@@ -64,9 +64,9 @@ public class TransactionKey
   }
 
   @Nonnull
-  public EBII2Transaction getTransaction ()
+  public ISpecificationTransaction getTransaction ()
   {
-    return m_eTransaction;
+    return m_aTransaction;
   }
 
   /**
@@ -75,7 +75,7 @@ public class TransactionKey
   @Nonnull
   public EUBL21DocumentType getUBLDocumentType ()
   {
-    return m_eTransaction.getUBLDocumentType ();
+    return m_aTransaction.getUBLDocumentType ();
   }
 
   @Override
@@ -86,18 +86,18 @@ public class TransactionKey
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final TransactionKey rhs = (TransactionKey) o;
-    return m_eBIS.equals (rhs.m_eBIS) && m_eTransaction.equals (rhs.m_eTransaction);
+    return m_eBIS.equals (rhs.m_eBIS) && m_aTransaction.equals (rhs.m_aTransaction);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eBIS).append (m_eTransaction).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eBIS).append (m_aTransaction).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("BIS", m_eBIS).append ("transaction", m_eTransaction).toString ();
+    return new ToStringGenerator (this).append ("BIS", m_eBIS).append ("transaction", m_aTransaction).toString ();
   }
 }

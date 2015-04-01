@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.io.IReadableResource;
 import com.helger.peppol.validation.domain.EPeppolBIS;
+import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
-import com.helger.peppol.validation.domain.cenbii2.EBII2Transaction;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
@@ -62,7 +62,7 @@ public interface IValidationArtefact
    *         <code>getTransactionKey().getTransaction()</code>.
    */
   @Nonnull
-  EBII2Transaction getTransaction ();
+  ISpecificationTransaction getTransaction ();
 
   /**
    * @return The UBL document type required for this validation artefact. Never

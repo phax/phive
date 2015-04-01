@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain.cenbii2;
+package com.helger.peppol.validation.domain.peppol;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.peppol.validation.domain.cenbii2.EBII2Transaction;
+import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 /**
  * Test class for class {@link EBII2Transaction}.

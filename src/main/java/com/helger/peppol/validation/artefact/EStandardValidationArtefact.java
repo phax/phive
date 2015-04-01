@@ -29,8 +29,8 @@ import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.validation.domain.EPeppolBIS;
+import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
-import com.helger.peppol.validation.domain.cenbii2.EBII2Transaction;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
@@ -104,7 +104,7 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public EBII2Transaction getTransaction ()
+  public ISpecificationTransaction getTransaction ()
   {
     return m_aTransactionKey.getTransaction ();
   }
