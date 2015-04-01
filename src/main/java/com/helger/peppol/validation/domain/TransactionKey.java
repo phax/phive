@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.peppol.validation.domain.cenbii2.EBII2Transaction;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**

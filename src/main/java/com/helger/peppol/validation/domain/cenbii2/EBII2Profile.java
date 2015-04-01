@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain;
+package com.helger.peppol.validation.domain.cenbii2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,8 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.name.IHasDisplayText;
+import com.helger.peppol.validation.domain.ISpecificationProfile;
+import com.helger.peppol.validation.domain.ISpecificationTransaction;
 
 /**
  * Defines the predefined CEN BII2 profiles. Each profile consists of a set of
@@ -39,7 +41,7 @@ import com.helger.commons.name.IHasDisplayText;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public enum EBII2Profile implements IHasDisplayText
+public enum EBII2Profile implements ISpecificationProfile
 {
   BII_MLR (EBII2ProfileName.BII_MLR, 0, EBII2Transaction.T71),
   BII01 (EBII2ProfileName.BII01, 1, EBII2Transaction.T19, EBII2Transaction.T58),
@@ -98,29 +100,18 @@ public enum EBII2Profile implements IHasDisplayText
     return m_aName.getDisplayText (aContentLocale);
   }
 
-  /**
-   * @return The numeric value of this profile (e.g. BII04 returns 4, BII22
-   *         returns 22 etc.). Only MLR returns 0!
-   */
   @Nonnegative
   public int getNumber ()
   {
     return m_nNumber;
   }
 
-  /**
-   * @return The group to which all transaction belong. Never null
-   */
   @Nonnull
   public EBII2Group getGroup ()
   {
     return m_eGroup;
   }
 
-  /**
-   * @return A non-<code>null</code> non empty list of all transactions
-   *         contained in this profile.
-   */
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
@@ -129,17 +120,9 @@ public enum EBII2Profile implements IHasDisplayText
     return CollectionHelper.newList (m_aTransactions);
   }
 
-  /**
-   * Check if the passed transaction is contained in this profile.
-   *
-   * @param eTransaction
-   *        The transaction to query. May be <code>null</code>.
-   * @return <code>true</code> if the passed transaction is contained in this
-   *         profile, <code>false</code> otherwise.
-   */
-  public boolean containsTransaction (@Nullable final EBII2Transaction eTransaction)
+  public boolean containsTransaction (@Nullable final ISpecificationTransaction aTransaction)
   {
-    return m_aTransactions.contains (eTransaction);
+    return m_aTransactions.contains (aTransaction);
   }
 
   /**

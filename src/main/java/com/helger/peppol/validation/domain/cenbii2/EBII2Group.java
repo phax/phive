@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain;
+package com.helger.peppol.validation.domain.cenbii2;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.lang.EnumHelper;
+import com.helger.peppol.validation.domain.ISpecificationGroup;
 
 /**
  * Represents the grouping of CEN BII2 transactions.<br>

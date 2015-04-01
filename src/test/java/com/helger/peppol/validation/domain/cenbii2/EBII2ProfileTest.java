@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain;
+package com.helger.peppol.validation.domain.cenbii2;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,9 +28,9 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.domain.EBII2Profile;
-import com.helger.peppol.validation.domain.EBII2ProfileName;
-import com.helger.peppol.validation.domain.EBII2Transaction;
+import com.helger.peppol.validation.domain.cenbii2.EBII2Profile;
+import com.helger.peppol.validation.domain.cenbii2.EBII2ProfileName;
+import com.helger.peppol.validation.domain.cenbii2.EBII2Transaction;
 
 /**
  * Test class for class {@link EBII2Profile}.
