@@ -21,9 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
-import com.helger.commons.name.IHasName;
 import com.helger.commons.string.StringHelper;
 import com.helger.ubl.EUBL21DocumentType;
 
@@ -38,9 +36,9 @@ import com.helger.ubl.EUBL21DocumentType;
  * <li>http://www.cenbii.eu/deliverables/cen-bii-2/cwa-16562-post-award/</li>
  * </ul>
  *
- * @author PEPPOL.AT, BRZ, Philip Helger
+ * @author Philip Helger
  */
-public enum EBII2Transaction implements IHasID <String>, IHasName
+public enum EBII2Transaction implements ISpecificationTransaction
 {
   T01 ("Order", 1, null, "2.0", EBII2Group.POST_AWARD, EUBL21DocumentType.ORDER),
   T02 ("Simple Order Response", 2, null, "2.0", EBII2Group.POST_AWARD, EUBL21DocumentType.ORDER_RESPONSE_SIMPLE),
@@ -114,9 +112,6 @@ public enum EBII2Transaction implements IHasID <String>, IHasName
     return m_sID;
   }
 
-  /**
-   * @return The pseudo name of this transaction. Does not require translation.
-   */
   @Nonnull
   @Nonempty
   public String getName ()
@@ -124,41 +119,24 @@ public enum EBII2Transaction implements IHasID <String>, IHasName
     return m_sName;
   }
 
-  /**
-   * @return The number of this transaction. This is only unique in combination
-   *         with the "sub number", since the number 64 is used 3 times but with
-   *         the sub numbers A, B and C!
-   */
   @Nonnegative
   public int getNumber ()
   {
     return m_nNumber;
   }
 
-  /**
-   * @return The sub number. This is only relevant for transaction 64 which is
-   *         split into A, B, and C. For all others this methods returns an
-   *         empty string.
-   */
   @Nonnull
   public String getSubNumber ()
   {
     return m_sSubNumber;
   }
 
-  /**
-   * @return The underlying group to which this transaction belongs.
-   */
   @Nonnull
   public EBII2Group getGroup ()
   {
     return m_eGroup;
   }
 
-  /**
-   * @return The complete transaction ID. E.g.
-   *         <code>urn:www.cenbii.eu:transaction:biitrns040:ver1.0</code>
-   */
   @Nonnull
   @Nonempty
   public String getTransactionID ()
@@ -166,9 +144,6 @@ public enum EBII2Transaction implements IHasID <String>, IHasName
     return m_sTransactionID;
   }
 
-  /**
-   * @return The unique key. E.g. "T064A" or "T004".
-   */
   @Nonnull
   @Nonempty
   public String getTransactionKey ()
@@ -176,9 +151,6 @@ public enum EBII2Transaction implements IHasID <String>, IHasName
     return "T" + StringHelper.getLeadingZero (m_nNumber, 3) + m_sSubNumber;
   }
 
-  /**
-   * @return The version of the transaction. E.g. "1.0" or "2.0".
-   */
   @Nonnull
   @Nonempty
   public String getVersionNumber ()
