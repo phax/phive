@@ -31,6 +31,7 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.validation.domain.EPeppolBIS;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
+import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
@@ -42,38 +43,38 @@ import com.helger.ubl.EUBL21DocumentType;
  */
 public enum EStandardValidationArtefact implements IValidationArtefact
 {
-  CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", TransactionKey.CATALOGUE_01_T19),
-  CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", TransactionKey.CATALOGUE_01_T19),
-  CATALOGUE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T19.sch", TransactionKey.CATALOGUE_01_T19),
+  CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", PeppolTransactionKey.CATALOGUE_01_T19),
+  CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", PeppolTransactionKey.CATALOGUE_01_T19),
+  CATALOGUE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T19.sch", PeppolTransactionKey.CATALOGUE_01_T19),
 
-  CATALOGUE_RESPONSE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T58.sch", TransactionKey.CATALOGUE_01_T58),
-  CATALOGUE_RESPONSE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T58.sch", TransactionKey.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T58.sch", PeppolTransactionKey.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T58.sch", PeppolTransactionKey.CATALOGUE_01_T58),
 
-  ORDER_CORE ("BIS2.0-order3a-VA_V2.3/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", TransactionKey.ORDER_03_T01),
-  ORDER_RULES ("BIS2.0-order3a-VA_V2.3/Schematron/BII RULES/BIIRULES-UBL-T01.sch", TransactionKey.ORDER_03_T01),
-  ORDER_OPENPEPPOL ("BIS2.0-order3a-VA_V2.3/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", TransactionKey.ORDER_03_T01),
+  ORDER_CORE ("BIS2.0-order3a-VA_V2.3/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", PeppolTransactionKey.ORDER_03_T01),
+  ORDER_RULES ("BIS2.0-order3a-VA_V2.3/Schematron/BII RULES/BIIRULES-UBL-T01.sch", PeppolTransactionKey.ORDER_03_T01),
+  ORDER_OPENPEPPOL ("BIS2.0-order3a-VA_V2.3/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", PeppolTransactionKey.ORDER_03_T01),
 
-  INVOICE_CORE ("BIS2.0-invoice4a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T10-V1.0.sch", TransactionKey.INVOICE_04_T10),
-  INVOICE_RULES ("BIS2.0-invoice4a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T10.sch", TransactionKey.INVOICE_04_T10),
-  INVOICE_OPENPEPPOL ("BIS2.0-invoice4a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T10.sch", TransactionKey.INVOICE_04_T10),
+  INVOICE_CORE ("BIS2.0-invoice4a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T10-V1.0.sch", PeppolTransactionKey.INVOICE_04_T10),
+  INVOICE_RULES ("BIS2.0-invoice4a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T10.sch", PeppolTransactionKey.INVOICE_04_T10),
+  INVOICE_OPENPEPPOL ("BIS2.0-invoice4a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T10.sch", PeppolTransactionKey.INVOICE_04_T10),
 
-  BILLING_CREDIT_NOTE_CORE ("BIS2.0-billing5a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T14-V1.0.sch", TransactionKey.BILLING_05_T14),
-  BILLING_CREDIT_NOTE_RULES ("BIS2.0-billing5a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T14.sch", TransactionKey.BILLING_05_T14),
-  BILLING_CREDIT_NOTE_OPENPEPPOL ("BIS2.0-billing5a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T14.sch", TransactionKey.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_CORE ("BIS2.0-billing5a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T14-V1.0.sch", PeppolTransactionKey.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_RULES ("BIS2.0-billing5a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T14.sch", PeppolTransactionKey.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_OPENPEPPOL ("BIS2.0-billing5a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T14.sch", PeppolTransactionKey.BILLING_05_T14),
 
-  ORDERING_ORDER_CORE ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", TransactionKey.ORDERING_28_T01),
-  ORDERING_ORDER_RULES ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T01.sch", TransactionKey.ORDERING_28_T01),
-  ORDERING_ORDER_OPENPEPPOL ("BIS2.0-ordering28a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", TransactionKey.ORDERING_28_T01),
+  ORDERING_ORDER_CORE ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", PeppolTransactionKey.ORDERING_28_T01),
+  ORDERING_ORDER_RULES ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T01.sch", PeppolTransactionKey.ORDERING_28_T01),
+  ORDERING_ORDER_OPENPEPPOL ("BIS2.0-ordering28a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", PeppolTransactionKey.ORDERING_28_T01),
 
-  ORDERING_ORDER_RESPONSE_RULES ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T76.sch", TransactionKey.ORDERING_28_T76),
-  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("BIS2.0-ordering28a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T76.sch", TransactionKey.ORDERING_28_T76),
+  ORDERING_ORDER_RESPONSE_RULES ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T76.sch", PeppolTransactionKey.ORDERING_28_T76),
+  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("BIS2.0-ordering28a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T76.sch", PeppolTransactionKey.ORDERING_28_T76),
 
-  DESPATCH_ADVICE_CORE ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/BII CORE/BIICORE-UBL-T16-V1.0.sch", TransactionKey.DESPATCH_ADVICE_30_T16),
-  DESPATCH_ADVICE_RULES ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/BII RULES/BIIRULES-UBL-T16.sch", TransactionKey.DESPATCH_ADVICE_30_T16),
-  DESPATCH_ADVICE_OPENPEPPOL ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T16.sch", TransactionKey.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_CORE ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/BII CORE/BIICORE-UBL-T16-V1.0.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_RULES ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/BII RULES/BIIRULES-UBL-T16.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_OPENPEPPOL ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T16.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
 
-  MLR_RULES ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T71.sch", TransactionKey.MLR_36_T71),
-  MLR_OPENPEPPOL ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T71.sch", TransactionKey.MLR_36_T71);
+  MLR_RULES ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T71.sch", PeppolTransactionKey.MLR_36_T71),
+  MLR_OPENPEPPOL ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T71.sch", PeppolTransactionKey.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
   private final TransactionKey m_aTransactionKey;

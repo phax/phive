@@ -32,6 +32,7 @@ import com.helger.peppol.validation.domain.ExtendedKey;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
+import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
@@ -43,13 +44,14 @@ import com.helger.ubl.EUBL21DocumentType;
  */
 public enum EExtendedValidationArtefact implements IValidationArtefact
 {
-  INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", new ExtendedTransactionKey (TransactionKey.INVOICE_04_T10, ExtendedKey.AT)),
-  INVOICE_AT_GOV ("atgov/ATGOV-UBL-T10.sch", new ExtendedTransactionKey (TransactionKey.INVOICE_04_T10,
+  INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
+                                                                         ExtendedKey.AT)),
+  INVOICE_AT_GOV ("atgov/ATGOV-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
                                                                          ExtendedKey.AT_SECTOR)),
 
-  BILLING_CREDIT_NOTE_AT_NAT ("atnat/ATNAT-UBL-T14.sch", new ExtendedTransactionKey (TransactionKey.BILLING_05_T14,
+  BILLING_CREDIT_NOTE_AT_NAT ("atnat/ATNAT-UBL-T14.sch", new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14,
                                                                                      ExtendedKey.AT)),
-  BILLING_CREDIT_NOTE_AT_GOV ("atgov/ATGOV-UBL-T14.sch", new ExtendedTransactionKey (TransactionKey.BILLING_05_T14,
+  BILLING_CREDIT_NOTE_AT_GOV ("atgov/ATGOV-UBL-T14.sch", new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14,
                                                                                      ExtendedKey.AT_SECTOR));
 
   private final ClassPathResource m_aResource;
