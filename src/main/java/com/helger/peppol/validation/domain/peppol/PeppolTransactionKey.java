@@ -18,7 +18,6 @@ package com.helger.peppol.validation.domain.peppol;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.peppol.validation.domain.EPeppolBIS;
 import com.helger.peppol.validation.domain.TransactionKey;
 
 /**

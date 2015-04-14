@@ -63,9 +63,9 @@ public class PeppolValidationConfiguration
     // Get all standard artefacts
     m_aValidationArtefacts.addAll (EStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
     if (m_aValidationArtefacts.isEmpty ())
-      s_aLogger.warn ("No standard validation artefact supports BIS " +
-                      aExtendedTransactionKey.getBIS ().getID () +
-                      " and transaction " +
+      s_aLogger.warn ("No standard validation artefact supports BIS '" +
+                      aExtendedTransactionKey.getBIS ().getDisplayName () +
+                      "' and transaction " +
                       aExtendedTransactionKey.getTransaction ().getTransactionKey ());
     m_nStandardArtefactCount = m_aValidationArtefacts.size ();
 

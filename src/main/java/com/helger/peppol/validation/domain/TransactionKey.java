@@ -22,31 +22,32 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 import com.helger.ubl.EUBL21DocumentType;
 
 /**
- * An immutable pair of BIS of type {@link EPeppolBIS} and transaction of type
- * {@link EBII2Transaction}.
+ * An immutable pair of a business specification of type
+ * {@link IBusinessSpecification} and a transaction of type
+ * {@link ISpecificationTransaction}.
  *
  * @author Philip Helger
  */
 @Immutable
 public class TransactionKey
 {
-  private final EPeppolBIS m_eBIS;
+  private final IBusinessSpecification m_aBIS;
   private final ISpecificationTransaction m_aTransaction;
 
-  public TransactionKey (@Nonnull final EPeppolBIS eBIS, @Nonnull final ISpecificationTransaction aTransaction)
+  public TransactionKey (@Nonnull final IBusinessSpecification aBIS,
+                         @Nonnull final ISpecificationTransaction aTransaction)
   {
-    m_eBIS = ValueEnforcer.notNull (eBIS, "BIS");
+    m_aBIS = ValueEnforcer.notNull (aBIS, "BIS");
     m_aTransaction = ValueEnforcer.notNull (aTransaction, "Transaction");
   }
 
   @Nonnull
-  public EPeppolBIS getBIS ()
+  public IBusinessSpecification getBIS ()
   {
-    return m_eBIS;
+    return m_aBIS;
   }
 
   @Nonnull
@@ -72,18 +73,18 @@ public class TransactionKey
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final TransactionKey rhs = (TransactionKey) o;
-    return m_eBIS.equals (rhs.m_eBIS) && m_aTransaction.equals (rhs.m_aTransaction);
+    return m_aBIS.equals (rhs.m_aBIS) && m_aTransaction.equals (rhs.m_aTransaction);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eBIS).append (m_aTransaction).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aBIS).append (m_aTransaction).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("BIS", m_eBIS).append ("transaction", m_aTransaction).toString ();
+    return new ToStringGenerator (this).append ("BIS", m_aBIS).append ("transaction", m_aTransaction).toString ();
   }
 }

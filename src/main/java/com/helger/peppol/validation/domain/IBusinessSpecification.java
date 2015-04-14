@@ -16,44 +16,15 @@
  */
 package com.helger.peppol.validation.domain;
 
-import javax.annotation.Nullable;
-
-import com.helger.commons.id.IHasSimpleIntID;
-import com.helger.commons.lang.EnumHelper;
+import com.helger.commons.id.IHasID;
+import com.helger.commons.name.IHasDisplayName;
 
 /**
- * Enumeration with all OpenPEPPOL BIS
+ * The base interface for business specifications (e.g. PEPPOL BIS)
  *
  * @author Philip Helger
  */
-public enum EPeppolBIS implements IHasSimpleIntID
+public interface IBusinessSpecification extends IHasID <String>, IHasDisplayName
 {
-  CATALOGUE_01 (1),
-  ORDER_03 (3),
-  INVOICE_04 (4),
-  BILLING_05 (5),
-  ORDERING_28 (28),
-  DESPATCH_ADVICE_30 (30),
-  MLR_36 (36);
-
-  private final int m_nID;
-
-  private EPeppolBIS (final int nID)
-  {
-    m_nID = nID;
-  }
-
-  /**
-   * @return The OpenPEPPOL internal number.
-   */
-  public int getID ()
-  {
-    return m_nID;
-  }
-
-  @Nullable
-  public static EPeppolBIS getFromIDOrNull (final int nID)
-  {
-    return EnumHelper.getFromIDOrNull (EPeppolBIS.class, nID);
-  }
+  /* empty */
 }

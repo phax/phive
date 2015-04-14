@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.io.IReadableResource;
-import com.helger.peppol.validation.domain.EPeppolBIS;
+import com.helger.peppol.validation.domain.IBusinessSpecification;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.ubl.EUBL21DocumentType;
@@ -49,12 +49,12 @@ public interface IValidationArtefact
   TransactionKey getTransactionKey ();
 
   /**
-   * @return The BIS to which the validation artefact belongs. Never
-   *         <code>null</code>. This is a shortcut for
+   * @return The business specification to which the validation artefact
+   *         belongs. Never <code>null</code>. This is a shortcut for
    *         <code>getTransactionKey().getBIS()</code>.
    */
   @Nonnull
-  EPeppolBIS getBIS ();
+  IBusinessSpecification getBIS ();
 
   /**
    * @return The transaction to which the validation artefact belongs. Never

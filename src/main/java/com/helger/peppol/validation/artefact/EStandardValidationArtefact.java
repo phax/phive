@@ -28,7 +28,7 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.peppol.validation.domain.EPeppolBIS;
+import com.helger.peppol.validation.domain.IBusinessSpecification;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
@@ -99,7 +99,7 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public EPeppolBIS getBIS ()
+  public IBusinessSpecification getBIS ()
   {
     return m_aTransactionKey.getBIS ();
   }

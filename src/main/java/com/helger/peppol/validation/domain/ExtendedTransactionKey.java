@@ -62,7 +62,7 @@ public class ExtendedTransactionKey
   }
 
   @Nonnull
-  public EPeppolBIS getBIS ()
+  public IBusinessSpecification getBIS ()
   {
     return m_aTransactionKey.getBIS ();
   }
