@@ -19,14 +19,14 @@ package com.helger.peppol.validation;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -42,37 +42,30 @@ import com.helger.peppol.validation.domain.ExtendedTransactionKey;
  *
  * @author Philip Helger
  */
-@NotThreadSafe
+@Immutable
 public class ValidationConfiguration
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationConfiguration.class);
 
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
-  private final List <IValidationArtefact> m_aValidationArtefacts = new ArrayList <IValidationArtefact> ();
-  private final int m_nStandardArtefactCount;
-  private final int m_nExtendedArtefactCount;
+  private final List <IValidationArtefact> m_aValidationArtefacts;
 
   /**
    * @param aExtendedTransactionKey
    *        The extended transaction key to be used. May not be
    *        <code>null</code>.
+   * @param aValidationArtefacts
+   *        The validation artefacts to be used in this particular order. May
+   *        neither be <code>null</code> nor empty nor may it contain
+   *        <code>null</code> elements.
    */
-  public ValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  public ValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey,
+                                  @Nonnull @Nonempty final List <IValidationArtefact> aValidationArtefacts)
   {
-    m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
-
-    // Get all standard artefacts
-    m_aValidationArtefacts.addAll (EPeppolStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
-    if (m_aValidationArtefacts.isEmpty ())
-      s_aLogger.warn ("No standard validation artefact supports BIS '" +
-                      aExtendedTransactionKey.getBusinessSpecification ().getDisplayName () +
-                      "' and transaction " +
-                      aExtendedTransactionKey.getTransaction ().getTransactionKey ());
-    m_nStandardArtefactCount = m_aValidationArtefacts.size ();
-
-    // Get all extended artefacts
-    m_aValidationArtefacts.addAll (EPeppolExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
-    m_nExtendedArtefactCount = m_aValidationArtefacts.size () - m_nStandardArtefactCount;
+    ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
+    ValueEnforcer.notEmptyNoNullValue (aValidationArtefacts, "ValidationArtefacts");
+    m_aExtendedTransactionKey = aExtendedTransactionKey;
+    m_aValidationArtefacts = CollectionHelper.newList (aValidationArtefacts);
   }
 
   /**
@@ -87,44 +80,15 @@ public class ValidationConfiguration
 
   /**
    * @return All validation artefacts to be applied in the order specified by
-   *         the returned list. Never <code>null</code>. This list contains both
-   *         the standard validation artefacts as well as the extended
-   *         artefacts.
+   *         the returned list. Never <code>null</code> nor empty nor does it
+   *         contain <code>null</code> documents.
    */
   @Nonnull
+  @Nonempty
   @ReturnsMutableCopy
   public List <IValidationArtefact> getAllValidationArtefacts ()
   {
     return CollectionHelper.newList (m_aValidationArtefacts);
-  }
-
-  /**
-   * @return How many of the provided artefacts are standard artefacts? Always
-   *         &ge; 0.
-   */
-  @Nonnegative
-  public int getStandardArtefactCount ()
-  {
-    return m_nStandardArtefactCount;
-  }
-
-  /**
-   * @return How many of the provided artefacts are extended artefacts? Always
-   *         &ge; 0.
-   */
-  @Nonnegative
-  public int getExtendedArtefactCount ()
-  {
-    return m_nExtendedArtefactCount;
-  }
-
-  /**
-   * @return <code>true</code> if this configuration contains at least one
-   *         extended artefact.
-   */
-  public boolean hasExtendedArtefacts ()
-  {
-    return m_nExtendedArtefactCount > 0;
   }
 
   @Override
@@ -132,8 +96,25 @@ public class ValidationConfiguration
   {
     return new ToStringGenerator (this).append ("extendedTransactionKey", m_aExtendedTransactionKey)
                                        .append ("validationArtefacts", m_aValidationArtefacts)
-                                       .append ("standardArtefactCount", m_nStandardArtefactCount)
-                                       .append ("extendedArtefactCount", m_nExtendedArtefactCount)
                                        .toString ();
+  }
+
+  @Nonnull
+  public static ValidationConfiguration createForPeppol (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  {
+    final List <IValidationArtefact> aValidationArtefacts = new ArrayList <IValidationArtefact> ();
+
+    // Get all PEPPOL standard artefacts
+    aValidationArtefacts.addAll (EPeppolStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
+    if (aValidationArtefacts.isEmpty ())
+      s_aLogger.warn ("No standard validation artefact supports BIS '" +
+                      aExtendedTransactionKey.getBusinessSpecification ().getDisplayName () +
+                      "' and transaction " +
+                      aExtendedTransactionKey.getTransaction ().getTransactionKey ());
+
+    // Get all PEPPOL extended artefacts
+    aValidationArtefacts.addAll (EPeppolExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
+
+    return new ValidationConfiguration (aExtendedTransactionKey, aValidationArtefacts);
   }
 }

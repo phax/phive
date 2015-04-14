@@ -30,25 +30,32 @@ import com.helger.peppol.validation.test.CTestFiles;
 import com.helger.peppol.validation.test.TestFile;
 
 /**
- * Test validator.
+ * Test class for class {@link UBLDocumentValidator}.
  *
  * @author Philip Helger
  */
 public final class UBLDocumentValidatorTest
 {
   @Test
-  public void testApplyXSDValidation () throws SAXException
+  public void testReadAllTestFiles () throws SAXException
   {
     for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
     {
       assertTrue (aTestFile.getResource ().exists ());
 
-      // Read as generic XML
+      // Read as generic XML to verify that it is readable
       final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
       assertNotNull (aTestFile.getResource ().getPath (), aDoc);
+    }
+  }
 
+  @Test
+  public void testApplyXSDValidationPeppol ()
+  {
+    for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
+    {
       // Build validator
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (new ValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getExtendedTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
@@ -60,17 +67,11 @@ public final class UBLDocumentValidatorTest
   }
 
   @Test
-  public void testApplySchematronValidation () throws SAXException
+  public void testApplySchematronValidationPeppol () throws SAXException
   {
     for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
     {
-      assertTrue (aTestFile.getResource ().exists ());
-
-      // Read as generic XML
-      final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
-      assertNotNull (aTestFile.getResource ().getPath (), aDoc);
-
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (new ValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getExtendedTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());

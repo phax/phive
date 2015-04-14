@@ -42,7 +42,7 @@ public interface IValidationArtefact
   IReadableResource getSchematronResource ();
 
   /**
-   * @return The transaction key for this standard validation artefact. Never
+   * @return The transaction key for this validation artefact. Never
    *         <code>null</code>.
    */
   @Nonnull
@@ -51,7 +51,7 @@ public interface IValidationArtefact
   /**
    * @return The business specification to which the validation artefact
    *         belongs. Never <code>null</code>. This is a shortcut for
-   *         <code>getTransactionKey().getBIS()</code>.
+   *         <code>getTransactionKey().getBusinessSpecification()</code>.
    */
   @Nonnull
   IBusinessSpecification getBusinessSpecification ();
