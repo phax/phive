@@ -81,9 +81,9 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
   private final TransactionKey m_aTransactionKey;
 
   private EPeppolStandardValidationArtefact (@Nonnull @Nonempty final String sPath,
-                                       @Nonnull final TransactionKey aTransactionKey)
+                                             @Nonnull final TransactionKey aTransactionKey)
   {
-    m_aResource = new ClassPathResource ("/standard/" + sPath);
+    m_aResource = new ClassPathResource ("/peppol/standard/" + sPath);
     m_aTransactionKey = aTransactionKey;
   }
 

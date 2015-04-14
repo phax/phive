@@ -43,7 +43,7 @@ import com.helger.ubl.EUBL21DocumentType;
  *
  * @author Philip Helger
  */
-public enum EExtendedPeppolValidationArtefact implements IValidationArtefact
+public enum EPeppolExtendedValidationArtefact implements IValidationArtefact
 {
   INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
                                                                          ExtendedKey.AT)),
@@ -58,10 +58,10 @@ public enum EExtendedPeppolValidationArtefact implements IValidationArtefact
   private final ClassPathResource m_aResource;
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
 
-  private EExtendedPeppolValidationArtefact (@Nonnull @Nonempty final String sPath,
-                                       @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  private EPeppolExtendedValidationArtefact (@Nonnull @Nonempty final String sPath,
+                                             @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
-    m_aResource = new ClassPathResource ("/extended/" + sPath);
+    m_aResource = new ClassPathResource ("/peppol/extended/" + sPath);
     m_aExtendedTransactionKey = aExtendedTransactionKey;
   }
 
@@ -136,12 +136,12 @@ public enum EExtendedPeppolValidationArtefact implements IValidationArtefact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EExtendedPeppolValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  public static List <EPeppolExtendedValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
 
-    final List <EExtendedPeppolValidationArtefact> ret = new ArrayList <EExtendedPeppolValidationArtefact> ();
-    for (final EExtendedPeppolValidationArtefact e : values ())
+    final List <EPeppolExtendedValidationArtefact> ret = new ArrayList <EPeppolExtendedValidationArtefact> ();
+    for (final EPeppolExtendedValidationArtefact e : values ())
       if (e.getExtendedTransactionKey ().equals (aExtendedTransactionKey))
         ret.add (e);
     return ret;

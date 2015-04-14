@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact;
+package com.helger.peppol.validation.artefact.peppol;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -31,7 +31,7 @@ import com.helger.schematron.pure.SchematronResourcePure;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public final class EStandardValidationArtefactTest
+public final class EPeppolStandardValidationArtefactTest
 {
   @Test
   public void testBasic ()

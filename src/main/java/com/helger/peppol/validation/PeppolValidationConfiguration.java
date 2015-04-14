@@ -31,7 +31,7 @@ import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.artefact.peppol.EExtendedPeppolValidationArtefact;
+import com.helger.peppol.validation.artefact.peppol.EPeppolExtendedValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArtefact;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 
@@ -70,7 +70,7 @@ public class PeppolValidationConfiguration
     m_nStandardArtefactCount = m_aValidationArtefacts.size ();
 
     // Get all extended artefacts
-    m_aValidationArtefacts.addAll (EExtendedPeppolValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
+    m_aValidationArtefacts.addAll (EPeppolExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
     m_nExtendedArtefactCount = m_aValidationArtefacts.size () - m_nStandardArtefactCount;
   }
 

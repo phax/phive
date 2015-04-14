@@ -14,27 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact;
+package com.helger.peppol.validation.artefact.peppol;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.artefact.peppol.EExtendedPeppolValidationArtefact;
+import com.helger.peppol.validation.artefact.peppol.EPeppolExtendedValidationArtefact;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
- * Test class for class {@link EExtendedPeppolValidationArtefact}.
+ * Test class for class {@link EPeppolExtendedValidationArtefact}.
  *
  * @author Philip Helger
  */
-public final class EExtendedValidationArtefactTest
+public final class EPeppolExtendedValidationArtefactTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EExtendedPeppolValidationArtefact e : EExtendedPeppolValidationArtefact.values ())
+    for (final EPeppolExtendedValidationArtefact e : EPeppolExtendedValidationArtefact.values ())
     {
       assertNotNull (e.getSchematronResource ());
       assertTrue (e.getSchematronResource ().exists ());
@@ -52,7 +52,7 @@ public final class EExtendedValidationArtefactTest
   @Test
   public void testValidSchematrons ()
   {
-    for (final EExtendedPeppolValidationArtefact e : EExtendedPeppolValidationArtefact.values ())
+    for (final EPeppolExtendedValidationArtefact e : EPeppolExtendedValidationArtefact.values ())
     {
       // Check that the passed Schematron is valid
       assertTrue (new SchematronResourcePure (e.getSchematronResource ()).isValidSchematron ());
