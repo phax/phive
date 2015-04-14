@@ -54,7 +54,7 @@ public interface IValidationArtefact
    *         <code>getTransactionKey().getBIS()</code>.
    */
   @Nonnull
-  IBusinessSpecification getBIS ();
+  IBusinessSpecification getBusinessSpecification ();
 
   /**
    * @return The transaction to which the validation artefact belongs. Never

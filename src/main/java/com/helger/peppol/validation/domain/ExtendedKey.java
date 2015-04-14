@@ -101,8 +101,8 @@ public class ExtendedKey
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("country", m_aCountry)
-                                       .append ("sectorSpecific", m_bIsSectorSpecific)
+    return new ToStringGenerator (this).append ("Country", m_aCountry)
+                                       .append ("IsSectorSpecific", m_bIsSectorSpecific)
                                        .toString ();
   }
 }

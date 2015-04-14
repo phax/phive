@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
 import com.helger.commons.hash.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.ubl.EUBL21DocumentType;
@@ -32,24 +33,33 @@ import com.helger.ubl.EUBL21DocumentType;
  * @author Philip Helger
  */
 @Immutable
+@MustImplementEqualsAndHashcode
 public class TransactionKey
 {
-  private final IBusinessSpecification m_aBIS;
+  private final IBusinessSpecification m_aBusinessSpecification;
   private final ISpecificationTransaction m_aTransaction;
 
-  public TransactionKey (@Nonnull final IBusinessSpecification aBIS,
+  public TransactionKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
                          @Nonnull final ISpecificationTransaction aTransaction)
   {
-    m_aBIS = ValueEnforcer.notNull (aBIS, "BIS");
+    m_aBusinessSpecification = ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
     m_aTransaction = ValueEnforcer.notNull (aTransaction, "Transaction");
   }
 
+  /**
+   * @return The business specification this transaction key refers to. This is
+   *         the object passed in the constructor. Never <code>null</code>.
+   */
   @Nonnull
-  public IBusinessSpecification getBIS ()
+  public IBusinessSpecification getBusinessSpecification ()
   {
-    return m_aBIS;
+    return m_aBusinessSpecification;
   }
 
+  /**
+   * @return The transaction of the specification as passed in the constructor.
+   *         Never <code>null</code>.
+   */
   @Nonnull
   public ISpecificationTransaction getTransaction ()
   {
@@ -73,18 +83,20 @@ public class TransactionKey
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final TransactionKey rhs = (TransactionKey) o;
-    return m_aBIS.equals (rhs.m_aBIS) && m_aTransaction.equals (rhs.m_aTransaction);
+    return m_aBusinessSpecification.equals (rhs.m_aBusinessSpecification) && m_aTransaction.equals (rhs.m_aTransaction);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aBIS).append (m_aTransaction).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aBusinessSpecification).append (m_aTransaction).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("BIS", m_aBIS).append ("transaction", m_aTransaction).toString ();
+    return new ToStringGenerator (this).append ("BusinessSpecification", m_aBusinessSpecification)
+                                       .append ("Transaction", m_aTransaction)
+                                       .toString ();
   }
 }

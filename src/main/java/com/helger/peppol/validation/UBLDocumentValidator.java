@@ -42,23 +42,27 @@ import com.helger.schematron.svrl.SVRLUtils;
 import com.helger.ubl.UBL21DocumentTypes;
 
 /**
- * This is the main validation class to validate PEPPOL UBL 2.1 documents
- * according to a passed validation configuration.
+ * This is the main validation class to validate e.g. PEPPOL UBL 2.1 documents
+ * according to a passed {@link ValidationConfiguration} object.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class PeppolValidator
+public class UBLDocumentValidator
 {
-  private final PeppolValidationConfiguration m_aConfiguration;
+  private final ValidationConfiguration m_aConfiguration;
 
-  public PeppolValidator (@Nonnull final PeppolValidationConfiguration aConfiguration)
+  public UBLDocumentValidator (@Nonnull final ValidationConfiguration aConfiguration)
   {
     m_aConfiguration = ValueEnforcer.notNull (aConfiguration, "Configuration");
   }
 
+  /**
+   * @return The validation configuration as passed in the constructor. Never
+   *         <code>null</code>.
+   */
   @Nonnull
-  public PeppolValidationConfiguration getValidationConfiguration ()
+  public ValidationConfiguration getValidationConfiguration ()
   {
     return m_aConfiguration;
   }

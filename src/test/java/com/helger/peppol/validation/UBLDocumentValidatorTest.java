@@ -34,7 +34,7 @@ import com.helger.peppol.validation.test.TestFile;
  *
  * @author Philip Helger
  */
-public final class PeppolValidatorTest
+public final class UBLDocumentValidatorTest
 {
   @Test
   public void testApplyXSDValidation () throws SAXException
@@ -48,7 +48,7 @@ public final class PeppolValidatorTest
       assertNotNull (aTestFile.getResource ().getPath (), aDoc);
 
       // Build validator
-      final PeppolValidator aValidator = new PeppolValidator (new PeppolValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (new ValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
@@ -70,7 +70,7 @@ public final class PeppolValidatorTest
       final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
       assertNotNull (aTestFile.getResource ().getPath (), aDoc);
 
-      final PeppolValidator aValidator = new PeppolValidator (new PeppolValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (new ValidationConfiguration (aTestFile.getExtendedTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());

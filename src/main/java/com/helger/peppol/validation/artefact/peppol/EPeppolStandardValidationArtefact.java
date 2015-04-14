@@ -100,9 +100,9 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public IBusinessSpecification getBIS ()
+  public IBusinessSpecification getBusinessSpecification ()
   {
-    return m_aTransactionKey.getBIS ();
+    return m_aTransactionKey.getBusinessSpecification ();
   }
 
   @Nonnull

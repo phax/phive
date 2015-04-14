@@ -130,7 +130,7 @@ public final class CTestFiles
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <TestFile> getAllTestFiles (@Nonnull final TransactionKey aTransactionKey)
+  public static List <TestFile> getAllMatchingTestFiles (@Nonnull final TransactionKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 

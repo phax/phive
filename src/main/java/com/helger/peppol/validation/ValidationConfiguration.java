@@ -36,15 +36,16 @@ import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArt
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 
 /**
- * This class contains the configuration to run a PEPPOL document validation. An
- * instance of this class can be used to validate multiple documents.
+ * This class contains the configuration to run a single UBL document
+ * validation. An instance of this class can be used to validate multiple
+ * documents.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class PeppolValidationConfiguration
+public class ValidationConfiguration
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (PeppolValidationConfiguration.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationConfiguration.class);
 
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
   private final List <IValidationArtefact> m_aValidationArtefacts = new ArrayList <IValidationArtefact> ();
@@ -56,7 +57,7 @@ public class PeppolValidationConfiguration
    *        The extended transaction key to be used. May not be
    *        <code>null</code>.
    */
-  public PeppolValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  public ValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
 
@@ -64,7 +65,7 @@ public class PeppolValidationConfiguration
     m_aValidationArtefacts.addAll (EPeppolStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
     if (m_aValidationArtefacts.isEmpty ())
       s_aLogger.warn ("No standard validation artefact supports BIS '" +
-                      aExtendedTransactionKey.getBIS ().getDisplayName () +
+                      aExtendedTransactionKey.getBusinessSpecification ().getDisplayName () +
                       "' and transaction " +
                       aExtendedTransactionKey.getTransaction ().getTransactionKey ());
     m_nStandardArtefactCount = m_aValidationArtefacts.size ();
@@ -115,6 +116,15 @@ public class PeppolValidationConfiguration
   public int getExtendedArtefactCount ()
   {
     return m_nExtendedArtefactCount;
+  }
+
+  /**
+   * @return <code>true</code> if this configuration contains at least one
+   *         extended artefact.
+   */
+  public boolean hasExtendedArtefacts ()
+  {
+    return m_nExtendedArtefactCount > 0;
   }
 
   @Override

@@ -41,7 +41,7 @@ public final class EPeppolStandardValidationArtefactTest
       assertNotNull (e.getSchematronResource ());
       assertTrue (e.getSchematronResource ().exists ());
       assertNotNull (e.getTransactionKey ());
-      assertNotNull (e.getBIS ());
+      assertNotNull (e.getBusinessSpecification ());
       assertNotNull (e.getTransaction ());
       assertNotNull (e.getUBLDocumentType ());
       assertFalse (e.isCountrySpecific ());
