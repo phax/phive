@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact;
+package com.helger.peppol.validation.artefact.peppol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,7 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.ExtendedKey;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.IBusinessSpecification;
@@ -42,7 +43,7 @@ import com.helger.ubl.EUBL21DocumentType;
  *
  * @author Philip Helger
  */
-public enum EExtendedValidationArtefact implements IValidationArtefact
+public enum EExtendedPeppolValidationArtefact implements IValidationArtefact
 {
   INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
                                                                          ExtendedKey.AT)),
@@ -57,7 +58,7 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
   private final ClassPathResource m_aResource;
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
 
-  private EExtendedValidationArtefact (@Nonnull @Nonempty final String sPath,
+  private EExtendedPeppolValidationArtefact (@Nonnull @Nonempty final String sPath,
                                        @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     m_aResource = new ClassPathResource ("/extended/" + sPath);
@@ -135,12 +136,12 @@ public enum EExtendedValidationArtefact implements IValidationArtefact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EExtendedValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  public static List <EExtendedPeppolValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
 
-    final List <EExtendedValidationArtefact> ret = new ArrayList <EExtendedValidationArtefact> ();
-    for (final EExtendedValidationArtefact e : values ())
+    final List <EExtendedPeppolValidationArtefact> ret = new ArrayList <EExtendedPeppolValidationArtefact> ();
+    for (final EExtendedPeppolValidationArtefact e : values ())
       if (e.getExtendedTransactionKey ().equals (aExtendedTransactionKey))
         ret.add (e);
     return ret;

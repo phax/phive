@@ -30,9 +30,9 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.collections.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.artefact.EExtendedValidationArtefact;
-import com.helger.peppol.validation.artefact.EStandardValidationArtefact;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
+import com.helger.peppol.validation.artefact.peppol.EExtendedPeppolValidationArtefact;
+import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArtefact;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 
 /**
@@ -61,7 +61,7 @@ public class PeppolValidationConfiguration
     m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
 
     // Get all standard artefacts
-    m_aValidationArtefacts.addAll (EStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
+    m_aValidationArtefacts.addAll (EPeppolStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
     if (m_aValidationArtefacts.isEmpty ())
       s_aLogger.warn ("No standard validation artefact supports BIS '" +
                       aExtendedTransactionKey.getBIS ().getDisplayName () +
@@ -70,7 +70,7 @@ public class PeppolValidationConfiguration
     m_nStandardArtefactCount = m_aValidationArtefacts.size ();
 
     // Get all extended artefacts
-    m_aValidationArtefacts.addAll (EExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
+    m_aValidationArtefacts.addAll (EExtendedPeppolValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
     m_nExtendedArtefactCount = m_aValidationArtefacts.size () - m_nStandardArtefactCount;
   }
 

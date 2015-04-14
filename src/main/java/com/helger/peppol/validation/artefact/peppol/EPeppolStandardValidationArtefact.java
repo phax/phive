@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact;
+package com.helger.peppol.validation.artefact.peppol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,7 @@ import com.helger.commons.annotations.Nonempty;
 import com.helger.commons.annotations.ReturnsMutableCopy;
 import com.helger.commons.io.IReadableResource;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.IBusinessSpecification;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
@@ -41,7 +42,7 @@ import com.helger.ubl.EUBL21DocumentType;
  *
  * @author Philip Helger
  */
-public enum EStandardValidationArtefact implements IValidationArtefact
+public enum EPeppolStandardValidationArtefact implements IValidationArtefact
 {
   CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", PeppolTransactionKey.CATALOGUE_01_T19),
   CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", PeppolTransactionKey.CATALOGUE_01_T19),
@@ -79,7 +80,7 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   private final ClassPathResource m_aResource;
   private final TransactionKey m_aTransactionKey;
 
-  private EStandardValidationArtefact (@Nonnull @Nonempty final String sPath,
+  private EPeppolStandardValidationArtefact (@Nonnull @Nonempty final String sPath,
                                        @Nonnull final TransactionKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/standard/" + sPath);
@@ -150,12 +151,12 @@ public enum EStandardValidationArtefact implements IValidationArtefact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EStandardValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey)
+  public static List <EPeppolStandardValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 
-    final List <EStandardValidationArtefact> ret = new ArrayList <EStandardValidationArtefact> ();
-    for (final EStandardValidationArtefact e : values ())
+    final List <EPeppolStandardValidationArtefact> ret = new ArrayList <EPeppolStandardValidationArtefact> ();
+    for (final EPeppolStandardValidationArtefact e : values ())
       if (e.getTransactionKey ().equals (aTransactionKey))
         ret.add (e);
     return ret;
@@ -173,7 +174,7 @@ public enum EStandardValidationArtefact implements IValidationArtefact
   public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey)
   {
     if (aTransactionKey != null)
-      for (final EStandardValidationArtefact e : values ())
+      for (final EPeppolStandardValidationArtefact e : values ())
         if (e.getTransactionKey ().equals (aTransactionKey))
           return true;
     return false;
