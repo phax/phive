@@ -32,7 +32,6 @@ import org.xml.sax.SAXException;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.EErrorLevel;
-import com.helger.commons.error.IResourceError;
 import com.helger.commons.error.IResourceErrorGroup;
 import com.helger.commons.error.ResourceError;
 import com.helger.commons.error.ResourceErrorGroup;
@@ -177,23 +176,27 @@ public class UBLDocumentValidator
     final ResourceErrorGroup ret = new ResourceErrorGroup ();
     for (final IValidationArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
     {
+      // get the Schematron resource to be used for this validation artefact
       final IReadableResource aSCHRes = aArtefact.getSchematronResource ();
+
       final CollectingPSErrorHandler aErrorHandler = new CollectingPSErrorHandler ();
       final SchematronResourcePure aSCH = new SchematronResourcePure (aSCHRes).setErrorHandler (aErrorHandler);
       try
       {
+        // Main application of Schematron
         final SchematronOutputType aSVRL = aSCH.applySchematronValidationToSVRL (aUBLDocumentNode);
         if (aSVRL == null)
         {
           // Invalid Schematron - unexpected
-          for (final IResourceError aErr : aErrorHandler.getAllResourceErrors ())
-            ret.addResourceError (aErr);
+          ret.addResourceErrors (aErrorHandler.getAllResourceErrors ());
         }
         else
         {
-          if (!aErrorHandler.getAllResourceErrors ().isEmpty ())
-            throw new IllegalStateException ("Expected no error");
+          // Conversion was successful
+          if (!aErrorHandler.isEmpty ())
+            throw new IllegalStateException ("Expected no error but got: " + aErrorHandler.getAllResourceErrors ());
 
+          // Convert failed asserts and successful reports to resource errors
           for (final SVRLFailedAssert aFailedAssert : SVRLUtils.getAllFailedAssertions (aSVRL))
             ret.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
           for (final SVRLSuccessfulReport aSuccessfulReport : SVRLUtils.getAllSuccesssfulReports (aSVRL))
