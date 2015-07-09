@@ -25,12 +25,12 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.GlobalDebug;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.name.IHasDisplayText;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.peppol.validation.domain.ISpecificationProfile;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
 

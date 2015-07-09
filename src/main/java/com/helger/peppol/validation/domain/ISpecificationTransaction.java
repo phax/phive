@@ -19,10 +19,10 @@ package com.helger.peppol.validation.domain;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasName;
-import com.helger.ubl.EUBL21DocumentType;
+import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * Represents a single transaction within a specification.

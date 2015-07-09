@@ -24,16 +24,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.Nonempty;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.IBusinessSpecification;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
-import com.helger.ubl.EUBL21DocumentType;
+import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * This enumeration contains all the default OpenPEPPOL Schematron artefacts.

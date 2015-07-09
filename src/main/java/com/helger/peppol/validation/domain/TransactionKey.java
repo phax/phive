@@ -20,10 +20,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.MustImplementEqualsAndHashcode;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.ubl.EUBL21DocumentType;
+import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * An immutable pair of a business specification of type

@@ -20,11 +20,11 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.commons.annotations.Nonempty;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.peppol.validation.domain.ISpecificationTransaction;
-import com.helger.ubl.EUBL21DocumentType;
+import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * Represents a single CEN BII2 transaction used in several profiles.<br>

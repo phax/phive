@@ -36,9 +36,9 @@ import com.helger.commons.error.IResourceErrorGroup;
 import com.helger.commons.error.ResourceError;
 import com.helger.commons.error.ResourceErrorGroup;
 import com.helger.commons.error.ResourceLocation;
-import com.helger.commons.io.IInputStreamProvider;
-import com.helger.commons.io.IReadableResource;
-import com.helger.commons.io.streams.StreamUtils;
+import com.helger.commons.io.IHasInputStream;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
 import com.helger.commons.xml.transform.TransformSourceFactory;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
@@ -48,7 +48,7 @@ import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.svrl.SVRLUtils;
-import com.helger.ubl.UBL21DocumentTypes;
+import com.helger.ubl21.UBL21DocumentTypes;
 
 /**
  * This is the main validation class to validate e.g. PEPPOL UBL 2.1 documents
@@ -89,7 +89,7 @@ public class UBLDocumentValidator
   }
 
   @Nonnull
-  public IResourceErrorGroup applyXSDValidation (@Nonnull final IInputStreamProvider aUBLDocument)
+  public IResourceErrorGroup applyXSDValidation (@Nonnull final IHasInputStream aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -99,8 +99,8 @@ public class UBLDocumentValidator
     if (aSource instanceof StreamSource)
     {
       // Close both because we don't know which one is used
-      StreamUtils.close (((StreamSource) aSource).getInputStream ());
-      StreamUtils.close (((StreamSource) aSource).getReader ());
+      StreamHelper.close (((StreamSource) aSource).getInputStream ());
+      StreamHelper.close (((StreamSource) aSource).getReader ());
     }
   }
 
@@ -127,8 +127,8 @@ public class UBLDocumentValidator
         aErrors.addResourceError (new ResourceError (new ResourceLocation (aUBLDocument.getSystemId ()),
                                                      EErrorLevel.ERROR,
                                                      "Don't know how to read UBL object of class " +
-                                                         aUBLImplementationClass.getName () +
-                                                         " because no XML schema class is available."));
+                                                                        aUBLImplementationClass.getName () +
+                                                                        " because no XML schema class is available."));
       }
       else
       {
@@ -157,7 +157,7 @@ public class UBLDocumentValidator
   }
 
   @Nonnull
-  public IResourceErrorGroup applySchematronValidation (@Nonnull final IInputStreamProvider aUBLDocument) throws SAXException
+  public IResourceErrorGroup applySchematronValidation (@Nonnull final IHasInputStream aUBLDocument) throws SAXException
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -199,7 +199,7 @@ public class UBLDocumentValidator
           // Convert failed asserts and successful reports to resource errors
           for (final SVRLFailedAssert aFailedAssert : SVRLUtils.getAllFailedAssertions (aSVRL))
             ret.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
-          for (final SVRLSuccessfulReport aSuccessfulReport : SVRLUtils.getAllSuccesssfulReports (aSVRL))
+          for (final SVRLSuccessfulReport aSuccessfulReport : SVRLUtils.getAllSuccessfulReports (aSVRL))
             ret.addResourceError (aSuccessfulReport.getAsResourceError (sResourceName));
         }
       }

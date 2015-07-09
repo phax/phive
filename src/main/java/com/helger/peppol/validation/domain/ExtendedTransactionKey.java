@@ -22,10 +22,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsUtils;
-import com.helger.commons.hash.HashCodeGenerator;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.ubl.EUBL21DocumentType;
+import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * A combination of {@link TransactionKey} and {@link ExtendedKey}. So this is a
@@ -49,7 +49,8 @@ public class ExtendedTransactionKey
     this (aTransactionKey, (ExtendedKey) null);
   }
 
-  public ExtendedTransactionKey (@Nonnull final TransactionKey aTransactionKey, @Nullable final ExtendedKey aExtendedKey)
+  public ExtendedTransactionKey (@Nonnull final TransactionKey aTransactionKey,
+                                 @Nullable final ExtendedKey aExtendedKey)
   {
     m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
     m_aExtendedKey = aExtendedKey;
@@ -115,7 +116,7 @@ public class ExtendedTransactionKey
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ExtendedTransactionKey rhs = (ExtendedTransactionKey) o;
-    return m_aTransactionKey.equals (rhs.m_aTransactionKey) && EqualsUtils.equals (m_aExtendedKey, rhs.m_aExtendedKey);
+    return m_aTransactionKey.equals (rhs.m_aTransactionKey) && EqualsHelper.equals (m_aExtendedKey, rhs.m_aExtendedKey);
   }
 
   @Override

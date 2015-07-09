@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 /**
  * Test class for class {@link EBII2Transaction}.

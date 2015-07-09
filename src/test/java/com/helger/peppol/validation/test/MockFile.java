@@ -23,9 +23,9 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotations.ReturnsMutableCopy;
-import com.helger.commons.collections.CollectionHelper;
-import com.helger.commons.io.IReadableResource;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.TransactionKey;
 
@@ -36,13 +36,13 @@ import com.helger.peppol.validation.domain.TransactionKey;
  * @author Philip Helger
  */
 @Immutable
-public class TestFile
+public class MockFile
 {
   private final IReadableResource m_aResource;
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
   private final Set <String> m_aExpectedErrorIDs;
 
-  public TestFile (@Nonnull final IReadableResource aResource,
+  public MockFile (@Nonnull final IReadableResource aResource,
                    @Nonnull final ExtendedTransactionKey aExtendedTransactionKey,
                    @Nullable final Set <String> aExpectedErrorIDs)
   {

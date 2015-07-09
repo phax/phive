@@ -32,14 +32,14 @@ import com.helger.peppol.validation.domain.TransactionKey;
  * @author Philip Helger
  */
 @Immutable
-public class StandardTestFile
+public class MockStandardFile
 {
   public static final String STANDARD_PATH = "/xml/standard/";
 
   @Nonnull
-  public static TestFile createGoodCase (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
+  public static MockFile createGoodCase (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
   {
-    return new TestFile (new ClassPathResource (STANDARD_PATH + sPath),
+    return new MockFile (new ClassPathResource (STANDARD_PATH + sPath),
                          new ExtendedTransactionKey (aTransactionKey),
                          (Set <String>) null);
   }

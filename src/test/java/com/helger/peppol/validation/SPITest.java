@@ -14,30 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain.peppol;
-
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+package com.helger.peppol.validation;
 
 import org.junit.Test;
 
-import com.helger.commons.string.StringHelper;
+import com.helger.commons.mock.CommonsTestHelper;
 
 /**
- * Test class for class {@link EBII2Group}.
+ * Test SPI definitions
  * 
- * @author PEPPOL.AT, BRZ, Philip Helger
+ * @author Philip Helger
  */
-public final class EBII2GroupTest
+public final class SPITest
 {
   @Test
-  public void testBasic ()
+  public void testBasic () throws Exception
   {
-    for (final EBII2Group eGroup : EBII2Group.values ())
-    {
-      assertTrue (StringHelper.hasText (eGroup.getID ()));
-      assertSame (eGroup, EBII2Group.valueOf (eGroup.name ()));
-      assertSame (eGroup, EBII2Group.getFromIDOrNull (eGroup.getID ()));
-    }
+    CommonsTestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }

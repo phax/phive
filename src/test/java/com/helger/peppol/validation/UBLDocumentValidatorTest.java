@@ -25,9 +25,9 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.helger.commons.error.IResourceErrorGroup;
-import com.helger.commons.xml.serialize.DOMReader;
+import com.helger.commons.xml.serialize.read.DOMReader;
 import com.helger.peppol.validation.test.CTestFiles;
-import com.helger.peppol.validation.test.TestFile;
+import com.helger.peppol.validation.test.MockFile;
 
 /**
  * Test class for class {@link UBLDocumentValidator}.
@@ -39,7 +39,7 @@ public final class UBLDocumentValidatorTest
   @Test
   public void testReadAllTestFiles () throws SAXException
   {
-    for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
+    for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
       assertTrue (aTestFile.getResource ().exists ());
 
@@ -52,7 +52,7 @@ public final class UBLDocumentValidatorTest
   @Test
   public void testApplyXSDValidationPeppol ()
   {
-    for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
+    for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
       // Build validator
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getExtendedTransactionKey ()));
@@ -69,7 +69,7 @@ public final class UBLDocumentValidatorTest
   @Test
   public void testApplySchematronValidationPeppol () throws SAXException
   {
-    for (final TestFile aTestFile : CTestFiles.getAllTestFiles ())
+    for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getExtendedTransactionKey ()));
 

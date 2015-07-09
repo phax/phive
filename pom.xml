@@ -65,27 +65,17 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-commons</artifactId>
-      <version>5.7.1</version>
+      <version>6.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-ubl</artifactId>
-      <version>3.3.1</version>
-      <exclusions>
-        <exclusion>
-          <groupId>com.helger</groupId>
-          <artifactId>ph-ubl20</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.helger</groupId>
-          <artifactId>ph-ubl20-codelists</artifactId>
-        </exclusion>
-      </exclusions>
+      <artifactId>ph-ubl21</artifactId>
+      <version>4.0.0-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
-      <version>2.9.2</version>
+      <version>3.0.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
