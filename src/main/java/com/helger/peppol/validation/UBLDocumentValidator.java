@@ -42,12 +42,12 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
 import com.helger.commons.xml.transform.TransformSourceFactory;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.schematron.SchematronUtils;
+import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
-import com.helger.schematron.svrl.SVRLUtils;
+import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.ubl21.UBL21DocumentTypes;
 
 /**
@@ -171,7 +171,7 @@ public class UBLDocumentValidator
       sResourceName = "in-memory-data";
 
     // Convert source to a Node only once - this closes any underlying stream
-    final Node aUBLDocumentNode = SchematronUtils.getNodeOfSource (aUBLDocument);
+    final Node aUBLDocumentNode = SchematronResourceHelper.getNodeOfSource (aUBLDocument);
 
     final ResourceErrorGroup ret = new ResourceErrorGroup ();
     for (final IValidationArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
@@ -197,9 +197,9 @@ public class UBLDocumentValidator
             throw new IllegalStateException ("Expected no error but got: " + aErrorHandler.getAllResourceErrors ());
 
           // Convert failed asserts and successful reports to resource errors
-          for (final SVRLFailedAssert aFailedAssert : SVRLUtils.getAllFailedAssertions (aSVRL))
+          for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
             ret.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
-          for (final SVRLSuccessfulReport aSuccessfulReport : SVRLUtils.getAllSuccessfulReports (aSVRL))
+          for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
             ret.addResourceError (aSuccessfulReport.getAsResourceError (sResourceName));
         }
       }
