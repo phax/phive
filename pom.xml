@@ -75,9 +75,35 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
-      <version>3.0.0-SNAPSHOT</version>
+      <version>3.0.0</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.odftoolkit</groupId>
+      <artifactId>simple-odf</artifactId>
+      <version>0.8.1-incubating</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>com.sun</groupId>
+          <artifactId>tools</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-genericode</artifactId>
+      <version>4.1.0</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -107,9 +133,9 @@
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>src/main/resources/extended/**</exclude>
-            <exclude>src/main/resources/standard/**</exclude>
+            <exclude>src/main/resources/peppol/**</exclude>
             <exclude>src/test/resources/xml/**</exclude>
+            <exclude>src/test/resources/rule-source/**</exclude>
           </excludes>
         </configuration>
       </plugin>
