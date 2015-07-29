@@ -201,7 +201,11 @@ public final class CodeListCreator
     {
       final Table aSheet = aSpreadSheet.getSheetByName (sCodeListName);
       if (aSheet == null)
-        throw new IllegalStateException ("Failed to resolve sheet with name '" + sCodeListName + "'");
+      {
+        // E.g. for 'EvidenceTypeCode'
+        CreateHelper.warn ("Failed to resolve sheet with name '" + sCodeListName + "'");
+        continue;
+      }
 
       final File aGCFile = aCodeList.getGCFile (sCodeListName);
       CreateHelper.log ("    Creating " + aGCFile.getName ());
@@ -220,7 +224,7 @@ public final class CodeListCreator
       aIdentification.setShortName (Genericode10Helper.createShortName (sShortname));
       aIdentification.setVersion (sVersion);
       aIdentification.setCanonicalUri (sAgency);
-      aIdentification.setCanonicalVersionUri (sAgency + "-" + sVersion);
+      aIdentification.setCanonicalVersionUri (StringHelper.getConcatenatedOnDemand (sAgency, '-', sVersion));
       aIdentification.getLocationUri ().add (sLocationURI);
       aGC.setIdentification (aIdentification);
 
