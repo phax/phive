@@ -44,11 +44,11 @@ import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
 import com.helger.commons.xml.serialize.write.XMLWriterSettings;
+import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
 import com.helger.peppol.validation.supplementary.createrules.RuleSourceItem;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
 import com.helger.schematron.CSchematron;
-import com.helger.ubl21.CUBL21;
 
 @Immutable
 public final class SchematronCreator
@@ -194,9 +194,9 @@ public final class SchematronCreator
   @Nonnull
   @Nonempty
   private IMultiMapListBased <String, RuleParam> _readBindingTests (@Nonnull final Table aSheet,
-                                                                    @Nonnull final String sBindingName)
+                                                                    @Nonnull final ESyntaxBinding eBinding)
   {
-    CreateHelper.log ("    Handling sheet for binding '" + sBindingName + "'");
+    CreateHelper.log ("    Handling sheet for binding '" + eBinding.getID () + "'");
     int nRow = 1;
     final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased <String, RuleParam> ();
     while (!ODFHelper.isEmpty (aSheet, 0, nRow))
@@ -217,7 +217,7 @@ public final class SchematronCreator
   }
 
   private void _writeBindingTests (@Nonnull final RuleSourceBusinessRule aBusinessRule,
-                                   @Nonnull final String sBindingName,
+                                   @Nonnull final ESyntaxBinding eBinding,
                                    @Nonnull final IMultiMapListBased <String, RuleParam> aBindingTests)
   {
     // Check if all required rules derived from the abstract rules are present
@@ -229,7 +229,7 @@ public final class SchematronCreator
         throw new IllegalStateException ("Found no rules for transaction " +
                                          sTransaction +
                                          " and binding " +
-                                         sBindingName);
+                                         eBinding.getID ());
 
       for (final Map.Entry <String, List <RuleAssertion>> aEntryContext : aEntryTransaction.getValue ().entrySet ())
       {
@@ -257,9 +257,9 @@ public final class SchematronCreator
     for (final Map.Entry <String, List <RuleParam>> aRuleEntry : aBindingTests.entrySet ())
     {
       final String sTransaction = aRuleEntry.getKey ();
-      final File aSCHFile = aBusinessRule.getSchematronBindingFile (sBindingName, sTransaction);
+      final File aSCHFile = aBusinessRule.getSchematronBindingFile (eBinding, sTransaction);
       CreateHelper.log ("      Writing " +
-                        sBindingName +
+                        eBinding.getID () +
                         " Schematron file " +
                         aSCHFile.getName () +
                         " for transaction " +
@@ -270,11 +270,11 @@ public final class SchematronCreator
 
       final IMicroDocument aDoc = new MicroDocument ();
       aDoc.appendComment ("This file is generated automatically! Do NOT edit!");
-      aDoc.appendComment ("Schematron tests for binding " + sBindingName + " and transaction " + sTransaction);
+      aDoc.appendComment ("Schematron tests for binding " + eBinding.getID () + " and transaction " + sTransaction);
       final IMicroElement ePattern = aDoc.appendElement (NS_SCHEMATRON, "pattern");
       // Assign to the global pattern
       ePattern.setAttribute ("is-a", sTransaction);
-      ePattern.setAttribute ("id", sBindingName.toUpperCase (Locale.US) + "-" + sTransaction);
+      ePattern.setAttribute ("id", eBinding.getID () + "-" + sTransaction);
       for (final RuleParam aRuleParam : aRuleEntry.getValue ())
       {
         final IMicroElement eParam = ePattern.appendElement (NS_SCHEMATRON, "param");
@@ -311,7 +311,9 @@ public final class SchematronCreator
       // String sCodelistFilename= ODFHelper.getText (aLastSheet, 3, nRow);
       final String sNamespace = ODFHelper.getText (aLastSheet, 4, nRow);
 
-      final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (sBindingName, sTransaction);
+      final ESyntaxBinding eBinding = ESyntaxBinding.getFromIDOrNull (sBindingName);
+
+      final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (eBinding, sTransaction);
       CreateHelper.log ("      Writing " + sBindingName + " Schematron assembly file " + aSCHFile.getName ());
 
       final String sBindingPrefix = sBindingName.toLowerCase (Locale.US);
@@ -325,31 +327,11 @@ public final class SchematronCreator
       eSchema.appendElement (NS_SCHEMATRON, "title")
              .appendText (aBusinessRule.getID () + " " + sTransaction + " bound to " + sBindingName);
 
-      if ("UBL".equals (sBindingName))
-      {
+      // Add all syntax binding namespace mappings
+      for (final Map.Entry <String, String> aEntry : eBinding.getAllNamespaces ().entrySet ())
         eSchema.appendElement (NS_SCHEMATRON, "ns")
-               .setAttribute ("prefix", "cac")
-               .setAttribute ("uri", CUBL21.XML_SCHEMA_CAC_NAMESPACE_URL);
-        eSchema.appendElement (NS_SCHEMATRON, "ns")
-               .setAttribute ("prefix", "cbc")
-               .setAttribute ("uri", CUBL21.XML_SCHEMA_CBC_NAMESPACE_URL);
-        eSchema.appendElement (NS_SCHEMATRON, "ns")
-               .setAttribute ("prefix", "cec")
-               .setAttribute ("uri", CUBL21.XML_SCHEMA_CEC_NAMESPACE_URL);
-      }
-      else
-        if ("CEFACT".equals (sBindingName))
-        {
-          eSchema.appendElement (NS_SCHEMATRON, "ns")
-                 .setAttribute ("prefix", "ram")
-                 .setAttribute ("uri",
-                                "urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:10");
-          eSchema.appendElement (NS_SCHEMATRON, "ns")
-                 .setAttribute ("prefix", "rsm")
-                 .setAttribute ("uri", "urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:4");
-        }
-        else
-          CreateHelper.warn ("No predefined namespaces for binding '" + sBindingName + "' available!");
+               .setAttribute ("prefix", aEntry.getKey ())
+               .setAttribute ("uri", aEntry.getValue ());
       eSchema.appendElement (NS_SCHEMATRON, "ns").setAttribute ("prefix", sBindingPrefix).setAttribute ("uri",
                                                                                                         sNamespace);
 
@@ -387,8 +369,7 @@ public final class SchematronCreator
       }
       eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
       eInclude.setAttribute ("href",
-                             "include/" +
-                                     aBusinessRule.getSchematronBindingFile (sBindingName, sTransaction).getName ());
+                             "include/" + aBusinessRule.getSchematronBindingFile (eBinding, sTransaction).getName ());
 
       if (MicroWriter.writeToFile (aDoc, aSCHFile).isFailure ())
         throw new IllegalStateException ("Failed to write file " + aSCHFile);
@@ -406,7 +387,7 @@ public final class SchematronCreator
     {
       CreateHelper.log ("Creating Schematron files for " + aRuleSourceItem.getID ());
 
-      // Process all business rule files
+      // Process all business rule files for this rule source item
       for (final RuleSourceBusinessRule aBusinessRule : aRuleSourceItem.getAllBusinessRules ())
       {
         // Read ODS file
@@ -426,10 +407,17 @@ public final class SchematronCreator
         {
           final Table aSheet = aSpreadSheet.getSheetByIndex (nSheetIndex);
           final String sBindingName = aSheet.getTableName ();
+          final ESyntaxBinding eBinding = ESyntaxBinding.getFromIDOrNull (sBindingName);
+          if (eBinding == null)
+            throw new IllegalStateException ("Unsupported syntax binding '" + sBindingName + "'");
 
-          // Read all binding specific tests
-          final IMultiMapListBased <String, RuleParam> aBindingTests = aSC._readBindingTests (aSheet, sBindingName);
-          aSC._writeBindingTests (aBusinessRule, sBindingName, aBindingTests);
+          // Use only selected syntaxes (if requested)
+          if (aRuleSourceItem.matchesRequestedSyntaxBinding (eBinding))
+          {
+            // Read all binding specific tests
+            final IMultiMapListBased <String, RuleParam> aBindingTests = aSC._readBindingTests (aSheet, eBinding);
+            aSC._writeBindingTests (aBusinessRule, eBinding, aBindingTests);
+          }
         }
 
         // Write the assembly files

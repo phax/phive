@@ -45,20 +45,23 @@ public final class MainCreateValidationRules
       aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                                 aRuleTarget,
                                                 aCodeListTarget,
-                                                "atgov").addBussinessRule ("businessrules/atgov-T10-BusinessRules-v03.ods")
-                                                        .addBussinessRule ("businessrules/atgov-T14-BusinessRules-v03.ods"));
+                                                "atgov",
+                                                ESyntaxBinding.UBL).addBussinessRule ("businessrules/atgov-T10-BusinessRules-v03.ods")
+                                                                   .addBussinessRule ("businessrules/atgov-T14-BusinessRules-v03.ods"));
       aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                                 aRuleTarget,
                                                 aCodeListTarget,
-                                                "atnat").addBussinessRule ("businessrules/atnat-T10-BusinessRules-v04.ods")
-                                                        .addBussinessRule ("businessrules/atnat-T14-BusinessRules-v04.ods"));
+                                                "atnat",
+                                                ESyntaxBinding.UBL).addBussinessRule ("businessrules/atnat-T10-BusinessRules-v04.ods")
+                                                                   .addBussinessRule ("businessrules/atnat-T14-BusinessRules-v04.ods"));
     }
 
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aRuleTarget,
                                               aCodeListTarget,
-                                              "BIS2.0-invoice4a-VA_V3.0").addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
-                                                                         .addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v11.ods"));
+                                              "BIS2.0-invoice4a-VA_V3.0",
+                                              ESyntaxBinding.UBL).addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
+                                                                 .addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v11.ods"));
 
     // Create all codelists (GC + CVA)
     // Processing time: quite quick

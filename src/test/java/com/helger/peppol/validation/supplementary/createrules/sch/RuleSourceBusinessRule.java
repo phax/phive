@@ -29,6 +29,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.string.StringHelper;
+import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
 
 public final class RuleSourceBusinessRule
 {
@@ -77,10 +78,11 @@ public final class RuleSourceBusinessRule
   }
 
   @Nonnull
-  public File getSchematronBindingFile (@Nonnull @Nonempty final String sBindingName,
+  public File getSchematronBindingFile (@Nonnull final ESyntaxBinding eBinding,
                                         @Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aOutputDirectory, "include/" + m_sID + "-" + sBindingName + "-" + sTransaction + "-test.sch");
+    return new File (m_aOutputDirectory,
+                     "include/" + m_sID + "-" + eBinding.getID () + "-" + sTransaction + "-test.sch");
   }
 
   @Nonnull
@@ -90,10 +92,10 @@ public final class RuleSourceBusinessRule
   }
 
   @Nonnull
-  public File getSchematronAssemblyFile (@Nonnull @Nonempty final String sBindingName,
+  public File getSchematronAssemblyFile (@Nonnull final ESyntaxBinding eBinding,
                                          @Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aOutputDirectory, m_sID + "-" + sBindingName + "-" + sTransaction + ".sch");
+    return new File (m_aOutputDirectory, m_sID + "-" + eBinding.getID () + "-" + sTransaction + ".sch");
   }
 
   public boolean hasCodeList ()

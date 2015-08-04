@@ -40,11 +40,13 @@ public final class RuleSourceItem implements IHasID <String>
   private final String m_sID;
   private final List <RuleSourceCodeList> m_aCodeLists = new ArrayList <RuleSourceCodeList> ();
   private final List <RuleSourceBusinessRule> m_aBusinessRules = new ArrayList <RuleSourceBusinessRule> ();
+  private final ESyntaxBinding m_eBinding;
 
   public RuleSourceItem (@Nonnull final File aRuleSrcDir,
                          @Nonnull final File aRuleDstDir,
                          @Nonnull final File aCodeListDstDir,
-                         @Nonnull @Nonempty final String sID)
+                         @Nonnull @Nonempty final String sID,
+                         @Nullable final ESyntaxBinding eBinding)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
@@ -53,6 +55,7 @@ public final class RuleSourceItem implements IHasID <String>
     m_aRuleDstDir = aRuleDstDir;
     m_aCodeListDstDir = aCodeListDstDir;
     m_sID = sID.toUpperCase (Locale.US);
+    m_eBinding = eBinding;
   }
 
   @Nonnull
@@ -113,5 +116,17 @@ public final class RuleSourceItem implements IHasID <String>
   public List <RuleSourceBusinessRule> getAllBusinessRules ()
   {
     return CollectionHelper.newList (m_aBusinessRules);
+  }
+
+  @Nullable
+  public ESyntaxBinding getRequestedSyntaxBinding ()
+  {
+    return m_eBinding;
+  }
+
+  public boolean matchesRequestedSyntaxBinding (@Nonnull final ESyntaxBinding eBinding)
+  {
+    // If none is specified, accept all
+    return m_eBinding == null || eBinding.equals (m_eBinding);
   }
 }
