@@ -42,6 +42,19 @@ public final class RuleSourceItem implements IHasID <String>
   private final List <RuleSourceBusinessRule> m_aBusinessRules = new ArrayList <RuleSourceBusinessRule> ();
   private final ESyntaxBinding m_eBinding;
 
+  /**
+   * @param aRuleSrcDir
+   *        Rule source directory. Must exist.
+   * @param aRuleDstDir
+   *        Rule destination directory. Must exist.
+   * @param aCodeListDstDir
+   *        Code list destination directory. Must exist.
+   * @param sID
+   *        Artefact ID
+   * @param eBinding
+   *        <code>null</code> if all syntax bindings should be processed, the
+   *        chosen syntax otherwise.
+   */
   public RuleSourceItem (@Nonnull final File aRuleSrcDir,
                          @Nonnull final File aRuleDstDir,
                          @Nonnull final File aCodeListDstDir,

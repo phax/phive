@@ -284,7 +284,7 @@ public final class CodeListCreator
     }
   }
 
-  private void _createCodelistSchematron (final RuleSourceCodeList aCodeList)
+  private void _createCodelistSchematron (@Nonnull final RuleSourceCodeList aCodeList)
   {
     CreateHelper.log ("  Writing Schematron code lists");
     // For all transactions

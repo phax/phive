@@ -290,7 +290,8 @@ public final class SchematronCreator
     }
   }
 
-  private void _writeAssemblyFiles (@Nonnull final RuleSourceBusinessRule aBusinessRule,
+  private void _writeAssemblyFiles (@Nonnull final RuleSourceItem aRuleSourceItem,
+                                    @Nonnull final RuleSourceBusinessRule aBusinessRule,
                                     @Nonnull final SpreadsheetDocument aSpreadSheet)
   {
     // Create assembled Schematron
@@ -312,70 +313,72 @@ public final class SchematronCreator
       final String sNamespace = ODFHelper.getText (aLastSheet, 4, nRow);
 
       final ESyntaxBinding eBinding = ESyntaxBinding.getFromIDOrNull (sBindingName);
-
-      final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (eBinding, sTransaction);
-      CreateHelper.log ("      Writing " + sBindingName + " Schematron assembly file " + aSCHFile.getName ());
-
-      final String sBindingPrefix = sBindingName.toLowerCase (Locale.US);
-      final String sBindingUC = sBindingName.toUpperCase (Locale.US);
-
-      final IMicroDocument aDoc = new MicroDocument ();
-      aDoc.appendComment ("This file is generated automatically! Do NOT edit!");
-      aDoc.appendComment ("Schematron assembly for binding " + sBindingName + " and transaction " + sTransaction);
-      final IMicroElement eSchema = aDoc.appendElement (NS_SCHEMATRON, "schema");
-      eSchema.setAttribute ("queryBinding", "xslt");
-      eSchema.appendElement (NS_SCHEMATRON, "title")
-             .appendText (aBusinessRule.getID () + " " + sTransaction + " bound to " + sBindingName);
-
-      // Add all syntax binding namespace mappings
-      for (final Map.Entry <String, String> aEntry : eBinding.getAllNamespaces ().entrySet ())
-        eSchema.appendElement (NS_SCHEMATRON, "ns")
-               .setAttribute ("prefix", aEntry.getKey ())
-               .setAttribute ("uri", aEntry.getValue ());
-      eSchema.appendElement (NS_SCHEMATRON, "ns").setAttribute ("prefix", sBindingPrefix).setAttribute ("uri",
-                                                                                                        sNamespace);
-
-      if (USE_LETS)
+      if (aRuleSourceItem.matchesRequestedSyntaxBinding (eBinding))
       {
-        // Print all global lets
-        for (final Map.Entry <String, String> aEntry : m_aPrereqCache.getAllSortedByID ().entrySet ())
+        final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (eBinding, sTransaction);
+        CreateHelper.log ("      Writing " + sBindingName + " Schematron assembly file " + aSCHFile.getName ());
+
+        final String sBindingPrefix = sBindingName.toLowerCase (Locale.US);
+        final String sBindingUC = sBindingName.toUpperCase (Locale.US);
+
+        final IMicroDocument aDoc = new MicroDocument ();
+        aDoc.appendComment ("This file is generated automatically! Do NOT edit!");
+        aDoc.appendComment ("Schematron assembly for binding " + sBindingName + " and transaction " + sTransaction);
+        final IMicroElement eSchema = aDoc.appendElement (NS_SCHEMATRON, "schema");
+        eSchema.setAttribute ("queryBinding", "xslt");
+        eSchema.appendElement (NS_SCHEMATRON, "title")
+               .appendText (aBusinessRule.getID () + " " + sTransaction + " bound to " + sBindingName);
+
+        // Add all syntax binding namespace mappings
+        for (final Map.Entry <String, String> aEntry : eBinding.getAllNamespaces ().entrySet ())
+          eSchema.appendElement (NS_SCHEMATRON, "ns")
+                 .setAttribute ("prefix", aEntry.getKey ())
+                 .setAttribute ("uri", aEntry.getValue ());
+        eSchema.appendElement (NS_SCHEMATRON, "ns").setAttribute ("prefix", sBindingPrefix).setAttribute ("uri",
+                                                                                                          sNamespace);
+
+        if (USE_LETS)
         {
-          final IMicroElement eLet = eSchema.appendElement (NS_SCHEMATRON, "let");
-          eLet.setAttribute ("name", aEntry.getValue ());
-          eLet.setAttribute ("value", aEntry.getKey ());
+          // Print all global lets
+          for (final Map.Entry <String, String> aEntry : m_aPrereqCache.getAllSortedByID ().entrySet ())
+          {
+            final IMicroElement eLet = eSchema.appendElement (NS_SCHEMATRON, "let");
+            eLet.setAttribute ("name", aEntry.getValue ());
+            eLet.setAttribute ("value", aEntry.getKey ());
+          }
         }
-      }
 
-      // Phases
-      IMicroElement ePhase = eSchema.appendElement (NS_SCHEMATRON, "phase");
-      ePhase.setAttribute ("id", aBusinessRule.getID () + "_" + sTransaction + "_phase");
-      ePhase.appendElement (NS_SCHEMATRON, "active").setAttribute ("pattern", sBindingUC + "-" + sTransaction);
-      if (aBusinessRule.hasCodeList ())
-      {
-        // Codelist phase
-        ePhase = eSchema.appendElement (NS_SCHEMATRON, "phase");
-        ePhase.setAttribute ("id", "codelist_phase");
-        ePhase.appendElement (NS_SCHEMATRON, "active").setAttribute ("pattern", "Codes-" + sTransaction);
-      }
+        // Phases
+        IMicroElement ePhase = eSchema.appendElement (NS_SCHEMATRON, "phase");
+        ePhase.setAttribute ("id", aBusinessRule.getID () + "_" + sTransaction + "_phase");
+        ePhase.appendElement (NS_SCHEMATRON, "active").setAttribute ("pattern", sBindingUC + "-" + sTransaction);
+        if (aBusinessRule.hasCodeList ())
+        {
+          // Codelist phase
+          ePhase = eSchema.appendElement (NS_SCHEMATRON, "phase");
+          ePhase.setAttribute ("id", "codelist_phase");
+          ePhase.appendElement (NS_SCHEMATRON, "active").setAttribute ("pattern", "Codes-" + sTransaction);
+        }
 
-      // Includes
-      IMicroElement eInclude;
-      eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
-      eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronAbstractFile (sTransaction).getName ());
-      if (aBusinessRule.hasCodeList ())
-      {
+        // Includes
+        IMicroElement eInclude;
         eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
-        eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronCodeListFile ().getName ());
+        eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronAbstractFile (sTransaction).getName ());
+        if (aBusinessRule.hasCodeList ())
+        {
+          eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
+          eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronCodeListFile ().getName ());
+        }
+        eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
+        eInclude.setAttribute ("href",
+                               "include/" + aBusinessRule.getSchematronBindingFile (eBinding, sTransaction).getName ());
+
+        if (MicroWriter.writeToFile (aDoc, aSCHFile).isFailure ())
+          throw new IllegalStateException ("Failed to write file " + aSCHFile);
+
+        // Remember file for XSLT creation
+        aBusinessRule.addResultSchematronFile (aSCHFile);
       }
-      eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
-      eInclude.setAttribute ("href",
-                             "include/" + aBusinessRule.getSchematronBindingFile (eBinding, sTransaction).getName ());
-
-      if (MicroWriter.writeToFile (aDoc, aSCHFile).isFailure ())
-        throw new IllegalStateException ("Failed to write file " + aSCHFile);
-
-      // Remember file for XSLT creation
-      aBusinessRule.addResultSchematronFile (aSCHFile);
 
       ++nRow;
     }
@@ -421,7 +424,7 @@ public final class SchematronCreator
         }
 
         // Write the assembly files
-        aSC._writeAssemblyFiles (aBusinessRule, aSpreadSheet);
+        aSC._writeAssemblyFiles (aRuleSourceItem, aBusinessRule, aSpreadSheet);
       }
     }
   }
