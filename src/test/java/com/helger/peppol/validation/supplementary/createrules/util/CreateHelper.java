@@ -30,6 +30,13 @@ public final class CreateHelper
   private CreateHelper ()
   {}
 
+  /**
+   * Replace all blanks on word boundaries with underscores
+   * 
+   * @param s
+   *        Source string
+   * @return replaced string
+   */
   @Nonnull
   public static String makeID (@Nonnull final String s)
   {

@@ -101,8 +101,8 @@ public final class CodeListCreator
    *         sheet
    */
   @Nonnull
-  private Set <String> _readCVAData (@Nonnull final RuleSourceCodeList aCodeList,
-                                     @Nonnull final SpreadsheetDocument aSpreadSheet)
+  private Set <String> _createCVAData (@Nonnull final RuleSourceCodeList aCodeList,
+                                       @Nonnull final SpreadsheetDocument aSpreadSheet)
   {
     final Set <String> aAllReferencedCodeListNames = new HashSet <String> ();
     final Table aCVASheet = aSpreadSheet.getSheetByName ("CVA");
@@ -188,10 +188,12 @@ public final class CodeListCreator
   private void _createCVAandGC (final RuleSourceCodeList aCodeList) throws Exception
   {
     CreateHelper.log ("Reading code list file " + aCodeList.getSourceFile ());
+
+    // Read ODS file
     final SpreadsheetDocument aSpreadSheet = SpreadsheetDocument.loadDocument (aCodeList.getSourceFile ());
 
     // Handle CVA sheets
-    final Set <String> aAllReferencedCodeListNames = _readCVAData (aCodeList, aSpreadSheet);
+    final Set <String> aAllReferencedCodeListNames = _createCVAData (aCodeList, aSpreadSheet);
     if (aAllReferencedCodeListNames.isEmpty ())
       throw new IllegalStateException ("CVA was not referencing any code list!");
 

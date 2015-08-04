@@ -36,31 +36,42 @@ public final class RuleSourceItem implements IHasID <String>
 {
   private final File m_aRuleSrcDir;
   private final File m_aRuleDstDir;
+  private final File m_aCodeListDstDir;
   private final String m_sID;
   private final List <RuleSourceCodeList> m_aCodeLists = new ArrayList <RuleSourceCodeList> ();
   private final List <RuleSourceBusinessRule> m_aBusinessRules = new ArrayList <RuleSourceBusinessRule> ();
 
   public RuleSourceItem (@Nonnull final File aRuleSrcDir,
                          @Nonnull final File aRuleDstDir,
+                         @Nonnull final File aCodeListDstDir,
                          @Nonnull @Nonempty final String sID)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
+    ValueEnforcer.isTrue (aCodeListDstDir.isDirectory (), aCodeListDstDir + " is not a directory!");
     m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;
+    m_aCodeListDstDir = aCodeListDstDir;
     m_sID = sID.toUpperCase (Locale.US);
-  }
-
-  @Nonnull
-  public File getOutputCodeListDirectory ()
-  {
-    return new File (m_aRuleDstDir, "codelist");
   }
 
   @Nonnull
   public File getOutputSchematronDirectory ()
   {
     return m_aRuleDstDir;
+  }
+
+  @Nonnull
+  public File getOutputCodeListDirectory ()
+  {
+    return m_aCodeListDstDir;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
   }
 
   @Nonnull
@@ -71,6 +82,13 @@ public final class RuleSourceItem implements IHasID <String>
                                               getOutputSchematronDirectory (),
                                               m_sID));
     return this;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <RuleSourceCodeList> getAllCodeLists ()
+  {
+    return CollectionHelper.newList (m_aCodeLists);
   }
 
   @Nonnull
@@ -88,20 +106,6 @@ public final class RuleSourceItem implements IHasID <String>
                                                       m_sID,
                                                       sCodeListTransaction));
     return this;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getID ()
-  {
-    return m_sID;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <RuleSourceCodeList> getAllCodeLists ()
-  {
-    return CollectionHelper.newList (m_aCodeLists);
   }
 
   @Nonnull

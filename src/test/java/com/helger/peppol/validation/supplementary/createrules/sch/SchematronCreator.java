@@ -97,7 +97,7 @@ public final class SchematronCreator
   private final PrerequesiteCache m_aPrereqCache = new PrerequesiteCache ();
 
   // Map from transaction to Map from context to list of assertions
-  final Map <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new HashMap <String, IMultiMapListBased <String, RuleAssertion>> ();
+  private final Map <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new HashMap <String, IMultiMapListBased <String, RuleAssertion>> ();
 
   private SchematronCreator ()
   {}
@@ -114,7 +114,7 @@ public final class SchematronCreator
       final String sContext = ODFHelper.getText (aFirstSheet, 2, nRow);
       final String sSeverity = ODFHelper.getText (aFirstSheet, 3, nRow);
       final String sTransaction = ODFHelper.getText (aFirstSheet, 4, nRow);
-      final String sIsObsolete = ODFHelper.getText (aFirstSheet, 5, nRow);
+      final String sIsObsolete = ODFHelper.getText (aFirstSheet, 9, nRow);
       if (StringParser.parseBool (sIsObsolete))
       {
         s_aLogger.info ("Skipping obsolete rule '" + sRuleID + "'");
@@ -147,10 +147,10 @@ public final class SchematronCreator
       final String sTransaction = aRuleEntry.getKey ();
       final File aSCHFile = aBusinessRule.getSchematronAbstractFile (sTransaction);
       CreateHelper.log ("    Writing abstract Schematron file " +
-                 aSCHFile.getName () +
-                 " with " +
-                 aRuleEntry.getValue ().getTotalValueCount () +
-                 " rule(s)");
+                        aSCHFile.getName () +
+                        " with " +
+                        aRuleEntry.getValue ().getTotalValueCount () +
+                        " rule(s)");
 
       // Create the XML content
       final IMicroDocument aDoc = new MicroDocument ();
@@ -216,20 +216,21 @@ public final class SchematronCreator
     return aRules;
   }
 
-  private void _extractBindingTests (@Nonnull final RuleSourceBusinessRule aBusinessRule,
-                                     @Nonnull final String sBindingName,
-                                     @Nonnull final IMultiMapListBased <String, RuleParam> aRules)
+  private void _writeBindingTests (@Nonnull final RuleSourceBusinessRule aBusinessRule,
+                                   @Nonnull final String sBindingName,
+                                   @Nonnull final IMultiMapListBased <String, RuleParam> aBindingTests)
   {
     // Check if all required rules derived from the abstract rules are present
     for (final Map.Entry <String, IMultiMapListBased <String, RuleAssertion>> aEntryTransaction : m_aAbstractRules.entrySet ())
     {
       final String sTransaction = aEntryTransaction.getKey ();
-      final List <RuleParam> aFoundRules = aRules.get (sTransaction);
+      final List <RuleParam> aFoundRules = aBindingTests.get (sTransaction);
       if (aFoundRules == null)
         throw new IllegalStateException ("Found no rules for transaction " +
                                          sTransaction +
                                          " and binding " +
                                          sBindingName);
+
       for (final Map.Entry <String, List <RuleAssertion>> aEntryContext : aEntryTransaction.getValue ().entrySet ())
       {
         final String sContext = aEntryContext.getKey ();
@@ -237,7 +238,7 @@ public final class SchematronCreator
         {
           // Create an invalid context
           CreateHelper.warn ("      Missing parameter for context '" + sContext + "'");
-          aRules.putSingle (sTransaction, new RuleParam (sContext, "//NonExistingDummyNode"));
+          aBindingTests.putSingle (sTransaction, new RuleParam (sContext, "//NonExistingDummyNode"));
         }
         for (final RuleAssertion aRuleAssertion : aEntryContext.getValue ())
         {
@@ -246,26 +247,26 @@ public final class SchematronCreator
           {
             // No test needed
             CreateHelper.warn ("      Missing parameter for rule '" + sRuleID + "'");
-            aRules.putSingle (sTransaction, new RuleParam (sRuleID, "./false"));
+            aBindingTests.putSingle (sTransaction, new RuleParam (sRuleID, "./false"));
           }
         }
       }
     }
 
     // Now iterate rules and assemble Schematron
-    for (final Map.Entry <String, List <RuleParam>> aRuleEntry : aRules.entrySet ())
+    for (final Map.Entry <String, List <RuleParam>> aRuleEntry : aBindingTests.entrySet ())
     {
       final String sTransaction = aRuleEntry.getKey ();
       final File aSCHFile = aBusinessRule.getSchematronBindingFile (sBindingName, sTransaction);
       CreateHelper.log ("      Writing " +
-                 sBindingName +
-                 " Schematron file " +
-                 aSCHFile.getName () +
-                 " for transaction " +
-                 sTransaction +
-                 " with " +
-                 aRuleEntry.getValue ().size () +
-                 " test(s)");
+                        sBindingName +
+                        " Schematron file " +
+                        aSCHFile.getName () +
+                        " for transaction " +
+                        sTransaction +
+                        " with " +
+                        aRuleEntry.getValue ().size () +
+                        " test(s)");
 
       final IMicroDocument aDoc = new MicroDocument ();
       aDoc.appendComment ("This file is generated automatically! Do NOT edit!");
@@ -283,20 +284,21 @@ public final class SchematronCreator
         else
           eParam.setAttribute ("value", aRuleParam.getTestWithPrerequisiteInline ());
       }
-      if (SimpleFileIO.writeFile (aSCHFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                      .isFailure ())
+
+      if (MicroWriter.writeToFile (aDoc, aSCHFile).isFailure ())
         throw new IllegalStateException ("Failed to write " + aSCHFile);
     }
   }
 
-  private void _createAssemblyFiles (@Nonnull final RuleSourceBusinessRule aBusinessRule,
-                                     @Nonnull final SpreadsheetDocument aSpreadSheet)
+  private void _writeAssemblyFiles (@Nonnull final RuleSourceBusinessRule aBusinessRule,
+                                    @Nonnull final SpreadsheetDocument aSpreadSheet)
   {
     // Create assembled Schematron
     CreateHelper.log ("    Creating assembly Schematron file(s)");
 
-    // Last sheet
+    // Last sheet (artifacts)
     final Table aLastSheet = aSpreadSheet.getSheetByIndex (aSpreadSheet.getSheetCount () - 1);
+    // Skip one row
     int nRow = 1;
     // cell 0 (profile) is optional!
     while (!ODFHelper.isEmpty (aLastSheet, 1, nRow))
@@ -306,7 +308,8 @@ public final class SchematronCreator
         throw new IllegalStateException ("Profile currently not supported! Found '" + sProfile + "'");
       final String sTransaction = ODFHelper.getText (aLastSheet, 1, nRow);
       final String sBindingName = ODFHelper.getText (aLastSheet, 2, nRow);
-      final String sNamespace = ODFHelper.getText (aLastSheet, 3, nRow);
+      // String sCodelistFilename= ODFHelper.getText (aLastSheet, 3, nRow);
+      final String sNamespace = ODFHelper.getText (aLastSheet, 4, nRow);
 
       final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (sBindingName, sTransaction);
       CreateHelper.log ("      Writing " + sBindingName + " Schematron assembly file " + aSCHFile.getName ());
@@ -322,15 +325,31 @@ public final class SchematronCreator
       eSchema.appendElement (NS_SCHEMATRON, "title")
              .appendText (aBusinessRule.getID () + " " + sTransaction + " bound to " + sBindingName);
 
-      eSchema.appendElement (NS_SCHEMATRON, "ns")
-             .setAttribute ("prefix", "cac")
-             .setAttribute ("uri", CUBL21.XML_SCHEMA_CAC_NAMESPACE_URL);
-      eSchema.appendElement (NS_SCHEMATRON, "ns")
-             .setAttribute ("prefix", "cbc")
-             .setAttribute ("uri", CUBL21.XML_SCHEMA_CBC_NAMESPACE_URL);
-      eSchema.appendElement (NS_SCHEMATRON, "ns")
-             .setAttribute ("prefix", "cec")
-             .setAttribute ("uri", CUBL21.XML_SCHEMA_CEC_NAMESPACE_URL);
+      if ("UBL".equals (sBindingName))
+      {
+        eSchema.appendElement (NS_SCHEMATRON, "ns")
+               .setAttribute ("prefix", "cac")
+               .setAttribute ("uri", CUBL21.XML_SCHEMA_CAC_NAMESPACE_URL);
+        eSchema.appendElement (NS_SCHEMATRON, "ns")
+               .setAttribute ("prefix", "cbc")
+               .setAttribute ("uri", CUBL21.XML_SCHEMA_CBC_NAMESPACE_URL);
+        eSchema.appendElement (NS_SCHEMATRON, "ns")
+               .setAttribute ("prefix", "cec")
+               .setAttribute ("uri", CUBL21.XML_SCHEMA_CEC_NAMESPACE_URL);
+      }
+      else
+        if ("CEFACT".equals (sBindingName))
+        {
+          eSchema.appendElement (NS_SCHEMATRON, "ns")
+                 .setAttribute ("prefix", "ram")
+                 .setAttribute ("uri",
+                                "urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:10");
+          eSchema.appendElement (NS_SCHEMATRON, "ns")
+                 .setAttribute ("prefix", "rsm")
+                 .setAttribute ("uri", "urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:4");
+        }
+        else
+          CreateHelper.warn ("No predefined namespaces for binding '" + sBindingName + "' available!");
       eSchema.appendElement (NS_SCHEMATRON, "ns").setAttribute ("prefix", sBindingPrefix).setAttribute ("uri",
                                                                                                         sNamespace);
 
@@ -371,8 +390,7 @@ public final class SchematronCreator
                              "include/" +
                                      aBusinessRule.getSchematronBindingFile (sBindingName, sTransaction).getName ());
 
-      if (SimpleFileIO.writeFile (aSCHFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                      .isFailure ())
+      if (MicroWriter.writeToFile (aDoc, aSCHFile).isFailure ())
         throw new IllegalStateException ("Failed to write file " + aSCHFile);
 
       // Remember file for XSLT creation
@@ -397,6 +415,10 @@ public final class SchematronCreator
 
         final SchematronCreator aSC = new SchematronCreator ();
 
+        // Read abstract rules before the binding specific rules are read
+        aSC._readAbstractRules (aSpreadSheet);
+        aSC._writeAbstractRules (aBusinessRule);
+
         // Read the binding files first, to fill the prerequisite cache
         // Skip the first sheet (abstract rules) and skip the last sheet
         // (transaction information)
@@ -404,15 +426,14 @@ public final class SchematronCreator
         {
           final Table aSheet = aSpreadSheet.getSheetByIndex (nSheetIndex);
           final String sBindingName = aSheet.getTableName ();
-          final IMultiMapListBased <String, RuleParam> aRules = aSC._readBindingTests (aSheet, sBindingName);
-          aSC._extractBindingTests (aBusinessRule, sBindingName, aRules);
+
+          // Read all binding specific tests
+          final IMultiMapListBased <String, RuleParam> aBindingTests = aSC._readBindingTests (aSheet, sBindingName);
+          aSC._writeBindingTests (aBusinessRule, sBindingName, aBindingTests);
         }
 
-        // Read abstract rules
-        aSC._readAbstractRules (aSpreadSheet);
-        aSC._writeAbstractRules (aBusinessRule);
-
-        aSC._createAssemblyFiles (aBusinessRule, aSpreadSheet);
+        // Write the assembly files
+        aSC._writeAssemblyFiles (aBusinessRule, aSpreadSheet);
       }
     }
   }
