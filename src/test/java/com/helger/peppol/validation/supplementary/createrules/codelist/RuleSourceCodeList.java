@@ -55,24 +55,24 @@ public final class RuleSourceCodeList
   @Nonnull
   public File getGCFile (@Nonnull @Nonempty final String sCodeListName)
   {
-    return new File (m_aCodeListOutputDirectory, sCodeListName + ".gc");
+    return new File (m_aCodeListOutputDirectory, "gc/" + sCodeListName + ".gc");
   }
 
   @Nonnull
   public File getCVAFile (@Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aCodeListOutputDirectory, m_sID + "-" + sTransaction + "-codes.cva");
-  }
-
-  @Nonnull
-  public File getXSLTFile (@Nonnull @Nonempty final String sTransaction)
-  {
-    return new File (m_aCodeListOutputDirectory, m_sID + "-" + sTransaction + "-codes.sch.xslt");
+    return new File (m_aCodeListOutputDirectory, "cva/" + m_sID + "-" + sTransaction + ".cva");
   }
 
   @Nonnull
   public File getSchematronFile (@Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aSchematronOutputDirectory, "include/" + m_sID + "-" + sTransaction + "-codes.sch");
+    return new File (m_aSchematronOutputDirectory, "codelist/" + m_sID + "-" + sTransaction + ".sch");
+  }
+
+  @Nonnull
+  public File getXSLTFile (@Nonnull @Nonempty final String sTransaction)
+  {
+    return new File (getSchematronFile (sTransaction).getAbsolutePath () + ".xslt");
   }
 }

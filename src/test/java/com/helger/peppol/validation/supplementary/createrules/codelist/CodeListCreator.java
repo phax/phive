@@ -37,6 +37,7 @@ import org.w3c.dom.Document;
 
 import com.helger.commons.collection.multimap.IMultiMapSetBased;
 import com.helger.commons.collection.multimap.MultiTreeMapTreeSetBased;
+import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.microdom.IMicroDocument;
@@ -180,6 +181,7 @@ public final class CodeListCreator
       aCVA.setContexts (aContexts);
 
       // to File
+      FileOperations.createDirIfNotExisting (aCVAFile.getParentFile ());
       if (new CVA10Marshaller ().write (aCVA, aCVAFile).isFailure ())
         throw new IllegalStateException ("Failed to write " + aCVAFile);
     }

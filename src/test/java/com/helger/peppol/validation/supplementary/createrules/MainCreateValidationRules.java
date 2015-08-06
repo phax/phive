@@ -35,7 +35,7 @@ public final class MainCreateValidationRules
 
     // Base directory for source rules
     final File aRuleSource = new File ("src/test/resources/rule-source");
-    final File aRuleTarget = new File ("src/main/resources/peppol/standard");
+    final File aRuleTarget = new File ("src/main/resources/peppol-rules");
     final File aCodeListTarget = new File ("src/test/resources/codelist-generated");
 
     // Add all base directories
@@ -59,9 +59,14 @@ public final class MainCreateValidationRules
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aRuleTarget,
                                               aCodeListTarget,
+                                              "codelists",
+                                              ESyntaxBinding.UBL).addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods"));
+
+    aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
+                                              aRuleTarget,
+                                              aCodeListTarget,
                                               "BIS2.0-invoice4a-VA_V3.0",
-                                              ESyntaxBinding.UBL).addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
-                                                                 .addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v11.ods"));
+                                              ESyntaxBinding.UBL).addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v11.ods"));
 
     // Create all codelists (GC + CVA)
     // Processing time: quite quick
@@ -78,9 +83,12 @@ public final class MainCreateValidationRules
       // Processing time: quite OK
       SchematronCreator.createSchematrons (aRuleSourceItems);
 
-      // Now create the validation XSLTs
-      // Processing time: terribly slow for biicore
-      XSLTCreator.createXSLTs (aRuleSourceItems);
+      if (false)
+      {
+        // Now create the validation XSLTs
+        // Processing time: terribly slow for biicore
+        XSLTCreator.createXSLTs (aRuleSourceItems);
+      }
     }
 
     CreateHelper.log ("Finished building validation rules");
