@@ -115,7 +115,9 @@ public final class CodeListCreator
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
       final String sID = ODFHelper.getText (aCVASheet, 1, nRow);
+      // column 2 is UBL, column 3 is CII
       String sItem = ODFHelper.getText (aCVASheet, 2, nRow);
+      // column 4 is UBL, column 5 is CII
       final String sScope = ODFHelper.getText (aCVASheet, 4, nRow);
       final String sCodeListName = ODFHelper.getText (aCVASheet, 6, nRow);
       final String sMessage = ODFHelper.getText (aCVASheet, 7, nRow);
@@ -213,10 +215,10 @@ public final class CodeListCreator
       CreateHelper.log ("    Creating " + aGCFile.getName ());
 
       // Read data
-      final String sShortname = ODFHelper.getText (aSheet, 0, 1);
-      final String sVersion = ODFHelper.getText (aSheet, 1, 1);
-      final String sAgency = ODFHelper.getText (aSheet, 2, 1);
-      final String sLocationURI = ODFHelper.getText (aSheet, 3, 1);
+      final String sShortname = ODFHelper.getText (aSheet, 1, 0);
+      final String sVersion = ODFHelper.getText (aSheet, 1, 2);
+      final String sLocationURI = ODFHelper.getText (aSheet, 1, 3);
+      final String sAgency = ODFHelper.getText (aSheet, 1, 4);
 
       // Start creating Genericode
       final CodeListDocument aGC = new CodeListDocument ();
@@ -243,9 +245,15 @@ public final class CodeListCreator
       aColumnSet.getKeyChoice ().add (Genericode10Helper.createKey ("codeKey", "CodeKey", null, aCodeColumn));
       aGC.setColumnSet (aColumnSet);
 
+      // Find start row
+      int nRow = 0;
+      while (!ODFHelper.isEmpty (aSheet, 0, nRow))
+        nRow++;
+      // Now we are at the empty row - skip 2 more
+      nRow += 2;
+
       // Add values
       final SimpleCodeList aSimpleCodeList = new SimpleCodeList ();
-      int nRow = 4;
       while (!ODFHelper.isEmpty (aSheet, 0, nRow))
       {
         final String sCode = ODFHelper.getText (aSheet, 0, nRow);
@@ -310,6 +318,8 @@ public final class CodeListCreator
 
         final IMicroElement eAssert = eRule.appendElement (NS_SCHEMATRON, "assert");
         eAssert.setAttribute ("flag", aCVAContextData.getSeverity ());
+        eAssert.setAttribute ("id", aCVAContextData.getID ());
+
         final Set <String> aMatchingCodes = m_aAllCodes.get (aCVAContextData.getCodeListName ());
         final String sTest = "contains('" +
                              CODELIST_VALUE_SEPARATOR +
@@ -317,7 +327,7 @@ public final class CodeListCreator
                              CODELIST_VALUE_SEPARATOR +
                              "',concat('" +
                              CODELIST_VALUE_SEPARATOR +
-                             "',.,'" +
+                             "',normalize-space(.),'" +
                              CODELIST_VALUE_SEPARATOR +
                              "'))";
         eAssert.setAttribute ("test", sTest);
@@ -352,7 +362,7 @@ public final class CodeListCreator
     }
   }
 
-  public void createCodeLists (final RuleSourceCodeList aCodeList) throws Exception
+  public void createCodeLists (@Nonnull final RuleSourceCodeList aCodeList) throws Exception
   {
     // Create .CVA and .GC files
     _createCVAandGC (aCodeList);
