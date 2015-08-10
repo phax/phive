@@ -39,10 +39,12 @@ public final class RuleSourceItem implements IHasID <String>
   private final File m_aRuleDstDir;
   private final File m_aCodeListDstDir;
   private final String m_sID;
-  private final List <RuleSourceCodeList> m_aCodeLists = new ArrayList <RuleSourceCodeList> ();
-  private final List <RuleSourceBusinessRule> m_aBusinessRules = new ArrayList <RuleSourceBusinessRule> ();
   private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
+  // status vars
+  private final List <RuleSourceCodeList> m_aCodeLists = new ArrayList <RuleSourceCodeList> ();
+  private final List <RuleSourceBusinessRule> m_aBusinessRules = new ArrayList <RuleSourceBusinessRule> ();
+  private boolean m_bHasCodeList = false;
 
   /**
    * @param aRuleSrcDir
@@ -102,6 +104,7 @@ public final class RuleSourceItem implements IHasID <String>
                                               getOutputSchematronDirectory (),
                                               m_sID,
                                               m_eTransaction));
+    m_bHasCodeList = true;
     return this;
   }
 
@@ -115,17 +118,10 @@ public final class RuleSourceItem implements IHasID <String>
   @Nonnull
   public RuleSourceItem addBussinessRule (@Nonnull @Nonempty final String sSourceFilename)
   {
-    return addBussinessRule (sSourceFilename, null);
-  }
-
-  @Nonnull
-  public RuleSourceItem addBussinessRule (@Nonnull @Nonempty final String sSourceFilename,
-                                          @Nullable final String sCodeListTransaction)
-  {
     m_aBusinessRules.add (new RuleSourceBusinessRule (new File (m_aRuleSrcDir, sSourceFilename),
                                                       getOutputSchematronDirectory (),
                                                       m_sID,
-                                                      sCodeListTransaction));
+                                                      m_bHasCodeList ? m_eTransaction : null));
     return this;
   }
 

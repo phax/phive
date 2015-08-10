@@ -72,7 +72,7 @@ public final class RuleSourceCodeList
   @Nonnull
   public File getSchematronFile (@Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aSchematronOutputDirectory, "codelist/" + m_sID + "-" + sTransaction + ".sch");
+    return new File (m_aSchematronOutputDirectory, "include/" + m_sID + "-" + sTransaction + ".sch");
   }
 
   @Nonnull

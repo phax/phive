@@ -28,7 +28,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.file.FileOperations;
-import com.helger.commons.string.StringHelper;
+import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
 
 public final class RuleSourceBusinessRule
@@ -36,13 +36,13 @@ public final class RuleSourceBusinessRule
   private final File m_aSourceFile;
   private final File m_aOutputDirectory;
   private final String m_sID;
-  private final String m_sCodeListTransaction;
+  private final EBII2Transaction m_eCodeListTransaction;
   private final List <File> m_aResultSCHFiles = new ArrayList <File> ();
 
   public RuleSourceBusinessRule (@Nonnull final File aSourceFilename,
                                  @Nonnull final File aOutputDirectory,
                                  @Nonnull @Nonempty final String sID,
-                                 @Nullable final String sCodeListTransaction)
+                                 @Nullable final EBII2Transaction eCodeListTransaction)
   {
     ValueEnforcer.notNull (aSourceFilename, "SourceFilename");
     if (!aSourceFilename.isFile ())
@@ -55,7 +55,7 @@ public final class RuleSourceBusinessRule
     m_aSourceFile = aSourceFilename;
     m_aOutputDirectory = aOutputDirectory;
     m_sID = sID;
-    m_sCodeListTransaction = sCodeListTransaction;
+    m_eCodeListTransaction = eCodeListTransaction;
   }
 
   @Nonnull
@@ -88,7 +88,7 @@ public final class RuleSourceBusinessRule
   @Nonnull
   public File getSchematronCodeListFile ()
   {
-    return new File (m_aOutputDirectory, "include/" + m_sID + "-" + m_sCodeListTransaction + "-codes.sch");
+    return new File (m_aOutputDirectory, "include/" + m_sID + "-" + m_eCodeListTransaction + "-codes.sch");
   }
 
   @Nonnull
@@ -100,12 +100,13 @@ public final class RuleSourceBusinessRule
 
   public boolean hasCodeList ()
   {
-    return StringHelper.hasText (m_sCodeListTransaction);
+    return m_eCodeListTransaction != null;
   }
 
-  public String getCodeList ()
+  @Nullable
+  public EBII2Transaction getCodeList ()
   {
-    return m_sCodeListTransaction;
+    return m_eCodeListTransaction;
   }
 
   public void addResultSchematronFile (@Nonnull final File aSCHFile)

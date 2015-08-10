@@ -136,6 +136,7 @@
             <exclude>src/main/resources/peppol/**</exclude>
             <exclude>src/test/resources/xml/**</exclude>
             <exclude>src/test/resources/rule-source/**</exclude>
+            <exclude>src/test/resources/rule-utils/**</exclude>
           </excludes>
         </configuration>
       </plugin>

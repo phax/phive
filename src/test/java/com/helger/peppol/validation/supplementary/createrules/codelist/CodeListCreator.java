@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.multimap.IMultiMapSetBased;
 import com.helger.commons.collection.multimap.MultiTreeMapTreeSetBased;
 import com.helger.commons.io.file.FileOperations;
@@ -89,9 +90,9 @@ public final class CodeListCreator
   private static final Logger s_aLogger = LoggerFactory.getLogger (CodeListCreator.class);
 
   private static Templates s_aCVA2SCH;
-  // From transaction to CVAData
+  /** From transaction to CVAData */
   private final Map <String, CVAData> m_aCVAs = new TreeMap <String, CVAData> ();
-  // From code list name to Set<Code>
+  /** From code list name to set of codes */
   private final IMultiMapSetBased <String, String> m_aAllCodes = new MultiTreeMapTreeSetBased <String, String> ();
 
   public CodeListCreator ()
@@ -102,20 +103,23 @@ public final class CodeListCreator
    *        code list information
    * @param aSpreadSheet
    *        ODS spreadsheet
+   * @param bCreateCVAFiles
+   *        <code>true</code> to write .cva files
    * @return A set with all required code list names, references from the CVA
    *         sheet
    */
   @Nonnull
   private Set <String> _createCVAData (@Nonnull final RuleSourceCodeList aCodeList,
-                                       @Nonnull final SpreadsheetDocument aSpreadSheet)
+                                       @Nonnull final SpreadsheetDocument aSpreadSheet,
+                                       final boolean bCreateCVAFiles)
   {
-    final Set <String> aAllReferencedCodeListNames = new HashSet <String> ();
     final Table aCVASheet = aSpreadSheet.getSheetByName ("CVA");
     if (aCVASheet == null)
       throw new IllegalStateException ("No 'CVA' sheet found!");
 
     CreateHelper.log ("  Reading CVA data");
     int nRow = 2;
+    final Set <String> aAllReferencedCodeListNames = new HashSet <String> ();
     while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
@@ -146,62 +150,63 @@ public final class CodeListCreator
       ++nRow;
     }
 
-    // Start creating CVA files (for each transaction)
-    for (final CVAData aCVAData : m_aCVAs.values ())
+    if (bCreateCVAFiles)
     {
-      final File aCVAFile = aCodeList.getCVAFile (aCVAData.getTransaction ());
-      CreateHelper.log ("    Creating " + aCVAFile.getName ());
-
-      final ContextValueAssociation aCVA = new ContextValueAssociation ();
-      aCVA.setName (FilenameHelper.getBaseName (aCVAFile));
-
-      // Create ValueLists
-      final Map <String, ValueList> aValueListMap = new HashMap <String, ValueList> ();
-      final ValueLists aValueLists = new ValueLists ();
-      // Emit only the code lists, that are used in the contexts
-      for (final String sCodeListName : aCVAData.getAllUsedCodeListNames ())
+      // Start creating CVA files (for each transaction)
+      for (final CVAData aCVAData : m_aCVAs.values ())
       {
-        final ValueList aValueList = new ValueList ();
-        aValueList.setId (sCodeListName);
-        aValueList.setUri (aCodeList.getGCFile (sCodeListName).getName ());
-        aValueLists.getValueList ().add (aValueList);
-        aValueListMap.put (aValueList.getId (), aValueList);
-      }
-      aCVA.setValueLists (aValueLists);
+        final File aCVAFile = aCodeList.getCVAFile (aCVAData.getTransaction ());
+        CreateHelper.log ("    Creating " + aCVAFile.getName ());
 
-      // Create Contexts
-      final Contexts aContexts = new Contexts ();
-      for (final CVAContextData aCVAContextData : aCVAData.getAllContexts ())
-      {
-        final Context aContext = new Context ();
-        aContext.setAddress (aCVAContextData.getItem ());
-        aContext.getValues ().add (aValueListMap.get (aCVAContextData.getCodeListName ()));
-        aContext.setMark (aCVAContextData.getSeverity ());
-        final Message aMessage = new Message ();
-        aMessage.getContent ().add ("[" + aCVAContextData.getID () + "]-" + aCVAContextData.getMessage ());
-        aContext.getMessage ().add (aMessage);
-        aContexts.getContext ().add (aContext);
-      }
-      aCVA.setContexts (aContexts);
+        final ContextValueAssociation aCVA = new ContextValueAssociation ();
+        aCVA.setName (FilenameHelper.getBaseName (aCVAFile));
 
-      // to File
-      FileOperations.createDirIfNotExisting (aCVAFile.getParentFile ());
-      if (new CVA10Marshaller ().write (aCVA, aCVAFile).isFailure ())
-        throw new IllegalStateException ("Failed to write " + aCVAFile);
+        // Create ValueLists
+        final Map <String, ValueList> aValueListMap = new HashMap <String, ValueList> ();
+        final ValueLists aValueLists = new ValueLists ();
+        // Emit only the code lists, that are used in the contexts
+        for (final String sCodeListName : aCVAData.getAllUsedCodeListNames ())
+        {
+          final ValueList aValueList = new ValueList ();
+          aValueList.setId (sCodeListName);
+          aValueList.setUri (aCodeList.getGCFile (sCodeListName).getName ());
+          aValueLists.addValueList (aValueList);
+          aValueListMap.put (aValueList.getId (), aValueList);
+        }
+        aCVA.setValueLists (aValueLists);
+
+        // Create Contexts
+        final Contexts aContexts = new Contexts ();
+        for (final CVAContextData aCVAContextData : aCVAData.getAllContexts ())
+        {
+          final Context aContext = new Context ();
+          aContext.setAddress (aCVAContextData.getItem ());
+          aContext.addValues (aValueListMap.get (aCVAContextData.getCodeListName ()));
+          aContext.setMark (aCVAContextData.getSeverity ());
+          final Message aMessage = new Message ();
+          aMessage.addContent ("[" + aCVAContextData.getID () + "]-" + aCVAContextData.getMessage ());
+          aContext.addMessage (aMessage);
+          aContexts.addContext (aContext);
+        }
+        aCVA.setContexts (aContexts);
+
+        // to File
+        FileOperations.createDirIfNotExisting (aCVAFile.getParentFile ());
+        if (new CVA10Marshaller ().write (aCVA, aCVAFile).isFailure ())
+          throw new IllegalStateException ("Failed to write " + aCVAFile);
+      }
     }
+
     return aAllReferencedCodeListNames;
   }
 
   @Nonnull
-  private void _createCVAandGC (@Nonnull final RuleSourceCodeList aCodeList) throws Exception
+  private void _createCVAandGC (@Nonnull final RuleSourceCodeList aCodeList,
+                                @Nonnull final SpreadsheetDocument aSpreadSheet,
+                                final boolean bWriteFiles) throws Exception
   {
-    CreateHelper.log ("Reading code list file " + aCodeList.getSourceFile ());
-
-    // Read ODS file
-    final SpreadsheetDocument aSpreadSheet = SpreadsheetDocument.loadDocument (aCodeList.getSourceFile ());
-
     // Handle CVA sheets
-    final Set <String> aAllReferencedCodeListNames = _createCVAData (aCodeList, aSpreadSheet);
+    final Set <String> aAllReferencedCodeListNames = _createCVAData (aCodeList, aSpreadSheet, bWriteFiles);
     if (aAllReferencedCodeListNames.isEmpty ())
       throw new IllegalStateException ("CVA was not referencing any code list!");
 
@@ -235,7 +240,7 @@ public final class CodeListCreator
       aIdentification.setVersion (sVersion);
       aIdentification.setCanonicalUri (sAgency);
       aIdentification.setCanonicalVersionUri (StringHelper.getConcatenatedOnDemand (sAgency, '-', sVersion));
-      aIdentification.getLocationUri ().add (sLocationURI);
+      aIdentification.addLocationUri (sLocationURI);
       aGC.setIdentification (aIdentification);
 
       // Build column set
@@ -246,9 +251,9 @@ public final class CodeListCreator
                                                                   null,
                                                                   "normalizedString");
       final Column aNameColumn = Genericode10Helper.createColumn ("name", UseType.OPTIONAL, "Name", null, "string");
-      aColumnSet.getColumnChoice ().add (aCodeColumn);
-      aColumnSet.getColumnChoice ().add (aNameColumn);
-      aColumnSet.getKeyChoice ().add (Genericode10Helper.createKey ("codeKey", "CodeKey", null, aCodeColumn));
+      aColumnSet.addColumnChoice (aCodeColumn);
+      aColumnSet.addColumnChoice (aNameColumn);
+      aColumnSet.addKeyChoice (Genericode10Helper.createKey ("codeKey", "CodeKey", null, aCodeColumn));
       aGC.setColumnSet (aColumnSet);
 
       // Find start row
@@ -269,14 +274,14 @@ public final class CodeListCreator
         Value aValue = new Value ();
         aValue.setColumnRef (aCodeColumn);
         aValue.setSimpleValue (Genericode10Helper.createSimpleValue (sCode));
-        aRow.getValue ().add (aValue);
+        aRow.addValue (aValue);
 
         aValue = new Value ();
         aValue.setColumnRef (aNameColumn);
         aValue.setSimpleValue (Genericode10Helper.createSimpleValue (sValue));
-        aRow.getValue ().add (aValue);
+        aRow.addValue (aValue);
 
-        aSimpleCodeList.getRow ().add (aRow);
+        aSimpleCodeList.addRow (aRow);
 
         // In code list name, a code is used
         if (m_aAllCodes.putSingle (sCodeListName, sCode).isUnchanged ())
@@ -289,15 +294,11 @@ public final class CodeListCreator
       }
       aGC.setSimpleCodeList (aSimpleCodeList);
 
-      // to XML
-      final Document aXML = new Genericode10CodeListMarshaller ().write (aGC);
-      if (aXML == null)
-        throw new IllegalStateException ("Failed to convert CVA to XML");
-
-      // to File
-      if (SimpleFileIO.writeFile (aGCFile, XMLWriter.getXMLString (aXML), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                      .isFailure ())
-        throw new IllegalStateException ("Failed to write " + aGCFile);
+      if (bWriteFiles)
+      {
+        if (new Genericode10CodeListMarshaller ().write (aGC, aGCFile).isFailure ())
+          throw new IllegalStateException ("Failed to write " + aGCFile);
+      }
     }
   }
 
@@ -333,6 +334,11 @@ public final class CodeListCreator
         eAssert.setAttribute ("id", aCVAContextData.getID ());
 
         final Set <String> aMatchingCodes = m_aAllCodes.get (aCVAContextData.getCodeListName ());
+        if (CollectionHelper.isEmpty (aMatchingCodes))
+          s_aLogger.warn ("No code list value found for '" +
+                          aCVAContextData.getCodeListName () +
+                          "' - Schematron rule will be bogus!");
+
         final String sTest = "contains('" +
                              CODELIST_VALUE_SEPARATOR +
                              StringHelper.getImploded (CODELIST_VALUE_SEPARATOR, aMatchingCodes) +
@@ -345,13 +351,12 @@ public final class CodeListCreator
         eAssert.setAttribute ("test", sTest);
         eAssert.appendText ("[" + aCVAContextData.getID () + "]-" + aCVAContextData.getMessage ());
       }
-      if (SimpleFileIO.writeFile (aSCHFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                      .isFailure ())
+      if (MicroWriter.writeToFile (aDoc, aSCHFile).isFailure ())
         throw new IllegalStateException ("Failed to write " + aSCHFile);
     }
   }
 
-  private void _createSchematronXSLTs (final RuleSourceCodeList aCodeList) throws TransformerException
+  private void _createSchematronXSLTs (@Nonnull final RuleSourceCodeList aCodeList) throws TransformerException
   {
     CreateHelper.log ("  Converting CVA files to Schematron XSLT");
     // Create only once (caching)
@@ -370,14 +375,19 @@ public final class CodeListCreator
       final Transformer aTransformer = s_aCVA2SCH.newTransformer ();
       final Document aSCHDoc = XMLFactory.newDocument ();
       aTransformer.transform (TransformSourceFactory.create (aCVAFile), new DOMResult (aSCHDoc));
+
       SimpleFileIO.writeFile (aResultXSLT, XMLWriter.getXMLString (aSCHDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
     }
   }
 
   public void createCodeLists (@Nonnull final RuleSourceCodeList aCodeList) throws Exception
   {
+    // Read ODS file
+    CreateHelper.log ("Reading code list file " + aCodeList.getSourceFile ());
+    final SpreadsheetDocument aSpreadSheet = SpreadsheetDocument.loadDocument (aCodeList.getSourceFile ());
+
     // Create .CVA and .GC files
-    _createCVAandGC (aCodeList);
+    _createCVAandGC (aCodeList, aSpreadSheet, false);
 
     // Create Schematron code list files
     _createCodelistSchematron (aCodeList);
