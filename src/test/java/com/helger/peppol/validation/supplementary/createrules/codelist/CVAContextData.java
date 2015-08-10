@@ -23,7 +23,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 
 @Immutable
-final class CVAContextData
+public final class CVAContextData
 {
   private final String m_sID;
   private final String m_sItem;

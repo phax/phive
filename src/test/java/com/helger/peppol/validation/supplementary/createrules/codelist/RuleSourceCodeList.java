@@ -24,6 +24,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
+import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
 
 public final class RuleSourceCodeList
 {
@@ -31,12 +32,14 @@ public final class RuleSourceCodeList
   private final File m_aCodeListOutputDirectory;
   private final File m_aSchematronOutputDirectory;
   private final String m_sID;
+  private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
 
   public RuleSourceCodeList (@Nonnull final File aSourceFilename,
                              @Nonnull final File aCodeListOutputDirectory,
                              @Nonnull final File aSchematronOutputDirectory,
                              @Nonnull @Nonempty final String sID,
+                             @Nonnull final ESyntaxBinding eBinding,
                              @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aSourceFilename.isFile (), "Source file does not exist: " + aSourceFilename);
@@ -48,6 +51,7 @@ public final class RuleSourceCodeList
     m_aCodeListOutputDirectory = aCodeListOutputDirectory;
     m_aSchematronOutputDirectory = aSchematronOutputDirectory;
     m_sID = sID;
+    m_eBinding = eBinding;
     m_eTransaction = eTransaction;
   }
 
@@ -70,15 +74,16 @@ public final class RuleSourceCodeList
   }
 
   @Nonnull
-  public File getSchematronFile (@Nonnull @Nonempty final String sTransaction)
+  public File getSchematronFile ()
   {
-    return new File (m_aSchematronOutputDirectory, "include/" + m_sID + "-" + sTransaction + ".sch");
+    return new File (m_aSchematronOutputDirectory,
+                     "include/" + m_sID + "-" + m_eBinding.getID () + "-" + m_eTransaction.name () + "-codes.sch");
   }
 
   @Nonnull
-  public File getXSLTFile (@Nonnull @Nonempty final String sTransaction)
+  public File getCVAXSLTFile (@Nonnull @Nonempty final String sTransaction)
   {
-    return new File (getSchematronFile (sTransaction).getAbsolutePath () + ".xslt");
+    return new File (m_aSchematronOutputDirectory, "cva/" + m_sID + "-" + sTransaction + "-cva.xslt");
   }
 
   @Nonnull

@@ -30,7 +30,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 
 @NotThreadSafe
-final class CVAData
+public final class CVAData
 {
   private final String m_sTransaction;
   private final List <CVAContextData> m_aContexts = new ArrayList <CVAContextData> ();

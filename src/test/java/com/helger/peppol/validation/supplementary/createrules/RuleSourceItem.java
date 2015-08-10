@@ -63,7 +63,7 @@ public final class RuleSourceItem implements IHasID <String>
                          @Nonnull final File aRuleDstDir,
                          @Nonnull final File aCodeListDstDir,
                          @Nonnull @Nonempty final String sID,
-                         @Nullable final ESyntaxBinding eBinding,
+                         @Nonnull final ESyntaxBinding eBinding,
                          @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
@@ -72,7 +72,7 @@ public final class RuleSourceItem implements IHasID <String>
     m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;
     m_aCodeListDstDir = aCodeListDstDir;
-    m_sID = sID.toUpperCase (Locale.US) + "-" + eBinding.getID () + "-" + eTransaction.name ();
+    m_sID = sID.toUpperCase (Locale.US);
     m_eBinding = eBinding;
     m_eTransaction = eTransaction;
   }
@@ -103,6 +103,7 @@ public final class RuleSourceItem implements IHasID <String>
                                               getOutputCodeListDirectory (),
                                               getOutputSchematronDirectory (),
                                               m_sID,
+                                              m_eBinding,
                                               m_eTransaction));
     m_bHasCodeList = true;
     return this;

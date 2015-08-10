@@ -314,7 +314,7 @@ public final class CodeListCreator
       if (!aCVAData.getTransaction ().equals (aCodeList.getTransactionKey ()))
         continue;
 
-      final File aSCHFile = aCodeList.getSchematronFile (sTransaction);
+      final File aSCHFile = aCodeList.getSchematronFile ();
       CreateHelper.log ("    Creating " + aSCHFile.getName ());
 
       // Create the XML document
@@ -351,6 +351,7 @@ public final class CodeListCreator
         eAssert.setAttribute ("test", sTest);
         eAssert.appendText ("[" + aCVAContextData.getID () + "]-" + aCVAContextData.getMessage ());
       }
+
       if (MicroWriter.writeToFile (aDoc, aSCHFile).isFailure ())
         throw new IllegalStateException ("Failed to write " + aSCHFile);
     }
@@ -366,11 +367,12 @@ public final class CodeListCreator
                                                                                      new DefaultTransformURIResolver ());
       s_aCVA2SCH = aTF.newTemplates (TransformSourceFactory.create (new File ("src/test/resources/rule-utils/Crane-cva2schXSLT.xsl")));
     }
+
     // Convert the CVA files for all transactions
     for (final String sTransaction : m_aCVAs.keySet ())
     {
       final File aCVAFile = aCodeList.getCVAFile (sTransaction);
-      final File aResultXSLT = aCodeList.getXSLTFile (sTransaction);
+      final File aResultXSLT = aCodeList.getCVAXSLTFile (sTransaction);
       CreateHelper.log ("    Creating " + aResultXSLT.getName ());
       final Transformer aTransformer = s_aCVA2SCH.newTransformer ();
       final Document aSCHDoc = XMLFactory.newDocument ();
