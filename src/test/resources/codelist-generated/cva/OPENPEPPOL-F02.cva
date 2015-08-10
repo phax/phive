@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><ns2:ContextValueAssociation xmlns:ns2="http://docs.oasis-open.org/codelist/ns/ContextValueAssociation/1.0/" name="OPENPEPPOL-F02"><ValueLists><ValueList uri="../gc/OPENPEPPOL-ActivityTypeCode.gc" xml:id="ActivityTypeCode"/><ValueList uri="../gc/OPENPEPPOL-CommodityClassificationCode.gc" xml:id="CommodityClassificationCode"/><ValueList uri="../gc/OPENPEPPOL-ContractType.gc" xml:id="ContractType"/><ValueList uri="../gc/OPENPEPPOL-ContractingBodyType.gc" xml:id="ContractingBodyType"/><ValueList uri="../gc/OPENPEPPOL-CriterionType.gc" xml:id="CriterionType"/><ValueList uri="../gc/OPENPEPPOL-ProcedureType.gc" xml:id="ProcedureType"/><ValueList uri="../gc/OPENPEPPOL-ProjectType.gc" xml:id="ProjectType"/></ValueLists><Contexts><Context mark="warning" values="ActivityTypeCode" address="cbc:ActivityTypeCode"><Message>[CL-T64-R001]-A contracting authority SHOULD have an activity code</Message></Context><Context mark="fatal" values="ContractType" address="cbc:ProcurementTypeCode"><Message>[CL-T64-R002]-A procurement project type MUST be one of the following:
+- Works
+- Goods
+- Services
+- Public Works Concession
+- Service Concession</Message></Context><Context mark="warning" values="ContractingBodyType" address="cac:ContractingParty/cbc:ContractingPartyTypeCode"><Message>[CL-T64-R003]-A contracting authority SHOULD have an contracting type code.</Message></Context><Context mark="warning" values="CommodityClassificationCode" address="cac:Item/cac:CommodityClassification/cbc:ItemClassificationCode/@listID"><Message>[CL-T64-R004]-Commodity classification SHOULD ONLY be one of UNSPSC, eCl@ss or CPV.</Message></Context><Context mark="fatal" values="CriterionType" address="cbc:AwardingCriteriaTypeCode"><Message>[CL-T64-R005]-Contract award criterion type MUST be one of the following: 
+- Criterion subject to automatic evaluation
+- Criterion subject to human evaluation</Message></Context><Context mark="fatal" values="ProcedureType" address="cbc:ProcedureType"><Message>[CL-T64-R006]-A procedure  type MUST be one of the following:
+- Open
+- Restricted
+- Accelerated restricted
+- Competitive dialogue
+- Negotiated with a call for competition
+- Accelerated negotiated
+- Negotiated without a call for competition
+- Award of a contract without prior publication of a contract notice
+- Direct award</Message></Context><Context mark="fatal" values="ProjectType" address="cbc:ContractingSystemCode"><Message>[CL-T64-R007]-A procurement contract type MUST be one of the following:
+- Public Contract
+- Establishment of a Framework agreement
+- Setting up a Dynamic Purchasing System
+- Public contract based on a Framework agreement
+- Public contract based on a Dynamic Purchasing System
+
+</Message></Context></Contexts></ns2:ContextValueAssociation>

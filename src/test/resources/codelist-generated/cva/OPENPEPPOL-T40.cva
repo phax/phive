@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><ns2:ContextValueAssociation xmlns:ns2="http://docs.oasis-open.org/codelist/ns/ContextValueAssociation/1.0/" name="OPENPEPPOL-T40"><ValueLists><ValueList uri="../gc/OPENPEPPOL-AwardCriterionSpecification.gc" xml:id="AwardCriterionSpecification"/><ValueList uri="../gc/OPENPEPPOL-CommodityClassificationCode.gc" xml:id="CommodityClassificationCode"/><ValueList uri="../gc/OPENPEPPOL-ContractType.gc" xml:id="ContractType"/><ValueList uri="../gc/OPENPEPPOL-CriterionType.gc" xml:id="CriterionType"/><ValueList uri="../gc/OPENPEPPOL-EvidenceTypeCode.gc" xml:id="EvidenceTypeCode"/><ValueList uri="../gc/OPENPEPPOL-ProcedureType.gc" xml:id="ProcedureType"/><ValueList uri="../gc/OPENPEPPOL-ProjectType.gc" xml:id="ProjectType"/></ValueLists><Contexts><Context mark="fatal" values="ProcedureType" address="cbc:ProcedureType"><Message>[CL-T40-R001]-A procedure  type MUST be one of the following:
+- Open
+- Restricted
+- Accelerated restricted
+- Competitive dialogue
+- Negotiated with a call for competition
+- Accelerated negotiated
+- Negotiated without a call for competition
+- Award of a contract without prior publication of a contract notice
+- Direct award</Message></Context><Context mark="fatal" values="ContractType" address="cbc:ProcurementTypeCode"><Message>[CL-T40-R002]-A procurement project type MUST be one of the following:
+- Works
+- Goods
+- Services
+- Public Works Concession
+- Service Concession</Message></Context><Context mark="fatal" values="AwardCriterionSpecification" address="cbc:AwardingMethodTypeCode"><Message>[CL-T40-R003]-Awarding method MUST be Price or Most Advantageous Tender.</Message></Context><Context mark="fatal" values="CriterionType" address="cbc:AwardingCriteriaTypeCode"><Message>[CL-T40-R004]-Contract award criterion type MUST be one of the following: 
+- Criterion subject to automatic evaluation
+- Criterion subject to human evaluation</Message></Context><Context mark="fatal" values="ProjectType" address="cbc:ContractingSystemCode"><Message>[CL-T40-R005]-A procurement contract type MUST be one of the following:
+- Public Contract
+- Establishment of a Framework agreement
+- Setting up a Dynamic Purchasing System
+- Public contract based on a Framework agreement
+- Public contract based on a Dynamic Purchasing System
+
+</Message></Context><Context mark="warning" values="CommodityClassificationCode" address="cac:Item/cac:CommodityClassification/cbc:ItemClassificationCode/@listID"><Message>[CL-T40-R006]-Commodity classification SHOULD ONLY be one of UNSPSC, eCl@ss or CPV.</Message></Context><Context mark="warning" values="EvidenceTypeCode" address="cbc:EvidenceTypeCode"><Message>[CL-T40-R007]-An evidence code SHOULD be one of the described in the CEN BII Codelist</Message></Context></Contexts></ns2:ContextValueAssociation>

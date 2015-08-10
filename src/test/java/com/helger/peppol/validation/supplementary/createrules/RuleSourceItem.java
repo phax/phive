@@ -37,7 +37,6 @@ public final class RuleSourceItem implements IHasID <String>
 {
   private final File m_aRuleSrcDir;
   private final File m_aRuleDstDir;
-  private final File m_aCodeListDstDir;
   private final String m_sID;
   private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
@@ -51,8 +50,6 @@ public final class RuleSourceItem implements IHasID <String>
    *        Rule source directory. Must exist.
    * @param aRuleDstDir
    *        Rule destination directory. Must exist.
-   * @param aCodeListDstDir
-   *        Code list destination directory. Must exist.
    * @param sID
    *        Artefact ID
    * @param eBinding
@@ -61,17 +58,14 @@ public final class RuleSourceItem implements IHasID <String>
    */
   public RuleSourceItem (@Nonnull final File aRuleSrcDir,
                          @Nonnull final File aRuleDstDir,
-                         @Nonnull final File aCodeListDstDir,
                          @Nonnull @Nonempty final String sID,
                          @Nonnull final ESyntaxBinding eBinding,
                          @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
-    ValueEnforcer.isTrue (aCodeListDstDir.isDirectory (), aCodeListDstDir + " is not a directory!");
     m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;
-    m_aCodeListDstDir = aCodeListDstDir;
     m_sID = sID.toUpperCase (Locale.US);
     m_eBinding = eBinding;
     m_eTransaction = eTransaction;
@@ -81,12 +75,6 @@ public final class RuleSourceItem implements IHasID <String>
   public File getOutputSchematronDirectory ()
   {
     return m_aRuleDstDir;
-  }
-
-  @Nonnull
-  public File getOutputCodeListDirectory ()
-  {
-    return m_aCodeListDstDir;
   }
 
   @Nonnull
@@ -100,7 +88,6 @@ public final class RuleSourceItem implements IHasID <String>
   public RuleSourceItem addCodeList (@Nonnull @Nonempty final String sSourceFilename)
   {
     m_aCodeLists.add (new RuleSourceCodeList (new File (m_aRuleSrcDir, sSourceFilename),
-                                              getOutputCodeListDirectory (),
                                               getOutputSchematronDirectory (),
                                               m_sID,
                                               m_eBinding,

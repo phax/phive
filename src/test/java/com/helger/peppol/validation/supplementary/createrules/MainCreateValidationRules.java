@@ -37,7 +37,6 @@ public final class MainCreateValidationRules
     // Base directory for source rules
     final File aRuleSource = new File ("src/test/resources/rule-source");
     final File aRuleTarget = new File ("src/main/resources/peppol-rules");
-    final File aCodeListTarget = new File ("src/test/resources/codelist-generated");
 
     // Add all base directories
     final List <RuleSourceItem> aRuleSourceItems = new ArrayList <RuleSourceItem> ();
@@ -45,14 +44,12 @@ public final class MainCreateValidationRules
     {
       aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                                 aRuleTarget,
-                                                aCodeListTarget,
                                                 "atgov",
                                                 ESyntaxBinding.UBL,
                                                 EBII2Transaction.T10).addBussinessRule ("businessrules/atgov-T10-BusinessRules-v03.ods")
                                                                      .addBussinessRule ("businessrules/atgov-T14-BusinessRules-v03.ods"));
       aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                                 aRuleTarget,
-                                                aCodeListTarget,
                                                 "atnat",
                                                 ESyntaxBinding.UBL,
                                                 EBII2Transaction.T10).addBussinessRule ("businessrules/atnat-T10-BusinessRules-v04.ods")
@@ -61,14 +58,12 @@ public final class MainCreateValidationRules
 
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aRuleTarget,
-                                              aCodeListTarget,
                                               "BIIRULES",
                                               ESyntaxBinding.UBL,
                                               EBII2Transaction.T10).addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
                                                                    .addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v12.ods"));
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aRuleTarget,
-                                              aCodeListTarget,
                                               "OPENPEPPOL",
                                               ESyntaxBinding.UBL,
                                               EBII2Transaction.T10).addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")

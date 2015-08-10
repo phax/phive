@@ -70,6 +70,13 @@ import com.helger.peppol.validation.supplementary.createrules.codelist.CVAData;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
 
+/**
+ * This tool creates all the CVA and GC files that can be extracted from the
+ * code list files. The target directory for these files is
+ * src/test/resources/codelist-generated
+ * 
+ * @author Philip Helger
+ */
 public final class MainCreateCodeLists
 {
   // Base directory for source rules
