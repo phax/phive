@@ -48,6 +48,7 @@ import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
 import com.helger.peppol.validation.supplementary.createrules.RuleSourceItem;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
+import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCache;
 import com.helger.schematron.CSchematron;
 
 @Immutable
@@ -394,8 +395,7 @@ public final class SchematronCreator
       for (final RuleSourceBusinessRule aBusinessRule : aRuleSourceItem.getAllBusinessRules ())
       {
         // Read ODS file
-        CreateHelper.log ("  Reading business rule source file " + aBusinessRule.getSourceFile ());
-        final SpreadsheetDocument aSpreadSheet = SpreadsheetDocument.loadDocument (aBusinessRule.getSourceFile ());
+        final SpreadsheetDocument aSpreadSheet = SpreadsheetCache.readSpreadsheet (aBusinessRule.getSourceFile ());
 
         final SchematronCreator aSC = new SchematronCreator ();
 

@@ -40,6 +40,7 @@ import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.string.StringHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
+import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCache;
 import com.helger.schematron.CSchematron;
 
 @Immutable
@@ -64,16 +65,11 @@ public final class CodeListCreator
   public CodeListCreator ()
   {}
 
-  /**
-   * @param aSpreadSheet
-   *        ODS spreadsheet
-   * @return A set with all required code list names, references from the CVA
-   *         sheet
-   */
-  @Nonnull
-  private Set <String> _createCVAData (@Nonnull final SpreadsheetDocument aSpreadSheet)
+  private void _readCVAandValues (@Nonnull final SpreadsheetDocument aSpreadsheet,
+                                  @Nonnull final String sRequiredTransaction) throws Exception
   {
-    final Table aCVASheet = aSpreadSheet.getSheetByName ("CVA");
+    // Handle CVA sheets
+    final Table aCVASheet = aSpreadsheet.getSheetByName ("CVA");
     if (aCVASheet == null)
       throw new IllegalStateException ("No 'CVA' sheet found!");
 
@@ -83,41 +79,38 @@ public final class CodeListCreator
     while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
-      final String sID = ODFHelper.getText (aCVASheet, 1, nRow);
-      // column 2 is UBL, column 3 is CII
-      String sItem = ODFHelper.getText (aCVASheet, 2, nRow);
-      // column 4 is UBL, column 5 is CII
-      final String sScope = ODFHelper.getText (aCVASheet, 4, nRow);
-      final String sCodeListName = ODFHelper.getText (aCVASheet, 6, nRow);
-      final String sMessage = ODFHelper.getText (aCVASheet, 7, nRow);
-      final String sSeverity = ODFHelper.getText (aCVASheet, 8, nRow);
 
-      if (StringHelper.hasText (sScope))
-        sItem = sScope + "/" + sItem;
-
-      // Save context per transaction
-      CVAData aCVAData = m_aCVAs.get (sTransaction);
-      if (aCVAData == null)
+      // Only take the data from the required transaction
+      if (sRequiredTransaction.equals (sTransaction))
       {
-        aCVAData = new CVAData (sTransaction);
-        m_aCVAs.put (sTransaction, aCVAData);
-      }
-      aCVAData.addContext (sID, sItem, sCodeListName, sSeverity, sMessage);
+        final String sID = ODFHelper.getText (aCVASheet, 1, nRow);
+        // column 2 is UBL, column 3 is CII
+        String sItem = ODFHelper.getText (aCVASheet, 2, nRow);
+        // column 4 is UBL, column 5 is CII
+        final String sScope = ODFHelper.getText (aCVASheet, 4, nRow);
+        final String sCodeListName = ODFHelper.getText (aCVASheet, 6, nRow);
+        final String sMessage = ODFHelper.getText (aCVASheet, 7, nRow);
+        final String sSeverity = ODFHelper.getText (aCVASheet, 8, nRow);
 
-      // Remember that we require a code list
-      aAllReferencedCodeListNames.add (sCodeListName);
+        if (StringHelper.hasText (sScope))
+          sItem = sScope + "/" + sItem;
+
+        // Save context per transaction
+        CVAData aCVAData = m_aCVAs.get (sTransaction);
+        if (aCVAData == null)
+        {
+          aCVAData = new CVAData (sTransaction);
+          m_aCVAs.put (sTransaction, aCVAData);
+        }
+        aCVAData.addContext (sID, sItem, sCodeListName, sSeverity, sMessage);
+
+        // Remember that we require a code list
+        aAllReferencedCodeListNames.add (sCodeListName);
+      }
 
       ++nRow;
     }
 
-    return aAllReferencedCodeListNames;
-  }
-
-  @Nonnull
-  private void _createCVAandGC (@Nonnull final SpreadsheetDocument aSpreadSheet) throws Exception
-  {
-    // Handle CVA sheets
-    final Set <String> aAllReferencedCodeListNames = _createCVAData (aSpreadSheet);
     if (aAllReferencedCodeListNames.isEmpty ())
       throw new IllegalStateException ("CVA was not referencing any code list!");
 
@@ -125,7 +118,7 @@ public final class CodeListCreator
     CreateHelper.log ("  Reading codelists");
     for (final String sCodeListName : aAllReferencedCodeListNames)
     {
-      final Table aSheet = aSpreadSheet.getSheetByName (sCodeListName);
+      final Table aSheet = aSpreadsheet.getSheetByName (sCodeListName);
       if (aSheet == null)
       {
         // E.g. for 'EvidenceTypeCode'
@@ -136,7 +129,7 @@ public final class CodeListCreator
       CreateHelper.log ("    Reading " + sCodeListName);
 
       // Find start row
-      int nRow = 0;
+      nRow = 0;
       while (!ODFHelper.isEmpty (aSheet, 0, nRow))
         nRow++;
       // Now we are at the empty row - skip 2 more
@@ -149,12 +142,9 @@ public final class CodeListCreator
 
         // In code list name, a code is used
         if (m_aAllCodes.putSingle (sCodeListName, sCode).isUnchanged ())
-        {
           s_aLogger.warn ("Found duplicate value '" + sCode + "' in code list " + sCodeListName);
-          continue;
-        }
-
-        ++nRow;
+        else
+          ++nRow;
       }
     }
   }
@@ -162,14 +152,13 @@ public final class CodeListCreator
   private void _createCodelistSchematron (@Nonnull final RuleSourceCodeList aCodeList)
   {
     CreateHelper.log ("  Writing Schematron code lists");
-    // For all transactions
-    for (final Map.Entry <String, CVAData> aEntry : m_aCVAs.entrySet ())
-    {
-      final String sTransaction = aEntry.getKey ();
-      final CVAData aCVAData = aEntry.getValue ();
+    if (m_aCVAs.size () > 1)
+      throw new IllegalStateException ("Having data for too many transactions!");
 
-      if (!aCVAData.getTransaction ().equals (aCodeList.getTransactionKey ()))
-        continue;
+    // For all transactions (exactly one!)
+    for (final CVAData aCVAData : m_aCVAs.values ())
+    {
+      final String sTransaction = aCodeList.getTransactionKey ();
 
       final File aSCHFile = aCodeList.getSchematronFile ();
       CreateHelper.log ("    Creating " + aSCHFile.getName ());
@@ -217,11 +206,10 @@ public final class CodeListCreator
   public void createCodeLists (@Nonnull final RuleSourceCodeList aCodeList) throws Exception
   {
     // Read ODS file
-    CreateHelper.log ("Reading code list file " + aCodeList.getSourceFile ());
-    final SpreadsheetDocument aSpreadSheet = SpreadsheetDocument.loadDocument (aCodeList.getSourceFile ());
+    final SpreadsheetDocument aSpreadsheet = SpreadsheetCache.readSpreadsheet (aCodeList.getSourceFile ());
 
     // Create .CVA and .GC files
-    _createCVAandGC (aSpreadSheet);
+    _readCVAandValues (aSpreadsheet, aCodeList.getTransactionKey ());
 
     // Create Schematron code list files
     _createCodelistSchematron (aCodeList);

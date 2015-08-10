@@ -69,12 +69,13 @@ import com.helger.peppol.validation.supplementary.createrules.codelist.CVAContex
 import com.helger.peppol.validation.supplementary.createrules.codelist.CVAData;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
+import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCache;
 
 /**
  * This tool creates all the CVA and GC files that can be extracted from the
  * code list files. The target directory for these files is
  * src/test/resources/codelist-generated
- * 
+ *
  * @author Philip Helger
  */
 public final class MainCreateCodeLists
@@ -358,8 +359,7 @@ public final class MainCreateCodeLists
       final File aCodeListFile = new File (aRuleSource, aCodeList[1]);
 
       // Read ODS file
-      CreateHelper.log ("Reading code list file " + aCodeListFile);
-      final SpreadsheetDocument aSpreadsheet = SpreadsheetDocument.loadDocument (aCodeListFile);
+      final SpreadsheetDocument aSpreadsheet = SpreadsheetCache.readSpreadsheet (aCodeListFile);
 
       /** From transaction to CVAData */
       final Map <String, CVAData> aCVAs = new TreeMap <String, CVAData> ();

@@ -64,12 +64,6 @@ public final class RuleSourceCodeList
   }
 
   @Nonnull
-  public EBII2Transaction getTransaction ()
-  {
-    return m_eTransaction;
-  }
-
-  @Nonnull
   @Nonempty
   public String getTransactionKey ()
   {
