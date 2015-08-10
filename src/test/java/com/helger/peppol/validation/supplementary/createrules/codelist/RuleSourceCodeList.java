@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FileOperations;
+import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 public final class RuleSourceCodeList
 {
@@ -30,13 +31,16 @@ public final class RuleSourceCodeList
   private final File m_aCodeListOutputDirectory;
   private final File m_aSchematronOutputDirectory;
   private final String m_sID;
+  private final EBII2Transaction m_eTransaction;
 
   public RuleSourceCodeList (@Nonnull final File aSourceFilename,
                              @Nonnull final File aCodeListOutputDirectory,
                              @Nonnull final File aSchematronOutputDirectory,
-                             @Nonnull @Nonempty final String sID)
+                             @Nonnull @Nonempty final String sID,
+                             @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aSourceFilename.isFile (), "Source file does not exist: " + aSourceFilename);
+    ValueEnforcer.notNull (eTransaction, "Transaction");
     FileOperations.createDirIfNotExisting (aCodeListOutputDirectory);
     FileOperations.createDirIfNotExisting (aSchematronOutputDirectory);
     FileOperations.createDirIfNotExisting (new File (aSchematronOutputDirectory, "include"));
@@ -44,6 +48,7 @@ public final class RuleSourceCodeList
     m_aCodeListOutputDirectory = aCodeListOutputDirectory;
     m_aSchematronOutputDirectory = aSchematronOutputDirectory;
     m_sID = sID;
+    m_eTransaction = eTransaction;
   }
 
   @Nonnull
@@ -74,5 +79,18 @@ public final class RuleSourceCodeList
   public File getXSLTFile (@Nonnull @Nonempty final String sTransaction)
   {
     return new File (getSchematronFile (sTransaction).getAbsolutePath () + ".xslt");
+  }
+
+  @Nonnull
+  public EBII2Transaction getTransaction ()
+  {
+    return m_eTransaction;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getTransactionKey ()
+  {
+    return m_eTransaction.name ();
   }
 }

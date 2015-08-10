@@ -29,6 +29,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.id.IHasID;
+import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.codelist.RuleSourceCodeList;
 import com.helger.peppol.validation.supplementary.createrules.sch.RuleSourceBusinessRule;
 
@@ -41,6 +42,7 @@ public final class RuleSourceItem implements IHasID <String>
   private final List <RuleSourceCodeList> m_aCodeLists = new ArrayList <RuleSourceCodeList> ();
   private final List <RuleSourceBusinessRule> m_aBusinessRules = new ArrayList <RuleSourceBusinessRule> ();
   private final ESyntaxBinding m_eBinding;
+  private final EBII2Transaction m_eTransaction;
 
   /**
    * @param aRuleSrcDir
@@ -59,7 +61,8 @@ public final class RuleSourceItem implements IHasID <String>
                          @Nonnull final File aRuleDstDir,
                          @Nonnull final File aCodeListDstDir,
                          @Nonnull @Nonempty final String sID,
-                         @Nullable final ESyntaxBinding eBinding)
+                         @Nullable final ESyntaxBinding eBinding,
+                         @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
@@ -67,8 +70,9 @@ public final class RuleSourceItem implements IHasID <String>
     m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;
     m_aCodeListDstDir = aCodeListDstDir;
-    m_sID = sID.toUpperCase (Locale.US);
+    m_sID = sID.toUpperCase (Locale.US) + "-" + eBinding.getID () + "-" + eTransaction.name ();
     m_eBinding = eBinding;
+    m_eTransaction = eTransaction;
   }
 
   @Nonnull
@@ -96,7 +100,8 @@ public final class RuleSourceItem implements IHasID <String>
     m_aCodeLists.add (new RuleSourceCodeList (new File (m_aRuleSrcDir, sSourceFilename),
                                               getOutputCodeListDirectory (),
                                               getOutputSchematronDirectory (),
-                                              m_sID));
+                                              m_sID,
+                                              m_eTransaction));
     return this;
   }
 

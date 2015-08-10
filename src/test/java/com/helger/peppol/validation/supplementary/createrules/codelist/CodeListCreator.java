@@ -33,6 +33,8 @@ import javax.xml.transform.dom.DOMResult;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 import org.odftoolkit.simple.table.Table;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 import com.helger.commons.collection.multimap.IMultiMapSetBased;
@@ -83,6 +85,8 @@ public final class CodeListCreator
   public static final char CODELIST_VALUE_SEPARATOR = '\ufffd';
 
   private static final String NS_SCHEMATRON = CSchematron.NAMESPACE_SCHEMATRON;
+
+  private static final Logger s_aLogger = LoggerFactory.getLogger (CodeListCreator.class);
 
   private static Templates s_aCVA2SCH;
   // From transaction to CVAData
@@ -189,7 +193,7 @@ public final class CodeListCreator
   }
 
   @Nonnull
-  private void _createCVAandGC (final RuleSourceCodeList aCodeList) throws Exception
+  private void _createCVAandGC (@Nonnull final RuleSourceCodeList aCodeList) throws Exception
   {
     CreateHelper.log ("Reading code list file " + aCodeList.getSourceFile ());
 
@@ -276,7 +280,10 @@ public final class CodeListCreator
 
         // In code list name, a code is used
         if (m_aAllCodes.putSingle (sCodeListName, sCode).isUnchanged ())
-          throw new IllegalStateException ("Found duplicate value '" + sCode + "' in code list " + sCodeListName);
+        {
+          s_aLogger.warn ("Found duplicate value '" + sCode + "' in code list " + sCodeListName);
+          continue;
+        }
 
         ++nRow;
       }
@@ -302,6 +309,9 @@ public final class CodeListCreator
     {
       final String sTransaction = aEntry.getKey ();
       final CVAData aCVAData = aEntry.getValue ();
+
+      if (!aCVAData.getTransaction ().equals (aCodeList.getTransactionKey ()))
+        continue;
 
       final File aSCHFile = aCodeList.getSchematronFile (sTransaction);
       CreateHelper.log ("    Creating " + aSCHFile.getName ());

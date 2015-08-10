@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.codelist.CodeListCreator;
 import com.helger.peppol.validation.supplementary.createrules.codelist.RuleSourceCodeList;
 import com.helger.peppol.validation.supplementary.createrules.sch.SchematronCreator;
@@ -46,27 +47,32 @@ public final class MainCreateValidationRules
                                                 aRuleTarget,
                                                 aCodeListTarget,
                                                 "atgov",
-                                                ESyntaxBinding.UBL).addBussinessRule ("businessrules/atgov-T10-BusinessRules-v03.ods")
-                                                                   .addBussinessRule ("businessrules/atgov-T14-BusinessRules-v03.ods"));
+                                                ESyntaxBinding.UBL,
+                                                EBII2Transaction.T10).addBussinessRule ("businessrules/atgov-T10-BusinessRules-v03.ods")
+                                                                     .addBussinessRule ("businessrules/atgov-T14-BusinessRules-v03.ods"));
       aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                                 aRuleTarget,
                                                 aCodeListTarget,
                                                 "atnat",
-                                                ESyntaxBinding.UBL).addBussinessRule ("businessrules/atnat-T10-BusinessRules-v04.ods")
-                                                                   .addBussinessRule ("businessrules/atnat-T14-BusinessRules-v04.ods"));
+                                                ESyntaxBinding.UBL,
+                                                EBII2Transaction.T10).addBussinessRule ("businessrules/atnat-T10-BusinessRules-v04.ods")
+                                                                     .addBussinessRule ("businessrules/atnat-T14-BusinessRules-v04.ods"));
     }
 
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aRuleTarget,
                                               aCodeListTarget,
-                                              "codelists",
-                                              ESyntaxBinding.UBL).addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods"));
-
+                                              "BIIRULES",
+                                              ESyntaxBinding.UBL,
+                                              EBII2Transaction.T10).addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
+                                                                   .addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v12.ods"));
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aRuleTarget,
                                               aCodeListTarget,
-                                              "BIS2.0-invoice4a-VA_V3.0",
-                                              ESyntaxBinding.UBL).addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v11.ods"));
+                                              "OPENPEPPOL",
+                                              ESyntaxBinding.UBL,
+                                              EBII2Transaction.T10).addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+                                                                   .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T10-BusinessRules-v03.ods"));
 
     // Create all codelists (GC + CVA)
     // Processing time: quite quick
