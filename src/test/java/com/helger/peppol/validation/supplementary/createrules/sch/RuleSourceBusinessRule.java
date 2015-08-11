@@ -45,13 +45,12 @@ public final class RuleSourceBusinessRule
                                  @Nullable final EBII2Transaction eCodeListTransaction)
   {
     ValueEnforcer.notNull (aSourceFilename, "SourceFilename");
-    if (!aSourceFilename.isFile ())
-      throw new IllegalArgumentException ("Source file does not exist: " + aSourceFilename);
+    ValueEnforcer.isTrue (aSourceFilename.isFile (), "Source file does not exist: " + aSourceFilename);
     ValueEnforcer.notNull (aOutputDirectory, "OutputDirectory");
-    ValueEnforcer.notEmpty (sID, "ID");
-
     FileOperations.createDirIfNotExisting (aOutputDirectory);
     FileOperations.createDirIfNotExisting (new File (aOutputDirectory, "include"));
+    ValueEnforcer.notEmpty (sID, "ID");
+
     m_aSourceFile = aSourceFilename;
     m_aOutputDirectory = aOutputDirectory;
     m_sID = sID;

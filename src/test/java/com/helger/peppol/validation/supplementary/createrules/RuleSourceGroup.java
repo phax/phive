@@ -27,6 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.io.file.FileOperations;
 import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 public final class RuleSourceGroup
@@ -55,6 +56,7 @@ public final class RuleSourceGroup
                           @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
+    FileOperations.createDirIfNotExisting (aRuleDstDir);
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
     m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;

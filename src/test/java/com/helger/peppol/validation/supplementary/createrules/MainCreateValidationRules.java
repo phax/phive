@@ -55,27 +55,97 @@ public final class MainCreateValidationRules
              .addBussinessRule ("businessrules/atnat-T14-BusinessRules-v04.ods");
     }
 
-    final RuleSourceGroup aT10 = new RuleSourceGroup (aRuleSource,
-                                                      aRuleTarget,
-                                                      ESyntaxBinding.UBL,
-                                                      EBII2Transaction.T10);
-    aT10.addItem ("BIIRULES").addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods");
-    aT10.addItem ("OPENPEPPOL")
-        .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
-        .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T10-BusinessRules-v03.ods");
+    // Catalogue
+    {
+      final RuleSourceGroup aT19 = new RuleSourceGroup (aRuleSource,
+                                                        new File (aRuleTarget, "Catalogue"),
+                                                        ESyntaxBinding.UBL,
+                                                        EBII2Transaction.T19);
+      aT19.addItem ("BIIRULES")
+          .addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
+          .addBussinessRule ("biirules/businessrules/bii2rules-T19-BusinessRules-v05.ods");
+      aT19.addItem ("OPENPEPPOL")
+          .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+          .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T19-BusinessRules-v01.ods");
+      aRuleSourceGroups.add (aT19);
 
-    // Create all codelists (GC + CVA)
-    // Processing time: quite quick
+      final RuleSourceGroup aT58 = new RuleSourceGroup (aRuleSource,
+                                                        new File (aRuleTarget, "Catalogue"),
+                                                        ESyntaxBinding.UBL,
+                                                        EBII2Transaction.T58);
+      aT58.addItem ("BIIRULES").addBussinessRule ("biirules/businessrules/bii2rules-T58-BusinessRules-v01.ods");
+      aT58.addItem ("OPENPEPPOL")
+          .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+          .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T58-BusinessRules-v01.ods");
+      aRuleSourceGroups.add (aT58);
+    }
+
+    // Despatch Advice
+    {
+      final RuleSourceGroup aT16 = new RuleSourceGroup (aRuleSource,
+                                                        new File (aRuleTarget, "DespatchAdvice"),
+                                                        ESyntaxBinding.UBL,
+                                                        EBII2Transaction.T16);
+      aT16.addItem ("BIIRULES").addBussinessRule ("biirules/businessrules/bii2rules-T16-BusinessRules-v05.ods");
+      aT16.addItem ("OPENPEPPOL")
+          .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+          .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T16-BusinessRules-v01.ods");
+      aRuleSourceGroups.add (aT16);
+    }
+
+    // Invoice
+    {
+      final RuleSourceGroup aT10 = new RuleSourceGroup (aRuleSource,
+                                                        new File (aRuleTarget, "Invoice"),
+                                                        ESyntaxBinding.UBL,
+                                                        EBII2Transaction.T10);
+      aT10.addItem ("BIIRULES")
+          .addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
+          .addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v12.ods");
+      aT10.addItem ("OPENPEPPOL")
+          .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+          .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T10-BusinessRules-v03.ods");
+      aRuleSourceGroups.add (aT10);
+    }
+
+    // Message Level Response
+    {
+      final RuleSourceGroup aT71 = new RuleSourceGroup (aRuleSource,
+                                                        new File (aRuleTarget, "MLR"),
+                                                        ESyntaxBinding.UBL,
+                                                        EBII2Transaction.T71);
+      aT71.addItem ("BIIRULES")
+          .addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
+          .addBussinessRule ("biirules/businessrules/bii2rules-T71-BusinessRules-v03.ods");
+      aT71.addItem ("OPENPEPPOL")
+          .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+          .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T71-BusinessRules-v01.ods");
+      aRuleSourceGroups.add (aT71);
+    }
+
+    // Order
+    {
+      final RuleSourceGroup aT01 = new RuleSourceGroup (aRuleSource,
+                                                        new File (aRuleTarget, "Order"),
+                                                        ESyntaxBinding.UBL,
+                                                        EBII2Transaction.T01);
+      aT01.addItem ("BIIRULES").addBussinessRule ("biirules/businessrules/bii2rules-T01-BusinessRules-v09.ods");
+      aT01.addItem ("OPENPEPPOL")
+          .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+          .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T01-BusinessRules-v01.ods");
+      aRuleSourceGroups.add (aT01);
+    }
+
     for (final RuleSourceGroup aRuleSourceGroup : aRuleSourceGroups)
     {
-      final List <RuleSourceItem> aRuleSourceItems = aRuleSourceGroup.getAllItems ();
-
       // Copy BIICORE file (if present)
       {
         final File aBIICore = aRuleSourceGroup.getBIICORESrcFile ();
         if (aBIICore.exists ())
           FileOperations.copyFile (aBIICore, aRuleSourceGroup.getBIICOREDstFile ());
       }
+
+      final List <RuleSourceItem> aRuleSourceItems = aRuleSourceGroup.getAllItems ();
 
       // Process code lists
       for (final RuleSourceItem aRuleSourceItem : aRuleSourceItems)
