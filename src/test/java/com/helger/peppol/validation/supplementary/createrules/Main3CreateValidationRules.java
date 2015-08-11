@@ -35,53 +35,51 @@ public final class Main3CreateValidationRules
   {
     GlobalDebug.setDebugModeDirect (false);
 
-    // Base directory for source rules
-    final File aRuleSource = new File ("src/test/resources/rule-source");
     final File aRuleTarget = new File ("src/main/resources/peppol-rules");
 
     // Add all base directories
     final List <RuleSourceGroup> aRuleSourceGroups = new ArrayList <RuleSourceGroup> ();
 
     // Catalogue
-    aRuleSourceGroups.add (new RuleSourceGroup (aRuleSource,
-                                                new File (aRuleTarget, "Catalogue"),
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Catalogue"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T19).addAllFrom (ERuleSource.T19));
-    aRuleSourceGroups.add (new RuleSourceGroup (aRuleSource,
-                                                new File (aRuleTarget, "Catalogue"),
+                                                EBII2Transaction.T19,
+                                                ERuleSource.T19));
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Catalogue"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T58).addAllFrom (ERuleSource.T58));
+                                                EBII2Transaction.T58,
+                                                ERuleSource.T58));
 
     // Despatch Advice
-    aRuleSourceGroups.add (new RuleSourceGroup (aRuleSource,
-                                                new File (aRuleTarget, "DespatchAdvice"),
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "DespatchAdvice"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T16).addAllFrom (ERuleSource.T16));
+                                                EBII2Transaction.T16,
+                                                ERuleSource.T16));
 
     // Invoice
-    aRuleSourceGroups.add (new RuleSourceGroup (aRuleSource,
-                                                new File (aRuleTarget, "Invoice"),
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Invoice"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T10).addAllFrom (ERuleSource.T10));
+                                                EBII2Transaction.T10,
+                                                ERuleSource.T10));
 
     // Message Level Response
-    aRuleSourceGroups.add (new RuleSourceGroup (aRuleSource,
-                                                new File (aRuleTarget, "MLR"),
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "MLR"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T71).addAllFrom (ERuleSource.T71));
+                                                EBII2Transaction.T71,
+                                                ERuleSource.T71));
 
     // Order
-    aRuleSourceGroups.add (new RuleSourceGroup (aRuleSource,
-                                                new File (aRuleTarget, "Order"),
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Order"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T01).addAllFrom (ERuleSource.T01));
+                                                EBII2Transaction.T01,
+                                                ERuleSource.T01));
 
     for (final RuleSourceGroup aRuleSourceGroup : aRuleSourceGroups)
     {
       // Copy BIICORE file (if present)
       {
         final File aBIICore = aRuleSourceGroup.getBIICORESrcFile ();
-        if (aBIICore.exists ())
+        if (aBIICore != null)
           FileOperations.copyFile (aBIICore, aRuleSourceGroup.getBIICOREDstFile ());
       }
 

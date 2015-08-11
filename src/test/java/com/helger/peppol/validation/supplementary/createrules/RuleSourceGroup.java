@@ -32,16 +32,22 @@ import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 public final class RuleSourceGroup
 {
-  private final File m_aRuleSrcDir;
   private final File m_aRuleDstDir;
   private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
+  private final File m_aBIICoreFile;
   // Status vars
   private final List <RuleSourceItem> m_aItems = new ArrayList <RuleSourceItem> ();
 
+  @Nonnull
+  private RuleSourceItem _addItem (@Nonnull @Nonempty final String sID)
+  {
+    final RuleSourceItem aItem = new RuleSourceItem (m_aRuleDstDir, sID, m_eBinding, m_eTransaction);
+    m_aItems.add (aItem);
+    return aItem;
+  }
+
   /**
-   * @param aRuleSrcDir
-   *        Rule source directory. Must exist.
    * @param aRuleDstDir
    *        Rule destination directory. Must exist.
    * @param eBinding
@@ -50,18 +56,37 @@ public final class RuleSourceGroup
    * @param eTransaction
    *        Transaction to use. May not be <code>null</code>.
    */
-  public RuleSourceGroup (@Nonnull final File aRuleSrcDir,
-                          @Nonnull final File aRuleDstDir,
+  public RuleSourceGroup (@Nonnull final File aRuleDstDir,
                           @Nullable final ESyntaxBinding eBinding,
-                          @Nonnull final EBII2Transaction eTransaction)
+                          @Nonnull final EBII2Transaction eTransaction,
+                          @Nonnull final ERuleSource eRuleSource)
   {
-    ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
     FileOperations.createDirRecursiveIfNotExisting (aRuleDstDir);
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
-    m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;
     m_eBinding = eBinding;
     m_eTransaction = eTransaction;
+
+    // Add rule items
+    m_aBIICoreFile = eRuleSource.getBIICoreFile ();
+
+    if (eRuleSource.usesBIICodeLists () || eRuleSource.hasBIIRules ())
+    {
+      final RuleSourceItem aItem = _addItem ("BIIRULES");
+      if (eRuleSource.usesBIICodeLists ())
+        aItem.addCodeList (ERuleSource.CODELISTS.getBIIRuleFile ());
+      if (eRuleSource.hasBIIRules ())
+        aItem.addBussinessRule (eRuleSource.getBIIRuleFile ());
+    }
+
+    if (eRuleSource.usesOpenPEPPOLCodeLists () || eRuleSource.hasOpenPEPPOLRules ())
+    {
+      final RuleSourceItem aItem = _addItem ("OPENPEPPOL");
+      if (eRuleSource.usesOpenPEPPOLCodeLists ())
+        aItem.addCodeList (ERuleSource.CODELISTS.getOpenPEPPOLRuleFile ());
+      if (eRuleSource.hasOpenPEPPOLRules ())
+        aItem.addBussinessRule (eRuleSource.getOpenPEPPOLRuleFile ());
+    }
   }
 
   @Nonnull
@@ -71,59 +96,21 @@ public final class RuleSourceGroup
   }
 
   @Nonnull
-  public RuleSourceGroup addAllFrom (@Nonnull final ERuleSource eRuleSource)
-  {
-    if (eRuleSource.usesBIICodeLists () || eRuleSource.hasBIIRules ())
-    {
-      final RuleSourceItem aItem = addItem ("BIIRULES");
-      if (eRuleSource.usesBIICodeLists ())
-        aItem.addCodeList (ERuleSource.CODELISTS.getBIIRuleFile ());
-      if (eRuleSource.hasBIIRules ())
-        aItem.addBussinessRule (eRuleSource.getBIIRuleFile ());
-    }
-
-    if (eRuleSource.usesOpenPEPPOLCodeLists () || eRuleSource.hasOpenPEPPOLRules ())
-    {
-      final RuleSourceItem aItem = addItem ("OPENPEPPOL");
-      if (eRuleSource.usesOpenPEPPOLCodeLists ())
-        aItem.addCodeList (ERuleSource.CODELISTS.getOpenPEPPOLRuleFile ());
-      if (eRuleSource.hasOpenPEPPOLRules ())
-        aItem.addBussinessRule (eRuleSource.getOpenPEPPOLRuleFile ());
-    }
-    return this;
-  }
-
-  @Nonnull
-  public RuleSourceItem addItem (@Nonnull @Nonempty final String sID)
-  {
-    final RuleSourceItem aItem = new RuleSourceItem (m_aRuleDstDir, sID, m_eBinding, m_eTransaction);
-    m_aItems.add (aItem);
-    return aItem;
-  }
-
-  @Nonnull
   @ReturnsMutableCopy
   public List <RuleSourceItem> getAllItems ()
   {
     return CollectionHelper.newList (m_aItems);
   }
 
-  @Nonnull
-  @Nonempty
-  private String _getBIICOREFilename ()
-  {
-    return "BIICORE-" + m_eBinding.getID () + "-" + m_eTransaction.getTransactionKeyShort () + "-V1.0.sch";
-  }
-
-  @Nonnull
+  @Nullable
   public File getBIICORESrcFile ()
   {
-    return new File (m_aRuleSrcDir, "biicore/" + _getBIICOREFilename ());
+    return m_aBIICoreFile;
   }
 
-  @Nonnull
+  @Nullable
   public File getBIICOREDstFile ()
   {
-    return new File (m_aRuleDstDir, _getBIICOREFilename ());
+    return m_aBIICoreFile == null ? null : new File (m_aRuleDstDir, m_aBIICoreFile.getName ());
   }
 }

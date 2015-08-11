@@ -77,6 +77,12 @@ public final class Main2CreateBusinessRuleEnums
     return sValue == null ? "null" : '"' + sValue + '"';
   }
 
+  @Nonnull
+  private static File _getBIICOREFile (@Nonnull final String sTransactionKey)
+  {
+    return new File ("src/test/resources/rule-source/biicore/BIICORE-UBL-" + sTransactionKey + "-V1.0.sch");
+  }
+
   private static boolean _hasCodeList (@Nonnull final String sPrefix, @Nonnull final String sTransactionKey)
   {
     return new File ("src/test/resources/codelist-generated/cva/" + sPrefix + "-" + sTransactionKey + ".cva").exists ();
@@ -94,8 +100,11 @@ public final class Main2CreateBusinessRuleEnums
 
     for (final String sKey : aKeys)
     {
+      final File aBIICoreFile = _getBIICOREFile (sKey);
       System.out.println (sKey +
                           " (" +
+                          (aBIICoreFile.exists () ? '"' + aBIICoreFile.getName () + '"' : "null") +
+                          ", " +
                           _getVersion (aBIIRules, sKey) +
                           ", " +
                           _hasCodeList ("BIIRULES", sKey) +
