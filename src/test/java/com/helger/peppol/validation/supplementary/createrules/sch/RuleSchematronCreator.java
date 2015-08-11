@@ -368,7 +368,7 @@ public final class RuleSchematronCreator
         if (aBusinessRule.hasCodeList ())
         {
           eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
-          eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronCodeListFile ().getName ());
+          eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronCodeListFile (eBinding).getName ());
         }
         eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
         eInclude.setAttribute ("href",

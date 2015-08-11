@@ -92,8 +92,8 @@ public final class RuleCodeListCreator
         final String sMessage = ODFHelper.getText (aCVASheet, 7, nRow);
         final String sSeverity = ODFHelper.getText (aCVASheet, 8, nRow);
 
-        if (StringHelper.hasText (sScope))
-          sItem = sScope + "/" + sItem;
+        // Prepend scope (if any)
+        sItem = StringHelper.getConcatenatedOnDemand (sScope, '/', sItem);
 
         // Save context per transaction
         CVAData aCVAData = m_aCVAs.get (sTransaction);

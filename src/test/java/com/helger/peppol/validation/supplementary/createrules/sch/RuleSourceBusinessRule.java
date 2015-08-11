@@ -85,9 +85,10 @@ public final class RuleSourceBusinessRule
   }
 
   @Nonnull
-  public File getSchematronCodeListFile ()
+  public File getSchematronCodeListFile (@Nonnull final ESyntaxBinding eBinding)
   {
-    return new File (m_aOutputDirectory, "include/" + m_sID + "-" + m_eCodeListTransaction + "-codes.sch");
+    return new File (m_aOutputDirectory,
+                     "include/" + m_sID + "-" + eBinding.getID () + "-" + m_eCodeListTransaction + "-codes.sch");
   }
 
   @Nonnull

@@ -40,6 +40,12 @@ public final class Main3CreateValidationRules
     // Add all base directories
     final List <RuleSourceGroup> aRuleSourceGroups = new ArrayList <RuleSourceGroup> ();
 
+    // Billing
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Billing"),
+                                                ESyntaxBinding.UBL,
+                                                EBII2Transaction.T14,
+                                                ERuleSource.T14));
+
     // Catalogue
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Catalogue"),
                                                 ESyntaxBinding.UBL,
@@ -74,6 +80,16 @@ public final class Main3CreateValidationRules
                                                 EBII2Transaction.T01,
                                                 ERuleSource.T01));
 
+    // Ordering
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Ordering"),
+                                                ESyntaxBinding.UBL,
+                                                EBII2Transaction.T01,
+                                                ERuleSource.T01));
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Ordering"),
+                                                ESyntaxBinding.UBL,
+                                                EBII2Transaction.T76,
+                                                ERuleSource.T76));
+
     for (final RuleSourceGroup aRuleSourceGroup : aRuleSourceGroups)
     {
       // Copy BIICORE file (if present)
@@ -93,12 +109,8 @@ public final class Main3CreateValidationRules
       // Create Schematron
       RuleSchematronCreator.createSchematrons (aRuleSourceItems);
 
-      if (false)
-      {
-        // Now create the validation XSLTs
-        // Processing time: terribly slow for biicore
-        RuleXSLTCreator.createXSLTs (aRuleSourceItems);
-      }
+      // Now create the validation XSLTs
+      RuleXSLTCreator.createXSLTs (aRuleSourceItems);
     }
 
     CreateHelper.log ("Finished building validation rules");

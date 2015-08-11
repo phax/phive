@@ -19,6 +19,7 @@ package com.helger.peppol.validation.supplementary.createrules.sch;
 import java.io.File;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import org.w3c.dom.Document;
@@ -43,7 +44,7 @@ public final class RuleXSLTCreator
   private RuleXSLTCreator ()
   {}
 
-  public static void createXSLTs (final List <RuleSourceItem> aRuleSourceItems)
+  public static void createXSLTs (@Nonnull final List <RuleSourceItem> aRuleSourceItems)
   {
     for (final RuleSourceItem aRuleSourceItem : aRuleSourceItems)
     {
