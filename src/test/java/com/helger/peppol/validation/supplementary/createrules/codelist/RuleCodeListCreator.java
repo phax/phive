@@ -44,7 +44,7 @@ import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCa
 import com.helger.schematron.CSchematron;
 
 @Immutable
-public final class CodeListCreator
+public final class RuleCodeListCreator
 {
   /**
    * The separator used to separate different code list values.<br>
@@ -55,14 +55,14 @@ public final class CodeListCreator
 
   private static final String NS_SCHEMATRON = CSchematron.NAMESPACE_SCHEMATRON;
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (CodeListCreator.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (RuleCodeListCreator.class);
 
   /** From transaction to CVAData */
   private final Map <String, CVAData> m_aCVAs = new TreeMap <String, CVAData> ();
   /** From code list name to set of codes */
   private final IMultiMapSetBased <String, String> m_aAllCodes = new MultiTreeMapTreeSetBased <String, String> ();
 
-  public CodeListCreator ()
+  public RuleCodeListCreator ()
   {}
 
   private void _readCVAandValues (@Nonnull final SpreadsheetDocument aSpreadsheet,

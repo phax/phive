@@ -38,9 +38,9 @@ import com.helger.schematron.xslt.SCHTransformerCustomizer;
 import com.helger.schematron.xslt.SchematronResourceSCHCache;
 
 @Immutable
-public final class XSLTCreator
+public final class RuleXSLTCreator
 {
-  private XSLTCreator ()
+  private RuleXSLTCreator ()
   {}
 
   public static void createXSLTs (final List <RuleSourceItem> aRuleSourceItems)

@@ -52,7 +52,7 @@ import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCa
 import com.helger.schematron.CSchematron;
 
 @Immutable
-public final class SchematronCreator
+public final class RuleSchematronCreator
 {
   private static final class PrerequesiteCache
   {
@@ -90,7 +90,7 @@ public final class SchematronCreator
     }
   }
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SchematronCreator.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (RuleSchematronCreator.class);
 
   private static final String NS_SCHEMATRON = CSchematron.NAMESPACE_SCHEMATRON;
   private static final boolean USE_LETS = false;
@@ -100,7 +100,7 @@ public final class SchematronCreator
   // Map from transaction to Map from context to list of assertions
   private final Map <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new HashMap <String, IMultiMapListBased <String, RuleAssertion>> ();
 
-  private SchematronCreator ()
+  private RuleSchematronCreator ()
   {}
 
   private void _readAbstractRules (@Nonnull final SpreadsheetDocument aSpreadSheet)
@@ -397,7 +397,7 @@ public final class SchematronCreator
         // Read ODS file
         final SpreadsheetDocument aSpreadSheet = SpreadsheetCache.readSpreadsheet (aBusinessRule.getSourceFile ());
 
-        final SchematronCreator aSC = new SchematronCreator ();
+        final RuleSchematronCreator aSC = new RuleSchematronCreator ();
 
         // Read abstract rules before the binding specific rules are read
         aSC._readAbstractRules (aSpreadSheet);

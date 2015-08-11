@@ -21,11 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.io.file.FileOperations;
 import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
-import com.helger.peppol.validation.supplementary.createrules.codelist.CodeListCreator;
+import com.helger.peppol.validation.supplementary.createrules.codelist.RuleCodeListCreator;
 import com.helger.peppol.validation.supplementary.createrules.codelist.RuleSourceCodeList;
-import com.helger.peppol.validation.supplementary.createrules.sch.SchematronCreator;
-import com.helger.peppol.validation.supplementary.createrules.sch.XSLTCreator;
+import com.helger.peppol.validation.supplementary.createrules.sch.RuleSchematronCreator;
+import com.helger.peppol.validation.supplementary.createrules.sch.RuleXSLTCreator;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 
 public final class MainCreateValidationRules
@@ -39,56 +40,56 @@ public final class MainCreateValidationRules
     final File aRuleTarget = new File ("src/main/resources/peppol-rules");
 
     // Add all base directories
-    final List <RuleSourceItem> aRuleSourceItems = new ArrayList <RuleSourceItem> ();
+    final List <RuleSourceGroup> aRuleSourceGroups = new ArrayList <RuleSourceGroup> ();
     if (false)
     {
-      aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
-                                                aRuleTarget,
-                                                "atgov",
-                                                ESyntaxBinding.UBL,
-                                                EBII2Transaction.T10).addBussinessRule ("businessrules/atgov-T10-BusinessRules-v03.ods")
-                                                                     .addBussinessRule ("businessrules/atgov-T14-BusinessRules-v03.ods"));
-      aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
-                                                aRuleTarget,
-                                                "atnat",
-                                                ESyntaxBinding.UBL,
-                                                EBII2Transaction.T10).addBussinessRule ("businessrules/atnat-T10-BusinessRules-v04.ods")
-                                                                     .addBussinessRule ("businessrules/atnat-T14-BusinessRules-v04.ods"));
+      final RuleSourceGroup aT10_AT = new RuleSourceGroup (aRuleSource,
+                                                           aRuleTarget,
+                                                           ESyntaxBinding.UBL,
+                                                           EBII2Transaction.T10);
+      aT10_AT.addItem ("atgov")
+             .addBussinessRule ("businessrules/atgov-T10-BusinessRules-v03.ods")
+             .addBussinessRule ("businessrules/atgov-T14-BusinessRules-v03.ods");
+      aT10_AT.addItem ("atnat")
+             .addBussinessRule ("businessrules/atnat-T10-BusinessRules-v04.ods")
+             .addBussinessRule ("businessrules/atnat-T14-BusinessRules-v04.ods");
     }
 
-    aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
-                                              aRuleTarget,
-                                              "BIIRULES",
-                                              ESyntaxBinding.UBL,
-                                              EBII2Transaction.T10).addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods")
-                                                                   .addBussinessRule ("biirules/businessrules/bii2rules-T10-BusinessRules-v12.ods"));
-    aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
-                                              aRuleTarget,
-                                              "OPENPEPPOL",
-                                              ESyntaxBinding.UBL,
-                                              EBII2Transaction.T10).addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
-                                                                   .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T10-BusinessRules-v03.ods"));
+    final RuleSourceGroup aT10 = new RuleSourceGroup (aRuleSource,
+                                                      aRuleTarget,
+                                                      ESyntaxBinding.UBL,
+                                                      EBII2Transaction.T10);
+    aT10.addItem ("BIIRULES").addCodeList ("biirules/businessrules/bii2rules-CodeLists-v04.ods");
+    aT10.addItem ("OPENPEPPOL")
+        .addCodeList ("peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods")
+        .addBussinessRule ("peppol/businessrules/OpenPEPPOL-T10-BusinessRules-v03.ods");
 
     // Create all codelists (GC + CVA)
     // Processing time: quite quick
-    for (final RuleSourceItem aRuleSourceItem : aRuleSourceItems)
+    for (final RuleSourceGroup aRuleSourceGroup : aRuleSourceGroups)
     {
-      // Process all code lists
-      for (final RuleSourceCodeList aCodeList : aRuleSourceItem.getAllCodeLists ())
-        new CodeListCreator ().createCodeLists (aCodeList);
-    }
+      final List <RuleSourceItem> aRuleSourceItems = aRuleSourceGroup.getAllItems ();
 
-    if (true)
-    {
+      // Copy BIICORE file (if present)
+      {
+        final File aBIICore = aRuleSourceGroup.getBIICORESrcFile ();
+        if (aBIICore.exists ())
+          FileOperations.copyFile (aBIICore, aRuleSourceGroup.getBIICOREDstFile ());
+      }
+
+      // Process code lists
+      for (final RuleSourceItem aRuleSourceItem : aRuleSourceItems)
+        for (final RuleSourceCodeList aCodeList : aRuleSourceItem.getAllCodeLists ())
+          new RuleCodeListCreator ().createCodeLists (aCodeList);
+
       // Create Schematron
-      // Processing time: quite OK
-      SchematronCreator.createSchematrons (aRuleSourceItems);
+      RuleSchematronCreator.createSchematrons (aRuleSourceItems);
 
       if (false)
       {
         // Now create the validation XSLTs
         // Processing time: terribly slow for biicore
-        XSLTCreator.createXSLTs (aRuleSourceItems);
+        RuleXSLTCreator.createXSLTs (aRuleSourceItems);
       }
     }
 

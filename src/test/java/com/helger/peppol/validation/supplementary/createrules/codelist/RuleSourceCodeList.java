@@ -60,13 +60,13 @@ public final class RuleSourceCodeList
   public File getSchematronFile ()
   {
     return new File (m_aSchematronOutputDirectory,
-                     "include/" + m_sID + "-" + m_eBinding.getID () + "-" + m_eTransaction.name () + "-codes.sch");
+                     "include/" + m_sID + "-" + m_eBinding.getID () + "-" + getTransactionKey () + "-codes.sch");
   }
 
   @Nonnull
   @Nonempty
   public String getTransactionKey ()
   {
-    return m_eTransaction.name ();
+    return m_eTransaction.getTransactionKeyShort ();
   }
 }
