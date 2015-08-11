@@ -55,11 +55,13 @@ public final class RuleSourceItem implements IHasID <String>
    * @param eBinding
    *        <code>null</code> if all syntax bindings should be processed, the
    *        chosen syntax otherwise.
+   * @param eTransaction
+   *        Transaction to use. May not be <code>null</code>.
    */
   public RuleSourceItem (@Nonnull final File aRuleSrcDir,
                          @Nonnull final File aRuleDstDir,
                          @Nonnull @Nonempty final String sID,
-                         @Nonnull final ESyntaxBinding eBinding,
+                         @Nullable final ESyntaxBinding eBinding,
                          @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
