@@ -28,6 +28,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.file.FileOperations;
+import com.helger.commons.io.file.FilenameHelper;
 import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 public final class RuleSourceGroup
@@ -35,7 +36,7 @@ public final class RuleSourceGroup
   private final File m_aRuleDstDir;
   private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
-  private final File m_aBIICoreFile;
+  private final File m_aBIICoreSchematronFile;
   // Status vars
   private final List <RuleSourceItem> m_aItems = new ArrayList <RuleSourceItem> ();
 
@@ -68,7 +69,7 @@ public final class RuleSourceGroup
     m_eTransaction = eTransaction;
 
     // Add rule items
-    m_aBIICoreFile = eRuleSource.getBIICoreFile ();
+    m_aBIICoreSchematronFile = eRuleSource.getBIICoreSchematronFile ();
 
     if (eRuleSource.usesBIICodeLists () || eRuleSource.hasBIIRules ())
     {
@@ -103,14 +104,30 @@ public final class RuleSourceGroup
   }
 
   @Nullable
-  public File getBIICORESrcFile ()
+  public File getBIICoreSchematronSrcFile ()
   {
-    return m_aBIICoreFile;
+    return m_aBIICoreSchematronFile;
   }
 
   @Nullable
-  public File getBIICOREDstFile ()
+  public File getBIICoreSchematronDstFile ()
   {
-    return m_aBIICoreFile == null ? null : new File (m_aRuleDstDir, m_aBIICoreFile.getName ());
+    final File f = m_aBIICoreSchematronFile;
+    return f == null ? null : new File (m_aRuleDstDir, f.getName ());
+  }
+
+  @Nullable
+  public File getBIICoreXSLTSrcFile ()
+  {
+    return m_aBIICoreSchematronFile == null ? null
+                                            : new File (FilenameHelper.getWithoutExtension (m_aBIICoreSchematronFile) +
+                                                        ".xslt");
+  }
+
+  @Nullable
+  public File getBIICoreXSLTDstFile ()
+  {
+    final File f = getBIICoreXSLTSrcFile ();
+    return f == null ? null : new File (m_aRuleDstDir, f.getName ());
   }
 }

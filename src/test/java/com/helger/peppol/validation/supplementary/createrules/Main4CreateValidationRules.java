@@ -29,7 +29,7 @@ import com.helger.peppol.validation.supplementary.createrules.sch.RuleSchematron
 import com.helger.peppol.validation.supplementary.createrules.sch.RuleXSLTCreator;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 
-public final class Main3CreateValidationRules
+public final class Main4CreateValidationRules
 {
   public static void main (final String [] args) throws Exception
   {
@@ -92,11 +92,15 @@ public final class Main3CreateValidationRules
 
     for (final RuleSourceGroup aRuleSourceGroup : aRuleSourceGroups)
     {
-      // Copy BIICORE file (if present)
+      // Copy BIICORE files (if present)
       {
-        final File aBIICore = aRuleSourceGroup.getBIICORESrcFile ();
-        if (aBIICore != null)
-          FileOperations.copyFile (aBIICore, aRuleSourceGroup.getBIICOREDstFile ());
+        final File aBIICoreSchematron = aRuleSourceGroup.getBIICoreSchematronSrcFile ();
+        if (aBIICoreSchematron != null)
+          FileOperations.copyFile (aBIICoreSchematron, aRuleSourceGroup.getBIICoreSchematronDstFile ());
+
+        final File aBIICoreXSLT = aRuleSourceGroup.getBIICoreXSLTSrcFile ();
+        if (aBIICoreXSLT != null)
+          FileOperations.copyFile (aBIICoreXSLT, aRuleSourceGroup.getBIICoreXSLTDstFile ());
       }
 
       final List <RuleSourceItem> aRuleSourceItems = aRuleSourceGroup.getAllItems ();

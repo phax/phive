@@ -67,8 +67,13 @@ public enum ERuleSource
     return this == ERuleSource.CODELISTS;
   }
 
+  public boolean hasBIICoreFile ()
+  {
+    return m_aBIICoreFile != null;
+  }
+
   @Nullable
-  public File getBIICoreFile ()
+  public File getBIICoreSchematronFile ()
   {
     return m_aBIICoreFile;
   }
