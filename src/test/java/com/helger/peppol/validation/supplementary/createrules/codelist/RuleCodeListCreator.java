@@ -143,8 +143,8 @@ public final class RuleCodeListCreator
         // In code list name, a code is used
         if (m_aAllCodes.putSingle (sCodeListName, sCode).isUnchanged ())
           s_aLogger.warn ("Found duplicate value '" + sCode + "' in code list " + sCodeListName);
-        else
-          ++nRow;
+
+        ++nRow;
       }
     }
   }
