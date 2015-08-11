@@ -56,7 +56,7 @@ public final class RuleSourceGroup
                           @Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
-    FileOperations.createDirIfNotExisting (aRuleDstDir);
+    FileOperations.createDirRecursiveIfNotExisting (aRuleDstDir);
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
     m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;
@@ -71,9 +71,32 @@ public final class RuleSourceGroup
   }
 
   @Nonnull
+  public RuleSourceGroup addAllFrom (@Nonnull final ERuleSource eRuleSource)
+  {
+    if (eRuleSource.usesBIICodeLists () || eRuleSource.hasBIIRules ())
+    {
+      final RuleSourceItem aItem = addItem ("BIIRULES");
+      if (eRuleSource.usesBIICodeLists ())
+        aItem.addCodeList (ERuleSource.CODELISTS.getBIIRuleFile ());
+      if (eRuleSource.hasBIIRules ())
+        aItem.addBussinessRule (eRuleSource.getBIIRuleFile ());
+    }
+
+    if (eRuleSource.usesOpenPEPPOLCodeLists () || eRuleSource.hasOpenPEPPOLRules ())
+    {
+      final RuleSourceItem aItem = addItem ("OPENPEPPOL");
+      if (eRuleSource.usesOpenPEPPOLCodeLists ())
+        aItem.addCodeList (ERuleSource.CODELISTS.getOpenPEPPOLRuleFile ());
+      if (eRuleSource.hasOpenPEPPOLRules ())
+        aItem.addBussinessRule (eRuleSource.getOpenPEPPOLRuleFile ());
+    }
+    return this;
+  }
+
+  @Nonnull
   public RuleSourceItem addItem (@Nonnull @Nonempty final String sID)
   {
-    final RuleSourceItem aItem = new RuleSourceItem (m_aRuleSrcDir, m_aRuleDstDir, sID, m_eBinding, m_eTransaction);
+    final RuleSourceItem aItem = new RuleSourceItem (m_aRuleDstDir, sID, m_eBinding, m_eTransaction);
     m_aItems.add (aItem);
     return aItem;
   }

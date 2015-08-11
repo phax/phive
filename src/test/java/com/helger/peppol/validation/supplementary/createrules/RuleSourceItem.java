@@ -35,7 +35,6 @@ import com.helger.peppol.validation.supplementary.createrules.sch.RuleSourceBusi
 
 public final class RuleSourceItem implements IHasID <String>
 {
-  private final File m_aRuleSrcDir;
   private final File m_aRuleDstDir;
   private final String m_sID;
   private final ESyntaxBinding m_eBinding;
@@ -46,8 +45,6 @@ public final class RuleSourceItem implements IHasID <String>
   private boolean m_bHasCodeList = false;
 
   /**
-   * @param aRuleSrcDir
-   *        Rule source directory. Must exist.
    * @param aRuleDstDir
    *        Rule destination directory. Must exist.
    * @param sID
@@ -58,15 +55,12 @@ public final class RuleSourceItem implements IHasID <String>
    * @param eTransaction
    *        Transaction to use. May not be <code>null</code>.
    */
-  public RuleSourceItem (@Nonnull final File aRuleSrcDir,
-                         @Nonnull final File aRuleDstDir,
+  public RuleSourceItem (@Nonnull final File aRuleDstDir,
                          @Nonnull @Nonempty final String sID,
                          @Nullable final ESyntaxBinding eBinding,
                          @Nonnull final EBII2Transaction eTransaction)
   {
-    ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), aRuleSrcDir + " is not a directory!");
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
-    m_aRuleSrcDir = aRuleSrcDir;
     m_aRuleDstDir = aRuleDstDir;
     m_sID = sID.toUpperCase (Locale.US);
     m_eBinding = eBinding;
@@ -87,9 +81,9 @@ public final class RuleSourceItem implements IHasID <String>
   }
 
   @Nonnull
-  public RuleSourceItem addCodeList (@Nonnull @Nonempty final String sSourceFilename)
+  public RuleSourceItem addCodeList (@Nonnull final File aSourceFile)
   {
-    m_aCodeLists.add (new RuleSourceCodeList (new File (m_aRuleSrcDir, sSourceFilename),
+    m_aCodeLists.add (new RuleSourceCodeList (aSourceFile,
                                               getOutputSchematronDirectory (),
                                               m_sID,
                                               m_eBinding,
@@ -106,9 +100,9 @@ public final class RuleSourceItem implements IHasID <String>
   }
 
   @Nonnull
-  public RuleSourceItem addBussinessRule (@Nonnull @Nonempty final String sSourceFilename)
+  public RuleSourceItem addBussinessRule (@Nonnull final File aSourceFile)
   {
-    m_aBusinessRules.add (new RuleSourceBusinessRule (new File (m_aRuleSrcDir, sSourceFilename),
+    m_aBusinessRules.add (new RuleSourceBusinessRule (aSourceFile,
                                                       getOutputSchematronDirectory (),
                                                       m_sID,
                                                       m_bHasCodeList ? m_eTransaction : null));

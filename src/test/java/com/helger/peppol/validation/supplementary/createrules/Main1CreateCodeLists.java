@@ -78,7 +78,7 @@ import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCa
  *
  * @author Philip Helger
  */
-public final class MainCreateCodeLists
+public final class Main1CreateCodeLists
 {
   // Base directory for source rules
   private static final File aRuleSource = new File ("src/test/resources/rule-source");

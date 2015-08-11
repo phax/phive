@@ -1,7 +1,9 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -11,9 +13,15 @@ import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
-public final class MainCreateBusinessRuleEnums
+/**
+ * Create the content of the {@link ERuleSource} enum. Must be run AFTER
+ * {@link Main1CreateCodeLists} was run!
+ *
+ * @author Philip Helger
+ */
+public final class Main2CreateBusinessRuleEnums
 {
-  private static final String KEY_CODELIST = "codelist";
+  private static final String KEY_CODELISTS = "CODELISTS";
 
   @Nonnull
   @ReturnsMutableCopy
@@ -31,7 +39,7 @@ public final class MainCreateBusinessRuleEnums
         {
           aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-CodeLists-(v[0-9]+)\\.ods", aFile.getName ());
           if (aMatches != null)
-            aBIIRules.put (KEY_CODELIST, aMatches[0]);
+            aBIIRules.put (KEY_CODELISTS, aMatches[0]);
           else
             throw new IllegalStateException ();
         }
@@ -41,36 +49,61 @@ public final class MainCreateBusinessRuleEnums
 
   @Nonnull
   @ReturnsMutableCopy
-  private static Map <String, String> _getOpenPEPPOLVersions ()
+  private static Map <String, String> _getOpenPEPPOLRuleVersions ()
   {
-    final Map <String, String> aBIIRules = new HashMap <String, String> ();
+    final Map <String, String> ret = new HashMap <String, String> ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/peppol/businessrules"))
       if (aFile.isFile () && aFile.getName ().endsWith (".ods"))
       {
         String [] aMatches = RegExHelper.getAllMatchingGroupValues ("OpenPEPPOL-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
                                                                     aFile.getName ());
         if (aMatches != null)
-          aBIIRules.put (aMatches[0], aMatches[1]);
+          ret.put (aMatches[0], aMatches[1]);
         else
         {
           aMatches = RegExHelper.getAllMatchingGroupValues ("OpenPEPPOL-CodeLists-(v[0-9]+)\\.ods", aFile.getName ());
           if (aMatches != null)
-            aBIIRules.put (KEY_CODELIST, aMatches[0]);
+            ret.put (KEY_CODELISTS, aMatches[0]);
           else
             throw new IllegalStateException ();
         }
       }
-    return aBIIRules;
+    return ret;
+  }
+
+  private static String _getVersion (@Nonnull final Map <String, String> aMap, @Nonnull final String sKey)
+  {
+    final String sValue = aMap.get (sKey);
+    return sValue == null ? "null" : '"' + sValue + '"';
+  }
+
+  private static boolean _hasCodeList (@Nonnull final String sPrefix, @Nonnull final String sTransactionKey)
+  {
+    return new File ("src/test/resources/codelist-generated/cva/" + sPrefix + "-" + sTransactionKey + ".cva").exists ();
   }
 
   public static void main (final String [] args)
   {
     final Map <String, String> aBIIRules = _getBIIRuleVersions ();
+    final Map <String, String> aOpenPEPPOLRules = _getOpenPEPPOLRuleVersions ();
 
-    final StringBuilder aSB = new StringBuilder ();
+    final List <String> aKeys = new ArrayList <String> ();
     for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
-    {
+      aKeys.add (eTransaction.getTransactionKeyShort ());
+    aKeys.add (KEY_CODELISTS);
 
+    for (final String sKey : aKeys)
+    {
+      System.out.println (sKey +
+                          " (" +
+                          _getVersion (aBIIRules, sKey) +
+                          ", " +
+                          _hasCodeList ("BIIRULES", sKey) +
+                          ", " +
+                          _getVersion (aOpenPEPPOLRules, sKey) +
+                          ", " +
+                          _hasCodeList ("OPENPEPPOL", sKey) +
+                          "),");
     }
   }
 }
