@@ -14,7 +14,8 @@ import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 /**
  * Create the content of the {@link ERuleSource} enum. Must be run AFTER
- * {@link Main1CreateCodeLists} was run!
+ * {@link Main1CreateCodeLists} was run! Must also be run if new BII Core rules
+ * are added, or they are changed.
  *
  * @author Philip Helger
  */
@@ -22,6 +23,12 @@ public final class Main2CreateBusinessRuleEnums
 {
   private static final String KEY_CODELISTS = "CODELISTS";
 
+  /**
+   * Map from transaction ID (e.g. 'T01') to the version number of the ODS file
+   * (e.g. 'v09').
+   *
+   * @author Philip Helger
+   */
   private static final class MyMap extends TreeMap <String, String>
   {
     @Override
@@ -36,7 +43,24 @@ public final class Main2CreateBusinessRuleEnums
 
   @Nonnull
   @ReturnsMutableCopy
-  private static MyMap _getBIIRuleVersions ()
+  private static MyMap _getBIICoreVersions ()
+  {
+    final MyMap ret = new MyMap ();
+    for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biicore"))
+      if (aFile.isFile () && aFile.getName ().endsWith (".sch"))
+      {
+        final String [] aMatches = RegExHelper.getAllMatchingGroupValues ("BIICORE-UBL-(T[0-9]+)-(V[0-9]+\\.[0-9]+)\\.sch",
+                                                                          aFile.getName ());
+        if (aMatches != null)
+          ret.put (aMatches[0], aMatches[1]);
+        // else e.g. a CEFACT rule
+      }
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  private static MyMap _getBIIRulesVersions ()
   {
     final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biirules/businessrules"))
@@ -60,7 +84,7 @@ public final class Main2CreateBusinessRuleEnums
 
   @Nonnull
   @ReturnsMutableCopy
-  private static MyMap _getOpenPEPPOLRuleVersions ()
+  private static MyMap _getOpenPEPPOLVersions ()
   {
     final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/peppol/businessrules"))
@@ -88,12 +112,6 @@ public final class Main2CreateBusinessRuleEnums
     return sValue == null ? "null" : '"' + sValue + '"';
   }
 
-  @Nonnull
-  private static File _getBIICOREFile (@Nonnull final String sTransactionKey)
-  {
-    return new File ("src/test/resources/rule-source/biicore/BIICORE-UBL-" + sTransactionKey + "-V1.0.sch");
-  }
-
   private static boolean _hasCodeList (@Nonnull final String sPrefix, @Nonnull final String sTransactionKey)
   {
     return new File ("src/test/resources/codelist-generated/cva/" + sPrefix + "-" + sTransactionKey + ".cva").exists ();
@@ -101,8 +119,9 @@ public final class Main2CreateBusinessRuleEnums
 
   public static void main (final String [] args)
   {
-    final MyMap aBIIRules = _getBIIRuleVersions ();
-    final MyMap aOpenPEPPOLRules = _getOpenPEPPOLRuleVersions ();
+    final MyMap aBIICore = _getBIICoreVersions ();
+    final MyMap aBIIRules = _getBIIRulesVersions ();
+    final MyMap aOpenPEPPOL = _getOpenPEPPOLVersions ();
 
     final List <String> aKeys = new ArrayList <String> ();
     for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
@@ -111,16 +130,15 @@ public final class Main2CreateBusinessRuleEnums
 
     for (final String sKey : aKeys)
     {
-      final File aBIICoreFile = _getBIICOREFile (sKey);
       System.out.println (sKey +
                           " (" +
-                          (aBIICoreFile.exists () ? '"' + aBIICoreFile.getName () + '"' : "null") +
+                          _getVersion (aBIICore, sKey) +
                           ", " +
                           _getVersion (aBIIRules, sKey) +
                           ", " +
                           _hasCodeList ("BIIRULES", sKey) +
                           ", " +
-                          _getVersion (aOpenPEPPOLRules, sKey) +
+                          _getVersion (aOpenPEPPOL, sKey) +
                           ", " +
                           _hasCodeList ("OPENPEPPOL", sKey) +
                           "),");

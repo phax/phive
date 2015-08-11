@@ -7,25 +7,25 @@ import javax.annotation.Nullable;
 
 public enum ERuleSource
 {
- T01 ("BIICORE-UBL-T01-V1.0.sch", "v09", false, "v01", true),
- T02 ("BIICORE-UBL-T02-V1.0.sch", "v05", false, null, false),
+ T01 ("V1.0", "v09", false, "v01", true),
+ T02 ("V1.0", "v05", false, null, false),
  T04 (null, "v02", false, null, false),
  T05 (null, "v02", false, null, false),
- T10 ("BIICORE-UBL-T10-V1.0.sch", "v12", true, "v03", true),
- T14 ("BIICORE-UBL-T14-V1.0.sch", "v09", true, "v03", true),
- T16 ("BIICORE-UBL-T16-V1.0.sch", "v05", false, "v01", true),
+ T10 ("V1.0", "v12", true, "v03", true),
+ T14 ("V1.0", "v09", true, "v03", true),
+ T16 ("V1.0", "v05", false, "v01", true),
  T17 (null, "v04", true, null, false),
  T18 (null, "v02", false, null, false),
- T19 ("BIICORE-UBL-T19-V1.0.sch", "v05", true, "v01", true),
+ T19 ("V1.0", "v05", true, "v01", true),
  T20 (null, "v01", true, null, false),
  T21 (null, "v01", true, null, false),
  T22 (null, "v01", false, null, false),
  T23 (null, "v01", false, null, false),
  T26 (null, "v02", true, null, false),
- T40 ("BIICORE-UBL-T40-V1.0.sch", "v06", true, null, false),
+ T40 ("V1.0", "v06", true, null, false),
  T41 (null, "v04", true, null, false),
  T42 (null, "v01", false, null, false),
- T44 ("BIICORE-UBL-T44-V1.0.sch", "v03", true, null, false),
+ T44 ("V1.0", "v03", true, null, false),
  T45 (null, "v02", false, null, false),
  T54 (null, "v01", true, null, false),
  T55 (null, "v01", false, null, false),
@@ -43,19 +43,19 @@ public enum ERuleSource
  T76 (null, "v01", false, "v01", true),
  CODELISTS (null, "v04", false, "v01", false);
 
-  private final File m_aBIICoreFile;
+  private final String m_sBIICoreVersion;
   private final String m_sBIIVersion;
   private final boolean m_bUsesBIICodeLists;
   private final String m_sOpenPEPPOLVersion;
   private final boolean m_bUsesOpenPEPPOLCodeLists;
 
-  private ERuleSource (@Nullable final String sBIICorePath,
+  private ERuleSource (@Nullable final String sBIICoreVersion,
                        @Nullable final String sBIIVersion,
                        final boolean bUsesBIICodeLists,
                        @Nullable final String sOpenPEPPOLVersion,
                        final boolean bUsesOpenPEPPOLCodeLists)
   {
-    m_aBIICoreFile = sBIICorePath == null ? null : new File ("src/test/resources/rule-source/biicore", sBIICorePath);
+    m_sBIICoreVersion = sBIICoreVersion;
     m_sBIIVersion = sBIIVersion;
     m_bUsesBIICodeLists = bUsesBIICodeLists;
     m_sOpenPEPPOLVersion = sOpenPEPPOLVersion;
@@ -69,13 +69,17 @@ public enum ERuleSource
 
   public boolean hasBIICoreFile ()
   {
-    return m_aBIICoreFile != null;
+    return m_sBIICoreVersion != null;
   }
 
   @Nullable
   public File getBIICoreSchematronFile ()
   {
-    return m_aBIICoreFile;
+    return new File ("src/test/resources/rule-source/biicore/BIICORE-UBL-" +
+                     name () +
+                     "-" +
+                     m_sBIICoreVersion +
+                     ".sch");
   }
 
   public boolean hasBIIRules ()

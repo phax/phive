@@ -162,7 +162,8 @@ public final class RuleSchematronCreator
       ePattern.setAttribute ("id", sTransaction);
 
       // For all assertions for the current transaction
-      for (final Map.Entry <String, List <RuleAssertion>> aPatternEntry : aRuleEntry.getValue ().entrySet ())
+      for (final Map.Entry <String, List <RuleAssertion>> aPatternEntry : CollectionHelper.getSortedByKey (aRuleEntry.getValue ())
+                                                                                          .entrySet ())
       {
         // The element context to use
         final String sContextRef = '$' + CreateHelper.makeID (aPatternEntry.getKey ());
@@ -175,6 +176,7 @@ public final class RuleSchematronCreator
           final IMicroElement eAssert = eRule.appendElement (NS_SCHEMATRON, "assert");
           eAssert.setAttribute ("flag", aRuleAssertion.getSeverity ());
           eAssert.setAttribute ("test", "$" + sTestID);
+          eAssert.setAttribute ("id", sTestID);
           eAssert.appendText ("[" + sTestID + "]-" + aRuleAssertion.getMessage ());
         }
       }

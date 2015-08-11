@@ -81,15 +81,14 @@ import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCa
 public final class Main1CreateCodeLists
 {
   // Base directory for source rules
-  private static final File aRuleSource = new File ("src/test/resources/rule-source");
-  private static final File aCodeListTarget = new File ("src/test/resources/codelist-generated");
+  private static final File TARGET_DIR = new File ("src/test/resources/codelist-generated");
 
   private static Templates s_aCVA2SCH;
 
   @Nonnull
   private static File _getCVAFile (@Nonnull final String sPrefix, @Nonnull final String sTransaction)
   {
-    final File ret = new File (aCodeListTarget, "cva/" + sPrefix + "-" + sTransaction + ".cva");
+    final File ret = new File (TARGET_DIR, "cva/" + sPrefix + "-" + sTransaction + ".cva");
     FileOperations.createDirIfNotExisting (ret.getParentFile ());
     return ret;
   }
@@ -97,7 +96,7 @@ public final class Main1CreateCodeLists
   @Nonnull
   private static File _getGCFile (@Nonnull final String sPrefix, @Nonnull final String sCodeListName)
   {
-    final File ret = new File (aCodeListTarget, "gc/" + sPrefix + "-" + sCodeListName + ".gc");
+    final File ret = new File (TARGET_DIR, "gc/" + sPrefix + "-" + sCodeListName + ".gc");
     FileOperations.createDirIfNotExisting (ret.getParentFile ());
     return ret;
   }
@@ -105,7 +104,7 @@ public final class Main1CreateCodeLists
   @Nonnull
   private static File _getXSLTFile (@Nonnull final String sPrefix, @Nonnull final String sTransaction)
   {
-    final File ret = new File (aCodeListTarget, "cva-xslt/" + sPrefix + "-" + sTransaction + ".xslt");
+    final File ret = new File (TARGET_DIR, "cva-xslt/" + sPrefix + "-" + sTransaction + ".xslt");
     FileOperations.createDirIfNotExisting (ret.getParentFile ());
     return ret;
   }
@@ -356,7 +355,7 @@ public final class Main1CreateCodeLists
                                                           "peppol/businessrules/OpenPEPPOL-CodeLists-v01.ods" } })
     {
       final String sPrefix = aCodeList[0];
-      final File aCodeListFile = new File (aRuleSource, aCodeList[1]);
+      final File aCodeListFile = new File ("src/test/resources/rule-source", aCodeList[1]);
 
       // Read ODS file
       final SpreadsheetDocument aSpreadsheet = SpreadsheetCache.readSpreadsheet (aCodeListFile);
