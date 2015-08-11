@@ -2,9 +2,8 @@ package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 
@@ -23,35 +22,47 @@ public final class Main2CreateBusinessRuleEnums
 {
   private static final String KEY_CODELISTS = "CODELISTS";
 
+  private static final class MyMap extends TreeMap <String, String>
+  {
+    @Override
+    public String put (@Nonnull final String sKey, @Nonnull final String sValue)
+    {
+      final String sOld = super.put (sKey, sValue);
+      if (sOld != null)
+        throw new IllegalArgumentException ("A value for the key '" + sKey + "' was already contained - duplicate!");
+      return sOld;
+    }
+  }
+
   @Nonnull
   @ReturnsMutableCopy
-  private static Map <String, String> _getBIIRuleVersions ()
+  private static MyMap _getBIIRuleVersions ()
   {
-    final Map <String, String> aBIIRules = new HashMap <String, String> ();
+    final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biirules/businessrules"))
       if (aFile.isFile () && aFile.getName ().endsWith (".ods"))
       {
         String [] aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
                                                                     aFile.getName ());
         if (aMatches != null)
-          aBIIRules.put (aMatches[0], aMatches[1]);
+          ret.put (aMatches[0], aMatches[1]);
         else
         {
           aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-CodeLists-(v[0-9]+)\\.ods", aFile.getName ());
           if (aMatches != null)
-            aBIIRules.put (KEY_CODELISTS, aMatches[0]);
+            ret.put (KEY_CODELISTS, aMatches[0]);
           else
             throw new IllegalStateException ();
         }
       }
-    return aBIIRules;
+    return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  private static Map <String, String> _getOpenPEPPOLRuleVersions ()
+  private static MyMap _getOpenPEPPOLRuleVersions ()
   {
-    final Map <String, String> ret = new HashMap <String, String> ();
+    final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/peppol/businessrules"))
       if (aFile.isFile () && aFile.getName ().endsWith (".ods"))
       {
@@ -71,7 +82,7 @@ public final class Main2CreateBusinessRuleEnums
     return ret;
   }
 
-  private static String _getVersion (@Nonnull final Map <String, String> aMap, @Nonnull final String sKey)
+  private static String _getVersion (@Nonnull final MyMap aMap, @Nonnull final String sKey)
   {
     final String sValue = aMap.get (sKey);
     return sValue == null ? "null" : '"' + sValue + '"';
@@ -90,8 +101,8 @@ public final class Main2CreateBusinessRuleEnums
 
   public static void main (final String [] args)
   {
-    final Map <String, String> aBIIRules = _getBIIRuleVersions ();
-    final Map <String, String> aOpenPEPPOLRules = _getOpenPEPPOLRuleVersions ();
+    final MyMap aBIIRules = _getBIIRuleVersions ();
+    final MyMap aOpenPEPPOLRules = _getOpenPEPPOLRuleVersions ();
 
     final List <String> aKeys = new ArrayList <String> ();
     for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
