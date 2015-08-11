@@ -65,7 +65,7 @@
             <attribute name="test">( false() or ( contains('&#127;FR:SIRENE&#127;SE:ORGNR&#127;FR:SIRET&#127;FI:OVT&#127;DUNS&#127;GLN&#127;DK:P&#127;IT:FTI&#127;NL:KVK&#127;IT:SIA&#127;IT:SECETI&#127;DK:CPR&#127;DK:CVR&#127;DK:SE&#127;DK:VANS&#127;IT:VAT&#127;IT:CF&#127;NO:ORGNR&#127;NO:VAT&#127;HU:VAT&#127;EU:REID&#127;AT:VAT&#127;AT:GOV&#127;IS:KT&#127;IBAN&#127;AT:KUR&#127;ES:VAT&#127;IT:IPA&#127;AD:VAT&#127;AL:VAT&#127;BA:VAT&#127;BE:VAT&#127;BG:VAT&#127;CH:VAT&#127;CY:VAT&#127;CZ:VAT&#127;DE:VAT&#127;EE:VAT&#127;GB:VAT&#127;GR:VAT&#127;HR:VAT&#127;IE:VAT&#127;LI:VAT&#127;LT:VAT&#127;LU:VAT&#127;LV:VAT&#127;MC:VAT&#127;ME:VAT&#127;MK:VAT&#127;MT:VAT&#127;NL:VAT&#127;PL:VAT&#127;PT:VAT&#127;RO:VAT&#127;RS:VAT&#127;SI:VAT&#127;SK:VAT&#127;SM:VAT&#127;TR:VAT&#127;VA:VAT&#127;NL:ION&#127;SE:VAT&#127;ZZZ&#127;',concat('&#127;',.,'&#127;')) ) ) </attribute>[OP-T19-R006]-A Party Identifier Scheme MUST be from the list of PEPPOL Party Identifiers described in the "PEPPOL Policy for using Identifiers".          </ns0:assert>
 </ns0:rule>
 
-<ns0:rule context="/ubl:Catalogue/cbc:ActionCode/" flag="fatal" role="fatal">
+<ns0:rule context="/ubl:Catalogue/cbc:ActionCode" flag="fatal" role="fatal">
   <!--{}[](ActionCodePEPPOL)-->
   <text xml:space="preserve">
       </text>

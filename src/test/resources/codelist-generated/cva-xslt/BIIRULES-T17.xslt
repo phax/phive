@@ -20,7 +20,7 @@
 <text />
         <comment />
 
-<ns0:rule context="cac:TaxCategory/cbc:ID/" flag="fatal" role="fatal">
+<ns0:rule context="cac:TaxCategory/cbc:ID" flag="fatal" role="fatal">
   <!--{}[](TaxCategoryID)-->
   <text xml:space="preserve">
       </text>
