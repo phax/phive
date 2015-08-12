@@ -48,6 +48,8 @@ public final class RuleSourceGroup
    *        chosen syntax otherwise.
    * @param eTransaction
    *        Transaction to use. May not be <code>null</code>.
+   * @param eRuleSource
+   *        Rule source to add by default
    */
   public RuleSourceGroup (@Nonnull final File aRuleDstDir,
                           @Nullable final ESyntaxBinding eBinding,
