@@ -19,7 +19,7 @@ import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
  *
  * @author Philip Helger
  */
-public final class Main2CreateBusinessRuleEnums
+public final class Main2CreateRuleSourceEnum
 {
   private static final String KEY_CODELISTS = "CODELISTS";
 
@@ -130,8 +130,21 @@ public final class Main2CreateBusinessRuleEnums
 
     for (final String sKey : aKeys)
     {
+      String sTransaction;
+      try
+      {
+        EBII2Transaction.valueOf (sKey);
+        sTransaction = "EBII2Transaction." + sKey;
+      }
+      catch (final IllegalArgumentException ex)
+      {
+        // No such BII transaction
+        sTransaction = "null";
+      }
       System.out.println (sKey +
                           " (" +
+                          sTransaction +
+                          ", " +
                           _getVersion (aBIICore, sKey) +
                           ", " +
                           _getVersion (aBIIRules, sKey) +
