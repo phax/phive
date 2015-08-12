@@ -40,14 +40,6 @@ public final class RuleSourceGroup
   // Status vars
   private final List <RuleSourceItem> m_aItems = new ArrayList <RuleSourceItem> ();
 
-  @Nonnull
-  private RuleSourceItem _addItem (@Nonnull @Nonempty final String sID)
-  {
-    final RuleSourceItem aItem = new RuleSourceItem (m_aRuleDstDir, sID, m_eBinding, m_eTransaction);
-    m_aItems.add (aItem);
-    return aItem;
-  }
-
   /**
    * @param aRuleDstDir
    *        Rule destination directory. Must exist.
@@ -73,7 +65,7 @@ public final class RuleSourceGroup
 
     if (eRuleSource.usesBIICodeLists () || eRuleSource.hasBIIRules ())
     {
-      final RuleSourceItem aItem = _addItem ("BIIRULES");
+      final RuleSourceItem aItem = addItem ("BIIRULES");
       if (eRuleSource.usesBIICodeLists ())
         aItem.addCodeList (ERuleSource.CODELISTS.getBIIRuleFile ());
       if (eRuleSource.hasBIIRules ())
@@ -82,12 +74,24 @@ public final class RuleSourceGroup
 
     if (eRuleSource.usesOpenPEPPOLCodeLists () || eRuleSource.hasOpenPEPPOLRules ())
     {
-      final RuleSourceItem aItem = _addItem ("OPENPEPPOL");
+      final RuleSourceItem aItem = addItem ("OPENPEPPOL");
       if (eRuleSource.usesOpenPEPPOLCodeLists ())
         aItem.addCodeList (ERuleSource.CODELISTS.getOpenPEPPOLRuleFile ());
       if (eRuleSource.hasOpenPEPPOLRules ())
         aItem.addBussinessRule (eRuleSource.getOpenPEPPOLRuleFile ());
     }
+
+    // Add thirdparty rules
+    for (final ERuleSourceThirdparty eThirdparty : ERuleSourceThirdparty.getAllForTransaction (eTransaction))
+      addItem (eThirdparty.getPackageNameUC ()).addBussinessRule (eThirdparty.getRuleFile ());
+  }
+
+  @Nonnull
+  public RuleSourceItem addItem (@Nonnull @Nonempty final String sID)
+  {
+    final RuleSourceItem aItem = new RuleSourceItem (m_aRuleDstDir, sID, m_eBinding, m_eTransaction);
+    m_aItems.add (aItem);
+    return aItem;
   }
 
   @Nonnull
