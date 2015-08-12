@@ -326,7 +326,14 @@ public final class RuleSchematronCreator
 
         final IMicroDocument aDoc = new MicroDocument ();
         aDoc.appendComment ("This file is generated automatically! Do NOT edit!");
-        aDoc.appendComment ("Schematron assembly for binding " + sBindingName + " and transaction " + sTransaction);
+        aDoc.appendComment ("Schematron assembly for " +
+                            aRuleSourceItem.getID () +
+                            " using binding " +
+                            sBindingName +
+                            " and transaction " +
+                            sTransaction +
+                            " based on " +
+                            aBusinessRule.getSourceFile ().getName ());
         final IMicroElement eSchema = aDoc.appendElement (NS_SCHEMATRON, "schema");
         eSchema.setAttribute ("queryBinding", "xslt");
         eSchema.appendElement (NS_SCHEMATRON, "title")
