@@ -36,7 +36,7 @@ public final class RuleSourceGroup
   private final File m_aRuleDstDir;
   private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
-  private final File m_aBIICoreSchematronFile;
+  private File m_aBIICoreSchematronFile;
   // Status vars
   private final List <RuleSourceItem> m_aItems = new ArrayList <RuleSourceItem> ();
 
@@ -48,20 +48,28 @@ public final class RuleSourceGroup
    *        chosen syntax otherwise.
    * @param eTransaction
    *        Transaction to use. May not be <code>null</code>.
-   * @param eRuleSource
-   *        Rule source to add by default
    */
   public RuleSourceGroup (@Nonnull final File aRuleDstDir,
                           @Nullable final ESyntaxBinding eBinding,
-                          @Nonnull final EBII2Transaction eTransaction,
-                          @Nonnull final ERuleSource eRuleSource)
+                          @Nonnull final EBII2Transaction eTransaction)
   {
     FileOperations.createDirRecursiveIfNotExisting (aRuleDstDir);
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
     m_aRuleDstDir = aRuleDstDir;
     m_eBinding = eBinding;
     m_eTransaction = eTransaction;
+  }
 
+  /**
+   * Add all default items
+   *
+   * @param eRuleSource
+   *        Rule source to add by default. May be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  public RuleSourceGroup addDefault (@Nonnull final ERuleSource eRuleSource)
+  {
     // Add rule items
     m_aBIICoreSchematronFile = eRuleSource.getBIICoreSchematronFile ();
 
@@ -83,9 +91,22 @@ public final class RuleSourceGroup
         aItem.addBussinessRule (eRuleSource.getOpenPEPPOLRuleFile ());
     }
 
+    return this;
+  }
+
+  /**
+   * Add all third party rules for this transaction
+   * 
+   * @return this
+   */
+  @Nonnull
+  public RuleSourceGroup addThirdparty ()
+  {
     // Add thirdparty rules
-    for (final ERuleSourceThirdparty eThirdparty : ERuleSourceThirdparty.getAllForTransaction (eTransaction))
+    for (final ERuleSourceThirdparty eThirdparty : ERuleSourceThirdparty.getAllForTransaction (m_eTransaction))
       addItem (eThirdparty.getPackageNameUC ()).addBussinessRule (eThirdparty.getRuleFile ());
+
+    return this;
   }
 
   @Nonnull

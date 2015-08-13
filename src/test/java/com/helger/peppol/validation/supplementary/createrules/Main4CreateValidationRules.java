@@ -43,52 +43,50 @@ public final class Main4CreateValidationRules
     // Billing
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Billing"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T14,
-                                                ERuleSource.T14));
+                                                EBII2Transaction.T14).addDefault (ERuleSource.T14));
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Billing-Thirdparty"),
+                                                ESyntaxBinding.UBL,
+                                                EBII2Transaction.T14).addThirdparty ());
 
     // Catalogue
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Catalogue"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T19,
-                                                ERuleSource.T19));
+                                                EBII2Transaction.T19).addDefault (ERuleSource.T19));
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Catalogue"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T58,
-                                                ERuleSource.T58));
+                                                EBII2Transaction.T58).addDefault (ERuleSource.T58));
 
     // Despatch Advice
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "DespatchAdvice"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T16,
-                                                ERuleSource.T16));
+                                                EBII2Transaction.T16).addDefault (ERuleSource.T16));
 
     // Invoice
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Invoice"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T10,
-                                                ERuleSource.T10));
+                                                EBII2Transaction.T10).addDefault (ERuleSource.T10));
+    // Invoice
+    aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Invoice-Thirdparty"),
+                                                ESyntaxBinding.UBL,
+                                                EBII2Transaction.T10).addThirdparty ());
 
     // Message Level Response
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "MLR"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T71,
-                                                ERuleSource.T71));
+                                                EBII2Transaction.T71).addDefault (ERuleSource.T71));
 
     // Order
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Order"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T01,
-                                                ERuleSource.T01));
+                                                EBII2Transaction.T01).addDefault (ERuleSource.T01));
 
     // Ordering
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Ordering"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T01,
-                                                ERuleSource.T01));
+                                                EBII2Transaction.T01).addDefault (ERuleSource.T01));
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Ordering"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T76,
-                                                ERuleSource.T76));
+                                                EBII2Transaction.T76).addDefault (ERuleSource.T76));
 
     for (final RuleSourceGroup aRuleSourceGroup : aRuleSourceGroups)
     {
