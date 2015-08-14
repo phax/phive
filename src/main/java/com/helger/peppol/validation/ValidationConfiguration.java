@@ -31,7 +31,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.artefact.peppol.EPeppolExtendedValidationArtefact;
+import com.helger.peppol.validation.artefact.peppol.EPeppolThirdpartyValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArtefact;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 
@@ -113,7 +113,7 @@ public class ValidationConfiguration
                       aExtendedTransactionKey.getTransaction ().getTransactionKey ());
 
     // Get all PEPPOL extended artefacts
-    aValidationArtefacts.addAll (EPeppolExtendedValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
+    aValidationArtefacts.addAll (EPeppolThirdpartyValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
 
     return new ValidationConfiguration (aExtendedTransactionKey, aValidationArtefacts);
   }

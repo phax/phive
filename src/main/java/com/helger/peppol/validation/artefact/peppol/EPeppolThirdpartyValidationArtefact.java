@@ -43,7 +43,7 @@ import com.helger.ubl21.EUBL21DocumentType;
  *
  * @author Philip Helger
  */
-public enum EPeppolExtendedValidationArtefact implements IValidationArtefact
+public enum EPeppolThirdpartyValidationArtefact implements IValidationArtefact
 {
   INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
                                                                          ExtendedKey.AT)),
@@ -58,7 +58,7 @@ public enum EPeppolExtendedValidationArtefact implements IValidationArtefact
   private final ClassPathResource m_aResource;
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
 
-  private EPeppolExtendedValidationArtefact (@Nonnull @Nonempty final String sPath,
+  private EPeppolThirdpartyValidationArtefact (@Nonnull @Nonempty final String sPath,
                                              @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     m_aResource = new ClassPathResource ("/peppol/extended/" + sPath);
@@ -136,12 +136,12 @@ public enum EPeppolExtendedValidationArtefact implements IValidationArtefact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EPeppolExtendedValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  public static List <EPeppolThirdpartyValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
     ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
 
-    final List <EPeppolExtendedValidationArtefact> ret = new ArrayList <EPeppolExtendedValidationArtefact> ();
-    for (final EPeppolExtendedValidationArtefact e : values ())
+    final List <EPeppolThirdpartyValidationArtefact> ret = new ArrayList <EPeppolThirdpartyValidationArtefact> ();
+    for (final EPeppolThirdpartyValidationArtefact e : values ())
       if (e.getExtendedTransactionKey ().equals (aExtendedTransactionKey))
         ret.add (e);
     return ret;
