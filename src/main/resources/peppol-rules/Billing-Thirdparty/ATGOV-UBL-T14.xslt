@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xsl:stylesheet version="1.0" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cec="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:ubl="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cec="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:ubl="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <!--Implementers: please note that overriding process-prolog or process-root is 
     the preferred method for meta-stylesheets to use where possible. -->
 <xsl:param name="archiveDirParameter" />
@@ -158,6 +158,7 @@
       <svrl:ns-prefix-in-attribute-values prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
       <svrl:ns-prefix-in-attribute-values prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" />
       <svrl:ns-prefix-in-attribute-values prefix="cec" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" />
+      <svrl:ns-prefix-in-attribute-values prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
       <svrl:ns-prefix-in-attribute-values prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" />
       <svrl:active-pattern>
         <xsl:attribute name="document">
@@ -167,7 +168,7 @@
         <xsl:attribute name="name">UBL-T14</xsl:attribute>
         <xsl:apply-templates />
       </svrl:active-pattern>
-      <xsl:apply-templates mode="M6" select="/" />
+      <xsl:apply-templates mode="M7" select="/" />
     </svrl:schematron-output>
   </xsl:template>
 
@@ -178,7 +179,7 @@
 
 
 	<!--RULE -->
-<xsl:template match="/ubl:CreditNote/cac:AdditionalDocumentReference" mode="M6" priority="1005">
+<xsl:template match="/ubl:CreditNote/cac:AdditionalDocumentReference" mode="M7" priority="1005">
     <svrl:fired-rule context="/ubl:CreditNote/cac:AdditionalDocumentReference" />
 
 		<!--ASSERT -->
@@ -210,11 +211,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="/ubl:CreditNote" mode="M6" priority="1004">
+<xsl:template match="/ubl:CreditNote" mode="M7" priority="1004">
     <svrl:fired-rule context="/ubl:CreditNote" />
 
 		<!--ASSERT -->
@@ -351,11 +352,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="/ubl:CreditNoteLine" mode="M6" priority="1003">
+<xsl:template match="/ubl:CreditNoteLine" mode="M7" priority="1003">
     <svrl:fired-rule context="/ubl:CreditNoteLine" />
 
 		<!--ASSERT -->
@@ -387,11 +388,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="/ubl:CreditNote/cac:PaymentMeans" mode="M6" priority="1002">
+<xsl:template match="/ubl:CreditNote/cac:PaymentMeans" mode="M7" priority="1002">
     <svrl:fired-rule context="/ubl:CreditNote/cac:PaymentMeans" />
 
 		<!--ASSERT -->
@@ -408,11 +409,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="/ubl:CreditNote/cac:PaymentTerms" mode="M6" priority="1001">
+<xsl:template match="/ubl:CreditNote/cac:PaymentTerms" mode="M7" priority="1001">
     <svrl:fired-rule context="/ubl:CreditNote/cac:PaymentTerms" />
 
 		<!--ASSERT -->
@@ -444,11 +445,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party" mode="M6" priority="1000">
+<xsl:template match="/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party" mode="M7" priority="1000">
     <svrl:fired-rule context="/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party" />
 
 		<!--ASSERT -->
@@ -465,10 +466,10 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
   </xsl:template>
-  <xsl:template match="text()" mode="M6" priority="-1" />
-  <xsl:template match="@*|node()" mode="M6" priority="-2">
-    <xsl:apply-templates mode="M6" select="*|comment()|processing-instruction()" />
+  <xsl:template match="text()" mode="M7" priority="-1" />
+  <xsl:template match="@*|node()" mode="M7" priority="-2">
+    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
   </xsl:template>
 </xsl:stylesheet>

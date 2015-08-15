@@ -23,7 +23,8 @@ public enum ESyntaxBinding implements IHasID <String>
    {
      return new SMap ().add ("cac", CUBL21.XML_SCHEMA_CAC_NAMESPACE_URL)
                        .add ("cbc", CUBL21.XML_SCHEMA_CBC_NAMESPACE_URL)
-                       .add ("cec", CUBL21.XML_SCHEMA_CEC_NAMESPACE_URL);
+                       .add ("cec", CUBL21.XML_SCHEMA_CEC_NAMESPACE_URL)
+                       .add ("xs", "http://www.w3.org/2001/XMLSchema");
    }
  },
  CEFACT ("CEFACT")
@@ -33,8 +34,10 @@ public enum ESyntaxBinding implements IHasID <String>
    @ReturnsMutableCopy
    public Map <String, String> getAllNamespaces ()
    {
-     return new SMap ().add ("ram", "urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:10")
-                       .add ("rsm", "urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:4");
+     return new SMap ().add ("udt", "urn:un:unece:uncefact:data:standard:UnqualifiedDataType:10")
+                       .add ("ram", "urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:10")
+                       .add ("rsm", "urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:4")
+                       .add ("xs", "http://www.w3.org/2001/XMLSchema");
    }
  };
 

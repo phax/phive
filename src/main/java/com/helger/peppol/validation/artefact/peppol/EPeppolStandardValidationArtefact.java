@@ -44,38 +44,38 @@ import com.helger.ubl21.EUBL21DocumentType;
  */
 public enum EPeppolStandardValidationArtefact implements IValidationArtefact
 {
-  CATALOGUE_CORE ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII CORE/BIICORE-UBL-T19-V1.0.sch", PeppolTransactionKey.CATALOGUE_01_T19),
-  CATALOGUE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T19.sch", PeppolTransactionKey.CATALOGUE_01_T19),
-  CATALOGUE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T19.sch", PeppolTransactionKey.CATALOGUE_01_T19),
+ CATALOGUE_CORE ("Catalogue/BIICORE-UBL-T19-V1.0.sch", PeppolTransactionKey.CATALOGUE_01_T19),
+ CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", PeppolTransactionKey.CATALOGUE_01_T19),
+ CATALOGUE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T19.sch", PeppolTransactionKey.CATALOGUE_01_T19),
 
-  CATALOGUE_RESPONSE_RULES ("BIS2.0-catalogue1a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T58.sch", PeppolTransactionKey.CATALOGUE_01_T58),
-  CATALOGUE_RESPONSE_OPENPEPPOL ("BIS2.0-catalogue1a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T58.sch", PeppolTransactionKey.CATALOGUE_01_T58),
+ CATALOGUE_RESPONSE_RULES ("Catalogue/BIIRULES-UBL-T58.sch", PeppolTransactionKey.CATALOGUE_01_T58),
+ CATALOGUE_RESPONSE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T58.sch", PeppolTransactionKey.CATALOGUE_01_T58),
 
-  ORDER_CORE ("BIS2.0-order3a-VA_V2.3/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", PeppolTransactionKey.ORDER_03_T01),
-  ORDER_RULES ("BIS2.0-order3a-VA_V2.3/Schematron/BII RULES/BIIRULES-UBL-T01.sch", PeppolTransactionKey.ORDER_03_T01),
-  ORDER_OPENPEPPOL ("BIS2.0-order3a-VA_V2.3/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", PeppolTransactionKey.ORDER_03_T01),
+ ORDER_CORE ("Order/BIICORE-UBL-T01-V1.0.sch", PeppolTransactionKey.ORDER_03_T01),
+ ORDER_RULES ("Order/BIIRULES-UBL-T01.sch", PeppolTransactionKey.ORDER_03_T01),
+ ORDER_OPENPEPPOL ("Order/OPENPEPPOL-UBL-T01.sch", PeppolTransactionKey.ORDER_03_T01),
 
-  INVOICE_CORE ("BIS2.0-invoice4a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T10-V1.0.sch", PeppolTransactionKey.INVOICE_04_T10),
-  INVOICE_RULES ("BIS2.0-invoice4a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T10.sch", PeppolTransactionKey.INVOICE_04_T10),
-  INVOICE_OPENPEPPOL ("BIS2.0-invoice4a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T10.sch", PeppolTransactionKey.INVOICE_04_T10),
+ INVOICE_CORE ("Invoice/BIICORE-UBL-T10-V1.0.sch", PeppolTransactionKey.INVOICE_04_T10),
+ INVOICE_RULES ("Invoice/BIIRULES-UBL-T10.sch", PeppolTransactionKey.INVOICE_04_T10),
+ INVOICE_OPENPEPPOL ("Invoice/OPENPEPPOL-UBL-T10.sch", PeppolTransactionKey.INVOICE_04_T10),
 
-  BILLING_CREDIT_NOTE_CORE ("BIS2.0-billing5a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T14-V1.0.sch", PeppolTransactionKey.BILLING_05_T14),
-  BILLING_CREDIT_NOTE_RULES ("BIS2.0-billing5a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T14.sch", PeppolTransactionKey.BILLING_05_T14),
-  BILLING_CREDIT_NOTE_OPENPEPPOL ("BIS2.0-billing5a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T14.sch", PeppolTransactionKey.BILLING_05_T14),
+ BILLING_CREDIT_NOTE_CORE ("Billing/BIICORE-UBL-T14-V1.0.sch", PeppolTransactionKey.BILLING_05_T14),
+ BILLING_CREDIT_NOTE_RULES ("Billing/BIIRULES-UBL-T14.sch", PeppolTransactionKey.BILLING_05_T14),
+ BILLING_CREDIT_NOTE_OPENPEPPOL ("Billing/OPENPEPPOL-UBL-T14.sch", PeppolTransactionKey.BILLING_05_T14),
 
-  ORDERING_ORDER_CORE ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII CORE/BIICORE-UBL-T01-V1.0.sch", PeppolTransactionKey.ORDERING_28_T01),
-  ORDERING_ORDER_RULES ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T01.sch", PeppolTransactionKey.ORDERING_28_T01),
-  ORDERING_ORDER_OPENPEPPOL ("BIS2.0-ordering28a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T01.sch", PeppolTransactionKey.ORDERING_28_T01),
+ ORDERING_ORDER_CORE ("Ordering/BIICORE-UBL-T01-V1.0.sch", PeppolTransactionKey.ORDERING_28_T01),
+ ORDERING_ORDER_RULES ("Ordering/BIIRULES-UBL-T01.sch", PeppolTransactionKey.ORDERING_28_T01),
+ ORDERING_ORDER_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T01.sch", PeppolTransactionKey.ORDERING_28_T01),
 
-  ORDERING_ORDER_RESPONSE_RULES ("BIS2.0-ordering28a-VA_V3.0/Schematron/BII RULES/BIIRULES-UBL-T76.sch", PeppolTransactionKey.ORDERING_28_T76),
-  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("BIS2.0-ordering28a-VA_V3.0/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T76.sch", PeppolTransactionKey.ORDERING_28_T76),
+ ORDERING_ORDER_RESPONSE_RULES ("Ordering/BIIRULES-UBL-T76.sch", PeppolTransactionKey.ORDERING_28_T76),
+ ORDERING_ORDER_RESPONSE_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T76.sch", PeppolTransactionKey.ORDERING_28_T76),
 
-  DESPATCH_ADVICE_CORE ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/BII CORE/BIICORE-UBL-T16-V1.0.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
-  DESPATCH_ADVICE_RULES ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/BII RULES/BIIRULES-UBL-T16.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
-  DESPATCH_ADVICE_OPENPEPPOL ("BIS2.0-despatchadvice30a-VA_V2.2/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T16.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
+ DESPATCH_ADVICE_CORE ("DespatchAdvice/BIICORE-UBL-T16-V1.0.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
+ DESPATCH_ADVICE_RULES ("DespatchAdvice/BIIRULES-UBL-T16.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
+ DESPATCH_ADVICE_OPENPEPPOL ("DespatchAdvice/OPENPEPPOL-UBL-T16.sch", PeppolTransactionKey.DESPATCH_ADVICE_30_T16),
 
-  MLR_RULES ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/BII RULES/BIIRULES-UBL-T71.sch", PeppolTransactionKey.MLR_36_T71),
-  MLR_OPENPEPPOL ("BIS2.0-messagelevelresponse36a-VA_V2.1/Schematron/OPENPEPPOL/OPENPEPPOL-UBL-T71.sch", PeppolTransactionKey.MLR_36_T71);
+ MLR_RULES ("MLR/BIIRULES-UBL-T71.sch", PeppolTransactionKey.MLR_36_T71),
+ MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", PeppolTransactionKey.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
   private final TransactionKey m_aTransactionKey;
@@ -83,7 +83,7 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
   private EPeppolStandardValidationArtefact (@Nonnull @Nonempty final String sPath,
                                              @Nonnull final TransactionKey aTransactionKey)
   {
-    m_aResource = new ClassPathResource ("/peppol/standard/" + sPath);
+    m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
     m_aTransactionKey = aTransactionKey;
   }
 

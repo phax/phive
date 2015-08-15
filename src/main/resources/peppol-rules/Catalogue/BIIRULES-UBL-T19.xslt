@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xsl:stylesheet version="1.0" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cec="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:ubl="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cec="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:svrl="http://purl.oclc.org/dsdl/svrl" xmlns:ubl="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <!--Implementers: please note that overriding process-prolog or process-root is 
     the preferred method for meta-stylesheets to use where possible. -->
 <xsl:param name="archiveDirParameter" />
@@ -158,6 +158,7 @@
       <svrl:ns-prefix-in-attribute-values prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
       <svrl:ns-prefix-in-attribute-values prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" />
       <svrl:ns-prefix-in-attribute-values prefix="cec" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" />
+      <svrl:ns-prefix-in-attribute-values prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
       <svrl:ns-prefix-in-attribute-values prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" />
       <svrl:active-pattern>
         <xsl:attribute name="document">
@@ -167,7 +168,7 @@
         <xsl:attribute name="name">Codes-T19</xsl:attribute>
         <xsl:apply-templates />
       </svrl:active-pattern>
-      <xsl:apply-templates mode="M7" select="/" />
+      <xsl:apply-templates mode="M8" select="/" />
       <svrl:active-pattern>
         <xsl:attribute name="document">
           <xsl:value-of select="document-uri(/)" />
@@ -176,7 +177,7 @@
         <xsl:attribute name="name">UBL-T19</xsl:attribute>
         <xsl:apply-templates />
       </svrl:active-pattern>
-      <xsl:apply-templates mode="M8" select="/" />
+      <xsl:apply-templates mode="M9" select="/" />
     </svrl:schematron-output>
   </xsl:template>
 
@@ -187,7 +188,7 @@
 
 
 	<!--RULE -->
-<xsl:template match="cac:CatalogueLine/cbc:ActionCode" mode="M7" priority="1002">
+<xsl:template match="cac:CatalogueLine/cbc:ActionCode" mode="M8" priority="1002">
     <svrl:fired-rule context="cac:CatalogueLine/cbc:ActionCode" />
 
 		<!--ASSERT -->
@@ -204,11 +205,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="@mimeCode" mode="M7" priority="1001">
+<xsl:template match="@mimeCode" mode="M8" priority="1001">
     <svrl:fired-rule context="@mimeCode" />
 
 		<!--ASSERT -->
@@ -225,11 +226,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cac:ClassifiedTaxCategory/cbc:ID" mode="M7" priority="1000">
+<xsl:template match="cac:ClassifiedTaxCategory/cbc:ID" mode="M8" priority="1000">
     <svrl:fired-rule context="cac:ClassifiedTaxCategory/cbc:ID" />
 
 		<!--ASSERT -->
@@ -246,18 +247,18 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
   </xsl:template>
-  <xsl:template match="text()" mode="M7" priority="-1" />
-  <xsl:template match="@*|node()" mode="M7" priority="-2">
-    <xsl:apply-templates mode="M7" select="*|comment()|processing-instruction()" />
+  <xsl:template match="text()" mode="M8" priority="-1" />
+  <xsl:template match="@*|node()" mode="M8" priority="-2">
+    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 <!--PATTERN UBL-T19-->
 
 
 	<!--RULE -->
-<xsl:template match="/ubl:Catalogue" mode="M8" priority="1011">
+<xsl:template match="/ubl:Catalogue" mode="M9" priority="1011">
     <svrl:fired-rule context="/ubl:Catalogue" />
 
 		<!--ASSERT -->
@@ -379,11 +380,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:ContractorCustomerParty" mode="M8" priority="1010">
+<xsl:template match="//cac:ContractorCustomerParty" mode="M9" priority="1010">
     <svrl:fired-rule context="//cac:ContractorCustomerParty" />
 
 		<!--ASSERT -->
@@ -400,11 +401,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:CatalogueLine" mode="M8" priority="1009">
+<xsl:template match="//cac:CatalogueLine" mode="M9" priority="1009">
     <svrl:fired-rule context="//cac:CatalogueLine" />
 
 		<!--ASSERT -->
@@ -511,11 +512,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:ProviderParty" mode="M8" priority="1008">
+<xsl:template match="//cac:ProviderParty" mode="M9" priority="1008">
     <svrl:fired-rule context="//cac:ProviderParty" />
 
 		<!--ASSERT -->
@@ -532,11 +533,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:ReceiverParty" mode="M8" priority="1007">
+<xsl:template match="//cac:ReceiverParty" mode="M9" priority="1007">
     <svrl:fired-rule context="//cac:ReceiverParty" />
 
 		<!--ASSERT -->
@@ -553,11 +554,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:SellerSupplierParty" mode="M8" priority="1006">
+<xsl:template match="//cac:SellerSupplierParty" mode="M9" priority="1006">
     <svrl:fired-rule context="//cac:SellerSupplierParty" />
 
 		<!--ASSERT -->
@@ -574,11 +575,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:Item" mode="M8" priority="1005">
+<xsl:template match="//cac:Item" mode="M9" priority="1005">
     <svrl:fired-rule context="//cac:Item" />
 
 		<!--ASSERT -->
@@ -612,11 +613,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:CommodityClassification/cbc:ItemClassificationCode" mode="M8" priority="1004">
+<xsl:template match="//cac:CommodityClassification/cbc:ItemClassificationCode" mode="M9" priority="1004">
     <svrl:fired-rule context="//cac:CommodityClassification/cbc:ItemClassificationCode" />
 
 		<!--ASSERT -->
@@ -633,11 +634,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:RequiredItemLocationQuantity/cac:Price" mode="M8" priority="1003">
+<xsl:template match="//cac:RequiredItemLocationQuantity/cac:Price" mode="M9" priority="1003">
     <svrl:fired-rule context="//cac:RequiredItemLocationQuantity/cac:Price" />
 
 		<!--ASSERT -->
@@ -654,11 +655,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:AdditionalItemProperty" mode="M8" priority="1002">
+<xsl:template match="//cac:AdditionalItemProperty" mode="M9" priority="1002">
     <svrl:fired-rule context="//cac:AdditionalItemProperty" />
 
 		<!--ASSERT -->
@@ -675,11 +676,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:StandardItemIdentification" mode="M8" priority="1001">
+<xsl:template match="//cac:StandardItemIdentification" mode="M9" priority="1001">
     <svrl:fired-rule context="//cac:StandardItemIdentification" />
 
 		<!--ASSERT -->
@@ -696,11 +697,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:ValidityPeriod" mode="M8" priority="1000">
+<xsl:template match="//cac:ValidityPeriod" mode="M9" priority="1000">
     <svrl:fired-rule context="//cac:ValidityPeriod" />
 
 		<!--ASSERT -->
@@ -717,10 +718,10 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
-  <xsl:template match="text()" mode="M8" priority="-1" />
-  <xsl:template match="@*|node()" mode="M8" priority="-2">
-    <xsl:apply-templates mode="M8" select="*|comment()|processing-instruction()" />
+  <xsl:template match="text()" mode="M9" priority="-1" />
+  <xsl:template match="@*|node()" mode="M9" priority="-2">
+    <xsl:apply-templates mode="M9" select="*|comment()|processing-instruction()" />
   </xsl:template>
 </xsl:stylesheet>

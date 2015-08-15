@@ -45,23 +45,23 @@ import com.helger.ubl21.EUBL21DocumentType;
  */
 public enum EPeppolThirdpartyValidationArtefact implements IValidationArtefact
 {
-  INVOICE_AT_NAT ("atnat/ATNAT-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
-                                                                         ExtendedKey.AT)),
-  INVOICE_AT_GOV ("atgov/ATGOV-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
-                                                                         ExtendedKey.AT_SECTOR)),
-
-  BILLING_CREDIT_NOTE_AT_NAT ("atnat/ATNAT-UBL-T14.sch", new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14,
+ INVOICE_AT_NAT ("Invoice-Thirdparty/ATNAT-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
                                                                                      ExtendedKey.AT)),
-  BILLING_CREDIT_NOTE_AT_GOV ("atgov/ATGOV-UBL-T14.sch", new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14,
-                                                                                     ExtendedKey.AT_SECTOR));
+ INVOICE_AT_GOV ("Invoice-Thirdparty/ATGOV-UBL-T10.sch", new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10,
+                                                                                     ExtendedKey.AT_SECTOR)),
+
+ BILLING_CREDIT_NOTE_AT_NAT ("Billing-Thirdparty/ATNAT-UBL-T14.sch", new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14,
+                                                                                                 ExtendedKey.AT)),
+ BILLING_CREDIT_NOTE_AT_GOV ("Billing-Thirdparty/ATGOV-UBL-T14.sch", new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14,
+                                                                                                 ExtendedKey.AT_SECTOR));
 
   private final ClassPathResource m_aResource;
   private final ExtendedTransactionKey m_aExtendedTransactionKey;
 
   private EPeppolThirdpartyValidationArtefact (@Nonnull @Nonempty final String sPath,
-                                             @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+                                               @Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {
-    m_aResource = new ClassPathResource ("/peppol/extended/" + sPath);
+    m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
     m_aExtendedTransactionKey = aExtendedTransactionKey;
   }
 
