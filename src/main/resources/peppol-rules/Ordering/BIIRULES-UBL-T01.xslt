@@ -255,9 +255,9 @@
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="(xs:decimal(cbc:LineExtensionAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:LineExtensionAmount)) * 10 * 10) div 100)" />
+      <xsl:when test="(xs:decimal(cbc:LineExtensionAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:LineExtensionAmount)) * 10 * 10) div 100)" />
       <xsl:otherwise>
-        <svrl:failed-assert test="(xs:decimal(cbc:LineExtensionAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:LineExtensionAmount)) * 10 * 10) div 100)">
+        <svrl:failed-assert test="(xs:decimal(cbc:LineExtensionAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:LineExtensionAmount)) * 10 * 10) div 100)">
           <xsl:attribute name="id">BII2-T01-R014</xsl:attribute>
           <xsl:attribute name="flag">fatal</xsl:attribute>
           <xsl:attribute name="location">
@@ -270,9 +270,9 @@
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="(cbc:AllowanceTotalAmount and (xs:decimal(cbc:AllowanceTotalAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;false&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:AllowanceTotalAmount)" />
+      <xsl:when test="(cbc:AllowanceTotalAmount and (xs:decimal(cbc:AllowanceTotalAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;false&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:AllowanceTotalAmount)" />
       <xsl:otherwise>
-        <svrl:failed-assert test="(cbc:AllowanceTotalAmount and (xs:decimal(cbc:AllowanceTotalAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;false&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:AllowanceTotalAmount)">
+        <svrl:failed-assert test="(cbc:AllowanceTotalAmount and (xs:decimal(cbc:AllowanceTotalAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;false&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:AllowanceTotalAmount)">
           <xsl:attribute name="id">BII2-T01-R015</xsl:attribute>
           <xsl:attribute name="flag">fatal</xsl:attribute>
           <xsl:attribute name="location">
@@ -285,9 +285,9 @@
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="(cbc:ChargeTotalAmount and (xs:decimal(cbc:ChargeTotalAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;true&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:ChargeTotalAmount)" />
+      <xsl:when test="(cbc:ChargeTotalAmount and (xs:decimal(cbc:ChargeTotalAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;true&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:ChargeTotalAmount)" />
       <xsl:otherwise>
-        <svrl:failed-assert test="(cbc:ChargeTotalAmount and (xs:decimal(cbc:ChargeTotalAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;true&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:ChargeTotalAmount)">
+        <svrl:failed-assert test="(cbc:ChargeTotalAmount and (xs:decimal(cbc:ChargeTotalAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:AllowanceCharge[cbc:ChargeIndicator=&quot;true&quot;]/cbc:Amount)) * 10 * 10) div 100)) or not(cbc:ChargeTotalAmount)">
           <xsl:attribute name="id">BII2-T01-R016</xsl:attribute>
           <xsl:attribute name="flag">fatal</xsl:attribute>
           <xsl:attribute name="location">
@@ -447,9 +447,9 @@
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="(cac:TaxTotal and (xs:decimal(cac:TaxTotal/cbc:TaxAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)) * 10 * 10) div 100)) or not(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)" />
+      <xsl:when test="(cac:TaxTotal and (xs:decimal(cac:TaxTotal/cbc:TaxAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)) * 10 * 10) div 100)) or not(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)" />
       <xsl:otherwise>
-        <svrl:failed-assert test="(cac:TaxTotal and (xs:decimal(cac:TaxTotal/cbc:TaxAmount)) = (round(sum(xs:decimal(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)) * 10 * 10) div 100)) or not(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)">
+        <svrl:failed-assert test="(cac:TaxTotal and (xs:decimal(cac:TaxTotal/cbc:TaxAmount)) = (round(xs:decimal(sum(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)) * 10 * 10) div 100)) or not(/ubl:Order/cac:OrderLine/cac:LineItem/cbc:TotalTaxAmount)">
           <xsl:attribute name="id">BII2-T01-R018</xsl:attribute>
           <xsl:attribute name="flag">warning</xsl:attribute>
           <xsl:attribute name="location">

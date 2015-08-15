@@ -26,7 +26,7 @@
   <param name="EUGEN-T14-R040" value="(cac:Party/cac:PartyLegalEntity)" />
   <param name="EUGEN-T14-R041" value="not(/ubl:CreditNote/cac:TaxTotal/*/*/*/cbc:ID = 'VAT') or (starts-with(cac:Party/cac:PartyTaxScheme/cbc:CompanyID,cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode))" />
   <param name="EUGEN-T14-R042" value="((cbc:TaxableAmount) and (cac:TaxCategory/cbc:Percent) and (xs:decimal((cbc:TaxAmount)) = round((xs:decimal(cbc:TaxableAmount) * (xs:decimal(cac:TaxCategory/cbc:Percent) div 100)) *10 * 10) div 100)) or not(cac:TaxCategory/cbc:Percent) or not(cbc:TaxableAmount)" />
-  <param name="EUGEN-T14-R043" value="(xs:decimal(child::cbc:TaxAmount)= round(number(sum(xs:decimal(cac:TaxSubtotal/cbc:TaxAmount)) * 10 * 10)) div 100) " />
+  <param name="EUGEN-T14-R043" value="(xs:decimal(child::cbc:TaxAmount)= round(number(xs:decimal(sum(cac:TaxSubtotal/cbc:TaxAmount)) * 10 * 10)) div 100) " />
   <param name="EUGEN-T14-R044" value="not(//cbc:TaxCurrencyCode) or (//cac:TaxExchangeRate)" />
   <param name="EUGEN-T14-R045" value="(cbc:CalculationRate) and (cbc:MathematicOperatorCode)" />
   <param name="EUGEN-T14-R046" value="not(/ubl:CreditNote/cbc:TaxCurrencyCode) or (cbc:TaxAmount and cbc:TransactionCurrencyTaxAmount)" />

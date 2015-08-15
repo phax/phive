@@ -27,6 +27,7 @@
     <assert flag="fatal" test="$BII2-T14-R047" id="BII2-T14-R047">[BII2-T14-R047]-A buyer VAT identifier MUST be present if the VAT category code is reverse VAT</assert>
     <assert flag="fatal" test="$BII2-T14-R049" id="BII2-T14-R049">[BII2-T14-R049]-The credit note total without VAT MUST be equal to the VAT category taxable amount if the VAT category code is reverse charge</assert>
     <assert flag="fatal" test="$BII2-T14-R050" id="BII2-T14-R050">[BII2-T14-R050]-The VAT category tax amount MUST be zero  if the VAT category code is reverse charge (since there is only one VAT category allowed it follows that the credit note tax total for reverse charge credit notes is zero)</assert>
+    <assert flag="fatal" test="$BII2-T14-R058" id="BII2-T14-R058">[BII2-T14-R058]-Credit Note total without VAT MUST be equal to the sum of VAT category taxable amounts</assert>
   </rule>
   <rule context="$Credit_Note_Line">
     <assert flag="fatal" test="$BII2-T14-R017" id="BII2-T14-R017">[BII2-T14-R017]-Each credit note line MUST have a credit note line identifier</assert>
@@ -51,7 +52,6 @@
     <assert flag="fatal" test="$BII2-T14-R054" id="BII2-T14-R054">[BII2-T14-R054]-The sum of allowances at document level MUST be equal to the sum of document level allowance amounts</assert>
     <assert flag="fatal" test="$BII2-T14-R055" id="BII2-T14-R055">[BII2-T14-R055]-The sum of charges at document level MUST be equal to the sum of document level charge amounts</assert>
     <assert flag="fatal" test="$BII2-T14-R056" id="BII2-T14-R056">[BII2-T14-R056]-Amount due for payment MUST be equal to the credit note total amount with VAT minus the paid amounts</assert>
-    <assert flag="fatal" test="$BII2-T14-R058" id="BII2-T14-R058">[BII2-T14-R058]-Credit Note total without VAT MUST be equal to the sum of VAT category taxable amounts</assert>
   </rule>
   <rule context="$VAT_category">
     <assert flag="fatal" test="$BII2-T14-R027" id="BII2-T14-R027">[BII2-T14-R027]-Each VAT category details MUST have a VAT category taxable amount</assert>

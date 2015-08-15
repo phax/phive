@@ -462,7 +462,7 @@
           <xsl:attribute name="location">
             <xsl:apply-templates mode="schematron-select-full-path" select="." />
           </xsl:attribute>
-          <svrl:text>[BII2-T19-R026]-Orderable quantitites MUST be greater than zero</svrl:text>
+          <svrl:text>[BII2-T19-R026]-Orderable quantities MUST be greater than zero</svrl:text>
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>

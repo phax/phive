@@ -856,9 +856,9 @@
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="(xs:decimal(child::cbc:TaxAmount)= round(number(sum(xs:decimal(cac:TaxSubtotal/cbc:TaxAmount)) * 10 * 10)) div 100) " />
+      <xsl:when test="(xs:decimal(child::cbc:TaxAmount)= round(number(xs:decimal(sum(cac:TaxSubtotal/cbc:TaxAmount)) * 10 * 10)) div 100) " />
       <xsl:otherwise>
-        <svrl:failed-assert test="(xs:decimal(child::cbc:TaxAmount)= round(number(sum(xs:decimal(cac:TaxSubtotal/cbc:TaxAmount)) * 10 * 10)) div 100)">
+        <svrl:failed-assert test="(xs:decimal(child::cbc:TaxAmount)= round(number(xs:decimal(sum(cac:TaxSubtotal/cbc:TaxAmount)) * 10 * 10)) div 100)">
           <xsl:attribute name="id">EUGEN-T10-R043</xsl:attribute>
           <xsl:attribute name="flag">fatal</xsl:attribute>
           <xsl:attribute name="location">

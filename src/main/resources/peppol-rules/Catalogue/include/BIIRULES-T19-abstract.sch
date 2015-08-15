@@ -19,7 +19,7 @@
     <assert flag="warning" test="$BII2-T19-R017" id="BII2-T19-R017">[BII2-T19-R017]-Catalogue line validity period MUST be within the range of the whole catalogue validity period</assert>
     <assert flag="warning" test="$BII2-T19-R018" id="BII2-T19-R018">[BII2-T19-R018]-Price validity period MUST be within the range of the whole catalogue line validity period</assert>
     <assert flag="fatal" test="$BII2-T19-R024" id="BII2-T19-R024">[BII2-T19-R024]-A catalogue line MUST contain a unique line identifier</assert>
-    <assert flag="fatal" test="$BII2-T19-R026" id="BII2-T19-R026">[BII2-T19-R026]-Orderable quantitites MUST be greater than zero</assert>
+    <assert flag="fatal" test="$BII2-T19-R026" id="BII2-T19-R026">[BII2-T19-R026]-Orderable quantities MUST be greater than zero</assert>
     <assert flag="warning" test="$BII2-T19-R029" id="BII2-T19-R029">[BII2-T19-R029]-Maximum quantity MUST be greater than zero</assert>
     <assert flag="warning" test="$BII2-T19-R030" id="BII2-T19-R030">[BII2-T19-R030]-Minimum quantity MUST be greater than zero</assert>
     <assert flag="warning" test="$BII2-T19-R031" id="BII2-T19-R031">[BII2-T19-R031]-Maximum quantity MUST be greater or equal to the Minimum quantity</assert>
