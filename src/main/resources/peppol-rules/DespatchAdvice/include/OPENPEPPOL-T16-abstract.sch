@@ -5,11 +5,11 @@
   <rule context="$country">
     <assert flag="fatal" test="$EUGEN-T16-R003" id="EUGEN-T16-R003">[EUGEN-T16-R003]-A country identification code MUST have a list identifier attribute ISO3166-1:Alpha2.</assert>
   </rule>
-  <rule context="$despatch_advice">
-    <assert flag="fatal" test="$EUGEN-T16-R002" id="EUGEN-T16-R002">[EUGEN-T16-R002]-A party identifier MUST have a scheme identifier attribute.</assert>
-  </rule>
   <rule context="$endpoint">
     <assert flag="fatal" test="$EUGEN-T16-R001" id="EUGEN-T16-R001">[EUGEN-T16-R001]-An endpoint identifier MUST have a scheme identifier attribute.</assert>
+  </rule>
+  <rule context="$party">
+    <assert flag="fatal" test="$EUGEN-T16-R002" id="EUGEN-T16-R002">[EUGEN-T16-R002]-A party identifier MUST have a scheme identifier attribute.</assert>
   </rule>
   <rule context="$transport_handling_unit_type">
     <assert flag="fatal" test="$EUGEN-T16-R006" id="EUGEN-T16-R006">[EUGEN-T16-R006]-A transport handling unit type code MUST have a list identifier attribute UNECERec21.</assert>

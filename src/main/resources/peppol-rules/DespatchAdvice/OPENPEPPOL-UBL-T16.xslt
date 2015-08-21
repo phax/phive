@@ -363,28 +363,7 @@
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="/ubl:DespatchAdvice" mode="M9" priority="1004">
-    <svrl:fired-rule context="/ubl:DespatchAdvice" />
-
-		<!--ASSERT -->
-<xsl:choose>
-      <xsl:when test="(//cac:DespatchSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID/@schemeID) and (//cac:DeliveryCustomerParty/cac:Party/cac:PartyIdentification/cbc:ID/@schemeID)" />
-      <xsl:otherwise>
-        <svrl:failed-assert test="(//cac:DespatchSupplierParty/cac:Party/cac:PartyIdentification/cbc:ID/@schemeID) and (//cac:DeliveryCustomerParty/cac:Party/cac:PartyIdentification/cbc:ID/@schemeID)">
-          <xsl:attribute name="id">EUGEN-T16-R002</xsl:attribute>
-          <xsl:attribute name="flag">fatal</xsl:attribute>
-          <xsl:attribute name="location">
-            <xsl:apply-templates mode="schematron-select-full-path" select="." />
-          </xsl:attribute>
-          <svrl:text>[EUGEN-T16-R002]-A party identifier MUST have a scheme identifier attribute.</svrl:text>
-        </svrl:failed-assert>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:apply-templates mode="M9" select="*" />
-  </xsl:template>
-
-	<!--RULE -->
-<xsl:template match="//cbc:EndpointID" mode="M9" priority="1003">
+<xsl:template match="//cbc:EndpointID" mode="M9" priority="1004">
     <svrl:fired-rule context="//cbc:EndpointID" />
 
 		<!--ASSERT -->
@@ -398,6 +377,27 @@
             <xsl:apply-templates mode="schematron-select-full-path" select="." />
           </xsl:attribute>
           <svrl:text>[EUGEN-T16-R001]-An endpoint identifier MUST have a scheme identifier attribute.</svrl:text>
+        </svrl:failed-assert>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates mode="M9" select="*" />
+  </xsl:template>
+
+	<!--RULE -->
+<xsl:template match="//cac:Party" mode="M9" priority="1003">
+    <svrl:fired-rule context="//cac:Party" />
+
+		<!--ASSERT -->
+<xsl:choose>
+      <xsl:when test="cac:PartyIdentification/cbc:ID/@schemeID" />
+      <xsl:otherwise>
+        <svrl:failed-assert test="cac:PartyIdentification/cbc:ID/@schemeID">
+          <xsl:attribute name="id">EUGEN-T16-R002</xsl:attribute>
+          <xsl:attribute name="flag">fatal</xsl:attribute>
+          <xsl:attribute name="location">
+            <xsl:apply-templates mode="schematron-select-full-path" select="." />
+          </xsl:attribute>
+          <svrl:text>[EUGEN-T16-R002]-A party identifier MUST have a scheme identifier attribute.</svrl:text>
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
