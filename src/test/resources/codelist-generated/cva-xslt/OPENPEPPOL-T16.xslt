@@ -93,7 +93,7 @@
 
 
 <!--{}(CountryCodeList)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d181e3">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d175e3">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>CountryCodeList</ns1:ShortName>
@@ -105,7 +105,7 @@
 </ns0:Identification>
 
 <!--{}(HandlingUnitAttributeCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d181e4">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d175e4">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>HandlingUnitAttributeCode</ns1:ShortName>
@@ -117,7 +117,7 @@
 </ns0:Identification>
 
 <!--{}(PartyIdentifierScheme)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d181e5">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d175e5">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>PartyIdentifier</ns1:ShortName>
@@ -129,7 +129,7 @@
 </ns0:Identification>
 
 <!--{}(TransportHandlingUnit)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d181e6">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d175e6">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>TransportHandlingUnitTypeCode</ns1:ShortName>
@@ -141,7 +141,7 @@
 </ns0:Identification>
 
 <!--{}(UNDG)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d181e7">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d175e7">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>UNDG Code</ns1:ShortName>
@@ -153,7 +153,7 @@
 </ns0:Identification>
 
 <!--{}(UnitCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d181e8">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d175e8">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>UnitOfMeasureCode</ns1:ShortName>

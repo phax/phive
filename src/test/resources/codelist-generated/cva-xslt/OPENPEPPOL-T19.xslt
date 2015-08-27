@@ -138,7 +138,7 @@
 
 
 <!--{}(ActionCodePEPPOL)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e3">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e3">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>ActionCodePEPPOL</ns1:ShortName>
@@ -150,7 +150,7 @@
 </ns0:Identification>
 
 <!--{}(AttributeCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e4">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e4">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>AttributeCode</ns1:ShortName>
@@ -162,7 +162,7 @@
 </ns0:Identification>
 
 <!--{}(CountryCodeList)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e5">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e5">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>CountryCodeList</ns1:ShortName>
@@ -174,7 +174,7 @@
 </ns0:Identification>
 
 <!--{}(CurrencyCodeList)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e6">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e6">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>CurrencyCodeList</ns1:ShortName>
@@ -186,7 +186,7 @@
 </ns0:Identification>
 
 <!--{}(Language)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e7">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e7">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>LanguageID</ns1:ShortName>
@@ -198,7 +198,7 @@
 </ns0:Identification>
 
 <!--{}(PackageLevelCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e8">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e8">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>PackageLevelCode</ns1:ShortName>
@@ -210,7 +210,7 @@
 </ns0:Identification>
 
 <!--{}(PartyIdentifierScheme)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e9">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e9">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>PartyIdentifier</ns1:ShortName>
@@ -222,7 +222,7 @@
 </ns0:Identification>
 
 <!--{}(UNDG)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e10">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e10">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>UNDG Code</ns1:ShortName>
@@ -234,7 +234,7 @@
 </ns0:Identification>
 
 <!--{}(UnitCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d205e11">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d199e11">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>UnitOfMeasureCode</ns1:ShortName>

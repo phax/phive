@@ -188,7 +188,7 @@
 
 
 	<!--RULE -->
-<xsl:template match="cac:ContractDocumentReference/cbc:DocumentTypeCode" mode="M8" priority="1009">
+<xsl:template match="cac:ContractDocumentReference/cbc:DocumentTypeCode" mode="M8" priority="1008">
     <svrl:fired-rule context="cac:ContractDocumentReference/cbc:DocumentTypeCode" />
 
 		<!--ASSERT -->
@@ -209,7 +209,7 @@
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:EndpointID/@schemeID" mode="M8" priority="1008">
+<xsl:template match="cbc:EndpointID/@schemeID" mode="M8" priority="1007">
     <svrl:fired-rule context="cbc:EndpointID/@schemeID" />
 
 		<!--ASSERT -->
@@ -230,7 +230,7 @@
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cac:PartyIdentification/cbc:ID/@schemeID" mode="M8" priority="1007">
+<xsl:template match="cac:PartyIdentification/cbc:ID/@schemeID" mode="M8" priority="1006">
     <svrl:fired-rule context="cac:PartyIdentification/cbc:ID/@schemeID" />
 
 		<!--ASSERT -->
@@ -251,7 +251,7 @@
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cac:PayeeFinancialAccount/cbc:ID/@schemeID" mode="M8" priority="1006">
+<xsl:template match="cac:PayeeFinancialAccount/cbc:ID/@schemeID" mode="M8" priority="1005">
     <svrl:fired-rule context="cac:PayeeFinancialAccount/cbc:ID/@schemeID" />
 
 		<!--ASSERT -->
@@ -272,7 +272,7 @@
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="@unitCode" mode="M8" priority="1005">
+<xsl:template match="@unitCode" mode="M8" priority="1004">
     <svrl:fired-rule context="@unitCode" />
 
 		<!--ASSERT -->
@@ -286,27 +286,6 @@
             <xsl:apply-templates mode="schematron-select-full-path" select="." />
           </xsl:attribute>
           <svrl:text>[OP-T14-R006]-Unit code MUST be coded according to the UN/ECE Recommendation 20</svrl:text>
-        </svrl:failed-assert>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:apply-templates mode="M8" select="*" />
-  </xsl:template>
-
-	<!--RULE -->
-<xsl:template match="cac:Item/cac:StandardItemIdentification/cbc:ID/@schemeID" mode="M8" priority="1004">
-    <svrl:fired-rule context="cac:Item/cac:StandardItemIdentification/cbc:ID/@schemeID" />
-
-		<!--ASSERT -->
-<xsl:choose>
-      <xsl:when test="contains('�CPV�CV�GN�HS�UNSPSC�eCl@ss�',concat('�',normalize-space(.),'�'))" />
-      <xsl:otherwise>
-        <svrl:failed-assert test="contains('�CPV�CV�GN�HS�UNSPSC�eCl@ss�',concat('�',normalize-space(.),'�'))">
-          <xsl:attribute name="id">OP-T14-R007</xsl:attribute>
-          <xsl:attribute name="flag">fatal</xsl:attribute>
-          <xsl:attribute name="location">
-            <xsl:apply-templates mode="schematron-select-full-path" select="." />
-          </xsl:attribute>
-          <svrl:text>[OP-T14-R007]-A standard item identifier scheme MUST be coded according to the list Item Identifier Scheme ID defined by PEPPOL</svrl:text>
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>

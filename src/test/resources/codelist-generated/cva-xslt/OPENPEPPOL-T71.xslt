@@ -57,7 +57,7 @@
 
 
 <!--{}(PartyIdentifierScheme)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d254e3">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d248e3">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>PartyIdentifier</ns1:ShortName>
@@ -69,7 +69,7 @@
 </ns0:Identification>
 
 <!--{}(StatusReasonCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d254e4">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d248e4">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>StatusReasonCode</ns1:ShortName>

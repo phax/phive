@@ -102,7 +102,7 @@
 
 
 <!--{}(CurrencyCodeList)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d266e3">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d260e3">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>CurrencyCodeList</ns1:ShortName>
@@ -114,7 +114,7 @@
 </ns0:Identification>
 
 <!--{}(OrderResponseCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d266e4">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d260e4">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>OrderResponseCode</ns1:ShortName>
@@ -126,7 +126,7 @@
 </ns0:Identification>
 
 <!--{}(PartyIdentifierScheme)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d266e5">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d260e5">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>PartyIdentifier</ns1:ShortName>
@@ -138,7 +138,7 @@
 </ns0:Identification>
 
 <!--{}(TaxCategoryID)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d266e6">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d260e6">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>TaxCategoryID</ns1:ShortName>
@@ -150,7 +150,7 @@
 </ns0:Identification>
 
 <!--{}(UnitCode)-->
-<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d266e7">
+<ns0:Identification xmlns:ns0="urn:x-Crane:ss:Crane-Constraints2Schematron" xml:id="d260e7">
 
 <ns1:Identification xmlns:ns1="">
       <ns1:ShortName>UnitOfMeasureCode</ns1:ShortName>
