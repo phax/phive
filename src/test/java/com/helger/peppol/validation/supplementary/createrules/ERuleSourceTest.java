@@ -6,7 +6,7 @@ import org.junit.Test;
 
 /**
  * Test class for class {@link ERuleSource}.
- * 
+ *
  * @author Philip Helger
  */
 public final class ERuleSourceTest

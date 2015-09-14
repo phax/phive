@@ -30,7 +30,7 @@ import org.odftoolkit.simple.common.TextExtractor;
  * @author philip
  */
 @Immutable
-public class SimpleTextExtractor extends TextExtractor
+public final class SimpleTextExtractor extends TextExtractor
 {
   public SimpleTextExtractor (@Nonnull final OdfElement aElement)
   {
