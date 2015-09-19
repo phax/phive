@@ -34,7 +34,7 @@ import com.helger.peppol.validation.domain.TransactionKey;
 @Immutable
 public class MockOfficialFile
 {
-  public static final String STANDARD_PATH = "/official-ubl/";
+  public static final String STANDARD_PATH = "/peppol-official/";
 
   @Nonnull
   public static MockFile createGoodCase (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
