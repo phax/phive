@@ -18,106 +18,22 @@ package com.helger.peppol.validation.test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.peppol.testfiles.official.OfficialTestFiles;
+import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
 
 @Immutable
 public final class CTestFiles
 {
-  private static final List <MockFile> s_aTestFiles = new ArrayList <MockFile> ();
-
-  static
-  {
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Use case 1.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T19));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Use case 2.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T19));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Use case 3.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T19));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Use case 4.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T19));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Use case 5.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T19));
-
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Response use case 1 TP.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T58));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Response use case 2 TP.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T58));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Response use case 3 TP.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T58));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Response use case 4 TP.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T58));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS01A/Catalogue Response use case 5 TP.xml",
-                                                       PeppolTransactionKey.CATALOGUE_01_T58));
-
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS03A/UC1_Order.xml", PeppolTransactionKey.ORDER_03_T01));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS03A/UC2_Order.xml", PeppolTransactionKey.ORDER_03_T01));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS03A/UC3_Order.xml", PeppolTransactionKey.ORDER_03_T01));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS03A/UC4_Order.xml", PeppolTransactionKey.ORDER_03_T01));
-
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS04A/good-bis4a-zero-amount.xml",
-                                                       PeppolTransactionKey.INVOICE_04_T10));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS04A/Use Case 1.a_ExampleFile_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.INVOICE_04_T10));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS04A/Use Case 1.b_ExampleFile_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.INVOICE_04_T10));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS04A/Use Case 2_ExampleFile_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.INVOICE_04_T10));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS04A/Use Case 3_ExampleFile_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.INVOICE_04_T10));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS04A/Use Case 4_ExampleFile_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.INVOICE_04_T10));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS04A/Use Case 5_ExampleFile_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.INVOICE_04_T10));
-
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS05A/good-bis5a-zero-amount.xml",
-                                                       PeppolTransactionKey.BILLING_05_T14));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS05A/Use Case 1.a_CreditNote_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.BILLING_05_T14));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS05A/Use Case 1.b_CreditNote_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.BILLING_05_T14));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS05A/Use Case 2_CreditNote_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.BILLING_05_T14));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS05A/Use Case 3_CreditNote_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.BILLING_05_T14));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS05A/Use Case 4_CreditNote_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.BILLING_05_T14));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS05A/Use Case 5_CreditNote_PEPPOL BIS.xml",
-                                                       PeppolTransactionKey.BILLING_05_T14));
-
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC1_Order.xml", PeppolTransactionKey.ORDERING_28_T01));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC2_Order.xml", PeppolTransactionKey.ORDERING_28_T01));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC3_Order.xml", PeppolTransactionKey.ORDERING_28_T01));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC4_Order.xml", PeppolTransactionKey.ORDERING_28_T01));
-
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC1_Order_response.xml",
-                                                       PeppolTransactionKey.ORDERING_28_T76));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC2_Order_response.xml",
-                                                       PeppolTransactionKey.ORDERING_28_T76));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC3_Order_response.xml",
-                                                       PeppolTransactionKey.ORDERING_28_T76));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS28A/UC4_Order_response.xml",
-                                                       PeppolTransactionKey.ORDERING_28_T76));
-
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS30A/UBL-DespatchAdvice-2_1BII2 openPEPPOL BIS_UseCase4.xml",
-                                                       PeppolTransactionKey.DESPATCH_ADVICE_30_T16));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS30A/UBL-DespatchAdvice-2_1BII2 openPEPPOL BIS_UseCase5.xml",
-                                                       PeppolTransactionKey.DESPATCH_ADVICE_30_T16));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS30A/UBL-DespatchAdvice-2.1BII2 openPEPPOL BIS_UseCase1.xml",
-                                                       PeppolTransactionKey.DESPATCH_ADVICE_30_T16));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS30A/UBL-DespatchAdvice-2.1BII2 openPEPPOL BIS_UseCase2.xml",
-                                                       PeppolTransactionKey.DESPATCH_ADVICE_30_T16));
-    s_aTestFiles.add (MockOfficialFile.createGoodCase ("BIS30A/UBL-DespatchAdvice-2.1BII2 openPEPPOL BIS_UseCase3.xml",
-                                                       PeppolTransactionKey.DESPATCH_ADVICE_30_T16));
-  }
-
   private CTestFiles ()
   {}
 
@@ -125,19 +41,44 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static List <MockFile> getAllTestFiles ()
   {
-    return CollectionHelper.newList (s_aTestFiles);
+    final List <MockFile> ret = new ArrayList <MockFile> ();
+    for (final TransactionKey aPTK : new TransactionKey [] { PeppolTransactionKey.CATALOGUE_01_T19,
+                                                             PeppolTransactionKey.CATALOGUE_01_T58,
+                                                             PeppolTransactionKey.ORDER_03_T01,
+                                                             PeppolTransactionKey.INVOICE_04_T10,
+                                                             PeppolTransactionKey.BILLING_05_T14,
+                                                             PeppolTransactionKey.ORDERING_28_T01,
+                                                             PeppolTransactionKey.ORDERING_28_T76,
+                                                             PeppolTransactionKey.DESPATCH_ADVICE_30_T16 })
+      for (final ClassPathResource aRes : getAllMatchingTestFiles (aPTK))
+        ret.add (new MockFile (aRes, new ExtendedTransactionKey (aPTK), (Set <String>) null));
+
+    return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <MockFile> getAllMatchingTestFiles (@Nonnull final TransactionKey aTransactionKey)
+  public static List <ClassPathResource> getAllMatchingTestFiles (@Nonnull final TransactionKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 
-    final List <MockFile> ret = new ArrayList <MockFile> ();
-    for (final MockFile aTF : s_aTestFiles)
-      if (aTF.getTransactionKey ().equals (aTransactionKey))
-        ret.add (aTF);
-    return ret;
+    if (aTransactionKey.equals (PeppolTransactionKey.CATALOGUE_01_T19))
+      return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
+    if (aTransactionKey.equals (PeppolTransactionKey.CATALOGUE_01_T58))
+      return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
+    if (aTransactionKey.equals (PeppolTransactionKey.ORDER_03_T01))
+      return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
+    if (aTransactionKey.equals (PeppolTransactionKey.INVOICE_04_T10))
+      return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
+    if (aTransactionKey.equals (PeppolTransactionKey.BILLING_05_T14))
+      return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
+    if (aTransactionKey.equals (PeppolTransactionKey.ORDERING_28_T01))
+      return OfficialTestFiles.getAllTestFilesOrdering_28_T01 ();
+    if (aTransactionKey.equals (PeppolTransactionKey.ORDERING_28_T76))
+      return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
+    if (aTransactionKey.equals (PeppolTransactionKey.DESPATCH_ADVICE_30_T16))
+      return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
+
+    throw new IllegalArgumentException ("Invalid transaction key: " + aTransactionKey);
   }
 }

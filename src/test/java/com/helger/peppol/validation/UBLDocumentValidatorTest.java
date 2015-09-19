@@ -17,15 +17,12 @@
 package com.helger.peppol.validation;
 
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.helger.commons.error.IResourceErrorGroup;
-import com.helger.commons.xml.serialize.read.DOMReader;
 import com.helger.peppol.validation.test.CTestFiles;
 import com.helger.peppol.validation.test.MockFile;
 
@@ -36,19 +33,6 @@ import com.helger.peppol.validation.test.MockFile;
  */
 public final class UBLDocumentValidatorTest
 {
-  @Test
-  public void testReadAllTestFiles () throws SAXException
-  {
-    for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
-    {
-      assertTrue (aTestFile.getResource ().exists ());
-
-      // Read as generic XML to verify that it is readable
-      final Document aDoc = DOMReader.readXMLDOM (aTestFile.getResource ());
-      assertNotNull (aTestFile.getResource ().getPath (), aDoc);
-    }
-  }
-
   @Test
   public void testApplyXSDValidationPeppol ()
   {
