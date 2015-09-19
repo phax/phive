@@ -32,9 +32,9 @@ import com.helger.peppol.validation.domain.TransactionKey;
  * @author Philip Helger
  */
 @Immutable
-public class MockStandardFile
+public class MockOfficialFile
 {
-  public static final String STANDARD_PATH = "/xml/standard/";
+  public static final String STANDARD_PATH = "/official-ubl/";
 
   @Nonnull
   public static MockFile createGoodCase (@Nonnull final String sPath, @Nonnull final TransactionKey aTransactionKey)
