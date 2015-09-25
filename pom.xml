@@ -107,7 +107,7 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>peppol-testfiles</artifactId>
-      <version>4.1.0-SNAPSHOT</version>
+      <version>4.1.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
