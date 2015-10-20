@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.string.StringHelper;
 import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
 
 /**
@@ -20,22 +21,37 @@ import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
  */
 public enum ERuleSourceThirdparty
 {
- ATGOV_T10 ("atgov", EBII2Transaction.T10, "v05"),
- ATGOV_T14 ("atgov", EBII2Transaction.T14, "v05"),
- ATNAT_T10 ("atnat", EBII2Transaction.T10, "v05"),
- ATNAT_T14 ("atnat", EBII2Transaction.T14, "v05");
+ ATGOV_T10 ("atgov",
+            EBII2Transaction.T10,
+            "v05",
+            "(/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
+ ATGOV_T14 ("atgov",
+            EBII2Transaction.T14,
+            "v05",
+            "(/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
+ ATNAT_T10 ("atnat",
+            EBII2Transaction.T10,
+            "v05",
+            "(/ubl:Invoice/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
+ ATNAT_T14 ("atnat",
+            EBII2Transaction.T14,
+            "v05",
+            "(/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')");
 
   private final String m_sPackageName;
   private final EBII2Transaction m_eTransaction;
   private final String m_sVersion;
+  private String m_sGlobalPrerequisite;
 
   private ERuleSourceThirdparty (@Nonnull @Nonempty final String sPackageName,
                                  @Nonnull final EBII2Transaction eTransaction,
-                                 @Nonnull @Nonempty final String sVersion)
+                                 @Nonnull @Nonempty final String sVersion,
+                                 @Nonnull final String sGlobalPrerequisite)
   {
     m_sPackageName = sPackageName;
     m_eTransaction = eTransaction;
     m_sVersion = sVersion;
+    m_sGlobalPrerequisite = sGlobalPrerequisite;
   }
 
   @Nonnull
@@ -63,6 +79,17 @@ public enum ERuleSourceThirdparty
                      "-BusinessRules-" +
                      m_sVersion +
                      ".ods");
+  }
+
+  @Nonnull
+  public String getGlobalPrerequisite ()
+  {
+    return m_sGlobalPrerequisite;
+  }
+
+  public boolean hasGlobalPrerequisite ()
+  {
+    return StringHelper.hasText (m_sGlobalPrerequisite);
   }
 
   @Nonnull

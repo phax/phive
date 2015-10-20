@@ -7,11 +7,15 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
+import com.helger.commons.string.StringHelper;
+import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
+import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCache;
 
 /**
  * Create the content of the {@link ERuleSourceThirdparty} enum. Must be run
@@ -21,18 +25,29 @@ import com.helger.commons.regex.RegExHelper;
  */
 public final class Main3CreateRuleSourceThirdpartyEnum
 {
+  private static final class Value
+  {
+    private final String m_sVersion;
+    private final String m_sGlobalPrerequisite;
+
+    public Value (final String sVersion, final String sGlobalPrerequisite)
+    {
+      m_sVersion = sVersion;
+      m_sGlobalPrerequisite = StringHelper.getNotNull (sGlobalPrerequisite);
+    }
+  }
+
   /**
    * Map from transaction ID (e.g. 'T01') to the version number of the ODS file
    * (e.g. 'v09').
    *
    * @author Philip Helger
    */
-  private static final class MyMap extends TreeMap <String, String>
+  private static final class MyMap extends TreeMap <String, Value>
   {
-    @Override
-    public String put (@Nonnull final String sKey, @Nonnull final String sValue)
+    public Value put (@Nonnull final String sKey, @Nonnull final String sVersion, @Nullable final String sGlobalPrerequisite)
     {
-      final String sOld = super.put (sKey, sValue);
+      final Value sOld = super.put (sKey, new Value (sVersion, sGlobalPrerequisite));
       if (sOld != null)
         throw new IllegalArgumentException ("A value for the key '" + sKey + "' was already contained - duplicate!");
       return sOld;
@@ -53,13 +68,15 @@ public final class Main3CreateRuleSourceThirdpartyEnum
         final MyMap aMap = new MyMap ();
         ret.put (aDir.getName (), aMap);
         for (final File aFile : new FileSystemIterator (aDir))
-          if (aFile.isFile () && aFile.getName ().endsWith (".ods"))
+          if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
           {
+            // Read artifacts:F2
+            final String sGlobalPrerequisite = ODFHelper.getText (SpreadsheetCache.readSpreadsheet (aFile).getTableByName ("artifacts"), 5, 1);
             final String [] aMatches = RegExHelper.getAllMatchingGroupValues (aDir.getName () +
                                                                               "-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
                                                                               aFile.getName ());
             if (aMatches != null)
-              aMap.put (aMatches[0], aMatches[1]);
+              aMap.put (aMatches[0], aMatches[1], sGlobalPrerequisite);
             else
               throw new IllegalStateException (aFile.getAbsolutePath ());
           }
@@ -73,10 +90,10 @@ public final class Main3CreateRuleSourceThirdpartyEnum
     for (final Map.Entry <String, MyMap> aEntry : aRules.entrySet ())
     {
       final String sPackageName = aEntry.getKey ();
-      for (final Map.Entry <String, String> aEntry2 : aEntry.getValue ().entrySet ())
+      for (final Map.Entry <String, Value> aEntry2 : aEntry.getValue ().entrySet ())
       {
         final String sTransaction = aEntry2.getKey ();
-        final String sVersion = aEntry2.getValue ();
+        final Value aValue = aEntry2.getValue ();
         final String sKey = sPackageName.toUpperCase (Locale.US) + "_" + sTransaction;
         System.out.println (sKey +
                             " (\"" +
@@ -84,7 +101,9 @@ public final class Main3CreateRuleSourceThirdpartyEnum
                             "\", EBII2Transaction." +
                             sTransaction +
                             ", \"" +
-                            sVersion +
+                            aValue.m_sVersion +
+                            "\", \"" +
+                            aValue.m_sGlobalPrerequisite +
                             "\"),");
       }
     }

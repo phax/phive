@@ -49,8 +49,7 @@ public final class Main2CreateRuleSourceEnum
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biicore"))
       if (aFile.isFile () && aFile.getName ().endsWith (".sch"))
       {
-        final String [] aMatches = RegExHelper.getAllMatchingGroupValues ("BIICORE-UBL-(T[0-9]+)-(V[0-9]+\\.[0-9]+)\\.sch",
-                                                                          aFile.getName ());
+        final String [] aMatches = RegExHelper.getAllMatchingGroupValues ("BIICORE-UBL-(T[0-9]+)-(V[0-9]+\\.[0-9]+)\\.sch", aFile.getName ());
         if (aMatches != null)
           ret.put (aMatches[0], aMatches[1]);
         // else e.g. a CEFACT rule
@@ -64,10 +63,9 @@ public final class Main2CreateRuleSourceEnum
   {
     final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biirules/businessrules"))
-      if (aFile.isFile () && aFile.getName ().endsWith (".ods"))
+      if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
       {
-        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
-                                                                    aFile.getName ());
+        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods", aFile.getName ());
         if (aMatches != null)
           ret.put (aMatches[0], aMatches[1]);
         else
@@ -88,10 +86,9 @@ public final class Main2CreateRuleSourceEnum
   {
     final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/peppol/businessrules"))
-      if (aFile.isFile () && aFile.getName ().endsWith (".ods"))
+      if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
       {
-        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("OpenPEPPOL-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
-                                                                    aFile.getName ());
+        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("OpenPEPPOL-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods", aFile.getName ());
         if (aMatches != null)
           ret.put (aMatches[0], aMatches[1]);
         else

@@ -43,6 +43,15 @@ public final class ODFHelper
     return aCell == null || aCell.getValueType () == null;
   }
 
+  /**
+   * @param aSheet
+   *        Sheet to use.
+   * @param nCol
+   *        0-based column index
+   * @param nRow
+   *        0-based row index
+   * @return <code>null</code> if empty
+   */
   @Nullable
   public static String getText (@Nonnull final Table aSheet, final int nCol, final int nRow)
   {
