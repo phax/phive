@@ -19,7 +19,7 @@ import com.helger.commons.regex.RegExHelper;
  *
  * @author Philip Helger
  */
-public final class Main2CreateRuleSourceThirdpartyEnum
+public final class Main3CreateRuleSourceThirdpartyEnum
 {
   /**
    * Map from transaction ID (e.g. 'T01') to the version number of the ODS file

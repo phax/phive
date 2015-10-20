@@ -29,7 +29,7 @@ import com.helger.peppol.validation.supplementary.createrules.sch.RuleSchematron
 import com.helger.peppol.validation.supplementary.createrules.sch.RuleXSLTCreator;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 
-public final class Main4CreateValidationRules
+public final class Main5CreateValidationRules
 {
   public static void main (final String [] args) throws Exception
   {

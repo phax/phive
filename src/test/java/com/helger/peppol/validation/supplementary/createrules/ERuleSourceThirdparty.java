@@ -20,10 +20,10 @@ import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
  */
 public enum ERuleSourceThirdparty
 {
- ATGOV_T10 ("atgov", EBII2Transaction.T10, "v04"),
- ATGOV_T14 ("atgov", EBII2Transaction.T14, "v04"),
- ATNAT_T10 ("atnat", EBII2Transaction.T10, "v04"),
- ATNAT_T14 ("atnat", EBII2Transaction.T14, "v04");
+ ATGOV_T10 ("atgov", EBII2Transaction.T10, "v05"),
+ ATGOV_T14 ("atgov", EBII2Transaction.T14, "v05"),
+ ATNAT_T10 ("atnat", EBII2Transaction.T10, "v05"),
+ ATNAT_T14 ("atnat", EBII2Transaction.T14, "v05");
 
   private final String m_sPackageName;
   private final EBII2Transaction m_eTransaction;

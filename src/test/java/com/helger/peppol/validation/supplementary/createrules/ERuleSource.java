@@ -108,8 +108,7 @@ public enum ERuleSource
   public File getBIIRuleFile ()
   {
     return new File ("src/test/resources/rule-source/biirules/businessrules/bii2rules-" +
-                     (isCodeListsSpecial () ? "CodeLists-"
-                                            : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
+                     (isCodeListsSpecial () ? "CodeLists-" : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
                      m_sBIIVersion +
                      ".ods");
   }
@@ -128,8 +127,7 @@ public enum ERuleSource
   public File getOpenPEPPOLRuleFile ()
   {
     return new File ("src/test/resources/rule-source/peppol/businessrules/OpenPEPPOL-" +
-                     (isCodeListsSpecial () ? "CodeLists-"
-                                            : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
+                     (isCodeListsSpecial () ? "CodeLists-" : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
                      m_sOpenPEPPOLVersion +
                      ".ods");
   }
