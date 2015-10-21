@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.domain.ValidationKey;
 
@@ -29,6 +30,7 @@ import com.helger.peppol.validation.domain.ValidationKey;
  *
  * @author Philip Helger
  */
+@MustImplementEqualsAndHashcode
 public interface IValidationArtefact extends Serializable
 {
   /**

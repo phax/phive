@@ -30,7 +30,7 @@ import com.helger.peppol.validation.artefact.IValidationArtefact;
 
 /**
  * This class captures the validation result of a single validation layer. It
- * contains the validation type and the errors occurred.
+ * contains the validation artefact and the errors occurred.
  *
  * @author Philip Helger
  */
@@ -39,7 +39,8 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   private final IValidationArtefact m_aValidationArtefact;
   private final IResourceErrorGroup m_aResourceErrors;
 
-  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IResourceError aResourceError)
+  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                                @Nonnull final IResourceError aResourceError)
   {
     this (aValidationArtefact, new ResourceErrorGroup (aResourceError));
   }
@@ -50,7 +51,8 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
     this (aValidationArtefact, new ResourceErrorGroup (aResourceErrors));
   }
 
-  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IResourceErrorGroup aResourceErrors)
+  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                                @Nonnull final IResourceErrorGroup aResourceErrors)
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     m_aResourceErrors = ValueEnforcer.notNull (aResourceErrors, "ResourceErrors");

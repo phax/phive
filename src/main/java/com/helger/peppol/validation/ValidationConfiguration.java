@@ -16,6 +16,7 @@
  */
 package com.helger.peppol.validation;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -37,7 +38,7 @@ import com.helger.peppol.validation.domain.ValidationKey;
  * @author Philip Helger
  */
 @Immutable
-public class ValidationConfiguration
+public class ValidationConfiguration implements Serializable
 {
   private final ValidationKey m_aValidationKey;
   private final List <IValidationArtefact> m_aValidationArtefacts;

@@ -32,7 +32,7 @@ import com.helger.commons.error.ResourceErrorGroup;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * Enhanced list of {@link ValidationLayerResult} objects
+ * A managed list of {@link ValidationLayerResult} objects
  *
  * @author Philip Helger
  */
