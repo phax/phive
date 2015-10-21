@@ -32,7 +32,7 @@ import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArtefact;
-import com.helger.peppol.validation.artefact.peppol.EPeppolThirdpartyValidationArtefact;
+import com.helger.peppol.validation.artefact.peppol.EPeppolThirdPartyValidationArtefact;
 import com.helger.peppol.validation.domain.ValidationKey;
 
 /**
@@ -121,8 +121,8 @@ public class ValidationConfiguration
                       "' and transaction " +
                       aValidationKey.getTransaction ().getTransactionKey ());
 
-    // Get all PEPPOL extended artefacts
-    aValidationArtefacts.addAll (EPeppolThirdpartyValidationArtefact.getAllMatchingValidationArtefacts (aValidationKey));
+    // Get all PEPPOL third party artefacts
+    aValidationArtefacts.addAll (EPeppolThirdPartyValidationArtefact.getAllMatchingValidationArtefacts (aValidationKey));
 
     return new ValidationConfiguration (aValidationKey, aValidationArtefacts);
   }

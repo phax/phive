@@ -24,16 +24,16 @@ import org.junit.Test;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
- * Test class for class {@link EPeppolThirdpartyValidationArtefact}.
+ * Test class for class {@link EPeppolThirdPartyValidationArtefact}.
  *
  * @author Philip Helger
  */
-public final class EPeppolThirdpartyValidationArtefactTest
+public final class EPeppolThirdPartyValidationArtefactTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EPeppolThirdpartyValidationArtefact e : EPeppolThirdpartyValidationArtefact.values ())
+    for (final EPeppolThirdPartyValidationArtefact e : EPeppolThirdPartyValidationArtefact.values ())
     {
       assertNotNull (e.getSchematronResource ());
       assertTrue (e.getSchematronResource ().exists ());
@@ -44,7 +44,7 @@ public final class EPeppolThirdpartyValidationArtefactTest
   @Test
   public void testValidSchematrons ()
   {
-    for (final EPeppolThirdpartyValidationArtefact e : EPeppolThirdpartyValidationArtefact.values ())
+    for (final EPeppolThirdPartyValidationArtefact e : EPeppolThirdPartyValidationArtefact.values ())
     {
       // Check that the passed Schematron is valid
       assertTrue (new SchematronResourcePure (e.getSchematronResource ()).isValidSchematron ());

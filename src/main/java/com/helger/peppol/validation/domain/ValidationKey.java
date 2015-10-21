@@ -30,7 +30,6 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * An immutable pair of a business specification of type
@@ -50,10 +49,10 @@ public class ValidationKey implements Serializable
   private final String m_sPrerequisiteXPath;
 
   public ValidationKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
-                         @Nonnull final ISpecificationTransaction aTransaction,
-                         @Nullable final String sCountryCode,
-                         final boolean bIsSectorSpecific,
-                         @Nullable final String sPrerequisiteXPath)
+                        @Nonnull final ISpecificationTransaction aTransaction,
+                        @Nullable final String sCountryCode,
+                        final boolean bIsSectorSpecific,
+                        @Nullable final String sPrerequisiteXPath)
   {
     m_aBusinessSpecification = ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
     m_aTransaction = ValueEnforcer.notNull (aTransaction, "Transaction");
@@ -70,7 +69,7 @@ public class ValidationKey implements Serializable
   }
 
   /**
-   * @return The business specification this transaction key refers to. This is
+   * @return The business specification this validation key refers to. This is
    *         the object passed in the constructor. Never <code>null</code>.
    */
   @Nonnull
@@ -90,12 +89,13 @@ public class ValidationKey implements Serializable
   }
 
   /**
-   * @return The UBL document type to be used for this transaction.
+   * @return The JAXB class implementing the document type referenced by the
+   *         transaction.
    */
   @Nonnull
-  public EUBL21DocumentType getUBLDocumentType ()
+  public Class <?> getImplementationClass ()
   {
-    return m_aTransaction.getUBLDocumentType ();
+    return m_aTransaction.getUBLDocumentType ().getImplementationClass ();
   }
 
   /**
@@ -222,7 +222,7 @@ public class ValidationKey implements Serializable
     {}
 
     /**
-     * Create a builder with the values of the provided transaction key.
+     * Create a builder with the values of the provided validation key.
      *
      * @param aOther
      *        Object to copy from. May not be <code>null</code>.
@@ -272,7 +272,7 @@ public class ValidationKey implements Serializable
     }
 
     /**
-     * @return The final transaction key. Never <code>null</code>.
+     * @return The final validation key. Never <code>null</code>.
      * @throws IllegalStateException
      *         If a mandatory field is not filled.
      */

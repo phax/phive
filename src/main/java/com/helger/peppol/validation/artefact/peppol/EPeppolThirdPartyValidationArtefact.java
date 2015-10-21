@@ -37,7 +37,7 @@ import com.helger.peppol.validation.domain.peppol.PeppolValidationKey;
  *
  * @author Philip Helger
  */
-public enum EPeppolThirdpartyValidationArtefact implements IValidationArtefact
+public enum EPeppolThirdPartyValidationArtefact implements IValidationArtefact
 {
  INVOICE_AT_NAT ("Invoice-Thirdparty/ATNAT-UBL-T10.sch",
                  new ValidationKey.Builder (PeppolValidationKey.INVOICE_04_T10).setCountry ("AT")
@@ -62,7 +62,7 @@ public enum EPeppolThirdpartyValidationArtefact implements IValidationArtefact
   private final ClassPathResource m_aResource;
   private final ValidationKey m_aTransactionKey;
 
-  private EPeppolThirdpartyValidationArtefact (@Nonnull @Nonempty final String sPath, @Nonnull final ValidationKey aTransactionKey)
+  private EPeppolThirdPartyValidationArtefact (@Nonnull @Nonempty final String sPath, @Nonnull final ValidationKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
     m_aTransactionKey = aTransactionKey;
@@ -93,12 +93,12 @@ public enum EPeppolThirdpartyValidationArtefact implements IValidationArtefact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EPeppolThirdpartyValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
+  public static List <EPeppolThirdPartyValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final List <EPeppolThirdpartyValidationArtefact> ret = new ArrayList <EPeppolThirdpartyValidationArtefact> ();
-    for (final EPeppolThirdpartyValidationArtefact e : values ())
+    final List <EPeppolThirdPartyValidationArtefact> ret = new ArrayList <EPeppolThirdPartyValidationArtefact> ();
+    for (final EPeppolThirdPartyValidationArtefact e : values ())
       if (e.getValidationKey ().hasSameSpecificationAndTransactionAndCountryAndSector (aValidationKey))
         ret.add (e);
     return ret;
