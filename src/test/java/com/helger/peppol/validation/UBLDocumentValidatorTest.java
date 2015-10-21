@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
-import com.helger.commons.error.IResourceErrorGroup;
 import com.helger.peppol.validation.mock.CTestFiles;
 import com.helger.peppol.validation.mock.MockFile;
 import com.helger.peppol.validation.peppol.PeppolValidationConfiguration;
@@ -43,11 +42,11 @@ public final class UBLDocumentValidatorTest
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
-      final IResourceErrorGroup aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
+      final ValidationLayerResult aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
       if (aTestFile.isGoodCase ())
-        assertTrue (aXSDErrors.toString (), aXSDErrors.isEmpty ());
+        assertTrue (aXSDErrors.toString (), aXSDErrors.isSuccess ());
       else
-        assertFalse (aXSDErrors.isEmpty ());
+        assertFalse (aXSDErrors.isSuccess ());
     }
   }
 
@@ -59,7 +58,7 @@ public final class UBLDocumentValidatorTest
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
-      final IResourceErrorGroup aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());
+      final ValidationLayerResultList aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());
       if (aTestFile.isGoodCase ())
         assertTrue (aSCHErrors.getAllErrors ().toString (), aSCHErrors.containsNoError ());
       else

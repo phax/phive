@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.peppol.validation.ValidationConfiguration;
-import com.helger.peppol.validation.artefact.IValidationSchematronArtefact;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationSchematronArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolThirdPartyValidationSchematronArtefact;
 import com.helger.peppol.validation.domain.ValidationKey;
@@ -59,7 +59,7 @@ public final class PeppolValidationConfiguration
   @Nonnull
   public static ValidationConfiguration createDefault (@Nonnull final ValidationKey aValidationKey)
   {
-    final List <IValidationSchematronArtefact> aValidationArtefacts = new ArrayList <IValidationSchematronArtefact> ();
+    final List <IValidationArtefact> aValidationArtefacts = new ArrayList <IValidationArtefact> ();
 
     // Get all PEPPOL standard artefacts
     aValidationArtefacts.addAll (EPeppolStandardValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));

@@ -26,7 +26,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.artefact.IValidationSchematronArtefact;
+import com.helger.peppol.validation.artefact.EValidationArtefactType;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.ValidationKey;
 import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
 
@@ -37,7 +38,7 @@ import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
  *
  * @author Philip Helger
  */
-public enum EPeppolStandardValidationSchematronArtefact implements IValidationSchematronArtefact
+public enum EPeppolStandardValidationSchematronArtefact implements IValidationArtefact
 {
  CATALOGUE_CORE ("Catalogue/BIICORE-UBL-T19-V1.0.sch", PeppolValidationKeys.CATALOGUE_01_T19),
  CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
@@ -82,7 +83,13 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationSc
   }
 
   @Nonnull
-  public IReadableResource getSchematronResource ()
+  public EValidationArtefactType getValidationArtefactType ()
+  {
+    return EValidationArtefactType.SCHEMATRON;
+  }
+
+  @Nonnull
+  public IReadableResource getRuleResource ()
   {
     return m_aResource;
   }

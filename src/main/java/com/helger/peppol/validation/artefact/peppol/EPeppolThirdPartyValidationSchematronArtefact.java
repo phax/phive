@@ -26,7 +26,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.artefact.IValidationSchematronArtefact;
+import com.helger.peppol.validation.artefact.EValidationArtefactType;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.ValidationKey;
 import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
 
@@ -37,7 +38,7 @@ import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
  *
  * @author Philip Helger
  */
-public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidationSchematronArtefact
+public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidationArtefact
 {
  INVOICE_AT_NAT ("Invoice-Thirdparty/ATNAT-UBL-T10.sch",
                  new ValidationKey.Builder (PeppolValidationKeys.INVOICE_04_T10).setCountry ("AT")
@@ -69,7 +70,13 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   }
 
   @Nonnull
-  public IReadableResource getSchematronResource ()
+  public EValidationArtefactType getValidationArtefactType ()
+  {
+    return EValidationArtefactType.SCHEMATRON;
+  }
+
+  @Nonnull
+  public IReadableResource getRuleResource ()
   {
     return m_aResource;
   }

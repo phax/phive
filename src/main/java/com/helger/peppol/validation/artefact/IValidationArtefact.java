@@ -29,13 +29,20 @@ import com.helger.peppol.validation.domain.ValidationKey;
  *
  * @author Philip Helger
  */
-public interface IValidationSchematronArtefact extends Serializable
+public interface IValidationArtefact extends Serializable
 {
   /**
-   * @return The Schematron resource descriptor. Never <code>null</code>.
+   * @return The validation artefact type. May not be <code>null</code>.
    */
   @Nonnull
-  IReadableResource getSchematronResource ();
+  EValidationArtefactType getValidationArtefactType ();
+
+  /**
+   * @return The resource that contains the rules (like XSD or Schematron).
+   *         Never <code>null</code>.
+   */
+  @Nonnull
+  IReadableResource getRuleResource ();
 
   /**
    * @return The validation key for this validation artefact. Never

@@ -26,7 +26,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.artefact.IValidationSchematronArtefact;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.ValidationKey;
 
 /**
@@ -40,7 +40,7 @@ import com.helger.peppol.validation.domain.ValidationKey;
 public class ValidationConfiguration
 {
   private final ValidationKey m_aValidationKey;
-  private final List <IValidationSchematronArtefact> m_aValidationArtefacts;
+  private final List <IValidationArtefact> m_aValidationArtefacts;
 
   /**
    * @param aValidationKey
@@ -51,7 +51,7 @@ public class ValidationConfiguration
    *        <code>null</code> elements.
    */
   public ValidationConfiguration (@Nonnull final ValidationKey aValidationKey,
-                                  @Nonnull @Nonempty final List <IValidationSchematronArtefact> aValidationArtefacts)
+                                  @Nonnull @Nonempty final List <IValidationArtefact> aValidationArtefacts)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
     ValueEnforcer.notEmptyNoNullValue (aValidationArtefacts, "ValidationArtefacts");
@@ -77,7 +77,7 @@ public class ValidationConfiguration
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public List <IValidationSchematronArtefact> getAllValidationArtefacts ()
+  public List <IValidationArtefact> getAllValidationArtefacts ()
   {
     return CollectionHelper.newList (m_aValidationArtefacts);
   }

@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.InputStream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.transform.Source;
@@ -41,14 +42,16 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
 import com.helger.commons.xml.transform.TransformSourceFactory;
-import com.helger.peppol.validation.artefact.IValidationSchematronArtefact;
+import com.helger.peppol.validation.artefact.EValidationArtefactType;
+import com.helger.peppol.validation.artefact.IValidationArtefact;
+import com.helger.peppol.validation.artefact.ValidationArtefact;
 import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
-import com.helger.ubl21.UBL21DocumentTypes;
+import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * This is the main validation class to validate e.g. PEPPOL UBL 2.1 documents
@@ -92,7 +95,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applyXSDValidation (@Nonnull final File aUBLDocument)
+  public ValidationLayerResult applyXSDValidation (@Nonnull final File aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -105,7 +108,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applyXSDValidation (@Nonnull final InputStream aUBLDocument)
+  public ValidationLayerResult applyXSDValidation (@Nonnull final InputStream aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -118,7 +121,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applyXSDValidation (@Nonnull final IHasInputStream aUBLDocument)
+  public ValidationLayerResult applyXSDValidation (@Nonnull final IHasInputStream aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -141,7 +144,22 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument)
+  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument)
+  {
+    return applyXSDValidation (aUBLDocument, (ClassLoader) null);
+  }
+
+  /**
+   * Perform only XSD validation
+   *
+   * @param aUBLDocument
+   *        Source to be validated
+   * @param aClassLoader
+   *        Optional class loader to use.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument, @Nullable final ClassLoader aClassLoader)
   {
     ValueEnforcer.notNull (aUBLDocument, "UBLDocument");
 
@@ -149,29 +167,23 @@ public class UBLDocumentValidator
     {
       // Find the implementation class that is required for the configured
       // validation
-      final Class <?> aUBLImplementationClass = m_aConfiguration.getValidationKey ().getImplementationClass ();
+      final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ().getTransaction ().getUBLDocumentType ();
 
       final ResourceErrorGroup aErrors = new ResourceErrorGroup ();
 
       // Find the XML schema required for validation
       // as we don't have a node, we need to trust the implementation class
-      final Schema aSchema = UBL21DocumentTypes.getSchemaOfImplementationClass (aUBLImplementationClass);
-      if (aSchema == null)
-      {
-        // Failed to resolve schema
-        aErrors.addResourceError (new ResourceError (new ResourceLocation (aUBLDocument.getSystemId ()),
-                                                     EErrorLevel.ERROR,
-                                                     "Don't know how to read UBL object of class " +
-                                                                        aUBLImplementationClass.getName () +
-                                                                        " because no XML schema class is available."));
-      }
-      else
-      {
-        // Apply the XML schema validation
-        final IResourceErrorGroup aXSDErrors = XMLSchemaValidationHelper.validate (aSchema, aUBLDocument);
-        aErrors.addResourceErrorGroup (aXSDErrors);
-      }
-      return aErrors.getAllFailures ();
+      final Schema aSchema = eUBLDocumentType.getSchema (aClassLoader);
+      assert aSchema != null;
+
+      // Apply the XML schema validation
+      final IResourceErrorGroup aXSDErrors = XMLSchemaValidationHelper.validate (aSchema, aUBLDocument);
+      aErrors.addResourceErrorGroup (aXSDErrors);
+
+      return new ValidationLayerResult (new ValidationArtefact (EValidationArtefactType.XSD,
+                                                                eUBLDocumentType.getXSDResource (aClassLoader),
+                                                                m_aConfiguration.getValidationKey ()),
+                                        aErrors.getAllFailures ());
     }
     finally
     {
@@ -187,7 +199,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applySchematronValidation (@Nonnull final File aUBLDocument) throws SAXException
+  public ValidationLayerResultList applySchematronValidation (@Nonnull final File aUBLDocument) throws SAXException
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -200,7 +212,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applySchematronValidation (@Nonnull @WillClose final InputStream aUBLDocument) throws SAXException
+  public ValidationLayerResultList applySchematronValidation (@Nonnull @WillClose final InputStream aUBLDocument) throws SAXException
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -213,7 +225,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applySchematronValidation (@Nonnull final IHasInputStream aUBLDocument) throws SAXException
+  public ValidationLayerResultList applySchematronValidation (@Nonnull final IHasInputStream aUBLDocument) throws SAXException
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -226,7 +238,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public IResourceErrorGroup applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument) throws SAXException
+  public ValidationLayerResultList applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument) throws SAXException
   {
     // Resource name of the document to be validated
     String sResourceName = aUBLDocument.getSystemId ();
@@ -236,11 +248,11 @@ public class UBLDocumentValidator
     // Convert source to a Node only once - this closes any underlying stream
     final Node aUBLDocumentNode = SchematronResourceHelper.getNodeOfSource (aUBLDocument);
 
-    final ResourceErrorGroup ret = new ResourceErrorGroup ();
-    for (final IValidationSchematronArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
+    final ValidationLayerResultList ret = new ValidationLayerResultList ();
+    for (final IValidationArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
     {
       // get the Schematron resource to be used for this validation artefact
-      final IReadableResource aSCHRes = aArtefact.getSchematronResource ();
+      final IReadableResource aSCHRes = aArtefact.getRuleResource ();
 
       final CollectingPSErrorHandler aErrorHandler = new CollectingPSErrorHandler ();
       final SchematronResourcePure aSCH = new SchematronResourcePure (aSCHRes).setErrorHandler (aErrorHandler);
@@ -251,7 +263,7 @@ public class UBLDocumentValidator
         if (aSVRL == null)
         {
           // Invalid Schematron - unexpected
-          ret.addResourceErrors (aErrorHandler.getAllResourceErrors ());
+          ret.add (new ValidationLayerResult (aArtefact, aErrorHandler.getAllResourceErrors ()));
         }
         else
         {
@@ -261,15 +273,16 @@ public class UBLDocumentValidator
 
           // Convert failed asserts and successful reports to resource errors
           for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
-            ret.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
+            ret.add (new ValidationLayerResult (aArtefact, aFailedAssert.getAsResourceError (sResourceName)));
           for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
-            ret.addResourceError (aSuccessfulReport.getAsResourceError (sResourceName));
+            ret.add (new ValidationLayerResult (aArtefact, aSuccessfulReport.getAsResourceError (sResourceName)));
         }
       }
       catch (final Exception ex)
       {
         // Usually an error in the Schematron
-        ret.addResourceError (new ResourceError (new ResourceLocation (aSCHRes.getPath ()), EErrorLevel.ERROR, ex.getMessage (), ex));
+        ret.add (new ValidationLayerResult (aArtefact,
+                                            new ResourceError (new ResourceLocation (aSCHRes.getPath ()), EErrorLevel.ERROR, ex.getMessage (), ex)));
       }
     }
     return ret;
