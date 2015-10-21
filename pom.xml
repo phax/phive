@@ -139,8 +139,9 @@
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
           <excludes>
-            <exclude>src/main/resources/peppol/**</exclude>
-            <exclude>src/test/resources/xml/**</exclude>
+            <exclude>src/main/resources/peppol-rules/**</exclude>
+            <exclude>src/test/resources/codelist-generated/**</exclude>
+            <exclude>src/test/resources/openpeppol/**</exclude>
             <exclude>src/test/resources/rule-source/**</exclude>
             <exclude>src/test/resources/rule-utils/**</exclude>
           </excludes>
