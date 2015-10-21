@@ -28,8 +28,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.ubl21.EUBL21DocumentType;
 
 /**
- * A combination of {@link TransactionKey} and {@link ExtendedKey}. So this is a
- * combination of:
+ * A combination of {@link TransactionKey} and {@link ThirdPartyKey}. So this is
+ * a combination of:
  * <ul>
  * <li>PEPPOL BIS</li>
  * <li>BII transaction</li>
@@ -42,18 +42,17 @@ import com.helger.ubl21.EUBL21DocumentType;
 public class ExtendedTransactionKey
 {
   private final TransactionKey m_aTransactionKey;
-  private final ExtendedKey m_aExtendedKey;
+  private final ThirdPartyKey m_aThirdpartyKey;
 
   public ExtendedTransactionKey (@Nonnull final TransactionKey aTransactionKey)
   {
-    this (aTransactionKey, (ExtendedKey) null);
+    this (aTransactionKey, (ThirdPartyKey) null);
   }
 
-  public ExtendedTransactionKey (@Nonnull final TransactionKey aTransactionKey,
-                                 @Nullable final ExtendedKey aExtendedKey)
+  public ExtendedTransactionKey (@Nonnull final TransactionKey aTransactionKey, @Nullable final ThirdPartyKey aThirdpartyKey)
   {
     m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
-    m_aExtendedKey = aExtendedKey;
+    m_aThirdpartyKey = aThirdpartyKey;
   }
 
   @Nonnull
@@ -81,31 +80,31 @@ public class ExtendedTransactionKey
   }
 
   @Nullable
-  public ExtendedKey getExtendedKey ()
+  public ThirdPartyKey getThirdpartyKey ()
   {
-    return m_aExtendedKey;
+    return m_aThirdpartyKey;
   }
 
   public boolean isCountrySpecific ()
   {
-    return m_aExtendedKey != null;
+    return m_aThirdpartyKey != null;
   }
 
   @Nullable
   public Locale getCountryLocale ()
   {
-    return m_aExtendedKey == null ? null : m_aExtendedKey.getCountryLocale ();
+    return m_aThirdpartyKey == null ? null : m_aThirdpartyKey.getCountryLocale ();
   }
 
   @Nullable
   public String getCountryCode ()
   {
-    return m_aExtendedKey == null ? null : m_aExtendedKey.getCountryCode ();
+    return m_aThirdpartyKey == null ? null : m_aThirdpartyKey.getCountryCode ();
   }
 
   public boolean isSectorSpecific ()
   {
-    return m_aExtendedKey != null && m_aExtendedKey.isSectorSpecific ();
+    return m_aThirdpartyKey != null && m_aThirdpartyKey.isSectorSpecific ();
   }
 
   @Override
@@ -116,20 +115,18 @@ public class ExtendedTransactionKey
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ExtendedTransactionKey rhs = (ExtendedTransactionKey) o;
-    return m_aTransactionKey.equals (rhs.m_aTransactionKey) && EqualsHelper.equals (m_aExtendedKey, rhs.m_aExtendedKey);
+    return m_aTransactionKey.equals (rhs.m_aTransactionKey) && EqualsHelper.equals (m_aThirdpartyKey, rhs.m_aThirdpartyKey);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aTransactionKey).append (m_aExtendedKey).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aTransactionKey).append (m_aThirdpartyKey).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("transactionKey", m_aTransactionKey)
-                                       .appendIfNotNull ("extendedKey", m_aExtendedKey)
-                                       .toString ();
+    return new ToStringGenerator (this).append ("TransactionKey", m_aTransactionKey).appendIfNotNull ("ThirdPartyKey", m_aThirdpartyKey).toString ();
   }
 }

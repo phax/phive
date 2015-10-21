@@ -36,16 +36,16 @@ import com.helger.commons.string.ToStringGenerator;
  */
 @Immutable
 @MustImplementEqualsAndHashcode
-public class ExtendedKey
+public class ThirdPartyKey
 {
   // Predefined keys
-  public static final ExtendedKey AT = new ExtendedKey ("AT", false);
-  public static final ExtendedKey AT_SECTOR = new ExtendedKey ("AT", true);
+  public static final ThirdPartyKey AT = new ThirdPartyKey ("AT", false);
+  public static final ThirdPartyKey AT_SECTOR = new ThirdPartyKey ("AT", true);
 
   private final Locale m_aCountry;
   private final boolean m_bIsSectorSpecific;
 
-  public ExtendedKey (@Nonnull @Nonempty final String sCountryCode, final boolean bIsSectorSpecific)
+  public ThirdPartyKey (@Nonnull @Nonempty final String sCountryCode, final boolean bIsSectorSpecific)
   {
     ValueEnforcer.notEmpty (sCountryCode, "CountryCode");
     m_aCountry = CountryCache.getInstance ().getCountry (sCountryCode);
@@ -90,7 +90,7 @@ public class ExtendedKey
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final ExtendedKey rhs = (ExtendedKey) o;
+    final ThirdPartyKey rhs = (ThirdPartyKey) o;
     return m_aCountry.equals (rhs.m_aCountry) && m_bIsSectorSpecific == rhs.m_bIsSectorSpecific;
   }
 

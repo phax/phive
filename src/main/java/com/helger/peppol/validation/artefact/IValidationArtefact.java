@@ -73,6 +73,19 @@ public interface IValidationArtefact
   EUBL21DocumentType getUBLDocumentType ();
 
   /**
+   * @return An optional prerequisite XPath expression that must match before
+   *         the validation artefact can be applied. May be <code>null</code>.
+   */
+  @Nullable
+  String getPrerequisiteXPath ();
+
+  /**
+   * @return <code>true</code> if a prerequisite XPath expression is present,
+   *         <code>false</code> if not
+   */
+  boolean hasPrerequisiteXPath ();
+
+  /**
    * @return <code>true</code> if this validation artefact is country specific,
    *         <code>false</code> if it is generic.
    */

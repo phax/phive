@@ -31,8 +31,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.artefact.peppol.EPeppolThirdpartyValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArtefact;
+import com.helger.peppol.validation.artefact.peppol.EPeppolThirdpartyValidationArtefact;
 import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 
 /**
@@ -99,6 +99,16 @@ public class ValidationConfiguration
                                        .toString ();
   }
 
+  /**
+   * Create a validation configuration for the specified transaction key. It
+   * adds the PEPPOL standard validation artefacts and - if possible - the
+   * PEPPOL third party validation artefacts
+   *
+   * @param aExtendedTransactionKey
+   *        The transaction key to be used.
+   * @return The {@link ValidationConfiguration} to be used. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   public static ValidationConfiguration createForPeppol (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
   {

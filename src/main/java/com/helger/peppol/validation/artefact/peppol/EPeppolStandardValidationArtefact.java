@@ -80,8 +80,7 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
   private final ClassPathResource m_aResource;
   private final TransactionKey m_aTransactionKey;
 
-  private EPeppolStandardValidationArtefact (@Nonnull @Nonempty final String sPath,
-                                             @Nonnull final TransactionKey aTransactionKey)
+  private EPeppolStandardValidationArtefact (@Nonnull @Nonempty final String sPath, @Nonnull final TransactionKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
     m_aTransactionKey = aTransactionKey;
@@ -115,6 +114,17 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
   public EUBL21DocumentType getUBLDocumentType ()
   {
     return getTransaction ().getUBLDocumentType ();
+  }
+
+  @Nullable
+  public String getPrerequisiteXPath ()
+  {
+    return null;
+  }
+
+  public boolean hasPrerequisiteXPath ()
+  {
+    return false;
   }
 
   public boolean isCountrySpecific ()

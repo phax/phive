@@ -46,8 +46,8 @@ import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
-import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.svrl.SVRLHelper;
+import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.ubl21.UBL21DocumentTypes;
 
 /**
@@ -61,6 +61,12 @@ public class UBLDocumentValidator
 {
   private final ValidationConfiguration m_aConfiguration;
 
+  /**
+   * Constructor
+   *
+   * @param aConfiguration
+   *        The configuration to be used. May not be <code>null</code>.
+   */
   public UBLDocumentValidator (@Nonnull final ValidationConfiguration aConfiguration)
   {
     m_aConfiguration = ValueEnforcer.notNull (aConfiguration, "Configuration");
@@ -76,18 +82,39 @@ public class UBLDocumentValidator
     return m_aConfiguration;
   }
 
+  /**
+   * Perform only XSD validation
+   *
+   * @param aUBLDocument
+   *        Source file
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applyXSDValidation (@Nonnull final File aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
 
+  /**
+   * Perform only XSD validation
+   *
+   * @param aUBLDocument
+   *        Source inpu stream
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applyXSDValidation (@Nonnull final InputStream aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
 
+  /**
+   * Perform only XSD validation
+   *
+   * @param aUBLDocument
+   *        Source input stream provider
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applyXSDValidation (@Nonnull final IHasInputStream aUBLDocument)
   {
@@ -104,6 +131,13 @@ public class UBLDocumentValidator
     }
   }
 
+  /**
+   * Perform only XSD validation
+   *
+   * @param aUBLDocument
+   *        Source to be validated
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument)
   {
@@ -113,9 +147,7 @@ public class UBLDocumentValidator
     {
       // Find the implementation class that is required for the configured
       // transaction
-      final Class <?> aUBLImplementationClass = m_aConfiguration.getExtendedTransactionKey ()
-                                                                .getUBLDocumentType ()
-                                                                .getImplementationClass ();
+      final Class <?> aUBLImplementationClass = m_aConfiguration.getExtendedTransactionKey ().getUBLDocumentType ().getImplementationClass ();
 
       final ResourceErrorGroup aErrors = new ResourceErrorGroup ();
 
@@ -124,6 +156,7 @@ public class UBLDocumentValidator
       final Schema aSchema = UBL21DocumentTypes.getSchemaOfImplementationClass (aUBLImplementationClass);
       if (aSchema == null)
       {
+        // Failed to resolve schema
         aErrors.addResourceError (new ResourceError (new ResourceLocation (aUBLDocument.getSystemId ()),
                                                      EErrorLevel.ERROR,
                                                      "Don't know how to read UBL object of class " +
@@ -144,24 +177,52 @@ public class UBLDocumentValidator
     }
   }
 
+  /**
+   * Perform only Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source file
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applySchematronValidation (@Nonnull final File aUBLDocument) throws SAXException
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
 
+  /**
+   * Perform only Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source input stream
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applySchematronValidation (@Nonnull @WillClose final InputStream aUBLDocument) throws SAXException
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
 
+  /**
+   * Perform only Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source input stream provider
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applySchematronValidation (@Nonnull final IHasInputStream aUBLDocument) throws SAXException
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
 
+  /**
+   * Perform only Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public IResourceErrorGroup applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument) throws SAXException
   {
@@ -206,10 +267,7 @@ public class UBLDocumentValidator
       catch (final Exception ex)
       {
         // Usually an error in the Schematron
-        ret.addResourceError (new ResourceError (new ResourceLocation (aSCHRes.getPath ()),
-                                                 EErrorLevel.ERROR,
-                                                 ex.getMessage (),
-                                                 ex));
+        ret.addResourceError (new ResourceError (new ResourceLocation (aSCHRes.getPath ()), EErrorLevel.ERROR, ex.getMessage (), ex));
       }
     }
     return ret;
