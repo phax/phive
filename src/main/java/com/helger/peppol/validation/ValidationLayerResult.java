@@ -69,8 +69,8 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   }
 
   /**
-   * @return The errors occurred during the validation. Never <code>null</code>
-   *         but maybe empty.
+   * @return The errors occurred during the validation execution on this layer.
+   *         Never <code>null</code> but maybe empty.
    */
   @Nonnull
   public IResourceErrorGroup getResourceErrorGroup ()
