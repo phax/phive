@@ -16,6 +16,8 @@
  */
 package com.helger.peppol.validation.artefact;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import com.helger.commons.io.resource.IReadableResource;
@@ -27,7 +29,7 @@ import com.helger.peppol.validation.domain.TransactionKey;
  *
  * @author Philip Helger
  */
-public interface IValidationArtefact
+public interface IValidationArtefact extends Serializable
 {
   /**
    * @return The Schematron resource descriptor. Never <code>null</code>.

@@ -16,9 +16,7 @@
  */
 package com.helger.peppol.validation.artefact.peppol;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -40,13 +38,6 @@ public final class EPeppolStandardValidationArtefactTest
       assertNotNull (e.getSchematronResource ());
       assertTrue (e.getSchematronResource ().exists ());
       assertNotNull (e.getTransactionKey ());
-      assertNotNull (e.getBusinessSpecification ());
-      assertNotNull (e.getTransaction ());
-      assertNotNull (e.getUBLDocumentType ());
-      assertFalse (e.isCountrySpecific ());
-      assertNull (e.getCountryLocale ());
-      assertNull (e.getCountryCode ());
-      assertFalse (e.isSectorSpecific ());
     }
   }
 

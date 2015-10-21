@@ -18,7 +18,6 @@ package com.helger.peppol.validation.artefact.peppol;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,11 +28,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.domain.IBusinessSpecification;
-import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
-import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * This enumeration contains all the default OpenPEPPOL Schematron artefacts.
@@ -96,57 +92,6 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
   public TransactionKey getTransactionKey ()
   {
     return m_aTransactionKey;
-  }
-
-  @Nonnull
-  public IBusinessSpecification getBusinessSpecification ()
-  {
-    return m_aTransactionKey.getBusinessSpecification ();
-  }
-
-  @Nonnull
-  public ISpecificationTransaction getTransaction ()
-  {
-    return m_aTransactionKey.getTransaction ();
-  }
-
-  @Nonnull
-  public EUBL21DocumentType getUBLDocumentType ()
-  {
-    return getTransaction ().getUBLDocumentType ();
-  }
-
-  @Nullable
-  public String getPrerequisiteXPath ()
-  {
-    return null;
-  }
-
-  public boolean hasPrerequisiteXPath ()
-  {
-    return false;
-  }
-
-  public boolean isCountrySpecific ()
-  {
-    return false;
-  }
-
-  @Nullable
-  public Locale getCountryLocale ()
-  {
-    return null;
-  }
-
-  @Nullable
-  public String getCountryCode ()
-  {
-    return null;
-  }
-
-  public boolean isSectorSpecific ()
-  {
-    return false;
   }
 
   /**
