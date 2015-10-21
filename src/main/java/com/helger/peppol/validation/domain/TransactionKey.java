@@ -49,11 +49,6 @@ public class TransactionKey implements Serializable
   private final boolean m_bIsSectorSpecific;
   private final String m_sPrerequisiteXPath;
 
-  public TransactionKey (@Nonnull final IBusinessSpecification aBusinessSpecification, @Nonnull final ISpecificationTransaction aTransaction)
-  {
-    this (aBusinessSpecification, aTransaction, null, false, null);
-  }
-
   public TransactionKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
                          @Nonnull final ISpecificationTransaction aTransaction,
                          @Nullable final String sCountryCode,
@@ -220,9 +215,18 @@ public class TransactionKey implements Serializable
     private boolean m_bIsSectorSpecific;
     private String m_sPrerequisiteXPath;
 
+    /**
+     * Create an empty Builder.
+     */
     public Builder ()
     {}
 
+    /**
+     * Create a builder with the values of the provided transaction key.
+     *
+     * @param aOther
+     *        Object to copy from. May not be <code>null</code>.
+     */
     public Builder (@Nonnull final TransactionKey aOther)
     {
       m_aBusinessSpecification = aOther.m_aBusinessSpecification;
@@ -267,6 +271,11 @@ public class TransactionKey implements Serializable
       return this;
     }
 
+    /**
+     * @return The final transaction key. Never <code>null</code>.
+     * @throws IllegalStateException
+     *         If a mandatory field is not filled.
+     */
     @Nonnull
     public TransactionKey build ()
     {

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -115,23 +114,5 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
       if (e.getTransactionKey ().hasSameSpecificationAndTransaction (aTransactionKey))
         ret.add (e);
     return ret;
-  }
-
-  /**
-   * Check if at least one standard validation artefact contained in this
-   * enumeration supports the passed transaction key.
-   *
-   * @param aTransactionKey
-   *        The transaction key to be checked. May be <code>null</code>.
-   * @return <code>true</code> if the passed transaction key is not
-   *         <code>null</code> and a matching artefact is present.
-   */
-  public static boolean containsMatchingValidationArtefacts (@Nullable final TransactionKey aTransactionKey)
-  {
-    if (aTransactionKey != null)
-      for (final EPeppolStandardValidationArtefact e : values ())
-        if (e.getTransactionKey ().hasSameSpecificationAndTransaction (aTransactionKey))
-          return true;
-    return false;
   }
 }

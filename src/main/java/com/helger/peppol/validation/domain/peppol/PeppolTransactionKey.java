@@ -30,18 +30,33 @@ import com.helger.peppol.validation.domain.TransactionKey;
 public class PeppolTransactionKey
 {
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
-  public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey (EPeppolBIS.CATALOGUE_01,
-                                                                            EBII2Transaction.T19);
-  public static final TransactionKey CATALOGUE_01_T58 = new TransactionKey (EPeppolBIS.CATALOGUE_01,
-                                                                            EBII2Transaction.T58);
-  public static final TransactionKey ORDER_03_T01 = new TransactionKey (EPeppolBIS.ORDER_03, EBII2Transaction.T01);
-  public static final TransactionKey INVOICE_04_T10 = new TransactionKey (EPeppolBIS.INVOICE_04, EBII2Transaction.T10);
-  public static final TransactionKey BILLING_05_T14 = new TransactionKey (EPeppolBIS.BILLING_05, EBII2Transaction.T14);
-  public static final TransactionKey ORDERING_28_T01 = new TransactionKey (EPeppolBIS.ORDERING_28, EBII2Transaction.T01);
-  public static final TransactionKey ORDERING_28_T76 = new TransactionKey (EPeppolBIS.ORDERING_28, EBII2Transaction.T76);
-  public static final TransactionKey DESPATCH_ADVICE_30_T16 = new TransactionKey (EPeppolBIS.DESPATCH_ADVICE_30,
-                                                                                  EBII2Transaction.T16);
-  public static final TransactionKey MLR_36_T71 = new TransactionKey (EPeppolBIS.MLR_36, EBII2Transaction.T71);
+  public static final TransactionKey CATALOGUE_01_T19 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.CATALOGUE_01)
+                                                                                     .setTransaction (EBII2Transaction.T19)
+                                                                                     .build ();
+  public static final TransactionKey CATALOGUE_01_T58 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.CATALOGUE_01)
+                                                                                     .setTransaction (EBII2Transaction.T58)
+                                                                                     .build ();
+  public static final TransactionKey ORDER_03_T01 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.ORDER_03)
+                                                                                 .setTransaction (EBII2Transaction.T01)
+                                                                                 .build ();
+  public static final TransactionKey INVOICE_04_T10 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.INVOICE_04)
+                                                                                   .setTransaction (EBII2Transaction.T10)
+                                                                                   .build ();
+  public static final TransactionKey BILLING_05_T14 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.BILLING_05)
+                                                                                   .setTransaction (EBII2Transaction.T14)
+                                                                                   .build ();
+  public static final TransactionKey ORDERING_28_T01 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.ORDERING_28)
+                                                                                    .setTransaction (EBII2Transaction.T01)
+                                                                                    .build ();
+  public static final TransactionKey ORDERING_28_T76 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.ORDERING_28)
+                                                                                    .setTransaction (EBII2Transaction.T76)
+                                                                                    .build ();
+  public static final TransactionKey DESPATCH_ADVICE_30_T16 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.DESPATCH_ADVICE_30)
+                                                                                           .setTransaction (EBII2Transaction.T16)
+                                                                                           .build ();
+  public static final TransactionKey MLR_36_T71 = new TransactionKey.Builder ().setBusinessSpecification (EPeppolBIS.MLR_36)
+                                                                               .setTransaction (EBII2Transaction.T71)
+                                                                               .build ();
 
   private PeppolTransactionKey ()
   {}

@@ -16,6 +16,7 @@
  */
 package com.helger.peppol.validation.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -33,7 +34,7 @@ import com.helger.commons.text.display.IHasDisplayText;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public interface ISpecificationProfile extends IHasDisplayText
+public interface ISpecificationProfile extends IHasDisplayText, Serializable
 {
   /**
    * @return The numeric value of this profile (e.g. BII04 returns 4, BII22

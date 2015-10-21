@@ -16,6 +16,8 @@
  */
 package com.helger.peppol.validation.domain;
 
+import java.io.Serializable;
+
 import com.helger.commons.id.IHasID;
 
 /**
@@ -23,7 +25,7 @@ import com.helger.commons.id.IHasID;
  *
  * @author Philip Helger
  */
-public interface ISpecificationGroup extends IHasID <String>
+public interface ISpecificationGroup extends IHasID <String>, Serializable
 {
   /* empty */
 }
