@@ -65,4 +65,20 @@ public final class UBLDocumentValidatorTest
         assertTrue (aSCHErrors.containsAtLeastOneError ());
     }
   }
+
+  @Test
+  public void testApplyCompleteValidationPeppol () throws SAXException
+  {
+    for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
+    {
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
+
+      // Read as desired type
+      final ValidationLayerResultList aErrors = aValidator.applyCompleteValidation (aTestFile.getResource ());
+      if (aTestFile.isGoodCase ())
+        assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
+      else
+        assertTrue (aErrors.containsAtLeastOneError ());
+    }
+  }
 }

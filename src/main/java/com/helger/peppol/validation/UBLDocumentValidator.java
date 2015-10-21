@@ -126,6 +126,19 @@ public class UBLDocumentValidator
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
 
+  /**
+   * Perform only XSD validation
+   *
+   * @param aUBLDocument
+   *        Source to be validated
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument)
+  {
+    return applyXSDValidation (aUBLDocument, (ClassLoader) null);
+  }
+
   private static void _closeSource (@Nonnull final Source aSource)
   {
     if (aSource instanceof StreamSource)
@@ -141,25 +154,13 @@ public class UBLDocumentValidator
    *
    * @param aUBLDocument
    *        Source to be validated
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument)
-  {
-    return applyXSDValidation (aUBLDocument, (ClassLoader) null);
-  }
-
-  /**
-   * Perform only XSD validation
-   *
-   * @param aUBLDocument
-   *        Source to be validated
    * @param aClassLoader
-   *        Optional class loader to use.
+   *        Optional class loader to use. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument, @Nullable final ClassLoader aClassLoader)
+  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                                   @Nullable final ClassLoader aClassLoader)
   {
     ValueEnforcer.notNull (aUBLDocument, "UBLDocument");
 
@@ -167,7 +168,9 @@ public class UBLDocumentValidator
     {
       // Find the implementation class that is required for the configured
       // validation
-      final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ().getTransaction ().getUBLDocumentType ();
+      final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
+                                                                  .getTransaction ()
+                                                                  .getUBLDocumentType ();
 
       final ResourceErrorGroup aErrors = new ResourceErrorGroup ();
 
@@ -197,6 +200,8 @@ public class UBLDocumentValidator
    * @param aUBLDocument
    *        Source file
    * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
    */
   @Nonnull
   public ValidationLayerResultList applySchematronValidation (@Nonnull final File aUBLDocument) throws SAXException
@@ -210,6 +215,8 @@ public class UBLDocumentValidator
    * @param aUBLDocument
    *        Source input stream
    * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
    */
   @Nonnull
   public ValidationLayerResultList applySchematronValidation (@Nonnull @WillClose final InputStream aUBLDocument) throws SAXException
@@ -223,6 +230,8 @@ public class UBLDocumentValidator
    * @param aUBLDocument
    *        Source input stream provider
    * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
    */
   @Nonnull
   public ValidationLayerResultList applySchematronValidation (@Nonnull final IHasInputStream aUBLDocument) throws SAXException
@@ -236,10 +245,33 @@ public class UBLDocumentValidator
    * @param aUBLDocument
    *        Source
    * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
    */
   @Nonnull
   public ValidationLayerResultList applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument) throws SAXException
   {
+    final ValidationLayerResultList ret = new ValidationLayerResultList ();
+    applySchematronValidation (aUBLDocument, ret);
+    return ret;
+  }
+
+  /**
+   * Perform only Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source
+   * @param aResultList
+   *        The result list to be filled. May not be <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
+   */
+  public void applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                         @Nonnull final ValidationLayerResultList aResultList) throws SAXException
+  {
+    ValueEnforcer.notNull (aUBLDocument, "UBLDocument");
+    ValueEnforcer.notNull (aResultList, "ResultList");
+
     // Resource name of the document to be validated
     String sResourceName = aUBLDocument.getSystemId ();
     if (sResourceName == null)
@@ -248,7 +280,6 @@ public class UBLDocumentValidator
     // Convert source to a Node only once - this closes any underlying stream
     final Node aUBLDocumentNode = SchematronResourceHelper.getNodeOfSource (aUBLDocument);
 
-    final ValidationLayerResultList ret = new ValidationLayerResultList ();
     for (final IValidationArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
     {
       // get the Schematron resource to be used for this validation artefact
@@ -263,7 +294,7 @@ public class UBLDocumentValidator
         if (aSVRL == null)
         {
           // Invalid Schematron - unexpected
-          ret.add (new ValidationLayerResult (aArtefact, aErrorHandler.getAllResourceErrors ()));
+          aResultList.add (new ValidationLayerResult (aArtefact, aErrorHandler.getAllResourceErrors ()));
         }
         else
         {
@@ -273,17 +304,107 @@ public class UBLDocumentValidator
 
           // Convert failed asserts and successful reports to resource errors
           for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
-            ret.add (new ValidationLayerResult (aArtefact, aFailedAssert.getAsResourceError (sResourceName)));
+            aResultList.add (new ValidationLayerResult (aArtefact, aFailedAssert.getAsResourceError (sResourceName)));
           for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
-            ret.add (new ValidationLayerResult (aArtefact, aSuccessfulReport.getAsResourceError (sResourceName)));
+            aResultList.add (new ValidationLayerResult (aArtefact,
+                                                        aSuccessfulReport.getAsResourceError (sResourceName)));
         }
       }
       catch (final Exception ex)
       {
         // Usually an error in the Schematron
-        ret.add (new ValidationLayerResult (aArtefact,
-                                            new ResourceError (new ResourceLocation (aSCHRes.getPath ()), EErrorLevel.ERROR, ex.getMessage (), ex)));
+        aResultList.add (new ValidationLayerResult (aArtefact,
+                                                    new ResourceError (new ResourceLocation (aSCHRes.getPath ()),
+                                                                       EErrorLevel.ERROR,
+                                                                       ex.getMessage (),
+                                                                       ex)));
       }
+    }
+  }
+
+  /**
+   * Perform XSD and Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source file
+   * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
+   */
+  @Nonnull
+  public ValidationLayerResultList applyCompleteValidation (@Nonnull final File aUBLDocument) throws SAXException
+  {
+    return applyCompleteValidation (TransformSourceFactory.create (aUBLDocument));
+  }
+
+  /**
+   * Perform XSD and Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source input stream
+   * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
+   */
+  @Nonnull
+  public ValidationLayerResultList applyCompleteValidation (@Nonnull @WillClose final InputStream aUBLDocument) throws SAXException
+  {
+    return applyCompleteValidation (TransformSourceFactory.create (aUBLDocument));
+  }
+
+  /**
+   * Perform XSD and Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source input stream provider
+   * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
+   */
+  @Nonnull
+  public ValidationLayerResultList applyCompleteValidation (@Nonnull final IHasInputStream aUBLDocument) throws SAXException
+  {
+    return applyCompleteValidation (TransformSourceFactory.create (aUBLDocument));
+  }
+
+  /**
+   * Perform XSD and Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source
+   * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
+   */
+  @Nonnull
+  public ValidationLayerResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument) throws SAXException
+  {
+    return applyCompleteValidation (aUBLDocument, (ClassLoader) null);
+  }
+
+  /**
+   * Perform XSD and Schematron validation
+   *
+   * @param aUBLDocument
+   *        Source
+   * @param aClassLoader
+   *        Optional class loader to use. May be <code>null</code>.
+   * @return Never <code>null</code>.
+   * @throws SAXException
+   *         In case the conversion from source to a node fails.
+   */
+  @Nonnull
+  public ValidationLayerResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                                            @Nullable final ClassLoader aClassLoader) throws SAXException
+  {
+    final ValidationLayerResultList ret = new ValidationLayerResultList ();
+    // XSD validation
+    final ValidationLayerResult aXSDResult = applyXSDValidation (aUBLDocument, aClassLoader);
+    ret.add (aXSDResult);
+    if (aXSDResult.isSuccess ())
+    {
+      // Schematron only if XSD is okay
+      applySchematronValidation (aUBLDocument, ret);
     }
     return ret;
   }
