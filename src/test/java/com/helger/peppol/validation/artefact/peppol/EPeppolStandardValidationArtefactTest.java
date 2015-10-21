@@ -37,7 +37,7 @@ public final class EPeppolStandardValidationArtefactTest
     {
       assertNotNull (e.getSchematronResource ());
       assertTrue (e.getSchematronResource ().exists ());
-      assertNotNull (e.getTransactionKey ());
+      assertNotNull (e.getValidationKey ());
     }
   }
 

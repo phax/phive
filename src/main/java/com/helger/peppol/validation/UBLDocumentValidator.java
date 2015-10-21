@@ -146,8 +146,8 @@ public class UBLDocumentValidator
     try
     {
       // Find the implementation class that is required for the configured
-      // transaction
-      final Class <?> aUBLImplementationClass = m_aConfiguration.getTransactionKey ().getUBLDocumentType ().getImplementationClass ();
+      // validation
+      final Class <?> aUBLImplementationClass = m_aConfiguration.getValidationKey ().getUBLDocumentType ().getImplementationClass ();
 
       final ResourceErrorGroup aErrors = new ResourceErrorGroup ();
 

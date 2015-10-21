@@ -26,7 +26,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.domain.TransactionKey;
+import com.helger.peppol.validation.domain.ValidationKey;
 
 /**
  * This class describes a simple test file: the path where it resides and the
@@ -38,11 +38,11 @@ import com.helger.peppol.validation.domain.TransactionKey;
 public class MockFile
 {
   private final IReadableResource m_aResource;
-  private final TransactionKey m_aTransactionKey;
+  private final ValidationKey m_aTransactionKey;
   private final Set <String> m_aExpectedErrorIDs;
 
   public MockFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final TransactionKey aTransactionKey,
+                   @Nonnull final ValidationKey aTransactionKey,
                    @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
@@ -65,7 +65,7 @@ public class MockFile
    *         <code>null</code>.
    */
   @Nonnull
-  public TransactionKey getTransactionKey ()
+  public ValidationKey getTransactionKey ()
   {
     return m_aTransactionKey;
   }

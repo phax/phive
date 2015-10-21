@@ -21,7 +21,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.domain.TransactionKey;
+import com.helger.peppol.validation.domain.ValidationKey;
 
 /**
  * Base interface for a single validation artefact that uses Schematron for
@@ -38,9 +38,9 @@ public interface IValidationArtefact extends Serializable
   IReadableResource getSchematronResource ();
 
   /**
-   * @return The transaction key for this validation artefact. Never
+   * @return The validation key for this validation artefact. Never
    *         <code>null</code>.
    */
   @Nonnull
-  TransactionKey getTransactionKey ();
+  ValidationKey getValidationKey ();
 }

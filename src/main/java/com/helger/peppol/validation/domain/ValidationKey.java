@@ -41,7 +41,7 @@ import com.helger.ubl21.EUBL21DocumentType;
  */
 @Immutable
 @MustImplementEqualsAndHashcode
-public class TransactionKey implements Serializable
+public class ValidationKey implements Serializable
 {
   private final IBusinessSpecification m_aBusinessSpecification;
   private final ISpecificationTransaction m_aTransaction;
@@ -49,7 +49,7 @@ public class TransactionKey implements Serializable
   private final boolean m_bIsSectorSpecific;
   private final String m_sPrerequisiteXPath;
 
-  public TransactionKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
+  public ValidationKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
                          @Nonnull final ISpecificationTransaction aTransaction,
                          @Nullable final String sCountryCode,
                          final boolean bIsSectorSpecific,
@@ -145,14 +145,14 @@ public class TransactionKey implements Serializable
     return StringHelper.hasText (m_sPrerequisiteXPath);
   }
 
-  public boolean hasSameSpecificationAndTransaction (@Nullable final TransactionKey aOther)
+  public boolean hasSameSpecificationAndTransaction (@Nullable final ValidationKey aOther)
   {
     if (aOther == null)
       return false;
     return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) && m_aTransaction.equals (aOther.m_aTransaction);
   }
 
-  public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final TransactionKey aOther)
+  public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationKey aOther)
   {
     if (aOther == null)
       return false;
@@ -169,7 +169,7 @@ public class TransactionKey implements Serializable
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final TransactionKey rhs = (TransactionKey) o;
+    final ValidationKey rhs = (ValidationKey) o;
     return m_aBusinessSpecification.equals (rhs.m_aBusinessSpecification) &&
            m_aTransaction.equals (rhs.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, rhs.m_aCountry) &&
@@ -200,7 +200,7 @@ public class TransactionKey implements Serializable
   }
 
   /**
-   * Builder class for {@link TransactionKey} objects.
+   * Builder class for {@link ValidationKey} objects.
    * {@link #setBusinessSpecification(IBusinessSpecification)} and
    * {@link #setTransaction(ISpecificationTransaction)} must be filled, as these
    * are the mandatory fields.
@@ -227,7 +227,7 @@ public class TransactionKey implements Serializable
      * @param aOther
      *        Object to copy from. May not be <code>null</code>.
      */
-    public Builder (@Nonnull final TransactionKey aOther)
+    public Builder (@Nonnull final ValidationKey aOther)
     {
       m_aBusinessSpecification = aOther.m_aBusinessSpecification;
       m_aTransaction = aOther.m_aTransaction;
@@ -277,13 +277,13 @@ public class TransactionKey implements Serializable
      *         If a mandatory field is not filled.
      */
     @Nonnull
-    public TransactionKey build ()
+    public ValidationKey build ()
     {
       if (m_aBusinessSpecification == null)
         throw new IllegalStateException ("The Business specification must be provided");
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
-      return new TransactionKey (m_aBusinessSpecification, m_aTransaction, m_sCountry, m_bIsSectorSpecific, m_sPrerequisiteXPath);
+      return new ValidationKey (m_aBusinessSpecification, m_aTransaction, m_sCountry, m_bIsSectorSpecific, m_sPrerequisiteXPath);
     }
   }
 }

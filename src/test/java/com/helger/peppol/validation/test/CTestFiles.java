@@ -27,8 +27,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
-import com.helger.peppol.validation.domain.TransactionKey;
-import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
+import com.helger.peppol.validation.domain.ValidationKey;
+import com.helger.peppol.validation.domain.peppol.PeppolValidationKey;
 
 @Immutable
 public final class CTestFiles
@@ -41,14 +41,14 @@ public final class CTestFiles
   public static List <MockFile> getAllTestFiles ()
   {
     final List <MockFile> ret = new ArrayList <MockFile> ();
-    for (final TransactionKey aPTK : new TransactionKey [] { PeppolTransactionKey.CATALOGUE_01_T19,
-                                                             PeppolTransactionKey.CATALOGUE_01_T58,
-                                                             PeppolTransactionKey.ORDER_03_T01,
-                                                             PeppolTransactionKey.INVOICE_04_T10,
-                                                             PeppolTransactionKey.BILLING_05_T14,
-                                                             PeppolTransactionKey.ORDERING_28_T01,
-                                                             PeppolTransactionKey.ORDERING_28_T76,
-                                                             PeppolTransactionKey.DESPATCH_ADVICE_30_T16 })
+    for (final ValidationKey aPTK : new ValidationKey [] { PeppolValidationKey.CATALOGUE_01_T19,
+                                                             PeppolValidationKey.CATALOGUE_01_T58,
+                                                             PeppolValidationKey.ORDER_03_T01,
+                                                             PeppolValidationKey.INVOICE_04_T10,
+                                                             PeppolValidationKey.BILLING_05_T14,
+                                                             PeppolValidationKey.ORDERING_28_T01,
+                                                             PeppolValidationKey.ORDERING_28_T76,
+                                                             PeppolValidationKey.DESPATCH_ADVICE_30_T16 })
       for (final ClassPathResource aRes : getAllMatchingTestFiles (aPTK))
         ret.add (new MockFile (aRes, aPTK, (Set <String>) null));
 
@@ -57,25 +57,25 @@ public final class CTestFiles
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <ClassPathResource> getAllMatchingTestFiles (@Nonnull final TransactionKey aTransactionKey)
+  public static List <ClassPathResource> getAllMatchingTestFiles (@Nonnull final ValidationKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 
-    if (aTransactionKey.equals (PeppolTransactionKey.CATALOGUE_01_T19))
+    if (aTransactionKey.equals (PeppolValidationKey.CATALOGUE_01_T19))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
-    if (aTransactionKey.equals (PeppolTransactionKey.CATALOGUE_01_T58))
+    if (aTransactionKey.equals (PeppolValidationKey.CATALOGUE_01_T58))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
-    if (aTransactionKey.equals (PeppolTransactionKey.ORDER_03_T01))
+    if (aTransactionKey.equals (PeppolValidationKey.ORDER_03_T01))
       return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
-    if (aTransactionKey.equals (PeppolTransactionKey.INVOICE_04_T10))
+    if (aTransactionKey.equals (PeppolValidationKey.INVOICE_04_T10))
       return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
-    if (aTransactionKey.equals (PeppolTransactionKey.BILLING_05_T14))
+    if (aTransactionKey.equals (PeppolValidationKey.BILLING_05_T14))
       return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
-    if (aTransactionKey.equals (PeppolTransactionKey.ORDERING_28_T01))
+    if (aTransactionKey.equals (PeppolValidationKey.ORDERING_28_T01))
       return OfficialTestFiles.getAllTestFilesOrdering_28_T01 ();
-    if (aTransactionKey.equals (PeppolTransactionKey.ORDERING_28_T76))
+    if (aTransactionKey.equals (PeppolValidationKey.ORDERING_28_T76))
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
-    if (aTransactionKey.equals (PeppolTransactionKey.DESPATCH_ADVICE_30_T16))
+    if (aTransactionKey.equals (PeppolValidationKey.DESPATCH_ADVICE_30_T16))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
 
     throw new IllegalArgumentException ("Invalid transaction key: " + aTransactionKey);
