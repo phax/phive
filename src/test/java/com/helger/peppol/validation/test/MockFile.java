@@ -26,7 +26,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.TransactionKey;
 
 /**
@@ -39,15 +38,15 @@ import com.helger.peppol.validation.domain.TransactionKey;
 public class MockFile
 {
   private final IReadableResource m_aResource;
-  private final ExtendedTransactionKey m_aExtendedTransactionKey;
+  private final TransactionKey m_aTransactionKey;
   private final Set <String> m_aExpectedErrorIDs;
 
   public MockFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final ExtendedTransactionKey aExtendedTransactionKey,
+                   @Nonnull final TransactionKey aTransactionKey,
                    @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
-    m_aExtendedTransactionKey = ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
+    m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
     m_aExpectedErrorIDs = CollectionHelper.newSet (aExpectedErrorIDs);
   }
 
@@ -66,18 +65,9 @@ public class MockFile
    *         <code>null</code>.
    */
   @Nonnull
-  public ExtendedTransactionKey getExtendedTransactionKey ()
-  {
-    return m_aExtendedTransactionKey;
-  }
-
-  /**
-   * @return The basic transaction key. Never <code>null</code>.
-   */
-  @Nonnull
   public TransactionKey getTransactionKey ()
   {
-    return m_aExtendedTransactionKey.getTransactionKey ();
+    return m_aTransactionKey;
   }
 
   public boolean isGoodCase ()

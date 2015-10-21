@@ -16,16 +16,10 @@
  */
 package com.helger.peppol.validation.artefact;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.domain.IBusinessSpecification;
-import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
-import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * Base interface for a single validation artefact that uses Schematron for
@@ -47,67 +41,4 @@ public interface IValidationArtefact
    */
   @Nonnull
   TransactionKey getTransactionKey ();
-
-  /**
-   * @return The business specification to which the validation artefact
-   *         belongs. Never <code>null</code>. This is a shortcut for
-   *         <code>getTransactionKey().getBusinessSpecification()</code>.
-   */
-  @Nonnull
-  IBusinessSpecification getBusinessSpecification ();
-
-  /**
-   * @return The transaction to which the validation artefact belongs. Never
-   *         <code>null</code>. This is a shortcut for
-   *         <code>getTransactionKey().getTransaction()</code>.
-   */
-  @Nonnull
-  ISpecificationTransaction getTransaction ();
-
-  /**
-   * @return The UBL document type required for this validation artefact. Never
-   *         <code>null</code>. This is a shortcut for
-   *         <code>getTransaction().getUBLDocumentType ()</code>.
-   */
-  @Nonnull
-  EUBL21DocumentType getUBLDocumentType ();
-
-  /**
-   * @return An optional prerequisite XPath expression that must match before
-   *         the validation artefact can be applied. May be <code>null</code>.
-   */
-  @Nullable
-  String getPrerequisiteXPath ();
-
-  /**
-   * @return <code>true</code> if a prerequisite XPath expression is present,
-   *         <code>false</code> if not
-   */
-  boolean hasPrerequisiteXPath ();
-
-  /**
-   * @return <code>true</code> if this validation artefact is country specific,
-   *         <code>false</code> if it is generic.
-   */
-  boolean isCountrySpecific ();
-
-  /**
-   * @return The locale for which this artefact is designed for or
-   *         <code>null</code> if it is country independent validation artefact.
-   */
-  @Nullable
-  Locale getCountryLocale ();
-
-  /**
-   * @return The country code for which this artefact is designed for or
-   *         <code>null</code> if it is country independent validation artefact.
-   */
-  @Nullable
-  String getCountryCode ();
-
-  /**
-   * @return <code>true</code> if this validation artefact is sector specific,
-   *         <code>false</code> if it is not.
-   */
-  boolean isSectorSpecific ();
 }

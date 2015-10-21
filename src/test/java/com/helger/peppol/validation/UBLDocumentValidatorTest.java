@@ -39,7 +39,7 @@ public final class UBLDocumentValidatorTest
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
       // Build validator
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getExtendedTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
@@ -55,7 +55,7 @@ public final class UBLDocumentValidatorTest
   {
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getExtendedTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());

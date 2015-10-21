@@ -18,25 +18,17 @@ package com.helger.peppol.validation.artefact.peppol;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.string.StringHelper;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.domain.ThirdPartyKey;
-import com.helger.peppol.validation.domain.ExtendedTransactionKey;
-import com.helger.peppol.validation.domain.IBusinessSpecification;
-import com.helger.peppol.validation.domain.ISpecificationTransaction;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
-import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * This enumeration contains all the extended country specific OpenPEPPOL
@@ -48,30 +40,32 @@ import com.helger.ubl21.EUBL21DocumentType;
 public enum EPeppolThirdpartyValidationArtefact implements IValidationArtefact
 {
  INVOICE_AT_NAT ("Invoice-Thirdparty/ATNAT-UBL-T10.sch",
-                 new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10, ThirdPartyKey.AT),
-                 "/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'"),
+                 new TransactionKey.Builder (PeppolTransactionKey.INVOICE_04_T10).setCountry ("AT")
+                                                                                 .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                 .build ()),
  INVOICE_AT_GOV ("Invoice-Thirdparty/ATGOV-UBL-T10.sch",
-                 new ExtendedTransactionKey (PeppolTransactionKey.INVOICE_04_T10, ThirdPartyKey.AT_SECTOR),
-                 "/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'"),
+                 new TransactionKey.Builder (PeppolTransactionKey.INVOICE_04_T10).setCountry ("AT")
+                                                                                 .setIsSectorSpecific (true)
+                                                                                 .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                 .build ()),
 
  BILLING_CREDIT_NOTE_AT_NAT ("Billing-Thirdparty/ATNAT-UBL-T14.sch",
-                             new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14, ThirdPartyKey.AT),
-                             "/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'"),
+                             new TransactionKey.Builder (PeppolTransactionKey.BILLING_05_T14).setCountry ("AT")
+                                                                                             .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                             .build ()),
  BILLING_CREDIT_NOTE_AT_GOV ("Billing-Thirdparty/ATGOV-UBL-T14.sch",
-                             new ExtendedTransactionKey (PeppolTransactionKey.BILLING_05_T14, ThirdPartyKey.AT_SECTOR),
-                             "/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'");
+                             new TransactionKey.Builder (PeppolTransactionKey.BILLING_05_T14).setCountry ("AT")
+                                                                                             .setIsSectorSpecific (true)
+                                                                                             .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                             .build ());
 
   private final ClassPathResource m_aResource;
-  private final ExtendedTransactionKey m_aExtendedTransactionKey;
-  private String m_sPrerequisiteXPath;
+  private final TransactionKey m_aTransactionKey;
 
-  private EPeppolThirdpartyValidationArtefact (@Nonnull @Nonempty final String sPath,
-                                               @Nonnull final ExtendedTransactionKey aExtendedTransactionKey,
-                                               @Nullable final String sPrerequisiteXPath)
+  private EPeppolThirdpartyValidationArtefact (@Nonnull @Nonempty final String sPath, @Nonnull final TransactionKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
-    m_aExtendedTransactionKey = aExtendedTransactionKey;
-    m_sPrerequisiteXPath = sPrerequisiteXPath;
+    m_aTransactionKey = aTransactionKey;
   }
 
   @Nonnull
@@ -81,88 +75,31 @@ public enum EPeppolThirdpartyValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public ExtendedTransactionKey getExtendedTransactionKey ()
-  {
-    return m_aExtendedTransactionKey;
-  }
-
-  @Nonnull
   public TransactionKey getTransactionKey ()
   {
-    return m_aExtendedTransactionKey.getTransactionKey ();
-  }
-
-  @Nonnull
-  public IBusinessSpecification getBusinessSpecification ()
-  {
-    return m_aExtendedTransactionKey.getBusinessSpecification ();
-  }
-
-  @Nonnull
-  public ISpecificationTransaction getTransaction ()
-  {
-    return m_aExtendedTransactionKey.getTransaction ();
-  }
-
-  @Nonnull
-  public EUBL21DocumentType getUBLDocumentType ()
-  {
-    return m_aExtendedTransactionKey.getUBLDocumentType ();
-  }
-
-  public boolean isCountrySpecific ()
-  {
-    return m_aExtendedTransactionKey.isCountrySpecific ();
-  }
-
-  @Nonnull
-  public Locale getCountryLocale ()
-  {
-    return m_aExtendedTransactionKey.getCountryLocale ();
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getCountryCode ()
-  {
-    return m_aExtendedTransactionKey.getCountryCode ();
-  }
-
-  public boolean isSectorSpecific ()
-  {
-    return m_aExtendedTransactionKey.isSectorSpecific ();
-  }
-
-  @Nullable
-  public String getPrerequisiteXPath ()
-  {
-    return m_sPrerequisiteXPath;
-  }
-
-  public boolean hasPrerequisiteXPath ()
-  {
-    return StringHelper.hasText (m_sPrerequisiteXPath);
+    return m_aTransactionKey;
   }
 
   /**
    * Get all validation artefacts matching the passed transaction key in the
-   * correct execution order.
+   * correct execution order. It matches business specification, transaction,
+   * country and sector?.
    *
-   * @param aExtendedTransactionKey
-   *        The extended transaction to search. May not be <code>null</code>.
+   * @param aTransactionKey
+   *        The transaction to search. May not be <code>null</code>.
    * @return A non-<code>null</code> list with all matching artefacts in the
    *         order they were defined. This list may be empty, if no matching
    *         artefact is present.
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EPeppolThirdpartyValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  public static List <EPeppolThirdpartyValidationArtefact> getAllMatchingValidationArtefacts (@Nonnull final TransactionKey aTransactionKey)
   {
-    ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
+    ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 
     final List <EPeppolThirdpartyValidationArtefact> ret = new ArrayList <EPeppolThirdpartyValidationArtefact> ();
     for (final EPeppolThirdpartyValidationArtefact e : values ())
-      if (e.getExtendedTransactionKey ().equals (aExtendedTransactionKey))
+      if (e.getTransactionKey ().hasSameSpecificationAndTransactionAndCountryAndSector (aTransactionKey))
         ret.add (e);
     return ret;
   }

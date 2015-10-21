@@ -16,6 +16,8 @@
  */
 package com.helger.peppol.validation.domain;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -29,7 +31,7 @@ import com.helger.ubl21.EUBL21DocumentType;
  *
  * @author Philip Helger
  */
-public interface ISpecificationTransaction extends IHasID <String>, IHasName
+public interface ISpecificationTransaction extends IHasID <String>, IHasName, Serializable
 {
   /**
    * @return The pseudo name of this transaction. Does not require translation.

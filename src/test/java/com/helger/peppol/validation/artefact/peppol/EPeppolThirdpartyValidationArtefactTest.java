@@ -38,13 +38,6 @@ public final class EPeppolThirdpartyValidationArtefactTest
       assertNotNull (e.getSchematronResource ());
       assertTrue (e.getSchematronResource ().exists ());
       assertNotNull (e.getTransactionKey ());
-      assertNotNull (e.getBusinessSpecification ());
-      assertNotNull (e.getTransaction ());
-      assertNotNull (e.getUBLDocumentType ());
-      assertTrue (e.isCountrySpecific ());
-      assertNotNull (e.getCountryLocale ());
-      assertNotNull (e.getCountryCode ());
-      // May or may not be sector specific
     }
   }
 

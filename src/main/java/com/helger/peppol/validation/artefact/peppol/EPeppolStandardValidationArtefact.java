@@ -167,7 +167,7 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
 
     final List <EPeppolStandardValidationArtefact> ret = new ArrayList <EPeppolStandardValidationArtefact> ();
     for (final EPeppolStandardValidationArtefact e : values ())
-      if (e.getTransactionKey ().equals (aTransactionKey))
+      if (e.getTransactionKey ().hasSameSpecificationAndTransaction (aTransactionKey))
         ret.add (e);
     return ret;
   }
@@ -185,7 +185,7 @@ public enum EPeppolStandardValidationArtefact implements IValidationArtefact
   {
     if (aTransactionKey != null)
       for (final EPeppolStandardValidationArtefact e : values ())
-        if (e.getTransactionKey ().equals (aTransactionKey))
+        if (e.getTransactionKey ().hasSameSpecificationAndTransaction (aTransactionKey))
           return true;
     return false;
   }

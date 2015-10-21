@@ -27,7 +27,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
-import com.helger.peppol.validation.domain.ExtendedTransactionKey;
 import com.helger.peppol.validation.domain.TransactionKey;
 import com.helger.peppol.validation.domain.peppol.PeppolTransactionKey;
 
@@ -51,7 +50,7 @@ public final class CTestFiles
                                                              PeppolTransactionKey.ORDERING_28_T76,
                                                              PeppolTransactionKey.DESPATCH_ADVICE_30_T16 })
       for (final ClassPathResource aRes : getAllMatchingTestFiles (aPTK))
-        ret.add (new MockFile (aRes, new ExtendedTransactionKey (aPTK), (Set <String>) null));
+        ret.add (new MockFile (aRes, aPTK, (Set <String>) null));
 
     return ret;
   }

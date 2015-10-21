@@ -33,7 +33,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolThirdpartyValidationArtefact;
-import com.helger.peppol.validation.domain.ExtendedTransactionKey;
+import com.helger.peppol.validation.domain.TransactionKey;
 
 /**
  * This class contains the configuration to run a single UBL document
@@ -47,11 +47,11 @@ public class ValidationConfiguration
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationConfiguration.class);
 
-  private final ExtendedTransactionKey m_aExtendedTransactionKey;
+  private final TransactionKey m_aTransactionKey;
   private final List <IValidationArtefact> m_aValidationArtefacts;
 
   /**
-   * @param aExtendedTransactionKey
+   * @param aTransactionKey
    *        The extended transaction key to be used. May not be
    *        <code>null</code>.
    * @param aValidationArtefacts
@@ -59,12 +59,12 @@ public class ValidationConfiguration
    *        neither be <code>null</code> nor empty nor may it contain
    *        <code>null</code> elements.
    */
-  public ValidationConfiguration (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey,
+  public ValidationConfiguration (@Nonnull final TransactionKey aTransactionKey,
                                   @Nonnull @Nonempty final List <IValidationArtefact> aValidationArtefacts)
   {
-    ValueEnforcer.notNull (aExtendedTransactionKey, "ExtendedTransactionKey");
+    ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
     ValueEnforcer.notEmptyNoNullValue (aValidationArtefacts, "ValidationArtefacts");
-    m_aExtendedTransactionKey = aExtendedTransactionKey;
+    m_aTransactionKey = aTransactionKey;
     m_aValidationArtefacts = CollectionHelper.newList (aValidationArtefacts);
   }
 
@@ -73,9 +73,9 @@ public class ValidationConfiguration
    *         <code>null</code>.
    */
   @Nonnull
-  public ExtendedTransactionKey getExtendedTransactionKey ()
+  public TransactionKey getTransactionKey ()
   {
-    return m_aExtendedTransactionKey;
+    return m_aTransactionKey;
   }
 
   /**
@@ -94,7 +94,7 @@ public class ValidationConfiguration
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("extendedTransactionKey", m_aExtendedTransactionKey)
+    return new ToStringGenerator (this).append ("extendedTransactionKey", m_aTransactionKey)
                                        .append ("validationArtefacts", m_aValidationArtefacts)
                                        .toString ();
   }
@@ -104,27 +104,27 @@ public class ValidationConfiguration
    * adds the PEPPOL standard validation artefacts and - if possible - the
    * PEPPOL third party validation artefacts
    *
-   * @param aExtendedTransactionKey
+   * @param aTransactionKey
    *        The transaction key to be used.
    * @return The {@link ValidationConfiguration} to be used. Never
    *         <code>null</code>.
    */
   @Nonnull
-  public static ValidationConfiguration createForPeppol (@Nonnull final ExtendedTransactionKey aExtendedTransactionKey)
+  public static ValidationConfiguration createForPeppol (@Nonnull final TransactionKey aTransactionKey)
   {
     final List <IValidationArtefact> aValidationArtefacts = new ArrayList <IValidationArtefact> ();
 
     // Get all PEPPOL standard artefacts
-    aValidationArtefacts.addAll (EPeppolStandardValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey.getTransactionKey ()));
+    aValidationArtefacts.addAll (EPeppolStandardValidationArtefact.getAllMatchingValidationArtefacts (aTransactionKey));
     if (aValidationArtefacts.isEmpty ())
       s_aLogger.warn ("No standard validation artefact supports BIS '" +
-                      aExtendedTransactionKey.getBusinessSpecification ().getDisplayName () +
+                      aTransactionKey.getBusinessSpecification ().getDisplayName () +
                       "' and transaction " +
-                      aExtendedTransactionKey.getTransaction ().getTransactionKey ());
+                      aTransactionKey.getTransaction ().getTransactionKey ());
 
     // Get all PEPPOL extended artefacts
-    aValidationArtefacts.addAll (EPeppolThirdpartyValidationArtefact.getAllMatchingValidationArtefacts (aExtendedTransactionKey));
+    aValidationArtefacts.addAll (EPeppolThirdpartyValidationArtefact.getAllMatchingValidationArtefacts (aTransactionKey));
 
-    return new ValidationConfiguration (aExtendedTransactionKey, aValidationArtefacts);
+    return new ValidationConfiguration (aTransactionKey, aValidationArtefacts);
   }
 }
