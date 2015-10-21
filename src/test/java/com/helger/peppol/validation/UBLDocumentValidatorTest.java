@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 import com.helger.peppol.validation.mock.CTestFiles;
 import com.helger.peppol.validation.mock.MockFile;
 import com.helger.peppol.validation.peppol.PeppolValidationConfiguration;
+import com.helger.peppol.validation.peppol.ValidationBootstraper;
 
 /**
  * Test class for class {@link UBLDocumentValidator}.
@@ -33,6 +34,11 @@ import com.helger.peppol.validation.peppol.PeppolValidationConfiguration;
  */
 public final class UBLDocumentValidatorTest
 {
+  static
+  {
+    ValidationBootstraper.run ();
+  }
+
   @Test
   public void testApplyXSDValidationPeppol ()
   {
