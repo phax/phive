@@ -16,23 +16,17 @@
  */
 package com.helger.peppol.validation;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationArtefact;
-import com.helger.peppol.validation.artefact.peppol.EPeppolThirdPartyValidationArtefact;
+import com.helger.peppol.validation.artefact.IValidationSchematronArtefact;
 import com.helger.peppol.validation.domain.ValidationKey;
 
 /**
@@ -45,10 +39,8 @@ import com.helger.peppol.validation.domain.ValidationKey;
 @Immutable
 public class ValidationConfiguration
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationConfiguration.class);
-
   private final ValidationKey m_aValidationKey;
-  private final List <IValidationArtefact> m_aValidationArtefacts;
+  private final List <IValidationSchematronArtefact> m_aValidationArtefacts;
 
   /**
    * @param aValidationKey
@@ -59,7 +51,7 @@ public class ValidationConfiguration
    *        <code>null</code> elements.
    */
   public ValidationConfiguration (@Nonnull final ValidationKey aValidationKey,
-                                  @Nonnull @Nonempty final List <IValidationArtefact> aValidationArtefacts)
+                                  @Nonnull @Nonempty final List <IValidationSchematronArtefact> aValidationArtefacts)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
     ValueEnforcer.notEmptyNoNullValue (aValidationArtefacts, "ValidationArtefacts");
@@ -85,7 +77,7 @@ public class ValidationConfiguration
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public List <IValidationArtefact> getAllValidationArtefacts ()
+  public List <IValidationSchematronArtefact> getAllValidationArtefacts ()
   {
     return CollectionHelper.newList (m_aValidationArtefacts);
   }
@@ -96,34 +88,5 @@ public class ValidationConfiguration
     return new ToStringGenerator (this).append ("extendedValidationKey", m_aValidationKey)
                                        .append ("validationArtefacts", m_aValidationArtefacts)
                                        .toString ();
-  }
-
-  /**
-   * Create a validation configuration for the specified validation key. It adds
-   * the PEPPOL standard validation artefacts and - if possible - the PEPPOL
-   * third party validation artefacts
-   *
-   * @param aValidationKey
-   *        The validation key to be used.
-   * @return The {@link ValidationConfiguration} to be used. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  public static ValidationConfiguration createForPeppol (@Nonnull final ValidationKey aValidationKey)
-  {
-    final List <IValidationArtefact> aValidationArtefacts = new ArrayList <IValidationArtefact> ();
-
-    // Get all PEPPOL standard artefacts
-    aValidationArtefacts.addAll (EPeppolStandardValidationArtefact.getAllMatchingValidationArtefacts (aValidationKey));
-    if (aValidationArtefacts.isEmpty ())
-      s_aLogger.warn ("No standard validation artefact supports BIS '" +
-                      aValidationKey.getBusinessSpecification ().getDisplayName () +
-                      "' and transaction " +
-                      aValidationKey.getTransaction ().getTransactionKey ());
-
-    // Get all PEPPOL third party artefacts
-    aValidationArtefacts.addAll (EPeppolThirdPartyValidationArtefact.getAllMatchingValidationArtefacts (aValidationKey));
-
-    return new ValidationConfiguration (aValidationKey, aValidationArtefacts);
   }
 }

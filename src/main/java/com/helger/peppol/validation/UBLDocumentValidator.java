@@ -41,7 +41,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
 import com.helger.commons.xml.transform.TransformSourceFactory;
-import com.helger.peppol.validation.artefact.IValidationArtefact;
+import com.helger.peppol.validation.artefact.IValidationSchematronArtefact;
 import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
@@ -59,6 +59,8 @@ import com.helger.ubl21.UBL21DocumentTypes;
 @NotThreadSafe
 public class UBLDocumentValidator
 {
+  public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
+
   private final ValidationConfiguration m_aConfiguration;
 
   /**
@@ -226,16 +228,16 @@ public class UBLDocumentValidator
   @Nonnull
   public IResourceErrorGroup applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument) throws SAXException
   {
-    // Resource name
+    // Resource name of the document to be validated
     String sResourceName = aUBLDocument.getSystemId ();
     if (sResourceName == null)
-      sResourceName = "in-memory-data";
+      sResourceName = IN_MEMORY_RESOURCE_NAME;
 
     // Convert source to a Node only once - this closes any underlying stream
     final Node aUBLDocumentNode = SchematronResourceHelper.getNodeOfSource (aUBLDocument);
 
     final ResourceErrorGroup ret = new ResourceErrorGroup ();
-    for (final IValidationArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
+    for (final IValidationSchematronArtefact aArtefact : m_aConfiguration.getAllValidationArtefacts ())
     {
       // get the Schematron resource to be used for this validation artefact
       final IReadableResource aSCHRes = aArtefact.getSchematronResource ();

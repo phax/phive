@@ -23,8 +23,9 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import com.helger.commons.error.IResourceErrorGroup;
-import com.helger.peppol.validation.test.CTestFiles;
-import com.helger.peppol.validation.test.MockFile;
+import com.helger.peppol.validation.mock.CTestFiles;
+import com.helger.peppol.validation.mock.MockFile;
+import com.helger.peppol.validation.peppol.PeppolValidationConfiguration;
 
 /**
  * Test class for class {@link UBLDocumentValidator}.
@@ -39,7 +40,7 @@ public final class UBLDocumentValidatorTest
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
       // Build validator
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
@@ -55,7 +56,7 @@ public final class UBLDocumentValidatorTest
   {
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (ValidationConfiguration.createForPeppol (aTestFile.getTransactionKey ()));
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
       final IResourceErrorGroup aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());

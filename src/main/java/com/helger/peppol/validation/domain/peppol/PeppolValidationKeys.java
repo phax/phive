@@ -28,7 +28,7 @@ import com.helger.peppol.validation.domain.ValidationKey;
  * @author Philip Helger
  */
 @Immutable
-public class PeppolValidationKey
+public class PeppolValidationKeys
 {
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
   public static final ValidationKey CATALOGUE_01_T19 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.CATALOGUE_01)
@@ -59,6 +59,6 @@ public class PeppolValidationKey
                                                                                .setTransaction (EBII2Transaction.T71)
                                                                                .build ();
 
-  private PeppolValidationKey ()
+  private PeppolValidationKeys ()
   {}
 }

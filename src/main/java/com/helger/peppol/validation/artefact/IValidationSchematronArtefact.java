@@ -29,7 +29,7 @@ import com.helger.peppol.validation.domain.ValidationKey;
  *
  * @author Philip Helger
  */
-public interface IValidationArtefact extends Serializable
+public interface IValidationSchematronArtefact extends Serializable
 {
   /**
    * @return The Schematron resource descriptor. Never <code>null</code>.
