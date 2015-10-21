@@ -20,7 +20,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.xml.sax.SAXException;
 
 import com.helger.peppol.validation.mock.CTestFiles;
 import com.helger.peppol.validation.mock.MockFile;
@@ -57,7 +56,7 @@ public final class UBLDocumentValidatorTest
   }
 
   @Test
-  public void testApplySchematronValidationPeppol () throws SAXException
+  public void testApplySchematronValidationPeppol ()
   {
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
@@ -73,7 +72,7 @@ public final class UBLDocumentValidatorTest
   }
 
   @Test
-  public void testApplyCompleteValidationPeppol () throws SAXException
+  public void testApplyCompleteValidationPeppol ()
   {
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {

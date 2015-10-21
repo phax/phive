@@ -22,22 +22,25 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
+import com.helger.commons.name.IHasName;
 
 /**
  * Enum to note the validation artefact type.
  *
  * @author Philip Helger
  */
-public enum EValidationArtefactType implements IHasID <String>
+public enum EValidationArtefactType implements IHasID <String>,IHasName
 {
- XSD ("xsd"),
- SCHEMATRON ("schematron");
+ XSD ("xsd", "XML Schema"),
+ SCHEMATRON ("schematron", "Schematron");
 
-  private String m_sID;
+  private final String m_sID;
+  private final String m_sName;
 
-  private EValidationArtefactType (@Nonnull @Nonempty final String sID)
+  private EValidationArtefactType (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     m_sID = sID;
+    m_sName = sName;
   }
 
   @Nonnull
@@ -45,6 +48,13 @@ public enum EValidationArtefactType implements IHasID <String>
   public String getID ()
   {
     return m_sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getName ()
+  {
+    return m_sName;
   }
 
   @Nullable
