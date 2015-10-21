@@ -166,7 +166,7 @@ public class UBLDocumentValidator
 
     try
     {
-      // Find the implementation class that is required for the configured
+      // Find the document type that is required for the configured
       // validation
       final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
                                                                   .getTransaction ()

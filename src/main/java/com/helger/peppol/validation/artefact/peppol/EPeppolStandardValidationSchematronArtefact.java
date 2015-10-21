@@ -17,7 +17,9 @@
 package com.helger.peppol.validation.artefact.peppol;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -74,12 +76,13 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
  MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
-  private final ValidationKey m_aTransactionKey;
+  private final ValidationKey m_aValidationKey;
 
-  private EPeppolStandardValidationSchematronArtefact (@Nonnull @Nonempty final String sPath, @Nonnull final ValidationKey aTransactionKey)
+  private EPeppolStandardValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
+                                                       @Nonnull final ValidationKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
-    m_aTransactionKey = aTransactionKey;
+    m_aValidationKey = aTransactionKey;
   }
 
   @Nonnull
@@ -97,7 +100,7 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
   @Nonnull
   public ValidationKey getValidationKey ()
   {
-    return m_aTransactionKey;
+    return m_aValidationKey;
   }
 
   /**
@@ -120,6 +123,20 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
     for (final EPeppolStandardValidationSchematronArtefact e : values ())
       if (e.getValidationKey ().hasSameSpecificationAndTransaction (aValidationKey))
         ret.add (e);
+    return ret;
+  }
+
+  /**
+   * @return An ordered set of all contained validation keys. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <ValidationKey> getAllValidationKeys ()
+  {
+    final Set <ValidationKey> ret = new LinkedHashSet <ValidationKey> ();
+    for (final EPeppolStandardValidationSchematronArtefact e : values ())
+      ret.add (e.m_aValidationKey);
     return ret;
   }
 }

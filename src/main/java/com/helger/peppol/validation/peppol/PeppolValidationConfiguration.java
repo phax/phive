@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.peppol.validation.ValidationConfiguration;
 import com.helger.peppol.validation.artefact.IValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationSchematronArtefact;
@@ -59,7 +60,12 @@ public final class PeppolValidationConfiguration
   @Nonnull
   public static ValidationConfiguration createDefault (@Nonnull final ValidationKey aValidationKey)
   {
+    ValueEnforcer.notNull (aValidationKey, "ValidationKey");
+
     final List <IValidationArtefact> aValidationArtefacts = new ArrayList <IValidationArtefact> ();
+
+    // Note: no need to add the XSD artefacts here. They are determined by the
+    // validation key automatically.
 
     // Get all PEPPOL standard artefacts
     aValidationArtefacts.addAll (EPeppolStandardValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));
