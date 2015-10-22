@@ -80,7 +80,10 @@ public class ValidationArtefact implements IValidationArtefact
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eValidationArtefactType).append (m_aResource).append (m_aValidationKey).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eValidationArtefactType)
+                                       .append (m_aResource)
+                                       .append (m_aValidationKey)
+                                       .getHashCode ();
   }
 
   @Override

@@ -28,13 +28,13 @@ import com.helger.peppol.validation.domain.IBusinessSpecification;
  */
 public enum EPeppolBIS implements IBusinessSpecification
 {
-  CATALOGUE_01 ("OpenPEPPOL BIS 1, Catalogue", 1),
-  ORDER_03 ("OpenPEPPOL BIS 3, Order", 3),
-  INVOICE_04 ("OpenPEPPOL BIS 4, Invoice", 4),
-  BILLING_05 ("OpenPEPPOL BIS 5, Billing", 5),
-  ORDERING_28 ("OpenPEPPOL BIS 28, Ordering", 28),
-  DESPATCH_ADVICE_30 ("OpenPEPPOL BIS 30, Despatch advice", 30),
-  MLR_36 ("OpenPEPPOL BIS 36, MLR", 36);
+ CATALOGUE_01 ("OpenPEPPOL BIS 1, Catalogue", 1),
+ ORDER_03 ("OpenPEPPOL BIS 3, Order", 3),
+ INVOICE_04 ("OpenPEPPOL BIS 4, Invoice", 4),
+ BILLING_05 ("OpenPEPPOL BIS 5, Billing", 5),
+ ORDERING_28 ("OpenPEPPOL BIS 28, Ordering", 28),
+ DESPATCH_ADVICE_30 ("OpenPEPPOL BIS 30, Despatch advice", 30),
+ MLR_36 ("OpenPEPPOL BIS 36, MLR", 36);
 
   private final String m_sDisplayName;
   private final int m_nNumber;

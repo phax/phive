@@ -149,7 +149,8 @@ public class ValidationKey implements Serializable
   {
     if (aOther == null)
       return false;
-    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) && m_aTransaction.equals (aOther.m_aTransaction);
+    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
+           m_aTransaction.equals (aOther.m_aTransaction);
   }
 
   public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationKey aOther)
@@ -283,7 +284,11 @@ public class ValidationKey implements Serializable
         throw new IllegalStateException ("The Business specification must be provided");
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
-      return new ValidationKey (m_aBusinessSpecification, m_aTransaction, m_sCountry, m_bIsSectorSpecific, m_sPrerequisiteXPath);
+      return new ValidationKey (m_aBusinessSpecification,
+                                m_aTransaction,
+                                m_sCountry,
+                                m_bIsSectorSpecific,
+                                m_sPrerequisiteXPath);
     }
   }
 }
