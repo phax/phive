@@ -19,6 +19,7 @@ package com.helger.peppol.validation.domain.peppol;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.peppol.validation.domain.ValidationKey;
+import com.helger.peppol.validation.domain.ValidationSectorKey;
 
 /**
  * This class contains the validation transactions used in PEPPOL. It uses
@@ -58,6 +59,8 @@ public class PeppolValidationKeys
   public static final ValidationKey MLR_36_T71 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.MLR_36)
                                                                              .setTransaction (EBII2Transaction.T71)
                                                                              .build ();
+
+  public static final ValidationSectorKey SECTOR_AT_GOV = new ValidationSectorKey ("ATGOV", "Austrian Government");
 
   private PeppolValidationKeys ()
   {}

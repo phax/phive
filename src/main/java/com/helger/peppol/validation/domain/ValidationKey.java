@@ -45,13 +45,13 @@ public class ValidationKey implements Serializable
   private final IBusinessSpecification m_aBusinessSpecification;
   private final ISpecificationTransaction m_aTransaction;
   private final Locale m_aCountry;
-  private final boolean m_bIsSectorSpecific;
+  private final ValidationSectorKey m_aSectorKey;
   private final String m_sPrerequisiteXPath;
 
   public ValidationKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
                         @Nonnull final ISpecificationTransaction aTransaction,
                         @Nullable final String sCountryCode,
-                        final boolean bIsSectorSpecific,
+                        @Nullable final ValidationSectorKey aSectorKey,
                         @Nullable final String sPrerequisiteXPath)
   {
     m_aBusinessSpecification = ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
@@ -64,7 +64,7 @@ public class ValidationKey implements Serializable
     }
     else
       m_aCountry = null;
-    m_bIsSectorSpecific = bIsSectorSpecific;
+    m_aSectorKey = aSectorKey;
     m_sPrerequisiteXPath = sPrerequisiteXPath;
   }
 
@@ -123,7 +123,17 @@ public class ValidationKey implements Serializable
    */
   public boolean isSectorSpecific ()
   {
-    return m_bIsSectorSpecific;
+    return m_aSectorKey != null;
+  }
+
+  /**
+   * @return The validation sector key specified in the constructor. May be
+   *         <code>null</code> if not sector specific.
+   */
+  @Nullable
+  public ValidationSectorKey getSectorKey ()
+  {
+    return m_aSectorKey;
   }
 
   /**
@@ -149,8 +159,7 @@ public class ValidationKey implements Serializable
   {
     if (aOther == null)
       return false;
-    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
-           m_aTransaction.equals (aOther.m_aTransaction);
+    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) && m_aTransaction.equals (aOther.m_aTransaction);
   }
 
   public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationKey aOther)
@@ -160,7 +169,7 @@ public class ValidationKey implements Serializable
     return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
            m_aTransaction.equals (aOther.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, aOther.m_aCountry) &&
-           m_bIsSectorSpecific == aOther.m_bIsSectorSpecific;
+           EqualsHelper.equals (m_aSectorKey, aOther.m_aSectorKey);
   }
 
   @Override
@@ -174,7 +183,7 @@ public class ValidationKey implements Serializable
     return m_aBusinessSpecification.equals (rhs.m_aBusinessSpecification) &&
            m_aTransaction.equals (rhs.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, rhs.m_aCountry) &&
-           m_bIsSectorSpecific == rhs.m_bIsSectorSpecific &&
+           EqualsHelper.equals (m_aSectorKey, rhs.m_aSectorKey) &&
            EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath);
   }
 
@@ -184,7 +193,7 @@ public class ValidationKey implements Serializable
     return new HashCodeGenerator (this).append (m_aBusinessSpecification)
                                        .append (m_aTransaction)
                                        .append (m_aCountry)
-                                       .append (m_bIsSectorSpecific)
+                                       .append (m_aSectorKey)
                                        .append (m_sPrerequisiteXPath)
                                        .getHashCode ();
   }
@@ -195,7 +204,7 @@ public class ValidationKey implements Serializable
     return new ToStringGenerator (this).append ("BusinessSpecification", m_aBusinessSpecification)
                                        .append ("Transaction", m_aTransaction)
                                        .append ("Country", m_aCountry)
-                                       .append ("IsSectorSpecific", m_bIsSectorSpecific)
+                                       .append ("SectorKey", m_aSectorKey)
                                        .append ("PrerequisiteXPath", m_sPrerequisiteXPath)
                                        .toString ();
   }
@@ -213,7 +222,7 @@ public class ValidationKey implements Serializable
     private IBusinessSpecification m_aBusinessSpecification;
     private ISpecificationTransaction m_aTransaction;
     private String m_sCountry;
-    private boolean m_bIsSectorSpecific;
+    private ValidationSectorKey m_aSectorKey;
     private String m_sPrerequisiteXPath;
 
     /**
@@ -233,7 +242,7 @@ public class ValidationKey implements Serializable
       m_aBusinessSpecification = aOther.m_aBusinessSpecification;
       m_aTransaction = aOther.m_aTransaction;
       m_sCountry = aOther.getCountryCode ();
-      m_bIsSectorSpecific = aOther.m_bIsSectorSpecific;
+      m_aSectorKey = aOther.m_aSectorKey;
       m_sPrerequisiteXPath = aOther.m_sPrerequisiteXPath;
     }
 
@@ -259,9 +268,9 @@ public class ValidationKey implements Serializable
     }
 
     @Nonnull
-    public Builder setIsSectorSpecific (final boolean bIsSectorSpecific)
+    public Builder setSectorKey (@Nullable final ValidationSectorKey aSectorKey)
     {
-      m_bIsSectorSpecific = bIsSectorSpecific;
+      m_aSectorKey = aSectorKey;
       return this;
     }
 
@@ -284,11 +293,7 @@ public class ValidationKey implements Serializable
         throw new IllegalStateException ("The Business specification must be provided");
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
-      return new ValidationKey (m_aBusinessSpecification,
-                                m_aTransaction,
-                                m_sCountry,
-                                m_bIsSectorSpecific,
-                                m_sPrerequisiteXPath);
+      return new ValidationKey (m_aBusinessSpecification, m_aTransaction, m_sCountry, m_aSectorKey, m_sPrerequisiteXPath);
     }
   }
 }
