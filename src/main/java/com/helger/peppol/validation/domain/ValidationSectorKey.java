@@ -32,7 +32,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class ValidationSectorKey implements Serializable
+public class ValidationSectorKey implements Serializable, Comparable <ValidationSectorKey>
 {
   private final String m_sID;
   private final String m_sDisplayName;
@@ -55,6 +55,11 @@ public class ValidationSectorKey implements Serializable
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  public int compareTo (@Nonnull final ValidationSectorKey aOther)
+  {
+    return m_sID.compareTo (aOther.m_sID);
   }
 
   @Override

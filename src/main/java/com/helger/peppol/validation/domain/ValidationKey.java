@@ -25,6 +25,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.locale.country.CountryCache;
@@ -40,7 +41,7 @@ import com.helger.commons.string.ToStringGenerator;
  */
 @Immutable
 @MustImplementEqualsAndHashcode
-public class ValidationKey implements Serializable
+public class ValidationKey implements Serializable, Comparable <ValidationKey>
 {
   private final IBusinessSpecification m_aBusinessSpecification;
   private final ISpecificationTransaction m_aTransaction;
@@ -99,6 +100,15 @@ public class ValidationKey implements Serializable
   }
 
   /**
+   * @return <code>true</code> if this validation key is country specific,
+   *         <code>false</code> otherwise.
+   */
+  public boolean isCountrySpecific ()
+  {
+    return m_aCountry != null;
+  }
+
+  /**
    * @return The country locale as specified in the constructor.
    */
   @Nullable
@@ -137,6 +147,15 @@ public class ValidationKey implements Serializable
   }
 
   /**
+   * @return <code>true</code> if a prerequisite XPath expression is present,
+   *         <code>false</code> if not
+   */
+  public boolean hasPrerequisiteXPath ()
+  {
+    return StringHelper.hasText (m_sPrerequisiteXPath);
+  }
+
+  /**
    * @return An optional prerequisite XPath expression that must match before
    *         the validation artefact can be applied. May be <code>null</code>.
    */
@@ -146,20 +165,12 @@ public class ValidationKey implements Serializable
     return m_sPrerequisiteXPath;
   }
 
-  /**
-   * @return <code>true</code> if a prerequisite XPath expression is present,
-   *         <code>false</code> if not
-   */
-  public boolean hasPrerequisiteXPath ()
-  {
-    return StringHelper.hasText (m_sPrerequisiteXPath);
-  }
-
   public boolean hasSameSpecificationAndTransaction (@Nullable final ValidationKey aOther)
   {
     if (aOther == null)
       return false;
-    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) && m_aTransaction.equals (aOther.m_aTransaction);
+    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
+           m_aTransaction.equals (aOther.m_aTransaction);
   }
 
   public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationKey aOther)
@@ -170,6 +181,29 @@ public class ValidationKey implements Serializable
            m_aTransaction.equals (aOther.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, aOther.m_aCountry) &&
            EqualsHelper.equals (m_aSectorKey, aOther.m_aSectorKey);
+  }
+
+  public int compareTo (@Nonnull final ValidationKey aOther)
+  {
+    int ret = CompareHelper.compare (m_aBusinessSpecification.getNumber (),
+                                     aOther.m_aBusinessSpecification.getNumber ());
+    if (ret == 0)
+    {
+      ret = m_aTransaction.getTransactionKey ().compareTo (aOther.m_aTransaction.getTransactionKey ());
+      if (ret == 0)
+      {
+        ret = CompareHelper.compare (getCountryCode (), aOther.getCountryCode ());
+        if (ret == 0)
+        {
+          ret = CompareHelper.compare (m_aSectorKey, m_aSectorKey);
+          if (ret == 0)
+          {
+            ret = CompareHelper.compare (m_sPrerequisiteXPath, aOther.m_sPrerequisiteXPath);
+          }
+        }
+      }
+    }
+    return ret;
   }
 
   @Override
@@ -293,7 +327,11 @@ public class ValidationKey implements Serializable
         throw new IllegalStateException ("The Business specification must be provided");
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
-      return new ValidationKey (m_aBusinessSpecification, m_aTransaction, m_sCountry, m_aSectorKey, m_sPrerequisiteXPath);
+      return new ValidationKey (m_aBusinessSpecification,
+                                m_aTransaction,
+                                m_sCountry,
+                                m_aSectorKey,
+                                m_sPrerequisiteXPath);
     }
   }
 }
