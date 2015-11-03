@@ -50,6 +50,9 @@ public enum EValidationArtefactType implements IHasID <String>,IHasName
     return m_sID;
   }
 
+  /**
+   * This locale independent name of the validation artefact.
+   */
   @Nonnull
   @Nonempty
   public String getName ()
