@@ -286,6 +286,7 @@ public class UBLDocumentValidator
                           " because the prerequisite XPath expression '" +
                           aArtefact.getValidationKey ().getPrerequisiteXPath () +
                           "' is not fulfilled.");
+          aResultList.add (ValidationLayerResult.createIgnoredLayer (aArtefact));
           continue;
         }
       }
