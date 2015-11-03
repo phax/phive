@@ -61,6 +61,17 @@ public class ValidationLayerResultList implements Iterable <ValidationLayerResul
     m_aList.addAll (aValidationLayerResultList.m_aList);
   }
 
+  @Nonnegative
+  public int getSize ()
+  {
+    return m_aList.size ();
+  }
+
+  public boolean isEmpty ()
+  {
+    return m_aList.isEmpty ();
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public List <ValidationLayerResult> getAll ()
