@@ -1,5 +1,6 @@
 #peppol-validation-engine
 PEPPOL BIS v2 validation engine.
+A running example can be found on [PEPPOL Practical](http://peppol.helger.com/public/menuitem-validation-bis2)
 
 Licensed under the Apache 2 license.
 
