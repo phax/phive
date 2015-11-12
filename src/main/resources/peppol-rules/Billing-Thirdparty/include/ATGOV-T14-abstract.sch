@@ -10,16 +10,15 @@
     <assert flag="fatal" test="$ATGOV-T14-R002" id="ATGOV-T14-R002">[ATGOV-T14-R002]-A maximum number of 999 invoice lines must be present.</assert>
     <assert flag="fatal" test="$ATGOV-T14-R003" id="ATGOV-T14-R003">[ATGOV-T14-R003]-The order number or buyer group must be present.</assert>
     <assert flag="warning" test="$ATGOV-T14-R005" id="ATGOV-T14-R005">[ATGOV-T14-R005]-Exactly 1 beneficiary account may be present.</assert>
-    <assert flag="fatal" test="$ATGOV-T14-R006" id="ATGOV-T14-R006">[ATGOV-T14-R006]-The "Buchungskreis" (accounting area code) must be present</assert>
     <assert flag="fatal" test="$ATGOV-T14-R009" id="ATGOV-T14-R009">[ATGOV-T14-R009]-At last 2 cashbacks may be present.</assert>
     <assert flag="fatal" test="$ATGOV-T14-R013" id="ATGOV-T14-R013">[ATGOV-T14-R013]-A maximum of 200 attachments are allowed within a single document.</assert>
     <assert flag="fatal" test="$ATGOV-T14-R014" id="ATGOV-T14-R014">[ATGOV-T14-R014]-The maximum size of all attachments after Base64 decoding must not exceed 15 Megabytes.</assert>
     <assert flag="fatal" test="$ATGOV-T14-R016" id="ATGOV-T14-R016">[ATGOV-T14-R016]-The payable amount of an invoice must be smaller or equal than 999999999.99.</assert>
-    <assert flag="fatal" test="$ATGOV-T14-R017" id="ATGOV-T14-R017">[ATGOV-T14-R017]-At least 1 beneficiary account must be present.</assert>
   </rule>
   <rule context="$CreditNoteLine">
     <assert flag="fatal" test="$ATGOV-T14-R008" id="ATGOV-T14-R008">[ATGOV-T14-R008]-The order position number (per line item) must be present when the OrderID is a PO number (10 digit numeric).</assert>
     <assert flag="fatal" test="$ATGOV-T14-R015" id="ATGOV-T14-R015">[ATGOV-T14-R015]-The gross amount of a single invoice line must be greater or equal than -999999999999.99 and smaller or equal than 999999999999.99.</assert>
+    <assert flag="fatal" test="$ATGOV-T14-R018" id="ATGOV-T14-R018">[ATGOV-T14-R018]-The unit net amount of a line may have at most 4 fraction digits</assert>
   </rule>
   <rule context="$Payment_Means">
     <assert flag="fatal" test="$ATGOV-T14-R007" id="ATGOV-T14-R007">[ATGOV-T14-R007]-Only valid BICs and IBANs are allowed as beneficiary account information.</assert>

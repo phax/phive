@@ -17,6 +17,7 @@
 package com.helger.peppol.validation;
 
 import java.io.File;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -44,6 +45,7 @@ import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.xml.XMLHelper;
+import com.helger.commons.xml.namespace.MapBasedNamespaceContext;
 import com.helger.commons.xml.sax.AbstractSAXErrorHandler;
 import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
 import com.helger.commons.xml.transform.TransformSourceFactory;
@@ -59,6 +61,7 @@ import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
  * This is the main validation class to validate e.g. PEPPOL UBL 2.1 documents
@@ -277,15 +280,42 @@ public class UBLDocumentValidator
         // Check if the artefact can be applied on the given document by
         // checking the prerequisite XPath
         if (aXPathContext == null)
-          aXPathContext = XPathHelper.createNewXPath ();
-        final Boolean aResult = XPathExpressionHelper.evalXPathToBoolean (aXPathContext, aArtefact.getValidationKey ().getPrerequisiteXPath (), XMLHelper.getOwnerDocument (aUBLDocumentNode));
-        if (aResult != null && !aResult.booleanValue ())
         {
-          s_aLogger.info ("Ignoring validation artefact " +
-                          aSCHRes.getPath () +
-                          " because the prerequisite XPath expression '" +
-                          aArtefact.getValidationKey ().getPrerequisiteXPath () +
-                          "' is not fulfilled.");
+          aXPathContext = XPathHelper.createNewXPath ();
+          final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext ();
+          for (final Map.Entry <String, String> aEntry : UBL21NamespaceContext.getInstance ().getPrefixToNamespaceURIMap ().entrySet ())
+            aNSContext.addMapping (aEntry.getKey (), aEntry.getValue ());
+
+          // Add the "ubl" mapping for the root namespace
+          final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ().getTransaction ().getUBLDocumentType ();
+          aNSContext.addMapping ("ubl", eUBLDocumentType.getNamespaceURI ());
+
+          aXPathContext.setNamespaceContext (aNSContext);
+        }
+        try
+        {
+          final Boolean aResult = XPathExpressionHelper.evalXPathToBoolean (aXPathContext, aArtefact.getValidationKey ().getPrerequisiteXPath (), XMLHelper.getOwnerDocument (aUBLDocumentNode));
+          if (aResult != null && !aResult.booleanValue ())
+          {
+            s_aLogger.info ("Ignoring validation artefact " +
+                            aSCHRes.getPath () +
+                            " because the prerequisite XPath expression '" +
+                            aArtefact.getValidationKey ().getPrerequisiteXPath () +
+                            "' is not fulfilled.");
+            aResultList.add (ValidationLayerResult.createIgnoredLayer (aArtefact));
+            continue;
+          }
+        }
+        catch (final IllegalArgumentException ex)
+        {
+          // Catch errors in prerequisite XPaths - most likely because of
+          // missing namespace prefixes...
+          s_aLogger.error ("Failed to verify if validation artefact " +
+                           aSCHRes.getPath () +
+                           " matches the prerequisite XPath expression '" +
+                           aArtefact.getValidationKey ().getPrerequisiteXPath () +
+                           "' - ignoring validation artefact.",
+                           ex);
           aResultList.add (ValidationLayerResult.createIgnoredLayer (aArtefact));
           continue;
         }

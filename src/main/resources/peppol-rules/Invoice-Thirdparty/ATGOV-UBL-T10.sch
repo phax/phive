@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--This file is generated automatically! Do NOT edit!-->
-<!--Schematron assembly for ATGOV using binding UBL and transaction T10 based on atgov-T10-BusinessRules-v04.ods-->
+<!--Schematron assembly for ATGOV using binding UBL and transaction T10 based on atgov-T10-BusinessRules-v06.ods-->
 <schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt">
   <title>ATGOV T10 bound to UBL</title>
   <ns prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
