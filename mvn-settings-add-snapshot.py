@@ -26,7 +26,9 @@ else:
 sonatypeServerNode = m2.createElement("server")
 
 sonatypeServerId = m2.createElement("id")
-idNode = m2.createTextNode("sonatype-nexus-snapshots")
+# See the name "ossrh" in the ph-parent-pom project
+# Original name was "sonatype-nexus-snapshots"
+idNode = m2.createTextNode("ossrh")
 sonatypeServerId.appendChild(idNode)
 sonatypeServerNode.appendChild(sonatypeServerId)
 
