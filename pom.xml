@@ -25,7 +25,7 @@
     <version>1.4.1</version>
   </parent>
   <artifactId>peppol-validation-engine</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>bundle</packaging>
   <name>peppol-validation-engine</name>
   <description>PEPPOL BIS v2 validation engine</description>
@@ -44,7 +44,7 @@
     <url>http://github.com/phax/peppol-validation-engine</url>
     <connection>scm:git:git@github.com:phax/peppol-validation-engine.git</connection>
     <developerConnection>scm:git:git@github.com:phax/peppol-validation-engine.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>peppol-validation-engine-1.0.0</tag>
   </scm>
   
   <organization>
