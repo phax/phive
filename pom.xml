@@ -84,6 +84,13 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>peppol-commons-parent-pom</artifactId>
+        <version>4.3.2</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -129,7 +136,6 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>peppol-testfiles</artifactId>
-      <version>4.3.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
