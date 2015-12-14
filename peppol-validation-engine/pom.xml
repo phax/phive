@@ -53,39 +53,6 @@
     </developer>
   </developers>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-commons-parent-pom</artifactId>
-        <version>6.2.3</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-ubl-parent-pom</artifactId>
-        <version>4.5.0</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>ph-schematron-parent-pom</artifactId>
-        <version>3.0.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.helger</groupId>
-        <artifactId>peppol-commons-parent-pom</artifactId>
-        <version>4.3.3</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
@@ -103,22 +70,7 @@
     <dependency>
       <groupId>org.apache.odftoolkit</groupId>
       <artifactId>simple-odf</artifactId>
-      <version>0.8.1-incubating</version>
       <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>com.sun</groupId>
-          <artifactId>tools</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
