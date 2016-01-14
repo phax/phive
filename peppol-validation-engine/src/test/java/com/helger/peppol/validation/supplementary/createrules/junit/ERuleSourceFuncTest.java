@@ -14,25 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.supplementary.createrules;
+package com.helger.peppol.validation.supplementary.createrules.junit;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.helger.peppol.validation.supplementary.createrules.ERuleSource;
+
 /**
- * Test class for class {@link ERuleSourceThirdparty}.
+ * Test class for class {@link ERuleSource}.
  *
  * @author Philip Helger
  */
-public final class ERuleSourceThirdpartyTest
+public final class ERuleSourceFuncTest
 {
   @Test
   public void testFilesPresent ()
   {
-    for (final ERuleSourceThirdparty e : ERuleSourceThirdparty.values ())
+    for (final ERuleSource e : ERuleSource.values ())
     {
-      assertTrue (e.getRuleFile ().exists ());
+      if (e.hasBIICoreFile ())
+        assertTrue (e.getBIICoreSchematronFile ().exists ());
+      if (e.hasBIIRules ())
+        assertTrue (e.getBIIRuleFile ().exists ());
+      if (e.hasOpenPEPPOLRules ())
+        assertTrue (e.getOpenPEPPOLRuleFile ().exists ());
     }
   }
 }
