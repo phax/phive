@@ -14,6 +14,9 @@ G2FvNR8zpt/M/GUx6CfsYRkDUdoh0rrwMe/qbt2WG+hvDuAAuj2jXJdFvJ3GrX7ALTrThhtxxPpRMEPk
 jdk:
   - openjdk6
   
+install:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V -U
+  
 cache:
   directories:
   - $HOME/.m2
