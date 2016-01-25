@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact.peppol;
+package com.helger.peppol.validation.engine.peppol;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -31,7 +31,6 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
-import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
 
 /**
  * This enumeration contains all the extended country specific OpenPEPPOL

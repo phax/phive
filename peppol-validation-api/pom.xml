@@ -26,7 +26,7 @@
   </parent>
   <artifactId>peppol-validation-api</artifactId>
   <packaging>bundle</packaging>
-  <name>peppol-validation-engine</name>
+  <name>peppol-validation-api</name>
   <description>PEPPOL BIS v2 validation engine API</description>
   <url>https://github.com/phax/peppol-validation-engine/peppol-validation-api</url>
   <inceptionYear>2016</inceptionYear>

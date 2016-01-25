@@ -106,25 +106,12 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.peppol.validation.*
+              com.helger.peppol.validation.engine.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*
             </Import-Package>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/peppol-rules/**</exclude>
-            <exclude>src/test/resources/codelist-generated/**</exclude>
-            <exclude>src/test/resources/openpeppol/**</exclude>
-            <exclude>src/test/resources/rule-source/**</exclude>
-            <exclude>src/test/resources/rule-utils/**</exclude>
-          </excludes>
         </configuration>
       </plugin>
     </plugins>

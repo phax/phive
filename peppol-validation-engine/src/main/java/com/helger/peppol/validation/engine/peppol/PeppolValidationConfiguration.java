@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.peppol;
+package com.helger.peppol.validation.engine.peppol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.peppol.validation.ValidationConfiguration;
 import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
-import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationSchematronArtefact;
-import com.helger.peppol.validation.artefact.peppol.EPeppolThirdPartyValidationSchematronArtefact;
+import com.helger.peppol.validation.engine.ValidationConfiguration;
 
 /**
  * This class contains the configuration to run a single UBL document

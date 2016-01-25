@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.mock;
+package com.helger.peppol.validation.engine.mock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
 import com.helger.peppol.validation.api.ValidationKey;
-import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
+import com.helger.peppol.validation.engine.peppol.PeppolValidationKeys;
 
 @Immutable
 public final class CTestFiles

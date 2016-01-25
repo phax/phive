@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation;
+package com.helger.peppol.validation.engine;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -23,10 +23,11 @@ import org.junit.Test;
 
 import com.helger.peppol.validation.api.result.ValidationLayerResult;
 import com.helger.peppol.validation.api.result.ValidationLayerResultList;
-import com.helger.peppol.validation.mock.CTestFiles;
-import com.helger.peppol.validation.mock.MockFile;
-import com.helger.peppol.validation.peppol.PeppolValidationConfiguration;
-import com.helger.peppol.validation.peppol.ValidationBootstraper;
+import com.helger.peppol.validation.engine.UBLDocumentValidator;
+import com.helger.peppol.validation.engine.mock.CTestFiles;
+import com.helger.peppol.validation.engine.mock.MockFile;
+import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
+import com.helger.peppol.validation.engine.peppol.ValidationBootstraper;
 
 /**
  * Test class for class {@link UBLDocumentValidator}.

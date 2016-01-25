@@ -14,26 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact.peppol;
+package com.helger.peppol.validation.engine.peppol;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.helger.peppol.validation.engine.peppol.EPeppolStandardValidationSchematronArtefact;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
- * Test class for class {@link EPeppolThirdPartyValidationSchematronArtefact}.
+ * Test class for class {@link EPeppolStandardValidationSchematronArtefact}.
  *
  * @author Philip Helger
  */
-public final class EPeppolThirdPartyValidationSchematronArtefactTest
+public final class EPeppolStandardValidationSchematronArtefactTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
+    for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
     {
       assertNotNull (e.getRuleResource ());
       assertTrue (e.getRuleResource ().exists ());
@@ -44,7 +45,7 @@ public final class EPeppolThirdPartyValidationSchematronArtefactTest
   @Test
   public void testValidSchematrons ()
   {
-    for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
+    for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
     {
       // Check that the passed Schematron is valid
       assertTrue (new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ());

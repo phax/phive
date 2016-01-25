@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact.peppol;
+package com.helger.peppol.validation.engine.peppol;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.helger.peppol.validation.engine.peppol.EBIICoreValidationSchematronArtefact;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**

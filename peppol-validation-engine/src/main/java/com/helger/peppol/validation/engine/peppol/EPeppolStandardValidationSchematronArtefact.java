@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact.peppol;
+package com.helger.peppol.validation.engine.peppol;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -31,28 +31,48 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
-import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
 
 /**
- * This enum contains the deprecated BII Core rules. With validation package
- * 3.1.0 these rules where deprecated.
+ * This enumeration contains all the default OpenPEPPOL Schematron artefacts.
+ * They are ordered ascending by BIS number, second by transaction and third by
+ * desired execution order.
  *
  * @author Philip Helger
  */
-public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
+public enum EPeppolStandardValidationSchematronArtefact implements IValidationArtefact
 {
- CATALOGUE_CORE ("Catalogue/BIICORE-UBL-T19-V1.0.sch", PeppolValidationKeys.CATALOGUE_01_T19),
- ORDER_CORE ("Order/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDER_03_T01),
- INVOICE_CORE ("Invoice/BIICORE-UBL-T10-V1.0.sch", PeppolValidationKeys.INVOICE_04_T10),
- BILLING_CREDIT_NOTE_CORE ("Billing/BIICORE-UBL-T14-V1.0.sch", PeppolValidationKeys.BILLING_05_T14),
- ORDERING_ORDER_CORE ("Ordering/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDERING_28_T01),
- DESPATCH_ADVICE_CORE ("DespatchAdvice/BIICORE-UBL-T16-V1.0.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16);
+ CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
+ CATALOGUE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
+
+ CATALOGUE_RESPONSE_RULES ("Catalogue/BIIRULES-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
+ CATALOGUE_RESPONSE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
+
+ ORDER_RULES ("Order/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
+ ORDER_OPENPEPPOL ("Order/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
+
+ INVOICE_RULES ("Invoice/BIIRULES-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
+ INVOICE_OPENPEPPOL ("Invoice/OPENPEPPOL-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
+
+ BILLING_CREDIT_NOTE_RULES ("Billing/BIIRULES-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
+ BILLING_CREDIT_NOTE_OPENPEPPOL ("Billing/OPENPEPPOL-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
+
+ ORDERING_ORDER_RULES ("Ordering/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
+ ORDERING_ORDER_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
+
+ ORDERING_ORDER_RESPONSE_RULES ("Ordering/BIIRULES-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
+ ORDERING_ORDER_RESPONSE_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
+
+ DESPATCH_ADVICE_RULES ("DespatchAdvice/BIIRULES-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
+ DESPATCH_ADVICE_OPENPEPPOL ("DespatchAdvice/OPENPEPPOL-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
+
+ MLR_RULES ("MLR/BIIRULES-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71),
+ MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
   private final ValidationKey m_aValidationKey;
 
-  private EBIICoreValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
-                                                @Nonnull final ValidationKey aTransactionKey)
+  private EPeppolStandardValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
+                                                       @Nonnull final ValidationKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
     m_aValidationKey = aTransactionKey;
@@ -88,12 +108,12 @@ public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EBIICoreValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
+  public static List <EPeppolStandardValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final List <EBIICoreValidationSchematronArtefact> ret = new ArrayList <EBIICoreValidationSchematronArtefact> ();
-    for (final EBIICoreValidationSchematronArtefact e : values ())
+    final List <EPeppolStandardValidationSchematronArtefact> ret = new ArrayList <EPeppolStandardValidationSchematronArtefact> ();
+    for (final EPeppolStandardValidationSchematronArtefact e : values ())
       if (e.getValidationKey ().hasSameSpecificationAndTransaction (aValidationKey))
         ret.add (e);
     return ret;
@@ -108,7 +128,7 @@ public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
   public static Set <ValidationKey> getAllValidationKeys ()
   {
     final Set <ValidationKey> ret = new LinkedHashSet <ValidationKey> ();
-    for (final EBIICoreValidationSchematronArtefact e : values ())
+    for (final EPeppolStandardValidationSchematronArtefact e : values ())
       ret.add (e.m_aValidationKey);
     return ret;
   }
