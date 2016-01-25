@@ -27,7 +27,6 @@ import com.helger.peppol.validation.engine.UBLDocumentValidator;
 import com.helger.peppol.validation.engine.mock.CTestFiles;
 import com.helger.peppol.validation.engine.mock.MockFile;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
-import com.helger.peppol.validation.engine.peppol.ValidationBootstraper;
 
 /**
  * Test class for class {@link UBLDocumentValidator}.

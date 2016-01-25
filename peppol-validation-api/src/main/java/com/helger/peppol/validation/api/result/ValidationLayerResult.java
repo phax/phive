@@ -41,22 +41,27 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   private final IResourceErrorGroup m_aResourceErrors;
   private final ETriState m_eSuccess;
 
-  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IResourceError aResourceError)
+  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                                @Nonnull final IResourceError aResourceError)
   {
     this (aValidationArtefact, new ResourceErrorGroup (aResourceError));
   }
 
-  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final Iterable <? extends IResourceError> aResourceErrors)
+  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                                @Nonnull final Iterable <? extends IResourceError> aResourceErrors)
   {
     this (aValidationArtefact, new ResourceErrorGroup (aResourceErrors));
   }
 
-  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IResourceErrorGroup aResourceErrors)
+  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                                @Nonnull final IResourceErrorGroup aResourceErrors)
   {
     this (aValidationArtefact, aResourceErrors, ETriState.valueOf (aResourceErrors.containsNoFailure ()));
   }
 
-  private ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IResourceErrorGroup aResourceErrors, @Nonnull final ETriState eSuccess)
+  private ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                                 @Nonnull final IResourceErrorGroup aResourceErrors,
+                                 @Nonnull final ETriState eSuccess)
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     m_aResourceErrors = ValueEnforcer.notNull (aResourceErrors, "ResourceErrors");
@@ -101,7 +106,10 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact).append ("ResourceErrorGroup", m_aResourceErrors).append ("Success", m_eSuccess).toString ();
+    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
+                                       .append ("ResourceErrorGroup", m_aResourceErrors)
+                                       .append ("Success", m_eSuccess)
+                                       .toString ();
   }
 
   @Nonnull

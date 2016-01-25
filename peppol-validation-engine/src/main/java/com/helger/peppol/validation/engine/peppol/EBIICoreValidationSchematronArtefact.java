@@ -40,12 +40,12 @@ import com.helger.peppol.validation.api.artefact.IValidationArtefact;
  */
 public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
 {
- CATALOGUE_CORE ("Catalogue/BIICORE-UBL-T19-V1.0.sch", PeppolValidationKeys.CATALOGUE_01_T19),
- ORDER_CORE ("Order/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDER_03_T01),
- INVOICE_CORE ("Invoice/BIICORE-UBL-T10-V1.0.sch", PeppolValidationKeys.INVOICE_04_T10),
- BILLING_CREDIT_NOTE_CORE ("Billing/BIICORE-UBL-T14-V1.0.sch", PeppolValidationKeys.BILLING_05_T14),
- ORDERING_ORDER_CORE ("Ordering/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDERING_28_T01),
- DESPATCH_ADVICE_CORE ("DespatchAdvice/BIICORE-UBL-T16-V1.0.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16);
+  CATALOGUE_CORE ("Catalogue/BIICORE-UBL-T19-V1.0.sch", PeppolValidationKeys.CATALOGUE_01_T19),
+  ORDER_CORE ("Order/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDER_03_T01),
+  INVOICE_CORE ("Invoice/BIICORE-UBL-T10-V1.0.sch", PeppolValidationKeys.INVOICE_04_T10),
+  BILLING_CREDIT_NOTE_CORE ("Billing/BIICORE-UBL-T14-V1.0.sch", PeppolValidationKeys.BILLING_05_T14),
+  ORDERING_ORDER_CORE ("Ordering/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDERING_28_T01),
+  DESPATCH_ADVICE_CORE ("DespatchAdvice/BIICORE-UBL-T16-V1.0.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16);
 
   private final ClassPathResource m_aResource;
   private final ValidationKey m_aValidationKey;

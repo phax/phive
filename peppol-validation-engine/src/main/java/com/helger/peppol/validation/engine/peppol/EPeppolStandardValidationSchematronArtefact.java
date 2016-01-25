@@ -41,32 +41,32 @@ import com.helger.peppol.validation.api.artefact.IValidationArtefact;
  */
 public enum EPeppolStandardValidationSchematronArtefact implements IValidationArtefact
 {
- CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
- CATALOGUE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
+  CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
+  CATALOGUE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
 
- CATALOGUE_RESPONSE_RULES ("Catalogue/BIIRULES-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
- CATALOGUE_RESPONSE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_RULES ("Catalogue/BIIRULES-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
 
- ORDER_RULES ("Order/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
- ORDER_OPENPEPPOL ("Order/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
+  ORDER_RULES ("Order/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
+  ORDER_OPENPEPPOL ("Order/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
 
- INVOICE_RULES ("Invoice/BIIRULES-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
- INVOICE_OPENPEPPOL ("Invoice/OPENPEPPOL-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
+  INVOICE_RULES ("Invoice/BIIRULES-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
+  INVOICE_OPENPEPPOL ("Invoice/OPENPEPPOL-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
 
- BILLING_CREDIT_NOTE_RULES ("Billing/BIIRULES-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
- BILLING_CREDIT_NOTE_OPENPEPPOL ("Billing/OPENPEPPOL-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_RULES ("Billing/BIIRULES-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_OPENPEPPOL ("Billing/OPENPEPPOL-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
 
- ORDERING_ORDER_RULES ("Ordering/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
- ORDERING_ORDER_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
+  ORDERING_ORDER_RULES ("Ordering/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
+  ORDERING_ORDER_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
 
- ORDERING_ORDER_RESPONSE_RULES ("Ordering/BIIRULES-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
- ORDERING_ORDER_RESPONSE_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
+  ORDERING_ORDER_RESPONSE_RULES ("Ordering/BIIRULES-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
+  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
 
- DESPATCH_ADVICE_RULES ("DespatchAdvice/BIIRULES-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
- DESPATCH_ADVICE_OPENPEPPOL ("DespatchAdvice/OPENPEPPOL-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_RULES ("DespatchAdvice/BIIRULES-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_OPENPEPPOL ("DespatchAdvice/OPENPEPPOL-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
 
- MLR_RULES ("MLR/BIIRULES-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71),
- MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71);
+  MLR_RULES ("MLR/BIIRULES-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71),
+  MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
   private final ValidationKey m_aValidationKey;

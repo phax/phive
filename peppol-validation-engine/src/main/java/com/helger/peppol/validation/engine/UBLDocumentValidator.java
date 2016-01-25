@@ -51,6 +51,7 @@ import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
 import com.helger.commons.xml.transform.TransformSourceFactory;
 import com.helger.commons.xml.xpath.XPathExpressionHelper;
 import com.helger.commons.xml.xpath.XPathHelper;
+import com.helger.peppol.validation.api.ValidationConfiguration;
 import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 import com.helger.peppol.validation.api.artefact.ValidationArtefact;
@@ -160,7 +161,8 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument, @Nullable final ClassLoader aClassLoader)
+  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                                   @Nullable final ClassLoader aClassLoader)
   {
     ValueEnforcer.notNull (aUBLDocument, "UBLDocument");
 
@@ -168,7 +170,9 @@ public class UBLDocumentValidator
     {
       // Find the document type that is required for the configured
       // validation
-      final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ().getTransaction ().getUBLDocumentType ();
+      final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
+                                                                  .getTransaction ()
+                                                                  .getUBLDocumentType ();
 
       // Find the XML schema required for validation
       // as we don't have a node, we need to trust the implementation class
@@ -186,13 +190,19 @@ public class UBLDocumentValidator
       {
         // Happens when non-XML document is trying to be parsed
         if (ex.getCause () instanceof SAXParseException)
-          aErrors.addResourceError (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
+          aErrors.addResourceError (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
+                                                                              (SAXParseException) ex.getCause ()));
         else
-          aErrors.addResourceError (new ResourceError (new ResourceLocation (aUBLDocument.getSystemId ()), EErrorLevel.FATAL_ERROR, "The document to be validated is non an XML document", ex));
+          aErrors.addResourceError (new ResourceError (new ResourceLocation (aUBLDocument.getSystemId ()),
+                                                       EErrorLevel.FATAL_ERROR,
+                                                       "The document to be validated is non an XML document",
+                                                       ex));
       }
 
       // Build result object
-      return new ValidationLayerResult (new ValidationArtefact (EValidationArtefactType.XSD, eUBLDocumentType.getXSDResource (aClassLoader), m_aConfiguration.getValidationKey ()),
+      return new ValidationLayerResult (new ValidationArtefact (EValidationArtefactType.XSD,
+                                                                eUBLDocumentType.getXSDResource (aClassLoader),
+                                                                m_aConfiguration.getValidationKey ()),
                                         aErrors.getAllFailures ());
     }
     finally
@@ -250,7 +260,8 @@ public class UBLDocumentValidator
    * @param aResultList
    *        The result list to be filled. May not be <code>null</code>.
    */
-  public void applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument, @Nonnull final ValidationLayerResultList aResultList)
+  public void applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                         @Nonnull final ValidationLayerResultList aResultList)
   {
     ValueEnforcer.notNull (aUBLDocument, "UBLDocument");
     ValueEnforcer.notNull (aResultList, "ResultList");
@@ -285,18 +296,25 @@ public class UBLDocumentValidator
         {
           aXPathContext = XPathHelper.createNewXPath ();
           final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext ();
-          for (final Map.Entry <String, String> aEntry : UBL21NamespaceContext.getInstance ().getPrefixToNamespaceURIMap ().entrySet ())
+          for (final Map.Entry <String, String> aEntry : UBL21NamespaceContext.getInstance ()
+                                                                              .getPrefixToNamespaceURIMap ()
+                                                                              .entrySet ())
             aNSContext.addMapping (aEntry.getKey (), aEntry.getValue ());
 
           // Add the "ubl" mapping for the root namespace
-          final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ().getTransaction ().getUBLDocumentType ();
+          final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
+                                                                      .getTransaction ()
+                                                                      .getUBLDocumentType ();
           aNSContext.addMapping ("ubl", eUBLDocumentType.getNamespaceURI ());
 
           aXPathContext.setNamespaceContext (aNSContext);
         }
         try
         {
-          final Boolean aResult = XPathExpressionHelper.evalXPathToBoolean (aXPathContext, aArtefact.getValidationKey ().getPrerequisiteXPath (), XMLHelper.getOwnerDocument (aUBLDocumentNode));
+          final Boolean aResult = XPathExpressionHelper.evalXPathToBoolean (aXPathContext,
+                                                                            aArtefact.getValidationKey ()
+                                                                                     .getPrerequisiteXPath (),
+                                                                            XMLHelper.getOwnerDocument (aUBLDocumentNode));
           if (aResult != null && !aResult.booleanValue ())
           {
             s_aLogger.info ("Ignoring validation artefact " +
@@ -354,7 +372,11 @@ public class UBLDocumentValidator
       catch (final Exception ex)
       {
         // Usually an error in the Schematron
-        aResultList.add (new ValidationLayerResult (aArtefact, new ResourceError (new ResourceLocation (aSCHRes.getPath ()), EErrorLevel.ERROR, ex.getMessage (), ex)));
+        aResultList.add (new ValidationLayerResult (aArtefact,
+                                                    new ResourceError (new ResourceLocation (aSCHRes.getPath ()),
+                                                                       EErrorLevel.ERROR,
+                                                                       ex.getMessage (),
+                                                                       ex)));
       }
     }
   }
@@ -408,7 +430,8 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument, @Nullable final ClassLoader aClassLoader)
+  public ValidationLayerResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                                            @Nullable final ClassLoader aClassLoader)
   {
     final ValidationLayerResultList ret = new ValidationLayerResultList ();
     // XSD validation

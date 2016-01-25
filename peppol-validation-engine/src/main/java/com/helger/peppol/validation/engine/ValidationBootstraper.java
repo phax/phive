@@ -14,12 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.engine.peppol;
+package com.helger.peppol.validation.engine;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.timing.StopWatch;
+import com.helger.peppol.validation.engine.peppol.EPeppolStandardValidationSchematronArtefact;
+import com.helger.peppol.validation.engine.peppol.EPeppolThirdPartyValidationSchematronArtefact;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**

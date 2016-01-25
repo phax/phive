@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.engine;
+package com.helger.peppol.validation.api;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +27,6 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
