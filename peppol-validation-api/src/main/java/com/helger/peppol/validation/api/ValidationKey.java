@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
@@ -169,7 +170,8 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
   {
     if (aOther == null)
       return false;
-    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) && m_aTransaction.equals (aOther.m_aTransaction);
+    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
+           m_aTransaction.equals (aOther.m_aTransaction);
   }
 
   public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationKey aOther)
@@ -179,12 +181,14 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
     return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
            m_aTransaction.equals (aOther.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, aOther.m_aCountry) &&
-           (EqualsHelper.equals (m_aSectorKey, aOther.m_aSectorKey) || (m_aSectorKey == null && aOther.m_aSectorKey != null));
+           (EqualsHelper.equals (m_aSectorKey, aOther.m_aSectorKey) ||
+            (m_aSectorKey == null && aOther.m_aSectorKey != null));
   }
 
   public int compareTo (@Nonnull final ValidationKey aOther)
   {
-    int ret = CompareHelper.compare (m_aBusinessSpecification.getNumber (), aOther.m_aBusinessSpecification.getNumber ());
+    int ret = CompareHelper.compare (m_aBusinessSpecification.getNumber (),
+                                     aOther.m_aBusinessSpecification.getNumber ());
     if (ret == 0)
     {
       ret = m_aTransaction.getTransactionKey ().compareTo (aOther.m_aTransaction.getTransactionKey ());
@@ -222,7 +226,12 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aBusinessSpecification).append (m_aTransaction).append (m_aCountry).append (m_aSectorKey).append (m_sPrerequisiteXPath).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aBusinessSpecification)
+                                       .append (m_aTransaction)
+                                       .append (m_aCountry)
+                                       .append (m_aSectorKey)
+                                       .append (m_sPrerequisiteXPath)
+                                       .getHashCode ();
   }
 
   @Override
@@ -244,6 +253,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
    *
    * @author Philip Helger
    */
+  @NotThreadSafe
   public static class Builder
   {
     private IBusinessSpecification m_aBusinessSpecification;
@@ -320,7 +330,11 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
         throw new IllegalStateException ("The Business specification must be provided");
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
-      return new ValidationKey (m_aBusinessSpecification, m_aTransaction, m_sCountry, m_aSectorKey, m_sPrerequisiteXPath);
+      return new ValidationKey (m_aBusinessSpecification,
+                                m_aTransaction,
+                                m_sCountry,
+                                m_aSectorKey,
+                                m_sPrerequisiteXPath);
     }
   }
 }

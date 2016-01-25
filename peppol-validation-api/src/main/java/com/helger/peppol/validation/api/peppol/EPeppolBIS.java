@@ -17,8 +17,10 @@
 package com.helger.peppol.validation.api.peppol;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.lang.EnumHelper;
 import com.helger.peppol.validation.api.IBusinessSpecification;
 
 /**
@@ -65,5 +67,11 @@ public enum EPeppolBIS implements IBusinessSpecification
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  @Nullable
+  public static EPeppolBIS getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EPeppolBIS.class, sID);
   }
 }

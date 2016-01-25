@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.commons.string.StringHelper;
-import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 
 /**
  * Test class for class {@link EBII2Transaction}.
@@ -44,7 +43,10 @@ public final class EBII2TransactionTest
       assertTrue (StringHelper.hasText (eTransaction.getID ()));
       assertTrue (StringHelper.hasText (eTransaction.getName ()));
       assertTrue (eTransaction.getNumber () > 0);
-      assertTrue (eTransaction.getTransactionID ().length () > 0);
+      assertNotNull (eTransaction.getSubNumber ());
+      assertTrue (StringHelper.hasText (eTransaction.getTransactionID ()));
+      assertTrue (StringHelper.hasText (eTransaction.getTransactionKey ()));
+      assertTrue (StringHelper.hasText (eTransaction.getTransactionKeyShort ()));
       assertNotNull (eTransaction.getUBLDocumentType ());
 
       assertSame (eTransaction, EBII2Transaction.valueOf (eTransaction.name ()));
