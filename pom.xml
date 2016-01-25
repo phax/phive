@@ -114,6 +114,11 @@
 
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>peppol-validation-artefacts</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>peppol-validation-engine</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -134,6 +139,7 @@
   </dependencies>
   
   <modules>
+    <module>peppol-validation-artefacts</module>
     <module>peppol-validation-engine</module>
   </modules>
 </project>
