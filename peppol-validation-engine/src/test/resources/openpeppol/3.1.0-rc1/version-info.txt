@@ -1,6 +1,0 @@
-VERSION INFORMATION
--------------------
-This ZIP contains the official OpenPEPPOL Validation Artifacts (XSLT + SCH files) for BIS 2.0 documents.
-Version   : 3.1.0_RC1
-Build time: 20150902_133404
-GIT number: 8cc2f3d167e9a578283b9ed23ea1aead49b07d1d

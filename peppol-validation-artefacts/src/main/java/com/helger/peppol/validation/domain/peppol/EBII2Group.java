@@ -31,11 +31,11 @@ import com.helger.peppol.validation.domain.ISpecificationGroup;
  */
 public enum EBII2Group implements ISpecificationGroup
 {
- ARCHITECTURE ("architecture"),
- NOTIFICATION ("notification"),
- TENDERING ("tendering"),
- CATALOGUE ("catalogue"),
- POST_AWARD ("post-award");
+  ARCHITECTURE ("architecture"),
+  NOTIFICATION ("notification"),
+  TENDERING ("tendering"),
+  CATALOGUE ("catalogue"),
+  POST_AWARD ("post-award");
 
   private final String m_sID;
 

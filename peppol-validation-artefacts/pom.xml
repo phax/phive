@@ -56,9 +56,13 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-ubl21</artifactId>
-      <scope>test</scope>
+      <artifactId>ph-commons</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-ubl21</artifactId>
+    </dependency>
+    
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
@@ -95,7 +99,7 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.peppol.validation.artefact.*
+              com.helger.peppol.validation.domain.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*

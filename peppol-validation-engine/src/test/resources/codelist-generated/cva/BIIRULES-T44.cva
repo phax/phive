@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><ns2:ContextValueAssociation xmlns:ns2="http://docs.oasis-open.org/codelist/ns/ContextValueAssociation/1.0/" name="BIIRULES-T44"><ValueLists><ValueList uri="../gc/BIIRULES-BinaryObjectMimeCode.gc" xml:id="BinaryObjectMimeCode"/><ValueList uri="../gc/BIIRULES-TenderTypeCode.gc" xml:id="TenderTypeCode"/></ValueLists><Contexts><Context mark="fatal" values="TenderTypeCode" address="cbc:TenderTypeCode"><Message>[CL-T44-R001]-The tender type code MUST be one of the following:
-
-- Technical Tender
-- Economic Tender
-- Technical and Economic Tender</Message></Context><Context mark="fatal" values="BinaryObjectMimeCode" address="@mimeCode"><Message>[CL-T44-R002]-For Mime code in attribute use MIMEMediaType.</Message></Context></Contexts></ns2:ContextValueAssociation>
