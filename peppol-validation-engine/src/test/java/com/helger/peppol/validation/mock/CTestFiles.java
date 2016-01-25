@@ -27,7 +27,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
-import com.helger.peppol.validation.domain.ValidationKey;
+import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
 
 @Immutable

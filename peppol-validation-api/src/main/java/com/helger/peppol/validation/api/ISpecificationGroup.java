@@ -14,25 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain;
+package com.helger.peppol.validation.api;
 
 import java.io.Serializable;
 
-import com.helger.commons.annotation.MustImplementComparable;
 import com.helger.commons.id.IHasID;
-import com.helger.commons.name.IHasDisplayName;
 
 /**
- * The base interface for business specifications (e.g. PEPPOL BIS)
+ * Represents the grouping of transactions.
  *
  * @author Philip Helger
  */
-@MustImplementComparable
-public interface IBusinessSpecification extends IHasID <String>, IHasDisplayName, Serializable
+public interface ISpecificationGroup extends IHasID <String>, Serializable
 {
-  /**
-   * @return The internal number of the business specification. Used for
-   *         ordering.
-   */
-  int getNumber ();
+  /* empty */
 }

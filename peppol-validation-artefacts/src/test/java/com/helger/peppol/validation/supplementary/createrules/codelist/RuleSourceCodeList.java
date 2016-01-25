@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FileOperations;
-import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
+import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
 
 public final class RuleSourceCodeList

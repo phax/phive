@@ -27,8 +27,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.domain.ValidationKey;
+import com.helger.peppol.validation.api.ValidationKey;
+import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
  * This class contains the configuration to run a single UBL document

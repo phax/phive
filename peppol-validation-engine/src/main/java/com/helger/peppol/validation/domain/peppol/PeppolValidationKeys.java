@@ -18,8 +18,10 @@ package com.helger.peppol.validation.domain.peppol;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.peppol.validation.domain.ValidationKey;
-import com.helger.peppol.validation.domain.ValidationSectorKey;
+import com.helger.peppol.validation.api.ValidationKey;
+import com.helger.peppol.validation.api.ValidationSectorKey;
+import com.helger.peppol.validation.api.peppol.EBII2Transaction;
+import com.helger.peppol.validation.api.peppol.EPeppolBIS;
 
 /**
  * This class contains the validation transactions used in PEPPOL. It uses

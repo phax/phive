@@ -26,7 +26,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.domain.ValidationKey;
+import com.helger.peppol.validation.api.ValidationKey;
 
 /**
  * This class describes a simple test file: the path where it resides and the

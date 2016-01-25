@@ -29,7 +29,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.id.IHasID;
-import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
+import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.codelist.RuleSourceCodeList;
 import com.helger.peppol.validation.supplementary.createrules.sch.RuleSourceBusinessRule;
 

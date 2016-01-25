@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation;
+package com.helger.peppol.validation.api.result;
 
 import java.io.Serializable;
 
@@ -27,7 +27,7 @@ import com.helger.commons.error.ResourceErrorGroup;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.artefact.IValidationArtefact;
+import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
  * This class captures the validation result of a single validation layer. It

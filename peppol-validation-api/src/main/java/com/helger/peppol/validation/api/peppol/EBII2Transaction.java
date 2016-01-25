@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain.peppol;
+package com.helger.peppol.validation.api.peppol;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.peppol.validation.domain.ISpecificationTransaction;
+import com.helger.peppol.validation.api.ISpecificationTransaction;
 import com.helger.ubl21.EUBL21DocumentType;
 
 /**

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain.peppol;
+package com.helger.peppol.validation.api.peppol;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.commons.string.StringHelper;
+import com.helger.peppol.validation.api.peppol.EBII2Group;
 
 /**
  * Test class for class {@link EBII2Group}.

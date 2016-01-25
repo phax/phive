@@ -27,10 +27,10 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.peppol.validation.ValidationConfiguration;
-import com.helger.peppol.validation.artefact.IValidationArtefact;
+import com.helger.peppol.validation.api.ValidationKey;
+import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolStandardValidationSchematronArtefact;
 import com.helger.peppol.validation.artefact.peppol.EPeppolThirdPartyValidationSchematronArtefact;
-import com.helger.peppol.validation.domain.ValidationKey;
 
 /**
  * This class contains the configuration to run a single UBL document

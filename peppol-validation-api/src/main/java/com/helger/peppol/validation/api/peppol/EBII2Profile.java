@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain.peppol;
+package com.helger.peppol.validation.api.peppol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.peppol.validation.domain.ISpecificationProfile;
-import com.helger.peppol.validation.domain.ISpecificationTransaction;
+import com.helger.peppol.validation.api.ISpecificationProfile;
+import com.helger.peppol.validation.api.ISpecificationTransaction;
 
 /**
  * Defines the predefined CEN BII2 profiles. Each profile consists of a set of

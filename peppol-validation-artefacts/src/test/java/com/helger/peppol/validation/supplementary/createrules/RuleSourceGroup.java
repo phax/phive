@@ -29,7 +29,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
+import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 
 public final class RuleSourceGroup
 {

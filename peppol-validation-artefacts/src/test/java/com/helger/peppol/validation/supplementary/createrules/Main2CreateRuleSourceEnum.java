@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
-import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
+import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 
 /**
  * Create the content of the {@link ERuleSource} enum. Must be run AFTER

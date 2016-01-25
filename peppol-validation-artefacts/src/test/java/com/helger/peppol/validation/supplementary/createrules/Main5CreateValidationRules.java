@@ -22,7 +22,7 @@ import java.util.List;
 
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FileOperations;
-import com.helger.peppol.validation.domain.peppol.EBII2Transaction;
+import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.codelist.RuleCodeListCreator;
 import com.helger.peppol.validation.supplementary.createrules.codelist.RuleSourceCodeList;
 import com.helger.peppol.validation.supplementary.createrules.sch.RuleSchematronCreator;

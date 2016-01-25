@@ -28,9 +28,9 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.artefact.EValidationArtefactType;
-import com.helger.peppol.validation.artefact.IValidationArtefact;
-import com.helger.peppol.validation.domain.ValidationKey;
+import com.helger.peppol.validation.api.ValidationKey;
+import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
+import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 import com.helger.peppol.validation.domain.peppol.PeppolValidationKeys;
 
 /**

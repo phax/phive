@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.domain.peppol;
+package com.helger.peppol.validation.api.peppol;
 
 import java.util.Locale;
 

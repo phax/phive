@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact;
+package com.helger.peppol.validation.api.artefact;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,8 +31,8 @@ import com.helger.commons.name.IHasName;
  */
 public enum EValidationArtefactType implements IHasID <String>,IHasName
 {
- XSD ("xsd", "XML Schema"),
- SCHEMATRON ("schematron", "Schematron");
+  XSD ("xsd", "XML Schema"),
+  SCHEMATRON ("schematron", "Schematron");
 
   private final String m_sID;
   private final String m_sName;

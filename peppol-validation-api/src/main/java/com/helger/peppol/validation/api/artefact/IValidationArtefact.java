@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.artefact;
+package com.helger.peppol.validation.api.artefact;
 
 import java.io.Serializable;
 
@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.domain.ValidationKey;
+import com.helger.peppol.validation.api.ValidationKey;
 
 /**
  * Base interface for a single validation artefact that uses Schematron for
