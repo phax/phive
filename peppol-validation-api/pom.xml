@@ -24,12 +24,12 @@
     <artifactId>peppol-validation-engine-parent-pom</artifactId>
     <version>1.1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>peppol-validation-artefacts</artifactId>
+  <artifactId>peppol-validation-api</artifactId>
   <packaging>bundle</packaging>
-  <name>peppol-validation-artefacts</name>
-  <description>PEPPOL BIS v2 validation artefacts</description>
-  <url>https://github.com/phax/peppol-validation-engine/peppol-validation-artefacts</url>
-  <inceptionYear>2015</inceptionYear>
+  <name>peppol-validation-engine</name>
+  <description>PEPPOL BIS v2 validation engine API</description>
+  <url>https://github.com/phax/peppol-validation-engine/peppol-validation-api</url>
+  <inceptionYear>2016</inceptionYear>
   
   <licenses>
     <license>
@@ -56,29 +56,13 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>peppol-validation-api</artifactId>
-      <scope>test</scope>
+      <artifactId>ph-commons</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-schematron</artifactId>
-      <scope>test</scope>
+      <artifactId>ph-ubl21</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.odftoolkit</groupId>
-      <artifactId>simple-odf</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-genericode</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>peppol-testfiles</artifactId>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
@@ -95,25 +79,12 @@
         <configuration>
           <instructions>
             <Export-Package>
-              com.helger.peppol.validation.domain.*
+              com.helger.peppol.validation.api.*
             </Export-Package>
             <Import-Package>
               !javax.annotation.*,*
             </Import-Package>
           </instructions>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>src/main/resources/peppol-rules/**</exclude>
-            <exclude>src/test/resources/codelist-generated/**</exclude>
-            <exclude>src/test/resources/openpeppol/**</exclude>
-            <exclude>src/test/resources/rule-source/**</exclude>
-            <exclude>src/test/resources/rule-utils/**</exclude>
-          </excludes>
         </configuration>
       </plugin>
     </plugins>

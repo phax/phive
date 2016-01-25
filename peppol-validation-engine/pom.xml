@@ -60,6 +60,10 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
+      <artifactId>peppol-validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
       <artifactId>peppol-validation-artefacts</artifactId>
     </dependency>
     <dependency>
