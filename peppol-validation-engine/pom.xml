@@ -76,16 +76,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.odftoolkit</groupId>
-      <artifactId>simple-odf</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-genericode</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>com.helger</groupId>
       <artifactId>peppol-testfiles</artifactId>
       <scope>test</scope>
