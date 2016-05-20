@@ -5,6 +5,9 @@
   <rule context="$country">
     <assert flag="fatal" test="$EUGEN-T16-R003" id="EUGEN-T16-R003">[EUGEN-T16-R003]-A country identification code MUST have a list identifier attribute ISO3166-1:Alpha2.</assert>
   </rule>
+  <rule context="$despatch_advice_Line">
+    <assert flag="fatal" test="$EUGEN-T16-R007" id="EUGEN-T16-R007">[EUGEN-T16-R007]-Each despatch advice line MUST have a delivered quantity</assert>
+  </rule>
   <rule context="$endpoint">
     <assert flag="fatal" test="$EUGEN-T16-R001" id="EUGEN-T16-R001">[EUGEN-T16-R001]-An endpoint identifier MUST have a scheme identifier attribute.</assert>
   </rule>

@@ -342,7 +342,7 @@
 
 
 	<!--RULE -->
-<xsl:template match="/cac:Country" mode="M9" priority="1005">
+<xsl:template match="/cac:Country" mode="M9" priority="1006">
     <svrl:fired-rule context="/cac:Country" />
 
 		<!--ASSERT -->
@@ -356,6 +356,27 @@
             <xsl:apply-templates mode="schematron-select-full-path" select="." />
           </xsl:attribute>
           <svrl:text>[EUGEN-T16-R003]-A country identification code MUST have a list identifier attribute ISO3166-1:Alpha2.</svrl:text>
+        </svrl:failed-assert>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates mode="M9" select="*" />
+  </xsl:template>
+
+	<!--RULE -->
+<xsl:template match="//cac:DespatchLine" mode="M9" priority="1005">
+    <svrl:fired-rule context="//cac:DespatchLine" />
+
+		<!--ASSERT -->
+<xsl:choose>
+      <xsl:when test="(cbc:DeliveredQuantity)" />
+      <xsl:otherwise>
+        <svrl:failed-assert test="(cbc:DeliveredQuantity)">
+          <xsl:attribute name="id">EUGEN-T16-R007</xsl:attribute>
+          <xsl:attribute name="flag">fatal</xsl:attribute>
+          <xsl:attribute name="location">
+            <xsl:apply-templates mode="schematron-select-full-path" select="." />
+          </xsl:attribute>
+          <svrl:text>[EUGEN-T16-R007]-Each despatch advice line MUST have a delivered quantity</svrl:text>
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
@@ -384,14 +405,14 @@
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="//cac:Party" mode="M9" priority="1003">
-    <svrl:fired-rule context="//cac:Party" />
+<xsl:template match="//cac:PartyIdentification" mode="M9" priority="1003">
+    <svrl:fired-rule context="//cac:PartyIdentification" />
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="cac:PartyIdentification/cbc:ID/@schemeID" />
+      <xsl:when test="cbc:ID/@schemeID" />
       <xsl:otherwise>
-        <svrl:failed-assert test="cac:PartyIdentification/cbc:ID/@schemeID">
+        <svrl:failed-assert test="cbc:ID/@schemeID">
           <xsl:attribute name="id">EUGEN-T16-R002</xsl:attribute>
           <xsl:attribute name="flag">fatal</xsl:attribute>
           <xsl:attribute name="location">

@@ -31,41 +31,41 @@ import com.helger.peppol.validation.api.peppol.EBII2Transaction;
  */
 public enum ERuleSource
 {
- T01 (EBII2Transaction.T01, "V1.0", "v09", false, "v01", true),
- T02 (EBII2Transaction.T02, "V1.0", "v05", false, null, false),
- T04 (EBII2Transaction.T04, null, "v02", false, null, false),
- T05 (EBII2Transaction.T05, null, "v02", false, null, false),
- T10 (EBII2Transaction.T10, "V1.0", "v12", true, "v03", true),
- T14 (EBII2Transaction.T14, "V1.0", "v09", true, "v03", true),
- T16 (EBII2Transaction.T16, "V1.0", "v05", false, "v01", true),
- T17 (EBII2Transaction.T17, null, "v04", true, null, false),
- T18 (EBII2Transaction.T18, null, "v02", false, null, false),
- T19 (EBII2Transaction.T19, "V1.0", "v05", true, "v01", true),
- T20 (EBII2Transaction.T20, null, "v01", true, null, false),
- T21 (EBII2Transaction.T21, null, "v01", true, null, false),
- T22 (EBII2Transaction.T22, null, "v01", false, null, false),
- T23 (EBII2Transaction.T23, null, "v01", false, null, false),
- T26 (EBII2Transaction.T26, null, "v02", true, null, false),
- T40 (EBII2Transaction.T40, "V1.0", "v06", true, null, false),
- T41 (EBII2Transaction.T41, null, "v04", true, null, false),
- T42 (EBII2Transaction.T42, null, "v01", false, null, false),
- T44 (EBII2Transaction.T44, "V1.0", "v03", true, null, false),
- T45 (EBII2Transaction.T45, null, "v02", false, null, false),
- T54 (EBII2Transaction.T54, null, "v01", true, null, false),
- T55 (EBII2Transaction.T55, null, "v01", false, null, false),
- T58 (EBII2Transaction.T58, null, "v01", false, "v01", true),
- T59 (EBII2Transaction.T59, null, "v01", false, null, false),
- T64A (EBII2Transaction.T64A, null, null, false, null, false),
- T64B (EBII2Transaction.T64B, null, null, false, null, false),
- T64C (EBII2Transaction.T64C, null, null, false, null, false),
- T65 (EBII2Transaction.T65, null, "v01", false, null, false),
- T68 (EBII2Transaction.T68, null, "v02", false, null, false),
- T69 (EBII2Transaction.T69, null, "v03", false, null, false),
- T71 (EBII2Transaction.T71, null, "v03", true, "v01", true),
- T72 (EBII2Transaction.T72, null, "v01", false, null, false),
- T73 (EBII2Transaction.T73, null, "v01", false, null, false),
- T76 (EBII2Transaction.T76, null, "v01", false, "v01", true),
- CODELISTS (null, null, "v04", false, "v01", false);
+  T01 (EBII2Transaction.T01, "V1.0", "v09", false, "v01", true),
+  T02 (EBII2Transaction.T02, "V1.0", "v05", false, null, false),
+  T04 (EBII2Transaction.T04, null, "v02", false, null, false),
+  T05 (EBII2Transaction.T05, null, "v02", false, null, false),
+  T10 (EBII2Transaction.T10, "V1.0", "v12", true, "v03", true),
+  T14 (EBII2Transaction.T14, "V1.0", "v09", true, "v03", true),
+  T16 (EBII2Transaction.T16, "V1.0", "v05", false, "v03", true),
+  T17 (EBII2Transaction.T17, null, "v04", true, null, false),
+  T18 (EBII2Transaction.T18, null, "v02", false, null, false),
+  T19 (EBII2Transaction.T19, "V1.0", "v05", true, "v01", true),
+  T20 (EBII2Transaction.T20, null, "v01", true, null, false),
+  T21 (EBII2Transaction.T21, null, "v01", true, null, false),
+  T22 (EBII2Transaction.T22, null, "v01", false, null, false),
+  T23 (EBII2Transaction.T23, null, "v01", false, null, false),
+  T26 (EBII2Transaction.T26, null, "v02", true, null, false),
+  T40 (EBII2Transaction.T40, "V1.0", "v06", true, null, false),
+  T41 (EBII2Transaction.T41, null, "v04", true, null, false),
+  T42 (EBII2Transaction.T42, null, "v01", false, null, false),
+  T44 (EBII2Transaction.T44, "V1.0", "v03", true, null, false),
+  T45 (EBII2Transaction.T45, null, "v02", false, null, false),
+  T54 (EBII2Transaction.T54, null, "v01", true, null, false),
+  T55 (EBII2Transaction.T55, null, "v01", false, null, false),
+  T58 (EBII2Transaction.T58, null, "v01", false, "v01", true),
+  T59 (EBII2Transaction.T59, null, "v01", false, null, false),
+  T64A (EBII2Transaction.T64A, null, null, false, null, false),
+  T64B (EBII2Transaction.T64B, null, null, false, null, false),
+  T64C (EBII2Transaction.T64C, null, null, false, null, false),
+  T65 (EBII2Transaction.T65, null, "v01", false, null, false),
+  T68 (EBII2Transaction.T68, null, "v02", false, null, false),
+  T69 (EBII2Transaction.T69, null, "v03", false, null, false),
+  T71 (EBII2Transaction.T71, null, "v03", true, "v01", true),
+  T72 (EBII2Transaction.T72, null, "v01", false, null, false),
+  T73 (EBII2Transaction.T73, null, "v01", false, null, false),
+  T76 (EBII2Transaction.T76, null, "v01", false, "v01", true),
+  CODELISTS (null, null, "v04", false, "v01", false);
 
   private EBII2Transaction m_eTransaction;
   private final String m_sBIICoreVersion;
@@ -124,7 +124,8 @@ public enum ERuleSource
   public File getBIIRuleFile ()
   {
     return new File ("src/test/resources/rule-source/biirules/businessrules/bii2rules-" +
-                     (isCodeListsSpecial () ? "CodeLists-" : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
+                     (isCodeListsSpecial () ? "CodeLists-"
+                                            : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
                      m_sBIIVersion +
                      ".ods");
   }
@@ -143,7 +144,8 @@ public enum ERuleSource
   public File getOpenPEPPOLRuleFile ()
   {
     return new File ("src/test/resources/rule-source/peppol/businessrules/OpenPEPPOL-" +
-                     (isCodeListsSpecial () ? "CodeLists-" : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
+                     (isCodeListsSpecial () ? "CodeLists-"
+                                            : m_eTransaction.getTransactionKeyShort () + "-BusinessRules-") +
                      m_sOpenPEPPOLVersion +
                      ".ods");
   }

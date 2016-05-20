@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--This file is generated automatically! Do NOT edit!-->
-<!--Schematron assembly for OPENPEPPOL using binding UBL and transaction T16 based on OpenPEPPOL-T16-BusinessRules-v01.ods-->
+<!--Schematron assembly for OPENPEPPOL using binding UBL and transaction T16 based on OpenPEPPOL-T16-BusinessRules-v03.ods-->
 <schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt">
   <title>OPENPEPPOL T16 bound to UBL</title>
   <ns prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
