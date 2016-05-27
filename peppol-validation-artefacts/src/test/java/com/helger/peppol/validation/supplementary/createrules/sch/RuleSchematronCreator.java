@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.io.file.SimpleFileIO;
@@ -162,8 +163,8 @@ public final class RuleSchematronCreator
       ePattern.setAttribute ("id", sTransaction);
 
       // For all assertions for the current transaction
-      for (final Map.Entry <String, List <RuleAssertion>> aPatternEntry : CollectionHelper.getSortedByKey (aRuleEntry.getValue ())
-                                                                                          .entrySet ())
+      for (final Map.Entry <String, ICommonsList <RuleAssertion>> aPatternEntry : CollectionHelper.getSortedByKey (aRuleEntry.getValue ())
+                                                                                                  .entrySet ())
       {
         // The element context to use
         final String sContextRef = '$' + CreateHelper.makeID (aPatternEntry.getKey ());
@@ -234,7 +235,8 @@ public final class RuleSchematronCreator
                                          " and binding " +
                                          eBinding.getID ());
 
-      for (final Map.Entry <String, List <RuleAssertion>> aEntryContext : aEntryTransaction.getValue ().entrySet ())
+      for (final Map.Entry <String, ICommonsList <RuleAssertion>> aEntryContext : aEntryTransaction.getValue ()
+                                                                                                   .entrySet ())
       {
         final String sContext = aEntryContext.getKey ();
         if (!_containsRuleID (aFoundRules, CreateHelper.makeID (sContext)))
@@ -257,7 +259,7 @@ public final class RuleSchematronCreator
     }
 
     // Now iterate rules and assemble Schematron
-    for (final Map.Entry <String, List <RuleParam>> aRuleEntry : aBindingTests.entrySet ())
+    for (final Map.Entry <String, ICommonsList <RuleParam>> aRuleEntry : aBindingTests.entrySet ())
     {
       final String sTransaction = aRuleEntry.getKey ();
       final File aSCHFile = aBusinessRule.getSchematronBindingFile (eBinding, sTransaction);

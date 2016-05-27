@@ -31,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.multimap.IMultiMapSetBased;
 import com.helger.commons.collection.multimap.MultiTreeMapTreeSetBased;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -58,9 +57,9 @@ public final class RuleCodeListCreator
   private static final Logger s_aLogger = LoggerFactory.getLogger (RuleCodeListCreator.class);
 
   /** From transaction to CVAData */
-  private final Map <String, CVAData> m_aCVAs = new TreeMap <String, CVAData> ();
+  private final Map <String, CVAData> m_aCVAs = new TreeMap <> ();
   /** From code list name to set of codes */
-  private final IMultiMapSetBased <String, String> m_aAllCodes = new MultiTreeMapTreeSetBased <String, String> ();
+  private final MultiTreeMapTreeSetBased <String, String> m_aAllCodes = new MultiTreeMapTreeSetBased <> ();
 
   public RuleCodeListCreator ()
   {}

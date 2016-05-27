@@ -200,8 +200,10 @@ public class UBLDocumentValidator
       }
 
       // Build result object
+      // UBL always uses exactly one XSD
       return new ValidationLayerResult (new ValidationArtefact (EValidationArtefactType.XSD,
-                                                                eUBLDocumentType.getXSDResource (aClassLoader),
+                                                                eUBLDocumentType.getAllXSDResources (aClassLoader)
+                                                                                .getFirst (),
                                                                 m_aConfiguration.getValidationKey ()),
                                         aErrors.getAllFailures ());
     }

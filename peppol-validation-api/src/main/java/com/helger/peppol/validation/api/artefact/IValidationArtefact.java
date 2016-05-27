@@ -34,7 +34,8 @@ import com.helger.peppol.validation.api.ValidationKey;
 public interface IValidationArtefact extends Serializable
 {
   /**
-   * @return The validation artefact type. May not be <code>null</code>.
+   * @return The validation artefact type - XSD or Schematron. May not be
+   *         <code>null</code>.
    */
   @Nonnull
   EValidationArtefactType getValidationArtefactType ();

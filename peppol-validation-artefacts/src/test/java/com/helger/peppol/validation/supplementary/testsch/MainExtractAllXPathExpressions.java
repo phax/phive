@@ -17,7 +17,7 @@
 package com.helger.peppol.validation.supplementary.testsch;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Set;
 import java.util.TreeSet;
@@ -25,6 +25,8 @@ import java.util.TreeSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.charset.CCharset;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.string.StringHelper;
@@ -70,7 +72,10 @@ public final class MainExtractAllXPathExpressions
         final PSPreprocessor aPreprocessor = PSPreprocessor.createPreprocessorWithoutInformationLoss (aQueryBinding);
         final PSSchema aPreprocessedSchema = aPreprocessor.getAsPreprocessedSchema (aSchema);
         if (aPreprocessedSchema == null)
-          throw new SchematronPreprocessException ("Failed to preprocess schema " + aSchema + " with query binding " + aQueryBinding);
+          throw new SchematronPreprocessException ("Failed to preprocess schema " +
+                                                   aSchema +
+                                                   " with query binding " +
+                                                   aQueryBinding);
 
         for (final PSPattern aPattern : aPreprocessedSchema.getAllPatterns ())
           for (final PSRule aRule : aPattern.getAllRules ())
@@ -83,11 +88,10 @@ public final class MainExtractAllXPathExpressions
       }
 
     final File fOut = new File ("test-xpaths.txt");
-    final Writer w = new FileWriter (fOut);
-    for (final String s : aExprs)
+    try (final Writer w = new OutputStreamWriter (FileHelper.getOutputStream (fOut), CCharset.CHARSET_UTF_8_OBJ))
     {
-      w.write ("_testOK (\"" + _escape (s) + "\");\n");
+      for (final String s : aExprs)
+        w.write ("_testOK (\"" + _escape (s) + "\");\n");
     }
-    w.close ();
   }
 }
