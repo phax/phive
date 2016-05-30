@@ -16,16 +16,15 @@
  */
 package com.helger.peppol.validation.engine.peppol;
 
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.api.ValidationKey;
@@ -108,11 +107,11 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EPeppolStandardValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
+  public static ICommonsList <EPeppolStandardValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final List <EPeppolStandardValidationSchematronArtefact> ret = new ArrayList <EPeppolStandardValidationSchematronArtefact> ();
+    final ICommonsList <EPeppolStandardValidationSchematronArtefact> ret = new CommonsArrayList <> ();
     for (final EPeppolStandardValidationSchematronArtefact e : values ())
       if (e.getValidationKey ().hasSameSpecificationAndTransaction (aValidationKey))
         ret.add (e);
@@ -125,9 +124,9 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static Set <ValidationKey> getAllValidationKeys ()
+  public static ICommonsOrderedSet <ValidationKey> getAllValidationKeys ()
   {
-    final Set <ValidationKey> ret = new LinkedHashSet <ValidationKey> ();
+    final ICommonsOrderedSet <ValidationKey> ret = new CommonsLinkedHashSet <> ();
     for (final EPeppolStandardValidationSchematronArtefact e : values ())
       ret.add (e.m_aValidationKey);
     return ret;

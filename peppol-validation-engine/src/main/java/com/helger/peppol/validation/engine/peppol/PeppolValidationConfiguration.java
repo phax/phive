@@ -16,9 +16,6 @@
  */
 package com.helger.peppol.validation.engine.peppol;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -26,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.peppol.validation.api.ValidationConfiguration;
 import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
@@ -60,7 +59,7 @@ public final class PeppolValidationConfiguration
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final List <IValidationArtefact> aValidationArtefacts = new ArrayList <IValidationArtefact> ();
+    final ICommonsList <IValidationArtefact> aValidationArtefacts = new CommonsArrayList <> ();
 
     // Note: no need to add the XSD artefacts here. They are determined by the
     // validation key automatically.

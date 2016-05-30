@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -27,6 +26,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
@@ -38,7 +39,7 @@ public final class RuleSourceGroup
   private final EBII2Transaction m_eTransaction;
   private File m_aBIICoreSchematronFile;
   // Status vars
-  private final List <RuleSourceItem> m_aItems = new ArrayList <RuleSourceItem> ();
+  private final ICommonsList <RuleSourceItem> m_aItems = new CommonsArrayList <> ();
 
   /**
    * @param aRuleDstDir
@@ -96,7 +97,7 @@ public final class RuleSourceGroup
 
   /**
    * Add all third party rules for this transaction
-   * 
+   *
    * @return this
    */
   @Nonnull

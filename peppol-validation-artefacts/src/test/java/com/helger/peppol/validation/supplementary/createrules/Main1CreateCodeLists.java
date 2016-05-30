@@ -17,13 +17,8 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
 import javax.xml.transform.Templates;
@@ -37,6 +32,14 @@ import org.odftoolkit.simple.table.Table;
 import org.w3c.dom.Document;
 
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.CommonsTreeMap;
+import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSortedMap;
+import com.helger.commons.collection.ext.ICommonsSortedSet;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
@@ -127,7 +130,7 @@ public final class Main1CreateCodeLists
 
     CreateHelper.log ("  Reading CVA data");
     int nRow = 2;
-    final Set <String> aAllReferencedCodeListNames = new TreeSet <String> ();
+    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet <> ();
     while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
@@ -168,7 +171,7 @@ public final class Main1CreateCodeLists
       aCVA.setName (FilenameHelper.getBaseName (aCVAFile));
 
       // Create ValueLists
-      final Map <String, ValueList> aValueListMap = new HashMap <String, ValueList> ();
+      final ICommonsMap <String, ValueList> aValueListMap = new CommonsHashMap <> ();
       final ValueLists aValueLists = new ValueLists ();
       // Emit only the code lists, that are used in the contexts
       for (final String sCodeListName : aCVAData.getAllUsedCodeListNames ())
@@ -216,7 +219,7 @@ public final class Main1CreateCodeLists
       throw new IllegalStateException ("CVA was not referencing any code list!");
 
     // Jut in case of error
-    final List <String> aAvailableSheets = new ArrayList <String> ();
+    final ICommonsList <String> aAvailableSheets = new CommonsArrayList <> ();
     for (int i = 0; i < aSpreadsheet.getSheetCount (); ++i)
       aAvailableSheets.add (aSpreadsheet.getSheetByIndex (i).getTableName ());
 
@@ -321,7 +324,7 @@ public final class Main1CreateCodeLists
       final File aCVAFile = _getCVAFile (sPrefix, sTransaction);
       final File aResultXSLT = _getXSLTFile (sPrefix, sTransaction);
 
-      final List <String> aMissingCodeLists = new ArrayList <String> ();
+      final ICommonsList <String> aMissingCodeLists = new CommonsArrayList <> ();
       for (final String sCodeListName : aEntry.getValue ().getAllUsedCodeListNames ())
         if (!_getGCFile (sPrefix, sCodeListName).exists ())
           aMissingCodeLists.add (sCodeListName);
@@ -361,7 +364,7 @@ public final class Main1CreateCodeLists
       final SpreadsheetDocument aSpreadsheet = SpreadsheetCache.readSpreadsheet (aCodeListFile);
 
       /** From transaction to CVAData */
-      final Map <String, CVAData> aCVAs = new TreeMap <String, CVAData> ();
+      final ICommonsSortedMap <String, CVAData> aCVAs = new CommonsTreeMap <> ();
 
       _createCVAandGC (sPrefix, aSpreadsheet, aCVAs);
 

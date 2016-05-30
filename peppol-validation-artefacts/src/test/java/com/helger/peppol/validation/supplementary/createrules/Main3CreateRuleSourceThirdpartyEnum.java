@@ -26,6 +26,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsTreeMap;
+import com.helger.commons.collection.ext.ICommonsSortedMap;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
@@ -61,7 +63,9 @@ public final class Main3CreateRuleSourceThirdpartyEnum
    */
   private static final class MyMap extends TreeMap <String, Value>
   {
-    public Value put (@Nonnull final String sKey, @Nonnull final String sVersion, @Nullable final String sGlobalPrerequisite)
+    public Value put (@Nonnull final String sKey,
+                      @Nonnull final String sVersion,
+                      @Nullable final String sGlobalPrerequisite)
     {
       final Value sOld = super.put (sKey, new Value (sVersion, sGlobalPrerequisite));
       if (sOld != null)
@@ -77,7 +81,7 @@ public final class Main3CreateRuleSourceThirdpartyEnum
   @ReturnsMutableCopy
   private static SortedMap <String, MyMap> _getRulesVersions ()
   {
-    final SortedMap <String, MyMap> ret = new TreeMap <String, MyMap> ();
+    final ICommonsSortedMap <String, MyMap> ret = new CommonsTreeMap <> ();
     for (final File aDir : new FileSystemIterator ("src/test/resources/rule-source/thirdparty"))
       if (aDir.isDirectory () && !FilenameHelper.isSystemInternalDirectory (aDir))
       {
@@ -87,7 +91,9 @@ public final class Main3CreateRuleSourceThirdpartyEnum
           if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
           {
             // Read artifacts:F2
-            final String sGlobalPrerequisite = ODFHelper.getText (SpreadsheetCache.readSpreadsheet (aFile).getTableByName ("artifacts"), 5, 1);
+            final String sGlobalPrerequisite = ODFHelper.getText (SpreadsheetCache.readSpreadsheet (aFile)
+                                                                                  .getTableByName ("artifacts"),
+                                                                  5, 1);
             final String [] aMatches = RegExHelper.getAllMatchingGroupValues (aDir.getName () +
                                                                               "-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
                                                                               aFile.getName ());

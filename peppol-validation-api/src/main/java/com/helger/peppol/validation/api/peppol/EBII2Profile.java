@@ -16,7 +16,6 @@
  */
 package com.helger.peppol.validation.api.peppol;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -29,6 +28,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.peppol.validation.api.ISpecificationProfile;
@@ -136,11 +137,11 @@ public enum EBII2Profile implements ISpecificationProfile
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EBII2Profile> getAllProfilesWithTransaction (@Nonnull final EBII2Transaction eTransaction)
+  public static ICommonsList <EBII2Profile> getAllProfilesWithTransaction (@Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.notNull (eTransaction, "Transaction");
 
-    final List <EBII2Profile> ret = new ArrayList <EBII2Profile> ();
+    final ICommonsList <EBII2Profile> ret = new CommonsArrayList <> ();
     for (final EBII2Profile eProfile : values ())
       if (eProfile.containsTransaction (eTransaction))
         ret.add (eProfile);

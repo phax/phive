@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +27,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.id.IHasID;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.codelist.RuleSourceCodeList;
@@ -40,8 +41,8 @@ public final class RuleSourceItem implements IHasID <String>
   private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
   // status vars
-  private final List <RuleSourceCodeList> m_aCodeLists = new ArrayList <RuleSourceCodeList> ();
-  private final List <RuleSourceBusinessRule> m_aBusinessRules = new ArrayList <RuleSourceBusinessRule> ();
+  private final ICommonsList <RuleSourceCodeList> m_aCodeLists = new CommonsArrayList <> ();
+  private final ICommonsList <RuleSourceBusinessRule> m_aBusinessRules = new CommonsArrayList <> ();
   private boolean m_bHasCodeList = false;
 
   /**

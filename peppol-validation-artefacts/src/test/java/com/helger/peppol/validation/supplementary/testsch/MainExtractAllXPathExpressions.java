@@ -19,13 +19,13 @@ package com.helger.peppol.validation.supplementary.testsch;
 import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.charset.CCharset;
+import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsSortedSet;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
 import com.helger.commons.io.resource.FileSystemResource;
@@ -51,7 +51,7 @@ public final class MainExtractAllXPathExpressions
 
   public static void main (final String [] args) throws Exception
   {
-    final Set <String> aExprs = new TreeSet <String> ();
+    final ICommonsSortedSet <String> aExprs = new CommonsTreeSet <> ();
     final String sPathSep = File.separator;
     for (final File f : new FileSystemRecursiveIterator (new File ("src/test/resources/")))
       if (f.isFile () &&

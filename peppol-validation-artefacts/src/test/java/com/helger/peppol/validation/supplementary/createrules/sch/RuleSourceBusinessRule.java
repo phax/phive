@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules.sch;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -27,6 +26,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.FileOperations;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
@@ -37,7 +38,7 @@ public final class RuleSourceBusinessRule
   private final File m_aOutputDirectory;
   private final String m_sID;
   private final EBII2Transaction m_eCodeListTransaction;
-  private final List <File> m_aResultSCHFiles = new ArrayList <File> ();
+  private final ICommonsList <File> m_aResultSCHFiles = new CommonsArrayList <> ();
 
   public RuleSourceBusinessRule (@Nonnull final File aSourceFilename,
                                  @Nonnull final File aOutputDirectory,

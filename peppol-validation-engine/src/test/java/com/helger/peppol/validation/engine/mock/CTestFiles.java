@@ -16,7 +16,6 @@
  */
 package com.helger.peppol.validation.engine.mock;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +24,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
 import com.helger.peppol.validation.api.ValidationKey;
@@ -38,17 +39,17 @@ public final class CTestFiles
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <MockFile> getAllTestFiles ()
+  public static ICommonsList <MockFile> getAllTestFiles ()
   {
-    final List <MockFile> ret = new ArrayList <MockFile> ();
+    final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     for (final ValidationKey aPTK : new ValidationKey [] { PeppolValidationKeys.CATALOGUE_01_T19,
-                                                             PeppolValidationKeys.CATALOGUE_01_T58,
-                                                             PeppolValidationKeys.ORDER_03_T01,
-                                                             PeppolValidationKeys.INVOICE_04_T10,
-                                                             PeppolValidationKeys.BILLING_05_T14,
-                                                             PeppolValidationKeys.ORDERING_28_T01,
-                                                             PeppolValidationKeys.ORDERING_28_T76,
-                                                             PeppolValidationKeys.DESPATCH_ADVICE_30_T16 })
+                                                           PeppolValidationKeys.CATALOGUE_01_T58,
+                                                           PeppolValidationKeys.ORDER_03_T01,
+                                                           PeppolValidationKeys.INVOICE_04_T10,
+                                                           PeppolValidationKeys.BILLING_05_T14,
+                                                           PeppolValidationKeys.ORDERING_28_T01,
+                                                           PeppolValidationKeys.ORDERING_28_T76,
+                                                           PeppolValidationKeys.DESPATCH_ADVICE_30_T16 })
       for (final ClassPathResource aRes : getAllMatchingTestFiles (aPTK))
         ret.add (new MockFile (aRes, aPTK, (Set <String>) null));
 

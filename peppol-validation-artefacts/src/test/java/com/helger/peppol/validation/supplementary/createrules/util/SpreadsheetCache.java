@@ -17,16 +17,17 @@
 package com.helger.peppol.validation.supplementary.createrules.util;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 
+import com.helger.commons.collection.ext.CommonsHashMap;
+import com.helger.commons.collection.ext.ICommonsMap;
+
 public final class SpreadsheetCache
 {
-  private static final Map <String, SpreadsheetDocument> s_aMap = new HashMap <String, SpreadsheetDocument> ();
+  private static final ICommonsMap <String, SpreadsheetDocument> s_aMap = new CommonsHashMap <> ();
 
   private SpreadsheetCache ()
   {}

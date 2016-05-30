@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules.sch;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,7 +33,9 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.io.file.SimpleFileIO;
@@ -59,7 +60,7 @@ public final class RuleSchematronCreator
   {
     private int m_nLastID = 0;
     // Map from String to ID
-    private final Map <String, String> m_aMap = new HashMap <String, String> ();
+    private final ICommonsMap <String, String> m_aMap = new CommonsHashMap <> ();
 
     @Nonnull
     @Nonempty
@@ -99,7 +100,7 @@ public final class RuleSchematronCreator
   private final PrerequesiteCache m_aPrereqCache = new PrerequesiteCache ();
 
   // Map from transaction to Map from context to list of assertions
-  private final Map <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new HashMap <String, IMultiMapListBased <String, RuleAssertion>> ();
+  private final ICommonsMap <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new CommonsHashMap <> ();
 
   private RuleSchematronCreator ()
   {}
@@ -127,7 +128,7 @@ public final class RuleSchematronCreator
         IMultiMapListBased <String, RuleAssertion> aTransactionRules = m_aAbstractRules.get (sTransaction);
         if (aTransactionRules == null)
         {
-          aTransactionRules = new MultiHashMapArrayListBased <String, RuleAssertion> ();
+          aTransactionRules = new MultiHashMapArrayListBased <> ();
           m_aAbstractRules.put (sTransaction, aTransactionRules);
         }
         aTransactionRules.putSingle (sContext, new RuleAssertion (sRuleID, sMessage, sSeverity));
@@ -202,7 +203,7 @@ public final class RuleSchematronCreator
   {
     CreateHelper.log ("    Handling sheet for binding '" + eBinding.getID () + "'");
     int nRow = 1;
-    final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased <String, RuleParam> ();
+    final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased <> ();
     while (!ODFHelper.isEmpty (aSheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aSheet, 0, nRow);

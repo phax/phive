@@ -20,7 +20,6 @@ import java.io.File;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -31,6 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsSortedSet;
 import com.helger.commons.collection.multimap.MultiTreeMapTreeSetBased;
 import com.helger.commons.microdom.IMicroDocument;
 import com.helger.commons.microdom.IMicroElement;
@@ -74,7 +75,7 @@ public final class RuleCodeListCreator
 
     CreateHelper.log ("  Reading CVA data");
     int nRow = 2;
-    final Set <String> aAllReferencedCodeListNames = new TreeSet <String> ();
+    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet <> ();
     while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);

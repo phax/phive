@@ -17,8 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -26,6 +24,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 
@@ -98,9 +98,9 @@ public enum ERuleSourceThirdparty
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <ERuleSourceThirdparty> getAllForTransaction (@Nullable final EBII2Transaction eTransaction)
+  public static ICommonsList <ERuleSourceThirdparty> getAllForTransaction (@Nullable final EBII2Transaction eTransaction)
   {
-    final List <ERuleSourceThirdparty> ret = new ArrayList <ERuleSourceThirdparty> ();
+    final ICommonsList <ERuleSourceThirdparty> ret = new CommonsArrayList <> ();
     if (eTransaction != null)
       for (final ERuleSourceThirdparty e : values ())
         if (e.getTransaction ().equals (eTransaction))

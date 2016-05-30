@@ -17,13 +17,13 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
@@ -65,7 +65,8 @@ public final class Main2CreateRuleSourceEnum
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biicore"))
       if (aFile.isFile () && aFile.getName ().endsWith (".sch"))
       {
-        final String [] aMatches = RegExHelper.getAllMatchingGroupValues ("BIICORE-UBL-(T[0-9]+)-(V[0-9]+\\.[0-9]+)\\.sch", aFile.getName ());
+        final String [] aMatches = RegExHelper.getAllMatchingGroupValues ("BIICORE-UBL-(T[0-9]+)-(V[0-9]+\\.[0-9]+)\\.sch",
+                                                                          aFile.getName ());
         if (aMatches != null)
           ret.put (aMatches[0], aMatches[1]);
         // else e.g. a CEFACT rule
@@ -81,7 +82,8 @@ public final class Main2CreateRuleSourceEnum
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biirules/businessrules"))
       if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
       {
-        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods", aFile.getName ());
+        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
+                                                                    aFile.getName ());
         if (aMatches != null)
           ret.put (aMatches[0], aMatches[1]);
         else
@@ -104,7 +106,8 @@ public final class Main2CreateRuleSourceEnum
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/peppol/businessrules"))
       if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
       {
-        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("OpenPEPPOL-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods", aFile.getName ());
+        String [] aMatches = RegExHelper.getAllMatchingGroupValues ("OpenPEPPOL-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
+                                                                    aFile.getName ());
         if (aMatches != null)
           ret.put (aMatches[0], aMatches[1]);
         else
@@ -136,7 +139,7 @@ public final class Main2CreateRuleSourceEnum
     final MyMap aBIIRules = _getBIIRulesVersions ();
     final MyMap aOpenPEPPOL = _getOpenPEPPOLVersions ();
 
-    final List <String> aKeys = new ArrayList <String> ();
+    final ICommonsList <String> aKeys = new CommonsArrayList <> ();
     for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
       aKeys.add (eTransaction.getTransactionKeyShort ());
     aKeys.add (KEY_CODELISTS);
