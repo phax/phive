@@ -16,7 +16,6 @@
  */
 package com.helger.peppol.validation.engine.mock;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -41,7 +40,7 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
-    final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
+    final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
     for (final ValidationKey aPTK : new ValidationKey [] { PeppolValidationKeys.CATALOGUE_01_T19,
                                                            PeppolValidationKeys.CATALOGUE_01_T58,
                                                            PeppolValidationKeys.ORDER_03_T01,
@@ -58,7 +57,7 @@ public final class CTestFiles
 
   @Nonnull
   @ReturnsMutableCopy
-  public static List <ClassPathResource> getAllMatchingTestFiles (@Nonnull final ValidationKey aTransactionKey)
+  public static ICommonsList <ClassPathResource> getAllMatchingTestFiles (@Nonnull final ValidationKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 

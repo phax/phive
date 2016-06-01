@@ -16,8 +16,6 @@
  */
 package com.helger.peppol.validation.engine.peppol;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -99,11 +97,11 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static List <EPeppolThirdPartyValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
+  public static ICommonsList <EPeppolThirdPartyValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final ICommonsList <EPeppolThirdPartyValidationSchematronArtefact> ret = new CommonsArrayList <> ();
+    final ICommonsList <EPeppolThirdPartyValidationSchematronArtefact> ret = new CommonsArrayList<> ();
     for (final EPeppolThirdPartyValidationSchematronArtefact e : values ())
       if (e.m_aValidationKey.hasSameSpecificationAndTransactionAndCountryAndSector (aValidationKey))
         ret.add (e);
@@ -118,7 +116,7 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationKey> getAllValidationKeys ()
   {
-    final ICommonsOrderedSet <ValidationKey> ret = new CommonsLinkedHashSet <> ();
+    final ICommonsOrderedSet <ValidationKey> ret = new CommonsLinkedHashSet<> ();
     for (final EPeppolThirdPartyValidationSchematronArtefact e : values ())
       ret.add (e.m_aValidationKey);
     return ret;

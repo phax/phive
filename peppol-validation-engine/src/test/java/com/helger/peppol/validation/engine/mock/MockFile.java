@@ -24,7 +24,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsHashSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.validation.api.ValidationKey;
 
@@ -39,7 +40,7 @@ public class MockFile
 {
   private final IReadableResource m_aResource;
   private final ValidationKey m_aTransactionKey;
-  private final Set <String> m_aExpectedErrorIDs;
+  private final ICommonsSet <String> m_aExpectedErrorIDs;
 
   public MockFile (@Nonnull final IReadableResource aResource,
                    @Nonnull final ValidationKey aTransactionKey,
@@ -47,7 +48,7 @@ public class MockFile
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
-    m_aExpectedErrorIDs = CollectionHelper.newSet (aExpectedErrorIDs);
+    m_aExpectedErrorIDs = new CommonsHashSet<> (aExpectedErrorIDs);
   }
 
   /**
@@ -72,18 +73,18 @@ public class MockFile
 
   public boolean isGoodCase ()
   {
-    return CollectionHelper.isEmpty (m_aExpectedErrorIDs);
+    return m_aExpectedErrorIDs.isNotEmpty ();
   }
 
   public boolean isBadCase ()
   {
-    return CollectionHelper.isNotEmpty (m_aExpectedErrorIDs);
+    return m_aExpectedErrorIDs.isNotEmpty ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <String> getAllExpectedErrorIDs ()
+  public ICommonsSet <String> getAllExpectedErrorIDs ()
   {
-    return CollectionHelper.newSet (m_aExpectedErrorIDs);
+    return m_aExpectedErrorIDs.getClone ();
   }
 }
