@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -26,7 +25,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.id.IHasID;
@@ -41,8 +39,8 @@ public final class RuleSourceItem implements IHasID <String>
   private final ESyntaxBinding m_eBinding;
   private final EBII2Transaction m_eTransaction;
   // status vars
-  private final ICommonsList <RuleSourceCodeList> m_aCodeLists = new CommonsArrayList <> ();
-  private final ICommonsList <RuleSourceBusinessRule> m_aBusinessRules = new CommonsArrayList <> ();
+  private final ICommonsList <RuleSourceCodeList> m_aCodeLists = new CommonsArrayList<> ();
+  private final ICommonsList <RuleSourceBusinessRule> m_aBusinessRules = new CommonsArrayList<> ();
   private boolean m_bHasCodeList = false;
 
   /**
@@ -95,9 +93,9 @@ public final class RuleSourceItem implements IHasID <String>
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <RuleSourceCodeList> getAllCodeLists ()
+  public ICommonsList <RuleSourceCodeList> getAllCodeLists ()
   {
-    return CollectionHelper.newList (m_aCodeLists);
+    return m_aCodeLists.getClone ();
   }
 
   @Nonnull
@@ -112,9 +110,9 @@ public final class RuleSourceItem implements IHasID <String>
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <RuleSourceBusinessRule> getAllBusinessRules ()
+  public ICommonsList <RuleSourceBusinessRule> getAllBusinessRules ()
   {
-    return CollectionHelper.newList (m_aBusinessRules);
+    return m_aBusinessRules.getClone ();
   }
 
   @Nullable

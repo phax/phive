@@ -18,14 +18,12 @@ package com.helger.peppol.validation.api.result;
 
 import java.io.Serializable;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.error.IResourceErrorGroup;
@@ -39,7 +37,7 @@ import com.helger.commons.string.ToStringGenerator;
  */
 public class ValidationLayerResultList implements Iterable <ValidationLayerResult>, Serializable
 {
-  private final ICommonsList <ValidationLayerResult> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <ValidationLayerResult> m_aList = new CommonsArrayList<> ();
 
   public ValidationLayerResultList ()
   {}
@@ -75,9 +73,9 @@ public class ValidationLayerResultList implements Iterable <ValidationLayerResul
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <ValidationLayerResult> getAll ()
+  public ICommonsList <ValidationLayerResult> getAll ()
   {
-    return CollectionHelper.newList (m_aList);
+    return m_aList.getClone ();
   }
 
   @Nonnull

@@ -25,7 +25,8 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
@@ -40,7 +41,7 @@ import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 public class ValidationConfiguration implements Serializable
 {
   private final ValidationKey m_aValidationKey;
-  private final List <IValidationArtefact> m_aValidationArtefacts;
+  private final ICommonsList <IValidationArtefact> m_aValidationArtefacts;
 
   /**
    * @param aValidationKey
@@ -56,7 +57,7 @@ public class ValidationConfiguration implements Serializable
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
     ValueEnforcer.notEmptyNoNullValue (aValidationArtefacts, "ValidationArtefacts");
     m_aValidationKey = aValidationKey;
-    m_aValidationArtefacts = CollectionHelper.newList (aValidationArtefacts);
+    m_aValidationArtefacts = new CommonsArrayList<> (aValidationArtefacts);
   }
 
   /**
@@ -77,9 +78,9 @@ public class ValidationConfiguration implements Serializable
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public List <IValidationArtefact> getAllValidationArtefacts ()
+  public ICommonsList <IValidationArtefact> getAllValidationArtefacts ()
   {
-    return CollectionHelper.newList (m_aValidationArtefacts);
+    return m_aValidationArtefacts.getClone ();
   }
 
   @Override

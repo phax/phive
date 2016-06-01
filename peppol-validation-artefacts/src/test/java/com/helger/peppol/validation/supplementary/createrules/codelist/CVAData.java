@@ -16,15 +16,12 @@
  */
 package com.helger.peppol.validation.supplementary.createrules.codelist;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -34,7 +31,7 @@ import com.helger.commons.collection.ext.ICommonsSortedSet;
 public final class CVAData
 {
   private final String m_sTransaction;
-  private final ICommonsList <CVAContextData> m_aContexts = new CommonsArrayList <> ();
+  private final ICommonsList <CVAContextData> m_aContexts = new CommonsArrayList<> ();
 
   public CVAData (@Nonnull @Nonempty final String sTransaction)
   {
@@ -60,16 +57,16 @@ public final class CVAData
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <CVAContextData> getAllContexts ()
+  public ICommonsList <CVAContextData> getAllContexts ()
   {
-    return CollectionHelper.newList (m_aContexts);
+    return m_aContexts.getCopyAsList ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsSortedSet <String> getAllUsedCodeListNames ()
   {
-    final ICommonsSortedSet <String> ret = new CommonsTreeSet <> ();
+    final ICommonsSortedSet <String> ret = new CommonsTreeSet<> ();
     for (final CVAContextData aContextData : m_aContexts)
       ret.add (aContextData.getCodeListName ());
     return ret;

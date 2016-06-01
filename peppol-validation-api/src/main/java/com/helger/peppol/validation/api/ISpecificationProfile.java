@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.api;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -25,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.text.display.IHasDisplayText;
 
 /**
@@ -56,7 +56,7 @@ public interface ISpecificationProfile extends IHasDisplayText, Serializable
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  List <? extends ISpecificationTransaction> getAllTransactions ();
+  ICommonsList <? extends ISpecificationTransaction> getAllTransactions ();
 
   /**
    * Check if the passed transaction is contained in this profile.

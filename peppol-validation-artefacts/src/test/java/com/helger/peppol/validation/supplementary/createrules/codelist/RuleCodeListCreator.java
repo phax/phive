@@ -17,9 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules.codelist;
 
 import java.io.File;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -30,7 +27,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsTreeMap;
 import com.helger.commons.collection.ext.CommonsTreeSet;
+import com.helger.commons.collection.ext.ICommonsSet;
+import com.helger.commons.collection.ext.ICommonsSortedMap;
 import com.helger.commons.collection.ext.ICommonsSortedSet;
 import com.helger.commons.collection.multimap.MultiTreeMapTreeSetBased;
 import com.helger.commons.microdom.IMicroDocument;
@@ -58,9 +58,9 @@ public final class RuleCodeListCreator
   private static final Logger s_aLogger = LoggerFactory.getLogger (RuleCodeListCreator.class);
 
   /** From transaction to CVAData */
-  private final Map <String, CVAData> m_aCVAs = new TreeMap <> ();
+  private final ICommonsSortedMap <String, CVAData> m_aCVAs = new CommonsTreeMap<> ();
   /** From code list name to set of codes */
-  private final MultiTreeMapTreeSetBased <String, String> m_aAllCodes = new MultiTreeMapTreeSetBased <> ();
+  private final MultiTreeMapTreeSetBased <String, String> m_aAllCodes = new MultiTreeMapTreeSetBased<> ();
 
   public RuleCodeListCreator ()
   {}
@@ -75,7 +75,7 @@ public final class RuleCodeListCreator
 
     CreateHelper.log ("  Reading CVA data");
     int nRow = 2;
-    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet <> ();
+    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet<> ();
     while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
@@ -179,7 +179,7 @@ public final class RuleCodeListCreator
         eAssert.setAttribute ("flag", aCVAContextData.getSeverity ());
         eAssert.setAttribute ("id", aCVAContextData.getID ());
 
-        final Set <String> aMatchingCodes = m_aAllCodes.get (aCVAContextData.getCodeListName ());
+        final ICommonsSet <String> aMatchingCodes = m_aAllCodes.get (aCVAContextData.getCodeListName ());
         if (CollectionHelper.isEmpty (aMatchingCodes))
           s_aLogger.warn ("No code list value found for '" +
                           aCVAContextData.getCodeListName () +

@@ -17,12 +17,12 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsTreeMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
@@ -45,7 +45,7 @@ public final class Main2CreateRuleSourceEnum
    *
    * @author Philip Helger
    */
-  private static final class MyMap extends TreeMap <String, String>
+  private static final class MyMap extends CommonsTreeMap <String, String>
   {
     @Override
     public String put (@Nonnull final String sKey, @Nonnull final String sValue)
@@ -139,7 +139,7 @@ public final class Main2CreateRuleSourceEnum
     final MyMap aBIIRules = _getBIIRulesVersions ();
     final MyMap aOpenPEPPOL = _getOpenPEPPOLVersions ();
 
-    final ICommonsList <String> aKeys = new CommonsArrayList <> ();
+    final ICommonsList <String> aKeys = new CommonsArrayList<> ();
     for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
       aKeys.add (eTransaction.getTransactionKeyShort ());
     aKeys.add (KEY_CODELISTS);

@@ -60,7 +60,7 @@ public final class RuleSchematronCreator
   {
     private int m_nLastID = 0;
     // Map from String to ID
-    private final ICommonsMap <String, String> m_aMap = new CommonsHashMap <> ();
+    private final ICommonsMap <String, String> m_aMap = new CommonsHashMap<> ();
 
     @Nonnull
     @Nonempty
@@ -86,7 +86,7 @@ public final class RuleSchematronCreator
 
     @Nonnull
     @ReturnsMutableCopy
-    public Map <String, String> getAllSortedByID ()
+    public ICommonsMap <String, String> getAllSortedByID ()
     {
       return CollectionHelper.getSortedByValue (m_aMap);
     }
@@ -100,7 +100,7 @@ public final class RuleSchematronCreator
   private final PrerequesiteCache m_aPrereqCache = new PrerequesiteCache ();
 
   // Map from transaction to Map from context to list of assertions
-  private final ICommonsMap <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new CommonsHashMap<> ();
 
   private RuleSchematronCreator ()
   {}
@@ -128,7 +128,7 @@ public final class RuleSchematronCreator
         IMultiMapListBased <String, RuleAssertion> aTransactionRules = m_aAbstractRules.get (sTransaction);
         if (aTransactionRules == null)
         {
-          aTransactionRules = new MultiHashMapArrayListBased <> ();
+          aTransactionRules = new MultiHashMapArrayListBased<> ();
           m_aAbstractRules.put (sTransaction, aTransactionRules);
         }
         aTransactionRules.putSingle (sContext, new RuleAssertion (sRuleID, sMessage, sSeverity));
@@ -203,7 +203,7 @@ public final class RuleSchematronCreator
   {
     CreateHelper.log ("    Handling sheet for binding '" + eBinding.getID () + "'");
     int nRow = 1;
-    final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased <> ();
+    final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased<> ();
     while (!ODFHelper.isEmpty (aSheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aSheet, 0, nRow);
@@ -229,7 +229,7 @@ public final class RuleSchematronCreator
     for (final Map.Entry <String, IMultiMapListBased <String, RuleAssertion>> aEntryTransaction : m_aAbstractRules.entrySet ())
     {
       final String sTransaction = aEntryTransaction.getKey ();
-      final List <RuleParam> aFoundRules = aBindingTests.get (sTransaction);
+      final ICommonsList <RuleParam> aFoundRules = aBindingTests.get (sTransaction);
       if (aFoundRules == null)
         throw new IllegalStateException ("Found no rules for transaction " +
                                          sTransaction +

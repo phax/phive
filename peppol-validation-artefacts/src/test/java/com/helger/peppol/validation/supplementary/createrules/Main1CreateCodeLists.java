@@ -18,7 +18,6 @@ package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.xml.transform.Templates;
@@ -38,6 +37,7 @@ import com.helger.commons.collection.ext.CommonsTreeMap;
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.collection.ext.ICommonsSortedMap;
 import com.helger.commons.collection.ext.ICommonsSortedSet;
 import com.helger.commons.debug.GlobalDebug;
@@ -120,9 +120,9 @@ public final class Main1CreateCodeLists
    *         sheet
    */
   @Nonnull
-  private static Set <String> _createCVAData (@Nonnull final String sPrefix,
-                                              @Nonnull final SpreadsheetDocument aSpreadsheet,
-                                              @Nonnull final Map <String, CVAData> aCVAs)
+  private static ICommonsSet <String> _createCVAData (@Nonnull final String sPrefix,
+                                                      @Nonnull final SpreadsheetDocument aSpreadsheet,
+                                                      @Nonnull final Map <String, CVAData> aCVAs)
   {
     final Table aCVASheet = aSpreadsheet.getSheetByName ("CVA");
     if (aCVASheet == null)
@@ -130,7 +130,7 @@ public final class Main1CreateCodeLists
 
     CreateHelper.log ("  Reading CVA data");
     int nRow = 2;
-    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet <> ();
+    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet<> ();
     while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
@@ -171,7 +171,7 @@ public final class Main1CreateCodeLists
       aCVA.setName (FilenameHelper.getBaseName (aCVAFile));
 
       // Create ValueLists
-      final ICommonsMap <String, ValueList> aValueListMap = new CommonsHashMap <> ();
+      final ICommonsMap <String, ValueList> aValueListMap = new CommonsHashMap<> ();
       final ValueLists aValueLists = new ValueLists ();
       // Emit only the code lists, that are used in the contexts
       for (final String sCodeListName : aCVAData.getAllUsedCodeListNames ())
@@ -214,12 +214,12 @@ public final class Main1CreateCodeLists
                                        @Nonnull final Map <String, CVAData> aCVAs) throws Exception
   {
     // Handle CVA sheets
-    final Set <String> aAllReferencedCodeListNames = _createCVAData (sPrefix, aSpreadsheet, aCVAs);
+    final ICommonsSet <String> aAllReferencedCodeListNames = _createCVAData (sPrefix, aSpreadsheet, aCVAs);
     if (aAllReferencedCodeListNames.isEmpty ())
       throw new IllegalStateException ("CVA was not referencing any code list!");
 
     // Jut in case of error
-    final ICommonsList <String> aAvailableSheets = new CommonsArrayList <> ();
+    final ICommonsList <String> aAvailableSheets = new CommonsArrayList<> ();
     for (int i = 0; i < aSpreadsheet.getSheetCount (); ++i)
       aAvailableSheets.add (aSpreadsheet.getSheetByIndex (i).getTableName ());
 
@@ -324,7 +324,7 @@ public final class Main1CreateCodeLists
       final File aCVAFile = _getCVAFile (sPrefix, sTransaction);
       final File aResultXSLT = _getXSLTFile (sPrefix, sTransaction);
 
-      final ICommonsList <String> aMissingCodeLists = new CommonsArrayList <> ();
+      final ICommonsList <String> aMissingCodeLists = new CommonsArrayList<> ();
       for (final String sCodeListName : aEntry.getValue ().getAllUsedCodeListNames ())
         if (!_getGCFile (sPrefix, sCodeListName).exists ())
           aMissingCodeLists.add (sCodeListName);
@@ -364,7 +364,7 @@ public final class Main1CreateCodeLists
       final SpreadsheetDocument aSpreadsheet = SpreadsheetCache.readSpreadsheet (aCodeListFile);
 
       /** From transaction to CVAData */
-      final ICommonsSortedMap <String, CVAData> aCVAs = new CommonsTreeMap <> ();
+      final ICommonsSortedMap <String, CVAData> aCVAs = new CommonsTreeMap<> ();
 
       _createCVAandGC (sPrefix, aSpreadsheet, aCVAs);
 

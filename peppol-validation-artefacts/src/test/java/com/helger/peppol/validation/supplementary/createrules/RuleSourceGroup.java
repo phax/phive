@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +24,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.FileOperations;
@@ -39,7 +37,7 @@ public final class RuleSourceGroup
   private final EBII2Transaction m_eTransaction;
   private File m_aBIICoreSchematronFile;
   // Status vars
-  private final ICommonsList <RuleSourceItem> m_aItems = new CommonsArrayList <> ();
+  private final ICommonsList <RuleSourceItem> m_aItems = new CommonsArrayList<> ();
 
   /**
    * @param aRuleDstDir
@@ -126,9 +124,9 @@ public final class RuleSourceGroup
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <RuleSourceItem> getAllItems ()
+  public ICommonsList <RuleSourceItem> getAllItems ()
   {
-    return CollectionHelper.newList (m_aItems);
+    return m_aItems.getClone ();
   }
 
   @Nullable

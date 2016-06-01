@@ -19,8 +19,6 @@ package com.helger.peppol.validation.supplementary.createrules;
 import java.io.File;
 import java.util.Locale;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,7 +59,7 @@ public final class Main3CreateRuleSourceThirdpartyEnum
    *
    * @author Philip Helger
    */
-  private static final class MyMap extends TreeMap <String, Value>
+  private static final class MyMap extends CommonsTreeMap <String, Value>
   {
     public Value put (@Nonnull final String sKey,
                       @Nonnull final String sVersion,
@@ -79,9 +77,9 @@ public final class Main3CreateRuleSourceThirdpartyEnum
    */
   @Nonnull
   @ReturnsMutableCopy
-  private static SortedMap <String, MyMap> _getRulesVersions ()
+  private static ICommonsSortedMap <String, MyMap> _getRulesVersions ()
   {
-    final ICommonsSortedMap <String, MyMap> ret = new CommonsTreeMap <> ();
+    final ICommonsSortedMap <String, MyMap> ret = new CommonsTreeMap<> ();
     for (final File aDir : new FileSystemIterator ("src/test/resources/rule-source/thirdparty"))
       if (aDir.isDirectory () && !FilenameHelper.isSystemInternalDirectory (aDir))
       {
@@ -93,7 +91,8 @@ public final class Main3CreateRuleSourceThirdpartyEnum
             // Read artifacts:F2
             final String sGlobalPrerequisite = ODFHelper.getText (SpreadsheetCache.readSpreadsheet (aFile)
                                                                                   .getTableByName ("artifacts"),
-                                                                  5, 1);
+                                                                  5,
+                                                                  1);
             final String [] aMatches = RegExHelper.getAllMatchingGroupValues (aDir.getName () +
                                                                               "-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
                                                                               aFile.getName ());

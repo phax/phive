@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules.sch;
 
 import java.io.File;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +24,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.FileOperations;
@@ -38,7 +36,7 @@ public final class RuleSourceBusinessRule
   private final File m_aOutputDirectory;
   private final String m_sID;
   private final EBII2Transaction m_eCodeListTransaction;
-  private final ICommonsList <File> m_aResultSCHFiles = new CommonsArrayList <> ();
+  private final ICommonsList <File> m_aResultSCHFiles = new CommonsArrayList<> ();
 
   public RuleSourceBusinessRule (@Nonnull final File aSourceFilename,
                                  @Nonnull final File aOutputDirectory,
@@ -117,8 +115,8 @@ public final class RuleSourceBusinessRule
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <File> getAllResultSchematronFiles ()
+  public ICommonsList <File> getAllResultSchematronFiles ()
   {
-    return CollectionHelper.newList (m_aResultSCHFiles);
+    return m_aResultSCHFiles.getClone ();
   }
 }

@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.supplementary.createrules;
 
 import java.io.File;
-import java.util.List;
 
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
@@ -39,7 +38,7 @@ public final class Main5CreateValidationRules
     final File aRuleTarget = new File ("src/main/resources/peppol-rules");
 
     // Add all base directories
-    final ICommonsList <RuleSourceGroup> aRuleSourceGroups = new CommonsArrayList <> ();
+    final ICommonsList <RuleSourceGroup> aRuleSourceGroups = new CommonsArrayList<> ();
 
     // Billing
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "Billing"),
@@ -102,7 +101,7 @@ public final class Main5CreateValidationRules
           FileOperations.copyFile (aBIICoreXSLT, aRuleSourceGroup.getBIICoreXSLTDstFile ());
       }
 
-      final List <RuleSourceItem> aRuleSourceItems = aRuleSourceGroup.getAllItems ();
+      final ICommonsList <RuleSourceItem> aRuleSourceItems = aRuleSourceGroup.getAllItems ();
 
       // Process code lists
       for (final RuleSourceItem aRuleSourceItem : aRuleSourceItems)

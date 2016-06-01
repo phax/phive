@@ -16,9 +16,7 @@
  */
 package com.helger.peppol.validation.api.peppol;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -28,9 +26,10 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.debug.GlobalDebug;
+import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.text.display.IHasDisplayText;
 import com.helger.peppol.validation.api.ISpecificationProfile;
 import com.helger.peppol.validation.api.ISpecificationTransaction;
@@ -70,7 +69,7 @@ public enum EBII2Profile implements ISpecificationProfile
   private final IHasDisplayText m_aName;
   private final int m_nNumber;
   private final EBII2Group m_eGroup;
-  private final Set <EBII2Transaction> m_aTransactions;
+  private final ICommonsOrderedSet <EBII2Transaction> m_aTransactions;
 
   private void _checkTransactionsSameGroup ()
   {
@@ -116,9 +115,9 @@ public enum EBII2Profile implements ISpecificationProfile
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public List <EBII2Transaction> getAllTransactions ()
+  public ICommonsList <EBII2Transaction> getAllTransactions ()
   {
-    return CollectionHelper.newList (m_aTransactions);
+    return m_aTransactions.getCopyAsList ();
   }
 
   public boolean containsTransaction (@Nullable final ISpecificationTransaction aTransaction)
@@ -140,11 +139,6 @@ public enum EBII2Profile implements ISpecificationProfile
   public static ICommonsList <EBII2Profile> getAllProfilesWithTransaction (@Nonnull final EBII2Transaction eTransaction)
   {
     ValueEnforcer.notNull (eTransaction, "Transaction");
-
-    final ICommonsList <EBII2Profile> ret = new CommonsArrayList <> ();
-    for (final EBII2Profile eProfile : values ())
-      if (eProfile.containsTransaction (eTransaction))
-        ret.add (eProfile);
-    return ret;
+    return EnumHelper.getAll (EBII2Profile.class, e -> e.containsTransaction (eTransaction));
   }
 }

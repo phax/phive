@@ -23,14 +23,11 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.api.peppol.EBII2Profile;
-import com.helger.peppol.validation.api.peppol.EBII2ProfileName;
-import com.helger.peppol.validation.api.peppol.EBII2Transaction;
+import com.helger.commons.collection.ext.ICommonsList;
 
 /**
  * Test class for class {@link EBII2Profile}.
@@ -60,9 +57,9 @@ public final class EBII2ProfileTest
   {
     for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
     {
-      final List <EBII2Profile> aList = EBII2Profile.getAllProfilesWithTransaction (eTransaction);
+      final ICommonsList <EBII2Profile> aList = EBII2Profile.getAllProfilesWithTransaction (eTransaction);
       assertNotNull (aList);
-      assertTrue (aList.size () > 0);
+      assertTrue (aList.isNotEmpty ());
     }
 
     try
