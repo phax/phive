@@ -23,7 +23,6 @@ import org.junit.Test;
 
 import com.helger.peppol.validation.api.result.ValidationLayerResult;
 import com.helger.peppol.validation.api.result.ValidationLayerResultList;
-import com.helger.peppol.validation.engine.UBLDocumentValidator;
 import com.helger.peppol.validation.engine.mock.CTestFiles;
 import com.helger.peppol.validation.engine.mock.MockFile;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
@@ -51,9 +50,9 @@ public final class UBLDocumentValidatorTest
       // Read as desired type
       final ValidationLayerResult aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
       if (aTestFile.isGoodCase ())
-        assertTrue (aXSDErrors.toString (), aXSDErrors.isSuccess ());
+        assertTrue (aTestFile.getResource ().getPath () + " - " + aXSDErrors.toString (), aXSDErrors.isSuccess ());
       else
-        assertFalse (aXSDErrors.isSuccess ());
+        assertFalse (aTestFile.getResource ().getPath (), aXSDErrors.isSuccess ());
     }
   }
 

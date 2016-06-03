@@ -48,7 +48,7 @@ public class MockFile
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
-    m_aExpectedErrorIDs = new CommonsHashSet<> (aExpectedErrorIDs);
+    m_aExpectedErrorIDs = new CommonsHashSet <> (aExpectedErrorIDs);
   }
 
   /**
@@ -73,7 +73,7 @@ public class MockFile
 
   public boolean isGoodCase ()
   {
-    return m_aExpectedErrorIDs.isNotEmpty ();
+    return m_aExpectedErrorIDs.isEmpty ();
   }
 
   public boolean isBadCase ()
