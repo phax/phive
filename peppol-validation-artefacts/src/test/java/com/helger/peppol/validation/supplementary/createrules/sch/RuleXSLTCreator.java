@@ -26,16 +26,16 @@ import org.w3c.dom.Document;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.serialize.MicroReader;
-import com.helger.commons.xml.namespace.MapBasedNamespaceContext;
-import com.helger.commons.xml.serialize.write.XMLWriter;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.peppol.validation.supplementary.createrules.RuleSourceItem;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.schematron.xslt.ISchematronXSLTBasedProvider;
 import com.helger.schematron.xslt.SCHTransformerCustomizer;
 import com.helger.schematron.xslt.SchematronResourceSCHCache;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.serialize.MicroReader;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.xml.serialize.write.XMLWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
 
 @Immutable
 public final class RuleXSLTCreator

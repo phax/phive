@@ -44,13 +44,6 @@ import com.helger.commons.error.ResourceLocation;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.xml.XMLHelper;
-import com.helger.commons.xml.namespace.MapBasedNamespaceContext;
-import com.helger.commons.xml.sax.AbstractSAXErrorHandler;
-import com.helger.commons.xml.schema.XMLSchemaValidationHelper;
-import com.helger.commons.xml.transform.TransformSourceFactory;
-import com.helger.commons.xml.xpath.XPathExpressionHelper;
-import com.helger.commons.xml.xpath.XPathHelper;
 import com.helger.peppol.validation.api.ValidationConfiguration;
 import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
@@ -65,6 +58,13 @@ import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
+import com.helger.xml.XMLHelper;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.xml.sax.AbstractSAXErrorHandler;
+import com.helger.xml.schema.XMLSchemaValidationHelper;
+import com.helger.xml.transform.TransformSourceFactory;
+import com.helger.xml.xpath.XPathExpressionHelper;
+import com.helger.xml.xpath.XPathHelper;
 
 /**
  * This is the main validation class to validate e.g. PEPPOL UBL 2.1 documents

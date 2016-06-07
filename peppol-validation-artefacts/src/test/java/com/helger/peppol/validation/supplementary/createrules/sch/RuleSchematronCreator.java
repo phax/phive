@@ -39,19 +39,19 @@ import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.collection.multimap.IMultiMapListBased;
 import com.helger.commons.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
 import com.helger.peppol.validation.supplementary.createrules.ESyntaxBinding;
 import com.helger.peppol.validation.supplementary.createrules.RuleSourceItem;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCache;
 import com.helger.schematron.CSchematron;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
 
 @Immutable
 public final class RuleSchematronCreator

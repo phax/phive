@@ -33,15 +33,15 @@ import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.collection.ext.ICommonsSortedMap;
 import com.helger.commons.collection.ext.ICommonsSortedSet;
 import com.helger.commons.collection.multimap.MultiTreeMapTreeSetBased;
-import com.helger.commons.microdom.IMicroDocument;
-import com.helger.commons.microdom.IMicroElement;
-import com.helger.commons.microdom.MicroDocument;
-import com.helger.commons.microdom.serialize.MicroWriter;
 import com.helger.commons.string.StringHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCache;
 import com.helger.schematron.CSchematron;
+import com.helger.xml.microdom.IMicroDocument;
+import com.helger.xml.microdom.IMicroElement;
+import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.serialize.MicroWriter;
 
 @Immutable
 public final class RuleCodeListCreator

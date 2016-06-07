@@ -45,12 +45,6 @@ import com.helger.commons.io.file.FileOperations;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.xml.XMLFactory;
-import com.helger.commons.xml.serialize.write.XMLWriter;
-import com.helger.commons.xml.serialize.write.XMLWriterSettings;
-import com.helger.commons.xml.transform.DefaultTransformURIResolver;
-import com.helger.commons.xml.transform.TransformSourceFactory;
-import com.helger.commons.xml.transform.XMLTransformerFactory;
 import com.helger.cva.CVA10Marshaller;
 import com.helger.cva.v10.Context;
 import com.helger.cva.v10.ContextValueAssociation;
@@ -73,6 +67,12 @@ import com.helger.peppol.validation.supplementary.createrules.codelist.CVAData;
 import com.helger.peppol.validation.supplementary.createrules.util.CreateHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.ODFHelper;
 import com.helger.peppol.validation.supplementary.createrules.util.SpreadsheetCache;
+import com.helger.xml.XMLFactory;
+import com.helger.xml.serialize.write.XMLWriter;
+import com.helger.xml.serialize.write.XMLWriterSettings;
+import com.helger.xml.transform.DefaultTransformURIResolver;
+import com.helger.xml.transform.TransformSourceFactory;
+import com.helger.xml.transform.XMLTransformerFactory;
 
 /**
  * This tool creates all the CVA and GC files that can be extracted from the
