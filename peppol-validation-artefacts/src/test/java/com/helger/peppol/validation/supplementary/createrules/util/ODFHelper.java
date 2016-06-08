@@ -23,6 +23,8 @@ import javax.annotation.concurrent.Immutable;
 import org.odftoolkit.simple.table.Cell;
 import org.odftoolkit.simple.table.Table;
 
+import com.helger.commons.string.StringHelper;
+
 @Immutable
 public final class ODFHelper
 {
@@ -62,8 +64,8 @@ public final class ODFHelper
     if (sText != null)
     {
       // Unify line ending to "\n"
-      sText = sText.replace ("\r\n", "\n");
-      sText = sText.replace ("\r", "\n");
+      sText = StringHelper.replaceAll (sText, "\r\n", "\n");
+      sText = StringHelper.replaceAll (sText, '\r', '\n');
     }
     return sText;
   }

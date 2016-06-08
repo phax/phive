@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,9 +46,9 @@ public final class MainExtractAllXPathExpressions
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MainExtractAllXPathExpressions.class);
 
-  private static String _escape (final String s)
+  private static String _escape (@Nonnull final String s)
   {
-    return s.replace ("\"", "\\\"");
+    return StringHelper.replaceAll (s, "\"", "\\\"");
   }
 
   public static void main (final String [] args) throws Exception
