@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.engine.peppol.EBIICoreValidationSchematronArtefact;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
