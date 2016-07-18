@@ -25,7 +25,7 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>peppol-validation-artefacts</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>peppol-validation-artefacts</name>
   <description>PEPPOL BIS v2 validation artefacts</description>
   <url>https://github.com/phax/peppol-validation-engine/peppol-validation-artefacts</url>
@@ -88,12 +88,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <!-- Nothing to export -->
-      </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
