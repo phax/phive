@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.error.IResourceErrorGroup;
 import com.helger.commons.error.ResourceErrorGroup;
@@ -35,7 +36,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public class ValidationLayerResultList implements Iterable <ValidationLayerResult>, Serializable
+public class ValidationLayerResultList implements ICommonsIterable <ValidationLayerResult>, Serializable
 {
   private final ICommonsList <ValidationLayerResult> m_aList = new CommonsArrayList<> ();
 
