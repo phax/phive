@@ -86,7 +86,7 @@ public final class Main3CreateRuleSourceThirdpartyEnum
         final MyMap aMap = new MyMap ();
         ret.put (aDir.getName (), aMap);
         for (final File aFile : new FileSystemIterator (aDir))
-          if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
+          if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !StringHelper.startsWith (aFile.getName (), '~'))
           {
             // Read artifacts:F2
             final String sGlobalPrerequisite = ODFHelper.getText (SpreadsheetCache.readSpreadsheet (aFile)

@@ -21,12 +21,12 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.lang.EnumHelper;
 import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
@@ -90,11 +90,8 @@ public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final ICommonsList <EBIICoreValidationSchematronArtefact> ret = new CommonsArrayList <> ();
-    for (final EBIICoreValidationSchematronArtefact e : values ())
-      if (e.getValidationKey ().hasSameSpecificationAndTransaction (aValidationKey))
-        ret.add (e);
-    return ret;
+    return EnumHelper.getAll (EBIICoreValidationSchematronArtefact.class,
+                              x -> x.getValidationKey ().hasSameSpecificationAndTransaction (aValidationKey));
   }
 
   /**
@@ -105,7 +102,7 @@ public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationKey> getAllValidationKeys ()
   {
-    final ICommonsOrderedSet <ValidationKey> ret = new CommonsLinkedHashSet <> ();
+    final ICommonsOrderedSet <ValidationKey> ret = new CommonsLinkedHashSet<> ();
     for (final EBIICoreValidationSchematronArtefact e : values ())
       ret.add (e.m_aValidationKey);
     return ret;
