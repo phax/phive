@@ -26,6 +26,7 @@ import com.helger.commons.collection.ext.CommonsTreeMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
+import com.helger.commons.string.StringHelper;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 
 /**
@@ -80,7 +81,7 @@ public final class Main2CreateRuleSourceEnum
   {
     final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/biirules/businessrules"))
-      if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
+      if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !StringHelper.startsWith (aFile.getName (), '~'))
       {
         String [] aMatches = RegExHelper.getAllMatchingGroupValues ("bii2rules-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
                                                                     aFile.getName ());
@@ -104,7 +105,7 @@ public final class Main2CreateRuleSourceEnum
   {
     final MyMap ret = new MyMap ();
     for (final File aFile : new FileSystemIterator ("src/test/resources/rule-source/peppol/businessrules"))
-      if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !aFile.getName ().startsWith ("~"))
+      if (aFile.isFile () && aFile.getName ().endsWith (".ods") && !StringHelper.startsWith (aFile.getName (), '~'))
       {
         String [] aMatches = RegExHelper.getAllMatchingGroupValues ("OpenPEPPOL-(T[0-9]+)-BusinessRules-(v[0-9]+)\\.ods",
                                                                     aFile.getName ());
