@@ -27,8 +27,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.commons.error.IResourceErrorGroup;
-import com.helger.commons.error.ResourceErrorGroup;
+import com.helger.commons.error.list.ErrorList;
+import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -119,21 +119,21 @@ public class ValidationLayerResultList implements ICommonsIterable <ValidationLa
 
   @Nonnull
   @ReturnsMutableCopy
-  public IResourceErrorGroup getAllFailures ()
+  public IErrorList getAllFailures ()
   {
-    final ResourceErrorGroup ret = new ResourceErrorGroup ();
+    final ErrorList ret = new ErrorList ();
     for (final ValidationLayerResult aItem : m_aList)
-      ret.addResourceErrors (aItem.getResourceErrorGroup ().getAllFailures ());
+      ret.addAll (aItem.getResourceErrorGroup ().getAllFailures ());
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public IResourceErrorGroup getAllErrors ()
+  public IErrorList getAllErrors ()
   {
-    final ResourceErrorGroup ret = new ResourceErrorGroup ();
+    final ErrorList ret = new ErrorList ();
     for (final ValidationLayerResult aItem : m_aList)
-      ret.addResourceErrors (aItem.getResourceErrorGroup ().getAllErrors ());
+      ret.addAll (aItem.getResourceErrorGroup ().getAllErrors ());
     return ret;
   }
 

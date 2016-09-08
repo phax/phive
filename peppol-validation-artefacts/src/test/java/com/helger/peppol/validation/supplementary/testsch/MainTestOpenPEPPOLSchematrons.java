@@ -21,7 +21,7 @@ import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.error.IResourceErrorGroup;
+import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.io.file.iterate.FileSystemRecursiveIterator;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.xml.transform.CollectingTransformErrorListener;
@@ -47,7 +47,7 @@ public final class MainTestOpenPEPPOLSchematrons
         aRes.setErrorListener (aCEL);
         aRes.isValidSchematron ();
 
-        final IResourceErrorGroup aREG = aCEL.getResourceErrors ();
+        final IErrorList aREG = aCEL.getErrorList ();
         if (aREG.containsAtLeastOneFailure ())
         {
           s_aLogger.error (aREG.toString ());

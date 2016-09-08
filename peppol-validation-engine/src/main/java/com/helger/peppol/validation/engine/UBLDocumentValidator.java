@@ -36,11 +36,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.error.EErrorLevel;
-import com.helger.commons.error.IResourceErrorGroup;
-import com.helger.commons.error.ResourceError;
-import com.helger.commons.error.ResourceErrorGroup;
-import com.helger.commons.error.ResourceLocation;
+import com.helger.commons.error.SingleError;
+import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.list.ErrorList;
+import com.helger.commons.error.list.IErrorList;
+import com.helger.commons.error.location.ErrorLocation;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
@@ -179,24 +179,25 @@ public class UBLDocumentValidator
       final Schema aSchema = eUBLDocumentType.getSchema (aClassLoader);
       assert aSchema != null;
 
-      final ResourceErrorGroup aErrors = new ResourceErrorGroup ();
+      final ErrorList aErrors = new ErrorList ();
       try
       {
         // Apply the XML schema validation
-        final IResourceErrorGroup aXSDErrors = XMLSchemaValidationHelper.validate (aSchema, aUBLDocument);
-        aErrors.addResourceErrorGroup (aXSDErrors);
+        final IErrorList aXSDErrors = XMLSchemaValidationHelper.validate (aSchema, aUBLDocument);
+        aErrors.addAll (aXSDErrors);
       }
       catch (final IllegalArgumentException ex)
       {
         // Happens when non-XML document is trying to be parsed
         if (ex.getCause () instanceof SAXParseException)
-          aErrors.addResourceError (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
-                                                                              (SAXParseException) ex.getCause ()));
+          aErrors.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
+                                                                 (SAXParseException) ex.getCause ()));
         else
-          aErrors.addResourceError (new ResourceError (new ResourceLocation (aUBLDocument.getSystemId ()),
-                                                       EErrorLevel.FATAL_ERROR,
-                                                       "The document to be validated is non an XML document",
-                                                       ex));
+          aErrors.add (SingleError.builderFatalError ()
+                                  .setErrorLocation (new ErrorLocation (aUBLDocument.getSystemId ()))
+                                  .setErrorText ("The document to be validated is non an XML document")
+                                  .setLinkedException (ex)
+                                  .build ());
       }
 
       // Build result object
@@ -361,11 +362,11 @@ public class UBLDocumentValidator
             throw new IllegalStateException ("Expected no error but got: " + aErrorHandler.getAllResourceErrors ());
 
           // Convert failed asserts and successful reports to resource errors
-          final ResourceErrorGroup aREG = new ResourceErrorGroup ();
+          final ErrorList aREG = new ErrorList ();
           for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
-            aREG.addResourceError (aFailedAssert.getAsResourceError (sResourceName));
+            aREG.add (aFailedAssert.getAsResourceError (sResourceName));
           for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
-            aREG.addResourceError (aSuccessfulReport.getAsResourceError (sResourceName));
+            aREG.add (aSuccessfulReport.getAsResourceError (sResourceName));
 
           // Add one result element per layer
           aResultList.add (new ValidationLayerResult (aArtefact, aREG));
@@ -375,10 +376,11 @@ public class UBLDocumentValidator
       {
         // Usually an error in the Schematron
         aResultList.add (new ValidationLayerResult (aArtefact,
-                                                    new ResourceError (new ResourceLocation (aSCHRes.getPath ()),
-                                                                       EErrorLevel.ERROR,
-                                                                       ex.getMessage (),
-                                                                       ex)));
+                                                    SingleError.builderError ()
+                                                               .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
+                                                               .setErrorText (ex.getMessage ())
+                                                               .setLinkedException (ex)
+                                                               .build ()));
       }
     }
   }

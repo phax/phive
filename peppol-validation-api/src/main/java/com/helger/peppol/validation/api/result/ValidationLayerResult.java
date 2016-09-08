@@ -21,9 +21,9 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.error.IResourceError;
-import com.helger.commons.error.IResourceErrorGroup;
-import com.helger.commons.error.ResourceErrorGroup;
+import com.helger.commons.error.IError;
+import com.helger.commons.error.list.ErrorList;
+import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
@@ -38,29 +38,29 @@ import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 public class ValidationLayerResult implements ISuccessIndicator, Serializable
 {
   private final IValidationArtefact m_aValidationArtefact;
-  private final IResourceErrorGroup m_aResourceErrors;
+  private final IErrorList m_aResourceErrors;
   private final ETriState m_eSuccess;
 
   public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final IResourceError aResourceError)
+                                @Nonnull final IError aResourceError)
   {
-    this (aValidationArtefact, new ResourceErrorGroup (aResourceError));
+    this (aValidationArtefact, new ErrorList (aResourceError));
   }
 
   public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final Iterable <? extends IResourceError> aResourceErrors)
+                                @Nonnull final Iterable <? extends IError> aResourceErrors)
   {
-    this (aValidationArtefact, new ResourceErrorGroup (aResourceErrors));
+    this (aValidationArtefact, new ErrorList (aResourceErrors));
   }
 
   public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final IResourceErrorGroup aResourceErrors)
+                                @Nonnull final IErrorList aResourceErrors)
   {
     this (aValidationArtefact, aResourceErrors, ETriState.valueOf (aResourceErrors.containsNoFailure ()));
   }
 
   private ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                 @Nonnull final IResourceErrorGroup aResourceErrors,
+                                 @Nonnull final IErrorList aResourceErrors,
                                  @Nonnull final ETriState eSuccess)
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
@@ -83,7 +83,7 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
    *         Never <code>null</code> but maybe empty.
    */
   @Nonnull
-  public IResourceErrorGroup getResourceErrorGroup ()
+  public IErrorList getResourceErrorGroup ()
   {
     return m_aResourceErrors;
   }
@@ -107,7 +107,7 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
-                                       .append ("ResourceErrorGroup", m_aResourceErrors)
+                                       .append ("ResourceErrors", m_aResourceErrors)
                                        .append ("Success", m_eSuccess)
                                        .toString ();
   }
@@ -115,6 +115,6 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   @Nonnull
   public static ValidationLayerResult createIgnoredLayer (@Nonnull final IValidationArtefact aValidationArtefact)
   {
-    return new ValidationLayerResult (aValidationArtefact, new ResourceErrorGroup (), ETriState.UNDEFINED);
+    return new ValidationLayerResult (aValidationArtefact, new ErrorList (), ETriState.UNDEFINED);
   }
 }
