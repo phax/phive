@@ -10,6 +10,8 @@ This project is divided into 3 sub-projects for maximum flexibility
   * peppol-validation-engine - the main engine using the API and the artefacts
   
 #News
+  * v2.0.1 - 2016-09-12
+    * Binds to ph-commons 8.5.x
   * v2.0.0 - 2016-08-22
     * Requires JDK 8
 
@@ -22,7 +24,7 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>peppol-validation-engine</artifactId>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
 </dependency>
 ```
 
