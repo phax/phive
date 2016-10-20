@@ -1,4 +1,4 @@
-package com.helger.bdve;
+package com.helger.bdve.execute;
 
 import java.io.File;
 
@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.xml.transform.Source;
 
-import com.helger.bdve.result.ValidationLayerResult;
+import com.helger.bdve.result.ValidationResult;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.xml.transform.TransformSourceFactory;
 
@@ -26,7 +26,7 @@ public interface IValidationExecutor
    * @return Never <code>null</code>.
    */
   @Nonnull
-  default ValidationLayerResult applyValidation (@Nonnull final byte [] aSourceDocument)
+  default ValidationResult applyValidation (@Nonnull final byte [] aSourceDocument)
   {
     return applyValidation (TransformSourceFactory.create (aSourceDocument));
   }
@@ -39,7 +39,7 @@ public interface IValidationExecutor
    * @return Never <code>null</code>.
    */
   @Nonnull
-  default ValidationLayerResult applyValidation (@Nonnull final File aSourceDocument)
+  default ValidationResult applyValidation (@Nonnull final File aSourceDocument)
   {
     return applyValidation (TransformSourceFactory.create (aSourceDocument));
   }
@@ -52,7 +52,7 @@ public interface IValidationExecutor
    * @return Never <code>null</code>.
    */
   @Nonnull
-  default ValidationLayerResult applyValidation (@Nonnull final IHasInputStream aSourceDocument)
+  default ValidationResult applyValidation (@Nonnull final IHasInputStream aSourceDocument)
   {
     return applyValidation (TransformSourceFactory.create (aSourceDocument));
   }
@@ -65,7 +65,7 @@ public interface IValidationExecutor
    * @return Never <code>null</code>.
    */
   @Nonnull
-  default ValidationLayerResult applyValidation (@Nonnull @WillClose final Source aSourceDocument)
+  default ValidationResult applyValidation (@Nonnull @WillClose final Source aSourceDocument)
   {
     return applyValidation (aSourceDocument, (ClassLoader) null);
   }
@@ -81,6 +81,5 @@ public interface IValidationExecutor
    * @return Never <code>null</code>.
    */
   @Nonnull
-  ValidationLayerResult applyValidation (@Nonnull @WillClose Source aSourceDocument,
-                                         @Nullable ClassLoader aClassLoader);
+  ValidationResult applyValidation (@Nonnull @WillClose Source aSourceDocument, @Nullable ClassLoader aClassLoader);
 }

@@ -16,31 +16,24 @@
  */
 package com.helger.bdve.result;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.artefact.IValidationArtefact;
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.state.ETriState;
-import com.helger.commons.state.ISuccessIndicator;
-import com.helger.commons.string.ToStringGenerator;
 
 /**
  * This class captures the validation result of a single validation layer. It
  * contains the validation artefact and the errors occurred.
  *
  * @author Philip Helger
+ * @deprecated Use {@link ValidationResult} instead
  */
-public class ValidationLayerResult implements ISuccessIndicator, Serializable
+@Deprecated
+public class ValidationLayerResult extends ValidationResult
 {
-  private final IValidationArtefact m_aValidationArtefact;
-  private final IErrorList m_aErrorList;
-  private final ETriState m_eSuccess;
-
   @Deprecated
   public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IError aError)
   {
@@ -64,71 +57,7 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
                                  @Nonnull final IErrorList aErrorList,
                                  @Nonnull final ETriState eSuccess)
   {
-    m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
-    m_aErrorList = ValueEnforcer.notNull (aErrorList, "ErrorList");
-    m_eSuccess = ValueEnforcer.notNull (eSuccess, "Success");
-  }
-
-  /**
-   * @return The validation artefact used to perform validation. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  public IValidationArtefact getValidationArtefact ()
-  {
-    return m_aValidationArtefact;
-  }
-
-  /**
-   * @return The errors occurred during the validation execution on this layer.
-   *         Never <code>null</code> but maybe empty.
-   * @deprecated Use {@link #getErrorList()} instead
-   */
-  @Deprecated
-  @Nonnull
-  public IErrorList getResourceErrorGroup ()
-  {
-    return getErrorList ();
-  }
-
-  /**
-   * @return The errors occurred during the validation execution on this layer.
-   *         Never <code>null</code> but maybe empty.
-   */
-  @Nonnull
-  public IErrorList getErrorList ()
-  {
-    return m_aErrorList;
-  }
-
-  public boolean isSuccess ()
-  {
-    return m_eSuccess.isTrue ();
-  }
-
-  public boolean isFailure ()
-  {
-    return m_eSuccess.isFalse ();
-  }
-
-  /**
-   * @return <code>true</code> if there are no results on this layer, because
-   *         the underlying validation artefact was not applicable. If this
-   *         method returns <code>true</code> {@link #isSuccess()} and
-   *         {@link #isFailure()} will both return <code>false</code>!
-   */
-  public boolean isIgnored ()
-  {
-    return m_eSuccess.isUndefined ();
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
-                                       .append ("ErrorList", m_aErrorList)
-                                       .append ("Success", m_eSuccess)
-                                       .toString ();
+    super (aValidationArtefact, aErrorList, eSuccess);
   }
 
   @Nonnull
