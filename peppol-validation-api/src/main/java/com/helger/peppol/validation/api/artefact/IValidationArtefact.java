@@ -41,8 +41,9 @@ public interface IValidationArtefact extends Serializable
   EValidationArtefactType getValidationArtefactType ();
 
   /**
-   * @return The resource that contains the rules (like XSD or Schematron).
-   *         Never <code>null</code>.
+   * @return The resource that contains the rules depending on the type (like
+   *         XSD or Schematron). Never <code>null</code>.
+   * @see #getValidationArtefactType()
    */
   @Nonnull
   IReadableResource getRuleResource ();

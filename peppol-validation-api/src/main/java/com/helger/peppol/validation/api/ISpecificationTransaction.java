@@ -27,7 +27,7 @@ import com.helger.commons.name.IHasName;
 import com.helger.ubl21.EUBL21DocumentType;
 
 /**
- * Represents a single transaction within a specification.
+ * Represents a single transaction within an {@link ISpecificationProfile}.
  *
  * @author Philip Helger
  */

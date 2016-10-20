@@ -38,33 +38,34 @@ import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 public class ValidationLayerResult implements ISuccessIndicator, Serializable
 {
   private final IValidationArtefact m_aValidationArtefact;
-  private final IErrorList m_aResourceErrors;
+  private final IErrorList m_aErrorList;
   private final ETriState m_eSuccess;
 
-  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final IError aResourceError)
+  @Deprecated
+  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IError aError)
   {
-    this (aValidationArtefact, new ErrorList (aResourceError));
+    this (aValidationArtefact, new ErrorList (aError));
+  }
+
+  @Deprecated
+  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                                @Nonnull final Iterable <? extends IError> aErrors)
+  {
+    this (aValidationArtefact, new ErrorList (aErrors));
   }
 
   public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final Iterable <? extends IError> aResourceErrors)
+                                @Nonnull final IErrorList aErrorList)
   {
-    this (aValidationArtefact, new ErrorList (aResourceErrors));
-  }
-
-  public ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final IErrorList aResourceErrors)
-  {
-    this (aValidationArtefact, aResourceErrors, ETriState.valueOf (aResourceErrors.containsNoFailure ()));
+    this (aValidationArtefact, aErrorList, ETriState.valueOf (aErrorList.containsNoFailure ()));
   }
 
   private ValidationLayerResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                                 @Nonnull final IErrorList aResourceErrors,
+                                 @Nonnull final IErrorList aErrorList,
                                  @Nonnull final ETriState eSuccess)
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
-    m_aResourceErrors = ValueEnforcer.notNull (aResourceErrors, "ResourceErrors");
+    m_aErrorList = ValueEnforcer.notNull (aErrorList, "ErrorList");
     m_eSuccess = ValueEnforcer.notNull (eSuccess, "Success");
   }
 
@@ -81,11 +82,23 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   /**
    * @return The errors occurred during the validation execution on this layer.
    *         Never <code>null</code> but maybe empty.
+   * @deprecated Use {@link #getErrorList()} instead
    */
+  @Deprecated
   @Nonnull
   public IErrorList getResourceErrorGroup ()
   {
-    return m_aResourceErrors;
+    return getErrorList ();
+  }
+
+  /**
+   * @return The errors occurred during the validation execution on this layer.
+   *         Never <code>null</code> but maybe empty.
+   */
+  @Nonnull
+  public IErrorList getErrorList ()
+  {
+    return m_aErrorList;
   }
 
   public boolean isSuccess ()
@@ -98,6 +111,12 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
     return m_eSuccess.isFalse ();
   }
 
+  /**
+   * @return <code>true</code> if there are no results on this layer, because
+   *         the underlying validation artefact was not applicable. If this
+   *         method returns <code>true</code> {@link #isSuccess()} and
+   *         {@link #isFailure()} will both return <code>false</code>!
+   */
   public boolean isIgnored ()
   {
     return m_eSuccess.isUndefined ();
@@ -107,7 +126,7 @@ public class ValidationLayerResult implements ISuccessIndicator, Serializable
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
-                                       .append ("ResourceErrors", m_aResourceErrors)
+                                       .append ("ErrorList", m_aErrorList)
                                        .append ("Success", m_eSuccess)
                                        .toString ();
   }

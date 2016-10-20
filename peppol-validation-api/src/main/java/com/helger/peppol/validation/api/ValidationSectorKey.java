@@ -22,16 +22,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.MustImplementComparable;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * A key defining a sector extension to be used in a {@link ValidationKey}.
+ * A key defining a sector extension to be used in a {@link ValidationKey}. It
+ * consists of an ID and a display name.
  *
  * @author Philip Helger
  */
 @Immutable
+@MustImplementComparable
+@MustImplementEqualsAndHashcode
 public class ValidationSectorKey implements Serializable, Comparable <ValidationSectorKey>
 {
   private final String m_sID;

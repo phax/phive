@@ -87,34 +87,22 @@ public class ValidationLayerResultList implements ICommonsIterable <ValidationLa
 
   public boolean containsNoFailure ()
   {
-    for (final ValidationLayerResult aItem : m_aList)
-      if (!aItem.getResourceErrorGroup ().containsNoFailure ())
-        return false;
-    return true;
+    return m_aList.containsOnly (x -> x.getErrorList ().containsNoFailure ());
   }
 
   public boolean containsNoError ()
   {
-    for (final ValidationLayerResult aItem : m_aList)
-      if (!aItem.getResourceErrorGroup ().containsNoError ())
-        return false;
-    return true;
+    return m_aList.containsOnly (x -> x.getErrorList ().containsNoError ());
   }
 
   public boolean containsAtLeastOneFailure ()
   {
-    for (final ValidationLayerResult aItem : m_aList)
-      if (aItem.getResourceErrorGroup ().containsAtLeastOneFailure ())
-        return true;
-    return false;
+    return m_aList.containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
   }
 
   public boolean containsAtLeastOneError ()
   {
-    for (final ValidationLayerResult aItem : m_aList)
-      if (aItem.getResourceErrorGroup ().containsAtLeastOneError ())
-        return true;
-    return false;
+    return m_aList.containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
   }
 
   @Nonnull
@@ -123,7 +111,7 @@ public class ValidationLayerResultList implements ICommonsIterable <ValidationLa
   {
     final ErrorList ret = new ErrorList ();
     for (final ValidationLayerResult aItem : m_aList)
-      ret.addAll (aItem.getResourceErrorGroup ().getAllFailures ());
+      ret.addAll (aItem.getErrorList ().getAllFailures ());
     return ret;
   }
 
@@ -133,7 +121,7 @@ public class ValidationLayerResultList implements ICommonsIterable <ValidationLa
   {
     final ErrorList ret = new ErrorList ();
     for (final ValidationLayerResult aItem : m_aList)
-      ret.addAll (aItem.getResourceErrorGroup ().getAllErrors ());
+      ret.addAll (aItem.getErrorList ().getAllErrors ());
     return ret;
   }
 

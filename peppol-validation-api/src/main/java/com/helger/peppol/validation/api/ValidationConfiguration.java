@@ -31,9 +31,8 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
- * This class contains the configuration to run a single UBL document
- * validation. An instance of this class can be used to validate multiple
- * documents.
+ * This class contains the configuration to run a single document validation. An
+ * instance of this class can be used to validate multiple documents.
  *
  * @author Philip Helger
  */

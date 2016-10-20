@@ -21,7 +21,8 @@ import java.io.Serializable;
 import com.helger.commons.id.IHasID;
 
 /**
- * Represents the grouping of transactions.
+ * Represents the grouping of transactions. A group is referenced from an
+ * {@link ISpecificationProfile}.
  *
  * @author Philip Helger
  */

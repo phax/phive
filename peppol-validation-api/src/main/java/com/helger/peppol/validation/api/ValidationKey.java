@@ -34,9 +34,17 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * An immutable pair of a business specification of type
- * {@link IBusinessSpecification} and a transaction of type
- * {@link ISpecificationTransaction}.
+ * A validation key that uniquely identifies a set of validation artefacts. It
+ * consists of the following elements:
+ * <ul>
+ * <li>A business specification of type {@link IBusinessSpecification}</li>
+ * <li>A transaction of type {@link ISpecificationTransaction}</li>
+ * <li>An optional country code in case validation is country dependent.</li>
+ * <li>An optional "sector key" of type {@link ValidationSectorKey} that
+ * identifies the industry or sector to which the validation applies.</li>
+ * <li>An optional "prerequisite expression" (like XPath) that may be used to
+ * identify whether this validation key is applicable to a document or not.</li>
+ * </ul>
  *
  * @author Philip Helger
  */
