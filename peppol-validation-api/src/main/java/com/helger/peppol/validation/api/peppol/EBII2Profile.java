@@ -22,8 +22,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.ISpecificationProfile;
-import com.helger.bdve.ISpecificationTransaction;
+import com.helger.bdve.spec.ISpecificationProfile;
+import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;

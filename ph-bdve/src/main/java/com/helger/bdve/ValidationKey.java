@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.bdve.spec.IBusinessSpecification;
+import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.compare.CompareHelper;
@@ -195,8 +197,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
 
   public int compareTo (@Nonnull final ValidationKey aOther)
   {
-    int ret = CompareHelper.compare (m_aBusinessSpecification.getNumber (),
-                                     aOther.m_aBusinessSpecification.getNumber ());
+    int ret = m_aBusinessSpecification.compareTo (aOther.m_aBusinessSpecification);
     if (ret == 0)
     {
       ret = m_aTransaction.getTransactionKey ().compareTo (aOther.m_aTransaction.getTransactionKey ());

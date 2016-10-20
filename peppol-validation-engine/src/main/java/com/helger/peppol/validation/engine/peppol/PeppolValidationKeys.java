@@ -20,45 +20,60 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.ValidationKey;
 import com.helger.bdve.ValidationSectorKey;
+import com.helger.bdve.spec.BusinessSpecification;
+import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
-import com.helger.peppol.validation.api.peppol.EPeppolBIS;
 
 /**
  * This class contains the validation transactions used in PEPPOL. It uses
- * business specifications of type {@link EPeppolBIS} and transaction of type
- * {@link EBII2Transaction}.
+ * transactions of type {@link EBII2Transaction}.
  *
  * @author Philip Helger
  */
 @Immutable
 public class PeppolValidationKeys
 {
+  public static final IBusinessSpecification CATALOGUE_01 = new BusinessSpecification ("openpeppol-bis-01",
+                                                                                       "OpenPEPPOL BIS 1, Catalogue");
+  public static final IBusinessSpecification ORDER_03 = new BusinessSpecification ("openpeppol-bis-03",
+                                                                                   "OpenPEPPOL BIS 3, Order");
+  public static final IBusinessSpecification INVOICE_04 = new BusinessSpecification ("openpeppol-bis-04",
+                                                                                     "OpenPEPPOL BIS 4, Invoice");
+  public static final IBusinessSpecification BILLING_05 = new BusinessSpecification ("openpeppol-bis-05",
+                                                                                     "OpenPEPPOL BIS 5, Billing");
+  public static final IBusinessSpecification ORDERING_28 = new BusinessSpecification ("openpeppol-bis-28",
+                                                                                      "OpenPEPPOL BIS 28, Ordering");
+  public static final IBusinessSpecification DESPATCH_ADVICE_30 = new BusinessSpecification ("openpeppol-bis-30",
+                                                                                             "OpenPEPPOL BIS 30, Despatch advice");
+  public static final IBusinessSpecification MLR_36 = new BusinessSpecification ("openpeppol-bis-36",
+                                                                                 "OpenPEPPOL BIS 36, MLR");
+
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
-  public static final ValidationKey CATALOGUE_01_T19 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.CATALOGUE_01)
+  public static final ValidationKey CATALOGUE_01_T19 = new ValidationKey.Builder ().setBusinessSpecification (CATALOGUE_01)
                                                                                    .setTransaction (EBII2Transaction.T19)
                                                                                    .build ();
-  public static final ValidationKey CATALOGUE_01_T58 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.CATALOGUE_01)
+  public static final ValidationKey CATALOGUE_01_T58 = new ValidationKey.Builder ().setBusinessSpecification (CATALOGUE_01)
                                                                                    .setTransaction (EBII2Transaction.T58)
                                                                                    .build ();
-  public static final ValidationKey ORDER_03_T01 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.ORDER_03)
+  public static final ValidationKey ORDER_03_T01 = new ValidationKey.Builder ().setBusinessSpecification (ORDER_03)
                                                                                .setTransaction (EBII2Transaction.T01)
                                                                                .build ();
-  public static final ValidationKey INVOICE_04_T10 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.INVOICE_04)
+  public static final ValidationKey INVOICE_04_T10 = new ValidationKey.Builder ().setBusinessSpecification (INVOICE_04)
                                                                                  .setTransaction (EBII2Transaction.T10)
                                                                                  .build ();
-  public static final ValidationKey BILLING_05_T14 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.BILLING_05)
+  public static final ValidationKey BILLING_05_T14 = new ValidationKey.Builder ().setBusinessSpecification (BILLING_05)
                                                                                  .setTransaction (EBII2Transaction.T14)
                                                                                  .build ();
-  public static final ValidationKey ORDERING_28_T01 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.ORDERING_28)
+  public static final ValidationKey ORDERING_28_T01 = new ValidationKey.Builder ().setBusinessSpecification (ORDERING_28)
                                                                                   .setTransaction (EBII2Transaction.T01)
                                                                                   .build ();
-  public static final ValidationKey ORDERING_28_T76 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.ORDERING_28)
+  public static final ValidationKey ORDERING_28_T76 = new ValidationKey.Builder ().setBusinessSpecification (ORDERING_28)
                                                                                   .setTransaction (EBII2Transaction.T76)
                                                                                   .build ();
-  public static final ValidationKey DESPATCH_ADVICE_30_T16 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.DESPATCH_ADVICE_30)
+  public static final ValidationKey DESPATCH_ADVICE_30_T16 = new ValidationKey.Builder ().setBusinessSpecification (DESPATCH_ADVICE_30)
                                                                                          .setTransaction (EBII2Transaction.T16)
                                                                                          .build ();
-  public static final ValidationKey MLR_36_T71 = new ValidationKey.Builder ().setBusinessSpecification (EPeppolBIS.MLR_36)
+  public static final ValidationKey MLR_36_T71 = new ValidationKey.Builder ().setBusinessSpecification (MLR_36)
                                                                              .setTransaction (EBII2Transaction.T71)
                                                                              .build ();
 

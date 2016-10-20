@@ -19,7 +19,7 @@ package com.helger.peppol.validation.api.peppol;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.ISpecificationGroup;
+import com.helger.bdve.spec.ISpecificationGroup;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
 

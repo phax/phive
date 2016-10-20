@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve;
+package com.helger.bdve.spec;
 
 import java.io.Serializable;
 
@@ -28,11 +28,11 @@ import com.helger.commons.name.IHasDisplayName;
  * @author Philip Helger
  */
 @MustImplementComparable
-public interface IBusinessSpecification extends IHasID <String>, IHasDisplayName, Serializable
+public interface IBusinessSpecification extends
+                                        IHasID <String>,
+                                        IHasDisplayName,
+                                        Comparable <IBusinessSpecification>,
+                                        Serializable
 {
-  /**
-   * @return The internal number of the business specification. Used for
-   *         ordering.
-   */
-  int getNumber ();
+  /* empty */
 }
