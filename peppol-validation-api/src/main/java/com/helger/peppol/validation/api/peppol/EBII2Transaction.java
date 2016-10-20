@@ -83,26 +83,24 @@ public enum EBII2Transaction implements ISpecificationTransaction
   private final int m_nNumber;
   private final String m_sSubNumber;
   private final String m_sVersion;
-  private final String m_sTransactionID;
-  private final EUBL21DocumentType m_eUBLDocumentType;
+  private final IJAXBDocumentType m_aJAXBDocumentType;
 
   private EBII2Transaction (@Nonnull @Nonempty final String sName,
                             @Nonnegative final int nNumber,
                             @Nullable final String sSubNumber,
                             @Nonnull @Nonempty final String sVersion,
-                            @Nonnull final EUBL21DocumentType eUBLDocumentType)
+                            @Nonnull final IJAXBDocumentType aJAXBDocumentType)
   {
-    m_sID = name ();
+    m_sID = "urn:www.cenbii.eu:transaction:biitrns" +
+            StringHelper.getLeadingZero (nNumber, 3) +
+            StringHelper.getNotNull (sSubNumber, "") +
+            ":ver" +
+            sVersion;
     m_sName = sName;
     m_nNumber = nNumber;
     m_sSubNumber = StringHelper.getNotNull (sSubNumber, "");
     m_sVersion = sVersion;
-    m_sTransactionID = "urn:www.cenbii.eu:transaction:biitrns" +
-                       StringHelper.getLeadingZero (nNumber, 3) +
-                       m_sSubNumber +
-                       ":ver" +
-                       sVersion;
-    m_eUBLDocumentType = eUBLDocumentType;
+    m_aJAXBDocumentType = aJAXBDocumentType;
   }
 
   @Nonnull
@@ -119,23 +117,26 @@ public enum EBII2Transaction implements ISpecificationTransaction
     return m_sName;
   }
 
+  /**
+   * @return The number of this transaction. This is only unique in combination
+   *         with the "sub number", since e.g. in BII2 the number 64 is used 3
+   *         times but with the sub numbers A, B and C!
+   */
   @Nonnegative
   public int getNumber ()
   {
     return m_nNumber;
   }
 
+  /**
+   * @return The sub number. This is e.g. relevant for BII2 transaction 64 which
+   *         is split into A, B, and C. For all others this methods returns an
+   *         empty string.
+   */
   @Nonnull
   public String getSubNumber ()
   {
     return m_sSubNumber;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getTransactionID ()
-  {
-    return m_sTransactionID;
   }
 
   /**
@@ -160,6 +161,9 @@ public enum EBII2Transaction implements ISpecificationTransaction
     return "T" + StringHelper.getLeadingZero (m_nNumber, 2) + m_sSubNumber;
   }
 
+  /**
+   * @return The version of the transaction. For BII2 e.g. "1.0" or "2.0".
+   */
   @Nonnull
   @Nonempty
   public String getVersionNumber ()
@@ -173,7 +177,7 @@ public enum EBII2Transaction implements ISpecificationTransaction
   @Nonnull
   public IJAXBDocumentType getJAXBDocumentType ()
   {
-    return m_eUBLDocumentType;
+    return m_aJAXBDocumentType;
   }
 
   @Nullable

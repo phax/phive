@@ -197,10 +197,10 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
 
   public int compareTo (@Nonnull final ValidationKey aOther)
   {
-    int ret = m_aBusinessSpecification.compareTo (aOther.m_aBusinessSpecification);
+    int ret = m_aBusinessSpecification.getDisplayName ().compareTo (aOther.m_aBusinessSpecification.getDisplayName ());
     if (ret == 0)
     {
-      ret = m_aTransaction.getTransactionKey ().compareTo (aOther.m_aTransaction.getTransactionKey ());
+      ret = m_aTransaction.getName ().compareTo (aOther.m_aTransaction.getName ());
       if (ret == 0)
       {
         ret = CompareHelper.compare (getCountryCode (), aOther.getCountryCode ());

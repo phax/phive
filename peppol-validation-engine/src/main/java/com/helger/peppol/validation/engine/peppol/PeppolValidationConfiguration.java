@@ -70,7 +70,7 @@ public final class PeppolValidationConfiguration
       s_aLogger.warn ("No standard validation artefact supports BIS '" +
                       aValidationKey.getBusinessSpecification ().getDisplayName () +
                       "' and transaction " +
-                      aValidationKey.getTransaction ().getTransactionKey ());
+                      aValidationKey.getTransaction ().getID ());
 
     // Get all PEPPOL third party artefacts (if any)
     aValidationArtefacts.addAll (EPeppolThirdPartyValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));

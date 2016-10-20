@@ -22,22 +22,27 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 
 /**
- * Standalone implementation of {@link IBusinessSpecification}.
+ * Standalone implementation of {@link ISpecificationTransaction}.
  *
  * @author Philip Helger
  */
 @Immutable
-public class BusinessSpecification implements IBusinessSpecification
+public class SpecificationTransaction implements ISpecificationTransaction
 {
   private final String m_sID;
-  private final String m_sDisplayName;
+  private final String m_sName;
+  private final IJAXBDocumentType m_aDocType;
 
-  public BusinessSpecification (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
+  public SpecificationTransaction (@Nonnull @Nonempty final String sID,
+                                   @Nonnull @Nonempty final String sName,
+                                   @Nonnull final IJAXBDocumentType aDocumentType)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
-    m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    m_sName = ValueEnforcer.notEmpty (sName, "Name");
+    m_aDocType = ValueEnforcer.notNull (aDocumentType, "DocType");
   }
 
   @Nonnull
@@ -49,14 +54,23 @@ public class BusinessSpecification implements IBusinessSpecification
 
   @Nonnull
   @Nonempty
-  public String getDisplayName ()
+  public String getName ()
   {
-    return m_sDisplayName;
+    return m_sName;
+  }
+
+  @Nonnull
+  public IJAXBDocumentType getJAXBDocumentType ()
+  {
+    return m_aDocType;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).toString ();
+    return new ToStringGenerator (this).append ("ID", m_sID)
+                                       .append ("Name", m_sName)
+                                       .append ("DocType", m_aDocType)
+                                       .toString ();
   }
 }

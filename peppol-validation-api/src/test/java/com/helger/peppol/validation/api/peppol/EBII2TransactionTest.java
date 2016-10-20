@@ -44,7 +44,6 @@ public final class EBII2TransactionTest
       assertTrue (StringHelper.hasText (eTransaction.getName ()));
       assertTrue (eTransaction.getNumber () > 0);
       assertNotNull (eTransaction.getSubNumber ());
-      assertTrue (StringHelper.hasText (eTransaction.getTransactionID ()));
       assertTrue (StringHelper.hasText (eTransaction.getTransactionKey ()));
       assertTrue (StringHelper.hasText (eTransaction.getTransactionKeyShort ()));
       assertNotNull (eTransaction.getJAXBDocumentType ());
@@ -55,12 +54,12 @@ public final class EBII2TransactionTest
 
     // Compare with
     // http://www.cenbii.eu/wp-content/uploads/TransactionCustomisationID.pdf
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBII2Transaction.T01.getTransactionID ());
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBII2Transaction.T01.getTransactionID ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBII2Transaction.T01.getID ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBII2Transaction.T01.getID ());
     assertEquals ("2.0", EBII2Transaction.T01.getVersionNumber ());
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064A:ver1.0", EBII2Transaction.T64A.getTransactionID ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064A:ver1.0", EBII2Transaction.T64A.getID ());
     assertEquals ("1.0", EBII2Transaction.T64A.getVersionNumber ());
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064C:ver1.0", EBII2Transaction.T64C.getTransactionID ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064C:ver1.0", EBII2Transaction.T64C.getID ());
     assertEquals ("1.0", EBII2Transaction.T64C.getVersionNumber ());
   }
 }

@@ -18,7 +18,6 @@ package com.helger.bdve.spec;
 
 import java.io.Serializable;
 
-import com.helger.commons.annotation.MustImplementComparable;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 
@@ -27,12 +26,7 @@ import com.helger.commons.name.IHasDisplayName;
  *
  * @author Philip Helger
  */
-@MustImplementComparable
-public interface IBusinessSpecification extends
-                                        IHasID <String>,
-                                        IHasDisplayName,
-                                        Comparable <IBusinessSpecification>,
-                                        Serializable
+public interface IBusinessSpecification extends IHasID <String>, IHasDisplayName, Serializable
 {
   /* empty */
 }

@@ -18,7 +18,6 @@ package com.helger.bdve.spec;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.Nonempty;
@@ -42,46 +41,8 @@ public interface ISpecificationTransaction extends IHasID <String>, IHasName, Se
   String getName ();
 
   /**
-   * @return The number of this transaction. This is only unique in combination
-   *         with the "sub number", since e.g. in BII2 the number 64 is used 3
-   *         times but with the sub numbers A, B and C!
-   */
-  @Nonnegative
-  int getNumber ();
-
-  /**
-   * @return The sub number. This is e.g. relevant for BII2 transaction 64 which
-   *         is split into A, B, and C. For all others this methods returns an
-   *         empty string.
-   */
-  @Nonnull
-  String getSubNumber ();
-
-  /**
-   * @return The complete transaction ID. For BII2 e.g.
-   *         <code>urn:www.cenbii.eu:transaction:biitrns040:ver1.0</code>
-   */
-  @Nonnull
-  @Nonempty
-  String getTransactionID ();
-
-  /**
-   * @return The unique key. For BII2 e.g. "T064A" or "T004".
-   */
-  @Nonnull
-  @Nonempty
-  String getTransactionKey ();
-
-  /**
-   * @return The version of the transaction. For BII2 e.g. "1.0" or "2.0".
-   */
-  @Nonnull
-  @Nonempty
-  String getVersionNumber ();
-
-  /**
-   * @return The expected underlying document type for this transaction. Never
-   *         <code>null</code>.
+   * @return The expected underlying document type for this transaction.
+   *         Required for XSD validation. Never <code>null</code>.
    */
   @Nonnull
   IJAXBDocumentType getJAXBDocumentType ();
