@@ -17,7 +17,6 @@
 package com.helger.peppol.validation.engine;
 
 import java.io.File;
-import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -298,11 +297,7 @@ public class UBLDocumentValidator
         if (aXPathContext == null)
         {
           aXPathContext = XPathHelper.createNewXPath ();
-          final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext ();
-          for (final Map.Entry <String, String> aEntry : UBL21NamespaceContext.getInstance ()
-                                                                              .getPrefixToNamespaceURIMap ()
-                                                                              .entrySet ())
-            aNSContext.addMapping (aEntry.getKey (), aEntry.getValue ());
+          final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext (UBL21NamespaceContext.getInstance ());
 
           // Add the "ubl" mapping for the root namespace
           final IJAXBDocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
