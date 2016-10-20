@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.api.result;
+package com.helger.bdve.result;
 
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.ErrorList;
@@ -27,7 +28,6 @@ import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
  * This class captures the validation result of a single validation layer. It

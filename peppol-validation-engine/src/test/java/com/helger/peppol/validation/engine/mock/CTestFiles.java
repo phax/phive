@@ -21,13 +21,13 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.ValidationKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
-import com.helger.peppol.validation.api.ValidationKey;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationKeys;
 
 @Immutable

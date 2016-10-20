@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.api.artefact;
+package com.helger.bdve.artefact;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.ValidationKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.api.ValidationKey;
 
 /**
  * Stand-alone implementation of {@link IValidationArtefact}

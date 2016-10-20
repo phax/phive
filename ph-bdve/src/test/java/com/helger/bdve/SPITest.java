@@ -14,19 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.api;
+package com.helger.bdve;
 
-import java.io.Serializable;
+import org.junit.Test;
 
-import com.helger.commons.id.IHasID;
+import com.helger.commons.mock.SPITestHelper;
 
 /**
- * Represents the grouping of transactions. A group is referenced from an
- * {@link ISpecificationProfile}.
- *
+ * Test SPI definitions
+ * 
  * @author Philip Helger
  */
-public interface ISpecificationGroup extends IHasID <String>, Serializable
+public final class SPITest
 {
-  /* empty */
+  @Test
+  public void testBasic () throws Exception
+  {
+    SPITestHelper.testIfAllSPIImplementationsAreValid ();
+  }
 }

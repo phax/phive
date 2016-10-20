@@ -21,8 +21,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.api.result.ValidationLayerResult;
-import com.helger.peppol.validation.api.result.ValidationLayerResultList;
+import com.helger.bdve.result.ValidationLayerResult;
+import com.helger.bdve.result.ValidationLayerResultList;
 import com.helger.peppol.validation.engine.mock.CTestFiles;
 import com.helger.peppol.validation.engine.mock.MockFile;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;

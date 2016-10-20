@@ -18,8 +18,8 @@ package com.helger.peppol.validation.engine.peppol;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.peppol.validation.api.ValidationKey;
-import com.helger.peppol.validation.api.ValidationSectorKey;
+import com.helger.bdve.ValidationKey;
+import com.helger.bdve.ValidationSectorKey;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 import com.helger.peppol.validation.api.peppol.EPeppolBIS;
 

@@ -18,6 +18,9 @@ package com.helger.peppol.validation.engine.peppol;
 
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.ValidationKey;
+import com.helger.bdve.artefact.EValidationArtefactType;
+import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -27,9 +30,6 @@ import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.lang.EnumHelper;
-import com.helger.peppol.validation.api.ValidationKey;
-import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
-import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
  * This enumeration contains all the extended country specific OpenPEPPOL

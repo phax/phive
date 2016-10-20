@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.api;
+package com.helger.bdve;
 
 import java.io.Serializable;
 import java.util.List;
@@ -23,13 +23,13 @@ import java.util.function.Consumer;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
  * This class contains the configuration to run a single document validation. An

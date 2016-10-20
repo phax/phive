@@ -60,6 +60,10 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
+      <artifactId>ph-bdve</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
       <artifactId>ph-ubl21</artifactId>
     </dependency>
     <dependency>

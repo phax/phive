@@ -20,11 +20,11 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.bdve.ISpecificationTransaction;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.jaxb.builder.IJAXBDocumentType;
-import com.helger.peppol.validation.api.ISpecificationTransaction;
 import com.helger.ubl21.EUBL21DocumentType;
 
 /**

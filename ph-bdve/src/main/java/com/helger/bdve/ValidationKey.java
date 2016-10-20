@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation.api;
+package com.helger.bdve;
 
 import java.io.Serializable;
 import java.util.Locale;

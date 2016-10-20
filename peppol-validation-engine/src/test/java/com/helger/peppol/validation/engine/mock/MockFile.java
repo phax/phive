@@ -22,12 +22,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.ValidationKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsHashSet;
 import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.peppol.validation.api.ValidationKey;
 
 /**
  * This class describes a simple test file: the path where it resides and the
@@ -48,7 +48,7 @@ public class MockFile
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
-    m_aExpectedErrorIDs = new CommonsHashSet <> (aExpectedErrorIDs);
+    m_aExpectedErrorIDs = new CommonsHashSet<> (aExpectedErrorIDs);
   }
 
   /**

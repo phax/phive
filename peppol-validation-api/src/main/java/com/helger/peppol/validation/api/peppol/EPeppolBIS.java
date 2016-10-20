@@ -19,9 +19,9 @@ package com.helger.peppol.validation.api.peppol;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.bdve.IBusinessSpecification;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
-import com.helger.peppol.validation.api.IBusinessSpecification;
 
 /**
  * Enumeration with all OpenPEPPOL BIS

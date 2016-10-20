@@ -22,6 +22,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.bdve.ISpecificationProfile;
+import com.helger.bdve.ISpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -31,8 +33,6 @@ import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.text.display.IHasDisplayText;
-import com.helger.peppol.validation.api.ISpecificationProfile;
-import com.helger.peppol.validation.api.ISpecificationTransaction;
 
 /**
  * Defines the predefined CEN BII2 profiles. Each profile consists of a set of
@@ -49,15 +49,30 @@ public enum EBII2Profile implements ISpecificationProfile
   BII03 (EBII2ProfileName.BII03, 3, EBII2Transaction.T01),
   BII04 (EBII2ProfileName.BII04, 4, EBII2Transaction.T10),
   BII05 (EBII2ProfileName.BII05, 5, EBII2Transaction.T10, EBII2Transaction.T14),
-  BII06 (EBII2ProfileName.BII06, 6, EBII2Transaction.T01, EBII2Transaction.T02, EBII2Transaction.T10, EBII2Transaction.T14),
-  BII10 (EBII2ProfileName.BII10, 10, EBII2Transaction.T64A, EBII2Transaction.T64B, EBII2Transaction.T64C, EBII2Transaction.T65),
+  BII06 (EBII2ProfileName.BII06,
+         6,
+         EBII2Transaction.T01,
+         EBII2Transaction.T02,
+         EBII2Transaction.T10,
+         EBII2Transaction.T14),
+  BII10 (EBII2ProfileName.BII10,
+         10,
+         EBII2Transaction.T64A,
+         EBII2Transaction.T64B,
+         EBII2Transaction.T64C,
+         EBII2Transaction.T65),
   BII11 (EBII2ProfileName.BII11, 11, EBII2Transaction.T41, EBII2Transaction.T42),
   BII12 (EBII2ProfileName.BII12, 12, EBII2Transaction.T44, EBII2Transaction.T45),
   BII16 (EBII2ProfileName.BII16, 16, EBII2Transaction.T22, EBII2Transaction.T23),
   BII17 (EBII2ProfileName.BII17, 17, EBII2Transaction.T18, EBII2Transaction.T54, EBII2Transaction.T55),
   BII21 (EBII2ProfileName.BII21, 21, EBII2Transaction.T26),
   BII22 (EBII2ProfileName.BII22, 22, EBII2Transaction.T40),
-  BII27 (EBII2ProfileName.BII27, 27, EBII2Transaction.T01, EBII2Transaction.T02, EBII2Transaction.T04, EBII2Transaction.T05),
+  BII27 (EBII2ProfileName.BII27,
+         27,
+         EBII2Transaction.T01,
+         EBII2Transaction.T02,
+         EBII2Transaction.T04,
+         EBII2Transaction.T05),
   BII28 (EBII2ProfileName.BII28, 28, EBII2Transaction.T01, EBII2Transaction.T76),
   BII30 (EBII2ProfileName.BII30, 30, EBII2Transaction.T16),
   BII31 (EBII2ProfileName.BII31, 31, EBII2Transaction.T17),

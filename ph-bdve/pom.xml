@@ -24,12 +24,12 @@
     <artifactId>peppol-validation-engine-parent-pom</artifactId>
     <version>2.1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>peppol-validation-engine</artifactId>
+  <artifactId>ph-bdve</artifactId>
   <packaging>bundle</packaging>
-  <name>peppol-validation-engine</name>
-  <description>PEPPOL BIS v2 validation engine</description>
-  <url>https://github.com/phax/peppol-validation-engine/peppol-validation-engine</url>
-  <inceptionYear>2014</inceptionYear>
+  <name>ph-bdve</name>
+  <description>Business Document Validation Engine</description>
+  <url>https://github.com/phax/peppol-validation-engine/ph-bdve</url>
+  <inceptionYear>2016</inceptionYear>
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -56,28 +56,7 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-bdve</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>peppol-validation-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>peppol-validation-artefacts</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-ubl21</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>ph-schematron</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>peppol-testfiles</artifactId>
-      <scope>test</scope>
+      <artifactId>ph-jaxb</artifactId>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -93,7 +72,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>com.helger.peppol.validation.engine.*</Export-Package>
+            <Export-Package>com.helger.bdve.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
