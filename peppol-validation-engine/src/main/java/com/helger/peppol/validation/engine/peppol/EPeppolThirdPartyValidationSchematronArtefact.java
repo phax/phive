@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -117,9 +117,6 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationKey> getAllValidationKeys ()
   {
-    final ICommonsOrderedSet <ValidationKey> ret = new CommonsLinkedHashSet<> ();
-    for (final EPeppolThirdPartyValidationSchematronArtefact e : values ())
-      ret.add (e.m_aValidationKey);
-    return ret;
+    return CollectionHelper.newOrderedSetMapped (values (), x -> x.m_aValidationKey);
   }
 }

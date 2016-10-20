@@ -50,7 +50,7 @@ public final class ValidationBootstraper
     for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
     {
       // Only relevant XSDs
-      e.getValidationKey ().getTransaction ().getUBLDocumentType ().getSchema ();
+      e.getValidationKey ().getTransaction ().getJAXBDocumentType ().getSchema ();
       new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ();
     }
 
@@ -58,7 +58,7 @@ public final class ValidationBootstraper
     for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
     {
       // Only relevant XSDs
-      e.getValidationKey ().getTransaction ().getUBLDocumentType ().getSchema ();
+      e.getValidationKey ().getTransaction ().getJAXBDocumentType ().getSchema ();
       new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ();
     }
 

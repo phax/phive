@@ -105,7 +105,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
   @Nonnull
   public Class <?> getImplementationClass ()
   {
-    return m_aTransaction.getUBLDocumentType ().getImplementationClass ();
+    return m_aTransaction.getJAXBDocumentType ().getImplementationClass ();
   }
 
   /**

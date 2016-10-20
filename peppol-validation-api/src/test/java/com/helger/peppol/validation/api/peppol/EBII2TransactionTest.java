@@ -47,7 +47,7 @@ public final class EBII2TransactionTest
       assertTrue (StringHelper.hasText (eTransaction.getTransactionID ()));
       assertTrue (StringHelper.hasText (eTransaction.getTransactionKey ()));
       assertTrue (StringHelper.hasText (eTransaction.getTransactionKeyShort ()));
-      assertNotNull (eTransaction.getUBLDocumentType ());
+      assertNotNull (eTransaction.getJAXBDocumentType ());
 
       assertSame (eTransaction, EBII2Transaction.valueOf (eTransaction.name ()));
       assertSame (eTransaction, EBII2Transaction.getFromIDOrNull (eTransaction.getID ()));

@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasName;
-import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 
 /**
  * Represents a single transaction within an {@link ISpecificationProfile}.
@@ -87,9 +87,9 @@ public interface ISpecificationTransaction extends IHasID <String>, IHasName, Se
   String getVersionNumber ();
 
   /**
-   * @return The expected UBL 2.1 document type for this transaction. Never
+   * @return The expected underlying document type for this transaction. Never
    *         <code>null</code>.
    */
   @Nonnull
-  EUBL21DocumentType getUBLDocumentType ();
+  IJAXBDocumentType getJAXBDocumentType ();
 }

@@ -44,6 +44,7 @@ import com.helger.commons.error.location.ErrorLocation;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.peppol.validation.api.ValidationConfiguration;
 import com.helger.peppol.validation.api.artefact.EValidationArtefactType;
 import com.helger.peppol.validation.api.artefact.IValidationArtefact;
@@ -56,7 +57,6 @@ import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
-import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
@@ -170,9 +170,9 @@ public class UBLDocumentValidator
     {
       // Find the document type that is required for the configured
       // validation
-      final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
-                                                                  .getTransaction ()
-                                                                  .getUBLDocumentType ();
+      final IJAXBDocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
+                                                                 .getTransaction ()
+                                                                 .getJAXBDocumentType ();
 
       // Find the XML schema required for validation
       // as we don't have a node, we need to trust the implementation class
@@ -305,9 +305,9 @@ public class UBLDocumentValidator
             aNSContext.addMapping (aEntry.getKey (), aEntry.getValue ());
 
           // Add the "ubl" mapping for the root namespace
-          final EUBL21DocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
-                                                                      .getTransaction ()
-                                                                      .getUBLDocumentType ();
+          final IJAXBDocumentType eUBLDocumentType = m_aConfiguration.getValidationKey ()
+                                                                     .getTransaction ()
+                                                                     .getJAXBDocumentType ();
           aNSContext.addMapping ("ubl", eUBLDocumentType.getNamespaceURI ());
 
           aXPathContext.setNamespaceContext (aNSContext);
@@ -353,7 +353,7 @@ public class UBLDocumentValidator
         if (aSVRL == null)
         {
           // Invalid Schematron - unexpected
-          aResultList.add (new ValidationLayerResult (aArtefact, aErrorHandler.getAllResourceErrors ()));
+          aResultList.add (new ValidationLayerResult (aArtefact, aErrorHandler.getResourceErrors ()));
         }
         else
         {
@@ -376,11 +376,11 @@ public class UBLDocumentValidator
       {
         // Usually an error in the Schematron
         aResultList.add (new ValidationLayerResult (aArtefact,
-                                                    SingleError.builderError ()
-                                                               .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
-                                                               .setErrorText (ex.getMessage ())
-                                                               .setLinkedException (ex)
-                                                               .build ()));
+                                                    new ErrorList (SingleError.builderError ()
+                                                                              .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
+                                                                              .setErrorText (ex.getMessage ())
+                                                                              .setLinkedException (ex)
+                                                                              .build ())));
       }
     }
   }

@@ -18,6 +18,7 @@ package com.helger.peppol.validation.api;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -32,7 +33,9 @@ import com.helger.peppol.validation.api.artefact.IValidationArtefact;
 
 /**
  * This class contains the configuration to run a single document validation. An
- * instance of this class can be used to validate multiple documents.
+ * instance of this class can be used to validate multiple documents. All
+ * validation artefacts are executed in the order they are provided in the
+ * constructor!
  *
  * @author Philip Helger
  */
@@ -44,7 +47,10 @@ public class ValidationConfiguration implements Serializable
 
   /**
    * @param aValidationKey
-   *        The validation key to be used. May not be <code>null</code>.
+   *        The validation key to be used. May not be <code>null</code>. This
+   *        validation key must be a superset of all validation artefact
+   *        validation keys and they must only share business specification and
+   *        transaction specification.
    * @param aValidationArtefacts
    *        The validation artefacts to be used in this particular order. May
    *        neither be <code>null</code> nor empty nor may it contain
@@ -82,11 +88,25 @@ public class ValidationConfiguration implements Serializable
     return m_aValidationArtefacts.getClone ();
   }
 
+  /**
+   * Invoke the passed consumer on each contained validation artefact in the
+   * order specified in the constructor.<br>
+   * Note: only read operations may be performed with the consumer!
+   *
+   * @param aConsumer
+   *        The consumer to invoke. May not be <code>null</code>.
+   */
+  public void forEachValidationArtefact (@Nonnull final Consumer <? super IValidationArtefact> aConsumer)
+  {
+    ValueEnforcer.notNull (aConsumer, "Consumer");
+    m_aValidationArtefacts.forEach (aConsumer);
+  }
+
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("extendedValidationKey", m_aValidationKey)
-                                       .append ("validationArtefacts", m_aValidationArtefacts)
+    return new ToStringGenerator (this).append ("ValidationKey", m_aValidationKey)
+                                       .append ("ValidationArtefacts", m_aValidationArtefacts)
                                        .toString ();
   }
 }
