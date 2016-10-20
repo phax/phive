@@ -37,10 +37,22 @@ import com.helger.peppol.validation.api.peppol.EBII2Transaction;
  */
 public enum ERuleSourceThirdparty
 {
-  ATGOV_T10 ("atgov", EBII2Transaction.T10, "v06", "(/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
-  ATGOV_T14 ("atgov", EBII2Transaction.T14, "v06", "(/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
-  ATNAT_T10 ("atnat", EBII2Transaction.T10, "v05", "(/ubl:Invoice/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
-  ATNAT_T14 ("atnat", EBII2Transaction.T14, "v05", "(/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')");
+  ATGOV_T10 ("atgov",
+             EBII2Transaction.T10,
+             "v06",
+             "(/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
+  ATGOV_T14 ("atgov",
+             EBII2Transaction.T14,
+             "v06",
+             "(/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
+  ATNAT_T10 ("atnat",
+             EBII2Transaction.T10,
+             "v05",
+             "(/ubl:Invoice/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
+  ATNAT_T14 ("atnat",
+             EBII2Transaction.T14,
+             "v05",
+             "(/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')");
 
   private final String m_sPackageName;
   private final EBII2Transaction m_eTransaction;
@@ -100,7 +112,7 @@ public enum ERuleSourceThirdparty
   @ReturnsMutableCopy
   public static ICommonsList <ERuleSourceThirdparty> getAllForTransaction (@Nullable final EBII2Transaction eTransaction)
   {
-    final ICommonsList <ERuleSourceThirdparty> ret = new CommonsArrayList <> ();
+    final ICommonsList <ERuleSourceThirdparty> ret = new CommonsArrayList<> ();
     if (eTransaction != null)
       for (final ERuleSourceThirdparty e : values ())
         if (e.getTransaction ().equals (eTransaction))

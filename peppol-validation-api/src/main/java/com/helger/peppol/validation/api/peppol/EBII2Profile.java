@@ -27,7 +27,7 @@ import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.lang.EnumHelper;
@@ -79,6 +79,7 @@ public enum EBII2Profile implements ISpecificationProfile
   BII34 (EBII2ProfileName.BII34, 34, EBII2Transaction.T40, EBII2Transaction.T69),
   BII35 (EBII2ProfileName.BII35, 35, EBII2Transaction.T44, EBII2Transaction.T68, EBII2Transaction.T45);
 
+  private final String m_sID;
   private final IHasDisplayText m_aName;
   private final int m_nNumber;
   private final ICommonsOrderedSet <EBII2Transaction> m_aTransactions;
@@ -87,9 +88,17 @@ public enum EBII2Profile implements ISpecificationProfile
                         @Nonnegative final int nNumber,
                         @Nonnull @Nonempty final EBII2Transaction... aTransactions)
   {
+    m_sID = name ();
     m_aName = eName;
     m_nNumber = nNumber;
-    m_aTransactions = CollectionHelper.newOrderedSet (aTransactions);
+    m_aTransactions = new CommonsLinkedHashSet<> (aTransactions);
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
   }
 
   /**
@@ -102,6 +111,10 @@ public enum EBII2Profile implements ISpecificationProfile
     return m_aName.getDisplayText (aContentLocale);
   }
 
+  /**
+   * @return The numeric value of this profile (e.g. BII04 returns 4, BII22
+   *         returns 22 etc.). Some special profiles (like BII2 MLR) return 0!
+   */
   @Nonnegative
   public int getNumber ()
   {

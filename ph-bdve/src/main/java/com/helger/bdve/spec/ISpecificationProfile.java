@@ -16,13 +16,13 @@
  */
 package com.helger.bdve.spec;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.id.IHasID;
 import com.helger.commons.text.display.IHasDisplayText;
 
 /**
@@ -31,15 +31,8 @@ import com.helger.commons.text.display.IHasDisplayText;
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public interface ISpecificationProfile extends IHasDisplayText
+public interface ISpecificationProfile extends IHasID <String>, IHasDisplayText
 {
-  /**
-   * @return The numeric value of this profile (e.g. BII04 returns 4, BII22
-   *         returns 22 etc.). Some special profiles (like BII2 MLR) return 0!
-   */
-  @Nonnegative
-  int getNumber ();
-
   /**
    * @return A non-<code>null</code> non empty list of all transactions
    *         contained in this profile.

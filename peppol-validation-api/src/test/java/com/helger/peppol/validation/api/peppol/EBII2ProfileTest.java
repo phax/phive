@@ -28,6 +28,9 @@ import java.util.Locale;
 import org.junit.Test;
 
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.peppol.validation.api.peppol.EBII2Profile;
+import com.helger.peppol.validation.api.peppol.EBII2ProfileName;
+import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 
 /**
  * Test class for class {@link EBII2Profile}.
