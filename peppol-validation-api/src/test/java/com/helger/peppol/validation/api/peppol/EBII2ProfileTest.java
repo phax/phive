@@ -41,7 +41,6 @@ public final class EBII2ProfileTest
   {
     for (final EBII2Profile eProfile : EBII2Profile.values ())
     {
-      assertNotNull (eProfile.getGroup ());
       assertNotNull (eProfile.getDisplayText (Locale.ENGLISH));
       // MLR is 0
       assertTrue (eProfile.getNumber () >= 0);

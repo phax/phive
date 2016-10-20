@@ -30,14 +30,12 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
-import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.text.display.IHasDisplayText;
 
 /**
  * Defines the predefined CEN BII2 profiles. Each profile consists of a set of
- * transactions ({@link EBII2Transaction}) and belongs to a group
- * {@link EBII2Group} (derived from the transactions).
+ * transactions ({@link EBII2Transaction}).
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
@@ -83,15 +81,7 @@ public enum EBII2Profile implements ISpecificationProfile
 
   private final IHasDisplayText m_aName;
   private final int m_nNumber;
-  private final EBII2Group m_eGroup;
   private final ICommonsOrderedSet <EBII2Transaction> m_aTransactions;
-
-  private void _checkTransactionsSameGroup ()
-  {
-    for (final EBII2Transaction e : m_aTransactions)
-      if (e.getGroup () != m_eGroup)
-        throw new IllegalStateException ("Different groups in transactions for " + toString ());
-  }
 
   private EBII2Profile (@Nonnull final EBII2ProfileName eName,
                         @Nonnegative final int nNumber,
@@ -99,10 +89,7 @@ public enum EBII2Profile implements ISpecificationProfile
   {
     m_aName = eName;
     m_nNumber = nNumber;
-    m_eGroup = aTransactions[0].getGroup ();
     m_aTransactions = CollectionHelper.newOrderedSet (aTransactions);
-    if (GlobalDebug.isDebugMode ())
-      _checkTransactionsSameGroup ();
   }
 
   /**
@@ -119,12 +106,6 @@ public enum EBII2Profile implements ISpecificationProfile
   public int getNumber ()
   {
     return m_nNumber;
-  }
-
-  @Nonnull
-  public EBII2Group getGroup ()
-  {
-    return m_eGroup;
   }
 
   @Nonnull

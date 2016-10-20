@@ -27,8 +27,7 @@ import com.helger.commons.text.display.IHasDisplayText;
 
 /**
  * Defines a predefined specification profile. Each profile consists of a set of
- * transactions ({@link ISpecificationTransaction}) and belongs to a group
- * {@link ISpecificationGroup} (derived from the transactions).
+ * transactions ({@link ISpecificationTransaction}).
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
@@ -40,12 +39,6 @@ public interface ISpecificationProfile extends IHasDisplayText
    */
   @Nonnegative
   int getNumber ();
-
-  /**
-   * @return The group to which all transaction belong. Never <code>null</code>.
-   */
-  @Nonnull
-  ISpecificationGroup getGroup ();
 
   /**
    * @return A non-<code>null</code> non empty list of all transactions

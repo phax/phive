@@ -58,13 +58,6 @@ public interface ISpecificationTransaction extends IHasID <String>, IHasName, Se
   String getSubNumber ();
 
   /**
-   * @return The underlying specification group to which this transaction
-   *         belongs.
-   */
-  @Nonnull
-  ISpecificationGroup getGroup ();
-
-  /**
    * @return The complete transaction ID. For BII2 e.g.
    *         <code>urn:www.cenbii.eu:transaction:biitrns040:ver1.0</code>
    */
