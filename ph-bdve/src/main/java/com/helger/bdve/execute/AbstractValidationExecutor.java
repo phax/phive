@@ -6,7 +6,7 @@ import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationKey;
+import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -19,23 +19,28 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public abstract class AbstractValidationExecutor implements IValidationExecutor
 {
-  private final EValidationType m_eType;
-  private final ValidationKey m_aVK;
+  private final IValidationArtefact m_aValidationArtefact;
 
-  public AbstractValidationExecutor (@Nonnull final EValidationType eType, @Nonnull final ValidationKey aVK)
+  public AbstractValidationExecutor (@Nonnull final EValidationType eType,
+                                     @Nonnull final IValidationArtefact aValidationArtefact)
   {
-    m_eType = ValueEnforcer.notNull (eType, "Type");
-    m_aVK = ValueEnforcer.notNull (aVK, "ValidationKey");
+    ValueEnforcer.notNull (eType, "Type");
+    m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().equals (eType),
+                          () -> "The validation artefact is of type " +
+                                aValidationArtefact.getValidationArtefactType () +
+                                " but needs to have type " +
+                                eType);
   }
 
   /**
-   * @return The type of validation performed by this executor. May not be
+   * @return The type of validation performed by this executor. Never
    *         <code>null</code>.
    */
   @Nonnull
   public EValidationType getValidationType ()
   {
-    return m_eType;
+    return m_aValidationArtefact.getValidationArtefactType ();
   }
 
   /**
@@ -43,9 +48,9 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
    *         <code>null</code>.
    */
   @Nonnull
-  protected final ValidationKey getValidationKey ()
+  public final IValidationArtefact getValidationArtefact ()
   {
-    return m_aVK;
+    return m_aValidationArtefact;
   }
 
   protected static void closeSource (@Nonnull final Source aSource)
@@ -61,6 +66,6 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Type", m_eType).append ("ValidationKey", m_aVK).toString ();
+    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact).toString ();
   }
 }

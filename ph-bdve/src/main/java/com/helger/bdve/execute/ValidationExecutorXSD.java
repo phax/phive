@@ -3,14 +3,14 @@ package com.helger.bdve.execute;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
-import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 
+import org.w3c.dom.Node;
 import org.xml.sax.SAXParseException;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationKey;
-import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
@@ -29,70 +29,54 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  */
 public class ValidationExecutorXSD extends AbstractValidationExecutor
 {
-  public ValidationExecutorXSD (@Nonnull final ValidationKey aVK)
+  public ValidationExecutorXSD (@Nonnull final IValidationArtefact aValidationArtefact)
   {
-    super (EValidationType.XSD, aVK);
+    super (EValidationType.XSD, aValidationArtefact);
   }
 
-  /**
-   * Perform only XSD validation
-   *
-   * @param aSourceDocument
-   *        Source to be validated
-   * @param aClassLoader
-   *        Optional class loader to use. May be <code>null</code>.
-   * @return Never <code>null</code>.
-   */
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull @WillClose final Source aSourceDocument,
+  public ValidationResult applyValidation (@Nonnull @WillClose final Node aNode,
                                            @Nullable final ClassLoader aClassLoader)
   {
-    ValueEnforcer.notNull (aSourceDocument, "SourceDocument");
+    ValueEnforcer.notNull (aNode, "Node");
 
-    final ValidationKey aVK = getValidationKey ();
+    final IValidationArtefact aVA = getValidationArtefact ();
+
+    // Find the document type that is required for the configured
+    // validation
+    final IJAXBDocumentType aJAXBDocumentType = aVA.getValidationKey ().getTransaction ().getJAXBDocumentType ();
+
+    // Find the XML schema required for validation
+    // as we don't have a node, we need to trust the implementation class
+    final Schema aSchema = aJAXBDocumentType.getSchema (aClassLoader);
+    assert aSchema != null;
+
+    final ErrorList aErrorList = new ErrorList ();
     try
     {
-      // Find the document type that is required for the configured
-      // validation
-      final IJAXBDocumentType aJAXBDocumentType = aVK.getTransaction ().getJAXBDocumentType ();
-
-      // Find the XML schema required for validation
-      // as we don't have a node, we need to trust the implementation class
-      final Schema aSchema = aJAXBDocumentType.getSchema (aClassLoader);
-      assert aSchema != null;
-
-      final ErrorList aErrors = new ErrorList ();
-      try
-      {
-        // Apply the XML schema validation
-        final IErrorList aXSDErrors = XMLSchemaValidationHelper.validate (aSchema, aSourceDocument);
-        aErrors.addAll (aXSDErrors);
-      }
-      catch (final IllegalArgumentException ex)
-      {
-        // Happens when non-XML document is trying to be parsed
-        if (ex.getCause () instanceof SAXParseException)
-          aErrors.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
-                                                                 (SAXParseException) ex.getCause ()));
-        else
-          aErrors.add (SingleError.builderFatalError ()
-                                  .setErrorLocation (new ErrorLocation (aSourceDocument.getSystemId ()))
-                                  .setErrorText ("The document to be validated is not an XML document")
-                                  .setLinkedException (ex)
-                                  .build ());
-      }
-
-      // Build result object
-      // UBL always uses exactly one XSD
-      return new ValidationResult (new ValidationArtefact (EValidationType.XSD,
-                                                           aJAXBDocumentType.getAllXSDResources (aClassLoader)
-                                                                            .getFirst (),
-                                                           aVK),
-                                   aErrors.getAllFailures ());
+      // Apply the XML schema validation
+      final IErrorList aXSDErrors = XMLSchemaValidationHelper.validate (aSchema, new DOMSource (aNode));
+      aErrorList.addAll (aXSDErrors);
     }
-    finally
+    catch (final IllegalArgumentException ex)
     {
-      closeSource (aSourceDocument);
+      // Happens when non-XML document is trying to be parsed
+      if (ex.getCause () instanceof SAXParseException)
+      {
+        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
+                                                                  (SAXParseException) ex.getCause ()));
+      }
+      else
+      {
+        aErrorList.add (SingleError.builderFatalError ()
+                                   .setErrorLocation (new ErrorLocation (aVA.getRuleResource ().getPath ()))
+                                   .setErrorText ("The document to be validated is not an XML document")
+                                   .setLinkedException (ex)
+                                   .build ());
+      }
     }
+
+    // Build result object
+    return new ValidationResult (aVA, aErrorList.getAllFailures ());
   }
 }

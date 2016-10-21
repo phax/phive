@@ -19,11 +19,13 @@ package com.helger.bdve.spec;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasName;
 import com.helger.jaxb.builder.IJAXBDocumentType;
+import com.helger.xml.namespace.IIterableNamespaceContext;
 
 /**
  * Represents a single transaction within an {@link ISpecificationProfile}.
@@ -46,4 +48,10 @@ public interface ISpecificationTransaction extends IHasID <String>, IHasName, Se
    */
   @Nonnull
   IJAXBDocumentType getJAXBDocumentType ();
+
+  /**
+   * @return An optional namespace prefix-to-url mapping to be used.
+   */
+  @Nullable
+  IIterableNamespaceContext getNamespaceContext ();
 }

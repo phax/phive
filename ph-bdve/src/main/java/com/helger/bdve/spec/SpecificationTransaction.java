@@ -17,12 +17,14 @@
 package com.helger.bdve.spec;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
+import com.helger.xml.namespace.IIterableNamespaceContext;
 
 /**
  * Standalone implementation of {@link ISpecificationTransaction}.
@@ -35,14 +37,17 @@ public class SpecificationTransaction implements ISpecificationTransaction
   private final String m_sID;
   private final String m_sName;
   private final IJAXBDocumentType m_aDocType;
+  private final IIterableNamespaceContext m_aNamespaceContext;
 
   public SpecificationTransaction (@Nonnull @Nonempty final String sID,
                                    @Nonnull @Nonempty final String sName,
-                                   @Nonnull final IJAXBDocumentType aDocumentType)
+                                   @Nonnull final IJAXBDocumentType aDocumentType,
+                                   @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_sName = ValueEnforcer.notEmpty (sName, "Name");
     m_aDocType = ValueEnforcer.notNull (aDocumentType, "DocType");
+    m_aNamespaceContext = aNamespaceContext;
   }
 
   @Nonnull
@@ -65,12 +70,19 @@ public class SpecificationTransaction implements ISpecificationTransaction
     return m_aDocType;
   }
 
+  @Nullable
+  public IIterableNamespaceContext getNamespaceContext ()
+  {
+    return m_aNamespaceContext;
+  }
+
   @Override
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ID", m_sID)
                                        .append ("Name", m_sName)
                                        .append ("DocType", m_aDocType)
+                                       .append ("NamespaceContext", m_aNamespaceContext)
                                        .toString ();
   }
 }

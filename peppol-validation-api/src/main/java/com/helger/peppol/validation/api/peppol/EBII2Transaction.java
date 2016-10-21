@@ -26,6 +26,8 @@ import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.ubl21.UBL21NamespaceContext;
+import com.helger.xml.namespace.IIterableNamespaceContext;
 
 /**
  * Represents a single CEN BII2 transaction used in several profiles.<br>
@@ -171,13 +173,16 @@ public enum EBII2Transaction implements ISpecificationTransaction
     return m_sVersion;
   }
 
-  /**
-   * @return The expected UBL 2.1 document type. Never <code>null</code>.
-   */
   @Nonnull
   public IJAXBDocumentType getJAXBDocumentType ()
   {
     return m_aJAXBDocumentType;
+  }
+
+  @Nonnull
+  public IIterableNamespaceContext getNamespaceContext ()
+  {
+    return UBL21NamespaceContext.getInstance ();
   }
 
   @Nullable
