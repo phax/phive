@@ -34,12 +34,12 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import com.helger.bdve.EValidationType;
 import com.helger.bdve.ValidationConfiguration;
-import com.helger.bdve.artefact.EValidationArtefactType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.artefact.ValidationArtefact;
-import com.helger.bdve.result.ValidationLayerResult;
-import com.helger.bdve.result.ValidationLayerResultList;
+import com.helger.bdve.result.ValidationResult;
+import com.helger.bdve.result.ValidationResultList;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -109,7 +109,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResult applyXSDValidation (@Nonnull final File aUBLDocument)
+  public ValidationResult applyXSDValidation (@Nonnull final File aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -122,7 +122,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResult applyXSDValidation (@Nonnull final IHasInputStream aUBLDocument)
+  public ValidationResult applyXSDValidation (@Nonnull final IHasInputStream aUBLDocument)
   {
     return applyXSDValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -135,7 +135,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument)
+  public ValidationResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument)
   {
     return applyXSDValidation (aUBLDocument, (ClassLoader) null);
   }
@@ -160,8 +160,8 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument,
-                                                   @Nullable final ClassLoader aClassLoader)
+  public ValidationResult applyXSDValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                              @Nullable final ClassLoader aClassLoader)
   {
     ValueEnforcer.notNull (aUBLDocument, "UBLDocument");
 
@@ -201,11 +201,11 @@ public class UBLDocumentValidator
 
       // Build result object
       // UBL always uses exactly one XSD
-      return new ValidationLayerResult (new ValidationArtefact (EValidationArtefactType.XSD,
-                                                                eUBLDocumentType.getAllXSDResources (aClassLoader)
-                                                                                .getFirst (),
-                                                                m_aConfiguration.getValidationKey ()),
-                                        aErrors.getAllFailures ());
+      return new ValidationResult (new ValidationArtefact (EValidationType.XSD,
+                                                           eUBLDocumentType.getAllXSDResources (aClassLoader)
+                                                                           .getFirst (),
+                                                           m_aConfiguration.getValidationKey ()),
+                                   aErrors.getAllFailures ());
     }
     finally
     {
@@ -221,7 +221,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applySchematronValidation (@Nonnull final File aUBLDocument)
+  public ValidationResultList applySchematronValidation (@Nonnull final File aUBLDocument)
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -234,7 +234,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applySchematronValidation (@Nonnull final IHasInputStream aUBLDocument)
+  public ValidationResultList applySchematronValidation (@Nonnull final IHasInputStream aUBLDocument)
   {
     return applySchematronValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -247,9 +247,9 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument)
+  public ValidationResultList applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument)
   {
-    final ValidationLayerResultList ret = new ValidationLayerResultList ();
+    final ValidationResultList ret = new ValidationResultList ();
     applySchematronValidation (aUBLDocument, ret);
     return ret;
   }
@@ -263,7 +263,7 @@ public class UBLDocumentValidator
    *        The result list to be filled. May not be <code>null</code>.
    */
   public void applySchematronValidation (@Nonnull @WillClose final Source aUBLDocument,
-                                         @Nonnull final ValidationLayerResultList aResultList)
+                                         @Nonnull final ValidationResultList aResultList)
   {
     ValueEnforcer.notNull (aUBLDocument, "UBLDocument");
     ValueEnforcer.notNull (aResultList, "ResultList");
@@ -320,7 +320,7 @@ public class UBLDocumentValidator
                             " because the prerequisite XPath expression '" +
                             aArtefact.getValidationKey ().getPrerequisiteXPath () +
                             "' is not fulfilled.");
-            aResultList.add (ValidationLayerResult.createIgnoredLayer (aArtefact));
+            aResultList.add (ValidationResult.createIgnoredResult (aArtefact));
             continue;
           }
         }
@@ -334,7 +334,7 @@ public class UBLDocumentValidator
                            aArtefact.getValidationKey ().getPrerequisiteXPath () +
                            "' - ignoring validation artefact.",
                            ex);
-          aResultList.add (ValidationLayerResult.createIgnoredLayer (aArtefact));
+          aResultList.add (ValidationResult.createIgnoredResult (aArtefact));
           continue;
         }
       }
@@ -348,7 +348,7 @@ public class UBLDocumentValidator
         if (aSVRL == null)
         {
           // Invalid Schematron - unexpected
-          aResultList.add (new ValidationLayerResult (aArtefact, aErrorHandler.getResourceErrors ()));
+          aResultList.add (new ValidationResult (aArtefact, aErrorHandler.getResourceErrors ()));
         }
         else
         {
@@ -364,18 +364,18 @@ public class UBLDocumentValidator
             aREG.add (aSuccessfulReport.getAsResourceError (sResourceName));
 
           // Add one result element per layer
-          aResultList.add (new ValidationLayerResult (aArtefact, aREG));
+          aResultList.add (new ValidationResult (aArtefact, aREG));
         }
       }
       catch (final Exception ex)
       {
         // Usually an error in the Schematron
-        aResultList.add (new ValidationLayerResult (aArtefact,
-                                                    new ErrorList (SingleError.builderError ()
-                                                                              .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
-                                                                              .setErrorText (ex.getMessage ())
-                                                                              .setLinkedException (ex)
-                                                                              .build ())));
+        aResultList.add (new ValidationResult (aArtefact,
+                                               new ErrorList (SingleError.builderError ()
+                                                                         .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
+                                                                         .setErrorText (ex.getMessage ())
+                                                                         .setLinkedException (ex)
+                                                                         .build ())));
       }
     }
   }
@@ -388,7 +388,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applyCompleteValidation (@Nonnull final File aUBLDocument)
+  public ValidationResultList applyCompleteValidation (@Nonnull final File aUBLDocument)
   {
     return applyCompleteValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -401,7 +401,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applyCompleteValidation (@Nonnull final IHasInputStream aUBLDocument)
+  public ValidationResultList applyCompleteValidation (@Nonnull final IHasInputStream aUBLDocument)
   {
     return applyCompleteValidation (TransformSourceFactory.create (aUBLDocument));
   }
@@ -414,7 +414,7 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument)
+  public ValidationResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument)
   {
     return applyCompleteValidation (aUBLDocument, (ClassLoader) null);
   }
@@ -429,12 +429,12 @@ public class UBLDocumentValidator
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public ValidationLayerResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument,
-                                                            @Nullable final ClassLoader aClassLoader)
+  public ValidationResultList applyCompleteValidation (@Nonnull @WillClose final Source aUBLDocument,
+                                                       @Nullable final ClassLoader aClassLoader)
   {
-    final ValidationLayerResultList ret = new ValidationLayerResultList ();
+    final ValidationResultList ret = new ValidationResultList ();
     // XSD validation
-    final ValidationLayerResult aXSDResult = applyXSDValidation (aUBLDocument, aClassLoader);
+    final ValidationResult aXSDResult = applyXSDValidation (aUBLDocument, aClassLoader);
     ret.add (aXSDResult);
     if (aXSDResult.isSuccess ())
     {

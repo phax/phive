@@ -19,6 +19,7 @@ package com.helger.bdve.artefact;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.EValidationType;
 import com.helger.bdve.ValidationKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -33,11 +34,11 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public class ValidationArtefact implements IValidationArtefact
 {
-  private final EValidationArtefactType m_eValidationArtefactType;
+  private final EValidationType m_eValidationArtefactType;
   private final IReadableResource m_aResource;
   private final ValidationKey m_aValidationKey;
 
-  public ValidationArtefact (@Nonnull final EValidationArtefactType eValidationArtefactType,
+  public ValidationArtefact (@Nonnull final EValidationType eValidationArtefactType,
                              @Nonnull final IReadableResource aResource,
                              @Nonnull final ValidationKey aValidationKey)
   {
@@ -47,7 +48,7 @@ public class ValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public EValidationArtefactType getValidationArtefactType ()
+  public EValidationType getValidationArtefactType ()
   {
     return m_eValidationArtefactType;
   }

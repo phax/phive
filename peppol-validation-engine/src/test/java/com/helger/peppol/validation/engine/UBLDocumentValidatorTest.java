@@ -21,8 +21,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.result.ValidationLayerResult;
-import com.helger.bdve.result.ValidationLayerResultList;
+import com.helger.bdve.result.ValidationResult;
+import com.helger.bdve.result.ValidationResultList;
 import com.helger.peppol.validation.engine.mock.CTestFiles;
 import com.helger.peppol.validation.engine.mock.MockFile;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
@@ -48,7 +48,7 @@ public final class UBLDocumentValidatorTest
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
-      final ValidationLayerResult aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
+      final ValidationResult aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
       if (aTestFile.isGoodCase ())
         assertTrue (aTestFile.getResource ().getPath () + " - " + aXSDErrors.toString (), aXSDErrors.isSuccess ());
       else
@@ -64,7 +64,7 @@ public final class UBLDocumentValidatorTest
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
-      final ValidationLayerResultList aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());
+      final ValidationResultList aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());
       if (aTestFile.isGoodCase ())
         assertTrue (aSCHErrors.getAllErrors ().toString (), aSCHErrors.containsNoError ());
       else
@@ -80,7 +80,7 @@ public final class UBLDocumentValidatorTest
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
-      final ValidationLayerResultList aErrors = aValidator.applyCompleteValidation (aTestFile.getResource ());
+      final ValidationResultList aErrors = aValidator.applyCompleteValidation (aTestFile.getResource ());
       if (aTestFile.isGoodCase ())
         assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
       else

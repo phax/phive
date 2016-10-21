@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.artefact;
+package com.helger.bdve;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,7 +29,7 @@ import com.helger.commons.name.IHasName;
  *
  * @author Philip Helger
  */
-public enum EValidationArtefactType implements IHasID <String>,IHasName
+public enum EValidationType implements IHasID <String>,IHasName
 {
   XSD ("xsd", "XML Schema"),
   SCHEMATRON ("schematron", "Schematron");
@@ -37,7 +37,7 @@ public enum EValidationArtefactType implements IHasID <String>,IHasName
   private final String m_sID;
   private final String m_sName;
 
-  private EValidationArtefactType (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  private EValidationType (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     m_sID = sID;
     m_sName = sName;
@@ -61,8 +61,8 @@ public enum EValidationArtefactType implements IHasID <String>,IHasName
   }
 
   @Nullable
-  public static EValidationArtefactType getFromIDOrNull (@Nullable final String sID)
+  public static EValidationType getFromIDOrNull (@Nullable final String sID)
   {
-    return EnumHelper.getFromIDOrNull (EValidationArtefactType.class, sID);
+    return EnumHelper.getFromIDOrNull (EValidationType.class, sID);
   }
 }

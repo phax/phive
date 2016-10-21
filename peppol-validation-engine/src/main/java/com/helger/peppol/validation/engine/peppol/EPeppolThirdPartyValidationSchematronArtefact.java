@@ -18,8 +18,8 @@ package com.helger.peppol.validation.engine.peppol;
 
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.EValidationType;
 import com.helger.bdve.ValidationKey;
-import com.helger.bdve.artefact.EValidationArtefactType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -71,9 +71,9 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   }
 
   @Nonnull
-  public EValidationArtefactType getValidationArtefactType ()
+  public EValidationType getValidationArtefactType ()
   {
-    return EValidationArtefactType.SCHEMATRON;
+    return EValidationType.SCHEMATRON;
   }
 
   @Nonnull

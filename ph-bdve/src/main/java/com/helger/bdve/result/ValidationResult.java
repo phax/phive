@@ -67,18 +67,6 @@ public class ValidationResult implements ISuccessIndicator, Serializable
   /**
    * @return The errors occurred during the validation execution on this layer.
    *         Never <code>null</code> but maybe empty.
-   * @deprecated Use {@link #getErrorList()} instead
-   */
-  @Deprecated
-  @Nonnull
-  public IErrorList getResourceErrorGroup ()
-  {
-    return getErrorList ();
-  }
-
-  /**
-   * @return The errors occurred during the validation execution on this layer.
-   *         Never <code>null</code> but maybe empty.
    */
   @Nonnull
   public IErrorList getErrorList ()

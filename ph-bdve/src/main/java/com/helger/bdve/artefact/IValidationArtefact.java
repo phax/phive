@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.EValidationType;
 import com.helger.bdve.ValidationKey;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
@@ -38,7 +39,7 @@ public interface IValidationArtefact extends Serializable
    *         <code>null</code>.
    */
   @Nonnull
-  EValidationArtefactType getValidationArtefactType ();
+  EValidationType getValidationArtefactType ();
 
   /**
    * @return The resource that contains the rules depending on the type (like
