@@ -1,6 +1,7 @@
 package com.helger.bdve.execute;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
@@ -15,6 +16,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
+@Immutable
 public abstract class AbstractValidationExecutor implements IValidationExecutor
 {
   private final EValidationType m_eType;
@@ -26,6 +28,10 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
     m_aVK = ValueEnforcer.notNull (aVK, "ValidationKey");
   }
 
+  /**
+   * @return The type of validation performed by this executor. May not be
+   *         <code>null</code>.
+   */
   @Nonnull
   public EValidationType getValidationType ()
   {

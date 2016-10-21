@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.xml.transform.Source;
 
-import com.helger.bdve.EValidationType;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.commons.io.IHasInputStream;
 import com.helger.xml.transform.TransformSourceFactory;
@@ -19,12 +18,6 @@ import com.helger.xml.transform.TransformSourceFactory;
  */
 public interface IValidationExecutor
 {
-  /**
-   * @return The type of validation performed by this executor.
-   */
-  @Nonnull
-  EValidationType getValidationType ();
-
   /**
    * Perform validation
    *
