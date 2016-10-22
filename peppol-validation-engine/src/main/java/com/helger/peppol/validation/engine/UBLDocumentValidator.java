@@ -35,7 +35,6 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationConfiguration;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.result.ValidationResult;

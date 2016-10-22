@@ -22,12 +22,12 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.bdve.ValidationConfiguration;
 import com.helger.bdve.ValidationKey;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.peppol.validation.engine.ValidationConfiguration;
 
 /**
  * This class contains the configuration to run a single UBL document

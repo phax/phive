@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve;
+package com.helger.peppol.validation.engine;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.ValidationKey;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -57,7 +57,7 @@ public class ValidationConfiguration implements Serializable
    *        <code>null</code> elements.
    */
   public ValidationConfiguration (@Nonnull final ValidationKey aValidationKey,
-                                  @Nonnull @Nonempty final List <IValidationArtefact> aValidationArtefacts)
+                                  @Nonnull @Nonempty final Iterable <? extends IValidationArtefact> aValidationArtefacts)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
     ValueEnforcer.notEmptyNoNullValue (aValidationArtefacts, "ValidationArtefacts");
