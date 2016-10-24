@@ -46,20 +46,6 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
                                 eType);
   }
 
-  /**
-   * @return The type of validation performed by this executor. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  public EValidationType getValidationType ()
-  {
-    return m_aValidationArtefact.getValidationArtefactType ();
-  }
-
-  /**
-   * @return The validation key passed in the constructor. Never
-   *         <code>null</code>.
-   */
   @Nonnull
   public final IValidationArtefact getValidationArtefact ()
   {

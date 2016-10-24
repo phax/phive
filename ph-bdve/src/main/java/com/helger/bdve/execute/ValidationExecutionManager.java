@@ -30,7 +30,9 @@ import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 
 /**
- * Execute multiple {@link IValidationExecutor}s at once.
+ * Execute multiple {@link IValidationExecutor}s at once. It is basically a
+ * chain of validators with different syntaxes (XSD, Schematron) and different
+ * rules (rule files). All validation executors are handled in order.
  *
  * @author Philip Helger
  */
@@ -110,11 +112,23 @@ public class ValidationExecutionManager
     final ValidationResultList ret = new ValidationResultList ();
     final ClassLoader aClassLoader = getClassLoader ();
 
+    boolean bIgnoreRest = false;
     for (final IValidationExecutor aExecutor : getAllExecutors ())
     {
-      final ValidationResult aResult = aExecutor.applyValidation (aNode, aClassLoader);
-      assert aResult != null;
-      ret.add (aResult);
+      if (bIgnoreRest)
+      {
+        // Ignore layer
+        ret.add (ValidationResult.createIgnoredResult (aExecutor.getValidationArtefact ()));
+      }
+      else
+      {
+        final ValidationResult aResult = aExecutor.applyValidation (aNode, aClassLoader);
+        assert aResult != null;
+        ret.add (aResult);
+
+        if (aResult.isFailure () && aExecutor.getValidationType ().isStopValidationOnError ())
+          bIgnoreRest = true;
+      }
     }
     return ret;
   }

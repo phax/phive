@@ -22,15 +22,35 @@ import javax.annotation.WillClose;
 
 import org.w3c.dom.Node;
 
+import com.helger.bdve.EValidationType;
+import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
 
 /**
- * Base interface for performing validation of a single document.
+ * Base interface for performing validation of a single XML document based on
+ * the rules of a single validation artefact.
  *
  * @author Philip Helger
  */
 public interface IValidationExecutor
 {
+  /**
+   * @return The validation artefact used to validate the XML instances. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  IValidationArtefact getValidationArtefact ();
+
+  /**
+   * @return The type of validation performed by this executor. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  default EValidationType getValidationType ()
+  {
+    return getValidationArtefact ().getValidationArtefactType ();
+  }
+
   /**
    * Perform validation
    *
