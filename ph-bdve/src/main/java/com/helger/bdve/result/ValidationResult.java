@@ -79,11 +79,6 @@ public class ValidationResult implements ISuccessIndicator, Serializable
     return m_eSuccess.isTrue ();
   }
 
-  public boolean isFailure ()
-  {
-    return m_eSuccess.isFalse ();
-  }
-
   /**
    * @return <code>true</code> if there are no results on this layer, because
    *         the underlying validation artefact was not applicable. If this
