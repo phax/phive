@@ -37,6 +37,7 @@ import org.xml.sax.SAXParseException;
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.commons.ValueEnforcer;
@@ -77,6 +78,7 @@ public class UBLDocumentValidator
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (UBLDocumentValidator.class);
 
+  private final ValidationExecutionManager m_aExecMgr;
   private final ValidationConfiguration m_aConfiguration;
 
   /**
@@ -87,6 +89,7 @@ public class UBLDocumentValidator
    */
   public UBLDocumentValidator (@Nonnull final ValidationConfiguration aConfiguration)
   {
+    m_aExecMgr = new ValidationExecutionManager ();
     m_aConfiguration = ValueEnforcer.notNull (aConfiguration, "Configuration");
   }
 

@@ -124,8 +124,7 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
   public static ICommonsOrderedSet <ValidationKey> getAllValidationKeys ()
   {
     final ICommonsOrderedSet <ValidationKey> ret = new CommonsLinkedHashSet<> ();
-    for (final EPeppolStandardValidationSchematronArtefact e : values ())
-      ret.add (e.m_aValidationKey);
+    ret.addAllMapped (values (), x -> x.m_aValidationKey);
     return ret;
   }
 }

@@ -40,6 +40,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public class ValidationConfiguration implements Serializable
 {
   private final ValidationKey m_aValidationKey;

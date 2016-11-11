@@ -28,7 +28,6 @@ import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -38,7 +37,7 @@ import com.helger.commons.string.ToStringGenerator;
  */
 public class ValidationResultList implements ICommonsIterable <ValidationResult>, Serializable
 {
-  private final ICommonsList <ValidationResult> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <ValidationResult> m_aResults = new CommonsArrayList<> ();
 
   public ValidationResultList ()
   {}
@@ -46,81 +45,86 @@ public class ValidationResultList implements ICommonsIterable <ValidationResult>
   public void add (@Nonnull final ValidationResult aValidationResult)
   {
     ValueEnforcer.notNull (aValidationResult, "ValidationResult");
-    m_aList.add (aValidationResult);
+    m_aResults.add (aValidationResult);
   }
 
   public void add (@Nonnegative final int nIndex, @Nonnull final ValidationResult aValidationResult)
   {
     ValueEnforcer.notNull (aValidationResult, "ValidationResult");
-    m_aList.add (nIndex, aValidationResult);
+    m_aResults.add (nIndex, aValidationResult);
   }
 
   public void addAll (@Nonnull final ValidationResultList aValidationResultList)
   {
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
-    m_aList.addAll (aValidationResultList.m_aList);
+    m_aResults.addAll (aValidationResultList.m_aResults);
   }
 
   @Nonnegative
   public int getSize ()
   {
-    return m_aList.size ();
+    return m_aResults.size ();
   }
 
   public boolean isEmpty ()
   {
-    return m_aList.isEmpty ();
+    return m_aResults.isEmpty ();
+  }
+
+  public boolean isNotEmpty ()
+  {
+    return m_aResults.isNotEmpty ();
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <ValidationResult> getAll ()
+  public ICommonsList <ValidationResult> getAllResults ()
   {
-    return m_aList.getClone ();
+    return m_aResults.getClone ();
   }
 
   @Nonnull
   public Iterator <ValidationResult> iterator ()
   {
-    return m_aList.iterator ();
+    return m_aResults.iterator ();
   }
 
   public boolean containsNoFailure ()
   {
-    return m_aList.containsOnly (x -> x.getErrorList ().containsNoFailure ());
+    return m_aResults.containsOnly (x -> x.getErrorList ().containsNoFailure ());
   }
 
   public boolean containsNoError ()
   {
-    return m_aList.containsOnly (x -> x.getErrorList ().containsNoError ());
+    return m_aResults.containsOnly (x -> x.getErrorList ().containsNoError ());
   }
 
   public boolean containsAtLeastOneFailure ()
   {
-    return m_aList.containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
+    return m_aResults.containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
   }
 
   public boolean containsAtLeastOneError ()
   {
-    return m_aList.containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
+    return m_aResults.containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public IErrorList getAllFailures ()
+  public ErrorList getAllFailures ()
   {
     final ErrorList ret = new ErrorList ();
-    for (final ValidationResult aItem : m_aList)
+    for (final ValidationResult aItem : m_aResults)
       ret.addAll (aItem.getErrorList ().getAllFailures ());
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public IErrorList getAllErrors ()
+  public ErrorList getAllErrors ()
   {
     final ErrorList ret = new ErrorList ();
-    for (final ValidationResult aItem : m_aList)
+    for (final ValidationResult aItem : m_aResults)
       ret.addAll (aItem.getErrorList ().getAllErrors ());
     return ret;
   }
@@ -128,6 +132,6 @@ public class ValidationResultList implements ICommonsIterable <ValidationResult>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("List", m_aList).toString ();
+    return new ToStringGenerator (this).append ("Results", m_aResults).toString ();
   }
 }
