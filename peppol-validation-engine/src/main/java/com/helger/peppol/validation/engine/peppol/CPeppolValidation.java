@@ -31,7 +31,7 @@ import com.helger.peppol.validation.api.peppol.EBII2Transaction;
  * @author Philip Helger
  */
 @Immutable
-public class PeppolValidationKeys
+public class CPeppolValidation
 {
   public static final IBusinessSpecification CATALOGUE_01 = new BusinessSpecification ("openpeppol-bis-01",
                                                                                        "OpenPEPPOL BIS 1, Catalogue");
@@ -79,6 +79,6 @@ public class PeppolValidationKeys
 
   public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV", "Austrian Government");
 
-  private PeppolValidationKeys ()
+  private CPeppolValidation ()
   {}
 }

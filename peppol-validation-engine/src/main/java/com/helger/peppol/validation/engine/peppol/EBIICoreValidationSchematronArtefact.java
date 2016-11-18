@@ -24,7 +24,7 @@ import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -39,12 +39,12 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
 {
-  CATALOGUE_CORE ("Catalogue/BIICORE-UBL-T19-V1.0.sch", PeppolValidationKeys.CATALOGUE_01_T19),
-  ORDER_CORE ("Order/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDER_03_T01),
-  INVOICE_CORE ("Invoice/BIICORE-UBL-T10-V1.0.sch", PeppolValidationKeys.INVOICE_04_T10),
-  BILLING_CREDIT_NOTE_CORE ("Billing/BIICORE-UBL-T14-V1.0.sch", PeppolValidationKeys.BILLING_05_T14),
-  ORDERING_ORDER_CORE ("Ordering/BIICORE-UBL-T01-V1.0.sch", PeppolValidationKeys.ORDERING_28_T01),
-  DESPATCH_ADVICE_CORE ("DespatchAdvice/BIICORE-UBL-T16-V1.0.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16);
+  CATALOGUE_CORE ("Catalogue/BIICORE-UBL-T19-V1.0.sch", CPeppolValidation.CATALOGUE_01_T19),
+  ORDER_CORE ("Order/BIICORE-UBL-T01-V1.0.sch", CPeppolValidation.ORDER_03_T01),
+  INVOICE_CORE ("Invoice/BIICORE-UBL-T10-V1.0.sch", CPeppolValidation.INVOICE_04_T10),
+  BILLING_CREDIT_NOTE_CORE ("Billing/BIICORE-UBL-T14-V1.0.sch", CPeppolValidation.BILLING_05_T14),
+  ORDERING_ORDER_CORE ("Ordering/BIICORE-UBL-T01-V1.0.sch", CPeppolValidation.ORDERING_28_T01),
+  DESPATCH_ADVICE_CORE ("DespatchAdvice/BIICORE-UBL-T16-V1.0.sch", CPeppolValidation.DESPATCH_ADVICE_30_T16);
 
   private final ClassPathResource m_aResource;
   private final ValidationArtefactKey m_aValidationKey;
@@ -102,9 +102,6 @@ public enum EBIICoreValidationSchematronArtefact implements IValidationArtefact
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationArtefactKey> getAllValidationKeys ()
   {
-    final ICommonsOrderedSet <ValidationArtefactKey> ret = new CommonsLinkedHashSet<> ();
-    for (final EBIICoreValidationSchematronArtefact e : values ())
-      ret.add (e.m_aValidationKey);
-    return ret;
+    return CollectionHelper.newOrderedSetMapped (values (), x -> x.m_aValidationKey);
   }
 }

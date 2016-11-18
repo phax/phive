@@ -44,22 +44,22 @@ import com.helger.commons.io.resource.IReadableResource;
 public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidationArtefact
 {
   INVOICE_AT_NAT ("Invoice-Thirdparty/ATNAT-UBL-T10.sch",
-                  new ValidationArtefactKey.Builder (PeppolValidationKeys.INVOICE_04_T10).setCountry ("AT")
+                  new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("AT")
                                                                                  .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                  .build ()),
   INVOICE_AT_GOV ("Invoice-Thirdparty/ATGOV-UBL-T10.sch",
-                  new ValidationArtefactKey.Builder (PeppolValidationKeys.INVOICE_04_T10).setCountry ("AT")
-                                                                                 .setSectorKey (PeppolValidationKeys.SECTOR_AT_GOV)
+                  new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("AT")
+                                                                                 .setSectorKey (CPeppolValidation.SECTOR_AT_GOV)
                                                                                  .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                  .build ()),
 
   BILLING_CREDIT_NOTE_AT_NAT ("Billing-Thirdparty/ATNAT-UBL-T14.sch",
-                              new ValidationArtefactKey.Builder (PeppolValidationKeys.BILLING_05_T14).setCountry ("AT")
+                              new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
                                                                                              .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                              .build ()),
   BILLING_CREDIT_NOTE_AT_GOV ("Billing-Thirdparty/ATGOV-UBL-T14.sch",
-                              new ValidationArtefactKey.Builder (PeppolValidationKeys.BILLING_05_T14).setCountry ("AT")
-                                                                                             .setSectorKey (PeppolValidationKeys.SECTOR_AT_GOV)
+                              new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
+                                                                                             .setSectorKey (CPeppolValidation.SECTOR_AT_GOV)
                                                                                              .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                              .build ());
 

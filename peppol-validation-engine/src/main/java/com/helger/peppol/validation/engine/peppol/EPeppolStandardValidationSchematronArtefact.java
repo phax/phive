@@ -29,8 +29,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -45,32 +45,32 @@ import com.helger.commons.io.resource.IReadableResource;
  */
 public enum EPeppolStandardValidationSchematronArtefact implements IValidationArtefact
 {
-  CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
-  CATALOGUE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T19.sch", PeppolValidationKeys.CATALOGUE_01_T19),
+  CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
+  CATALOGUE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
 
-  CATALOGUE_RESPONSE_RULES ("Catalogue/BIIRULES-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
-  CATALOGUE_RESPONSE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T58.sch", PeppolValidationKeys.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_RULES ("Catalogue/BIIRULES-UBL-T58.sch", CPeppolValidation.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T58.sch", CPeppolValidation.CATALOGUE_01_T58),
 
-  ORDER_RULES ("Order/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
-  ORDER_OPENPEPPOL ("Order/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDER_03_T01),
+  ORDER_RULES ("Order/BIIRULES-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
+  ORDER_OPENPEPPOL ("Order/OPENPEPPOL-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
 
-  INVOICE_RULES ("Invoice/BIIRULES-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
-  INVOICE_OPENPEPPOL ("Invoice/OPENPEPPOL-UBL-T10.sch", PeppolValidationKeys.INVOICE_04_T10),
+  INVOICE_RULES ("Invoice/BIIRULES-UBL-T10.sch", CPeppolValidation.INVOICE_04_T10),
+  INVOICE_OPENPEPPOL ("Invoice/OPENPEPPOL-UBL-T10.sch", CPeppolValidation.INVOICE_04_T10),
 
-  BILLING_CREDIT_NOTE_RULES ("Billing/BIIRULES-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
-  BILLING_CREDIT_NOTE_OPENPEPPOL ("Billing/OPENPEPPOL-UBL-T14.sch", PeppolValidationKeys.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_RULES ("Billing/BIIRULES-UBL-T14.sch", CPeppolValidation.BILLING_05_T14),
+  BILLING_CREDIT_NOTE_OPENPEPPOL ("Billing/OPENPEPPOL-UBL-T14.sch", CPeppolValidation.BILLING_05_T14),
 
-  ORDERING_ORDER_RULES ("Ordering/BIIRULES-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
-  ORDERING_ORDER_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T01.sch", PeppolValidationKeys.ORDERING_28_T01),
+  ORDERING_ORDER_RULES ("Ordering/BIIRULES-UBL-T01.sch", CPeppolValidation.ORDERING_28_T01),
+  ORDERING_ORDER_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T01.sch", CPeppolValidation.ORDERING_28_T01),
 
-  ORDERING_ORDER_RESPONSE_RULES ("Ordering/BIIRULES-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
-  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T76.sch", PeppolValidationKeys.ORDERING_28_T76),
+  ORDERING_ORDER_RESPONSE_RULES ("Ordering/BIIRULES-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
+  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
 
-  DESPATCH_ADVICE_RULES ("DespatchAdvice/BIIRULES-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
-  DESPATCH_ADVICE_OPENPEPPOL ("DespatchAdvice/OPENPEPPOL-UBL-T16.sch", PeppolValidationKeys.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_RULES ("DespatchAdvice/BIIRULES-UBL-T16.sch", CPeppolValidation.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_OPENPEPPOL ("DespatchAdvice/OPENPEPPOL-UBL-T16.sch", CPeppolValidation.DESPATCH_ADVICE_30_T16),
 
-  MLR_RULES ("MLR/BIIRULES-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71),
-  MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", PeppolValidationKeys.MLR_36_T71);
+  MLR_RULES ("MLR/BIIRULES-UBL-T71.sch", CPeppolValidation.MLR_36_T71),
+  MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", CPeppolValidation.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
   private final ValidationArtefactKey m_aValidationKey;
@@ -143,8 +143,6 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationArtefactKey> getAllValidationKeys ()
   {
-    final ICommonsOrderedSet <ValidationArtefactKey> ret = new CommonsLinkedHashSet<> ();
-    ret.addAllMapped (values (), x -> x.m_aValidationKey);
-    return ret;
+    return CollectionHelper.newOrderedSetMapped (values (), x -> x.m_aValidationKey);
   }
 }
