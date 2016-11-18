@@ -19,7 +19,7 @@ package com.helger.peppol.validation.engine.peppol;
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationKey;
+import com.helger.bdve.ValidationArtefactKey;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
@@ -44,30 +44,30 @@ import com.helger.commons.io.resource.IReadableResource;
 public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidationArtefact
 {
   INVOICE_AT_NAT ("Invoice-Thirdparty/ATNAT-UBL-T10.sch",
-                  new ValidationKey.Builder (PeppolValidationKeys.INVOICE_04_T10).setCountry ("AT")
+                  new ValidationArtefactKey.Builder (PeppolValidationKeys.INVOICE_04_T10).setCountry ("AT")
                                                                                  .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                  .build ()),
   INVOICE_AT_GOV ("Invoice-Thirdparty/ATGOV-UBL-T10.sch",
-                  new ValidationKey.Builder (PeppolValidationKeys.INVOICE_04_T10).setCountry ("AT")
+                  new ValidationArtefactKey.Builder (PeppolValidationKeys.INVOICE_04_T10).setCountry ("AT")
                                                                                  .setSectorKey (PeppolValidationKeys.SECTOR_AT_GOV)
                                                                                  .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                  .build ()),
 
   BILLING_CREDIT_NOTE_AT_NAT ("Billing-Thirdparty/ATNAT-UBL-T14.sch",
-                              new ValidationKey.Builder (PeppolValidationKeys.BILLING_05_T14).setCountry ("AT")
+                              new ValidationArtefactKey.Builder (PeppolValidationKeys.BILLING_05_T14).setCountry ("AT")
                                                                                              .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                              .build ()),
   BILLING_CREDIT_NOTE_AT_GOV ("Billing-Thirdparty/ATGOV-UBL-T14.sch",
-                              new ValidationKey.Builder (PeppolValidationKeys.BILLING_05_T14).setCountry ("AT")
+                              new ValidationArtefactKey.Builder (PeppolValidationKeys.BILLING_05_T14).setCountry ("AT")
                                                                                              .setSectorKey (PeppolValidationKeys.SECTOR_AT_GOV)
                                                                                              .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                              .build ());
 
   private final ClassPathResource m_aResource;
-  private final ValidationKey m_aValidationKey;
+  private final ValidationArtefactKey m_aValidationKey;
 
   private EPeppolThirdPartyValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
-                                                         @Nonnull final ValidationKey aTransactionKey)
+                                                         @Nonnull final ValidationArtefactKey aTransactionKey)
   {
     m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
     m_aValidationKey = aTransactionKey;
@@ -86,7 +86,7 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   }
 
   @Nonnull
-  public ValidationKey getValidationKey ()
+  public ValidationArtefactKey getValidationKey ()
   {
     return m_aValidationKey;
   }
@@ -104,7 +104,7 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <IValidationExecutor> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
+  public static ICommonsList <IValidationExecutor> getAllMatchingValidationArtefacts (@Nonnull final ValidationArtefactKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
@@ -121,7 +121,7 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsOrderedSet <ValidationKey> getAllValidationKeys ()
+  public static ICommonsOrderedSet <ValidationArtefactKey> getAllValidationKeys ()
   {
     return CollectionHelper.newOrderedSetMapped (values (), x -> x.m_aValidationKey);
   }

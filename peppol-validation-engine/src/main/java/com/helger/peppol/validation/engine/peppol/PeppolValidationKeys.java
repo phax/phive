@@ -18,8 +18,8 @@ package com.helger.peppol.validation.engine.peppol;
 
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.ValidationKey;
-import com.helger.bdve.ValidationSectorKey;
+import com.helger.bdve.ValidationArtefactKey;
+import com.helger.bdve.ValidationArtefactSectorKey;
 import com.helger.bdve.spec.BusinessSpecification;
 import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
@@ -49,35 +49,35 @@ public class PeppolValidationKeys
                                                                                  "OpenPEPPOL BIS 36, MLR");
 
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
-  public static final ValidationKey CATALOGUE_01_T19 = new ValidationKey.Builder ().setBusinessSpecification (CATALOGUE_01)
+  public static final ValidationArtefactKey CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
                                                                                    .setTransaction (EBII2Transaction.T19)
                                                                                    .build ();
-  public static final ValidationKey CATALOGUE_01_T58 = new ValidationKey.Builder ().setBusinessSpecification (CATALOGUE_01)
+  public static final ValidationArtefactKey CATALOGUE_01_T58 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
                                                                                    .setTransaction (EBII2Transaction.T58)
                                                                                    .build ();
-  public static final ValidationKey ORDER_03_T01 = new ValidationKey.Builder ().setBusinessSpecification (ORDER_03)
+  public static final ValidationArtefactKey ORDER_03_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDER_03)
                                                                                .setTransaction (EBII2Transaction.T01)
                                                                                .build ();
-  public static final ValidationKey INVOICE_04_T10 = new ValidationKey.Builder ().setBusinessSpecification (INVOICE_04)
+  public static final ValidationArtefactKey INVOICE_04_T10 = new ValidationArtefactKey.Builder ().setBusinessSpecification (INVOICE_04)
                                                                                  .setTransaction (EBII2Transaction.T10)
                                                                                  .build ();
-  public static final ValidationKey BILLING_05_T14 = new ValidationKey.Builder ().setBusinessSpecification (BILLING_05)
+  public static final ValidationArtefactKey BILLING_05_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (BILLING_05)
                                                                                  .setTransaction (EBII2Transaction.T14)
                                                                                  .build ();
-  public static final ValidationKey ORDERING_28_T01 = new ValidationKey.Builder ().setBusinessSpecification (ORDERING_28)
+  public static final ValidationArtefactKey ORDERING_28_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDERING_28)
                                                                                   .setTransaction (EBII2Transaction.T01)
                                                                                   .build ();
-  public static final ValidationKey ORDERING_28_T76 = new ValidationKey.Builder ().setBusinessSpecification (ORDERING_28)
+  public static final ValidationArtefactKey ORDERING_28_T76 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDERING_28)
                                                                                   .setTransaction (EBII2Transaction.T76)
                                                                                   .build ();
-  public static final ValidationKey DESPATCH_ADVICE_30_T16 = new ValidationKey.Builder ().setBusinessSpecification (DESPATCH_ADVICE_30)
+  public static final ValidationArtefactKey DESPATCH_ADVICE_30_T16 = new ValidationArtefactKey.Builder ().setBusinessSpecification (DESPATCH_ADVICE_30)
                                                                                          .setTransaction (EBII2Transaction.T16)
                                                                                          .build ();
-  public static final ValidationKey MLR_36_T71 = new ValidationKey.Builder ().setBusinessSpecification (MLR_36)
+  public static final ValidationArtefactKey MLR_36_T71 = new ValidationArtefactKey.Builder ().setBusinessSpecification (MLR_36)
                                                                              .setTransaction (EBII2Transaction.T71)
                                                                              .build ();
 
-  public static final ValidationSectorKey SECTOR_AT_GOV = new ValidationSectorKey ("ATGOV", "Austrian Government");
+  public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV", "Austrian Government");
 
   private PeppolValidationKeys ()
   {}

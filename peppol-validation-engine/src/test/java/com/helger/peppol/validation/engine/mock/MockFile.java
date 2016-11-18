@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.ValidationKey;
+import com.helger.bdve.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsHashSet;
@@ -39,11 +39,11 @@ import com.helger.commons.io.resource.IReadableResource;
 public class MockFile
 {
   private final IReadableResource m_aResource;
-  private final ValidationKey m_aTransactionKey;
+  private final ValidationArtefactKey m_aTransactionKey;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
   public MockFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final ValidationKey aTransactionKey,
+                   @Nonnull final ValidationArtefactKey aTransactionKey,
                    @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
@@ -66,7 +66,7 @@ public class MockFile
    *         <code>null</code>.
    */
   @Nonnull
-  public ValidationKey getTransactionKey ()
+  public ValidationArtefactKey getTransactionKey ()
   {
     return m_aTransactionKey;
   }

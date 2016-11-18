@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationKey;
+import com.helger.bdve.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
@@ -36,11 +36,11 @@ public class ValidationArtefact implements IValidationArtefact
 {
   private final EValidationType m_eValidationArtefactType;
   private final IReadableResource m_aResource;
-  private final ValidationKey m_aValidationKey;
+  private final ValidationArtefactKey m_aValidationKey;
 
   public ValidationArtefact (@Nonnull final EValidationType eValidationArtefactType,
                              @Nonnull final IReadableResource aResource,
-                             @Nonnull final ValidationKey aValidationKey)
+                             @Nonnull final ValidationArtefactKey aValidationKey)
   {
     m_eValidationArtefactType = ValueEnforcer.notNull (eValidationArtefactType, "ValidationArtefactType");
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
@@ -60,7 +60,7 @@ public class ValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public ValidationKey getValidationKey ()
+  public ValidationArtefactKey getValidationKey ()
   {
     return m_aValidationKey;
   }
@@ -98,8 +98,15 @@ public class ValidationArtefact implements IValidationArtefact
 
   @Nonnull
   public static ValidationArtefact createXSD (@Nonnull final IReadableResource aResource,
-                                              @Nonnull final ValidationKey aValidationKey)
+                                              @Nonnull final ValidationArtefactKey aValidationKey)
   {
     return new ValidationArtefact (EValidationType.XSD, aResource, aValidationKey);
+  }
+
+  @Nonnull
+  public static ValidationArtefact createSchematron (@Nonnull final IReadableResource aResource,
+                                                     @Nonnull final ValidationArtefactKey aValidationKey)
+  {
+    return new ValidationArtefact (EValidationType.SCHEMATRON, aResource, aValidationKey);
   }
 }

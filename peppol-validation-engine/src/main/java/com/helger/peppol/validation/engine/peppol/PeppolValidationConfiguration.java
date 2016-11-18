@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.bdve.ValidationKey;
+import com.helger.bdve.ValidationArtefactKey;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -54,7 +54,7 @@ public final class PeppolValidationConfiguration
    *         <code>null</code>.
    */
   @Nonnull
-  public static ICommonsList <IValidationExecutor> createDefault (@Nonnull final ValidationKey aValidationKey)
+  public static ICommonsList <IValidationExecutor> createDefault (@Nonnull final ValidationArtefactKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 

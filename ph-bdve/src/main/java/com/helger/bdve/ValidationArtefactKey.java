@@ -42,7 +42,7 @@ import com.helger.commons.string.ToStringGenerator;
  * <li>A business specification of type {@link IBusinessSpecification}</li>
  * <li>A transaction of type {@link ISpecificationTransaction}</li>
  * <li>An optional country code in case validation is country dependent.</li>
- * <li>An optional "sector key" of type {@link ValidationSectorKey} that
+ * <li>An optional "sector key" of type {@link ValidationArtefactSectorKey} that
  * identifies the industry or sector to which the validation applies.</li>
  * <li>An optional "prerequisite expression" (like XPath) that may be used to
  * identify whether this validation key is applicable to a document or not.</li>
@@ -52,18 +52,18 @@ import com.helger.commons.string.ToStringGenerator;
  */
 @Immutable
 @MustImplementEqualsAndHashcode
-public class ValidationKey implements Serializable, Comparable <ValidationKey>
+public class ValidationArtefactKey implements Serializable, Comparable <ValidationArtefactKey>
 {
   private final IBusinessSpecification m_aBusinessSpecification;
   private final ISpecificationTransaction m_aTransaction;
   private final Locale m_aCountry;
-  private final ValidationSectorKey m_aSectorKey;
+  private final ValidationArtefactSectorKey m_aSectorKey;
   private final String m_sPrerequisiteXPath;
 
-  public ValidationKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
+  public ValidationArtefactKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
                         @Nonnull final ISpecificationTransaction aTransaction,
                         @Nullable final String sCountryCode,
-                        @Nullable final ValidationSectorKey aSectorKey,
+                        @Nullable final ValidationArtefactSectorKey aSectorKey,
                         @Nullable final String sPrerequisiteXPath)
   {
     m_aBusinessSpecification = ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
@@ -152,7 +152,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
    *         <code>null</code> if not sector specific.
    */
   @Nullable
-  public ValidationSectorKey getSectorKey ()
+  public ValidationArtefactSectorKey getSectorKey ()
   {
     return m_aSectorKey;
   }
@@ -176,7 +176,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
     return m_sPrerequisiteXPath;
   }
 
-  public boolean hasSameSpecificationAndTransaction (@Nullable final ValidationKey aOther)
+  public boolean hasSameSpecificationAndTransaction (@Nullable final ValidationArtefactKey aOther)
   {
     if (aOther == null)
       return false;
@@ -184,7 +184,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
            m_aTransaction.equals (aOther.m_aTransaction);
   }
 
-  public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationKey aOther)
+  public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationArtefactKey aOther)
   {
     if (aOther == null)
       return false;
@@ -195,7 +195,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
             (m_aSectorKey == null && aOther.m_aSectorKey != null));
   }
 
-  public int compareTo (@Nonnull final ValidationKey aOther)
+  public int compareTo (@Nonnull final ValidationArtefactKey aOther)
   {
     int ret = m_aBusinessSpecification.getDisplayName ().compareTo (aOther.m_aBusinessSpecification.getDisplayName ());
     if (ret == 0)
@@ -224,7 +224,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final ValidationKey rhs = (ValidationKey) o;
+    final ValidationArtefactKey rhs = (ValidationArtefactKey) o;
     return m_aBusinessSpecification.equals (rhs.m_aBusinessSpecification) &&
            m_aTransaction.equals (rhs.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, rhs.m_aCountry) &&
@@ -255,7 +255,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
   }
 
   /**
-   * Builder class for {@link ValidationKey} objects.
+   * Builder class for {@link ValidationArtefactKey} objects.
    * {@link #setBusinessSpecification(IBusinessSpecification)} and
    * {@link #setTransaction(ISpecificationTransaction)} must be filled, as these
    * are the mandatory fields.
@@ -268,7 +268,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
     private IBusinessSpecification m_aBusinessSpecification;
     private ISpecificationTransaction m_aTransaction;
     private String m_sCountry;
-    private ValidationSectorKey m_aSectorKey;
+    private ValidationArtefactSectorKey m_aSectorKey;
     private String m_sPrerequisiteXPath;
 
     /**
@@ -283,7 +283,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
      * @param aOther
      *        Object to copy from. May not be <code>null</code>.
      */
-    public Builder (@Nonnull final ValidationKey aOther)
+    public Builder (@Nonnull final ValidationArtefactKey aOther)
     {
       m_aBusinessSpecification = aOther.m_aBusinessSpecification;
       m_aTransaction = aOther.m_aTransaction;
@@ -314,7 +314,7 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
     }
 
     @Nonnull
-    public Builder setSectorKey (@Nullable final ValidationSectorKey aSectorKey)
+    public Builder setSectorKey (@Nullable final ValidationArtefactSectorKey aSectorKey)
     {
       m_aSectorKey = aSectorKey;
       return this;
@@ -333,13 +333,13 @@ public class ValidationKey implements Serializable, Comparable <ValidationKey>
      *         If a mandatory field is not filled.
      */
     @Nonnull
-    public ValidationKey build ()
+    public ValidationArtefactKey build ()
     {
       if (m_aBusinessSpecification == null)
         throw new IllegalStateException ("The Business specification must be provided");
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
-      return new ValidationKey (m_aBusinessSpecification,
+      return new ValidationArtefactKey (m_aBusinessSpecification,
                                 m_aTransaction,
                                 m_sCountry,
                                 m_aSectorKey,

@@ -21,7 +21,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.ValidationKey;
+import com.helger.bdve.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -41,7 +41,7 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
-    for (final ValidationKey aPTK : new ValidationKey [] { PeppolValidationKeys.CATALOGUE_01_T19,
+    for (final ValidationArtefactKey aPTK : new ValidationArtefactKey [] { PeppolValidationKeys.CATALOGUE_01_T19,
                                                            PeppolValidationKeys.CATALOGUE_01_T58,
                                                            PeppolValidationKeys.ORDER_03_T01,
                                                            PeppolValidationKeys.INVOICE_04_T10,
@@ -57,7 +57,7 @@ public final class CTestFiles
 
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <ClassPathResource> getAllMatchingTestFiles (@Nonnull final ValidationKey aTransactionKey)
+  public static ICommonsList <ClassPathResource> getAllMatchingTestFiles (@Nonnull final ValidationArtefactKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 

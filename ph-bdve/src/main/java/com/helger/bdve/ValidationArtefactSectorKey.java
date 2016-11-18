@@ -26,10 +26,12 @@ import com.helger.commons.annotation.MustImplementComparable;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.id.IHasID;
+import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * A key defining a sector extension to be used in a {@link ValidationKey}. It
+ * A key defining a sector extension to be used in a {@link ValidationArtefactKey}. It
  * consists of an ID and a display name.
  *
  * @author Philip Helger
@@ -37,12 +39,16 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 @MustImplementComparable
 @MustImplementEqualsAndHashcode
-public class ValidationSectorKey implements Serializable, Comparable <ValidationSectorKey>
+public class ValidationArtefactSectorKey implements
+                                 IHasID <String>,
+                                 IHasDisplayName,
+                                 Serializable,
+                                 Comparable <ValidationArtefactSectorKey>
 {
   private final String m_sID;
   private final String m_sDisplayName;
 
-  public ValidationSectorKey (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
+  public ValidationArtefactSectorKey (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -62,7 +68,7 @@ public class ValidationSectorKey implements Serializable, Comparable <Validation
     return m_sDisplayName;
   }
 
-  public int compareTo (@Nonnull final ValidationSectorKey aOther)
+  public int compareTo (@Nonnull final ValidationArtefactSectorKey aOther)
   {
     return m_sID.compareTo (aOther.m_sID);
   }
@@ -74,7 +80,7 @@ public class ValidationSectorKey implements Serializable, Comparable <Validation
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final ValidationSectorKey rhs = (ValidationSectorKey) o;
+    final ValidationArtefactSectorKey rhs = (ValidationArtefactSectorKey) o;
     return m_sID.equals (rhs.m_sID);
   }
 
