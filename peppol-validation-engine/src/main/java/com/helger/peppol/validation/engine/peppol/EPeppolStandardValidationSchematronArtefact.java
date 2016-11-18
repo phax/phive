@@ -21,15 +21,20 @@ import javax.annotation.Nonnull;
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.ValidationKey;
 import com.helger.bdve.artefact.IValidationArtefact;
+import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.execute.IValidationExecutor;
+import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.lang.EnumHelper;
 
 /**
  * This enumeration contains all the default OpenPEPPOL Schematron artefacts.
@@ -107,12 +112,27 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <EPeppolStandardValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
+  public static ICommonsList <IValidationExecutor> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    return EnumHelper.getAll (EPeppolStandardValidationSchematronArtefact.class,
-                              x -> x.getValidationKey ().hasSameSpecificationAndTransaction (aValidationKey));
+    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList<> ();
+    // Add all XSDs and Schematrons
+    ArrayHelper.forEach (EPeppolStandardValidationSchematronArtefact.values (),
+                         x -> x.m_aValidationKey.hasSameSpecificationAndTransaction (aValidationKey),
+                         x -> {
+                           // Add XSDs only from one artefact
+                           if (ret.isEmpty ())
+                           {
+                             for (final IReadableResource aXSDRes : x.m_aValidationKey.getTransaction ()
+                                                                                      .getJAXBDocumentType ()
+                                                                                      .getAllXSDResources ())
+                               ret.add (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes,
+                                                                                                 aValidationKey)));
+                           }
+                           ret.add (new ValidationExecutorSchematron (x));
+                         });
+    return ret;
   }
 
   /**

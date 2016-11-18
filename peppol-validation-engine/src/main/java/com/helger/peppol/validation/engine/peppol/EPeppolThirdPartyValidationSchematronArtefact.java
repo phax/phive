@@ -21,15 +21,18 @@ import javax.annotation.Nonnull;
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.ValidationKey;
 import com.helger.bdve.artefact.IValidationArtefact;
+import com.helger.bdve.execute.IValidationExecutor;
+import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.CollectionHelper;
+import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.lang.EnumHelper;
 
 /**
  * This enumeration contains all the extended country specific OpenPEPPOL
@@ -101,12 +104,15 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <EPeppolThirdPartyValidationSchematronArtefact> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
+  public static ICommonsList <IValidationExecutor> getAllMatchingValidationArtefacts (@Nonnull final ValidationKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    return EnumHelper.getAll (EPeppolThirdPartyValidationSchematronArtefact.class,
-                              x -> x.m_aValidationKey.hasSameSpecificationAndTransactionAndCountryAndSector (aValidationKey));
+    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList<> ();
+    ArrayHelper.forEach (EPeppolThirdPartyValidationSchematronArtefact.values (),
+                         x -> x.m_aValidationKey.hasSameSpecificationAndTransactionAndCountryAndSector (aValidationKey),
+                         x -> ret.add (new ValidationExecutorSchematron (x)));
+    return ret;
   }
 
   /**

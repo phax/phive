@@ -23,11 +23,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.bdve.ValidationKey;
-import com.helger.bdve.artefact.IValidationArtefact;
+import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.peppol.validation.engine.ValidationConfiguration;
 
 /**
  * This class contains the configuration to run a single UBL document
@@ -55,26 +54,26 @@ public final class PeppolValidationConfiguration
    *         <code>null</code>.
    */
   @Nonnull
-  public static ValidationConfiguration createDefault (@Nonnull final ValidationKey aValidationKey)
+  public static ICommonsList <IValidationExecutor> createDefault (@Nonnull final ValidationKey aValidationKey)
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final ICommonsList <IValidationArtefact> aValidationArtefacts = new CommonsArrayList<> ();
+    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList<> ();
 
     // Note: no need to add the XSD artefacts here. They are determined by the
     // validation key automatically.
 
     // Get all PEPPOL standard artefacts
-    aValidationArtefacts.addAll (EPeppolStandardValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));
-    if (aValidationArtefacts.isEmpty ())
+    ret.addAll (EPeppolStandardValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));
+    if (ret.isEmpty ())
       s_aLogger.warn ("No standard validation artefact supports BIS '" +
                       aValidationKey.getBusinessSpecification ().getDisplayName () +
                       "' and transaction " +
                       aValidationKey.getTransaction ().getID ());
 
     // Get all PEPPOL third party artefacts (if any)
-    aValidationArtefacts.addAll (EPeppolThirdPartyValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));
+    ret.addAll (EPeppolThirdPartyValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));
 
-    return new ValidationConfiguration (aValidationKey, aValidationArtefacts);
+    return ret;
   }
 }

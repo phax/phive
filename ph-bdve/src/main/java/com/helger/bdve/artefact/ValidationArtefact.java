@@ -95,4 +95,11 @@ public class ValidationArtefact implements IValidationArtefact
                                        .append ("ValidationKey", m_aValidationKey)
                                        .toString ();
   }
+
+  @Nonnull
+  public static ValidationArtefact createXSD (@Nonnull final IReadableResource aResource,
+                                              @Nonnull final ValidationKey aValidationKey)
+  {
+    return new ValidationArtefact (EValidationType.XSD, aResource, aValidationKey);
+  }
 }

@@ -16,16 +16,16 @@
  */
 package com.helger.peppol.validation.engine;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
-import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.peppol.validation.engine.mock.CTestFiles;
 import com.helger.peppol.validation.engine.mock.MockFile;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
+import com.helger.xml.serialize.read.DOMReader;
 
 /**
  * Test class for class {@link UBLDocumentValidator}.
@@ -40,47 +40,14 @@ public final class UBLDocumentValidatorTest
   }
 
   @Test
-  public void testApplyXSDValidationPeppol ()
-  {
-    for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
-    {
-      // Build validator
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
-
-      // Read as desired type
-      final ValidationResult aXSDErrors = aValidator.applyXSDValidation (aTestFile.getResource ());
-      if (aTestFile.isGoodCase ())
-        assertTrue (aTestFile.getResource ().getPath () + " - " + aXSDErrors.toString (), aXSDErrors.isSuccess ());
-      else
-        assertFalse (aTestFile.getResource ().getPath (), aXSDErrors.isSuccess ());
-    }
-  }
-
-  @Test
-  public void testApplySchematronValidationPeppol ()
+  public void testApplyCompleteValidationPeppol () throws SAXException
   {
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
       final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
 
       // Read as desired type
-      final ValidationResultList aSCHErrors = aValidator.applySchematronValidation (aTestFile.getResource ());
-      if (aTestFile.isGoodCase ())
-        assertTrue (aSCHErrors.getAllErrors ().toString (), aSCHErrors.containsNoError ());
-      else
-        assertTrue (aSCHErrors.containsAtLeastOneError ());
-    }
-  }
-
-  @Test
-  public void testApplyCompleteValidationPeppol ()
-  {
-    for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
-    {
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
-
-      // Read as desired type
-      final ValidationResultList aErrors = aValidator.applyCompleteValidation (aTestFile.getResource ());
+      final ValidationResultList aErrors = aValidator.applyCompleteValidation (DOMReader.readXMLDOM (aTestFile.getResource ()));
       if (aTestFile.isGoodCase ())
         assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
       else
