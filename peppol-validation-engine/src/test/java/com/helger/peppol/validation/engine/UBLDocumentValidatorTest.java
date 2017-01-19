@@ -21,7 +21,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.result.ValidationResultList;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.peppol.validation.engine.mock.CTestFiles;
 import com.helger.peppol.validation.engine.mock.MockFile;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
@@ -44,7 +46,9 @@ public final class UBLDocumentValidatorTest
   {
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
-      final UBLDocumentValidator aValidator = new UBLDocumentValidator (PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ()));
+      final ICommonsList <IValidationExecutor> aExecutors = PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ());
+      assertTrue (aExecutors.isNotEmpty ());
+      final UBLDocumentValidator aValidator = new UBLDocumentValidator (aExecutors);
 
       // Read as desired type
       final ValidationResultList aErrors = aValidator.applyCompleteValidation (DOMReader.readXMLDOM (aTestFile.getResource ()));
