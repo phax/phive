@@ -95,6 +95,7 @@
           <excludes>
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
+            <exclude>src/main/resources/openpeppol/**</exclude>
             <exclude>src/main/resources/peppol-rules/**</exclude>
             <exclude>src/test/resources/codelist-generated/**</exclude>
             <exclude>src/test/resources/openpeppol/**</exclude>
