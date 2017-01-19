@@ -208,7 +208,7 @@ public class ValidationExecutionManager
     {
       if (bIgnoreRest)
       {
-        // Ignore layer
+        // Ignore executor because of previous failures
         aValidationResults.add (ValidationResult.createIgnoredResult (aExecutor.getValidationArtefact ()));
       }
       else
@@ -220,7 +220,7 @@ public class ValidationExecutionManager
 
         if (aResult.isFailure () && aExecutor.getValidationType ().isStopValidationOnError ())
         {
-          // Ignore all following layers
+          // Ignore all following executors
           bIgnoreRest = true;
         }
       }
