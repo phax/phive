@@ -36,7 +36,7 @@ public final class EBIICoreValidationSchematronArtefactTest
     for (final EBIICoreValidationSchematronArtefact e : EBIICoreValidationSchematronArtefact.values ())
     {
       assertNotNull (e.getRuleResource ());
-      assertTrue (e.getRuleResource ().exists ());
+      assertTrue (e.getRuleResource ().toString (), e.getRuleResource ().exists ());
       assertNotNull (e.getValidationKey ());
     }
   }

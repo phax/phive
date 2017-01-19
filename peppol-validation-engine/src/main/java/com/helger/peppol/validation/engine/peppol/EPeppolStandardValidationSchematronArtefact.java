@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.ValidationArtefactKey;
-import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
@@ -43,34 +42,66 @@ import com.helger.commons.io.resource.IReadableResource;
  *
  * @author Philip Helger
  */
-public enum EPeppolStandardValidationSchematronArtefact implements IValidationArtefact
+public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValidationArtefact
 {
-  CATALOGUE_RULES ("Catalogue/BIIRULES-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
-  CATALOGUE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
+  CATALOGUE_RULES (CATALOGUE + BII_RULES + "BIIRULES-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
+  CATALOGUE_OPENPEPPOL (CATALOGUE + OPENPEPPOL + "OPENPEPPOL-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
+  CATALOGUE_OPENPEPPOL_CORE (CATALOGUE +
+                             OPENPEPPOL_CORE +
+                             "OPENPEPPOLCORE-UBL-T19.sch",
+                             CPeppolValidation.CATALOGUE_01_T19),
 
-  CATALOGUE_RESPONSE_RULES ("Catalogue/BIIRULES-UBL-T58.sch", CPeppolValidation.CATALOGUE_01_T58),
-  CATALOGUE_RESPONSE_OPENPEPPOL ("Catalogue/OPENPEPPOL-UBL-T58.sch", CPeppolValidation.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_RULES (CATALOGUE_RESPONSE +
+                            BII_RULES +
+                            "BIIRULES-UBL-T58.sch",
+                            CPeppolValidation.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_OPENPEPPOL (CATALOGUE_RESPONSE +
+                                 OPENPEPPOL +
+                                 "OPENPEPPOL-UBL-T58.sch",
+                                 CPeppolValidation.CATALOGUE_01_T58),
+  CATALOGUE_RESPONSE_OPENPEPPOL_CORE (CATALOGUE_RESPONSE +
+                                      OPENPEPPOL_CORE +
+                                      "OPENPEPPOLCORE-UBL-T58.sch",
+                                      CPeppolValidation.CATALOGUE_01_T58),
 
-  ORDER_RULES ("Order/BIIRULES-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
-  ORDER_OPENPEPPOL ("Order/OPENPEPPOL-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
+  ORDER_RULES (ORDER + BII_RULES + "BIIRULES-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
+  ORDER_OPENPEPPOL (ORDER + OPENPEPPOL + "OPENPEPPOL-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
+  ORDER_OPENPEPPOL_CORE (ORDER + OPENPEPPOL_CORE + "OPENPEPPOLCORE-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
 
-  INVOICE_RULES ("Invoice/BIIRULES-UBL-T10.sch", CPeppolValidation.INVOICE_04_T10),
-  INVOICE_OPENPEPPOL ("Invoice/OPENPEPPOL-UBL-T10.sch", CPeppolValidation.INVOICE_04_T10),
+  ORDER_RESPONSE_RULES (ORDER_RESPONSE + BII_RULES + "BIIRULES-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
+  ORDER_RESPONSE_OPENPEPPOL (ORDER_RESPONSE + OPENPEPPOL + "OPENPEPPOL-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
+  ORDER_RESPONSE_OPENPEPPOL_CORE (ORDER_RESPONSE +
+                                  OPENPEPPOL_CORE +
+                                  "OPENPEPPOLCORE-UBL-T76.sch",
+                                  CPeppolValidation.ORDERING_28_T76),
 
-  BILLING_CREDIT_NOTE_RULES ("Billing/BIIRULES-UBL-T14.sch", CPeppolValidation.BILLING_05_T14),
-  BILLING_CREDIT_NOTE_OPENPEPPOL ("Billing/OPENPEPPOL-UBL-T14.sch", CPeppolValidation.BILLING_05_T14),
+  DESPATCH_ADVICE_RULES (DESPATCH_ADVICE +
+                         BII_RULES +
+                         "BIIRULES-UBL-T16.sch",
+                         CPeppolValidation.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_OPENPEPPOL (DESPATCH_ADVICE +
+                              OPENPEPPOL +
+                              "OPENPEPPOL-UBL-T16.sch",
+                              CPeppolValidation.DESPATCH_ADVICE_30_T16),
+  DESPATCH_ADVICE_OPENPEPPOL_CORE (DESPATCH_ADVICE +
+                                   OPENPEPPOL_CORE +
+                                   "OPENPEPPOLCORE-UBL-T16.sch",
+                                   CPeppolValidation.DESPATCH_ADVICE_30_T16),
 
-  ORDERING_ORDER_RULES ("Ordering/BIIRULES-UBL-T01.sch", CPeppolValidation.ORDERING_28_T01),
-  ORDERING_ORDER_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T01.sch", CPeppolValidation.ORDERING_28_T01),
+  INVOICE_RULES (INVOICE + BII_RULES + "BIIRULES-UBL-T10.sch", CPeppolValidation.INVOICE_04_T10),
+  INVOICE_OPENPEPPOL (INVOICE + OPENPEPPOL + "OPENPEPPOL-UBL-T10.sch", CPeppolValidation.INVOICE_04_T10),
+  INVOICE_OPENPEPPOL_CORE (INVOICE + OPENPEPPOL_CORE + "OPENPEPPOLCORE-UBL-T10.sch", CPeppolValidation.INVOICE_04_T10),
 
-  ORDERING_ORDER_RESPONSE_RULES ("Ordering/BIIRULES-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
-  ORDERING_ORDER_RESPONSE_OPENPEPPOL ("Ordering/OPENPEPPOL-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
+  CREDIT_NOTE_RULES (CREDIT_NOTE + BII_RULES + "BIIRULES-UBL-T14.sch", CPeppolValidation.BILLING_05_T14),
+  CREDIT_NOTE_OPENPEPPOL (CREDIT_NOTE + OPENPEPPOL + "OPENPEPPOL-UBL-T14.sch", CPeppolValidation.BILLING_05_T14),
+  CREDIT_NOTE_OPENPEPPOL_CORE (CREDIT_NOTE +
+                               OPENPEPPOL_CORE +
+                               "OPENPEPPOLCORE-UBL-T14.sch",
+                               CPeppolValidation.BILLING_05_T14),
 
-  DESPATCH_ADVICE_RULES ("DespatchAdvice/BIIRULES-UBL-T16.sch", CPeppolValidation.DESPATCH_ADVICE_30_T16),
-  DESPATCH_ADVICE_OPENPEPPOL ("DespatchAdvice/OPENPEPPOL-UBL-T16.sch", CPeppolValidation.DESPATCH_ADVICE_30_T16),
-
-  MLR_RULES ("MLR/BIIRULES-UBL-T71.sch", CPeppolValidation.MLR_36_T71),
-  MLR_OPENPEPPOL ("MLR/OPENPEPPOL-UBL-T71.sch", CPeppolValidation.MLR_36_T71);
+  MLR_RULES (MLR + BII_RULES + "BIIRULES-UBL-T71.sch", CPeppolValidation.MLR_36_T71),
+  MLR_OPENPEPPOL (MLR + OPENPEPPOL + "OPENPEPPOL-UBL-T71.sch", CPeppolValidation.MLR_36_T71),
+  MLR_OPENPEPPOL_CORE (MLR + OPENPEPPOL_CORE + "OPENPEPPOLCORE-UBL-T71.sch", CPeppolValidation.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
   private final ValidationArtefactKey m_aValidationKey;
@@ -78,7 +109,7 @@ public enum EPeppolStandardValidationSchematronArtefact implements IValidationAr
   private EPeppolStandardValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
                                                        @Nonnull final ValidationArtefactKey aTransactionKey)
   {
-    m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
+    m_aResource = new ClassPathResource (sPath);
     m_aValidationKey = aTransactionKey;
   }
 

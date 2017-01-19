@@ -36,7 +36,7 @@ public final class EPeppolStandardValidationSchematronArtefactTest
     for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
     {
       assertNotNull (e.getRuleResource ());
-      assertTrue (e.getRuleResource ().exists ());
+      assertTrue (e.getRuleResource ().toString (), e.getRuleResource ().exists ());
       assertNotNull (e.getValidationKey ());
     }
   }
@@ -47,7 +47,8 @@ public final class EPeppolStandardValidationSchematronArtefactTest
     for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
     {
       // Check that the passed Schematron is valid
-      assertTrue (new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ());
+      assertTrue (e.getRuleResource ().toString (),
+                  new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ());
     }
   }
 }
