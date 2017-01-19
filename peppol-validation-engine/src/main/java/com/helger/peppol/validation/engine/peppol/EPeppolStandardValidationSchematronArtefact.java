@@ -16,6 +16,8 @@
  */
 package com.helger.peppol.validation.engine.peppol;
 
+import java.util.function.BiConsumer;
+
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.EValidationType;
@@ -27,11 +29,12 @@ import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.CommonsLinkedHashSet;
+import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
+import com.helger.commons.collection.ext.ICommonsSet;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
@@ -64,16 +67,21 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
                                       "OPENPEPPOLCORE-UBL-T58.sch",
                                       CPeppolValidation.CATALOGUE_01_T58),
 
-  ORDER_RULES (ORDER + BII_RULES + "BIIRULES-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
-  ORDER_OPENPEPPOL (ORDER + OPENPEPPOL + "OPENPEPPOL-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
-  ORDER_OPENPEPPOL_CORE (ORDER + OPENPEPPOL_CORE + "OPENPEPPOLCORE-UBL-T01.sch", CPeppolValidation.ORDER_03_T01),
-
-  @Deprecated
-  ORDERING_ORDER_RULES (ORDER + BII_RULES + "BIIRULES-UBL-T01.sch", CPeppolValidation.ORDERING_28_T01),
-  @Deprecated
-  ORDERING_ORDER_OPENPEPPOL (ORDER + OPENPEPPOL + "OPENPEPPOL-UBL-T01.sch", CPeppolValidation.ORDERING_28_T01),
-  @Deprecated
-  ORDERING_ORDER_OPENPEPPOL_CORE (ORDER + OPENPEPPOL_CORE + "OPENPEPPOLCORE-UBL-T01.sch", CPeppolValidation.ORDERING_28_T01),
+  ORDER_RULES (ORDER +
+               BII_RULES +
+               "BIIRULES-UBL-T01.sch",
+               CPeppolValidation.ORDER_03_T01,
+               CPeppolValidation.ORDERING_28_T01),
+  ORDER_OPENPEPPOL (ORDER +
+                    OPENPEPPOL +
+                    "OPENPEPPOL-UBL-T01.sch",
+                    CPeppolValidation.ORDER_03_T01,
+                    CPeppolValidation.ORDERING_28_T01),
+  ORDER_OPENPEPPOL_CORE (ORDER +
+                         OPENPEPPOL_CORE +
+                         "OPENPEPPOLCORE-UBL-T01.sch",
+                         CPeppolValidation.ORDER_03_T01,
+                         CPeppolValidation.ORDERING_28_T01),
 
   ORDER_RESPONSE_RULES (ORDER_RESPONSE + BII_RULES + "BIIRULES-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
   ORDER_RESPONSE_OPENPEPPOL (ORDER_RESPONSE + OPENPEPPOL + "OPENPEPPOL-UBL-T76.sch", CPeppolValidation.ORDERING_28_T76),
@@ -111,13 +119,13 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
   MLR_OPENPEPPOL_CORE (MLR + OPENPEPPOL_CORE + "OPENPEPPOLCORE-UBL-T71.sch", CPeppolValidation.MLR_36_T71);
 
   private final ClassPathResource m_aResource;
-  private final ValidationArtefactKey m_aValidationKey;
+  private final ICommonsOrderedSet <ValidationArtefactKey> m_aValidationKeys;
 
   private EPeppolStandardValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
-                                                       @Nonnull final ValidationArtefactKey aTransactionKey)
+                                                       @Nonnull final ValidationArtefactKey... aTransactionKeys)
   {
     m_aResource = new ClassPathResource (sPath);
-    m_aValidationKey = aTransactionKey;
+    m_aValidationKeys = new CommonsLinkedHashSet<> (aTransactionKeys);
   }
 
   @Nonnull
@@ -133,9 +141,21 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
   }
 
   @Nonnull
-  public ValidationArtefactKey getValidationKey ()
+  public ICommonsSet <ValidationArtefactKey> getAllValidationKeys ()
   {
-    return m_aValidationKey;
+    return m_aValidationKeys.getClone ();
+  }
+
+  @Nonnull
+  public ICommonsIterable <ValidationArtefactKey> getValidationKeys ()
+  {
+    return m_aValidationKeys;
+  }
+
+  public static void forEachValidationKey (@Nonnull final BiConsumer <? super EPeppolStandardValidationSchematronArtefact, ? super ValidationArtefactKey> aConsumer)
+  {
+    for (final EPeppolStandardValidationSchematronArtefact e : values ())
+      e.m_aValidationKeys.forEach (y -> aConsumer.accept (e, y));
   }
 
   /**
@@ -156,20 +176,19 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
 
     final ICommonsList <IValidationExecutor> ret = new CommonsArrayList<> ();
     // Add all XSDs and Schematrons
-    ArrayHelper.forEach (EPeppolStandardValidationSchematronArtefact.values (),
-                         x -> x.m_aValidationKey.hasSameSpecificationAndTransaction (aValidationKey),
-                         x -> {
-                           // Add XSDs only from one artefact
-                           if (ret.isEmpty ())
-                           {
-                             for (final IReadableResource aXSDRes : x.m_aValidationKey.getTransaction ()
-                                                                                      .getJAXBDocumentType ()
-                                                                                      .getAllXSDResources ())
-                               ret.add (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes,
-                                                                                                 aValidationKey)));
-                           }
-                           ret.add (new ValidationExecutorSchematron (x));
-                         });
+    forEachValidationKey ( (a, vk) -> {
+      if (vk.hasSameSpecificationAndTransaction (aValidationKey))
+      {
+        if (ret.isEmpty ())
+        {
+          // Add XSDs only from one artefact
+          for (final IReadableResource aXSDRes : vk.getTransaction ().getJAXBDocumentType ().getAllXSDResources ())
+            ret.add (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationKey)));
+        }
+        ret.add (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (a.getRuleResource (),
+                                                                                        aValidationKey)));
+      }
+    });
     return ret;
   }
 
@@ -179,8 +198,10 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsOrderedSet <ValidationArtefactKey> getAllValidationKeys ()
+  public static ICommonsOrderedSet <ValidationArtefactKey> getTotalValidationKeys ()
   {
-    return new CommonsLinkedHashSet<> (values (), x -> x.m_aValidationKey);
+    final ICommonsOrderedSet <ValidationArtefactKey> ret = new CommonsLinkedHashSet<> ();
+    forEachValidationKey ( (a, vk) -> ret.add (vk));
+    return ret;
   }
 }

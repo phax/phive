@@ -16,15 +16,13 @@
  */
 package com.helger.peppol.validation.engine.peppol;
 
-import com.helger.bdve.artefact.IValidationArtefact;
-
 /**
  * Dummy interface that only defines the internal paths for the PEPPOL
  * validation artefacts
- * 
+ *
  * @author Philip Helger
  */
-interface IPeppolValidationArtefact extends IValidationArtefact
+interface IPeppolValidationArtefact
 {
   // global prefix
   String PREFIX = "openpeppol/3.3.0/SCH/";

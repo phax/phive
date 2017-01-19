@@ -255,9 +255,9 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   {
     return new ToStringGenerator (this).append ("BusinessSpecification", m_aBusinessSpecification)
                                        .append ("Transaction", m_aTransaction)
-                                       .append ("Country", m_aCountry)
-                                       .append ("SectorKey", m_aSectorKey)
-                                       .append ("PrerequisiteXPath", m_sPrerequisiteXPath)
+                                       .appendIfNotNull ("Country", m_aCountry)
+                                       .appendIfNotNull ("SectorKey", m_aSectorKey)
+                                       .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
                                        .toString ();
   }
 

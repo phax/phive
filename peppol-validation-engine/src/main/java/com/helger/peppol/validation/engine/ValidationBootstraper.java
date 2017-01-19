@@ -19,6 +19,7 @@ package com.helger.peppol.validation.engine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.bdve.ValidationArtefactKey;
 import com.helger.commons.timing.StopWatch;
 import com.helger.peppol.validation.engine.peppol.EPeppolStandardValidationSchematronArtefact;
 import com.helger.peppol.validation.engine.peppol.EPeppolThirdPartyValidationSchematronArtefact;
@@ -50,7 +51,8 @@ public final class ValidationBootstraper
     for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
     {
       // Only relevant XSDs
-      e.getValidationKey ().getTransaction ().getJAXBDocumentType ().getSchema ();
+      for (final ValidationArtefactKey aVK : e.getValidationKeys ())
+        aVK.getTransaction ().getJAXBDocumentType ().getSchema ();
       new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ();
     }
 

@@ -121,7 +121,7 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsOrderedSet <ValidationArtefactKey> getAllValidationKeys ()
+  public static ICommonsOrderedSet <ValidationArtefactKey> getTotalValidationKeys ()
   {
     return CollectionHelper.newOrderedSetMapped (values (), x -> x.m_aValidationKey);
   }

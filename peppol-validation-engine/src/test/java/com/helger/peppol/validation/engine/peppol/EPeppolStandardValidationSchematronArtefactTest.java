@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.helger.bdve.ValidationArtefactKey;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
@@ -37,7 +38,8 @@ public final class EPeppolStandardValidationSchematronArtefactTest
     {
       assertNotNull (e.getRuleResource ());
       assertTrue (e.getRuleResource ().toString (), e.getRuleResource ().exists ());
-      assertNotNull (e.getValidationKey ());
+      for (final ValidationArtefactKey aVK : e.getValidationKeys ())
+        assertNotNull (aVK);
     }
   }
 
