@@ -10,6 +10,7 @@
   <ns prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
   <ns prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"/>
   <ns prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2"/>
+  <ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
   <phase id="BIIRULEST14_phase">
     <active pattern="UBL-T14"/>
   </phase>
