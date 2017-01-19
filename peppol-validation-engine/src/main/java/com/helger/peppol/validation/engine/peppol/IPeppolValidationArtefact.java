@@ -25,7 +25,7 @@ package com.helger.peppol.validation.engine.peppol;
 interface IPeppolValidationArtefact
 {
   // global prefix
-  String PREFIX = "openpeppol/3.3.0/SCH/";
+  String PREFIX = "openpeppol/" + CPeppolValidation.PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true) + "/SCH/";
 
   String CATALOGUE = PREFIX + "peppolbis-trdm019-2.0-catalogue/";
   String CATALOGUE_RESPONSE = PREFIX + "peppolbis-trdm058-2.0-catalogue-response/";

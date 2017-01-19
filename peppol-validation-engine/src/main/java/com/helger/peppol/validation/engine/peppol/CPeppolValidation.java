@@ -16,12 +16,16 @@
  */
 package com.helger.peppol.validation.engine.peppol;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.ValidationArtefactKey;
 import com.helger.bdve.ValidationArtefactSectorKey;
 import com.helger.bdve.spec.BusinessSpecification;
+import com.helger.bdve.spec.BusinessSpecificationRegistry;
 import com.helger.bdve.spec.IBusinessSpecification;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.version.Version;
 import com.helger.peppol.validation.api.peppol.EBII2Transaction;
 
 /**
@@ -31,22 +35,33 @@ import com.helger.peppol.validation.api.peppol.EBII2Transaction;
  * @author Philip Helger
  */
 @Immutable
-public class CPeppolValidation
+public final class CPeppolValidation
 {
-  public static final IBusinessSpecification CATALOGUE_01 = new BusinessSpecification ("openpeppol-bis-01",
-                                                                                       "OpenPEPPOL BIS 1, Catalogue");
-  public static final IBusinessSpecification ORDER_03 = new BusinessSpecification ("openpeppol-bis-03",
-                                                                                   "OpenPEPPOL BIS 3, Order");
-  public static final IBusinessSpecification INVOICE_04 = new BusinessSpecification ("openpeppol-bis-04",
-                                                                                     "OpenPEPPOL BIS 4, Invoice");
-  public static final IBusinessSpecification BILLING_05 = new BusinessSpecification ("openpeppol-bis-05",
-                                                                                     "OpenPEPPOL BIS 5, Billing");
-  public static final IBusinessSpecification ORDERING_28 = new BusinessSpecification ("openpeppol-bis-28",
-                                                                                      "OpenPEPPOL BIS 28, Ordering");
-  public static final IBusinessSpecification DESPATCH_ADVICE_30 = new BusinessSpecification ("openpeppol-bis-30",
-                                                                                             "OpenPEPPOL BIS 30, Despatch advice");
-  public static final IBusinessSpecification MLR_36 = new BusinessSpecification ("openpeppol-bis-36",
-                                                                                 "OpenPEPPOL BIS 36, MLR");
+  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 3, 0);
+
+  @Nonnull
+  private static BusinessSpecification _createBusinessSpec (@Nonnull @Nonempty final String sID,
+                                                            @Nonnull @Nonempty final String sDisplayName)
+  {
+    final BusinessSpecification ret = new BusinessSpecification (sID, sDisplayName);
+    BusinessSpecificationRegistry.INSTANCE.registerBusinessSpecification (ret);
+    return ret;
+  }
+
+  public static final IBusinessSpecification CATALOGUE_01 = _createBusinessSpec ("openpeppol-bis-01",
+                                                                                 "OpenPEPPOL BIS 1, Catalogue");
+  public static final IBusinessSpecification ORDER_03 = _createBusinessSpec ("openpeppol-bis-03",
+                                                                             "OpenPEPPOL BIS 3, Order");
+  public static final IBusinessSpecification INVOICE_04 = _createBusinessSpec ("openpeppol-bis-04",
+                                                                               "OpenPEPPOL BIS 4, Invoice");
+  public static final IBusinessSpecification BILLING_05 = _createBusinessSpec ("openpeppol-bis-05",
+                                                                               "OpenPEPPOL BIS 5, Billing");
+  public static final IBusinessSpecification ORDERING_28 = _createBusinessSpec ("openpeppol-bis-28",
+                                                                                "OpenPEPPOL BIS 28, Ordering");
+  public static final IBusinessSpecification DESPATCH_ADVICE_30 = _createBusinessSpec ("openpeppol-bis-30",
+                                                                                       "OpenPEPPOL BIS 30, Despatch advice");
+  public static final IBusinessSpecification MLR_36 = _createBusinessSpec ("openpeppol-bis-36",
+                                                                           "OpenPEPPOL BIS 36, MLR");
 
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
   public static final ValidationArtefactKey CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
