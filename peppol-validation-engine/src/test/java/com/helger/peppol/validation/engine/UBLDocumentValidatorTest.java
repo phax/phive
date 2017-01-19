@@ -24,11 +24,12 @@ import org.xml.sax.SAXException;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.result.ValidationResultList;
+import com.helger.bdve.source.IValidationSource;
+import com.helger.bdve.source.ValidationSource;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.peppol.validation.engine.mock.CTestFiles;
 import com.helger.peppol.validation.engine.mock.MockFile;
 import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
-import com.helger.xml.serialize.read.DOMReader;
 
 /**
  * Test class for class {@link ValidationExecutionManager}.
@@ -52,7 +53,8 @@ public final class UBLDocumentValidatorTest
       final ValidationExecutionManager aValidator = new ValidationExecutionManager (aExecutors);
 
       // Read as desired type
-      final ValidationResultList aErrors = aValidator.executeValidation (DOMReader.readXMLDOM (aTestFile.getResource ()));
+      final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());
+      final ValidationResultList aErrors = aValidator.executeValidation (aSource);
       if (aTestFile.isGoodCase ())
         assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
       else

@@ -16,15 +16,15 @@
  */
 package com.helger.bdve.execute;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-
-import org.w3c.dom.Node;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
+import com.helger.bdve.source.IValidationSource;
 
 /**
  * Base interface for performing validation of a single XML document based on
@@ -32,7 +32,7 @@ import com.helger.bdve.result.ValidationResult;
  *
  * @author Philip Helger
  */
-public interface IValidationExecutor
+public interface IValidationExecutor extends Serializable
 {
   /**
    * @return The validation artefact used to validate the XML instances. Never
@@ -54,26 +54,26 @@ public interface IValidationExecutor
   /**
    * Perform validation
    *
-   * @param aNode
-   *        Node to be validated.
+   * @param aSource
+   *        Source to be validated. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  default ValidationResult applyValidation (@Nonnull @WillClose final Node aNode)
+  default ValidationResult applyValidation (@Nonnull final IValidationSource aSource)
   {
-    return applyValidation (aNode, (ClassLoader) null);
+    return applyValidation (aSource, (ClassLoader) null);
   }
 
   /**
    * Perform validation
    *
-   * @param aNode
-   *        Node to be validated.
+   * @param aSource
+   *        Source to be validated. May not be <code>null</code>.
    * @param aClassLoader
    *        Optional class loader to use. May be <code>null</code> to use the
    *        default context class loader.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  ValidationResult applyValidation (@Nonnull @WillClose Node aNode, @Nullable ClassLoader aClassLoader);
+  ValidationResult applyValidation (@Nonnull IValidationSource aSource, @Nullable ClassLoader aClassLoader);
 }

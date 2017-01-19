@@ -20,10 +20,9 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.w3c.dom.Node;
-
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.result.ValidationResultList;
+import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -106,9 +105,10 @@ public class ValidationExecutionManager
     return this;
   }
 
-  public void executeValidation (@Nonnull final Node aNode, @Nonnull final ValidationResultList aValidationResults)
+  public void executeValidation (@Nonnull final IValidationSource aSource,
+                                 @Nonnull final ValidationResultList aValidationResults)
   {
-    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aSource, "Source");
     ValueEnforcer.notNull (aValidationResults, "ValidationResults");
 
     final ClassLoader aClassLoader = getClassLoader ();
@@ -124,7 +124,7 @@ public class ValidationExecutionManager
       else
       {
         // Execute validation
-        final ValidationResult aResult = aExecutor.applyValidation (aNode, aClassLoader);
+        final ValidationResult aResult = aExecutor.applyValidation (aSource, aClassLoader);
         assert aResult != null;
         aValidationResults.add (aResult);
 
@@ -138,10 +138,10 @@ public class ValidationExecutionManager
   }
 
   @Nonnull
-  public ValidationResultList executeValidation (@Nonnull final Node aNode)
+  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
   {
     final ValidationResultList ret = new ValidationResultList ();
-    executeValidation (aNode, ret);
+    executeValidation (aSource, ret);
     return ret;
   }
 }

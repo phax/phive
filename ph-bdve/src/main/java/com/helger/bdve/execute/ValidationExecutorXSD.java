@@ -18,21 +18,18 @@ package com.helger.bdve.execute;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.WillClose;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 
-import org.w3c.dom.Node;
 import org.xml.sax.SAXParseException;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
+import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.error.location.ErrorLocation;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
@@ -51,10 +48,10 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   }
 
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull @WillClose final Node aNode,
+  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
                                            @Nullable final ClassLoader aClassLoader)
   {
-    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aSource, "Source");
 
     final IValidationArtefact aVA = getValidationArtefact ();
 
@@ -71,8 +68,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
     try
     {
       // Apply the XML schema validation
-      final IErrorList aXSDErrors = XMLSchemaValidationHelper.validate (aSchema, new DOMSource (aNode));
-      aErrorList.addAll (aXSDErrors);
+      XMLSchemaValidationHelper.validate (aSchema, aSource.getAsTransformSource (), aErrorList);
     }
     catch (final IllegalArgumentException ex)
     {
