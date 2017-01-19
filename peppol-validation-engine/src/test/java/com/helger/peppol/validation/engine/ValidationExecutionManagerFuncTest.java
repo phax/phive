@@ -36,7 +36,7 @@ import com.helger.peppol.validation.engine.peppol.PeppolValidationConfiguration;
  *
  * @author Philip Helger
  */
-public final class UBLDocumentValidatorTest
+public final class ValidationExecutionManagerFuncTest
 {
   static
   {
