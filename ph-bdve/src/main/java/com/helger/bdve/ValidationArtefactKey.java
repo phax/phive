@@ -176,6 +176,13 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     return m_sPrerequisiteXPath;
   }
 
+  public boolean hasSameTransaction (@Nullable final ValidationArtefactKey aOther)
+  {
+    if (aOther == null)
+      return false;
+    return m_aTransaction.equals (aOther.m_aTransaction);
+  }
+
   public boolean hasSameSpecificationAndTransaction (@Nullable final ValidationArtefactKey aOther)
   {
     if (aOther == null)
