@@ -31,6 +31,7 @@ import com.helger.commons.name.IHasName;
  */
 public enum EValidationType implements IHasID <String>, IHasName
 {
+  XML ("xml", "XML Syntax"),
   XSD ("xsd", "XML Schema"),
   SCHEMATRON ("schematron", "Schematron");
 
@@ -63,11 +64,11 @@ public enum EValidationType implements IHasID <String>, IHasName
   /**
    * @return <code>true</code> to stop validation if an error occurs when using
    *         this validation type. This is helpful to avoid running Schematron
-   *         validations when the XSD validations already failed.
+   *         validations when the XML/XSD validations already failed.
    */
   public boolean isStopValidationOnError ()
   {
-    return this == XSD;
+    return this == XML || this == XSD;
   }
 
   @Nullable

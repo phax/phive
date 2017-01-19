@@ -106,10 +106,11 @@ public class ValidationExecutionManager
     return this;
   }
 
-  @Nonnull
-  public ValidationResultList executeValidation (@Nonnull final Node aNode)
+  public void executeValidation (@Nonnull final Node aNode, @Nonnull final ValidationResultList aValidationResults)
   {
-    final ValidationResultList ret = new ValidationResultList ();
+    ValueEnforcer.notNull (aNode, "Node");
+    ValueEnforcer.notNull (aValidationResults, "ValidationResults");
+
     final ClassLoader aClassLoader = getClassLoader ();
 
     boolean bIgnoreRest = false;
@@ -118,18 +119,29 @@ public class ValidationExecutionManager
       if (bIgnoreRest)
       {
         // Ignore layer
-        ret.add (ValidationResult.createIgnoredResult (aExecutor.getValidationArtefact ()));
+        aValidationResults.add (ValidationResult.createIgnoredResult (aExecutor.getValidationArtefact ()));
       }
       else
       {
+        // Execute validation
         final ValidationResult aResult = aExecutor.applyValidation (aNode, aClassLoader);
         assert aResult != null;
-        ret.add (aResult);
+        aValidationResults.add (aResult);
 
         if (aResult.isFailure () && aExecutor.getValidationType ().isStopValidationOnError ())
+        {
+          // Ignore all following layers
           bIgnoreRest = true;
+        }
       }
     }
+  }
+
+  @Nonnull
+  public ValidationResultList executeValidation (@Nonnull final Node aNode)
+  {
+    final ValidationResultList ret = new ValidationResultList ();
+    executeValidation (aNode, ret);
     return ret;
   }
 }

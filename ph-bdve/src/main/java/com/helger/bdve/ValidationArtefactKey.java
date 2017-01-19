@@ -61,10 +61,10 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   private final String m_sPrerequisiteXPath;
 
   public ValidationArtefactKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
-                        @Nonnull final ISpecificationTransaction aTransaction,
-                        @Nullable final String sCountryCode,
-                        @Nullable final ValidationArtefactSectorKey aSectorKey,
-                        @Nullable final String sPrerequisiteXPath)
+                                @Nonnull final ISpecificationTransaction aTransaction,
+                                @Nullable final String sCountryCode,
+                                @Nullable final ValidationArtefactSectorKey aSectorKey,
+                                @Nullable final String sPrerequisiteXPath)
   {
     m_aBusinessSpecification = ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
     m_aTransaction = ValueEnforcer.notNull (aTransaction, "Transaction");
@@ -340,10 +340,10 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
       return new ValidationArtefactKey (m_aBusinessSpecification,
-                                m_aTransaction,
-                                m_sCountry,
-                                m_aSectorKey,
-                                m_sPrerequisiteXPath);
+                                        m_aTransaction,
+                                        m_sCountry,
+                                        m_aSectorKey,
+                                        m_sPrerequisiteXPath);
     }
   }
 }

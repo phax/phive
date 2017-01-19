@@ -28,8 +28,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -181,6 +181,6 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationArtefactKey> getAllValidationKeys ()
   {
-    return CollectionHelper.newOrderedSetMapped (values (), x -> x.m_aValidationKey);
+    return new CommonsLinkedHashSet<> (values (), x -> x.m_aValidationKey);
   }
 }
