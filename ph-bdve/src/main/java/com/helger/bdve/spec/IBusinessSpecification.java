@@ -33,28 +33,34 @@ import com.helger.commons.name.IHasDisplayName;
 @MustImplementEqualsAndHashcode
 public interface IBusinessSpecification extends IHasID <String>, IHasDisplayName, Serializable
 {
+  /** The separator between group ID and spec ID in the full ID */
+  char SEPARATOR_CHAR = ':';
+
   /**
    * @return The ID of the group maintaining the specification. E.g. "eu.peppol"
-   *         for OpenPEPPOL.
+   *         for OpenPEPPOL. May not contain {@link #SEPARATOR_CHAR}. Neither
+   *         <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
   String getGroupID ();
 
   /**
-   * @return The ID of the specification itself.
+   * @return The ID of the specification itself. May not contain
+   *         {@link #SEPARATOR_CHAR}. Neither <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
   String getSpecID ();
 
   /**
-   * @return The overall ID of the business specification.
+   * @return The overall ID of the business specification. Neither
+   *         <code>null</code> nor empty.
    */
   @Nonnull
   @Nonempty
   default String getID ()
   {
-    return getGroupID () + ":" + getSpecID ();
+    return getGroupID () + SEPARATOR_CHAR + getSpecID ();
   }
 }

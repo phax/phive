@@ -28,6 +28,7 @@ import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -60,14 +61,20 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   private final ValidationArtefactSectorKey m_aSectorKey;
   private final String m_sPrerequisiteXPath;
 
+  // Status vars
+  private final String m_sID;
+
   public ValidationArtefactKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
                                 @Nonnull final ISpecificationTransaction aTransaction,
                                 @Nullable final String sCountryCode,
                                 @Nullable final ValidationArtefactSectorKey aSectorKey,
                                 @Nullable final String sPrerequisiteXPath)
   {
-    m_aBusinessSpecification = ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
-    m_aTransaction = ValueEnforcer.notNull (aTransaction, "Transaction");
+    ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
+    ValueEnforcer.notNull (aTransaction, "Transaction");
+
+    m_aBusinessSpecification = aBusinessSpecification;
+    m_aTransaction = aTransaction;
     if (StringHelper.hasText (sCountryCode))
     {
       m_aCountry = CountryCache.getInstance ().getCountry (sCountryCode);
@@ -78,6 +85,20 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       m_aCountry = null;
     m_aSectorKey = aSectorKey;
     m_sPrerequisiteXPath = sPrerequisiteXPath;
+
+    String sID = aBusinessSpecification.getID () + "~" + aTransaction.getID ();
+    if (m_aCountry != null)
+      sID += "~" + m_aCountry.getCountry ();
+    if (aSectorKey != null)
+      sID += "~" + aSectorKey.getID ();
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
   }
 
   /**
@@ -179,7 +200,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   /**
    * Check if this and the passed validation artefact key have the same business
    * specification and transaction!
-   * 
+   *
    * @param aOther
    *        The validation artefact key to compare to. May be <code>null</code>.
    * @return <code>true</code> if the passed object is not <code>null</code> and

@@ -39,7 +39,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
-import com.helger.schematron.pure.errorhandler.CollectingPSErrorHandler;
+import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
@@ -135,41 +135,37 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
     }
 
     // No prerequisite or prerequisite matched
-    final CollectingPSErrorHandler aErrorHandler = new CollectingPSErrorHandler ();
-    final SchematronResourcePure aSCH = new SchematronResourcePure (aSCHRes).setErrorHandler (aErrorHandler);
+    final ErrorList aErrorList = new ErrorList ();
+    final SchematronResourcePure aSCH = new SchematronResourcePure (aSCHRes);
+    aSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
+    // Don't cache to avoid that errors in the Schematron are hidden on
+    // consecutive calls!
+    aSCH.setUseCache (false);
+
     try
     {
       // Main application of Schematron
       final SchematronOutputType aSVRL = aSCH.applySchematronValidationToSVRL (aNode);
-      if (aSVRL == null)
+      if (aSVRL != null && aErrorList.isEmpty ())
       {
-        // Invalid Schematron - unexpected
-        return new ValidationResult (aArtefact, aErrorHandler.getResourceErrors ());
+        // Valid Schematron - interpret result
+
+        // Convert failed asserts and successful reports to error objects
+        for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
+          aErrorList.add (aFailedAssert.getAsResourceError (aSource.getSystemID ()));
+        for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
+          aErrorList.add (aSuccessfulReport.getAsResourceError (aSource.getSystemID ()));
       }
-
-      // Conversion was successful
-      if (!aErrorHandler.isEmpty ())
-        throw new IllegalStateException ("Expected no error but got: " + aErrorHandler.getAllResourceErrors ());
-
-      // Convert failed asserts and successful reports to resource errors
-      final ErrorList aErrorList = new ErrorList ();
-      for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
-        aErrorList.add (aFailedAssert.getAsResourceError (aSource.getSystemID ()));
-      for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
-        aErrorList.add (aSuccessfulReport.getAsResourceError (aSource.getSystemID ()));
-
-      // Add one result element per layer
-      return new ValidationResult (aArtefact, aErrorList);
     }
     catch (final Exception ex)
     {
       // Usually an error in the Schematron
-      return new ValidationResult (aArtefact,
-                                   new ErrorList (SingleError.builderError ()
-                                                             .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
-                                                             .setErrorText (ex.getMessage ())
-                                                             .setLinkedException (ex)
-                                                             .build ()));
+      aErrorList.add (SingleError.builderError ()
+                                 .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
+                                 .setErrorText (ex.getMessage ())
+                                 .setLinkedException (ex)
+                                 .build ());
     }
+    return new ValidationResult (aArtefact, aErrorList);
   }
 }

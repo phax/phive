@@ -42,11 +42,13 @@ public class BusinessSpecification implements IBusinessSpecification
                                 @Nonnull @Nonempty final String sDisplayName)
   {
     ValueEnforcer.notEmpty (sGroupID, "GroupID");
+    ValueEnforcer.isTrue (sGroupID.indexOf (SEPARATOR_CHAR) < 0, "GroupID may not contain the separator char");
     ValueEnforcer.notEmpty (sSpecID, "SpecID");
+    ValueEnforcer.isTrue (sSpecID.indexOf (SEPARATOR_CHAR) < 0, "SpecID may not contain the separator char");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     m_sGroupID = sGroupID;
     m_sSpecID = sSpecID;
-    m_sID = sGroupID + ":" + sSpecID;
+    m_sID = sGroupID + SEPARATOR_CHAR + sSpecID;
     m_sDisplayName = sDisplayName;
   }
 

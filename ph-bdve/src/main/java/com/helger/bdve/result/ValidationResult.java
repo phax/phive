@@ -40,14 +40,25 @@ public class ValidationResult implements ISuccessIndicator, Serializable
   private final IErrorList m_aErrorList;
   private final ETriState m_eSuccess;
 
+  /**
+   * Public constructor
+   *
+   * @param aValidationArtefact
+   *        The validation artefact that was applied. May not be
+   *        <code>null</code>.
+   * @param aErrorList
+   *        The list of errors applying the validation artefact. May not be
+   *        <code>null</code>. If this list contains any entry with a level of
+   *        error, it is considered a failure.
+   */
   public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IErrorList aErrorList)
   {
-    this (aValidationArtefact, aErrorList, ETriState.valueOf (aErrorList.containsNoFailure ()));
+    this (aValidationArtefact, aErrorList, ETriState.valueOf (aErrorList.containsNoError ()));
   }
 
-  ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                    @Nonnull final IErrorList aErrorList,
-                    @Nonnull final ETriState eSuccess)
+  protected ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                              @Nonnull final IErrorList aErrorList,
+                              @Nonnull final ETriState eSuccess)
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     m_aErrorList = ValueEnforcer.notNull (aErrorList, "ErrorList");
