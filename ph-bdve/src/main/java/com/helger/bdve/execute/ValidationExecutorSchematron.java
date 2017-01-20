@@ -95,12 +95,16 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
       final XPath aXPathContext = XPathHelper.createNewXPath ();
 
       {
+        // Get all from the transaction
         final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext (aVAK.getTransaction ()
                                                                                       .getNamespaceContext ());
 
         // Add the default mapping for the root namespace
-        final IJAXBDocumentType eUBLDocumentType = aVAK.getTransaction ().getJAXBDocumentType ();
-        aNSContext.addMapping (XMLConstants.DEFAULT_NS_PREFIX, eUBLDocumentType.getNamespaceURI ());
+        final IJAXBDocumentType aDocumentType = aVAK.getTransaction ().getJAXBDocumentType ();
+        aNSContext.addMapping (XMLConstants.DEFAULT_NS_PREFIX, aDocumentType.getNamespaceURI ());
+        // For historical reasons, the "ubl" prefix is also mapped to this
+        // namespace URI
+        aNSContext.addMapping ("ubl", aDocumentType.getNamespaceURI ());
 
         aXPathContext.setNamespaceContext (aNSContext);
       }
@@ -124,13 +128,17 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
       {
         // Catch errors in prerequisite XPaths - most likely because of
         // missing namespace prefixes...
-        s_aLogger.error ("Failed to verify if validation artefact " +
-                         aSCHRes.getPath () +
-                         " matches the prerequisite XPath expression '" +
-                         aVAK.getPrerequisiteXPath () +
-                         "' - ignoring validation artefact.",
-                         ex);
-        return ValidationResult.createIgnoredResult (aArtefact);
+        final String sErrorMsg = "Failed to verify if validation artefact " +
+                                 aSCHRes.getPath () +
+                                 " matches the prerequisite XPath expression '" +
+                                 aVAK.getPrerequisiteXPath () +
+                                 "' - ignoring validation artefact.";
+        s_aLogger.error (sErrorMsg, ex);
+        return new ValidationResult (aArtefact,
+                                     new ErrorList (SingleError.builderError ()
+                                                               .setErrorText (sErrorMsg)
+                                                               .setLinkedException (ex)
+                                                               .build ()));
       }
     }
 
