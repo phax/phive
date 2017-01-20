@@ -22,6 +22,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -30,6 +31,7 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.string.ToStringGenerator;
 
 /**
  * A registry for {@link IBusinessSpecification} objects. The default instance
@@ -37,6 +39,7 @@ import com.helger.commons.string.StringHelper;
  *
  * @author Philip Helger
  */
+@ThreadSafe
 public class BusinessSpecificationRegistry implements Serializable
 {
   public static final BusinessSpecificationRegistry INSTANCE = new BusinessSpecificationRegistry ();
@@ -64,6 +67,10 @@ public class BusinessSpecificationRegistry implements Serializable
     return aBusinessSpec;
   }
 
+  /**
+   * @return A list of all contained business specifications in this registry.
+   *         Never <code>null</code> but maybe empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IBusinessSpecification> getAll ()
@@ -71,6 +78,14 @@ public class BusinessSpecificationRegistry implements Serializable
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
   }
 
+  /**
+   * Final all business specifications that match the provided filter.
+   *
+   * @param aFilter
+   *        The filter to be used. May be <code>null</code> in which case the
+   *        result is the same as {@link #getAll()}.
+   * @return Never <code>null</code> but maybe empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IBusinessSpecification> findAll (@Nonnull final Predicate <? super IBusinessSpecification> aFilter)
@@ -78,6 +93,13 @@ public class BusinessSpecificationRegistry implements Serializable
     return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aFilter));
   }
 
+  /**
+   * Find the business specification with the specified ID.
+   *
+   * @param sID
+   *        The ID to search. May be <code>null</code>.
+   * @return <code>null</code> if no such business specification is registered.
+   */
   @Nullable
   public IBusinessSpecification getOfID (@Nullable final String sID)
   {
@@ -85,5 +107,11 @@ public class BusinessSpecificationRegistry implements Serializable
       return null;
 
     return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("Map", m_aMap).toString ();
   }
 }

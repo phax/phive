@@ -176,13 +176,16 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     return m_sPrerequisiteXPath;
   }
 
-  public boolean hasSameTransaction (@Nullable final ValidationArtefactKey aOther)
-  {
-    if (aOther == null)
-      return false;
-    return m_aTransaction.equals (aOther.m_aTransaction);
-  }
-
+  /**
+   * Check if this and the passed validation artefact key have the same business
+   * specification and transaction!
+   * 
+   * @param aOther
+   *        The validation artefact key to compare to. May be <code>null</code>.
+   * @return <code>true</code> if the passed object is not <code>null</code> and
+   *         if business specification and transaction are equal,
+   *         <code>false</code> otherwise.
+   */
   public boolean hasSameSpecificationAndTransaction (@Nullable final ValidationArtefactKey aOther)
   {
     if (aOther == null)
@@ -299,6 +302,11 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       m_sPrerequisiteXPath = aOther.m_sPrerequisiteXPath;
     }
 
+    /**
+     * @param aBusinessSpecification
+     *        The business specification to be used. May be <code>null</code>.
+     * @return this for chaining
+     */
     @Nonnull
     public Builder setBusinessSpecification (@Nullable final IBusinessSpecification aBusinessSpecification)
     {
@@ -306,6 +314,11 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       return this;
     }
 
+    /**
+     * @param aTransaction
+     *        The transaction to be used. May be <code>null</code>.
+     * @return this for chaining
+     */
     @Nonnull
     public Builder setTransaction (@Nullable final ISpecificationTransaction aTransaction)
     {
@@ -313,6 +326,11 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       return this;
     }
 
+    /**
+     * @param sCountry
+     *        The country code to be used. May be <code>null</code>.
+     * @return this for chaining
+     */
     @Nonnull
     public Builder setCountry (@Nullable final String sCountry)
     {
@@ -320,6 +338,11 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       return this;
     }
 
+    /**
+     * @param aSectorKey
+     *        The sector specific validation key. May be <code>null</code>.
+     * @return this for chaining
+     */
     @Nonnull
     public Builder setSectorKey (@Nullable final ValidationArtefactSectorKey aSectorKey)
     {
@@ -327,6 +350,12 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       return this;
     }
 
+    /**
+     * @param sPrerequisiteXPath
+     *        The optional prerequisite XPath that must be fullfilled to perform
+     *        the validation. May be <code>null</code>.
+     * @return this for chaining
+     */
     @Nonnull
     public Builder setPrerequisiteXPath (@Nullable final String sPrerequisiteXPath)
     {
@@ -335,6 +364,11 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     }
 
     /**
+     * Build the validation artefact key from the specified fields. At least
+     * business specification and transaction MUST not be <code>null</code>!
+     * This method can be called many times and will return a new object every
+     * time.
+     *
      * @return The final validation key. Never <code>null</code>.
      * @throws IllegalStateException
      *         If a mandatory field is not filled.

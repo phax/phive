@@ -21,6 +21,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -31,13 +32,36 @@ import com.helger.commons.string.ToStringGenerator;
 @Immutable
 public class BusinessSpecification implements IBusinessSpecification
 {
+  private final String m_sGroupID;
+  private final String m_sSpecID;
   private final String m_sID;
   private final String m_sDisplayName;
 
-  public BusinessSpecification (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
+  public BusinessSpecification (@Nonnull @Nonempty final String sGroupID,
+                                @Nonnull @Nonempty final String sSpecID,
+                                @Nonnull @Nonempty final String sDisplayName)
   {
-    m_sID = ValueEnforcer.notEmpty (sID, "ID");
-    m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    ValueEnforcer.notEmpty (sGroupID, "GroupID");
+    ValueEnforcer.notEmpty (sSpecID, "SpecID");
+    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    m_sGroupID = sGroupID;
+    m_sSpecID = sSpecID;
+    m_sID = sGroupID + ":" + sSpecID;
+    m_sDisplayName = sDisplayName;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getGroupID ()
+  {
+    return m_sGroupID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getSpecID ()
+  {
+    return m_sSpecID;
   }
 
   @Nonnull
@@ -55,8 +79,29 @@ public class BusinessSpecification implements IBusinessSpecification
   }
 
   @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final BusinessSpecification rhs = (BusinessSpecification) o;
+    return m_sID.equals (rhs.m_sID) && m_sDisplayName.equals (rhs.m_sDisplayName);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_sID).append (m_sDisplayName).getHashCode ();
+  }
+
+  @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).toString ();
+    return new ToStringGenerator (this).append ("GroupID", m_sGroupID)
+                                       .append ("SpecID", m_sSpecID)
+                                       .append ("ID", m_sID)
+                                       .append ("DisplayName", m_sDisplayName)
+                                       .toString ();
   }
 }

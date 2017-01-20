@@ -21,6 +21,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasName;
@@ -32,6 +33,7 @@ import com.helger.xml.namespace.IIterableNamespaceContext;
  *
  * @author Philip Helger
  */
+@MustImplementEqualsAndHashcode
 public interface ISpecificationTransaction extends IHasID <String>, IHasName, Serializable
 {
   /**

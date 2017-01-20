@@ -18,6 +18,10 @@ package com.helger.bdve.spec;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
 
@@ -26,7 +30,31 @@ import com.helger.commons.name.IHasDisplayName;
  *
  * @author Philip Helger
  */
+@MustImplementEqualsAndHashcode
 public interface IBusinessSpecification extends IHasID <String>, IHasDisplayName, Serializable
 {
-  /* empty */
+  /**
+   * @return The ID of the group maintaining the specification. E.g. "eu.peppol"
+   *         for OpenPEPPOL.
+   */
+  @Nonnull
+  @Nonempty
+  String getGroupID ();
+
+  /**
+   * @return The ID of the specification itself.
+   */
+  @Nonnull
+  @Nonempty
+  String getSpecID ();
+
+  /**
+   * @return The overall ID of the business specification.
+   */
+  @Nonnull
+  @Nonempty
+  default String getID ()
+  {
+    return getGroupID () + ":" + getSpecID ();
+  }
 }
