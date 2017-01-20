@@ -27,8 +27,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.ext.CommonsArrayList;
+import com.helger.commons.collection.ext.CommonsLinkedHashSet;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsOrderedSet;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -43,34 +43,56 @@ import com.helger.commons.io.resource.IReadableResource;
  */
 public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidationArtefact
 {
-  INVOICE_AT_NAT ("Invoice-Thirdparty/ATNAT-UBL-T10.sch",
+  INVOICE_AT_NAT (false,
+                  "invoice-at/ATNAT-UBL-T10.sch",
                   new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("AT")
                                                                                       .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                       .build ()),
-  INVOICE_AT_GOV ("Invoice-Thirdparty/ATGOV-UBL-T10.sch",
+  INVOICE_AT_GOV (false,
+                  "invoice-at/ATGOV-UBL-T10.sch",
                   new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("AT")
                                                                                       .setSectorKey (CPeppolValidation.SECTOR_AT_GOV)
                                                                                       .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                       .build ()),
+  INVOICE_SIMPLER_INVOICING (true,
+                             "simplerinvoicing/SI-UBL-INV.SCH",
+                             new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("NL")
+                                                                                                 .setSectorKey (CPeppolValidation.SECTOR_NL_SIMPLERINVOICING)
+                                                                                                 .build ()),
+  INVOICE_SIMPLER_INVOICING_STRICT (true,
+                                    "simplerinvoicing/SI-UBL-INV-STRICT.SCH",
+                                    new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("NL")
+                                                                                                        .setSectorKey (CPeppolValidation.SECTOR_NL_SIMPLERINVOICING_STRICT)
+                                                                                                        .build ()),
 
-  BILLING_CREDIT_NOTE_AT_NAT ("Billing-Thirdparty/ATNAT-UBL-T14.sch",
-                              new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
-                                                                                                  .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
-                                                                                                  .build ()),
-  BILLING_CREDIT_NOTE_AT_GOV ("Billing-Thirdparty/ATGOV-UBL-T14.sch",
-                              new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
-                                                                                                  .setSectorKey (CPeppolValidation.SECTOR_AT_GOV)
-                                                                                                  .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
-                                                                                                  .build ());
+  CREDIT_NOTE_AT_NAT (false,
+                      "creditnote-at/ATNAT-UBL-T14.sch",
+                      new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
+                                                                                          .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                          .build ()),
+  CREDIT_NOTE_AT_GOV (false,
+                      "creditnote-at/ATGOV-UBL-T14.sch",
+                      new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
+                                                                                          .setSectorKey (CPeppolValidation.SECTOR_AT_GOV)
+                                                                                          .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                          .build ());
 
+  private boolean m_bIsSelfContained;
   private final ClassPathResource m_aResource;
   private final ValidationArtefactKey m_aValidationKey;
 
-  private EPeppolThirdPartyValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
+  private EPeppolThirdPartyValidationSchematronArtefact (final boolean bIsSelfContained,
+                                                         @Nonnull @Nonempty final String sPath,
                                                          @Nonnull final ValidationArtefactKey aTransactionKey)
   {
-    m_aResource = new ClassPathResource ("/peppol-rules/" + sPath);
+    m_bIsSelfContained = bIsSelfContained;
+    m_aResource = new ClassPathResource ("/thirdparty/" + sPath);
     m_aValidationKey = aTransactionKey;
+  }
+
+  public boolean isSelfContained ()
+  {
+    return m_bIsSelfContained;
   }
 
   @Nonnull
@@ -123,6 +145,6 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationArtefactKey> getTotalValidationKeys ()
   {
-    return CollectionHelper.newOrderedSetMapped (values (), x -> x.m_aValidationKey);
+    return new CommonsLinkedHashSet<> (values (), x -> x.m_aValidationKey);
   }
 }

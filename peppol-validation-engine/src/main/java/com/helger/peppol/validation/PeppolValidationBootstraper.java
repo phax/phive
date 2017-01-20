@@ -42,7 +42,7 @@ public final class PeppolValidationBootstraper
    */
   public static void run ()
   {
-    s_aLogger.info ("Bootstrapping validation resources");
+    s_aLogger.info ("Bootstrapping PEPPOL validation resources");
     final StopWatch aSW = StopWatch.createdStarted ();
 
     // Bootstrap Peppol SCH artefacts
@@ -50,7 +50,7 @@ public final class PeppolValidationBootstraper
     {
       // Only relevant XSDs
       for (final ValidationArtefactKey aVK : e.getValidationKeys ())
-        aVK.getTransaction ().getJAXBDocumentType ().getSchema ();
+        aVK.getJAXBDocumentType ().getSchema ();
       new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ();
     }
 
@@ -58,10 +58,10 @@ public final class PeppolValidationBootstraper
     for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
     {
       // Only relevant XSDs
-      e.getValidationKey ().getTransaction ().getJAXBDocumentType ().getSchema ();
+      e.getValidationKey ().getJAXBDocumentType ().getSchema ();
       new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ();
     }
 
-    s_aLogger.info ("Finished bootstrapping validation resources in " + aSW.stopAndGetMillis () + "ms");
+    s_aLogger.info ("Finished bootstrapping PEPPOL validation resources in " + aSW.stopAndGetMillis () + "ms");
   }
 }

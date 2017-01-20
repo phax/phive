@@ -19,6 +19,8 @@ package com.helger.peppol.validation;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import com.helger.bdve.execute.IValidationExecutor;
@@ -27,8 +29,6 @@ import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
 import com.helger.commons.collection.ext.ICommonsList;
-import com.helger.peppol.validation.PeppolValidationConfiguration;
-import com.helger.peppol.validation.PeppolValidationBootstraper;
 
 /**
  * Test class for class {@link ValidationExecutionManager}.
@@ -37,6 +37,8 @@ import com.helger.peppol.validation.PeppolValidationBootstraper;
  */
 public final class ValidationExecutionManagerFuncTest
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
+
   static
   {
     PeppolValidationBootstraper.run ();
@@ -50,6 +52,12 @@ public final class ValidationExecutionManagerFuncTest
       final ICommonsList <IValidationExecutor> aExecutors = PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ());
       assertTrue (aExecutors.isNotEmpty ());
       final ValidationExecutionManager aValidator = new ValidationExecutionManager (aExecutors);
+
+      s_aLogger.info ("Validating " +
+                      aTestFile.getResource ().getPath () +
+                      " against " +
+                      aExecutors.size () +
+                      " validation layers");
 
       // Read as desired type
       final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());

@@ -182,7 +182,7 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
         if (ret.isEmpty ())
         {
           // Add XSDs only from one artefact
-          for (final IReadableResource aXSDRes : vk.getTransaction ().getJAXBDocumentType ().getAllXSDResources ())
+          for (final IReadableResource aXSDRes : vk.getJAXBDocumentType ().getAllXSDResources ())
             ret.add (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationKey)));
         }
         ret.add (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (a.getRuleResource (),

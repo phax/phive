@@ -36,7 +36,7 @@ import com.helger.commons.io.resource.IReadableResource;
  * @author Philip Helger
  */
 @Immutable
-public class MockFile
+public final class MockFile
 {
   private final IReadableResource m_aResource;
   private final ValidationArtefactKey m_aTransactionKey;
@@ -86,5 +86,12 @@ public class MockFile
   public ICommonsSet <String> getAllExpectedErrorIDs ()
   {
     return m_aExpectedErrorIDs.getClone ();
+  }
+
+  @Nonnull
+  public static MockFile createGoodCase (@Nonnull final IReadableResource aResource,
+                                         @Nonnull final ValidationArtefactKey aTransactionKey)
+  {
+    return new MockFile (aResource, aTransactionKey, null);
   }
 }

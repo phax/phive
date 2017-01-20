@@ -102,6 +102,10 @@ public final class CPeppolValidation
 
   public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV",
                                                                                                    "Austrian Government");
+  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING = new ValidationArtefactSectorKey ("NLSI",
+                                                                                                                "SimplerInvoicing");
+  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING_STRICT = new ValidationArtefactSectorKey ("NLSISTRICT",
+                                                                                                                       "SimplerInvoicing (Strict)");
 
   private CPeppolValidation ()
   {}

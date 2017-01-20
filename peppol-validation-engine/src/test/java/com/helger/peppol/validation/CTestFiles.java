@@ -16,8 +16,6 @@
  */
 package com.helger.peppol.validation;
 
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -27,8 +25,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
-import com.helger.peppol.validation.CPeppolValidation;
 
 @Immutable
 public final class CTestFiles
@@ -41,23 +39,24 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
-    for (final ValidationArtefactKey aPTK : new ValidationArtefactKey [] { CPeppolValidation.CATALOGUE_01_T19,
-                                                           CPeppolValidation.CATALOGUE_01_T58,
-                                                           CPeppolValidation.ORDER_03_T01,
-                                                           CPeppolValidation.INVOICE_04_T10,
-                                                           CPeppolValidation.BILLING_05_T14,
-                                                           CPeppolValidation.ORDERING_28_T01,
-                                                           CPeppolValidation.ORDERING_28_T76,
-                                                           CPeppolValidation.DESPATCH_ADVICE_30_T16 })
-      for (final ClassPathResource aRes : getAllMatchingTestFiles (aPTK))
-        ret.add (new MockFile (aRes, aPTK, (Set <String>) null));
+    for (final ValidationArtefactKey aVK : new ValidationArtefactKey [] { CPeppolValidation.CATALOGUE_01_T19,
+                                                                          CPeppolValidation.CATALOGUE_01_T58,
+                                                                          CPeppolValidation.ORDER_03_T01,
+                                                                          CPeppolValidation.INVOICE_04_T10,
+                                                                          CPeppolValidation.BILLING_05_T14,
+                                                                          CPeppolValidation.ORDERING_28_T01,
+                                                                          CPeppolValidation.ORDERING_28_T76,
+                                                                          CPeppolValidation.DESPATCH_ADVICE_30_T16,
+                                                                          EPeppolThirdPartyValidationSchematronArtefact.INVOICE_SIMPLER_INVOICING.getValidationKey () })
+      for (final IReadableResource aRes : getAllMatchingTestFiles (aVK))
+        ret.add (MockFile.createGoodCase (aRes, aVK));
 
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <ClassPathResource> getAllMatchingTestFiles (@Nonnull final ValidationArtefactKey aTransactionKey)
+  public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final ValidationArtefactKey aTransactionKey)
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 
@@ -77,6 +76,14 @@ public final class CTestFiles
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
     if (aTransactionKey.equals (CPeppolValidation.DESPATCH_ADVICE_30_T16))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
+    if (aTransactionKey.equals (EPeppolThirdPartyValidationSchematronArtefact.INVOICE_SIMPLER_INVOICING.getValidationKey ()))
+    {
+      final ICommonsList <IReadableResource> ret = new CommonsArrayList<> ();
+      ret.add (new ClassPathResource ("test-files/simplerinvoicing/SI-UBL-1.0-ok-minimal.xml"));
+      ret.add (new ClassPathResource ("test-files/simplerinvoicing/SI-UBL-1.0-ok-reference.xml"));
+      ret.add (new ClassPathResource ("test-files/simplerinvoicing/SI-UBL-1.0-ok.xml"));
+      return ret;
+    }
 
     throw new IllegalArgumentException ("Invalid transaction key: " + aTransactionKey);
   }
