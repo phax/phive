@@ -10,6 +10,9 @@ This project is divided into 3 sub-projects for maximum flexibility
   * peppol-validation-engine - the main engine using the API and the artefacts
   
 #News
+  * v3.0.0
+    * Binds to ph-commons 8.6.x
+    * Requires at least ph-schematron 4.2.1
   * v2.0.1 - 2016-09-12
     * Binds to ph-commons 8.5.x
   * v2.0.0 - 2016-08-22
