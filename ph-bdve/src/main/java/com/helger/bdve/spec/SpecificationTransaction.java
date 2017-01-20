@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.namespace.IIterableNamespaceContext;
@@ -36,6 +37,7 @@ public class SpecificationTransaction implements ISpecificationTransaction
 {
   private final String m_sID;
   private final String m_sName;
+  // Is only required to implement equals in ph-jaxb > 8.6.0
   private final IJAXBDocumentType m_aDocType;
   private final IIterableNamespaceContext m_aNamespaceContext;
 
@@ -74,6 +76,23 @@ public class SpecificationTransaction implements ISpecificationTransaction
   public IIterableNamespaceContext getNamespaceContext ()
   {
     return m_aNamespaceContext;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final SpecificationTransaction rhs = (SpecificationTransaction) o;
+    return m_sID.equals (rhs.m_sID);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_sID).getHashCode ();
   }
 
   @Override

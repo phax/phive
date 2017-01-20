@@ -86,13 +86,13 @@ public class BusinessSpecification implements IBusinessSpecification
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final BusinessSpecification rhs = (BusinessSpecification) o;
-    return m_sID.equals (rhs.m_sID) && m_sDisplayName.equals (rhs.m_sDisplayName);
+    return m_sID.equals (rhs.m_sID);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sID).append (m_sDisplayName).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sID).getHashCode ();
   }
 
   @Override

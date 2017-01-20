@@ -29,7 +29,8 @@ import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.namespace.IIterableNamespaceContext;
 
 /**
- * Represents a single transaction within an {@link ISpecificationProfile}.
+ * Represents a single transaction that defines the document type to be
+ * validated.
  *
  * @author Philip Helger
  */
