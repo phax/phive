@@ -219,6 +219,9 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   {
     if (aOther == null)
       return false;
+
+    // If this has no sector key, but the other has a sector key, it's also a
+    // match!
     return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
            m_aTransaction.equals (aOther.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, aOther.m_aCountry) &&
