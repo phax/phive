@@ -60,19 +60,21 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>peppol-validation-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
-      <artifactId>peppol-validation-artefacts</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.helger</groupId>
       <artifactId>ph-ubl21</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.odftoolkit</groupId>
+      <artifactId>simple-odf</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-genericode</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
@@ -96,6 +98,22 @@
             <Export-Package>com.helger.peppol.validation.engine.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/LICENSE</exclude>
+            <exclude>**/NOTICE</exclude>
+            <exclude>src/main/resources/openpeppol/**</exclude>
+            <exclude>src/main/resources/peppol-rules/**</exclude>
+            <exclude>src/test/resources/codelist-generated/**</exclude>
+            <exclude>src/test/resources/openpeppol/**</exclude>
+            <exclude>src/test/resources/rule-source/**</exclude>
+            <exclude>src/test/resources/rule-utils/**</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>
