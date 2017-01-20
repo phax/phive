@@ -35,6 +35,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 
 /**
  * A validation key that uniquely identifies a set of validation artefacts. It
@@ -122,13 +123,22 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   }
 
   /**
+   * @return The JAXB document type referenced by the transaction.
+   */
+  @Nonnull
+  public IJAXBDocumentType getJAXBDocumentType ()
+  {
+    return m_aTransaction.getJAXBDocumentType ();
+  }
+
+  /**
    * @return The JAXB class implementing the document type referenced by the
    *         transaction.
    */
   @Nonnull
   public Class <?> getImplementationClass ()
   {
-    return m_aTransaction.getJAXBDocumentType ().getImplementationClass ();
+    return getJAXBDocumentType ().getImplementationClass ();
   }
 
   /**

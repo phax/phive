@@ -19,6 +19,7 @@ package com.helger.bdve.result;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
@@ -34,6 +35,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
+@Immutable
 public class ValidationResult implements ISuccessIndicator, Serializable
 {
   private final IValidationArtefact m_aValidationArtefact;

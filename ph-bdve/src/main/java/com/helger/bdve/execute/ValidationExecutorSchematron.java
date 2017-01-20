@@ -100,7 +100,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
                                                                                       .getNamespaceContext ());
 
         // Add the default mapping for the root namespace
-        final IJAXBDocumentType aDocumentType = aVAK.getTransaction ().getJAXBDocumentType ();
+        final IJAXBDocumentType aDocumentType = aVAK.getJAXBDocumentType ();
         aNSContext.addMapping (XMLConstants.DEFAULT_NS_PREFIX, aDocumentType.getNamespaceURI ());
         // For historical reasons, the "ubl" prefix is also mapped to this
         // namespace URI

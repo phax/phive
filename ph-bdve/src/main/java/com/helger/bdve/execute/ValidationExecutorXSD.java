@@ -57,7 +57,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
 
     // Find the document type that is required for the configured
     // validation
-    final IJAXBDocumentType aJAXBDocumentType = aVA.getValidationKey ().getTransaction ().getJAXBDocumentType ();
+    final IJAXBDocumentType aJAXBDocumentType = aVA.getValidationKey ().getJAXBDocumentType ();
 
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
