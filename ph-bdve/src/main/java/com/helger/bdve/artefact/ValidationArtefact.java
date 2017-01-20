@@ -97,6 +97,13 @@ public class ValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
+  public static ValidationArtefact createXML (@Nonnull final IReadableResource aResource,
+                                              @Nonnull final ValidationArtefactKey aValidationKey)
+  {
+    return new ValidationArtefact (EValidationType.XML, aResource, aValidationKey);
+  }
+
+  @Nonnull
   public static ValidationArtefact createXSD (@Nonnull final IReadableResource aResource,
                                               @Nonnull final ValidationArtefactKey aValidationKey)
   {

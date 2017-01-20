@@ -309,7 +309,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     {}
 
     /**
-     * Create a builder with the values of the provided validation key.
+     * Create a builder with the values of the provided validation artefact key.
      *
      * @param aOther
      *        Object to copy from. May not be <code>null</code>.
