@@ -5,12 +5,14 @@ import java.util.Iterator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -97,5 +99,57 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                             .append ("DisplayName", m_sDisplayName)
                             .append ("List", m_aList)
                             .toString ();
+  }
+
+  @Nonnull
+  public static ValidationExecutorSet create (@Nonnull @Nonempty final String sID,
+                                              @Nonnull @Nonempty final String sDisplayName,
+                                              @Nonnull final ValidationArtefactKey aValidationArtefactKey,
+                                              @Nonnull final IReadableResource... aSchematrons)
+  {
+    ValueEnforcer.notEmpty (sID, "ID");
+    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
+    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
+
+    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
+
+    // Add XSDs at the beginning
+    for (final IReadableResource aXSDRes : aValidationArtefactKey.getJAXBDocumentType ().getAllXSDResources ())
+      ret.addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationArtefactKey)));
+
+    // Add Schematrons
+    for (final IReadableResource aRes : aSchematrons)
+      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
+                                                                                              aValidationArtefactKey)));
+
+    return ret;
+  }
+
+  @Nonnull
+  public static ValidationExecutorSet createDerived (@Nonnull final IValidationExecutorSet aBaseVES,
+                                                     @Nonnull @Nonempty final String sID,
+                                                     @Nonnull @Nonempty final String sDisplayName,
+                                                     @Nonnull final ValidationArtefactKey aValidationArtefactKey,
+                                                     @Nonnull final IReadableResource... aSchematrons)
+  {
+    ValueEnforcer.notNull (aBaseVES, "BaseVES");
+    ValueEnforcer.notEmpty (sID, "ID");
+    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
+    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
+
+    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
+
+    // Copy all existing ones
+    for (final IValidationExecutor aVE : aBaseVES)
+      ret.addExecutor (aVE);
+
+    // Add Schematrons
+    for (final IReadableResource aRes : aSchematrons)
+      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
+                                                                                              aValidationArtefactKey)));
+
+    return ret;
   }
 }

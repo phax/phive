@@ -19,17 +19,10 @@ package com.helger.peppol.validation;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.artefact.ValidationArtefact;
-import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.IValidationExecutorSet;
-import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.execute.ValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutorSetRegistry;
-import com.helger.bdve.execute.ValidationExecutorXSD;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.resource.IReadableResource;
 
 /**
  * Peppol validation configuration
@@ -60,58 +53,6 @@ public final class CPeppolValidation
   private CPeppolValidation ()
   {}
 
-  @Nonnull
-  public static ValidationExecutorSet _create (@Nonnull @Nonempty final String sID,
-                                               @Nonnull @Nonempty final String sDisplayName,
-                                               @Nonnull final ValidationArtefactKey aValidationArtefactKey,
-                                               @Nonnull final IReadableResource... aSchematrons)
-  {
-    ValueEnforcer.notEmpty (sID, "ID");
-    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
-    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
-
-    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
-
-    // Add XSDs at the beginning
-    for (final IReadableResource aXSDRes : aValidationArtefactKey.getJAXBDocumentType ().getAllXSDResources ())
-      ret.addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationArtefactKey)));
-
-    // Add Schematrons
-    for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
-                                                                                              aValidationArtefactKey)));
-
-    return ret;
-  }
-
-  @Nonnull
-  public static ValidationExecutorSet _createDerived (@Nonnull @Nonempty final String sID,
-                                                      @Nonnull @Nonempty final String sDisplayName,
-                                                      @Nonnull final ValidationArtefactKey aValidationArtefactKey,
-                                                      @Nonnull final IValidationExecutorSet aBaseVES,
-                                                      @Nonnull final IReadableResource... aSchematrons)
-  {
-    ValueEnforcer.notEmpty (sID, "ID");
-    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
-    ValueEnforcer.notNull (aBaseVES, "BaseVES");
-    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
-
-    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
-
-    // Copy all existing ones
-    for (final IValidationExecutor aVE : aBaseVES)
-      ret.addExecutor (aVE);
-
-    // Add Schematrons
-    for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
-                                                                                              aValidationArtefactKey)));
-
-    return ret;
-  }
-
   /**
    * Register all standard PEPPOL validation execution sets to the provided
    * registry.
@@ -123,94 +64,95 @@ public final class CPeppolValidation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T19_V2,
-                                                      "OpenPEPPOL Catalogue",
-                                                      CPeppolValidationArtefact.VK_CATALOGUE_01_T19,
-                                                      CPeppolValidationArtefact.CATALOGUE_RULES,
-                                                      CPeppolValidationArtefact.CATALOGUE_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.CATALOGUE_OPENPEPPOL_CORE));
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T58_V2,
-                                                      "OpenPEPPOL Catalogue Response",
-                                                      CPeppolValidationArtefact.VK_CATALOGUE_01_T58,
-                                                      CPeppolValidationArtefact.CATALOGUE_RESPONSE_RULES,
-                                                      CPeppolValidationArtefact.CATALOGUE_RESPONSE_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.CATALOGUE_RESPONSE_OPENPEPPOL_CORE));
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T01_V2,
-                                                      "OpenPEPPOL Order",
-                                                      CPeppolValidationArtefact.VK_ORDER_03_T01,
-                                                      CPeppolValidationArtefact.ORDER_RULES,
-                                                      CPeppolValidationArtefact.ORDER_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.ORDER_OPENPEPPOL_CORE));
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T76_V2,
-                                                      "OpenPEPPOL Order Response",
-                                                      CPeppolValidationArtefact.VK_ORDERING_28_T76,
-                                                      CPeppolValidationArtefact.ORDER_RESPONSE_RULES,
-                                                      CPeppolValidationArtefact.ORDER_RESPONSE_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.ORDER_RESPONSE_OPENPEPPOL_CORE));
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T16_V2,
-                                                      "OpenPEPPOL Despatch Advice",
-                                                      CPeppolValidationArtefact.VK_DESPATCH_ADVICE_30_T16,
-                                                      CPeppolValidationArtefact.DESPATCH_ADVICE_RULES,
-                                                      CPeppolValidationArtefact.DESPATCH_ADVICE_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.DESPATCH_ADVICE_OPENPEPPOL_CORE));
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T10_V2,
-                                                      "OpenPEPPOL Invoice",
-                                                      CPeppolValidationArtefact.VK_INVOICE_04_T10,
-                                                      CPeppolValidationArtefact.INVOICE_RULES,
-                                                      CPeppolValidationArtefact.INVOICE_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.INVOICE_OPENPEPPOL_CORE));
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T14_V2,
-                                                      "OpenPEPPOL Credit Note",
-                                                      CPeppolValidationArtefact.VK_BILLING_05_T14,
-                                                      CPeppolValidationArtefact.CREDIT_NOTE_RULES,
-                                                      CPeppolValidationArtefact.CREDIT_NOTE_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.CREDIT_NOTE_OPENPEPPOL_CORE));
-    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T71_V2,
-                                                      "OpenPEPPOL MLR",
-                                                      CPeppolValidationArtefact.VK_MLR_36_T71,
-                                                      CPeppolValidationArtefact.MLR_RULES,
-                                                      CPeppolValidationArtefact.MLR_OPENPEPPOL,
-                                                      CPeppolValidationArtefact.MLR_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T19_V2,
+                                                                           "OpenPEPPOL Catalogue",
+                                                                           CPeppolValidationArtefact.VK_CATALOGUE_01_T19,
+                                                                           CPeppolValidationArtefact.CATALOGUE_RULES,
+                                                                           CPeppolValidationArtefact.CATALOGUE_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.CATALOGUE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T58_V2,
+                                                                           "OpenPEPPOL Catalogue Response",
+                                                                           CPeppolValidationArtefact.VK_CATALOGUE_01_T58,
+                                                                           CPeppolValidationArtefact.CATALOGUE_RESPONSE_RULES,
+                                                                           CPeppolValidationArtefact.CATALOGUE_RESPONSE_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.CATALOGUE_RESPONSE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T01_V2,
+                                                                           "OpenPEPPOL Order",
+                                                                           CPeppolValidationArtefact.VK_ORDER_03_T01,
+                                                                           CPeppolValidationArtefact.ORDER_RULES,
+                                                                           CPeppolValidationArtefact.ORDER_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.ORDER_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T76_V2,
+                                                                           "OpenPEPPOL Order Response",
+                                                                           CPeppolValidationArtefact.VK_ORDERING_28_T76,
+                                                                           CPeppolValidationArtefact.ORDER_RESPONSE_RULES,
+                                                                           CPeppolValidationArtefact.ORDER_RESPONSE_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.ORDER_RESPONSE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T16_V2,
+                                                                           "OpenPEPPOL Despatch Advice",
+                                                                           CPeppolValidationArtefact.VK_DESPATCH_ADVICE_30_T16,
+                                                                           CPeppolValidationArtefact.DESPATCH_ADVICE_RULES,
+                                                                           CPeppolValidationArtefact.DESPATCH_ADVICE_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.DESPATCH_ADVICE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T10_V2,
+                                                                           "OpenPEPPOL Invoice",
+                                                                           CPeppolValidationArtefact.VK_INVOICE_04_T10,
+                                                                           CPeppolValidationArtefact.INVOICE_RULES,
+                                                                           CPeppolValidationArtefact.INVOICE_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.INVOICE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T14_V2,
+                                                                           "OpenPEPPOL Credit Note",
+                                                                           CPeppolValidationArtefact.VK_BILLING_05_T14,
+                                                                           CPeppolValidationArtefact.CREDIT_NOTE_RULES,
+                                                                           CPeppolValidationArtefact.CREDIT_NOTE_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.CREDIT_NOTE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T71_V2,
+                                                                           "OpenPEPPOL MLR",
+                                                                           CPeppolValidationArtefact.VK_MLR_36_T71,
+                                                                           CPeppolValidationArtefact.MLR_RULES,
+                                                                           CPeppolValidationArtefact.MLR_OPENPEPPOL,
+                                                                           CPeppolValidationArtefact.MLR_OPENPEPPOL_CORE));
   }
 
   public static void initThirdParty (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
+    // Extending third-party artefacts
     final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (VID_OPENPEPPOL_T10_V2);
     final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (VID_OPENPEPPOL_T14_V2);
     if (aVESInvoice == null || aVESCreditNote == null)
       throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before third-party artefacts!");
 
-    final ValidationExecutorSet aVESInvoiceAT = aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T10_V2_AT,
-                                                                                                         "OpenPEPPOL Invoice (Austria)",
-                                                                                                         CPeppolValidationArtefact.VK_INVOICE_04_T10_ATNAT,
-                                                                                                         aVESInvoice,
-                                                                                                         CPeppolValidationArtefact.INVOICE_AT_NAT));
-    aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T10_V2_AT_GOV,
-                                                             "OpenPEPPOL Invoice (Austrian Government)",
-                                                             CPeppolValidationArtefact.VK_INVOICE_04_T10_ATGOV,
-                                                             aVESInvoiceAT,
-                                                             CPeppolValidationArtefact.INVOICE_AT_GOV));
-    final ValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T14_V2_AT,
-                                                                                                            "OpenPEPPOL Credit Note (Austria)",
-                                                                                                            CPeppolValidationArtefact.VK_BILLING_05_T14_ATNAT,
-                                                                                                            aVESCreditNote,
-                                                                                                            CPeppolValidationArtefact.CREDIT_NOTE_AT_NAT));
-    aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T14_V2_AT_GOV,
-                                                             "OpenPEPPOL Credit Note (Austrian Government)",
-                                                             CPeppolValidationArtefact.VK_BILLING_05_T14_ATGOV,
-                                                             aVESCreditNoteAT,
-                                                             CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV));
+    final IValidationExecutorSet aVESInvoiceAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoice,
+                                                                                                                               VID_OPENPEPPOL_T10_V2_AT,
+                                                                                                                               "OpenPEPPOL Invoice (Austria)",
+                                                                                                                               CPeppolValidationArtefact.VK_INVOICE_04_T10_ATNAT,
+                                                                                                                               CPeppolValidationArtefact.INVOICE_AT_NAT));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoiceAT,
+                                                                                  VID_OPENPEPPOL_T10_V2_AT_GOV,
+                                                                                  "OpenPEPPOL Invoice (Austrian Government)",
+                                                                                  CPeppolValidationArtefact.VK_INVOICE_04_T10_ATGOV,
+                                                                                  CPeppolValidationArtefact.INVOICE_AT_GOV));
+    final IValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
+                                                                                                                                  VID_OPENPEPPOL_T14_V2_AT,
+                                                                                                                                  "OpenPEPPOL Credit Note (Austria)",
+                                                                                                                                  CPeppolValidationArtefact.VK_BILLING_05_T14_ATNAT,
+                                                                                                                                  CPeppolValidationArtefact.CREDIT_NOTE_AT_NAT));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNoteAT,
+                                                                                  VID_OPENPEPPOL_T14_V2_AT_GOV,
+                                                                                  "OpenPEPPOL Credit Note (Austrian Government)",
+                                                                                  CPeppolValidationArtefact.VK_BILLING_05_T14_ATGOV,
+                                                                                  CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV));
 
     // SimplerInvoicing is self-contained
-    aRegistry.registerValidationExecutorSet (_create (VID_SIMPLERINVOICING_V11,
-                                                      "SimplerInvoicing 1.1",
-                                                      CPeppolValidationArtefact.VK_SIMPLERINVOICING,
-                                                      CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING));
-    aRegistry.registerValidationExecutorSet (_create (VID_SIMPLERINVOICING_V11_STRICT,
-                                                      "SimplerInvoicing 1.1 (strict)",
-                                                      CPeppolValidationArtefact.VK_SIMPLERINVOICING_STRICT,
-                                                      CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11,
+                                                                           "SimplerInvoicing 1.1",
+                                                                           CPeppolValidationArtefact.VK_SIMPLERINVOICING,
+                                                                           CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11_STRICT,
+                                                                           "SimplerInvoicing 1.1 (strict)",
+                                                                           CPeppolValidationArtefact.VK_SIMPLERINVOICING_STRICT,
+                                                                           CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT));
   }
 }
