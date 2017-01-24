@@ -17,7 +17,7 @@
   <param name="ATGOV-T14-R014" value="string-length(string-join(cac:AdditionalDocumentReference/cac:Attachment/cbc:EmbeddedDocumentBinaryObject/text(),'')) * 3 div 4 &lt;= 15728640" />
   <param name="ATGOV-T14-R015" value="(number(cbc:LineExtensionAmount) >= -999999999999.99 and number(cbc:LineExtensionAmount) &lt;= 999999999999.99)" />
   <param name="ATGOV-T14-R016" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount) &lt;= 999999999.99" />
-  <param name="ATGOV-T14-R018" value="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
+  <param name="ATGOV-T14-R018" value="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})?$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
   <param name="CreditNote" value="/ubl:CreditNote" />
   <param name="Payment_Means" value="/ubl:CreditNote/cac:PaymentMeans" />
   <param name="Supplier" value="/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party" />

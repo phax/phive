@@ -376,9 +376,9 @@
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
+      <xsl:when test="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})?$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
       <xsl:otherwise>
-        <svrl:failed-assert test="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})$&quot;)) or not ((cac:Price/cbc:PriceAmount))">
+        <svrl:failed-assert test="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})?$&quot;)) or not ((cac:Price/cbc:PriceAmount))">
           <xsl:attribute name="id">ATGOV-T10-R018</xsl:attribute>
           <xsl:attribute name="flag">fatal</xsl:attribute>
           <xsl:attribute name="location">

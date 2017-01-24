@@ -182,11 +182,11 @@ public final class CPeppolValidationArtefact
                                                                                      "OPENPEPPOLCORE-UBL-T71.sch");
 
   // Third party
-  public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/invoice-at/ATNAT-UBL-T10.sch");
-  public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/invoice-at/ATGOV-UBL-T10.sch");
+  public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/invoice/ATNAT-UBL-T10.sch");
+  public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/invoice/ATGOV-UBL-T10.sch");
 
-  public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/creditnote-at/ATNAT-UBL-T14.sch");
-  public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/creditnote-at/ATGOV-UBL-T14.sch");
+  public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/creditnote/ATNAT-UBL-T14.sch");
+  public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/creditnote/ATGOV-UBL-T14.sch");
 
   // SimplerInvoicing
   public static final IReadableResource INVOICE_SIMPLER_INVOICING = new ClassPathResource ("/thirdparty/simplerinvoicing/SI-UBL-INV.SCH");

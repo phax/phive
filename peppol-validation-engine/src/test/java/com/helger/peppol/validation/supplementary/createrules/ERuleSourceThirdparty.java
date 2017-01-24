@@ -39,11 +39,11 @@ public enum ERuleSourceThirdparty
 {
   ATGOV_T10 ("atgov",
              EBII2Transaction.T10,
-             "v06",
+             "v07",
              "(/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
   ATGOV_T14 ("atgov",
              EBII2Transaction.T14,
-             "v06",
+             "v07",
              "(/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
   ATNAT_T10 ("atnat",
              EBII2Transaction.T10,

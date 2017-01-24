@@ -18,7 +18,7 @@
   <param name="ATGOV-T10-R015" value="(number(cbc:LineExtensionAmount) >= -999999999999.99 and number(cbc:LineExtensionAmount) &lt;= 999999999999.99)" />
   <param name="ATGOV-T10-R016" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount) &lt;= 999999999.99" />
   <param name="ATGOV-T10-R017" value="count(cac:PaymentMeans/cac:PayeeFinancialAccount/cbc:ID) >= 1" />
-  <param name="ATGOV-T10-R018" value="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
+  <param name="ATGOV-T10-R018" value="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})?$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
   <param name="Invoice" value="/ubl:Invoice" />
   <param name="Payment_Means" value="/ubl:Invoice/cac:PaymentMeans" />
   <param name="Supplier" value="/ubl:Invoice/cac:AccountingSupplierParty/cac:Party" />
