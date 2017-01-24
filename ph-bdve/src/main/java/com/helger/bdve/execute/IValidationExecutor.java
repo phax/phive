@@ -25,6 +25,7 @@ import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 
 /**
  * Base interface for performing validation of a single XML document based on
@@ -32,6 +33,7 @@ import com.helger.bdve.source.IValidationSource;
  *
  * @author Philip Helger
  */
+@MustImplementEqualsAndHashcode
 public interface IValidationExecutor extends Serializable
 {
   /**

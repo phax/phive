@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -50,6 +51,23 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
   public final IValidationArtefact getValidationArtefact ()
   {
     return m_aValidationArtefact;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    final AbstractValidationExecutor rhs = (AbstractValidationExecutor) o;
+    return m_aValidationArtefact.equals (rhs.m_aValidationArtefact);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aValidationArtefact).getHashCode ();
   }
 
   @Override
