@@ -58,33 +58,21 @@ public final class PeppolValidationConfiguration
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList<> ();
+    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList <> ();
 
     // Note: no need to add the XSD artefacts here. They are determined by the
     // validation key automatically.
 
-    // Special self contained check for e.g. SimplerInvoicing
-    boolean bIsSelfContained = false;
-    for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
-      if (aValidationKey.equals (e.getValidationKey ()))
-      {
-        bIsSelfContained = e.isSelfContained ();
-        break;
-      }
-
-    if (!bIsSelfContained)
-    {
-      // Get all PEPPOL standard artefacts
-      ret.addAll (EPeppolStandardValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));
-      if (ret.isEmpty ())
-        s_aLogger.warn ("No standard validation artefact supports BIS '" +
-                        aValidationKey.getBusinessSpecification ().getDisplayName () +
-                        "' and transaction " +
-                        aValidationKey.getTransaction ().getID ());
-    }
+    // Get all PEPPOL standard artefacts
+    ret.addAll (EVAPeppolStandard.getAllMatchingValidationArtefacts (aValidationKey));
+    if (ret.isEmpty ())
+      s_aLogger.warn ("No standard validation artefact supports BIS '" +
+                      aValidationKey.getBusinessSpecification ().getDisplayName () +
+                      "' and transaction " +
+                      aValidationKey.getTransaction ().getID ());
 
     // Get all PEPPOL third party artefacts (if any)
-    ret.addAll (EPeppolThirdPartyValidationSchematronArtefact.getAllMatchingValidationArtefacts (aValidationKey));
+    ret.addAll (EVAPeppolThirdParty.getAllMatchingValidationArtefacts (aValidationKey));
 
     return ret;
   }

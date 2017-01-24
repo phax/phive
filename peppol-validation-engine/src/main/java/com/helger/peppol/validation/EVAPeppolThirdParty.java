@@ -35,64 +35,44 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
 /**
- * This enumeration contains all the extended country specific OpenPEPPOL
- * Schematron artefacts I'm aware of. They are ordered ascending country, than
- * by BIS number, by transaction and finally by desired execution order.
+ * This enumeration contains all the extended country- and/or sector-specific
+ * OpenPEPPOL Schematron artefacts I'm aware of. They are ordered ascending
+ * country, than by BIS number, by transaction and finally by desired execution
+ * order. Each third-party validation requires the standard validation executed
+ * beforehand - these are just additional rule sets.
  *
  * @author Philip Helger
  */
-public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidationArtefact
+public enum EVAPeppolThirdParty implements IValidationArtefact
 {
-  INVOICE_AT_NAT (false,
-                  "invoice-at/ATNAT-UBL-T10.sch",
+  INVOICE_AT_NAT ("invoice-at/ATNAT-UBL-T10.sch",
                   new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("AT")
                                                                                       .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                       .build ()),
-  INVOICE_AT_GOV (false,
-                  "invoice-at/ATGOV-UBL-T10.sch",
+  INVOICE_AT_GOV ("invoice-at/ATGOV-UBL-T10.sch",
                   new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("AT")
                                                                                       .setSectorKey (CPeppolValidation.SECTOR_AT_GOV)
                                                                                       .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                       .build ()),
-  INVOICE_SIMPLER_INVOICING (true,
-                             "simplerinvoicing/SI-UBL-INV.SCH",
-                             new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("NL")
-                                                                                                 .setSectorKey (CPeppolValidation.SECTOR_NL_SIMPLERINVOICING)
-                                                                                                 .build ()),
-  INVOICE_SIMPLER_INVOICING_STRICT (true,
-                                    "simplerinvoicing/SI-UBL-INV-STRICT.SCH",
-                                    new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("NL")
-                                                                                                        .setSectorKey (CPeppolValidation.SECTOR_NL_SIMPLERINVOICING_STRICT)
-                                                                                                        .build ()),
 
-  CREDIT_NOTE_AT_NAT (false,
-                      "creditnote-at/ATNAT-UBL-T14.sch",
+  CREDIT_NOTE_AT_NAT ("creditnote-at/ATNAT-UBL-T14.sch",
                       new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
                                                                                           .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                           .build ()),
-  CREDIT_NOTE_AT_GOV (false,
-                      "creditnote-at/ATGOV-UBL-T14.sch",
+  CREDIT_NOTE_AT_GOV ("creditnote-at/ATGOV-UBL-T14.sch",
                       new ValidationArtefactKey.Builder (CPeppolValidation.BILLING_05_T14).setCountry ("AT")
                                                                                           .setSectorKey (CPeppolValidation.SECTOR_AT_GOV)
                                                                                           .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                           .build ());
 
-  private boolean m_bIsSelfContained;
   private final ClassPathResource m_aResource;
   private final ValidationArtefactKey m_aValidationKey;
 
-  private EPeppolThirdPartyValidationSchematronArtefact (final boolean bIsSelfContained,
-                                                         @Nonnull @Nonempty final String sPath,
-                                                         @Nonnull final ValidationArtefactKey aTransactionKey)
+  private EVAPeppolThirdParty (@Nonnull @Nonempty final String sPath,
+                               @Nonnull final ValidationArtefactKey aTransactionKey)
   {
-    m_bIsSelfContained = bIsSelfContained;
     m_aResource = new ClassPathResource ("/thirdparty/" + sPath);
     m_aValidationKey = aTransactionKey;
-  }
-
-  public boolean isSelfContained ()
-  {
-    return m_bIsSelfContained;
   }
 
   @Nonnull
@@ -130,8 +110,8 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList<> ();
-    ArrayHelper.forEach (EPeppolThirdPartyValidationSchematronArtefact.values (),
+    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList <> ();
+    ArrayHelper.forEach (EVAPeppolThirdParty.values (),
                          x -> x.m_aValidationKey.hasSameSpecificationAndTransactionAndCountryAndSector (aValidationKey),
                          x -> ret.add (new ValidationExecutorSchematron (x)));
     return ret;
@@ -145,6 +125,6 @@ public enum EPeppolThirdPartyValidationSchematronArtefact implements IValidation
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationArtefactKey> getTotalValidationKeys ()
   {
-    return new CommonsLinkedHashSet<> (values (), x -> x.m_aValidationKey);
+    return new CommonsLinkedHashSet <> (values (), x -> x.m_aValidationKey);
   }
 }

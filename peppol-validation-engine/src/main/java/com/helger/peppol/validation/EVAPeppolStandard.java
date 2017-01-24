@@ -41,11 +41,13 @@ import com.helger.commons.io.resource.IReadableResource;
 /**
  * This enumeration contains all the default OpenPEPPOL Schematron artefacts.
  * They are ordered ascending by BIS number, second by transaction and third by
- * desired execution order.
+ * desired execution order.<br>
+ * Use {@link #getAllMatchingValidationArtefacts(ValidationArtefactKey)} to
+ * determine the correct list of validation executors.
  *
  * @author Philip Helger
  */
-public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValidationArtefact
+public enum EVAPeppolStandard implements IPeppolValidationArtefact
 {
   CATALOGUE_RULES (CATALOGUE + BII_RULES + "BIIRULES-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
   CATALOGUE_OPENPEPPOL (CATALOGUE + OPENPEPPOL + "OPENPEPPOL-UBL-T19.sch", CPeppolValidation.CATALOGUE_01_T19),
@@ -121,11 +123,11 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
   private final ClassPathResource m_aResource;
   private final ICommonsOrderedSet <ValidationArtefactKey> m_aValidationKeys;
 
-  private EPeppolStandardValidationSchematronArtefact (@Nonnull @Nonempty final String sPath,
-                                                       @Nonnull final ValidationArtefactKey... aTransactionKeys)
+  private EVAPeppolStandard (@Nonnull @Nonempty final String sPath,
+                             @Nonnull final ValidationArtefactKey... aTransactionKeys)
   {
     m_aResource = new ClassPathResource (sPath);
-    m_aValidationKeys = new CommonsLinkedHashSet<> (aTransactionKeys);
+    m_aValidationKeys = new CommonsLinkedHashSet <> (aTransactionKeys);
   }
 
   @Nonnull
@@ -152,10 +154,11 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
     return m_aValidationKeys;
   }
 
-  public static void forEachValidationKey (@Nonnull final BiConsumer <? super EPeppolStandardValidationSchematronArtefact, ? super ValidationArtefactKey> aConsumer)
+  public static void forEachValidationKey (@Nonnull final BiConsumer <? super EVAPeppolStandard, ? super ValidationArtefactKey> aConsumer)
   {
-    for (final EPeppolStandardValidationSchematronArtefact e : values ())
-      e.m_aValidationKeys.forEach (y -> aConsumer.accept (e, y));
+    for (final EVAPeppolStandard e : values ())
+      for (final ValidationArtefactKey aVK : e.m_aValidationKeys)
+        aConsumer.accept (e, aVK);
   }
 
   /**
@@ -174,7 +177,7 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
   {
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
 
-    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList<> ();
+    final ICommonsList <IValidationExecutor> ret = new CommonsArrayList <> ();
     // Add all XSDs and Schematrons
     forEachValidationKey ( (a, vk) -> {
       if (vk.hasSameSpecificationAndTransaction (aValidationKey))
@@ -200,7 +203,7 @@ public enum EPeppolStandardValidationSchematronArtefact implements IPeppolValida
   @ReturnsMutableCopy
   public static ICommonsOrderedSet <ValidationArtefactKey> getTotalValidationKeys ()
   {
-    final ICommonsOrderedSet <ValidationArtefactKey> ret = new CommonsLinkedHashSet<> ();
+    final ICommonsOrderedSet <ValidationArtefactKey> ret = new CommonsLinkedHashSet <> ();
     forEachValidationKey ( (a, vk) -> ret.add (vk));
     return ret;
   }

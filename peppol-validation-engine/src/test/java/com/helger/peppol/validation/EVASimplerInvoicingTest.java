@@ -21,37 +21,33 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.ValidationArtefactKey;
-import com.helger.peppol.validation.EPeppolStandardValidationSchematronArtefact;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
- * Test class for class {@link EPeppolStandardValidationSchematronArtefact}.
+ * Test class for class {@link EVASimplerInvoicing}.
  *
  * @author Philip Helger
  */
-public final class EPeppolStandardValidationSchematronArtefactTest
+public final class EVASimplerInvoicingTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
+    for (final EVASimplerInvoicing e : EVASimplerInvoicing.values ())
     {
       assertNotNull (e.getRuleResource ());
-      assertTrue (e.getRuleResource ().toString (), e.getRuleResource ().exists ());
-      for (final ValidationArtefactKey aVK : e.getValidationKeys ())
-        assertNotNull (aVK);
+      assertTrue (e.getRuleResource ().exists ());
+      assertNotNull (e.getValidationKey ());
     }
   }
 
   @Test
   public void testValidSchematrons ()
   {
-    for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
+    for (final EVASimplerInvoicing e : EVASimplerInvoicing.values ())
     {
       // Check that the passed Schematron is valid
-      assertTrue (e.getRuleResource ().toString (),
-                  new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ());
+      assertTrue (new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ());
     }
   }
 }

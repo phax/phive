@@ -21,34 +21,37 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.peppol.validation.EPeppolThirdPartyValidationSchematronArtefact;
+import com.helger.bdve.ValidationArtefactKey;
+import com.helger.peppol.validation.EVAPeppolStandard;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
- * Test class for class {@link EPeppolThirdPartyValidationSchematronArtefact}.
+ * Test class for class {@link EVAPeppolStandard}.
  *
  * @author Philip Helger
  */
-public final class EPeppolThirdPartyValidationSchematronArtefactTest
+public final class EVAPeppolStandardTest
 {
   @Test
   public void testBasic ()
   {
-    for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
+    for (final EVAPeppolStandard e : EVAPeppolStandard.values ())
     {
       assertNotNull (e.getRuleResource ());
-      assertTrue (e.getRuleResource ().exists ());
-      assertNotNull (e.getValidationKey ());
+      assertTrue (e.getRuleResource ().toString (), e.getRuleResource ().exists ());
+      for (final ValidationArtefactKey aVK : e.getValidationKeys ())
+        assertNotNull (aVK);
     }
   }
 
   @Test
   public void testValidSchematrons ()
   {
-    for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
+    for (final EVAPeppolStandard e : EVAPeppolStandard.values ())
     {
       // Check that the passed Schematron is valid
-      assertTrue (new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ());
+      assertTrue (e.getRuleResource ().toString (),
+                  new SchematronResourcePure (e.getRuleResource ()).isValidSchematron ());
     }
   }
 }

@@ -27,7 +27,7 @@
   <artifactId>ph-bdve</artifactId>
   <packaging>bundle</packaging>
   <name>ph-bdve</name>
-  <description>Business Document Validation Engine</description>
+  <description>Business Document Validation Engine (BDVE)</description>
   <url>https://github.com/phax/peppol-validation-engine/ph-bdve</url>
   <inceptionYear>2016</inceptionYear>
   <licenses>

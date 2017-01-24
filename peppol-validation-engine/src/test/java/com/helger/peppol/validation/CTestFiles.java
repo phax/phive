@@ -38,8 +38,8 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
-    final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
-    for (final ValidationArtefactKey aVK : new ValidationArtefactKey [] { EPeppolThirdPartyValidationSchematronArtefact.INVOICE_SIMPLER_INVOICING.getValidationKey (),
+    final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
+    for (final ValidationArtefactKey aVK : new ValidationArtefactKey [] { EVASimplerInvoicing.INVOICE_SIMPLER_INVOICING.getValidationKey (),
                                                                           CPeppolValidation.CATALOGUE_01_T19,
                                                                           CPeppolValidation.CATALOGUE_01_T58,
                                                                           CPeppolValidation.ORDER_03_T01,
@@ -76,9 +76,9 @@ public final class CTestFiles
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
     if (aTransactionKey.equals (CPeppolValidation.DESPATCH_ADVICE_30_T16))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
-    if (aTransactionKey.equals (EPeppolThirdPartyValidationSchematronArtefact.INVOICE_SIMPLER_INVOICING.getValidationKey ()))
+    if (aTransactionKey.equals (EVASimplerInvoicing.INVOICE_SIMPLER_INVOICING.getValidationKey ()))
     {
-      final ICommonsList <IReadableResource> ret = new CommonsArrayList<> ();
+      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
       ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R034.xml"));
       if (false)
         ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R035.xml"));

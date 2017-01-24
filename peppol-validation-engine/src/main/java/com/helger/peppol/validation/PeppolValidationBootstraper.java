@@ -46,7 +46,7 @@ public final class PeppolValidationBootstraper
     final StopWatch aSW = StopWatch.createdStarted ();
 
     // Bootstrap Peppol SCH artefacts
-    for (final EPeppolStandardValidationSchematronArtefact e : EPeppolStandardValidationSchematronArtefact.values ())
+    for (final EVAPeppolStandard e : EVAPeppolStandard.values ())
     {
       // Only relevant XSDs
       for (final ValidationArtefactKey aVK : e.getValidationKeys ())
@@ -55,7 +55,7 @@ public final class PeppolValidationBootstraper
     }
 
     // Bootstrap Peppol third-party SCH artefacts
-    for (final EPeppolThirdPartyValidationSchematronArtefact e : EPeppolThirdPartyValidationSchematronArtefact.values ())
+    for (final EVAPeppolThirdParty e : EVAPeppolThirdParty.values ())
     {
       // Only relevant XSDs
       e.getValidationKey ().getJAXBDocumentType ().getSchema ();
