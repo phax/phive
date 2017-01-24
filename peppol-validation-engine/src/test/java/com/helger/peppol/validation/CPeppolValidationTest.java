@@ -25,6 +25,7 @@ import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.IValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutorSetRegistry;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
@@ -34,21 +35,37 @@ import com.helger.schematron.pure.SchematronResourcePure;
  */
 public final class CPeppolValidationTest
 {
-  @Test
-  public void testBasic ()
+  private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
+  static
   {
-    final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
-    CPeppolValidation.init (aRegistry);
-    for (final IValidationExecutorSet aVES : aRegistry.getAll ())
+    CPeppolValidation.initStandard (VES_REGISTRY);
+    CPeppolValidation.initThirdParty (VES_REGISTRY);
+  }
+
+  @Test
+  public void testFilesExist ()
+  {
+    for (final IValidationExecutorSet aVES : VES_REGISTRY.getAll ())
       for (final IValidationExecutor aVE : aVES)
       {
         final IValidationArtefact aVA = aVE.getValidationArtefact ();
-        assertTrue (aVA.getRuleResource ().toString (), aVA.getRuleResource ().exists ());
+        final IReadableResource aRes = aVA.getRuleResource ();
+        assertTrue (aRes.toString (), aRes.exists ());
+      }
+  }
+
+  @Test
+  public void testSchematronsValid ()
+  {
+    for (final IValidationExecutorSet aVES : VES_REGISTRY.getAll ())
+      for (final IValidationExecutor aVE : aVES)
+      {
+        final IValidationArtefact aVA = aVE.getValidationArtefact ();
         if (aVA.getValidationArtefactType () == EValidationType.SCHEMATRON)
         {
           // Check that the passed Schematron is valid
-          assertTrue (aVA.getRuleResource ().toString (),
-                      new SchematronResourcePure (aVA.getRuleResource ()).isValidSchematron ());
+          final IReadableResource aRes = aVA.getRuleResource ();
+          assertTrue (aRes.toString (), new SchematronResourcePure (aRes).isValidSchematron ());
         }
       }
   }

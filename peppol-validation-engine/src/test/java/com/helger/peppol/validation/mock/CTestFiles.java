@@ -19,7 +19,7 @@ package com.helger.peppol.validation.mock;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.key.ValidationArtefactKey;
+import com.helger.bdve.execute.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -28,11 +28,17 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
 import com.helger.peppol.validation.CPeppolValidation;
-import com.helger.peppol.validation.EVASimplerInvoicing;
 
 @Immutable
 public final class CTestFiles
 {
+  private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
+  static
+  {
+    CPeppolValidation.initStandard (VES_REGISTRY);
+    CPeppolValidation.initThirdParty (VES_REGISTRY);
+  }
+
   private CTestFiles ()
   {}
 
@@ -40,47 +46,44 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
-    final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final ValidationArtefactKey aVK : new ValidationArtefactKey [] { EVASimplerInvoicing.INVOICE_SIMPLER_INVOICING.getValidationKey (),
-                                                                          CPeppolValidation.VK_CATALOGUE_01_T19,
-                                                                          CPeppolValidation.VK_CATALOGUE_01_T58,
-                                                                          CPeppolValidation.VK_ORDER_03_T01,
-                                                                          CPeppolValidation.VK_INVOICE_04_T10,
-                                                                          CPeppolValidation.VK_BILLING_05_T14,
-                                                                          CPeppolValidation.VK_ORDERING_28_T01,
-                                                                          CPeppolValidation.VK_ORDERING_28_T76,
-                                                                          CPeppolValidation.VK_DESPATCH_ADVICE_30_T16, })
-      for (final IReadableResource aRes : getAllMatchingTestFiles (aVK))
-        ret.add (MockFile.createGoodCase (aRes, aVK));
+    final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
+    for (final String sVESID : new String [] { CPeppolValidation.VID_SIMPLERINVOICING_V11,
+                                               CPeppolValidation.VID_OPENPEPPOL_T19_V2,
+                                               CPeppolValidation.VID_OPENPEPPOL_T58_V2,
+                                               CPeppolValidation.VID_OPENPEPPOL_T01_V2,
+                                               CPeppolValidation.VID_OPENPEPPOL_T10_V2,
+                                               CPeppolValidation.VID_OPENPEPPOL_T14_V2,
+                                               CPeppolValidation.VID_OPENPEPPOL_T76_V2,
+                                               CPeppolValidation.VID_OPENPEPPOL_T16_V2, })
+      for (final IReadableResource aRes : getAllMatchingTestFiles (sVESID))
+        ret.add (MockFile.createGoodCase (aRes, sVESID));
 
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final ValidationArtefactKey aTransactionKey)
+  public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final String sVESID)
   {
-    ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
+    ValueEnforcer.notEmpty (sVESID, "VES-ID");
 
-    if (aTransactionKey.equals (CPeppolValidation.VK_CATALOGUE_01_T19))
+    if (sVESID.equals (CPeppolValidation.VID_OPENPEPPOL_T19_V2))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
-    if (aTransactionKey.equals (CPeppolValidation.VK_CATALOGUE_01_T58))
+    if (sVESID.equals (CPeppolValidation.VID_OPENPEPPOL_T58_V2))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
-    if (aTransactionKey.equals (CPeppolValidation.VK_ORDER_03_T01))
+    if (sVESID.equals (CPeppolValidation.VID_OPENPEPPOL_T01_V2))
       return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
-    if (aTransactionKey.equals (CPeppolValidation.VK_INVOICE_04_T10))
+    if (sVESID.equals (CPeppolValidation.VID_OPENPEPPOL_T10_V2))
       return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
-    if (aTransactionKey.equals (CPeppolValidation.VK_BILLING_05_T14))
+    if (sVESID.equals (CPeppolValidation.VID_OPENPEPPOL_T14_V2))
       return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
-    if (aTransactionKey.equals (CPeppolValidation.VK_ORDERING_28_T01))
-      return OfficialTestFiles.getAllTestFilesOrdering_28_T01 ();
-    if (aTransactionKey.equals (CPeppolValidation.VK_ORDERING_28_T76))
+    if (sVESID.equals (CPeppolValidation.VID_OPENPEPPOL_T76_V2))
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
-    if (aTransactionKey.equals (CPeppolValidation.VK_DESPATCH_ADVICE_30_T16))
+    if (sVESID.equals (CPeppolValidation.VID_OPENPEPPOL_T16_V2))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
-    if (aTransactionKey.equals (EVASimplerInvoicing.INVOICE_SIMPLER_INVOICING.getValidationKey ()))
+    if (sVESID.equals (CPeppolValidation.VID_SIMPLERINVOICING_V11))
     {
-      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
+      final ICommonsList <IReadableResource> ret = new CommonsArrayList<> ();
       ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R034.xml"));
       if (false)
         ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R035.xml"));
@@ -116,6 +119,6 @@ public final class CTestFiles
       return ret;
     }
 
-    throw new IllegalArgumentException ("Invalid transaction key: " + aTransactionKey);
+    throw new IllegalArgumentException ("Invalid transaction key: " + sVESID);
   }
 }

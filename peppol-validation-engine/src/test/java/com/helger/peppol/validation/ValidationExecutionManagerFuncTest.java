@@ -16,6 +16,7 @@
  */
 package com.helger.peppol.validation;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -23,13 +24,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import com.helger.bdve.execute.IValidationExecutor;
+import com.helger.bdve.execute.IValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.execute.ValidationExecutorSetRegistry;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
-import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.peppol.validation.mock.CTestFiles;
 import com.helger.peppol.validation.mock.MockFile;
 
@@ -46,18 +46,19 @@ public final class ValidationExecutionManagerFuncTest
   public void testApplyCompleteValidationPeppol () throws SAXException
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
-    CPeppolValidation.init (aRegistry);
+    CPeppolValidation.initStandard (aRegistry);
+    CPeppolValidation.initThirdParty (aRegistry);
 
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
-      final ICommonsList <IValidationExecutor> aExecutors = aRegistry.findFirst (x-> x.get aTestFile.getValidationArtefactKey ());
-      assertTrue (aExecutors.isNotEmpty ());
-      final ValidationExecutionManager aValidator = new ValidationExecutionManager (aExecutors);
+      final IValidationExecutorSet aExecutors = aRegistry.getOfID (aTestFile.getVESID ());
+      assertNotNull (aExecutors);
+      final ValidationExecutionManager aValidator = aExecutors.getExecutorManager ();
 
       s_aLogger.info ("Validating " +
                       aTestFile.getResource ().getPath () +
                       " against " +
-                      aExecutors.size () +
+                      aExecutors.getExecutorCount () +
                       " validation layers");
 
       // Read as desired type

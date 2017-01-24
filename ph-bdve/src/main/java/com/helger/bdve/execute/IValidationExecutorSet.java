@@ -2,6 +2,7 @@ package com.helger.bdve.execute;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.collection.ext.ICommonsIterable;
@@ -19,6 +20,12 @@ public interface IValidationExecutorSet extends
                                         IHasDisplayName,
                                         ICommonsIterable <IValidationExecutor>
 {
+  /**
+   * @return The number of contained validation exutors. Always &ge; 0.
+   */
+  @Nonnegative
+  int getExecutorCount ();
+
   @Nonnull
   default ValidationExecutionManager getExecutorManager ()
   {

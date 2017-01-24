@@ -2,6 +2,7 @@ package com.helger.bdve.execute;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
@@ -20,7 +21,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 {
   private final String m_sID;
   private final String m_sDisplayName;
-  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList<> ();
 
   public ValidationExecutorSet (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
   {
@@ -46,6 +47,12 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   {
     ValueEnforcer.notNull (aExecutor, "Executor");
     m_aList.add (aExecutor);
+  }
+
+  @Nonnegative
+  public int getExecutorCount ()
+  {
+    return m_aList.size ();
   }
 
   @Nonnull

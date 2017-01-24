@@ -20,6 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.execute.IValidationExecutor;
+import com.helger.bdve.execute.IValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.execute.ValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutorSetRegistry;
@@ -37,6 +39,7 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class CPeppolValidation
 {
+  // Standard
   public static final String VID_OPENPEPPOL_T71_V2 = "openpeppol-t71-v2";
   public static final String VID_OPENPEPPOL_T14_V2 = "openpeppol-t14-v2";
   public static final String VID_OPENPEPPOL_T10_V2 = "openpeppol-t10-v2";
@@ -45,6 +48,14 @@ public final class CPeppolValidation
   public static final String VID_OPENPEPPOL_T01_V2 = "openpeppol-t01-v2";
   public static final String VID_OPENPEPPOL_T58_V2 = "openpeppol-t58-v2";
   public static final String VID_OPENPEPPOL_T19_V2 = "openpeppol-t19-v2";
+
+  // Third-party
+  public static final String VID_OPENPEPPOL_T10_V2_AT = "openpeppol-t10-v2-at";
+  public static final String VID_OPENPEPPOL_T10_V2_AT_GOV = "openpeppol-t10-v2-at-gov";
+  public static final String VID_OPENPEPPOL_T14_V2_AT = "openpeppol-t14-v2-at";
+  public static final String VID_OPENPEPPOL_T14_V2_AT_GOV = "openpeppol-t14-v2-at-gov";
+  public static final String VID_SIMPLERINVOICING_V11 = "simplerinvoicing-t10-v11-nl";
+  public static final String VID_SIMPLERINVOICING_V11_STRICT = "simplerinvoicing-t10-v11-nl-strict";
 
   private CPeppolValidation ()
   {}
@@ -55,8 +66,10 @@ public final class CPeppolValidation
                                                @Nonnull final ValidationArtefactKey aValidationKey,
                                                @Nonnull final IReadableResource... aSchematrons)
   {
+    ValueEnforcer.notEmpty (sID, "ID");
+    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aValidationKey, "ValidationKey");
-    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Files");
+    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName);
 
@@ -71,8 +84,43 @@ public final class CPeppolValidation
     return ret;
   }
 
-  public static void init (@Nonnull final ValidationExecutorSetRegistry aRegistry)
+  @Nonnull
+  public static ValidationExecutorSet _createDerived (@Nonnull @Nonempty final String sID,
+                                                      @Nonnull @Nonempty final String sDisplayName,
+                                                      @Nonnull final ValidationArtefactKey aValidationKey,
+                                                      @Nonnull final IValidationExecutorSet aBaseVES,
+                                                      @Nonnull final IReadableResource... aSchematrons)
   {
+    ValueEnforcer.notEmpty (sID, "ID");
+    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    ValueEnforcer.notNull (aValidationKey, "ValidationKey");
+    ValueEnforcer.notNull (aBaseVES, "BaseVES");
+    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
+
+    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName);
+
+    // Copy all existing ones
+    for (final IValidationExecutor aVE : aBaseVES)
+      ret.addExecutor (aVE);
+
+    // Add Schematrons
+    for (final IReadableResource aRes : aSchematrons)
+      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes, aValidationKey)));
+
+    return ret;
+  }
+
+  /**
+   * Register all standard PEPPOL validation execution sets to the provided
+   * registry.
+   *
+   * @param aRegistry
+   *        The registry to add the artefacts. May not be <code>null</code>.
+   */
+  public static void initStandard (@Nonnull final ValidationExecutorSetRegistry aRegistry)
+  {
+    ValueEnforcer.notNull (aRegistry, "Registry");
+
     aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T19_V2,
                                                       "OpenPEPPOL Catalogue",
                                                       CPeppolValidationArtefact.VK_CATALOGUE_01_T19,
@@ -121,5 +169,46 @@ public final class CPeppolValidation
                                                       CPeppolValidationArtefact.MLR_RULES,
                                                       CPeppolValidationArtefact.MLR_OPENPEPPOL,
                                                       CPeppolValidationArtefact.MLR_OPENPEPPOL_CORE));
+  }
+
+  public static void initThirdParty (@Nonnull final ValidationExecutorSetRegistry aRegistry)
+  {
+    ValueEnforcer.notNull (aRegistry, "Registry");
+
+    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (VID_OPENPEPPOL_T10_V2);
+    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (VID_OPENPEPPOL_T14_V2);
+    if (aVESInvoice == null || aVESCreditNote == null)
+      throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before third-party artefacts!");
+
+    final ValidationExecutorSet aVESInvoiceAT = aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T10_V2_AT,
+                                                                                                         "OpenPEPPOL Invoice (Austria)",
+                                                                                                         CPeppolValidationArtefact.VK_INVOICE_04_T10_ATNAT,
+                                                                                                         aVESInvoice,
+                                                                                                         CPeppolValidationArtefact.INVOICE_AT_NAT));
+    aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T10_V2_AT_GOV,
+                                                             "OpenPEPPOL Invoice (Austrian Government)",
+                                                             CPeppolValidationArtefact.VK_INVOICE_04_T10_ATGOV,
+                                                             aVESInvoiceAT,
+                                                             CPeppolValidationArtefact.INVOICE_AT_GOV));
+    final ValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T14_V2_AT,
+                                                                                                            "OpenPEPPOL Credit Note (Austria)",
+                                                                                                            CPeppolValidationArtefact.VK_BILLING_05_T14_ATNAT,
+                                                                                                            aVESCreditNote,
+                                                                                                            CPeppolValidationArtefact.CREDIT_NOTE_AT_NAT));
+    aRegistry.registerValidationExecutorSet (_createDerived (VID_OPENPEPPOL_T14_V2_AT_GOV,
+                                                             "OpenPEPPOL Credit Note (Austrian Government)",
+                                                             CPeppolValidationArtefact.VK_BILLING_05_T14_ATGOV,
+                                                             aVESCreditNoteAT,
+                                                             CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV));
+
+    // SimplerInvoicing is self-contained
+    aRegistry.registerValidationExecutorSet (_create (VID_SIMPLERINVOICING_V11,
+                                                      "SimplerInvoicing 1.1",
+                                                      CPeppolValidationArtefact.VK_SIMPLERINVOICING,
+                                                      CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING));
+    aRegistry.registerValidationExecutorSet (_create (VID_SIMPLERINVOICING_V11_STRICT,
+                                                      "SimplerInvoicing 1.1 (strict)",
+                                                      CPeppolValidationArtefact.VK_SIMPLERINVOICING_STRICT,
+                                                      CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT));
   }
 }
