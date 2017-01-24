@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasDisplayName;
@@ -20,6 +21,9 @@ public interface IValidationExecutorSet extends
                                         IHasDisplayName,
                                         ICommonsIterable <IValidationExecutor>
 {
+  @Nonnull
+  ValidationArtefactKey getValidationArtefactKey ();
+
   /**
    * @return The number of contained validation exutors. Always &ge; 0.
    */

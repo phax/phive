@@ -63,23 +63,24 @@ public final class CPeppolValidation
   @Nonnull
   public static ValidationExecutorSet _create (@Nonnull @Nonempty final String sID,
                                                @Nonnull @Nonempty final String sDisplayName,
-                                               @Nonnull final ValidationArtefactKey aValidationKey,
+                                               @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                                @Nonnull final IReadableResource... aSchematrons)
   {
     ValueEnforcer.notEmpty (sID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    ValueEnforcer.notNull (aValidationKey, "ValidationKey");
+    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName);
+    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
 
     // Add XSDs at the beginning
-    for (final IReadableResource aXSDRes : aValidationKey.getJAXBDocumentType ().getAllXSDResources ())
-      ret.addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationKey)));
+    for (final IReadableResource aXSDRes : aValidationArtefactKey.getJAXBDocumentType ().getAllXSDResources ())
+      ret.addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationArtefactKey)));
 
     // Add Schematrons
     for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes, aValidationKey)));
+      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
+                                                                                              aValidationArtefactKey)));
 
     return ret;
   }
@@ -87,17 +88,17 @@ public final class CPeppolValidation
   @Nonnull
   public static ValidationExecutorSet _createDerived (@Nonnull @Nonempty final String sID,
                                                       @Nonnull @Nonempty final String sDisplayName,
-                                                      @Nonnull final ValidationArtefactKey aValidationKey,
+                                                      @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                                       @Nonnull final IValidationExecutorSet aBaseVES,
                                                       @Nonnull final IReadableResource... aSchematrons)
   {
     ValueEnforcer.notEmpty (sID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    ValueEnforcer.notNull (aValidationKey, "ValidationKey");
+    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
     ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName);
+    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
 
     // Copy all existing ones
     for (final IValidationExecutor aVE : aBaseVES)
@@ -105,7 +106,8 @@ public final class CPeppolValidation
 
     // Add Schematrons
     for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes, aValidationKey)));
+      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
+                                                                                              aValidationArtefactKey)));
 
     return ret;
   }

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -21,12 +22,16 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 {
   private final String m_sID;
   private final String m_sDisplayName;
+  private final ValidationArtefactKey m_aValidationArtefactKey;
   private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList<> ();
 
-  public ValidationExecutorSet (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sDisplayName)
+  public ValidationExecutorSet (@Nonnull @Nonempty final String sID,
+                                @Nonnull @Nonempty final String sDisplayName,
+                                @Nonnull final ValidationArtefactKey aValidationArtefactKey)
   {
     m_sID = ValueEnforcer.notEmpty (sID, "ID");
     m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    m_aValidationArtefactKey = ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
   }
 
   @Nonnull
@@ -41,6 +46,12 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public String getDisplayName ()
   {
     return m_sDisplayName;
+  }
+
+  @Nonnull
+  public ValidationArtefactKey getValidationArtefactKey ()
+  {
+    return m_aValidationArtefactKey;
   }
 
   public void addExecutor (@Nonnull final IValidationExecutor aExecutor)
