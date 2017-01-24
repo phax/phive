@@ -45,21 +45,21 @@ import com.helger.commons.io.resource.IReadableResource;
  */
 public enum EVAPeppolThirdParty implements IValidationArtefact
 {
-  INVOICE_AT_NAT ("invoice-at/ATNAT-UBL-T10.sch",
+  INVOICE_AT_NAT ("/thirdparty/invoice-at/ATNAT-UBL-T10.sch",
                   new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("AT")
                                                                                                  .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                                  .build ()),
-  INVOICE_AT_GOV ("invoice-at/ATGOV-UBL-T10.sch",
+  INVOICE_AT_GOV ("/thirdparty/invoice-at/ATGOV-UBL-T10.sch",
                   new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("AT")
                                                                                                  .setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                  .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                                  .build ()),
 
-  CREDIT_NOTE_AT_NAT ("creditnote-at/ATNAT-UBL-T14.sch",
+  CREDIT_NOTE_AT_NAT ("/thirdparty/creditnote-at/ATNAT-UBL-T14.sch",
                       new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_BILLING_05_T14).setCountry ("AT")
                                                                                                      .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                                      .build ()),
-  CREDIT_NOTE_AT_GOV ("creditnote-at/ATGOV-UBL-T14.sch",
+  CREDIT_NOTE_AT_GOV ("/thirdparty/creditnote-at/ATGOV-UBL-T14.sch",
                       new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_BILLING_05_T14).setCountry ("AT")
                                                                                                      .setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                      .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
@@ -71,7 +71,7 @@ public enum EVAPeppolThirdParty implements IValidationArtefact
   private EVAPeppolThirdParty (@Nonnull @Nonempty final String sPath,
                                @Nonnull final ValidationArtefactKey aTransactionKey)
   {
-    m_aResource = new ClassPathResource ("/thirdparty/" + sPath);
+    m_aResource = new ClassPathResource (sPath);
     m_aValidationKey = aTransactionKey;
   }
 

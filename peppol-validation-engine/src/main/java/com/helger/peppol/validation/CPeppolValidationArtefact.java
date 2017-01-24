@@ -26,7 +26,7 @@ import com.helger.commons.version.Version;
 
 /**
  * Peppol validation artefacts etc
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -45,9 +45,19 @@ public final class CPeppolValidationArtefact
   public static final ValidationArtefactKey VK_INVOICE_04_T10 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CPeppolBusinessSpec.INVOICE_04)
                                                                                                     .setTransaction (EBII2Transaction.T10)
                                                                                                     .build ();
+  public static final ValidationArtefactKey VK_INVOICE_04_T10_ATNAT = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10).setCountry ("AT")
+                                                                                                                           .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                                                           .build ();
+  public static final ValidationArtefactKey VK_INVOICE_04_T10_ATGOV = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
+                                                                                                                                 .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CPeppolBusinessSpec.BILLING_05)
                                                                                                     .setTransaction (EBII2Transaction.T14)
                                                                                                     .build ();
+  public static final ValidationArtefactKey VK_BILLING_05_T14_ATNAT = new ValidationArtefactKey.Builder (VK_BILLING_05_T14).setCountry ("AT")
+                                                                                                                           .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
+                                                                                                                           .build ();
+  public static final ValidationArtefactKey VK_BILLING_05_T14_ATGOV = new ValidationArtefactKey.Builder (VK_BILLING_05_T14_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
+                                                                                                                                 .build ();
   public static final ValidationArtefactKey VK_ORDERING_28_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CPeppolBusinessSpec.ORDERING_28)
                                                                                                      .setTransaction (EBII2Transaction.T01)
                                                                                                      .build ();
