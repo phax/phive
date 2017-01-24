@@ -27,8 +27,8 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationArtefactKey;
 import com.helger.bdve.artefact.IValidationArtefact;
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;

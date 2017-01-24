@@ -21,7 +21,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationArtefactKey;
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
 

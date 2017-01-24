@@ -19,94 +19,107 @@ package com.helger.peppol.validation;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.ValidationArtefactKey;
-import com.helger.bdve.ValidationArtefactSectorKey;
-import com.helger.bdve.spec.BusinessSpecification;
-import com.helger.bdve.spec.BusinessSpecificationRegistry;
-import com.helger.bdve.spec.IBusinessSpecification;
+import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorSet;
+import com.helger.bdve.execute.ValidationExecutorSetRegistry;
+import com.helger.bdve.execute.ValidationExecutorXSD;
+import com.helger.bdve.key.ValidationArtefactKey;
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.version.Version;
+import com.helger.commons.io.resource.IReadableResource;
 
 /**
- * This class contains the validation transactions used in PEPPOL. It uses
- * transactions of type {@link EBII2Transaction}.
+ * Peppol validation configuration
  *
  * @author Philip Helger
  */
 @Immutable
 public final class CPeppolValidation
 {
-  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 3, 0);
-  private static final String BUSINESS_SPEC_GROUP_ID = "eu.peppol";
-
-  @Nonnull
-  private static BusinessSpecification _createBusinessSpec (@Nonnull @Nonempty final String sGroupID,
-                                                            @Nonnull @Nonempty final String sSpecID,
-                                                            @Nonnull @Nonempty final String sDisplayName)
-  {
-    final BusinessSpecification ret = new BusinessSpecification (sGroupID, sSpecID, sDisplayName);
-    BusinessSpecificationRegistry.INSTANCE.registerBusinessSpecification (ret);
-    return ret;
-  }
-
-  public static final IBusinessSpecification CATALOGUE_01 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                 "bis-01",
-                                                                                 "OpenPEPPOL BIS 1, Catalogue");
-  public static final IBusinessSpecification ORDER_03 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                             "bis-03",
-                                                                             "OpenPEPPOL BIS 3, Order");
-  public static final IBusinessSpecification INVOICE_04 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                               "bis-04",
-                                                                               "OpenPEPPOL BIS 4, Invoice");
-  public static final IBusinessSpecification BILLING_05 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                               "bis-05",
-                                                                               "OpenPEPPOL BIS 5, Billing");
-  public static final IBusinessSpecification ORDERING_28 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                "bis-28",
-                                                                                "OpenPEPPOL BIS 28, Ordering");
-  public static final IBusinessSpecification DESPATCH_ADVICE_30 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                       "bis-30",
-                                                                                       "OpenPEPPOL BIS 30, Despatch advice");
-  public static final IBusinessSpecification MLR_36 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                           "bis-36",
-                                                                           "OpenPEPPOL BIS 36, MLR");
-
-  // Predefined transaction keys, ordered by BIS and than by BII2 transaction
-  public static final ValidationArtefactKey CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
-                                                                                                   .setTransaction (EBII2Transaction.T19)
-                                                                                                   .build ();
-  public static final ValidationArtefactKey CATALOGUE_01_T58 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
-                                                                                                   .setTransaction (EBII2Transaction.T58)
-                                                                                                   .build ();
-  public static final ValidationArtefactKey ORDER_03_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDER_03)
-                                                                                               .setTransaction (EBII2Transaction.T01)
-                                                                                               .build ();
-  public static final ValidationArtefactKey INVOICE_04_T10 = new ValidationArtefactKey.Builder ().setBusinessSpecification (INVOICE_04)
-                                                                                                 .setTransaction (EBII2Transaction.T10)
-                                                                                                 .build ();
-  public static final ValidationArtefactKey BILLING_05_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (BILLING_05)
-                                                                                                 .setTransaction (EBII2Transaction.T14)
-                                                                                                 .build ();
-  public static final ValidationArtefactKey ORDERING_28_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDERING_28)
-                                                                                                  .setTransaction (EBII2Transaction.T01)
-                                                                                                  .build ();
-  public static final ValidationArtefactKey ORDERING_28_T76 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDERING_28)
-                                                                                                  .setTransaction (EBII2Transaction.T76)
-                                                                                                  .build ();
-  public static final ValidationArtefactKey DESPATCH_ADVICE_30_T16 = new ValidationArtefactKey.Builder ().setBusinessSpecification (DESPATCH_ADVICE_30)
-                                                                                                         .setTransaction (EBII2Transaction.T16)
-                                                                                                         .build ();
-  public static final ValidationArtefactKey MLR_36_T71 = new ValidationArtefactKey.Builder ().setBusinessSpecification (MLR_36)
-                                                                                             .setTransaction (EBII2Transaction.T71)
-                                                                                             .build ();
-
-  public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV",
-                                                                                                   "Austrian Government");
-  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING = new ValidationArtefactSectorKey ("NLSI",
-                                                                                                                "SimplerInvoicing");
-  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING_STRICT = new ValidationArtefactSectorKey ("NLSISTRICT",
-                                                                                                                       "SimplerInvoicing (Strict)");
+  public static final String VID_OPENPEPPOL_T71_V2 = "openpeppol-t71-v2";
+  public static final String VID_OPENPEPPOL_T14_V2 = "openpeppol-t14-v2";
+  public static final String VID_OPENPEPPOL_T10_V2 = "openpeppol-t10-v2";
+  public static final String VID_OPENPEPPOL_T16_V2 = "openpeppol-t16-v2";
+  public static final String VID_OPENPEPPOL_T76_V2 = "openpeppol-t76-v2";
+  public static final String VID_OPENPEPPOL_T01_V2 = "openpeppol-t01-v2";
+  public static final String VID_OPENPEPPOL_T58_V2 = "openpeppol-t58-v2";
+  public static final String VID_OPENPEPPOL_T19_V2 = "openpeppol-t19-v2";
 
   private CPeppolValidation ()
   {}
+
+  @Nonnull
+  public static ValidationExecutorSet _create (@Nonnull @Nonempty final String sID,
+                                               @Nonnull @Nonempty final String sDisplayName,
+                                               @Nonnull final ValidationArtefactKey aValidationKey,
+                                               @Nonnull final IReadableResource... aSchematrons)
+  {
+    ValueEnforcer.notNull (aValidationKey, "ValidationKey");
+    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Files");
+
+    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName);
+
+    // Add XSDs at the beginning
+    for (final IReadableResource aXSDRes : aValidationKey.getJAXBDocumentType ().getAllXSDResources ())
+      ret.addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationKey)));
+
+    // Add Schematrons
+    for (final IReadableResource aRes : aSchematrons)
+      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes, aValidationKey)));
+
+    return ret;
+  }
+
+  public static void init (@Nonnull final ValidationExecutorSetRegistry aRegistry)
+  {
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T19_V2,
+                                                      "OpenPEPPOL Catalogue",
+                                                      CPeppolValidationArtefact.VK_CATALOGUE_01_T19,
+                                                      CPeppolValidationArtefact.CATALOGUE_RULES,
+                                                      CPeppolValidationArtefact.CATALOGUE_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.CATALOGUE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T58_V2,
+                                                      "OpenPEPPOL Catalogue Response",
+                                                      CPeppolValidationArtefact.VK_CATALOGUE_01_T58,
+                                                      CPeppolValidationArtefact.CATALOGUE_RESPONSE_RULES,
+                                                      CPeppolValidationArtefact.CATALOGUE_RESPONSE_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.CATALOGUE_RESPONSE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T01_V2,
+                                                      "OpenPEPPOL Order",
+                                                      CPeppolValidationArtefact.VK_ORDER_03_T01,
+                                                      CPeppolValidationArtefact.ORDER_RULES,
+                                                      CPeppolValidationArtefact.ORDER_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.ORDER_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T76_V2,
+                                                      "OpenPEPPOL Order Response",
+                                                      CPeppolValidationArtefact.VK_ORDERING_28_T76,
+                                                      CPeppolValidationArtefact.ORDER_RESPONSE_RULES,
+                                                      CPeppolValidationArtefact.ORDER_RESPONSE_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.ORDER_RESPONSE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T16_V2,
+                                                      "OpenPEPPOL Despatch Advice",
+                                                      CPeppolValidationArtefact.VK_DESPATCH_ADVICE_30_T16,
+                                                      CPeppolValidationArtefact.DESPATCH_ADVICE_RULES,
+                                                      CPeppolValidationArtefact.DESPATCH_ADVICE_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.DESPATCH_ADVICE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T10_V2,
+                                                      "OpenPEPPOL Invoice",
+                                                      CPeppolValidationArtefact.VK_INVOICE_04_T10,
+                                                      CPeppolValidationArtefact.INVOICE_RULES,
+                                                      CPeppolValidationArtefact.INVOICE_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.INVOICE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T14_V2,
+                                                      "OpenPEPPOL Credit Note",
+                                                      CPeppolValidationArtefact.VK_BILLING_05_T14,
+                                                      CPeppolValidationArtefact.CREDIT_NOTE_RULES,
+                                                      CPeppolValidationArtefact.CREDIT_NOTE_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.CREDIT_NOTE_OPENPEPPOL_CORE));
+    aRegistry.registerValidationExecutorSet (_create (VID_OPENPEPPOL_T71_V2,
+                                                      "OpenPEPPOL MLR",
+                                                      CPeppolValidationArtefact.VK_MLR_36_T71,
+                                                      CPeppolValidationArtefact.MLR_RULES,
+                                                      CPeppolValidationArtefact.MLR_OPENPEPPOL,
+                                                      CPeppolValidationArtefact.MLR_OPENPEPPOL_CORE));
+  }
 }

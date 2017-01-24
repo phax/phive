@@ -19,10 +19,10 @@ package com.helger.peppol.validation;
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.ValidationArtefactKey;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -42,13 +42,13 @@ import com.helger.commons.io.resource.IReadableResource;
 public enum EVASimplerInvoicing implements IValidationArtefact
 {
   INVOICE_SIMPLER_INVOICING ("simplerinvoicing/SI-UBL-INV.SCH",
-                             new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("NL")
-                                                                                                 .setSectorKey (CPeppolValidation.SECTOR_NL_SIMPLERINVOICING)
-                                                                                                 .build ()),
+                             new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
+                                                                                                            .setSectorKey (CPeppolValidationArtefact.SECTOR_NL_SIMPLERINVOICING)
+                                                                                                            .build ()),
   INVOICE_SIMPLER_INVOICING_STRICT ("simplerinvoicing/SI-UBL-INV-STRICT.SCH",
-                                    new ValidationArtefactKey.Builder (CPeppolValidation.INVOICE_04_T10).setCountry ("NL")
-                                                                                                        .setSectorKey (CPeppolValidation.SECTOR_NL_SIMPLERINVOICING_STRICT)
-                                                                                                        .build ());
+                                    new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
+                                                                                                                   .setSectorKey (CPeppolValidationArtefact.SECTOR_NL_SIMPLERINVOICING_STRICT)
+                                                                                                                   .build ());
 
   private final ClassPathResource m_aResource;
   private final ValidationArtefactKey m_aValidationKey;

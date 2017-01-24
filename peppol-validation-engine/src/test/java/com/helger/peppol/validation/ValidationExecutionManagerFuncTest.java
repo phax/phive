@@ -25,10 +25,13 @@ import org.xml.sax.SAXException;
 
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutionManager;
+import com.helger.bdve.execute.ValidationExecutorSetRegistry;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
 import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.peppol.validation.mock.CTestFiles;
+import com.helger.peppol.validation.mock.MockFile;
 
 /**
  * Test class for class {@link ValidationExecutionManager}.
@@ -39,17 +42,15 @@ public final class ValidationExecutionManagerFuncTest
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
-  static
-  {
-    PeppolValidationBootstraper.run ();
-  }
-
   @Test
   public void testApplyCompleteValidationPeppol () throws SAXException
   {
+    final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
+    CPeppolValidation.init (aRegistry);
+
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
-      final ICommonsList <IValidationExecutor> aExecutors = PeppolValidationConfiguration.createDefault (aTestFile.getTransactionKey ());
+      final ICommonsList <IValidationExecutor> aExecutors = aRegistry.findFirst (x-> x.get aTestFile.getValidationArtefactKey ());
       assertTrue (aExecutors.isNotEmpty ());
       final ValidationExecutionManager aValidator = new ValidationExecutionManager (aExecutors);
 

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation;
+package com.helger.peppol.validation.mock;
 
 import java.util.Set;
 
@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.ValidationArtefactKey;
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsHashSet;
@@ -39,7 +39,7 @@ import com.helger.commons.io.resource.IReadableResource;
 public final class MockFile
 {
   private final IReadableResource m_aResource;
-  private final ValidationArtefactKey m_aTransactionKey;
+  private final ValidationArtefactKey m_aValidationArtefactKey;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
   public MockFile (@Nonnull final IReadableResource aResource,
@@ -47,7 +47,7 @@ public final class MockFile
                    @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
-    m_aTransactionKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
+    m_aValidationArtefactKey = ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
     m_aExpectedErrorIDs = new CommonsHashSet<> (aExpectedErrorIDs);
   }
 
@@ -66,9 +66,9 @@ public final class MockFile
    *         <code>null</code>.
    */
   @Nonnull
-  public ValidationArtefactKey getTransactionKey ()
+  public ValidationArtefactKey getValidationArtefactKey ()
   {
-    return m_aTransactionKey;
+    return m_aValidationArtefactKey;
   }
 
   public boolean isGoodCase ()

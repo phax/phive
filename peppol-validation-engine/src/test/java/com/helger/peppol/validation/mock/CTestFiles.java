@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.peppol.validation;
+package com.helger.peppol.validation.mock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.ValidationArtefactKey;
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
@@ -27,6 +27,8 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
+import com.helger.peppol.validation.CPeppolValidation;
+import com.helger.peppol.validation.EVASimplerInvoicing;
 
 @Immutable
 public final class CTestFiles
@@ -40,14 +42,14 @@ public final class CTestFiles
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     for (final ValidationArtefactKey aVK : new ValidationArtefactKey [] { EVASimplerInvoicing.INVOICE_SIMPLER_INVOICING.getValidationKey (),
-                                                                          CPeppolValidation.CATALOGUE_01_T19,
-                                                                          CPeppolValidation.CATALOGUE_01_T58,
-                                                                          CPeppolValidation.ORDER_03_T01,
-                                                                          CPeppolValidation.INVOICE_04_T10,
-                                                                          CPeppolValidation.BILLING_05_T14,
-                                                                          CPeppolValidation.ORDERING_28_T01,
-                                                                          CPeppolValidation.ORDERING_28_T76,
-                                                                          CPeppolValidation.DESPATCH_ADVICE_30_T16, })
+                                                                          CPeppolValidation.VK_CATALOGUE_01_T19,
+                                                                          CPeppolValidation.VK_CATALOGUE_01_T58,
+                                                                          CPeppolValidation.VK_ORDER_03_T01,
+                                                                          CPeppolValidation.VK_INVOICE_04_T10,
+                                                                          CPeppolValidation.VK_BILLING_05_T14,
+                                                                          CPeppolValidation.VK_ORDERING_28_T01,
+                                                                          CPeppolValidation.VK_ORDERING_28_T76,
+                                                                          CPeppolValidation.VK_DESPATCH_ADVICE_30_T16, })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVK))
         ret.add (MockFile.createGoodCase (aRes, aVK));
 
@@ -60,21 +62,21 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aTransactionKey, "TransactionKey");
 
-    if (aTransactionKey.equals (CPeppolValidation.CATALOGUE_01_T19))
+    if (aTransactionKey.equals (CPeppolValidation.VK_CATALOGUE_01_T19))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
-    if (aTransactionKey.equals (CPeppolValidation.CATALOGUE_01_T58))
+    if (aTransactionKey.equals (CPeppolValidation.VK_CATALOGUE_01_T58))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
-    if (aTransactionKey.equals (CPeppolValidation.ORDER_03_T01))
+    if (aTransactionKey.equals (CPeppolValidation.VK_ORDER_03_T01))
       return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
-    if (aTransactionKey.equals (CPeppolValidation.INVOICE_04_T10))
+    if (aTransactionKey.equals (CPeppolValidation.VK_INVOICE_04_T10))
       return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
-    if (aTransactionKey.equals (CPeppolValidation.BILLING_05_T14))
+    if (aTransactionKey.equals (CPeppolValidation.VK_BILLING_05_T14))
       return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
-    if (aTransactionKey.equals (CPeppolValidation.ORDERING_28_T01))
+    if (aTransactionKey.equals (CPeppolValidation.VK_ORDERING_28_T01))
       return OfficialTestFiles.getAllTestFilesOrdering_28_T01 ();
-    if (aTransactionKey.equals (CPeppolValidation.ORDERING_28_T76))
+    if (aTransactionKey.equals (CPeppolValidation.VK_ORDERING_28_T76))
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
-    if (aTransactionKey.equals (CPeppolValidation.DESPATCH_ADVICE_30_T16))
+    if (aTransactionKey.equals (CPeppolValidation.VK_DESPATCH_ADVICE_30_T16))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
     if (aTransactionKey.equals (EVASimplerInvoicing.INVOICE_SIMPLER_INVOICING.getValidationKey ()))
     {

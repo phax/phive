@@ -46,13 +46,23 @@ public class BusinessSpecificationRegistry implements Serializable
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  protected final ICommonsMap <String, IBusinessSpecification> m_aMap = new CommonsHashMap<> ();
+  protected final ICommonsMap <String, IBusinessSpecification> m_aMap = new CommonsHashMap <> ();
 
-  protected BusinessSpecificationRegistry ()
+  public BusinessSpecificationRegistry ()
   {}
 
+  /**
+   * Register a business specification into this registry.
+   *
+   * @param aBusinessSpec
+   *        The object to register. MAy not be <code>null</code>.
+   * @return The passed parameter
+   * @throws IllegalStateException
+   *         If another object with the same ID is already registered in this
+   *         registry.
+   */
   @Nonnull
-  public <T extends IBusinessSpecification> T registerBusinessSpecification (@Nonnull final T aBusinessSpec)
+  public <T extends IBusinessSpecification> T registerBusinessSpecification (@Nonnull final T aBusinessSpec) throws IllegalStateException
   {
     ValueEnforcer.notNull (aBusinessSpec, "BusinessSpec");
 
