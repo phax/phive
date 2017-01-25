@@ -46,7 +46,7 @@ public class BusinessSpecificationRegistry implements Serializable
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  protected final ICommonsMap <String, IBusinessSpecification> m_aMap = new CommonsHashMap <> ();
+  protected final ICommonsMap <String, IBusinessSpecification> m_aMap = new CommonsHashMap<> ();
 
   public BusinessSpecificationRegistry ()
   {}
@@ -60,6 +60,9 @@ public class BusinessSpecificationRegistry implements Serializable
    * @throws IllegalStateException
    *         If another object with the same ID is already registered in this
    *         registry.
+   * @param <T>
+   *        The {@link IBusinessSpecification} implementation that is added and
+   *        returned.
    */
   @Nonnull
   public <T extends IBusinessSpecification> T registerBusinessSpecification (@Nonnull final T aBusinessSpec) throws IllegalStateException

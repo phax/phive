@@ -43,7 +43,7 @@ public class ValidationExecutorSetRegistry
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  protected final ICommonsMap <String, IValidationExecutorSet> m_aMap = new CommonsHashMap <> ();
+  protected final ICommonsMap <String, IValidationExecutorSet> m_aMap = new CommonsHashMap<> ();
 
   public ValidationExecutorSetRegistry ()
   {}
@@ -57,6 +57,9 @@ public class ValidationExecutorSetRegistry
    * @throws IllegalStateException
    *         If another object with the same ID is already registered in this
    *         registry.
+   * @param <T>
+   *        The {@link IValidationExecutorSet} implementation that is added and
+   *        returned.
    */
   @Nonnull
   public <T extends IValidationExecutorSet> T registerValidationExecutorSet (@Nonnull final T aVES) throws IllegalStateException
