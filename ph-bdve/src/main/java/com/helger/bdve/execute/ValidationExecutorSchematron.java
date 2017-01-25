@@ -42,6 +42,7 @@ import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
+import com.helger.schematron.svrl.SVRLMarshaller;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
@@ -59,9 +60,23 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
+  private boolean m_bCacheSchematron = false;
+
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact)
   {
     super (EValidationType.SCHEMATRON, aValidationArtefact);
+  }
+
+  public boolean isCacheSchematron ()
+  {
+    return m_bCacheSchematron;
+  }
+
+  @Nonnull
+  public ValidationExecutorSchematron setCacheSchematron (final boolean bCacheSchematron)
+  {
+    m_bCacheSchematron = bCacheSchematron;
+    return this;
   }
 
   @Nonnull
@@ -148,12 +163,16 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
     aSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
     // Don't cache to avoid that errors in the Schematron are hidden on
     // consecutive calls!
-    aSCH.setUseCache (false);
+    aSCH.setUseCache (m_bCacheSchematron);
 
     try
     {
       // Main application of Schematron
       final SchematronOutputType aSVRL = aSCH.applySchematronValidationToSVRL (aNode);
+
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("SVRL: " + new SVRLMarshaller (false).getAsString (aSVRL));
+
       if (aSVRL != null && aErrorList.isEmpty ())
       {
         // Valid Schematron - interpret result
