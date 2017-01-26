@@ -30,7 +30,7 @@ import com.helger.commons.ValueEnforcer;
  * @author Philip Helger
  */
 @Immutable
-public final class CPeppolValidation
+public final class PeppolValidation
 {
   // Standard
   public static final String VID_OPENPEPPOL_T71_V2 = "openpeppol-t71-v2";
@@ -47,10 +47,8 @@ public final class CPeppolValidation
   public static final String VID_OPENPEPPOL_T10_V2_AT_GOV = "openpeppol-t10-v2-at-gov";
   public static final String VID_OPENPEPPOL_T14_V2_AT = "openpeppol-t14-v2-at";
   public static final String VID_OPENPEPPOL_T14_V2_AT_GOV = "openpeppol-t14-v2-at-gov";
-  public static final String VID_SIMPLERINVOICING_V11 = "simplerinvoicing-t10-v11-nl";
-  public static final String VID_SIMPLERINVOICING_V11_STRICT = "simplerinvoicing-t10-v11-nl-strict";
 
-  private CPeppolValidation ()
+  private PeppolValidation ()
   {}
 
   /**
@@ -144,15 +142,5 @@ public final class CPeppolValidation
                                                                                   "OpenPEPPOL Credit Note (Austrian Government)",
                                                                                   CPeppolValidationArtefact.VK_BILLING_05_T14_ATGOV,
                                                                                   CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV));
-
-    // SimplerInvoicing is self-contained
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11,
-                                                                           "SimplerInvoicing 1.1",
-                                                                           CPeppolValidationArtefact.VK_SIMPLERINVOICING,
-                                                                           CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11_STRICT,
-                                                                           "SimplerInvoicing 1.1 (strict)",
-                                                                           CPeppolValidationArtefact.VK_SIMPLERINVOICING_STRICT,
-                                                                           CPeppolValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT));
   }
 }

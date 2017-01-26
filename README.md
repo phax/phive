@@ -6,7 +6,7 @@ Licensed under the Apache 2 license.
 
 This project is divided into 3 sub-projects for maximum flexibility
   * ph-bdve - generic "Business Document Validation Engine"
-  * peppol-validation-engine - the PEPPOL specific setup etc
+  * ph-bdve-peppol - the PEPPOL specific setup etc
   
 #News
   * v3.0.0 - 2017-01-26
@@ -26,7 +26,7 @@ Add the following to your `pom.xml` to use this artifact:
 ```
 <dependency>
   <groupId>com.helger</groupId>
-  <artifactId>peppol-validation-engine</artifactId>
+  <artifactId>ph-bdve-peppol</artifactId>
   <version>3.0.0</version>
 </dependency>
 ```

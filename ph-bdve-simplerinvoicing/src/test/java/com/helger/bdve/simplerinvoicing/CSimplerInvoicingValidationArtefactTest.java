@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.peppol;
+package com.helger.bdve.simplerinvoicing;
 
 import static org.junit.Assert.assertTrue;
 
@@ -25,22 +25,20 @@ import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.IValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutorSetRegistry;
-import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.schematron.pure.SchematronResourcePure;
 
 /**
- * Test class for class {@link PeppolValidation}.
+ * Test class for class {@link SimplerInvoicingValidation}.
  *
  * @author Philip Helger
  */
-public final class CPeppolValidationTest
+public final class CSimplerInvoicingValidationArtefactTest
 {
   private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
-    PeppolValidation.initStandard (VES_REGISTRY);
-    PeppolValidation.initThirdParty (VES_REGISTRY);
+    SimplerInvoicingValidation.initSimplerInvoicing (VES_REGISTRY);
   }
 
   @Test

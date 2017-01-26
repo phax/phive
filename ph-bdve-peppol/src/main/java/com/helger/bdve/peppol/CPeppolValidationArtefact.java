@@ -34,10 +34,6 @@ public final class CPeppolValidationArtefact
 {
   public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV",
                                                                                                    "Austrian Government");
-  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING = new ValidationArtefactSectorKey ("NLSI",
-                                                                                                                "SimplerInvoicing");
-  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING_STRICT = new ValidationArtefactSectorKey ("NLSIS",
-                                                                                                                       "SimplerInvoicing (Strict)");
 
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
   public static final ValidationArtefactKey VK_CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CPeppolBusinessSpec.CATALOGUE_01)
@@ -77,13 +73,6 @@ public final class CPeppolValidationArtefact
   public static final ValidationArtefactKey VK_MLR_36_T71 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CPeppolBusinessSpec.MLR_36)
                                                                                                 .setTransaction (EBII2Transaction.T71)
                                                                                                 .build ();
-
-  public static final ValidationArtefactKey VK_SIMPLERINVOICING = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
-                                                                                                                                                 .setSectorKey (CPeppolValidationArtefact.SECTOR_NL_SIMPLERINVOICING)
-                                                                                                                                                 .build ();
-  public static final ValidationArtefactKey VK_SIMPLERINVOICING_STRICT = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
-                                                                                                                                                        .setSectorKey (CPeppolValidationArtefact.SECTOR_NL_SIMPLERINVOICING_STRICT)
-                                                                                                                                                        .build ();
 
   // Standard resources
   public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 3, 0);
@@ -187,10 +176,6 @@ public final class CPeppolValidationArtefact
 
   public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/creditnote/ATNAT-UBL-T14.sch");
   public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/creditnote/ATGOV-UBL-T14.sch");
-
-  // SimplerInvoicing
-  public static final IReadableResource INVOICE_SIMPLER_INVOICING = new ClassPathResource ("/thirdparty/simplerinvoicing/SI-UBL-INV.SCH");
-  public static final IReadableResource INVOICE_SIMPLER_INVOICING_STRICT = new ClassPathResource ("/thirdparty/simplerinvoicing/SI-UBL-INV-STRICT.SCH");
 
   private CPeppolValidationArtefact ()
   {}

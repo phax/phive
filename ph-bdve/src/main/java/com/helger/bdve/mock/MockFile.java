@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.peppol.mock;
+package com.helger.bdve.mock;
 
 import java.util.Set;
 
@@ -30,12 +30,12 @@ import com.helger.commons.io.resource.IReadableResource;
 
 /**
  * This class describes a simple test file: the path where it resides and the
- * transaction key to be used.
+ * validation ID to be used.
  *
  * @author Philip Helger
  */
 @Immutable
-public final class MockFile
+public class MockFile
 {
   private final IReadableResource m_aResource;
   private final String m_aVESID;
@@ -47,7 +47,7 @@ public final class MockFile
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aVESID = ValueEnforcer.notNull (sVESID, "VESID");
-    m_aExpectedErrorIDs = new CommonsHashSet<> (aExpectedErrorIDs);
+    m_aExpectedErrorIDs = new CommonsHashSet <> (aExpectedErrorIDs);
   }
 
   /**

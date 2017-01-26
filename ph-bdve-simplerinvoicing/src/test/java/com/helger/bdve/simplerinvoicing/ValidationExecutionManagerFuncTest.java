@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.peppol;
+package com.helger.bdve.simplerinvoicing;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -28,9 +28,8 @@ import com.helger.bdve.execute.IValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.execute.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
-import com.helger.bdve.peppol.PeppolValidation;
-import com.helger.bdve.peppol.mock.CTestFiles;
 import com.helger.bdve.result.ValidationResultList;
+import com.helger.bdve.simplerinvoicing.mock.CTestFiles;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
 
@@ -47,8 +46,7 @@ public final class ValidationExecutionManagerFuncTest
   public void testApplyCompleteValidationPeppol () throws SAXException
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
-    PeppolValidation.initStandard (aRegistry);
-    PeppolValidation.initThirdParty (aRegistry);
+    SimplerInvoicingValidation.initSimplerInvoicing (aRegistry);
 
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
