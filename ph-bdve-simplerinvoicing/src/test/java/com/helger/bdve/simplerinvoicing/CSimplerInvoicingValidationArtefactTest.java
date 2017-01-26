@@ -23,8 +23,8 @@ import org.junit.Test;
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
-import com.helger.bdve.execute.IValidationExecutorSet;
-import com.helger.bdve.execute.ValidationExecutorSetRegistry;
+import com.helger.bdve.executorset.IValidationExecutorSet;
+import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.schematron.pure.SchematronResourcePure;
 

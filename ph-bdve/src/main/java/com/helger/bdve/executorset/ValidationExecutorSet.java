@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.execute;
+package com.helger.bdve.executorset;
 
 import java.util.Iterator;
 
@@ -22,6 +22,9 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.execute.IValidationExecutor;
+import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;

@@ -14,13 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.execute;
+package com.helger.bdve.executorset;
 
 import java.io.Serializable;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.execute.IValidationExecutor;
+import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.collection.ext.ICommonsIterable;
 import com.helger.commons.id.IHasID;

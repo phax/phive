@@ -24,9 +24,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import com.helger.bdve.execute.IValidationExecutorSet;
 import com.helger.bdve.execute.ValidationExecutionManager;
-import com.helger.bdve.execute.ValidationExecutorSetRegistry;
+import com.helger.bdve.executorset.IValidationExecutorSet;
+import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.peppol.mock.CTestFiles;

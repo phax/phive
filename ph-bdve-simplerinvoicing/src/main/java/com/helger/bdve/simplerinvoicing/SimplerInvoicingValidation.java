@@ -19,8 +19,8 @@ package com.helger.bdve.simplerinvoicing;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.execute.ValidationExecutorSet;
-import com.helger.bdve.execute.ValidationExecutorSetRegistry;
+import com.helger.bdve.executorset.ValidationExecutorSet;
+import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
 
 /**

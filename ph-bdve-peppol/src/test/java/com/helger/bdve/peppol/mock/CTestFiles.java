@@ -19,7 +19,7 @@ package com.helger.bdve.peppol.mock;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.execute.ValidationExecutorSetRegistry;
+import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.commons.ValueEnforcer;

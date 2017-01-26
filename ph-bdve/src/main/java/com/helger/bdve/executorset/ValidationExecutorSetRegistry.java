@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.execute;
+package com.helger.bdve.executorset;
 
 import java.util.function.Predicate;
 
