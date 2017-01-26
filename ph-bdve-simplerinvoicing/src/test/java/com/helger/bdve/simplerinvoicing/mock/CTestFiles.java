@@ -19,6 +19,7 @@ package com.helger.bdve.simplerinvoicing.mock;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.simplerinvoicing.SimplerInvoicingValidation;
@@ -45,23 +46,23 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
-    final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final String sVESID : new String [] { SimplerInvoicingValidation.VID_SIMPLERINVOICING_V11 })
-      for (final IReadableResource aRes : getAllMatchingTestFiles (sVESID))
-        ret.add (MockFile.createGoodCase (aRes, sVESID));
+    final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
+    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SIMPLERINVOICING_V11 })
+      for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
+        ret.add (MockFile.createGoodCase (aRes, aVESID));
 
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final String sVESID)
+  public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final VESID aVESID)
   {
-    ValueEnforcer.notEmpty (sVESID, "VES-ID");
+    ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (sVESID.equals (SimplerInvoicingValidation.VID_SIMPLERINVOICING_V11))
+    if (aVESID.equals (SimplerInvoicingValidation.VID_SIMPLERINVOICING_V11))
     {
-      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
+      final ICommonsList <IReadableResource> ret = new CommonsArrayList<> ();
       ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R034.xml"));
       if (false)
         ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R035.xml"));
@@ -97,6 +98,6 @@ public final class CTestFiles
       return ret;
     }
 
-    throw new IllegalArgumentException ("Invalid transaction key: " + sVESID);
+    throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
   }
 }

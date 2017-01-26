@@ -35,15 +35,18 @@ import com.helger.commons.name.IHasDisplayName;
  */
 public interface IValidationExecutorSet extends
                                         Serializable,
-                                        IHasID <String>,
+                                        IHasID <VESID>,
                                         IHasDisplayName,
                                         ICommonsIterable <IValidationExecutor>
 {
+  /**
+   * @return The main validation artefact key assigned to this VES
+   */
   @Nonnull
   ValidationArtefactKey getValidationArtefactKey ();
 
   /**
-   * @return The number of contained validation exutors. Always &ge; 0.
+   * @return The number of contained validation executors. Always &ge; 0.
    */
   @Nonnegative
   int getExecutorCount ();

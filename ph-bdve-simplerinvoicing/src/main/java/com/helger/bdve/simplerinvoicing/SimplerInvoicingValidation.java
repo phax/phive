@@ -19,6 +19,7 @@ package com.helger.bdve.simplerinvoicing;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
@@ -31,8 +32,8 @@ import com.helger.commons.ValueEnforcer;
 @Immutable
 public final class SimplerInvoicingValidation
 {
-  public static final String VID_SIMPLERINVOICING_V11 = "simplerinvoicing-t10-v11-nl";
-  public static final String VID_SIMPLERINVOICING_V11_STRICT = "simplerinvoicing-t10-v11-nl-strict";
+  public static final VESID VID_SIMPLERINVOICING_V11 = new VESID ("org.simplerinvoicing", "invoice", "1.1");
+  public static final VESID VID_SIMPLERINVOICING_V11_STRICT = VID_SIMPLERINVOICING_V11.getWithClassifier ("strict");
 
   private SimplerInvoicingValidation ()
   {}
@@ -50,11 +51,11 @@ public final class SimplerInvoicingValidation
 
     // SimplerInvoicing is self-contained
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11,
-                                                                           "SimplerInvoicing 1.1",
+                                                                           "Simplerinvoicing 1.1",
                                                                            CSimplerInvoicingValidationArtefact.VK_SIMPLERINVOICING,
                                                                            CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11_STRICT,
-                                                                           "SimplerInvoicing 1.1 (strict)",
+                                                                           "Simplerinvoicing 1.1 (strict)",
                                                                            CSimplerInvoicingValidationArtefact.VK_SIMPLERINVOICING_STRICT,
                                                                            CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT));
   }

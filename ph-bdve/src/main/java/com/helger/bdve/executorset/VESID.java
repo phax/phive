@@ -1,12 +1,30 @@
+/**
+ * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.helger.bdve.executorset;
 
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.RegEx;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -14,18 +32,49 @@ import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
+/**
+ * Validation Executor Set ID - VESID
+ *
+ * @author Philip Helger
+ */
 public final class VESID implements Serializable, Comparable <VESID>
 {
+  /** The regular expression to which each part must conform */
+  @RegEx
+  public static final String REGEX_PART = "[a-zA-Z0-9_\\-\\.]+";
+  /** The separator char between ID elements */
+  public static final char ID_SEPARATOR = ':';
+
   private final String m_sGroupID;
   private final String m_sArtifactID;
   private final String m_sVersion;
   private final String m_sClassifier;
 
+  /**
+   * Check if the provided part matches the regular expression
+   * {@value #REGEX_PART}.
+   * 
+   * @param sPart
+   *        The part to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the value matches the regular expression,
+   *         <code>false</code> otherwise.
+   */
   public static boolean isValidPart (@Nullable final String sPart)
   {
-    return StringHelper.hasText (sPart) && RegExHelper.stringMatchesPattern ("[a-zA-Z0-9_\\-\\.]+", sPart);
+    return StringHelper.hasText (sPart) && RegExHelper.stringMatchesPattern (REGEX_PART, sPart);
   }
 
+  /**
+   * Constructor without classifier. All parameters must match the constraints
+   * from {@link #isValidPart(String)}.
+   *
+   * @param sGroupID
+   *        Group ID. May neither be <code>null</code> nor empty.
+   * @param sArtifactID
+   *        Artifact ID. May neither be <code>null</code> nor empty.
+   * @param sVersion
+   *        Version string. May neither be <code>null</code> nor empty.
+   */
   public VESID (@Nonnull @Nonempty final String sGroupID,
                 @Nonnull @Nonempty final String sArtifactID,
                 @Nonnull @Nonempty final String sVersion)
@@ -33,6 +82,19 @@ public final class VESID implements Serializable, Comparable <VESID>
     this (sGroupID, sArtifactID, sVersion, (String) null);
   }
 
+  /**
+   * Constructor. All parameters must match the constraints from
+   * {@link #isValidPart(String)}.
+   *
+   * @param sGroupID
+   *        Group ID. May neither be <code>null</code> nor empty.
+   * @param sArtifactID
+   *        Artifact ID. May neither be <code>null</code> nor empty.
+   * @param sVersion
+   *        Version string. May neither be <code>null</code> nor empty.
+   * @param sClassifier
+   *        Classifier. May be <code>null</code>.
+   */
   public VESID (@Nonnull @Nonempty final String sGroupID,
                 @Nonnull @Nonempty final String sArtifactID,
                 @Nonnull @Nonempty final String sVersion,
@@ -49,7 +111,8 @@ public final class VESID implements Serializable, Comparable <VESID>
     m_sGroupID = sGroupID;
     m_sArtifactID = sArtifactID;
     m_sVersion = sVersion;
-    m_sClassifier = sClassifier;
+    // Unify "" and null
+    m_sClassifier = StringHelper.hasText (sClassifier) ? sClassifier : null;
   }
 
   @Nonnull
@@ -73,24 +136,32 @@ public final class VESID implements Serializable, Comparable <VESID>
     return m_sVersion;
   }
 
+  public boolean hasClassifier ()
+  {
+    return StringHelper.hasText (m_sClassifier);
+  }
+
   @Nullable
   public String getClassifier ()
   {
     return m_sClassifier;
   }
 
-  public boolean hasClassifier ()
+  @Nonnull
+  public VESID getWithClassifier (@Nullable final String sNewClassifier)
   {
-    return StringHelper.hasText (m_sClassifier);
+    if (EqualsHelper.equals (m_sClassifier, sNewClassifier))
+      return this;
+    return new VESID (m_sGroupID, m_sArtifactID, m_sVersion, sNewClassifier);
   }
 
   @Nonnull
   @Nonempty
-  public String getFileBaseName ()
+  public String getAsSingleID ()
   {
-    String ret = m_sGroupID + '-' + m_sArtifactID + '-' + m_sVersion;
+    String ret = m_sGroupID + ID_SEPARATOR + m_sArtifactID + ID_SEPARATOR + m_sVersion;
     if (hasClassifier ())
-      ret += '-' + m_sClassifier;
+      ret += ID_SEPARATOR + m_sClassifier;
     return ret;
   }
 
@@ -137,10 +208,34 @@ public final class VESID implements Serializable, Comparable <VESID>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("GroupID", m_sGroupID)
+    return new ToStringGenerator (null).append ("GroupID", m_sGroupID)
                                        .append ("ArtifactID", m_sArtifactID)
                                        .append ("Version", m_sVersion)
                                        .appendIf ("Classifier", m_sClassifier, StringHelper::hasText)
                                        .toString ();
+  }
+
+  @Nonnull
+  public static VESID parseID (@Nullable final String sVESID)
+  {
+    final ICommonsList <String> aParts = StringHelper.getExploded (ID_SEPARATOR, sVESID);
+    final int nSize = aParts.size ();
+    if (nSize >= 3 && nSize <= 4)
+      return new VESID (aParts.get (0), aParts.get (1), aParts.get (2), nSize >= 4 ? aParts.get (3) : null);
+
+    throw new IllegalArgumentException ("Invalid VESID '" + sVESID + "' provided!");
+  }
+
+  @Nullable
+  public static VESID parseIDOrNull (@Nullable final String sVESID)
+  {
+    try
+    {
+      return parseID (sVESID);
+    }
+    catch (final IllegalArgumentException ex)
+    {
+      return null;
+    }
   }
 }

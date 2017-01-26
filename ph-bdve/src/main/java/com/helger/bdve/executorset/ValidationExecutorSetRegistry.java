@@ -16,11 +16,13 @@
  */
 package com.helger.bdve.executorset;
 
+import java.io.Serializable;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -28,7 +30,6 @@ import com.helger.commons.collection.ext.CommonsHashMap;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.collection.ext.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -37,13 +38,14 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorSetRegistry
+@ThreadSafe
+public class ValidationExecutorSetRegistry implements Serializable
 {
   public static final ValidationExecutorSetRegistry INSTANCE = new ValidationExecutorSetRegistry ();
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  protected final ICommonsMap <String, IValidationExecutorSet> m_aMap = new CommonsHashMap<> ();
+  protected final ICommonsMap <VESID, IValidationExecutorSet> m_aMap = new CommonsHashMap<> ();
 
   public ValidationExecutorSetRegistry ()
   {}
@@ -66,13 +68,13 @@ public class ValidationExecutorSetRegistry
   {
     ValueEnforcer.notNull (aVES, "VES");
 
-    final String sKey = aVES.getID ();
+    final VESID aKey = aVES.getID ();
     m_aRWLock.writeLocked ( () -> {
-      if (m_aMap.containsKey (sKey))
+      if (m_aMap.containsKey (aKey))
         throw new IllegalStateException ("Another validation executor set with the ID '" +
-                                         sKey +
+                                         aKey +
                                          "' is already registered!");
-      m_aMap.put (sKey, aVES);
+      m_aMap.put (aKey, aVES);
     });
     return aVES;
   }
@@ -120,17 +122,17 @@ public class ValidationExecutorSetRegistry
   /**
    * Find the validation executor set with the specified ID.
    *
-   * @param sID
+   * @param aID
    *        The ID to search. May be <code>null</code>.
    * @return <code>null</code> if no such validation executor set is registered.
    */
   @Nullable
-  public IValidationExecutorSet getOfID (@Nullable final String sID)
+  public IValidationExecutorSet getOfID (@Nullable final VESID aID)
   {
-    if (StringHelper.hasNoText (sID))
+    if (aID == null)
       return null;
 
-    return m_aRWLock.readLocked ( () -> m_aMap.get (sID));
+    return m_aRWLock.readLocked ( () -> m_aMap.get (aID));
   }
 
   @Override

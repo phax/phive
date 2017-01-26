@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) 2014-2017 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.helger.bdve.executorset;
 
 import static org.junit.Assert.assertEquals;
@@ -60,5 +76,24 @@ public final class VESIDTest
                                                                                      "ph-bdve",
                                                                                      "3.0.0-SNAPSHOT",
                                                                                      "src"));
+  }
+
+  @Test
+  public void testParseID ()
+  {
+    final VESID aID1 = new VESID ("com.helger", "ph-bdve", "3.0.0-SNAPSHOT");
+    final VESID aID2 = aID1.getWithClassifier ("test");
+
+    assertEquals (aID1, VESID.parseIDOrNull (aID1.getAsSingleID ()));
+    assertEquals (aID1, VESID.parseIDOrNull (aID1.getAsSingleID () + VESID.ID_SEPARATOR));
+    assertEquals (aID2, VESID.parseIDOrNull (aID2.getAsSingleID ()));
+    assertNull (VESID.parseIDOrNull (null));
+    assertNull (VESID.parseIDOrNull ("a"));
+    assertNull (VESID.parseIDOrNull ("a:b"));
+    assertNull (VESID.parseIDOrNull ("a:b:c:d:e"));
+    assertNull (VESID.parseIDOrNull ("a:b:c:d:e:f"));
+    assertNull (VESID.parseIDOrNull ("::"));
+    assertNull (VESID.parseIDOrNull (":::"));
+    assertNull (VESID.parseIDOrNull ("a:b:"));
   }
 }

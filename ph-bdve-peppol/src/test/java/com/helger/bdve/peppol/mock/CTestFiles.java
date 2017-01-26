@@ -19,6 +19,7 @@ package com.helger.bdve.peppol.mock;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.peppol.PeppolValidation;
@@ -46,41 +47,41 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
-    final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final String sVESID : new String [] { PeppolValidation.VID_OPENPEPPOL_T19_V2,
-                                               PeppolValidation.VID_OPENPEPPOL_T58_V2,
-                                               PeppolValidation.VID_OPENPEPPOL_T01_V2,
-                                               PeppolValidation.VID_OPENPEPPOL_T10_V2,
-                                               PeppolValidation.VID_OPENPEPPOL_T14_V2,
-                                               PeppolValidation.VID_OPENPEPPOL_T76_V2,
-                                               PeppolValidation.VID_OPENPEPPOL_T16_V2, })
-      for (final IReadableResource aRes : getAllMatchingTestFiles (sVESID))
-        ret.add (MockFile.createGoodCase (aRes, sVESID));
+    final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
+    for (final VESID aESID : new VESID [] { PeppolValidation.VID_OPENPEPPOL_T19_V2,
+                                            PeppolValidation.VID_OPENPEPPOL_T58_V2,
+                                            PeppolValidation.VID_OPENPEPPOL_T01_V2,
+                                            PeppolValidation.VID_OPENPEPPOL_T10_V2,
+                                            PeppolValidation.VID_OPENPEPPOL_T14_V2,
+                                            PeppolValidation.VID_OPENPEPPOL_T76_V2,
+                                            PeppolValidation.VID_OPENPEPPOL_T16_V2, })
+      for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
+        ret.add (MockFile.createGoodCase (aRes, aESID));
 
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final String sVESID)
+  public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final VESID aVESID)
   {
-    ValueEnforcer.notEmpty (sVESID, "VES-ID");
+    ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (sVESID.equals (PeppolValidation.VID_OPENPEPPOL_T19_V2))
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_T19_V2))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
-    if (sVESID.equals (PeppolValidation.VID_OPENPEPPOL_T58_V2))
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_T58_V2))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
-    if (sVESID.equals (PeppolValidation.VID_OPENPEPPOL_T01_V2))
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_T01_V2))
       return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
-    if (sVESID.equals (PeppolValidation.VID_OPENPEPPOL_T10_V2))
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_T10_V2))
       return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
-    if (sVESID.equals (PeppolValidation.VID_OPENPEPPOL_T14_V2))
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_T14_V2))
       return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
-    if (sVESID.equals (PeppolValidation.VID_OPENPEPPOL_T76_V2))
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_T76_V2))
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
-    if (sVESID.equals (PeppolValidation.VID_OPENPEPPOL_T16_V2))
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_T16_V2))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
 
-    throw new IllegalArgumentException ("Invalid transaction key: " + sVESID);
+    throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
   }
 }

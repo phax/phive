@@ -41,25 +41,24 @@ import com.helger.commons.string.ToStringGenerator;
  */
 public class ValidationExecutorSet implements IValidationExecutorSet
 {
-  private final String m_sID;
+  private final VESID m_aID;
   private final String m_sDisplayName;
   private final ValidationArtefactKey m_aValidationArtefactKey;
   private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList<> ();
 
-  public ValidationExecutorSet (@Nonnull @Nonempty final String sID,
+  public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
                                 @Nonnull final ValidationArtefactKey aValidationArtefactKey)
   {
-    m_sID = ValueEnforcer.notEmpty (sID, "ID");
+    m_aID = ValueEnforcer.notNull (aID, "ID");
     m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     m_aValidationArtefactKey = ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
   }
 
   @Nonnull
-  @Nonempty
-  public String getID ()
+  public VESID getID ()
   {
-    return m_sID;
+    return m_aID;
   }
 
   @Nonnull
@@ -101,37 +100,37 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ValidationExecutorSet rhs = (ValidationExecutorSet) o;
-    return m_sID.equals (rhs.m_sID) && m_sDisplayName.equals (rhs.m_sDisplayName) && m_aList.equals (rhs.m_aList);
+    return m_aID.equals (rhs.m_aID) && m_sDisplayName.equals (rhs.m_sDisplayName) && m_aList.equals (rhs.m_aList);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sID).append (m_sDisplayName).append (m_aList).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aID).append (m_sDisplayName).append (m_aList).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("ID", m_sID)
+                            .append ("ID", m_aID)
                             .append ("DisplayName", m_sDisplayName)
                             .append ("List", m_aList)
                             .toString ();
   }
 
   @Nonnull
-  public static ValidationExecutorSet create (@Nonnull @Nonempty final String sID,
+  public static ValidationExecutorSet create (@Nonnull final VESID aID,
                                               @Nonnull @Nonempty final String sDisplayName,
                                               @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                               @Nonnull final IReadableResource... aSchematrons)
   {
-    ValueEnforcer.notEmpty (sID, "ID");
+    ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
+    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, aValidationArtefactKey);
 
     // Add XSDs at the beginning
     for (final IReadableResource aXSDRes : aValidationArtefactKey.getJAXBDocumentType ().getAllXSDResources ())
@@ -147,18 +146,18 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 
   @Nonnull
   public static ValidationExecutorSet createDerived (@Nonnull final IValidationExecutorSet aBaseVES,
-                                                     @Nonnull @Nonempty final String sID,
+                                                     @Nonnull final VESID aID,
                                                      @Nonnull @Nonempty final String sDisplayName,
                                                      @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                                      @Nonnull final IReadableResource... aSchematrons)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
-    ValueEnforcer.notEmpty (sID, "ID");
+    ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (sID, sDisplayName, aValidationArtefactKey);
+    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, aValidationArtefactKey);
 
     // Copy all existing ones
     for (final IValidationExecutor aVE : aBaseVES)

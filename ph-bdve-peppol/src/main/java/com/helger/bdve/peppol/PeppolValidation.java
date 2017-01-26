@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.executorset.IValidationExecutorSet;
+import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
@@ -32,21 +33,23 @@ import com.helger.commons.ValueEnforcer;
 @Immutable
 public final class PeppolValidation
 {
+  private static String VERSION = CPeppolValidation330.PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
+
   // Standard
-  public static final String VID_OPENPEPPOL_T71_V2 = "openpeppol-t71-v2";
-  public static final String VID_OPENPEPPOL_T14_V2 = "openpeppol-t14-v2";
-  public static final String VID_OPENPEPPOL_T10_V2 = "openpeppol-t10-v2";
-  public static final String VID_OPENPEPPOL_T16_V2 = "openpeppol-t16-v2";
-  public static final String VID_OPENPEPPOL_T76_V2 = "openpeppol-t76-v2";
-  public static final String VID_OPENPEPPOL_T01_V2 = "openpeppol-t01-v2";
-  public static final String VID_OPENPEPPOL_T58_V2 = "openpeppol-t58-v2";
-  public static final String VID_OPENPEPPOL_T19_V2 = "openpeppol-t19-v2";
+  public static final VESID VID_OPENPEPPOL_T71_V2 = new VESID ("eu.peppol", "t71-v2", VERSION);
+  public static final VESID VID_OPENPEPPOL_T14_V2 = new VESID ("eu.peppol", "t14-v2", VERSION);
+  public static final VESID VID_OPENPEPPOL_T10_V2 = new VESID ("eu.peppol", "t10-v2", VERSION);
+  public static final VESID VID_OPENPEPPOL_T16_V2 = new VESID ("eu.peppol", "t16-v2", VERSION);
+  public static final VESID VID_OPENPEPPOL_T76_V2 = new VESID ("eu.peppol", "t76-v2", VERSION);
+  public static final VESID VID_OPENPEPPOL_T01_V2 = new VESID ("eu.peppol", "t01-v2", VERSION);
+  public static final VESID VID_OPENPEPPOL_T58_V2 = new VESID ("eu.peppol", "t58-v2", VERSION);
+  public static final VESID VID_OPENPEPPOL_T19_V2 = new VESID ("eu.peppol", "t19-v2", VERSION);
 
   // Third-party
-  public static final String VID_OPENPEPPOL_T10_V2_AT = "openpeppol-t10-v2-at";
-  public static final String VID_OPENPEPPOL_T10_V2_AT_GOV = "openpeppol-t10-v2-at-gov";
-  public static final String VID_OPENPEPPOL_T14_V2_AT = "openpeppol-t14-v2-at";
-  public static final String VID_OPENPEPPOL_T14_V2_AT_GOV = "openpeppol-t14-v2-at-gov";
+  public static final VESID VID_OPENPEPPOL_T10_V2_AT = new VESID ("eu.peppol", "t10-v2", VERSION, "at");
+  public static final VESID VID_OPENPEPPOL_T10_V2_AT_GOV = new VESID ("eu.peppol", "t10-v2", VERSION, "at-gov");
+  public static final VESID VID_OPENPEPPOL_T14_V2_AT = new VESID ("eu.peppol", "t14-v2", VERSION, "at");
+  public static final VESID VID_OPENPEPPOL_T14_V2_AT_GOV = new VESID ("eu.peppol", "t14-v2", VERSION, "at-gov");
 
   private PeppolValidation ()
   {}

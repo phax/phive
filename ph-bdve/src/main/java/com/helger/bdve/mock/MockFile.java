@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.executorset.VESID;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsHashSet;
@@ -38,16 +39,16 @@ import com.helger.commons.io.resource.IReadableResource;
 public class MockFile
 {
   private final IReadableResource m_aResource;
-  private final String m_aVESID;
+  private final VESID m_aVESID;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
   public MockFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final String sVESID,
+                   @Nonnull final VESID aVESID,
                    @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
-    m_aVESID = ValueEnforcer.notNull (sVESID, "VESID");
-    m_aExpectedErrorIDs = new CommonsHashSet <> (aExpectedErrorIDs);
+    m_aVESID = ValueEnforcer.notNull (aVESID, "VESID");
+    m_aExpectedErrorIDs = new CommonsHashSet<> (aExpectedErrorIDs);
   }
 
   /**
@@ -64,7 +65,7 @@ public class MockFile
    * @return The VES ID passed in the constructor. Never <code>null</code>.
    */
   @Nonnull
-  public String getVESID ()
+  public VESID getVESID ()
   {
     return m_aVESID;
   }
@@ -87,8 +88,8 @@ public class MockFile
   }
 
   @Nonnull
-  public static MockFile createGoodCase (@Nonnull final IReadableResource aResource, @Nonnull final String sVESID)
+  public static MockFile createGoodCase (@Nonnull final IReadableResource aResource, @Nonnull final VESID aVESID)
   {
-    return new MockFile (aResource, sVESID, null);
+    return new MockFile (aResource, aVESID, null);
   }
 }
