@@ -7,6 +7,7 @@ Licensed under the Apache 2 license.
 This project is divided into 3 sub-projects for maximum flexibility
   * ph-bdve - generic "Business Document Validation Engine"
   * ph-bdve-peppol - the PEPPOL specific setup etc
+  * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.1 support
   
 #News
   * v3.0.0 - 2017-01-26
