@@ -21,6 +21,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.RegEx;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -37,6 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
+@Immutable
 public final class VESID implements Serializable, Comparable <VESID>
 {
   /** The regular expression to which each part must conform */
@@ -53,7 +55,7 @@ public final class VESID implements Serializable, Comparable <VESID>
   /**
    * Check if the provided part matches the regular expression
    * {@value #REGEX_PART}.
-   * 
+   *
    * @param sPart
    *        The part to be checked. May be <code>null</code>.
    * @return <code>true</code> if the value matches the regular expression,

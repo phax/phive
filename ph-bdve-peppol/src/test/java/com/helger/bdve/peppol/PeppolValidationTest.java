@@ -34,7 +34,7 @@ import com.helger.schematron.pure.SchematronResourcePure;
  *
  * @author Philip Helger
  */
-public final class CPeppolValidationTest
+public final class PeppolValidationTest
 {
   private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
