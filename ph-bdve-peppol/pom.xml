@@ -24,12 +24,12 @@
     <artifactId>ph-bdve-parent-pom</artifactId>
     <version>3.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-bdve</artifactId>
+  <artifactId>ph-bdve-peppol</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-bdve</name>
-  <description>Business Document Validation Engine (BDVE)</description>
-  <url>https://github.com/phax/peppol-validation-engine/ph-bdve</url>
-  <inceptionYear>2016</inceptionYear>
+  <name>ph-bdve-peppol</name>
+  <description>PEPPOL BIS v2 validation engine</description>
+  <url>https://github.com/phax/peppol-validation-engine/ph-bdve-peppol</url>
+  <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -56,11 +56,30 @@
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-jaxb</artifactId>
+      <artifactId>ph-bdve</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-ubl21</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.odftoolkit</groupId>
+      <artifactId>simple-odf</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-genericode</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>peppol-testfiles</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -76,9 +95,26 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>com.helger.bdve.*</Export-Package>
+            <Export-Package>com.helger.bdve.peppol.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/LICENSE</exclude>
+            <exclude>**/NOTICE</exclude>
+            <exclude>src/main/resources/openpeppol/**</exclude>
+            <exclude>src/main/resources/thirdparty/**</exclude>
+            <exclude>src/test/resources/codelist-generated/**</exclude>
+            <exclude>src/test/resources/openpeppol/**</exclude>
+            <exclude>src/test/resources/rule-source/**</exclude>
+            <exclude>src/test/resources/rule-utils/**</exclude>
+            <exclude>src/test/resources/test-files/**</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>

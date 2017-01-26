@@ -5,12 +5,12 @@ A running example can be found on [PEPPOL Practical](http://peppol.helger.com/pu
 Licensed under the Apache 2 license.
 
 This project is divided into 3 sub-projects for maximum flexibility
-  * peppol-validation-api - generic API
-  * peppol-validation-artefacts - only the created SCH and XSLT artefacts - no Java code and no dependencies!
-  * peppol-validation-engine - the main engine using the API and the artefacts
+  * ph-bdve - generic "Business Document Validation Engine"
+  * peppol-validation-engine - the PEPPOL specific setup etc
   
 #News
-  * v3.0.0
+  * v3.0.0 - 2017-01-26
+    * Is a complete rewrite with different structure etc.
     * Binds to ph-commons 8.6.x
     * Requires at least ph-schematron 4.2.1
   * v2.0.1 - 2016-09-12
@@ -27,7 +27,7 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>peppol-validation-engine</artifactId>
-  <version>2.0.1</version>
+  <version>3.0.0</version>
 </dependency>
 ```
 
