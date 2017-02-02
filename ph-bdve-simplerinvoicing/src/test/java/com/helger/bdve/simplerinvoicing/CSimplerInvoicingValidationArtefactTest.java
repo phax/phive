@@ -20,7 +20,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.executorset.IValidationExecutorSet;
@@ -60,7 +59,7 @@ public final class CSimplerInvoicingValidationArtefactTest
       for (final IValidationExecutor aVE : aVES)
       {
         final IValidationArtefact aVA = aVE.getValidationArtefact ();
-        if (aVA.getValidationArtefactType () == EValidationType.SCHEMATRON)
+        if (aVA.getValidationArtefactType ().isSchematronBased ())
         {
           // Check that the passed Schematron is valid
           final IReadableResource aRes = aVA.getRuleResource ();

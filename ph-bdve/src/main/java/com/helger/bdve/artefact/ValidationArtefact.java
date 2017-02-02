@@ -111,6 +111,7 @@ public class ValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
+  @Deprecated
   public static ValidationArtefact createSchematron (@Nonnull final IReadableResource aResource,
                                                      @Nonnull final ValidationArtefactKey aValidationKey)
   {

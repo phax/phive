@@ -19,6 +19,7 @@ package com.helger.bdve.execute;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
@@ -26,7 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
-import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.result.ValidationResult;
@@ -37,6 +37,7 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.location.ErrorLocation;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.jaxb.builder.IJAXBDocumentType;
+import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
@@ -44,8 +45,11 @@ import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
+import com.helger.schematron.xslt.SchematronResourceSCH;
+import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
 import com.helger.xml.xpath.XPathExpressionHelper;
 import com.helger.xml.xpath.XPathHelper;
 
@@ -64,7 +68,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact)
   {
-    super (EValidationType.SCHEMATRON, aValidationArtefact);
+    super (aValidationArtefact);
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematronBased (),
+                          "Artifact is not Schematron");
   }
 
   public boolean isCacheSchematron ()
@@ -159,8 +165,35 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
 
     // No prerequisite or prerequisite matched
     final ErrorList aErrorList = new ErrorList ();
-    final SchematronResourcePure aSCH = new SchematronResourcePure (aSCHRes);
-    aSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
+    AbstractSchematronResource aSCH;
+    switch (getValidationType ())
+    {
+      case SCHEMATRON_PURE:
+      {
+        final SchematronResourcePure aPureSCH = new SchematronResourcePure (aSCHRes);
+        aPureSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
+        // Don't cache to avoid that errors in the Schematron are hidden on
+        // consecutive calls!
+        aSCH = aPureSCH;
+        break;
+      }
+      case SCHEMATRON_SCH:
+      {
+        final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
+        aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+        aSCH = aSCHSCH;
+        break;
+      }
+      case SCHEMATRON_XSLT:
+      {
+        final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
+        aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+        aSCH = aSCHXSLT;
+        break;
+      }
+      default:
+        throw new IllegalStateException ("Unsupported validation type: " + getValidationType ());
+    }
     // Don't cache to avoid that errors in the Schematron are hidden on
     // consecutive calls!
     aSCH.setUseCache (m_bCacheSchematron);
@@ -168,7 +201,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
     try
     {
       // Main application of Schematron
-      final SchematronOutputType aSVRL = aSCH.applySchematronValidationToSVRL (aNode);
+      final SchematronOutputType aSVRL = aSCH.applySchematronValidationToSVRL (new DOMSource (aNode));
 
       if (s_aLogger.isDebugEnabled ())
         s_aLogger.debug ("SVRL: " + new SVRLMarshaller (false).getAsString (aSVRL));

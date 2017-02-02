@@ -33,7 +33,12 @@ public enum EValidationType implements IHasID <String>, IHasName
 {
   XML ("xml", "XML Syntax"),
   XSD ("xsd", "XML Schema"),
-  SCHEMATRON ("schematron", "Schematron");
+  SCHEMATRON_PURE ("schematron-pure", "Schematron (XPath)"),
+  SCHEMATRON_SCH ("schematron-sch", "Schematron (SCH)"),
+  SCHEMATRON_XSLT ("schematron-xslt", "Schematron (XSLT)");
+
+  @Deprecated
+  public static final EValidationType SCHEMATRON = SCHEMATRON_PURE;
 
   private final String m_sID;
   private final String m_sName;
@@ -61,6 +66,21 @@ public enum EValidationType implements IHasID <String>, IHasName
     return m_sName;
   }
 
+  public boolean isXMLBased ()
+  {
+    return this == XML;
+  }
+
+  public boolean isXSDBased ()
+  {
+    return this == XSD;
+  }
+
+  public boolean isSchematronBased ()
+  {
+    return this == SCHEMATRON_PURE || this == SCHEMATRON_SCH || this == SCHEMATRON_XSLT;
+  }
+
   /**
    * @return <code>true</code> to stop validation if an error occurs when using
    *         this validation type. This is helpful to avoid running Schematron
@@ -68,7 +88,7 @@ public enum EValidationType implements IHasID <String>, IHasName
    */
   public boolean isStopValidationOnError ()
   {
-    return this == XML || this == XSD;
+    return isXMLBased () || isXSDBased ();
   }
 
   @Nullable

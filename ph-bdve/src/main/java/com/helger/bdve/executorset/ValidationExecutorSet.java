@@ -21,6 +21,7 @@ import java.util.Iterator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
@@ -44,7 +45,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   private final VESID m_aID;
   private final String m_sDisplayName;
   private final ValidationArtefactKey m_aValidationArtefactKey;
-  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList<> ();
+  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
 
   public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
@@ -138,8 +139,9 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 
     // Add Schematrons
     for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
-                                                                                              aValidationArtefactKey)));
+      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
+                                                                                 aRes,
+                                                                                 aValidationArtefactKey)));
 
     return ret;
   }
@@ -165,8 +167,9 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 
     // Add Schematrons
     for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (ValidationArtefact.createSchematron (aRes,
-                                                                                              aValidationArtefactKey)));
+      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
+                                                                                 aRes,
+                                                                                 aValidationArtefactKey)));
 
     return ret;
   }

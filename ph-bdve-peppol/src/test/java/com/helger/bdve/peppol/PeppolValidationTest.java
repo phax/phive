@@ -20,12 +20,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.schematron.pure.SchematronResourcePure;
 
@@ -62,7 +60,7 @@ public final class PeppolValidationTest
       for (final IValidationExecutor aVE : aVES)
       {
         final IValidationArtefact aVA = aVE.getValidationArtefact ();
-        if (aVA.getValidationArtefactType () == EValidationType.SCHEMATRON)
+        if (aVA.getValidationArtefactType ().isSchematronBased ())
         {
           // Check that the passed Schematron is valid
           final IReadableResource aRes = aVA.getRuleResource ();

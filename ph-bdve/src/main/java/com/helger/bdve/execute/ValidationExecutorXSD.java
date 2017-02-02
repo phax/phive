@@ -22,7 +22,6 @@ import javax.xml.validation.Schema;
 
 import org.xml.sax.SAXParseException;
 
-import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
@@ -44,7 +43,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
 {
   public ValidationExecutorXSD (@Nonnull final IValidationArtefact aValidationArtefact)
   {
-    super (EValidationType.XSD, aValidationArtefact);
+    super (aValidationArtefact);
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSDBased (), "Artifact is not XSD");
   }
 
   @Nonnull
