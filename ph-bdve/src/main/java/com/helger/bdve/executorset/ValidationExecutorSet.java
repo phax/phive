@@ -34,6 +34,7 @@ import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 
 /**
  * Default implementation of {@link IValidationExecutorSet}.
@@ -45,7 +46,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   private final VESID m_aID;
   private final String m_sDisplayName;
   private final ValidationArtefactKey m_aValidationArtefactKey;
-  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList<> ();
 
   public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
@@ -79,6 +80,14 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   {
     ValueEnforcer.notNull (aExecutor, "Executor");
     m_aList.add (aExecutor);
+  }
+
+  public void addAllXSDExecutors (@Nonnull final IJAXBDocumentType aDocType,
+                                  @Nonnull final ValidationArtefactKey aValidationArtefactKey)
+  {
+    ValueEnforcer.notNull (aDocType, "DocType");
+    for (final IReadableResource aXSDRes : aDocType.getAllXSDResources ())
+      addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationArtefactKey)));
   }
 
   @Nonnegative
@@ -134,8 +143,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, aValidationArtefactKey);
 
     // Add XSDs at the beginning
-    for (final IReadableResource aXSDRes : aValidationArtefactKey.getJAXBDocumentType ().getAllXSDResources ())
-      ret.addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationArtefactKey)));
+    ret.addAllXSDExecutors (aValidationArtefactKey.getJAXBDocumentType (), aValidationArtefactKey);
 
     // Add Schematrons
     for (final IReadableResource aRes : aSchematrons)
