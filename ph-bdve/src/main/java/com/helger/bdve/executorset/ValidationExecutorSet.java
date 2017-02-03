@@ -76,20 +76,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     return m_aValidationArtefactKey;
   }
 
-  public void addExecutor (@Nonnull final IValidationExecutor aExecutor)
-  {
-    ValueEnforcer.notNull (aExecutor, "Executor");
-    m_aList.add (aExecutor);
-  }
-
-  public void addAllXSDExecutors (@Nonnull final IJAXBDocumentType aDocType,
-                                  @Nonnull final ValidationArtefactKey aValidationArtefactKey)
-  {
-    ValueEnforcer.notNull (aDocType, "DocType");
-    for (final IReadableResource aXSDRes : aDocType.getAllXSDResources ())
-      addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, aValidationArtefactKey)));
-  }
-
   @Nonnegative
   public int getExecutorCount ()
   {
@@ -100,6 +86,39 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public Iterator <IValidationExecutor> iterator ()
   {
     return m_aList.iterator ();
+  }
+
+  /**
+   * Add a single executor.
+   *
+   * @param aExecutor
+   *        The executor to be added. May not be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public ValidationExecutorSet addExecutor (@Nonnull final IValidationExecutor aExecutor)
+  {
+    ValueEnforcer.notNull (aExecutor, "Executor");
+    m_aList.add (aExecutor);
+    return this;
+  }
+
+  /**
+   * Shortcut method to add all XSD executors of a single JAXB document type.
+   * The validation artefact key passed in the constructor is used for the XSD
+   * executors.
+   *
+   * @param aDocType
+   *        The JAXB document type. May not be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public ValidationExecutorSet addAllXSDExecutors (@Nonnull final IJAXBDocumentType aDocType)
+  {
+    ValueEnforcer.notNull (aDocType, "DocType");
+    for (final IReadableResource aXSDRes : aDocType.getAllXSDResources ())
+      addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, m_aValidationArtefactKey)));
+    return this;
   }
 
   @Override
@@ -143,7 +162,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, aValidationArtefactKey);
 
     // Add XSDs at the beginning
-    ret.addAllXSDExecutors (aValidationArtefactKey.getJAXBDocumentType (), aValidationArtefactKey);
+    ret.addAllXSDExecutors (aValidationArtefactKey.getJAXBDocumentType ());
 
     // Add Schematrons
     for (final IReadableResource aRes : aSchematrons)

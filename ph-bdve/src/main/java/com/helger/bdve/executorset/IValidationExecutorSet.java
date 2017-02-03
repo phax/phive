@@ -51,8 +51,12 @@ public interface IValidationExecutorSet extends
   @Nonnegative
   int getExecutorCount ();
 
+  /**
+   * @return A new {@link ValidationExecutionManager} for this validation
+   *         executor set.
+   */
   @Nonnull
-  default ValidationExecutionManager getExecutorManager ()
+  default ValidationExecutionManager createExecutionManager ()
   {
     return new ValidationExecutionManager (this);
   }

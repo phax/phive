@@ -54,7 +54,7 @@ public final class ValidationExecutionManagerFuncTest
     {
       final IValidationExecutorSet aExecutors = aRegistry.getOfID (aTestFile.getVESID ());
       assertNotNull (aExecutors);
-      final ValidationExecutionManager aValidator = aExecutors.getExecutorManager ();
+      final ValidationExecutionManager aValidator = aExecutors.createExecutionManager ();
 
       s_aLogger.info ("Validating " +
                       aTestFile.getResource ().getPath () +
