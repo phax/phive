@@ -19,10 +19,13 @@ package com.helger.bdve.simplerinvoicing;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.EValidationType;
+import com.helger.bdve.executorset.TypedValidationResource;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.io.resource.IReadableResource;
 
 /**
  * SimplerInvoicing validation configuration
@@ -37,6 +40,12 @@ public final class SimplerInvoicingValidation
 
   private SimplerInvoicingValidation ()
   {}
+
+  @Nonnull
+  private static TypedValidationResource _create (@Nonnull final IReadableResource aRes)
+  {
+    return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_PURE);
+  }
 
   /**
    * Register all standard SimplerInvoicing validation execution sets to the
@@ -53,10 +62,10 @@ public final class SimplerInvoicingValidation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11,
                                                                            "Simplerinvoicing 1.1",
                                                                            CSimplerInvoicingValidationArtefact.VK_SIMPLERINVOICING,
-                                                                           CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING));
+                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11_STRICT,
                                                                            "Simplerinvoicing 1.1 (strict)",
                                                                            CSimplerInvoicingValidationArtefact.VK_SIMPLERINVOICING_STRICT,
-                                                                           CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT));
+                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT)));
   }
 }

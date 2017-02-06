@@ -21,7 +21,6 @@ import java.util.Iterator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
@@ -29,6 +28,7 @@ import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.collection.ext.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -86,6 +86,13 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public Iterator <IValidationExecutor> iterator ()
   {
     return m_aList.iterator ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ICommonsList <IValidationExecutor> getAllExecutors ()
+  {
+    return m_aList.getClone ();
   }
 
   /**
@@ -152,7 +159,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public static ValidationExecutorSet create (@Nonnull final VESID aID,
                                               @Nonnull @Nonempty final String sDisplayName,
                                               @Nonnull final ValidationArtefactKey aValidationArtefactKey,
-                                              @Nonnull final IReadableResource... aSchematrons)
+                                              @Nonnull final TypedValidationResource... aSchematrons)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -165,9 +172,9 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ret.addAllXSDExecutors (aValidationArtefactKey.getJAXBDocumentType ());
 
     // Add Schematrons
-    for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
-                                                                                 aRes,
+    for (final TypedValidationResource aRes : aSchematrons)
+      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (aRes.getValidationType (),
+                                                                                 aRes.getResource (),
                                                                                  aValidationArtefactKey)));
 
     return ret;
@@ -178,7 +185,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                                                      @Nonnull final VESID aID,
                                                      @Nonnull @Nonempty final String sDisplayName,
                                                      @Nonnull final ValidationArtefactKey aValidationArtefactKey,
-                                                     @Nonnull final IReadableResource... aSchematrons)
+                                                     @Nonnull final TypedValidationResource... aSchematrons)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
     ValueEnforcer.notNull (aID, "ID");
@@ -193,9 +200,9 @@ public class ValidationExecutorSet implements IValidationExecutorSet
       ret.addExecutor (aVE);
 
     // Add Schematrons
-    for (final IReadableResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
-                                                                                 aRes,
+    for (final TypedValidationResource aRes : aSchematrons)
+      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (aRes.getValidationType (),
+                                                                                 aRes.getResource (),
                                                                                  aValidationArtefactKey)));
 
     return ret;
