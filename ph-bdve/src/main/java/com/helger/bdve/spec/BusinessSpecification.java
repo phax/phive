@@ -104,6 +104,6 @@ public class BusinessSpecification implements IBusinessSpecification
                                        .append ("SpecID", m_sSpecID)
                                        .append ("ID", m_sID)
                                        .append ("DisplayName", m_sDisplayName)
-                                       .toString ();
+                                       .getToString ();
   }
 }

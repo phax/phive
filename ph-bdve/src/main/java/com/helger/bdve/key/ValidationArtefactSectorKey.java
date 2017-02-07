@@ -31,8 +31,8 @@ import com.helger.commons.name.IHasDisplayName;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * A key defining a sector extension to be used in a {@link ValidationArtefactKey}. It
- * consists of an ID and a display name.
+ * A key defining a sector extension to be used in a
+ * {@link ValidationArtefactKey}. It consists of an ID and a display name.
  *
  * @author Philip Helger
  */
@@ -40,10 +40,10 @@ import com.helger.commons.string.ToStringGenerator;
 @MustImplementComparable
 @MustImplementEqualsAndHashcode
 public class ValidationArtefactSectorKey implements
-                                 IHasID <String>,
-                                 IHasDisplayName,
-                                 Serializable,
-                                 Comparable <ValidationArtefactSectorKey>
+                                         IHasID <String>,
+                                         IHasDisplayName,
+                                         Serializable,
+                                         Comparable <ValidationArtefactSectorKey>
 {
   private final String m_sID;
   private final String m_sDisplayName;
@@ -94,6 +94,6 @@ public class ValidationArtefactSectorKey implements
   @Nonnull
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).toString ();
+    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).getToString ();
   }
 }

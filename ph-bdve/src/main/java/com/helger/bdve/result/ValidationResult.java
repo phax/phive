@@ -109,7 +109,7 @@ public class ValidationResult implements ISuccessIndicator, Serializable
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
                                        .append ("ErrorList", m_aErrorList)
                                        .append ("Success", m_eSuccess)
-                                       .toString ();
+                                       .getToString ();
   }
 
   @Nonnull
