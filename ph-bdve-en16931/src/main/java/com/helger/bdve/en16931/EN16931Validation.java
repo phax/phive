@@ -44,7 +44,7 @@ public final class EN16931Validation
   static
   {
     // Required for EDIFACT ISO 20625
-    XMLSystemProperties.setXMLMaxOccur (9_999_999);
+    XMLSystemProperties.setXMLMaxOccurIfLarger (9_999_999);
   }
 
   private EN16931Validation ()
