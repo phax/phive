@@ -43,8 +43,8 @@ public final class EN16931Validation
 
   static
   {
-    // Required for CII
-    XMLSystemProperties.setXMLMaxOccur (0);
+    // Required for EDIFACT ISO 20625
+    XMLSystemProperties.setXMLMaxOccur (9_999_999);
   }
 
   private EN16931Validation ()
