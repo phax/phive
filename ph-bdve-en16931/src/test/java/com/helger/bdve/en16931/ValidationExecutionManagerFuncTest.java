@@ -46,7 +46,7 @@ public final class ValidationExecutionManagerFuncTest
   public void testTestFiles () throws SAXException
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
-    EN16931Validation.initSimplerInvoicing (aRegistry);
+    EN16931Validation.initEN16931 (aRegistry);
 
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {

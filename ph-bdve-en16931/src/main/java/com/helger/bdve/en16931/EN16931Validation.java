@@ -26,6 +26,7 @@ import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.xml.XMLSystemProperties;
 
 /**
  * SimplerInvoicing validation configuration
@@ -39,6 +40,12 @@ public final class EN16931Validation
   public static final VESID VID_UBL = new VESID ("eu.cen.en16931", "ubl", VERSION);
   public static final VESID VID_CII = new VESID ("eu.cen.en16931", "cii", VERSION);
   public static final VESID VID_EDIFACT = new VESID ("eu.cen.en16931", "edifact", VERSION);
+
+  static
+  {
+    // Required for CII
+    XMLSystemProperties.setXMLMaxOccur (0);
+  }
 
   private EN16931Validation ()
   {}
@@ -56,7 +63,7 @@ public final class EN16931Validation
    * @param aRegistry
    *        The registry to add the artefacts. May not be <code>null</code>.
    */
-  public static void initSimplerInvoicing (@Nonnull final ValidationExecutorSetRegistry aRegistry)
+  public static void initEN16931 (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 

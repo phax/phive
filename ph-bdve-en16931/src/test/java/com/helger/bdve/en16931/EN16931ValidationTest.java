@@ -39,7 +39,7 @@ public final class EN16931ValidationTest
   private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
-    EN16931Validation.initSimplerInvoicing (VES_REGISTRY);
+    EN16931Validation.initEN16931 (VES_REGISTRY);
   }
 
   @Test
