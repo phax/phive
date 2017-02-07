@@ -45,8 +45,8 @@ public final class CSimplerInvoicingValidationArtefact
                                                                                                                                                         .build ();
 
   // SimplerInvoicing
-  public static final IReadableResource INVOICE_SIMPLER_INVOICING = new ClassPathResource ("/thirdparty/simplerinvoicing/SI-UBL-INV.SCH");
-  public static final IReadableResource INVOICE_SIMPLER_INVOICING_STRICT = new ClassPathResource ("/thirdparty/simplerinvoicing/SI-UBL-INV-STRICT.SCH");
+  public static final IReadableResource INVOICE_SIMPLER_INVOICING = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV.SCH");
+  public static final IReadableResource INVOICE_SIMPLER_INVOICING_STRICT = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-STRICT.SCH");
 
   private CSimplerInvoicingValidationArtefact ()
   {}
