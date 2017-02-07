@@ -67,17 +67,18 @@ public final class EN16931Validation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
+    final String sPrefix = " (draft 2017-02-07)";
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII,
-                                                                           "EN 16931 CII",
+                                                                           "EN 16931 CII" + sPrefix,
                                                                            CEN19631.VK_INVOICE_CII,
                                                                            _create (CEN19631.INVOICE_CII)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT,
-                                                                           "EN 16931 EDIFACT/ISO 20625",
+                                                                           "EN 16931 EDIFACT/ISO 20625" + sPrefix,
                                                                            CEN19631.VK_INVOICE_EDIFACT,
                                                                            new TypedValidationResource (CEN19631.INVOICE_EDIFACT_XSLT,
                                                                                                         EValidationType.SCHEMATRON_XSLT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL,
-                                                                           "EN 16931 UBL",
+                                                                           "EN 16931 UBL" + sPrefix,
                                                                            CEN19631.VK_INVOICE_UBL,
                                                                            _create (CEN19631.INVOICE_UBL)));
   }
