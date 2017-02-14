@@ -102,6 +102,6 @@ public class SpecificationTransaction implements ISpecificationTransaction
                                        .append ("Name", m_sName)
                                        .append ("DocType", m_aDocType)
                                        .append ("NamespaceContext", m_aNamespaceContext)
-                                       .getToString ();
+                                       .toString ();
   }
 }

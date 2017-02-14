@@ -31,7 +31,6 @@ import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.invoic.d14b.iso20625.MINVOIC;
-import com.helger.jaxb.builder.JAXBDocumentType;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 
@@ -62,12 +61,13 @@ public final class CEN19631
                                                                                                                                                 ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE,
                                                                                                                                                 CIID16BNamespaceContext.getInstance ()))
                                                                                                  .build ();
+  @SuppressWarnings ("deprecation")
   public static final ValidationArtefactKey VK_INVOICE_EDIFACT = new ValidationArtefactKey.Builder ().setBusinessSpecification (EN16931)
                                                                                                      .setTransaction (new SpecificationTransaction ("edifact",
                                                                                                                                                     "EDIFACT/ISO 20625 Invoice",
-                                                                                                                                                    new JAXBDocumentType (MINVOIC.class,
-                                                                                                                                                                          new CommonsArrayList <> ("/en16931/edifact/schema/INVOIC_D14B_ISO20625.xsd"),
-                                                                                                                                                                          x -> x),
+                                                                                                                                                    new JAXBDocumentType9 (MINVOIC.class,
+                                                                                                                                                                           new CommonsArrayList<> ("/en16931/edifact/schema/INVOIC_D14B_ISO20625.xsd"),
+                                                                                                                                                                           x -> x),
                                                                                                                                                     CIID16BNamespaceContext.getInstance ()))
                                                                                                      .build ();
   public static final ValidationArtefactKey VK_INVOICE_UBL = new ValidationArtefactKey.Builder ().setBusinessSpecification (EN16931)

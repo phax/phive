@@ -94,6 +94,6 @@ public class ValidationArtefactSectorKey implements
   @Nonnull
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).getToString ();
+    return new ToStringGenerator (this).append ("ID", m_sID).append ("DisplayName", m_sDisplayName).toString ();
   }
 }

@@ -65,6 +65,6 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact).getToString ();
+    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact).toString ();
   }
 }

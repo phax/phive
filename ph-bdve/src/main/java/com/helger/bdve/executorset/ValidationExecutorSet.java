@@ -46,7 +46,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   private final VESID m_aID;
   private final String m_sDisplayName;
   private final ValidationArtefactKey m_aValidationArtefactKey;
-  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList<> ();
 
   public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
@@ -152,7 +152,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                             .append ("ID", m_aID)
                             .append ("DisplayName", m_sDisplayName)
                             .append ("List", m_aList)
-                            .getToString ();
+                            .toString ();
   }
 
   @Nonnull

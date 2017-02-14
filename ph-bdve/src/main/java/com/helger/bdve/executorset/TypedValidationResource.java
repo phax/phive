@@ -89,6 +89,6 @@ public final class TypedValidationResource
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Res", m_aRes).append ("Type", m_eType).getToString ();
+    return new ToStringGenerator (this).append ("Res", m_aRes).append ("Type", m_eType).toString ();
   }
 }

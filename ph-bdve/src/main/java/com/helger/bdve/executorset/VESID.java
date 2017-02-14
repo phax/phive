@@ -214,7 +214,7 @@ public final class VESID implements Serializable, Comparable <VESID>
                                        .append ("ArtifactID", m_sArtifactID)
                                        .append ("Version", m_sVersion)
                                        .appendIf ("Classifier", m_sClassifier, StringHelper::hasText)
-                                       .getToString ();
+                                       .toString ();
   }
 
   @Nonnull

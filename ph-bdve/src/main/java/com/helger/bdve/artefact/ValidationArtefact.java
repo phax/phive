@@ -93,7 +93,7 @@ public class ValidationArtefact implements IValidationArtefact
     return new ToStringGenerator (this).append ("ValidationArtefactType", m_eValidationArtefactType)
                                        .append ("Resource", m_aResource)
                                        .append ("ValidationKey", m_aValidationKey)
-                                       .getToString ();
+                                       .toString ();
   }
 
   @Nonnull

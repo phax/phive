@@ -37,7 +37,7 @@ import com.helger.commons.string.ToStringGenerator;
  */
 public class ValidationResultList implements ICommonsIterable <ValidationResult>, Serializable
 {
-  private final ICommonsList <ValidationResult> m_aResults = new CommonsArrayList <> ();
+  private final ICommonsList <ValidationResult> m_aResults = new CommonsArrayList<> ();
 
   public ValidationResultList ()
   {}
@@ -132,6 +132,6 @@ public class ValidationResultList implements ICommonsIterable <ValidationResult>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Results", m_aResults).getToString ();
+    return new ToStringGenerator (this).append ("Results", m_aResults).toString ();
   }
 }
