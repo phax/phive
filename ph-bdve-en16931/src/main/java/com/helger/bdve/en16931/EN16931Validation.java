@@ -44,17 +44,7 @@ public final class EN16931Validation
   static
   {
     // Required for EDIFACT ISO 20625
-    // TODO use setXMLMaxOccurIfLarger in ph-commons 9.0
-    final int nOldValue = XMLSystemProperties.getXMLMaxOccur ();
-    if (nOldValue > 0)
-    {
-      // Current value is limited
-      if (9_999_999 > nOldValue)
-      {
-        // New value is unlimited or higher
-        XMLSystemProperties.setXMLMaxOccur (9_999_999);
-      }
-    }
+    XMLSystemProperties.setXMLMaxOccurIfLarger (9_999_999);
   }
 
   private EN16931Validation ()
