@@ -19,13 +19,13 @@ package com.helger.bdve.peppol.supplementary.testsch;
 import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.charset.CCharset;
 import com.helger.commons.collection.ext.CommonsTreeSet;
 import com.helger.commons.collection.ext.ICommonsSortedSet;
 import com.helger.commons.io.file.FileHelper;
@@ -90,7 +90,7 @@ public final class MainExtractAllXPathExpressions
       }
 
     final File fOut = new File ("test-xpaths.txt");
-    try (final Writer w = new OutputStreamWriter (FileHelper.getOutputStream (fOut), CCharset.CHARSET_UTF_8_OBJ))
+    try (final Writer w = new OutputStreamWriter (FileHelper.getOutputStream (fOut), StandardCharsets.UTF_8))
     {
       for (final String s : aExprs)
         w.write ("_testOK (\"" + _escape (s) + "\");\n");

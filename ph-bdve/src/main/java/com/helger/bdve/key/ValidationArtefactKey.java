@@ -295,7 +295,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
                                        .appendIfNotNull ("Country", m_aCountry)
                                        .appendIfNotNull ("SectorKey", m_aSectorKey)
                                        .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
-                                       .toString ();
+                                       .getToString ();
   }
 
   /**

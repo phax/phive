@@ -46,7 +46,7 @@ public class BusinessSpecificationRegistry implements Serializable
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  protected final ICommonsMap <String, IBusinessSpecification> m_aMap = new CommonsHashMap<> ();
+  protected final ICommonsMap <String, IBusinessSpecification> m_aMap = new CommonsHashMap <> ();
 
   public BusinessSpecificationRegistry ()
   {}
@@ -125,6 +125,6 @@ public class BusinessSpecificationRegistry implements Serializable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Map", m_aMap).toString ();
+    return new ToStringGenerator (this).append ("Map", m_aMap).getToString ();
   }
 }
