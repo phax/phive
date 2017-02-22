@@ -30,10 +30,11 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ext.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.invoic.d14b.iso20625.MINVOIC;
 import com.helger.jaxb.builder.JAXBDocumentType;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
+
+import eu.cen.en16931.edifact.invoicd14b.iso20625.MINVOIC;
 
 /**
  * CEN/TC 434 - EN 16931 validation artefacts etc
@@ -66,7 +67,7 @@ public final class CEN19631
                                                                                                      .setTransaction (new SpecificationTransaction ("edifact",
                                                                                                                                                     "EDIFACT/ISO 20625 Invoice",
                                                                                                                                                     new JAXBDocumentType (MINVOIC.class,
-                                                                                                                                                                          new CommonsArrayList<> ("/en16931/edifact/schema/INVOIC_D14B_ISO20625.xsd"),
+                                                                                                                                                                          new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
                                                                                                                                                                           x -> x),
                                                                                                                                                     CIID16BNamespaceContext.getInstance ()))
                                                                                                      .build ();
