@@ -1,4 +1,4 @@
-#peppol-validation-engine
+# peppol-validation-engine
 PEPPOL BIS v2 validation engine.
 A running example can be found on [PEPPOL Practical](http://peppol.helger.com/public/menuitem-validation-bis2)
 
@@ -9,7 +9,7 @@ This project is divided into 3 sub-projects for maximum flexibility
   * ph-bdve-peppol - the PEPPOL specific setup etc
   * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.1 support
   
-#News
+# News
   * v3.0.0 - 2017-01-26
     * Is a complete rewrite with different structure etc.
     * Binds to ph-commons 8.6.x
@@ -19,10 +19,10 @@ This project is divided into 3 sub-projects for maximum flexibility
   * v2.0.0 - 2016-08-22
     * Requires JDK 8
 
-#Usage notes
+# Usage notes
 Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle runtime, this can be achieved by passing `-Xss1m` on the command line. This only seems to be a problem when running 32bit Java. With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
-#Maven usage
+# Maven usage
 Add the following to your `pom.xml` to use this artifact:
 ```
 <dependency>
@@ -34,7 +34,7 @@ Add the following to your `pom.xml` to use this artifact:
 
 (no release yet)
 
-#Origin of some elements
+# Origin of some elements
 The rule source files were originating from https://github.com/oriol/validation-tools
 
 ---
