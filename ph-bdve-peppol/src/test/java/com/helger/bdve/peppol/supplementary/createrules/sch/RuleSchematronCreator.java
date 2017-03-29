@@ -51,7 +51,6 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.serialize.MicroWriter;
-import com.helger.xml.serialize.write.XMLWriterSettings;
 
 @Immutable
 public final class RuleSchematronCreator
@@ -60,7 +59,7 @@ public final class RuleSchematronCreator
   {
     private int m_nLastID = 0;
     // Map from String to ID
-    private final ICommonsMap <String, String> m_aMap = new CommonsHashMap<> ();
+    private final ICommonsMap <String, String> m_aMap = new CommonsHashMap <> ();
 
     @Nonnull
     @Nonempty
@@ -100,7 +99,7 @@ public final class RuleSchematronCreator
   private final PrerequesiteCache m_aPrereqCache = new PrerequesiteCache ();
 
   // Map from transaction to Map from context to list of assertions
-  private final ICommonsMap <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new CommonsHashMap<> ();
+  private final ICommonsMap <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new CommonsHashMap <> ();
 
   private RuleSchematronCreator ()
   {}
@@ -128,7 +127,7 @@ public final class RuleSchematronCreator
         IMultiMapListBased <String, RuleAssertion> aTransactionRules = m_aAbstractRules.get (sTransaction);
         if (aTransactionRules == null)
         {
-          aTransactionRules = new MultiHashMapArrayListBased<> ();
+          aTransactionRules = new MultiHashMapArrayListBased <> ();
           m_aAbstractRules.put (sTransaction, aTransactionRules);
         }
         aTransactionRules.putSingle (sContext, new RuleAssertion (sRuleID, sMessage, sSeverity));
@@ -182,8 +181,7 @@ public final class RuleSchematronCreator
           eAssert.appendText ("[" + sTestID + "]-" + aRuleAssertion.getMessage ());
         }
       }
-      if (SimpleFileIO.writeFile (aSCHFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ)
-                      .isFailure ())
+      if (SimpleFileIO.writeFile (aSCHFile, MicroWriter.getNodeAsBytes (aDoc)).isFailure ())
         throw new IllegalStateException ("Failed to write " + aSCHFile);
     }
   }
@@ -203,7 +201,7 @@ public final class RuleSchematronCreator
   {
     CreateHelper.log ("    Handling sheet for binding '" + eBinding.getID () + "'");
     int nRow = 1;
-    final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased<> ();
+    final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased <> ();
     while (!ODFHelper.isEmpty (aSheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aSheet, 0, nRow);

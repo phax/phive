@@ -69,7 +69,6 @@ import com.helger.genericode.v10.UseType;
 import com.helger.genericode.v10.Value;
 import com.helger.xml.XMLFactory;
 import com.helger.xml.serialize.write.XMLWriter;
-import com.helger.xml.serialize.write.XMLWriterSettings;
 import com.helger.xml.transform.DefaultTransformURIResolver;
 import com.helger.xml.transform.TransformSourceFactory;
 import com.helger.xml.transform.XMLTransformerFactory;
@@ -130,7 +129,7 @@ public final class Main1CreateCodeLists
 
     CreateHelper.log ("  Reading CVA data");
     int nRow = 2;
-    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet<> ();
+    final ICommonsSortedSet <String> aAllReferencedCodeListNames = new CommonsTreeSet <> ();
     while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
     {
       final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
@@ -171,7 +170,7 @@ public final class Main1CreateCodeLists
       aCVA.setName (FilenameHelper.getBaseName (aCVAFile));
 
       // Create ValueLists
-      final ICommonsMap <String, ValueList> aValueListMap = new CommonsHashMap<> ();
+      final ICommonsMap <String, ValueList> aValueListMap = new CommonsHashMap <> ();
       final ValueLists aValueLists = new ValueLists ();
       // Emit only the code lists, that are used in the contexts
       for (final String sCodeListName : aCVAData.getAllUsedCodeListNames ())
@@ -219,7 +218,7 @@ public final class Main1CreateCodeLists
       throw new IllegalStateException ("CVA was not referencing any code list!");
 
     // Jut in case of error
-    final ICommonsList <String> aAvailableSheets = new CommonsArrayList<> ();
+    final ICommonsList <String> aAvailableSheets = new CommonsArrayList <> ();
     for (int i = 0; i < aSpreadsheet.getSheetCount (); ++i)
       aAvailableSheets.add (aSpreadsheet.getSheetByIndex (i).getTableName ());
 
@@ -324,7 +323,7 @@ public final class Main1CreateCodeLists
       final File aCVAFile = _getCVAFile (sPrefix, sTransaction);
       final File aResultXSLT = _getXSLTFile (sPrefix, sTransaction);
 
-      final ICommonsList <String> aMissingCodeLists = new CommonsArrayList<> ();
+      final ICommonsList <String> aMissingCodeLists = new CommonsArrayList <> ();
       for (final String sCodeListName : aEntry.getValue ().getAllUsedCodeListNames ())
         if (!_getGCFile (sPrefix, sCodeListName).exists ())
           aMissingCodeLists.add (sCodeListName);
@@ -344,7 +343,7 @@ public final class Main1CreateCodeLists
       final Document aSCHDoc = XMLFactory.newDocument ();
       aTransformer.transform (TransformSourceFactory.create (aCVAFile), new DOMResult (aSCHDoc));
 
-      SimpleFileIO.writeFile (aResultXSLT, XMLWriter.getXMLString (aSCHDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+      SimpleFileIO.writeFile (aResultXSLT, XMLWriter.getNodeAsBytes (aSCHDoc));
     }
   }
 
@@ -364,7 +363,7 @@ public final class Main1CreateCodeLists
       final SpreadsheetDocument aSpreadsheet = SpreadsheetCache.readSpreadsheet (aCodeListFile);
 
       /** From transaction to CVAData */
-      final ICommonsSortedMap <String, CVAData> aCVAs = new CommonsTreeMap<> ();
+      final ICommonsSortedMap <String, CVAData> aCVAs = new CommonsTreeMap <> ();
 
       _createCVAandGC (sPrefix, aSpreadsheet, aCVAs);
 

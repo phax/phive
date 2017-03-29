@@ -24,7 +24,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # Maven usage
 Add the following to your `pom.xml` to use this artifact:
-```
+```xml
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
