@@ -60,6 +60,9 @@ public final class CPeppolValidationArtefact
   public static final IBusinessSpecification BILLING_05 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
                                                                                "bis-05",
                                                                                "OpenPEPPOL BIS 5, Billing");
+  public static final IBusinessSpecification PUNCH_OUT_18 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
+                                                                                 "bis-18",
+                                                                                 "OpenPEPPOL BIS 18, Punch Out");
   public static final IBusinessSpecification ORDERING_28 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
                                                                                 "bis-28",
                                                                                 "OpenPEPPOL BIS 28, Ordering");
@@ -69,6 +72,9 @@ public final class CPeppolValidationArtefact
   public static final IBusinessSpecification MLR_36 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
                                                                            "bis-36",
                                                                            "OpenPEPPOL BIS 36, MLR");
+  public static final IBusinessSpecification ORDER_AGREEMENT_42 = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
+                                                                                       "bis-42",
+                                                                                       "OpenPEPPOL BIS 42, Order Agreement");
 
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
   public static final ValidationArtefactKey VK_CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
@@ -96,6 +102,9 @@ public final class CPeppolValidationArtefact
                                                                                                                            .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14_ATGOV = new ValidationArtefactKey.Builder (VK_BILLING_05_T14_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                                                  .build ();
+  public static final ValidationArtefactKey VK_PUNCH_OUT_18_T77 = new ValidationArtefactKey.Builder ().setBusinessSpecification (PUNCH_OUT_18)
+                                                                                                      .setTransaction (EBII2Transaction.T77)
+                                                                                                      .build ();
   public static final ValidationArtefactKey VK_ORDERING_28_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDERING_28)
                                                                                                      .setTransaction (EBII2Transaction.T01)
                                                                                                      .build ();
@@ -108,6 +117,9 @@ public final class CPeppolValidationArtefact
   public static final ValidationArtefactKey VK_MLR_36_T71 = new ValidationArtefactKey.Builder ().setBusinessSpecification (MLR_36)
                                                                                                 .setTransaction (EBII2Transaction.T71)
                                                                                                 .build ();
+  public static final ValidationArtefactKey VK_ORDER_AGREEMENT_42_T110 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDER_AGREEMENT_42)
+                                                                                                             .setTransaction (EBII2Transaction.T110)
+                                                                                                             .build ();
 
   public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV",
                                                                                                    "Austrian Government");

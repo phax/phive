@@ -61,22 +61,19 @@ public final class EN16931ValidationTest
       for (final IValidationExecutor aVE : aVES)
       {
         final IValidationArtefact aVA = aVE.getValidationArtefact ();
-        if (aVA.getValidationArtefactType ().isSchematronBased ())
+        // Check that the passed Schematron is valid
+        final IReadableResource aRes = aVA.getRuleResource ();
+        switch (aVA.getValidationArtefactType ())
         {
-          // Check that the passed Schematron is valid
-          final IReadableResource aRes = aVA.getRuleResource ();
-          switch (aVA.getValidationArtefactType ())
-          {
-            case SCHEMATRON_PURE:
-              assertTrue (aRes.toString (), new SchematronResourcePure (aRes).isValidSchematron ());
-              break;
-            case SCHEMATRON_SCH:
-              assertTrue (aRes.toString (), new SchematronResourceSCH (aRes).isValidSchematron ());
-              break;
-            case SCHEMATRON_XSLT:
-              assertTrue (aRes.toString (), new SchematronResourceXSLT (aRes).isValidSchematron ());
-              break;
-          }
+          case SCHEMATRON_PURE:
+            assertTrue (aRes.toString (), new SchematronResourcePure (aRes).isValidSchematron ());
+            break;
+          case SCHEMATRON_SCH:
+            assertTrue (aRes.toString (), new SchematronResourceSCH (aRes).isValidSchematron ());
+            break;
+          case SCHEMATRON_XSLT:
+            assertTrue (aRes.toString (), new SchematronResourceXSLT (aRes).isValidSchematron ());
+            break;
         }
       }
   }

@@ -39,7 +39,7 @@ public final class PeppolValidation330
 {
   // Standard resources
   public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 3, 0);
-  private static String VERSION_STR = PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
+  public static final String VERSION_STR = PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
 
   // Standard
   public static final VESID VID_OPENPEPPOL_T71_V2 = new VESID ("eu.peppol.bis2", "t71", VERSION_STR);

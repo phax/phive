@@ -78,7 +78,9 @@ public enum EBII2Transaction implements ISpecificationTransaction
   T71 ("Message Level Response", 71, null, "1.0", EUBL21DocumentType.APPLICATION_RESPONSE),
   T72 ("Catalogue Subscription Request", 72, null, "1.0", EUBL21DocumentType.CATALOGUE_REQUEST),
   T73 ("Catalogue Subscription Response", 73, null, "1.0", EUBL21DocumentType.APPLICATION_RESPONSE),
-  T76 ("Order Response", 76, null, "1.0", EUBL21DocumentType.ORDER_RESPONSE);
+  T76 ("Order Response", 76, null, "1.0", EUBL21DocumentType.ORDER_RESPONSE),
+  T77 ("Punch Out", 77, null, "1.0", EUBL21DocumentType.CATALOGUE),
+  T110 ("Order Agreement", 110, null, "1.0", EUBL21DocumentType.ORDER_RESPONSE);
 
   private final String m_sID;
   private final String m_sName;

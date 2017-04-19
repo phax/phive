@@ -23,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.peppol.EBII2Transaction;
 import com.helger.commons.string.StringHelper;
 
 /**
@@ -37,7 +36,7 @@ public final class EBII2TransactionTest
   public void testBasic ()
   {
     // Add one for the MLR which has no transaction ID!
-    assertEquals (33 + 1, EBII2Transaction.values ().length);
+    assertEquals (35 + 1, EBII2Transaction.values ().length);
 
     for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
     {

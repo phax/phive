@@ -26,6 +26,8 @@ import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.schematron.pure.SchematronResourcePure;
+import com.helger.schematron.xslt.SchematronResourceSCH;
+import com.helger.schematron.xslt.SchematronResourceXSLT;
 
 /**
  * Test class for class {@link PeppolValidation}.
@@ -60,11 +62,20 @@ public final class PeppolValidationTest
       for (final IValidationExecutor aVE : aVES)
       {
         final IValidationArtefact aVA = aVE.getValidationArtefact ();
-        if (aVA.getValidationArtefactType ().isSchematronBased ())
+        final IReadableResource aRes = aVA.getRuleResource ();
+
+        // Check that the passed Schematron is valid
+        switch (aVA.getValidationArtefactType ())
         {
-          // Check that the passed Schematron is valid
-          final IReadableResource aRes = aVA.getRuleResource ();
-          assertTrue (aRes.toString (), new SchematronResourcePure (aRes).isValidSchematron ());
+          case SCHEMATRON_PURE:
+            assertTrue (aRes.toString (), new SchematronResourcePure (aRes).isValidSchematron ());
+            break;
+          case SCHEMATRON_SCH:
+            assertTrue (aRes.toString (), new SchematronResourceSCH (aRes).isValidSchematron ());
+            break;
+          case SCHEMATRON_XSLT:
+            assertTrue (aRes.toString (), new SchematronResourceXSLT (aRes).isValidSchematron ());
+            break;
         }
       }
   }
