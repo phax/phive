@@ -150,6 +150,14 @@ public final class VESID implements Serializable, Comparable <VESID>
   }
 
   @Nonnull
+  public VESID getWithVersion (@Nonnull @Nonempty final String sNewVersion)
+  {
+    if (EqualsHelper.equals (m_sVersion, sNewVersion))
+      return this;
+    return new VESID (m_sGroupID, m_sArtifactID, sNewVersion, m_sClassifier);
+  }
+
+  @Nonnull
   public VESID getWithClassifier (@Nullable final String sNewClassifier)
   {
     if (EqualsHelper.equals (m_sClassifier, sNewClassifier))
