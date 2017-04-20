@@ -80,9 +80,11 @@
   <rule context="$Tax_Total">
     <assert test="$EUGEN-T10-R043" flag="fatal" id="EUGEN-T10-R043">[EUGEN-T10-R043]-The total tax amount MUST equal the sum of tax amounts per category.</assert>
   </rule>
+  <!--
   <rule context="$Unit_Code">
-    <!--<assert test="$EUGEN-T10-R030" flag="fatal" id="EUGEN-T10-R030">[EUGEN-T10-R030]-A unit code attribute MUST have a unit code list identifier attribute 'UNECERec20'.</assert>-->
+    <assert test="$EUGEN-T10-R030" flag="fatal" id="EUGEN-T10-R030">[EUGEN-T10-R030]-A unit code attribute MUST have a unit code list identifier attribute 'UNECERec20'.</assert>
   </rule>
+  -->
   <rule context="$VAT_category">
     <assert test="$EUGEN-T10-R042" flag="fatal" id="EUGEN-T10-R042">[EUGEN-T10-R042]-The tax amount per category MUST be the taxable amount multiplied by the category percentage.</assert>
     <assert test="$EUGEN-T10-R046" flag="fatal" id="EUGEN-T10-R046">[EUGEN-T10-R046]-If the tax currency code is different from the document currency code, each tax subtotal has to include the tax amount in both currencies</assert>
