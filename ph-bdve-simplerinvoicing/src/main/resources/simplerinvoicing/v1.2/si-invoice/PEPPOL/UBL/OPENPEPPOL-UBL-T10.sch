@@ -1,45 +1,38 @@
 <!-- Schematron binding rules generated automatically. -->
 <!-- Data binding to UBL syntax for T10 -->
 <!-- (2009). Invinet Sistemes -->
-<pattern xmlns="http://purl.oclc.org/dsdl/schematron" is-a="PEPPOL-T10" id="PEPPOL-UBL-T10">
-    <!-- Version check -->
-    <rule context="node()[not(contains(//cbc:CustomizationID, 'urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1'))] | @*[not(contains(//cbc:CustomizationID, 'urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1'))]">
-        <assert test="true()" />
-    </rule>
-    <!-- End of version check -->
-  <param name="EUGEN-T10-R004" value="((cbc:PaymentMeansCode = '31') and (cac:PayeeFinancialAccount/cbc:ID/@schemeID and cac:PayeeFinancialAccount/cbc:ID/@schemeID = 'IBAN') and (cac:PayeeFinancialAccount/cac:FinancialInstitutionBranch/cac:FinancialInstitution/cbc:ID/@schemeID and cac:PayeeFinancialAccount/cac:FinancialInstitutionBranch/cac:FinancialInstitution/cbc:ID/@schemeID = 'BIC')) or (string(cbc:PaymentMeansCode) != '31') or ((cbc:PaymentMeansCode = '31') and  (not(cac:PayeeFinancialAccount/cbc:ID/@schemeID) or (string(cac:PayeeFinancialAccount/cbc:ID/@schemeID) != 'IBAN')))"/>
+<pattern xmlns="http://purl.oclc.org/dsdl/schematron" is-a="PEPPOL12-T10" id="PEPPOL12-UBL-T10">
+  <param name="EUGEN-T10-R004" value="((cbc:PaymentMeansCode = '31') and (cac:PayeeFinancialAccount/cbc:ID/@schemeID and cac:PayeeFinancialAccount/cbc:ID/@schemeID = 'IBAN') and (cac:PayeeFinancialAccount/cac:FinancialInstitutionBranch/cac:FinancialInstitution/cbc:ID/@schemeID and cac:PayeeFinancialAccount/cac:FinancialInstitutionBranch/cac:FinancialInstitution/cbc:ID/@schemeID = 'BIC')) or (cbc:PaymentMeansCode != '31') or ((cbc:PaymentMeansCode = '31') and  (not(cac:PayeeFinancialAccount/cbc:ID/@schemeID) or (cac:PayeeFinancialAccount/cbc:ID/@schemeID != 'IBAN')))"/>
   <param name="EUGEN-T10-R008" value="(parent::cac:AllowanceCharge) or (cbc:ID and cbc:Percent) or (cbc:ID = 'AE')"/>
   <param name="EUGEN-T10-R012" value="not(cbc:MultiplierFactorNumeric) or number(cbc:MultiplierFactorNumeric) &gt;=0"/>
-   <!-- EUGEN-T10-R022 is removed for Simplerinvoicing --><!--<param name="EUGEN-T10-R022" value="number(cbc:Amount)&gt;=0"/>-->
+  <param name="EUGEN-T10-R022" value="number(cbc:Amount)&gt;=0"/>
   <param name="EUGEN-T10-R023" value="@schemeID"/>
   <param name="EUGEN-T10-R024" value="@schemeID"/>
   <param name="EUGEN-T10-R025" value="@listID = 'UNCL1001'"/>
-  <!-- EUGEN-T10-R026 is removed for Simplerinvoicing --><!--<param name="EUGEN-T10-R026" value="@listID =  'ISO4217'"/>-->
+  <param name="EUGEN-T10-R026" value="@listID =  'ISO4217'"/>
   <param name="EUGEN-T10-R027" value="@listID = 'ISO3166-1:Alpha2'"/>
   <param name="EUGEN-T10-R028" value="@listID = 'UNCL4461'"/>
   <param name="EUGEN-T10-R029" value="@listID = 'UNCL4465'"/>
-  <!-- EUGEN-T10-R030 is removed for Simplerinvoicing --><!--<param name="EUGEN-T10-R030" value="not(attribute::unitCode) or (attribute::unitCode and attribute::unitCodeListID = 'UNECERec20')"/>-->
+  <param name="EUGEN-T10-R030" value="not(attribute::unitCode) or (attribute::unitCode and attribute::unitCodeListID = 'UNECERec20')"/>
   <param name="EUGEN-T10-R031" value="@schemeID"/>
   <param name="EUGEN-T10-R032" value="@schemeID = 'UNCL5305'"/>
   <param name="EUGEN-T10-R033" value="@listID = 'UNCL1001'"/>
   <param name="EUGEN-T10-R034" value="@schemeID"/>
-  <!-- EUGEN-T10-R035 is removed for Simplerinvoicing --><!--<param name="EUGEN-T10-R035" value="(cac:Party/cac:PartyName/cbc:Name)"/>-->
-  <!-- EUGEN-T10-R036 is removed for Simplerinvoicing --><!--<param name="EUGEN-T10-R036" value="(cac:Party/cac:PartyName/cbc:Name)"/>-->
-  <!-- EUGEN-T10-R037 is removed for Simplerinvoicing --><!--<param name="EUGEN-T10-R037" value="(cac:Party/cac:PostalAddress)"/>-->
-  <!-- EUGEN-T10-R038 is removed for Simplerinvoicing --><!--<param name="EUGEN-T10-R038" value="(cac:Party/cac:PostalAddress)"/>-->
+  <param name="EUGEN-T10-R035" value="(cac:Party/cac:PartyName/cbc:Name)"/>
+  <param name="EUGEN-T10-R036" value="(cac:Party/cac:PartyName/cbc:Name)"/>
+  <param name="EUGEN-T10-R037" value="(cac:Party/cac:PostalAddress)"/>
+  <param name="EUGEN-T10-R038" value="(cac:Party/cac:PostalAddress)"/>
   <param name="EUGEN-T10-R039" value="(cac:Party/cac:PartyLegalEntity)"/>
   <param name="EUGEN-T10-R040" value="(cac:Party/cac:PartyLegalEntity)"/>
   <param name="EUGEN-T10-R041" value="not(/ubl:Invoice/cac:TaxTotal/*/*/*/cbc:ID = 'VAT') or (starts-with(cac:Party/cac:PartyTaxScheme/cbc:CompanyID,cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode))"/>
-  <param name="EUGEN-T10-R042" value="((cbc:TaxAmount) and (cbc:TaxableAmount) and (cac:TaxCategory/cbc:Percent) and (number(cbc:TaxAmount - 1) &lt; number(cbc:TaxableAmount * (cac:TaxCategory/cbc:Percent div 100))) and (number(cbc:TaxAmount + 1) &gt; number(cbc:TaxableAmount * (cac:TaxCategory/cbc:Percent div 100)))) or not(cac:TaxCategory/cbc:Percent) or not(cbc:TaxableAmount)"/>
+  <param name="EUGEN-T10-R042" value="((cbc:TaxableAmount) and (cac:TaxCategory/cbc:Percent) and (xs:decimal(cbc:TaxAmount - 1) &lt; xs:decimal(cbc:TaxableAmount * (xs:decimal(cac:TaxCategory/cbc:Percent) div 100))) and (xs:decimal(cbc:TaxAmount + 1) &gt; xs:decimal(cbc:TaxableAmount * (xs:decimal(cac:TaxCategory/cbc:Percent) div 100)))) or not(cac:TaxCategory/cbc:Percent) or not(cbc:TaxableAmount)"/>
   <!-- Adopted for Simplerivoicing for proper rounding.
- 
-    <param name="EUGEN-T10-R043" value="(number(child::cbc:TaxAmount)= round(number(sum(cac:TaxSubtotal/cbc:TaxAmount) * 10 * 10)) div 100) "/> 
+  <param name="EUGEN-T10-R043" value="(xs:decimal(child::cbc:TaxAmount)= round(number(xs:decimal(sum(cac:TaxSubtotal/cbc:TaxAmount)) * 10 * 10)) div 100) "/>
   -->
   <param name="EUGEN-T10-R043" value="(round(xs:decimal(child::cbc:TaxAmount) * 10 * 10) div 100= round(xs:decimal(sum(cac:TaxSubtotal/cbc:TaxAmount) * 10 * 10)) div 100) "/> 
-  
-  <param name="EUGEN-T10-R044" value="not(/ubl:Invoice/cbc:TaxCurrencyCode) or (string(/ubl:Invoice/cbc:TaxCurrencyCode) = string(/ubl:Invoice/cbc:DocumentCurrencyCode)) or (/ubl:Invoice/cac:TaxExchangeRate)"/>
+  <param name="EUGEN-T10-R044" value="not(//cbc:TaxCurrencyCode) or (//cac:TaxExchangeRate)"/>
   <param name="EUGEN-T10-R045" value="(cbc:CalculationRate) and (cbc:MathematicOperatorCode)"/>
-  <param name="EUGEN-T10-R046" value="not(/ubl:Invoice/cbc:TaxCurrencyCode) or (string(/ubl:Invoice/cbc:TaxCurrencyCode) = string(/ubl:Invoice/cbc:DocumentCurrencyCode)) or (cbc:TaxAmount and cbc:TransactionCurrencyTaxAmount)"/>
+  <param name="EUGEN-T10-R046" value="not(/ubl:Invoice/cbc:TaxCurrencyCode) or (cbc:TaxAmount and cbc:TransactionCurrencyTaxAmount)"/>
   <param name="VAT_category" value="//cac:TaxSubtotal[cac:TaxCategory/cac:TaxScheme/cbc:ID = 'VAT']"/>
   <param name="Unit_Code" value="//*[contains(name(),'Quantity')]"/>
   <param name="Total_Invoice" value="//cac:LegalMonetaryTotal"/>

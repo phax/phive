@@ -46,8 +46,8 @@ public final class CTestFiles
   @ReturnsMutableCopy
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
-    final ICommonsList <MockFile> ret = new CommonsArrayList<> ();
-    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SIMPLERINVOICING_V11 })
+    final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
+    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SIMPLERINVOICING_V12 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
 
@@ -60,9 +60,9 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (aVESID.equals (SimplerInvoicingValidation.VID_SIMPLERINVOICING_V11))
+    if (aVESID.equals (SimplerInvoicingValidation.VID_SIMPLERINVOICING_V12))
     {
-      final ICommonsList <IReadableResource> ret = new CommonsArrayList<> ();
+      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
       ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R034.xml"));
       if (false)
         ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R035.xml"));

@@ -34,19 +34,13 @@ public final class CSimplerInvoicingValidationArtefact
 {
   public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING = new ValidationArtefactSectorKey ("NLSI",
                                                                                                                 "SimplerInvoicing");
-  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING_STRICT = new ValidationArtefactSectorKey ("NLSIS",
-                                                                                                                       "SimplerInvoicing (Strict)");
 
   public static final ValidationArtefactKey VK_SIMPLERINVOICING = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
                                                                                                                                                  .setSectorKey (CSimplerInvoicingValidationArtefact.SECTOR_NL_SIMPLERINVOICING)
                                                                                                                                                  .build ();
-  public static final ValidationArtefactKey VK_SIMPLERINVOICING_STRICT = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
-                                                                                                                                                        .setSectorKey (CSimplerInvoicingValidationArtefact.SECTOR_NL_SIMPLERINVOICING_STRICT)
-                                                                                                                                                        .build ();
 
   // SimplerInvoicing
   public static final IReadableResource INVOICE_SIMPLER_INVOICING = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV.SCH");
-  public static final IReadableResource INVOICE_SIMPLER_INVOICING_STRICT = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-STRICT.SCH");
 
   private CSimplerInvoicingValidationArtefact ()
   {}

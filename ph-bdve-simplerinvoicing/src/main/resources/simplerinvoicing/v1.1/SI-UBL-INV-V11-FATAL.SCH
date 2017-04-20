@@ -9,22 +9,18 @@
     <!-- if we want to warn for new version, this would be a good place -->
     <!--
     <rule context="ubl:Invoice" flag="warning">
-        <assert test="false()" flag="warning">[SI-UBL-INV-R000]-Simplerinvoicing v1.1 validation is used but will soon be obsolete, please move to Simplerinvoicing v1.1.1</assert>
+        <assert test="false()" flag="warning">[SI-UBL-INV-R000]-Simplerinvoicing v1.1 validation is used but will soon be obsolete, please move to Simplerinvoicing v1.2</assert>
     </rule>
     -->
     <!-- end of warning for new version -->
     <!-- End of version check -->
     <!-- End backwards compatibiltiy statement -->
-
-
     
-    <rule context="/" flag="fatal">
-        <assert test="ubl:Invoice" flag="fatal">[SI-V11-INV-R000]-This is NOT a UBL 2.x document, validation cannot continue</assert>
-    </rule>
     <rule context="ubl:Invoice" flag="fatal">
         <assert test="cbc:UBLVersionID='2.1'" flag="fatal">[SI-V11-INV-R001]-Each invoice MUST be specified as a UBL 2.1 document</assert>
         <assert test="cbc:InvoiceTypeCode" flag="fatal">[SI-V11-INV-R002]-Each invoice MUST have an InvoiceTypeCode declaration</assert>
-    </rule>
+        <assert test="cbc:InvoiceTypeCode!='384' or cac:BillingReference" flag="fatal">[SI-V11-INV-R453]-For corrective invoices a billing reference MUST be set</assert>
+     </rule>
     <rule context="cbc:CompanyID" flag="fatal">
         <assert test="@schemeID" flag="fatal">[SI-V11-INV-R003]-A CompanyID MUST be specified using a PEPPOL Party identifier</assert>
     </rule>
@@ -90,7 +86,7 @@
     <rule context="cbc:TransactionCurrencyTaxAmount/@currencyID[/ubl:Invoice/cbc:TaxCurrencyCode]" flag="fatal">
         <assert test="/ubl:Invoice/cbc:TaxCurrencyCode and string(.) = string(/ubl:Invoice/cbc:TaxCurrencyCode)" flag="fatal">[SI-V11-INV-R025]-Transaction currency tax amounts MUST be in the local currency and equal to the tax currency defined on the header level</assert>
     </rule>
-    <rule context="@currencyID" flag="fatal">
+    <rule context="cbc:*/@currencyID" flag="fatal">
         <assert test="string(.) = string(/ubl:Invoice/cbc:DocumentCurrencyCode)" flag="fatal">[SI-V11-INV-R026]-Currency Identifier MUST be stated in the currency as defined on header level</assert>
     </rule>
     <rule context="ubl:Invoice/cac:TaxTotal[cac:TaxSubtotal/cac:TaxCategory/cac:TaxScheme/cbc:ID = 'VAT']/cbc:TaxAmount" flag="fatal">

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:ubl="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" queryBinding="xslt" xmlns="http://purl.oclc.org/dsdl/schematron">
     <!--
+        Release 1.2
+        Author: Rik Ribbers, Jelte Jansen (SIDN)
+        Email: support@simplerinvoicing.org
+        Changes since 1.1.1:
+        - SI-UBL version 1.2 rules included
+        - XSLT 2.0 support
+
         Release 1.1.1
         Author: Jelte Jansen (SIDN Labs)
         Changes since 1.1:
@@ -10,8 +17,7 @@
 
         Release 1.1
         Author: M.P. Diepstra (Innopay) 
-        Email: support@simplerinvoicing.org
-
+      
         Usable XPath statements for getting insight into Schematron file:
         //rule[@context=preceding-sibling::rule/@context]      - - - > Gets all rules that might not get fired because they have the same context as previous rules
         max(//assert/substring-before(text(), ']'))   - - - > Gets the maximum number of the current error numbering in the rule set
@@ -34,11 +40,12 @@
             - Add warnings for elements not in the core
             - Decide whether or not multiple occurences of items that have macoccur of 1 should be fatal or warning
     -->
-    <title>Simplerinvoicing invoice v1.1 bound to UBL 2.1 and OPENPEPPOL v2</title>
+    <title>Simplerinvoicing invoice v1.2 bound to UBL 2.1 and OPENPEPPOL v2</title>
     <ns prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
     <ns prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"/>
     <ns prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"/>
 
+<!--
     <phase id="invoice_phase">
         <active pattern="BII-UBL-T10"/>
         <active pattern="PEPPOL-UBL-T10"/>
@@ -56,11 +63,29 @@
         <active pattern="SI-V10-INV-FATAL"/>
         <active pattern="SI-V10-INV-WARNING"/>
     </phase>
+-->
 
     <!-- basic version-independent checks -->
-    <include href="general/SI-UBL-GENERAL.SCH" />
+    <include href="general/SI-UBL-INV-GENERAL.SCH" />
 
+    <!-- SimplerInvoicing Version 1.2 -->
+
+    <include href="v1.2/si-invoice/SI-UBL-INV-V12-WARNING.SCH" />
+    <include href="v1.2/si-invoice/SI-UBL-INV-V12-FATAL.SCH" />
+    <include href="v1.2/si-invoice/SI-UBL-INV-V12-Codes.SCH" />
+
+    <include href="v1.2/si-invoice/BII/abstract/BIIRULES-T10.sch"/>
+    <include href="v1.2/si-invoice/BII/UBL/BIIRULES-UBL-T10.sch"/>
+    <include href="v1.2/si-invoice/BII/codelist/BIIRULESCodesT10-UBL.sch"/>
+
+    <include href="v1.2/si-invoice/PEPPOL/abstract/OPENPEPPOL-T10.sch"/>
+    <include href="v1.2/si-invoice/PEPPOL/UBL/OPENPEPPOL-UBL-T10.sch"/>
+    <include href="v1.2/si-invoice/PEPPOL/codelist/OPENPEPPOLCodesT10-UBL.sch"/>
+
+<!--    <include href="v1.2/CORE/OPENPEPPOLCORE-UBL-T10.sch"/>-->
     <!-- SimplerInvoicing Version 1.1 -->
+
+    <!-- BII patterns, one per version -->
 
     <include href="v1.1/BII/abstract/BIIRULES-T10.sch"/>
     <include href="v1.1/BII/UBL/BIIRULES-UBL-T10.sch"/>
@@ -75,14 +100,12 @@
     <include href="v1.1/SI-UBL-INV-V11-WARNING.SCH" />
     <include href="v1.1/SI-UBL-INV-V11-FATAL.SCH" />
     <include href="v1.1/SI-UBL-INV-V11-Codes.SCH" />
-    
+
 
     <!-- SimplerInvoicing Version 1.0 -->
     <include href="v1.0/SI-UBL-INV-V10-FATAL.SCH"/>
     <include href="v1.0/SI-UBL-INV-V10-WARNING.SCH"/>
 
-<!-- Uncomment this to enable BII content checks on SI-UBL 1.0 documents
     <include href="v1.0/biirules/abstract/BIIRULES-T10.sch"/>
     <include href="v1.0/biirules/UBL/BIIRULES-UBL-T10.sch"/>
--->
 </schema>

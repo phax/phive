@@ -1,76 +1,76 @@
-<pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="SI-V11-INV-WARNING">
+<pattern xmlns="http://purl.oclc.org/dsdl/schematron" id="SI-V12-INV-WARNING">
 	<!-- Backwards compatibility statement for Simplerinvoicing v1.0, it should include the version for which the asserts in this pattern MUST not be executed -->
-    <rule context="node()[not(contains(//cbc:CustomizationID, 'urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1'))] | @*[not(contains(//cbc:CustomizationID, 'urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1'))]">
+    <rule context="node()[not(contains(//cbc:CustomizationID, 'urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.2'))] | @*[not(contains(//cbc:CustomizationID, 'urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.2'))]">
         <assert test="true()" />
     </rule>
-	<!-- End backwards compatibiltiy statement -->
+	<!-- End backwards compatibility statement -->
 	
 	<!-- Rules are numbered in the region 2xx -->
 	<rule context="cbc:CustomizationID">
-		<assert test="contains(., 'urn:www.simplerinvoicing.org:si:si-ubl:ver1.1')" flag="fatal">[SI-V11-INV-R200]-This XML instance is NOT tagged as an SI-UBL 1.1 invoice</assert>
+		<assert test="contains(., 'urn:www.simplerinvoicing.org:si:si-ubl:ver1.2')" flag="fatal">[SI-V12-INV-R200]-This XML instance is NOT tagged as an SI-UBL invoice</assert>
 	</rule>
 	<rule context="cac:ContractDocumentReference[2]">
-		<assert test="false()">[SI-V11-INV-R201]-An SI invoice SHOULD not contain more than one contract document reference</assert>
+		<assert test="false()">[SI-V12-INV-R201]-An SI invoice SHOULD not contain more than one contract document reference</assert>
 	</rule>
 	<rule context="cac:InvoicePeriod[2]">
-		<assert test="false()">[SI-V11-INV-R202]-An SI invoice SHOULD not contain more than one invoice period</assert>
+		<assert test="false()">[SI-V12-INV-R202]-An SI invoice SHOULD not contain more than one invoice period</assert>
 	</rule>
 	<rule context="cbc:Note[2]">
-		<assert test="false()">[SI-V11-INV-R203]-Multple notes in a section SHOULD not occur</assert>
+		<assert test="false()">[SI-V12-INV-R203]-Multple notes in a section SHOULD not occur</assert>
 	</rule>
 	<rule context="cbc:PartyIdentification[2]">
-		<assert test="false()" flag="warning">[SI-V11-INV-R204]-A party SHOULD not contain more than one identification</assert>
+		<assert test="false()" flag="warning">[SI-V12-INV-R204]-A party SHOULD not contain more than one identification</assert>
 	</rule>
 	<rule context="cac:PartyName[2]">
-		<assert test="false()" flag="warning">[SI-V11-INV-R205]-A party SHOULD not contain more than one name</assert>
+		<assert test="false()" flag="warning">[SI-V12-INV-R205]-A party SHOULD not contain more than one name</assert>
 	</rule>
 	<rule context="cac:PartyTaxScheme[2]">
-		<assert test="false()" flag="warning">[SI-V11-INV-R206]-A party SHOULD not contain more than one tax scheme</assert>
+		<assert test="false()" flag="warning">[SI-V12-INV-R206]-A party SHOULD not contain more than one tax scheme</assert>
 	</rule>
 	<rule context="cac:PartyLegalEntity[2]">
-		<assert test="false()" flag="warning">[SI-V11-INV-R207]-A party SHOULD not contain more than one legal entity</assert>
+		<assert test="false()" flag="warning">[SI-V12-INV-R207]-A party SHOULD not contain more than one legal entity</assert>
 	</rule>
 	<rule context="cac:PostalAddress | cac:Address">
-		<assert test="(cbc:StreetName and cbc:CityName and cbc:PostalZone and cac:Country)" flag="warning">[SI-V11-INV-R208]-An address in an invoice SHOULD contain at least, street name and number, city name, zip code and the country</assert>
+		<assert test="(cbc:StreetName and cbc:CityName and cbc:PostalZone and cac:Country)" flag="warning">[SI-V12-INV-R208]-An address in an invoice SHOULD contain at least, street name and number, city name, zip code and the country</assert>
 	</rule>
 	<rule context="cac:PaymentMeans[2]">
-		<assert test="false()" flag="warning">[SI-V11-INV-R209]-An invoice SHOULD not contain more than one means of payment</assert>
+		<assert test="false()" flag="warning">[SI-V12-INV-R209]-An invoice SHOULD not contain more than one means of payment</assert>
 	</rule>
 	<rule context="cbc:PaymentID[2]">
-		<assert test="false()" flag="warning">[SI-V11-INV-R210]-A payment means SHOULD not have multiple payment ids</assert>
+		<assert test="false()" flag="warning">[SI-V12-INV-R210]-A payment means SHOULD not have multiple payment ids</assert>
 	</rule>
 	<rule context="cbc:PrimaryAccountNumberID">
-		<assert test="string-length(normalize-space(text())) = 4 or string-length(normalize-space(text())) = 6">[SI-V11-INV-R211]-In accordance to general rules for
+		<assert test="string-length(normalize-space(text())) = 4 or string-length(normalize-space(text())) = 6">[SI-V12-INV-R211]-In accordance to general rules for
 			referencing payments cards only the last 4 or 6 digits of the card number SHOULD be used.</assert>
 	</rule>
 	<rule context="cac:PaymentTerms[2]">
-		<assert test="false()">[SI-V11-INV-R212]-An invoice SHOULD not have multiple payment terms</assert>
+		<assert test="false()">[SI-V12-INV-R212]-An invoice SHOULD not have multiple payment terms</assert>
 	</rule>
 	<!-- Next rule is commented because it conflicts with rule BII2-T10-R025, for the moment we assume the BII2 
 	rule should be followed -->
 	<!--<rule context="cbc:AllowanceChargeReason" flag="fatal">
-		<assert test="not(preceding-sibling::cbc:AllowanceChargeReasonCode)">[SI-V11-INV-R213]-When an allowance charge reason code is specified the allowance charge reason SHOULD not be included</assert>
+		<assert test="not(preceding-sibling::cbc:AllowanceChargeReasonCode)">[SI-V12-INV-R213]-When an allowance charge reason code is specified the allowance charge reason SHOULD not be included</assert>
 	</rule>-->
 	<rule context="cbc:TaxExemptionReasonCode | cbc:TaxExemptionReason">
-		<assert test="preceding-sibling::cbc:ID[text() = 'E' or text() = 'AB']">[SI-V11-INV-R214]-A tax exemption reason or reason code SHOULD only be given when the tax category is tax exempt</assert>
+		<assert test="preceding-sibling::cbc:ID[text() = 'E' or text() = 'AB']">[SI-V12-INV-R214]-A tax exemption reason or reason code SHOULD only be given when the tax category is tax exempt</assert>
 	</rule>
 	<rule context="cac:TaxCategory[2]">
-		<assert test="false()">[SI-V11-INV-R215]-Tax category SHOULD not occur more than once in a section</assert>
+		<assert test="false()">[SI-V12-INV-R215]-Tax category SHOULD not occur more than once in a section</assert>
 	</rule>
 	<rule context="cac:TaxTotal[2]">
-		<assert test="false()">[SI-V11-INV-R216]-An invoice SHOULD not have multiple tax totals on invoice level</assert>
+		<assert test="false()">[SI-V12-INV-R216]-An invoice SHOULD not have multiple tax totals on invoice level</assert>
 	</rule>
 	<rule context="cac:Delivery/cac:DeliveryLocation/cbc:ID/@schemeID" flag="warning">
-		<assert test="( ( not(contains(normalize-space(.),' ')) and contains( ' GLN ',concat(' ',normalize-space(.),' ') ) ) )" flag="warning">[SI-V11-INV-R217]-Location identifiers SHOULD be GLN</assert>
+		<assert test="( ( not(contains(normalize-space(.),' ')) and contains( ' GLN ',concat(' ',normalize-space(.),' ') ) ) )" flag="warning">[SI-V12-INV-R217]-Location identifiers SHOULD be GLN</assert>
 	</rule>
 	<rule context="cac:Delivery[2]">
-		<assert test="false()">[SI-V11-INV-R218]-Each invoiceline SHOULD have no more than one delivery specified</assert>
+		<assert test="false()">[SI-V12-INV-R218]-Each invoiceline SHOULD have no more than one delivery specified</assert>
 	</rule>
 	<rule context="cac:ClassifiedTaxCategory[2]">
-		<assert test="false()">[SI-V11-INV-R219]-An invoiceline SHOULD not have more than one classified tax category</assert>
+		<assert test="false()">[SI-V12-INV-R219]-An invoiceline SHOULD not have more than one classified tax category</assert>
 	</rule>
 	<rule context="cac:Price/cac:AllowanceCharge[2]">
-		<assert test="false()">[SI-V11-INV-R220]-The price in an invoiceline SHOULD not have more than one allowance charge</assert>
+		<assert test="false()">[SI-V12-INV-R220]-The price in an invoiceline SHOULD not have more than one allowance charge</assert>
 	</rule>
 	<rule context="ubl:Invoice" flag="warning">
 		<assert test="not(cbc:CopyIndicator)" flag="warning">A Simplerinvoicing invoice SHOULD not contain the element cbc:CopyIndicator</assert>
@@ -489,10 +489,10 @@
 		<assert test="not(cac:Price/cac:AllowanceCharge/cac:PaymentMeans)" flag="warning">A Simplerinvoicing invoice SHOULD not contain the element cac:InvoiceLine/cac:Price/cac:AllowanceCharge/cac:PaymentMeans</assert>
 		<assert test="not(cac:OrderLineReference/cbc:UUID)" flag="warning">A Simplerinvoicing invoice SHOULD not contain the element cac:InvoiceLine/cac:OrderLineReference/cbc:UUID</assert>
 		<assert test="not(cac:OrderLineReference/cbc:LineStatusCode)" flag="warning">A Simplerinvoicing invoice SHOULD not contain the element cac:InvoiceLine/cac:OrderLineReference/cbc:LineStatusCode</assert>
-		<assert test="not(cac:OrderLineReference/cac:OrderReference)" flag="warning">A Simplerinvoicing invoice SHOULD not contain the element cac:InvoiceLine/cac:OrderLineReference/cbc:OrderReference</assert>
+		<assert test="not(cac:OrderLineReference/cac:OrderReference)" flag="warning">[SI-UBL-INV-R404]-A conformant SI-UBL invoice core data model SHOULD not have data elements not in the core.</assert>
 	</rule>
 		
 	<rule context="*">
-		<assert test="* or normalize-space(text()) != ''" flag="warning">[SI-V11-INV-R300]-An invoice SHOULD not contain empty elements.</assert>
+		<assert test="* or normalize-space(text()) != ''" flag="warning">[SI-V12-INV-R300]-An invoice SHOULD not contain empty elements.</assert>
 	</rule>		
 </pattern>

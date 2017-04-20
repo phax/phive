@@ -35,8 +35,7 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class SimplerInvoicingValidation
 {
-  public static final VESID VID_SIMPLERINVOICING_V11 = new VESID ("org.simplerinvoicing", "invoice", "1.1");
-  public static final VESID VID_SIMPLERINVOICING_V11_STRICT = VID_SIMPLERINVOICING_V11.getWithClassifier ("strict");
+  public static final VESID VID_SIMPLERINVOICING_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
 
   private SimplerInvoicingValidation ()
   {}
@@ -59,13 +58,9 @@ public final class SimplerInvoicingValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     // SimplerInvoicing is self-contained
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11,
-                                                                           "Simplerinvoicing 1.1",
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V12,
+                                                                           "Simplerinvoicing 1.2",
                                                                            CSimplerInvoicingValidationArtefact.VK_SIMPLERINVOICING,
                                                                            _create (CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V11_STRICT,
-                                                                           "Simplerinvoicing 1.1 (strict)",
-                                                                           CSimplerInvoicingValidationArtefact.VK_SIMPLERINVOICING_STRICT,
-                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING_STRICT)));
   }
 }

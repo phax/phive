@@ -10,7 +10,7 @@
 
         Release 1.1
         Author: M.P. Diepstra (Innopay) 
-        Email: support@simplerinvoicing.org
+        Email: info@simplerinvoicing.org
 
         Usable XPath statements for getting insight into Schematron file:
         //rule[@context=preceding-sibling::rule/@context]      - - - > Gets all rules that might not get fired because they have the same context as previous rules
