@@ -58,10 +58,8 @@ public final class PeppolValidation
    */
   public static void initStandard (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
-    if (USE_NEW_RC)
-      PeppolValidation340.init (aRegistry);
-    else
-      PeppolValidation330.init (aRegistry);
+    PeppolValidation330.init (aRegistry);
+    PeppolValidation340.init (aRegistry);
   }
 
   @Nonnull

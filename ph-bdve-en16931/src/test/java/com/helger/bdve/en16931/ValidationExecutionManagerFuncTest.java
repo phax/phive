@@ -58,7 +58,8 @@ public final class ValidationExecutionManagerFuncTest
                       aTestFile.getResource ().getPath () +
                       " against " +
                       aExecutors.getExecutorCount () +
-                      " validation layers");
+                      " validation layers using " +
+                      aTestFile.getVESID ().getAsSingleID ());
 
       // Read as desired type
       final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());

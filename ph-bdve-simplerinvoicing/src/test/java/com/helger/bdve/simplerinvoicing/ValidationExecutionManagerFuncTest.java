@@ -43,7 +43,7 @@ public final class ValidationExecutionManagerFuncTest
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
   @Test
-  public void testApplyCompleteValidationPeppol () throws SAXException
+  public void testApplyCompleteValidation () throws SAXException
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
     SimplerInvoicingValidation.initSimplerInvoicing (aRegistry);
@@ -58,7 +58,8 @@ public final class ValidationExecutionManagerFuncTest
                       aTestFile.getResource ().getPath () +
                       " against " +
                       aExecutors.getExecutorCount () +
-                      " validation layers");
+                      " validation layers using " +
+                      aTestFile.getVESID ().getAsSingleID ());
 
       // Read as desired type
       final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());

@@ -28,7 +28,6 @@ import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
-import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.peppol.mock.CTestFiles;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
@@ -44,7 +43,7 @@ public final class ValidationExecutionManagerFuncTest
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
   @Test
-  public void testApplyCompleteValidationPeppol () throws SAXException
+  public void testApplyCompleteValidation () throws SAXException
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
     PeppolValidation.initStandard (aRegistry);
@@ -60,7 +59,8 @@ public final class ValidationExecutionManagerFuncTest
                       aTestFile.getResource ().getPath () +
                       " against " +
                       aExecutors.getExecutorCount () +
-                      " validation layers");
+                      " validation layers using " +
+                      aTestFile.getVESID ().getAsSingleID ());
 
       // Read as desired type
       final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());
