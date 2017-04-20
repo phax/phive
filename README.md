@@ -7,9 +7,14 @@ Licensed under the Apache 2 license.
 This project is divided into 3 sub-projects for maximum flexibility
   * ph-bdve - generic "Business Document Validation Engine"
   * ph-bdve-peppol - the PEPPOL specific setup etc
-  * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.1 support
+  * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.x support from https://github.com/SimplerInvoicing/validation
+  * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
+  * v3.1.0 - work in progress
+    * Added EN 16931 rules
+    * Update to OpenPEPPOL 3.4.0-rc1 rules
+    * Update to SimplerInvoicing 1.2 rules 
   * v3.0.0 - 2017-01-26
     * Is a complete rewrite with different structure etc.
     * Binds to ph-commons 8.6.x

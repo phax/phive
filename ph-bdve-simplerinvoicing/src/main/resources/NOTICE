@@ -3,3 +3,6 @@
 =============================================================================
 This product includes Open Source Software developed by
 Philip Helger - http://www.helger.com/
+
+The contained SimplerInvoicing validation rules are originally from
+https://github.com/SimplerInvoicing/validation
