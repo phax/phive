@@ -62,53 +62,51 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
+    final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
     if (aVESID.equals (EN16931Validation.VID_CII))
     {
-      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
+      // CII files fail with pure!
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_01.xml"));
       if (false)
+        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_02.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example1.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example2.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example3.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example4.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example5.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example6.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example7.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example8.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example9.xml"));
+    }
+    else
+      if (aVESID.equals (EN16931Validation.VID_EDIFACT))
       {
-        // TODO CII files fail
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example1.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example2.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example3.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example4.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example5.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example6.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example7.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example8.xml"));
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example9.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE1.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE2.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE3.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE4.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE5.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE6.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE7.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE8.xml"));
+        ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE9.xml"));
       }
-      return ret;
-    }
-    if (aVESID.equals (EN16931Validation.VID_EDIFACT))
-    {
-      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE1.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE2.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE3.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE4.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE5.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE6.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE7.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE8.xml"));
-      ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE9.xml"));
-      return ret;
-    }
-    if (aVESID.equals (EN16931Validation.VID_UBL))
-    {
-      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example3.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example4.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example5.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example6.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example7.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example8.xml"));
-      ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example9.xml"));
-      return ret;
-    }
-
-    throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+      else
+        if (aVESID.equals (EN16931Validation.VID_UBL))
+        {
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example3.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example4.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example5.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example6.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example7.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example8.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example9.xml"));
+        }
+        else
+          throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+    return ret;
   }
 }

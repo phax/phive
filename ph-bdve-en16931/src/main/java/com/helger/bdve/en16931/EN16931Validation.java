@@ -56,6 +56,12 @@ public final class EN16931Validation
     return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_PURE);
   }
 
+  @Nonnull
+  private static TypedValidationResource _createSCH (@Nonnull final IReadableResource aRes)
+  {
+    return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_SCH);
+  }
+
   /**
    * Register all standard EN 16931 validation execution sets to the provided
    * registry.
@@ -67,18 +73,18 @@ public final class EN16931Validation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
-    final String sPrefix = " (draft 2017-04-21)";
+    final String sVersion = " (2017-04-21)";
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII,
-                                                                           "EN 16931 CII" + sPrefix,
+                                                                           "EN 16931 CII" + sVersion,
                                                                            CEN19631.VK_INVOICE_CII,
-                                                                           _create (CEN19631.INVOICE_CII)));
+                                                                           _createSCH (CEN19631.INVOICE_CII)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT,
-                                                                           "EN 16931 EDIFACT/ISO 20625" + sPrefix,
+                                                                           "EN 16931 EDIFACT/ISO 20625" + sVersion,
                                                                            CEN19631.VK_INVOICE_EDIFACT,
                                                                            new TypedValidationResource (CEN19631.INVOICE_EDIFACT_XSLT,
                                                                                                         EValidationType.SCHEMATRON_XSLT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL,
-                                                                           "EN 16931 UBL" + sPrefix,
+                                                                           "EN 16931 UBL" + sVersion,
                                                                            CEN19631.VK_INVOICE_UBL,
                                                                            _create (CEN19631.INVOICE_UBL)));
   }
