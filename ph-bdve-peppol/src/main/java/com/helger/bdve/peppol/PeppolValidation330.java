@@ -157,50 +157,51 @@ public final class PeppolValidation330
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
+    final String sVersion = " (" + VERSION_STR + ")";
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T19_V2,
-                                                                           "OpenPEPPOL Catalogue",
+                                                                           "OpenPEPPOL Catalogue" + sVersion,
                                                                            CPeppolValidationArtefact.VK_CATALOGUE_01_T19,
                                                                            _create (CATALOGUE_RULES),
                                                                            _create (CATALOGUE_OPENPEPPOL),
                                                                            _create (CATALOGUE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T58_V2,
-                                                                           "OpenPEPPOL Catalogue Response",
+                                                                           "OpenPEPPOL Catalogue Response" + sVersion,
                                                                            CPeppolValidationArtefact.VK_CATALOGUE_01_T58,
                                                                            _create (CATALOGUE_RESPONSE_RULES),
                                                                            _create (CATALOGUE_RESPONSE_OPENPEPPOL),
                                                                            _create (CATALOGUE_RESPONSE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T01_V2,
-                                                                           "OpenPEPPOL Order",
+                                                                           "OpenPEPPOL Order" + sVersion,
                                                                            CPeppolValidationArtefact.VK_ORDER_03_T01,
                                                                            _create (ORDER_RULES),
                                                                            _create (ORDER_OPENPEPPOL),
                                                                            _create (ORDER_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T76_V2,
-                                                                           "OpenPEPPOL Order Response",
+                                                                           "OpenPEPPOL Order Response" + sVersion,
                                                                            CPeppolValidationArtefact.VK_ORDERING_28_T76,
                                                                            _create (ORDER_RESPONSE_RULES),
                                                                            _create (ORDER_RESPONSE_OPENPEPPOL),
                                                                            _create (ORDER_RESPONSE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T16_V2,
-                                                                           "OpenPEPPOL Despatch Advice",
+                                                                           "OpenPEPPOL Despatch Advice" + sVersion,
                                                                            CPeppolValidationArtefact.VK_DESPATCH_ADVICE_30_T16,
                                                                            _create (DESPATCH_ADVICE_RULES),
                                                                            _create (DESPATCH_ADVICE_OPENPEPPOL),
                                                                            _create (DESPATCH_ADVICE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T10_V2,
-                                                                           "OpenPEPPOL Invoice",
+                                                                           "OpenPEPPOL Invoice" + sVersion,
                                                                            CPeppolValidationArtefact.VK_INVOICE_04_T10,
                                                                            _create (INVOICE_RULES),
                                                                            _create (INVOICE_OPENPEPPOL),
                                                                            _create (INVOICE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T14_V2,
-                                                                           "OpenPEPPOL Credit Note",
+                                                                           "OpenPEPPOL Credit Note" + sVersion,
                                                                            CPeppolValidationArtefact.VK_BILLING_05_T14,
                                                                            _create (CREDIT_NOTE_RULES),
                                                                            _create (CREDIT_NOTE_OPENPEPPOL),
                                                                            _create (CREDIT_NOTE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T71_V2,
-                                                                           "OpenPEPPOL MLR",
+                                                                           "OpenPEPPOL MLR" + sVersion,
                                                                            CPeppolValidationArtefact.VK_MLR_36_T71,
                                                                            _create (MLR_RULES),
                                                                            _create (MLR_OPENPEPPOL),
