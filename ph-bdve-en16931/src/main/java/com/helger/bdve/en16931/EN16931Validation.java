@@ -67,7 +67,7 @@ public final class EN16931Validation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
-    final String sPrefix = " (draft 2017-02-07)";
+    final String sPrefix = " (draft 2017-04-21)";
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII,
                                                                            "EN 16931 CII" + sPrefix,
                                                                            CEN19631.VK_INVOICE_CII,
