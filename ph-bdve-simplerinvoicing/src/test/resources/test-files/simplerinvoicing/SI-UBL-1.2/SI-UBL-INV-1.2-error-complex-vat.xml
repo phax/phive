@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2
+	http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd">
+  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+  <cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1.x</cbc:CustomizationID>
+  <cbc:ProfileID>urn:www.cenbii.eu:profile:bii04:ver1.0</cbc:ProfileID>
+  <cbc:ID>I2013.03.4361</cbc:ID>
+  <cbc:IssueDate>2013-08-06</cbc:IssueDate>
+  <cbc:InvoiceTypeCode listID="UNCL1001" listAgencyID="6">380</cbc:InvoiceTypeCode>
+  <cbc:DocumentCurrencyCode listID="ISO4217" listAgencyID="6">EUR</cbc:DocumentCurrencyCode>
+  <cac:AccountingSupplierParty>
+    <cac:Party>
+      <cac:PartyName>
+        <cbc:Name>Seller B.V.</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Main street</cbc:StreetName>
+        <cbc:CityName>Big city</cbc:CityName>
+        <cbc:PostalZone>54321</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode listAgencyID="6" listID="ISO3166-1:Alpha2">NL</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="NL:VAT">3333333333</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cac:PartyName>
+        <cbc:Name>Buyercompany VOF</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Main street</cbc:StreetName>
+        <cbc:CityName>Big city</cbc:CityName>
+        <cbc:PostalZone>54321</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode listAgencyID="6" listID="ISO3166-1:Alpha2">NL</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="NL:VAT">3333333333</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:TaxTotal>
+      <!-- 21 + 57 -->
+      <cbc:TaxAmount currencyID="EUR">78</cbc:TaxAmount>
+        <cac:TaxSubtotal>
+          <cbc:TaxableAmount currencyID="EUR">100</cbc:TaxableAmount>
+          <cbc:TaxAmount currencyID="EUR">21</cbc:TaxAmount>
+          <cac:TaxCategory>
+              <cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">S</cbc:ID>
+              <cbc:Percent>21</cbc:Percent>
+              <cac:TaxScheme>
+                  <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</cbc:ID>
+              </cac:TaxScheme>
+          </cac:TaxCategory>
+        </cac:TaxSubtotal>
+        <cac:TaxSubtotal>
+          <cbc:TaxableAmount currencyID="EUR">950</cbc:TaxableAmount>
+          <cbc:TaxAmount currencyID="EUR">57</cbc:TaxAmount>
+          <cac:TaxCategory>
+            <cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">S</cbc:ID>
+              <cbc:Percent>6</cbc:Percent>
+              <cac:TaxScheme>
+                  <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</cbc:ID>
+              </cac:TaxScheme>
+            </cac:TaxCategory>
+        </cac:TaxSubtotal>
+    </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="EUR">1050</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">1050</cbc:TaxExclusiveAmount>
+    <!-- 1050 + 78   = 1128-->
+    <cbc:TaxInclusiveAmount currencyID="EUR">1128</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="EUR">1128</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:InvoiceLine>
+    <cbc:ID>1</cbc:ID>
+    <!-- LETOP: 2  items -->
+    <cbc:InvoicedQuantity unitCode="10" unitCodeListID="UNECERec20">2</cbc:InvoicedQuantity>
+    <!-- 2*500-50 + 100 = 950 --> 
+    <cbc:LineExtensionAmount currencyID="EUR">1050</cbc:LineExtensionAmount>
+    <cac:AllowanceCharge>
+      <cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+      <cbc:AllowanceChargeReason>extra services</cbc:AllowanceChargeReason>
+      <cbc:Amount currencyID="EUR">100</cbc:Amount>
+      <cac:TaxCategory>
+        <cbc:ID schemeAgencyID="6" schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>21</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:AllowanceCharge>
+
+      <cac:AllowanceCharge>
+        <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+        <cbc:AllowanceChargeReason>extra korting</cbc:AllowanceChargeReason>
+    <!-- deze korting heeft betrekking op het item zelf dus moet 6% zijn 
+     VRAAG: is dit per item of per 2 items? Ik neem aan per 2 items.
+   -->
+        <cbc:Amount currencyID="EUR">50</cbc:Amount>
+        <cac:TaxCategory>
+          <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+          <cbc:Percent>6</cbc:Percent>
+          <cac:TaxScheme>
+            <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">VAT</cbc:ID>
+          </cac:TaxScheme>
+        </cac:TaxCategory>
+      </cac:AllowanceCharge>
+    <cac:Item>
+      <cbc:Description>My item description</cbc:Description>
+      <cbc:Name>Some goods</cbc:Name>
+      <cac:ClassifiedTaxCategory>
+        <cbc:ID schemeAgencyID="6" schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>6</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="EUR">500</cbc:PriceAmount>
+    </cac:Price>
+  </cac:InvoiceLine>
+</Invoice>

@@ -47,7 +47,7 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SIMPLERINVOICING_V12 })
+    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SI_INVOICE_V12 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
 
@@ -60,41 +60,42 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (aVESID.equals (SimplerInvoicingValidation.VID_SIMPLERINVOICING_V12))
+    if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V12))
     {
       final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R034.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R035.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R037.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R045.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-BII2-T10-R046.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-EUGEN-T10-R026.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-EUGEN-T10-R030.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-EUGEN-T10-R035.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-EUGEN-T10-R036.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-EUGEN-T10-R037.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-EUGEN-T10-R038.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-extension.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-full-multiple-currencies.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-full-single-currency.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-full-tax-currency.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-full-tax-subcategory.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-full.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-minimal-corrective.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-minimal.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-reference.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-ok-single-item.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-warning-CL-T10-R006.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-warning-CL-T10-R007.xml"));
-      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/1.1/SI-UBL-1.1-warning-CL-T10-R010.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-BII2-T10-R034.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-BII2-T10-R035.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-BII2-T10-R037.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-BII2-T10-R045.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-BII2-T10-R046.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-EUGEN-T10-R026.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-EUGEN-T10-R030.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-EUGEN-T10-R035.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-EUGEN-T10-R036.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-EUGEN-T10-R037.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-EUGEN-T10-R038.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-extension.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-full-multiple-currencies.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-full-single-currency.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-full-tax-currency.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-full-tax-subcategory.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-full.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-minimal-corrective.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-minimal.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-reference.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-rounding-vat-1.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-si-extension-1.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-si-extension-2.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-si-extension-3.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-si-extension.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-single-item.xml"));
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-INV-1.2-ok-taxes-ae.xml"));
+      return ret;
+    }
+    if (aVESID.equals (SimplerInvoicingValidation.VID_SI_ORDER_V12))
+    {
+      final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
+      ret.add (new ClassPathResource ("/test-files/simplerinvoicing/SI-UBL-1.2/SI-UBL-PO-1.2-ok-minimal.xml"));
       return ret;
     }
 

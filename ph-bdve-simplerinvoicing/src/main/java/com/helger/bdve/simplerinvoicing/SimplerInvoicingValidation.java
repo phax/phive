@@ -35,7 +35,8 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class SimplerInvoicingValidation
 {
-  public static final VESID VID_SIMPLERINVOICING_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
+  public static final VESID VID_SI_INVOICE_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
+  public static final VESID VID_SI_ORDER_V12 = new VESID ("org.simplerinvoicing", "order", "1.2");
 
   private SimplerInvoicingValidation ()
   {}
@@ -58,9 +59,13 @@ public final class SimplerInvoicingValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     // SimplerInvoicing is self-contained
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SIMPLERINVOICING_V12,
-                                                                           "Simplerinvoicing 1.2",
-                                                                           CSimplerInvoicingValidationArtefact.VK_SIMPLERINVOICING,
-                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SIMPLER_INVOICING)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
+                                                                           "Simplerinvoicing Invoice 1.2",
+                                                                           CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
+                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_ORDER_V12,
+                                                                           "Simplerinvoicing Order 1.2",
+                                                                           CSimplerInvoicingValidationArtefact.VK_SI_ORDER,
+                                                                           _create (CSimplerInvoicingValidationArtefact.ORDER_SI)));
   }
 }

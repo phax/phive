@@ -32,15 +32,19 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class CSimplerInvoicingValidationArtefact
 {
-  public static final ValidationArtefactSectorKey SECTOR_NL_SIMPLERINVOICING = new ValidationArtefactSectorKey ("NLSI",
+  public static final ValidationArtefactSectorKey SECTOR_NL_SI = new ValidationArtefactSectorKey ("NLSI",
                                                                                                                 "SimplerInvoicing");
 
-  public static final ValidationArtefactKey VK_SIMPLERINVOICING = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
-                                                                                                                                                 .setSectorKey (CSimplerInvoicingValidationArtefact.SECTOR_NL_SIMPLERINVOICING)
-                                                                                                                                                 .build ();
+  public static final ValidationArtefactKey VK_SI_INVOICE = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
+                                                                                                                                                         .setSectorKey (CSimplerInvoicingValidationArtefact.SECTOR_NL_SI)
+                                                                                                                                                         .build ();
+  public static final ValidationArtefactKey VK_SI_ORDER = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_ORDER_03_T01).setCountry ("NL")
+                                                                                                                                                     .setSectorKey (CSimplerInvoicingValidationArtefact.SECTOR_NL_SI)
+                                                                                                                                                     .build ();
 
   // SimplerInvoicing
-  public static final IReadableResource INVOICE_SIMPLER_INVOICING = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV.SCH");
+  public static final IReadableResource INVOICE_SI = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV.SCH");
+  public static final IReadableResource ORDER_SI = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO.SCH");
 
   private CSimplerInvoicingValidationArtefact ()
   {}

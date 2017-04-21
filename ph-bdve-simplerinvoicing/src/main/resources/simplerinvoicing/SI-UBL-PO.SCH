@@ -24,6 +24,7 @@
     <ns prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
     <ns prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"/>
     <ns prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:Order-2"/>
+    <ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
 
 
     <!-- basic version-independent checks -->
