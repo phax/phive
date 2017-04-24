@@ -98,6 +98,23 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-sch2xslt-maven-plugin</artifactId>
+        <version>4.2.3-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <schematronDirectory>${basedir}/src/main/resources/en16931/cii/schematron</schematronDirectory>
+          <schematronPattern>*.sch</schematronPattern>
+          <xsltDirectory>${basedir}/src/main/resources/en16931/cii/schematron</xsltDirectory>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

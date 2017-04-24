@@ -77,7 +77,8 @@ public final class EN16931Validation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII,
                                                                            "EN 16931 CII" + sVersion,
                                                                            CEN19631.VK_INVOICE_CII,
-                                                                           _createSCH (CEN19631.INVOICE_CII)));
+                                                                           new TypedValidationResource (CEN19631.INVOICE_CII_XSLT,
+                                                                                                        EValidationType.SCHEMATRON_XSLT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT,
                                                                            "EN 16931 EDIFACT/ISO 20625" + sVersion,
                                                                            CEN19631.VK_INVOICE_EDIFACT,
