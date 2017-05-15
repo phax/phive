@@ -49,6 +49,7 @@ import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.xml.serialize.read.DOMReaderSettings;
 import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
 import com.helger.xml.xpath.XPathExpressionHelper;
 import com.helger.xml.xpath.XPathHelper;
@@ -101,7 +102,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
     Node aNode = null;
     try
     {
-      aNode = SchematronResourceHelper.getNodeOfSource (aSource.getAsTransformSource ());
+      aNode = SchematronResourceHelper.getNodeOfSource (aSource.getAsTransformSource (), new DOMReaderSettings ());
     }
     catch (final Exception ex)
     {
