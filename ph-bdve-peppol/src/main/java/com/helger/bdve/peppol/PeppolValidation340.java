@@ -157,10 +157,10 @@ public final class PeppolValidation340
                                                                                        "OPENPEPPOL-UBL-T77.sch");
 
   private static final IReadableResource ORDER_AGREEMENT_RULES = new ClassPathResource (ORDER_AGREEMENT +
-                                                                                        PATH_SCHEMATRON +
+                                                                                        BII_RULES +
                                                                                         "BIIRULES-UBL-T110.sch");
   private static final IReadableResource ORDER_AGREEMENT_OPENPEPPOL = new ClassPathResource (ORDER_AGREEMENT +
-                                                                                             PATH_SCHEMATRON +
+                                                                                             OPENPEPPOL +
                                                                                              "OPENPEPPOL-UBL-T110.sch");
 
   private PeppolValidation340 ()
