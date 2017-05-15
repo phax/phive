@@ -42,9 +42,7 @@ public final class PeppolValidation
   public static final VESID VID_OPENPEPPOL_T14_V2_5_AT = new VESID ("eu.peppol.bis2", "t14", "5", "at");
   public static final VESID VID_OPENPEPPOL_T14_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t14", "7", "at-gov");
 
-  private static final boolean USE_NEW_RC = true;
-  public static final String VERSION_TO_USE = USE_NEW_RC ? PeppolValidation340.VERSION_STR
-                                                         : PeppolValidation330.VERSION_STR;
+  public static final String VERSION_TO_USE = PeppolValidation340.VERSION_STR;
 
   private PeppolValidation ()
   {}
@@ -73,8 +71,8 @@ public final class PeppolValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     // Extending third-party artefacts
-    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation330.VID_OPENPEPPOL_T10_V2.getWithVersion (VERSION_TO_USE));
-    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation330.VID_OPENPEPPOL_T14_V2.getWithVersion (VERSION_TO_USE));
+    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation340.VID_OPENPEPPOL_T10_V2.getWithVersion (VERSION_TO_USE));
+    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation340.VID_OPENPEPPOL_T14_V2.getWithVersion (VERSION_TO_USE));
     if (aVESInvoice == null || aVESCreditNote == null)
       throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before third-party artefacts!");
 
