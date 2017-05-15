@@ -11,10 +11,11 @@ This project is divided into 3 sub-projects for maximum flexibility
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
-  * v3.1.0 - work in progress
+  * v3.1.0 - 2017-05-15
     * Added EN 16931 rules
-    * Update to OpenPEPPOL 3.4.0-rc1 rules
-    * Update to SimplerInvoicing 1.2 rules 
+    * Update to OpenPEPPOL 3.4.0 rules
+    * Update to SimplerInvoicing 1.2 rules
+    * Updated to ph-schematron 4.3.0
   * v3.0.0 - 2017-01-26
     * Is a complete rewrite with different structure etc.
     * Binds to ph-commons 8.6.x
@@ -33,11 +34,21 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>3.0.0</version>
+  <version>3.1.0</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-en16931</artifactId>
+  <version>3.1.0</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-simplerinvoicing</artifactId>
+  <version>3.1.0</version>
 </dependency>
 ```
-
-(no release yet)
 
 # Origin of some elements
 The rule source files were originating from https://github.com/oriol/validation-tools
