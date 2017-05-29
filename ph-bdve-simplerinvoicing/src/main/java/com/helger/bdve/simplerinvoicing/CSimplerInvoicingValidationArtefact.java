@@ -33,18 +33,20 @@ import com.helger.commons.io.resource.IReadableResource;
 public final class CSimplerInvoicingValidationArtefact
 {
   public static final ValidationArtefactSectorKey SECTOR_NL_SI = new ValidationArtefactSectorKey ("NLSI",
-                                                                                                                "SimplerInvoicing");
-
+                                                                                                  "SimplerInvoicing");
   public static final ValidationArtefactKey VK_SI_INVOICE = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setCountry ("NL")
-                                                                                                                                                         .setSectorKey (CSimplerInvoicingValidationArtefact.SECTOR_NL_SI)
-                                                                                                                                                         .build ();
+                                                                                                                                           .setSectorKey (SECTOR_NL_SI)
+                                                                                                                                           .build ();
   public static final ValidationArtefactKey VK_SI_ORDER = new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_ORDER_03_T01).setCountry ("NL")
-                                                                                                                                                     .setSectorKey (CSimplerInvoicingValidationArtefact.SECTOR_NL_SI)
-                                                                                                                                                     .build ();
+                                                                                                                                       .setSectorKey (SECTOR_NL_SI)
+                                                                                                                                       .build ();
 
   // SimplerInvoicing
-  public static final IReadableResource INVOICE_SI = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV.SCH");
-  public static final IReadableResource ORDER_SI = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO.SCH");
+  // 1.1
+  public static final IReadableResource INVOICE_SI11 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11.SCH");
+  // 1.2
+  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV.SCH");
+  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO.SCH");
 
   private CSimplerInvoicingValidationArtefact ()
   {}

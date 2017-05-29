@@ -35,6 +35,7 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class SimplerInvoicingValidation
 {
+  public static final VESID VID_SI_INVOICE_V11 = new VESID ("org.simplerinvoicing", "invoice", "1.1");
   public static final VESID VID_SI_INVOICE_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
   public static final VESID VID_SI_ORDER_V12 = new VESID ("org.simplerinvoicing", "order", "1.2");
 
@@ -59,13 +60,19 @@ public final class SimplerInvoicingValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     // SimplerInvoicing is self-contained
+    // 1.1
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
+                                                                           "Simplerinvoicing 1.1",
+                                                                           CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
+                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
+    // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
-                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI)));
+                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_ORDER_V12,
                                                                            "Simplerinvoicing Order 1.2",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_ORDER,
-                                                                           _create (CSimplerInvoicingValidationArtefact.ORDER_SI)));
+                                                                           _create (CSimplerInvoicingValidationArtefact.ORDER_SI12)));
   }
 }
