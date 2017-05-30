@@ -62,7 +62,7 @@ public final class SimplerInvoicingValidation
     // SimplerInvoicing is self-contained
     // 1.1
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
-                                                                           "Simplerinvoicing 1.1",
+                                                                           "Simplerinvoicing Invoice 1.1",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
                                                                            _create (CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
     // 1.2
