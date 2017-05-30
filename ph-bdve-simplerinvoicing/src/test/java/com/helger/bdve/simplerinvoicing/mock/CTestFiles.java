@@ -47,7 +47,8 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SI_INVOICE_V12,
+    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SI_INVOICE_V11,
+                                             SimplerInvoicingValidation.VID_SI_INVOICE_V12,
                                              SimplerInvoicingValidation.VID_SI_ORDER_V12 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));

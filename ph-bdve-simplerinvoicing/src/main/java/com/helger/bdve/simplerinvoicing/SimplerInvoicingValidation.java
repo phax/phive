@@ -36,6 +36,7 @@ import com.helger.commons.io.resource.IReadableResource;
 public final class SimplerInvoicingValidation
 {
   public static final VESID VID_SI_INVOICE_V11 = new VESID ("org.simplerinvoicing", "invoice", "1.1");
+  public static final VESID VID_SI_INVOICE_V11_STRICT = VID_SI_INVOICE_V11.getWithClassifier ("strict");
   public static final VESID VID_SI_INVOICE_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
   public static final VESID VID_SI_ORDER_V12 = new VESID ("org.simplerinvoicing", "order", "1.2");
 
@@ -65,6 +66,10 @@ public final class SimplerInvoicingValidation
                                                                            "Simplerinvoicing Invoice 1.1",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
                                                                            _create (CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11_STRICT,
+                                                                           "Simplerinvoicing Invoice 1.1 (strict)",
+                                                                           CSimplerInvoicingValidationArtefact.VK_SI_INVOICE_STRICT,
+                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI11_STRICT)));
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
