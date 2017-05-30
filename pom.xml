@@ -106,7 +106,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>peppol-commons-parent-pom</artifactId>
-        <version>5.2.5</version>
+        <version>5.2.6</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -114,7 +114,7 @@
       <dependency>
         <groupId>org.apache.odftoolkit</groupId>
         <artifactId>simple-odf</artifactId>
-        <version>0.8.1-incubating</version>
+        <version>0.8.2-incubating</version>
         <exclusions>
           <exclusion>
             <groupId>com.sun</groupId>
