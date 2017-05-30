@@ -45,8 +45,8 @@ public final class CSimplerInvoicingValidationArtefact
   // 1.1
   public static final IReadableResource INVOICE_SI11 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11.SCH");
   // 1.2
-  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV.SCH");
-  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO.SCH");
+  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-12.SCH");
+  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO-12.SCH");
 
   private CSimplerInvoicingValidationArtefact ()
   {}
