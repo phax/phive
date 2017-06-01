@@ -25,7 +25,7 @@ import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.schematron.pure.SchematronResourcePure;
+import com.helger.schematron.xslt.SchematronResourceXSLT;
 
 /**
  * Test class for class {@link SimplerInvoicingValidation}.
@@ -63,7 +63,7 @@ public final class CSimplerInvoicingValidationArtefactTest
         {
           // Check that the passed Schematron is valid
           final IReadableResource aRes = aVA.getRuleResource ();
-          assertTrue (aRes.toString (), new SchematronResourcePure (aRes).isValidSchematron ());
+          assertTrue (aRes.toString (), new SchematronResourceXSLT (aRes).isValidSchematron ());
         }
       }
   }

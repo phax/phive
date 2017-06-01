@@ -69,9 +69,7 @@ public final class ValidationExecutionManagerFuncTest
       if (aTestFile.isGoodCase ())
       {
         aErrors.getAllErrors ().forEach (x -> s_aLogger.info (x.getErrorLevel () + " " + x.getErrorText (Locale.US)));
-        // TODO this should be enabled!
-        if (true)
-          assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
+        assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
       }
       else
         assertTrue (aErrors.containsAtLeastOneError ());
