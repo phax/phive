@@ -11,8 +11,10 @@ This project is divided into 3 sub-projects for maximum flexibility
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
-  * v3.1.1 - 2017-05-29
+  * v3.1.1 - 2017-06-01
     * Re-added SimplerInvoicing 1.1 rules
+    * Enabled Schematron caching by default
+    * Improved caching API
   * v3.1.0 - 2017-05-15
     * Added EN 16931 rules
     * Update to OpenPEPPOL 3.4.0 rules
