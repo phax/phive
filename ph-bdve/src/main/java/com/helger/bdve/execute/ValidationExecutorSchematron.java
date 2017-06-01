@@ -62,10 +62,11 @@ import com.helger.xml.xpath.XPathHelper;
 public class ValidationExecutorSchematron extends AbstractValidationExecutor
 {
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
+  public static final boolean DEFAULT_CACHE = true;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
-  private boolean m_bCacheSchematron = false;
+  private boolean m_bCacheSchematron = DEFAULT_CACHE;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact)
   {
