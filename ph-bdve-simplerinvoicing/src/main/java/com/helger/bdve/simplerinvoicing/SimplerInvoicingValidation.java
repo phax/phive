@@ -46,7 +46,7 @@ public final class SimplerInvoicingValidation
   @Nonnull
   private static TypedValidationResource _create (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_PURE);
+    return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_XSLT);
   }
 
   /**
