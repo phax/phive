@@ -60,9 +60,9 @@ import com.helger.xml.xpath.XPathHelper;
  * @author Philip Helger
  */
 public class ValidationExecutorSchematron extends AbstractValidationExecutor
+                                          implements IValidationExecutor.ICacheSupport
 {
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
-  public static final boolean DEFAULT_CACHE = true;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
@@ -75,15 +75,15 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
                           "Artifact is not Schematron");
   }
 
-  public boolean isCacheSchematron ()
+  public boolean isCacheArtefact ()
   {
     return m_bCacheSchematron;
   }
 
   @Nonnull
-  public ValidationExecutorSchematron setCacheSchematron (final boolean bCacheSchematron)
+  public ValidationExecutorSchematron setCacheArtefact (final boolean bCacheArtefact)
   {
-    m_bCacheSchematron = bCacheSchematron;
+    m_bCacheSchematron = bCacheArtefact;
     return this;
   }
 

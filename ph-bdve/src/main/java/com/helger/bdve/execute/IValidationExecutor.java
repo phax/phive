@@ -37,6 +37,34 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 public interface IValidationExecutor extends Serializable
 {
   /**
+   * Nested interface for validation executors that support caching.
+   *
+   * @author Philip Helger
+   * @since 3.1.1
+   */
+  public interface ICacheSupport
+  {
+    boolean DEFAULT_CACHE = true;
+
+    /**
+     * @return <code>true</code> if caching is enabled, <code>false</code> if
+     *         not.
+     */
+    boolean isCacheArtefact ();
+
+    /**
+     * Enable or disable caching.
+     * 
+     * @param bCacheArtefact
+     *        <code>true</code> to enable caching, <code>false</code> to disable
+     *        it.
+     * @return this for chaining
+     */
+    @Nonnull
+    ICacheSupport setCacheArtefact (final boolean bCacheArtefact);
+  }
+
+  /**
    * @return The validation artefact used to validate the XML instances. Never
    *         <code>null</code>.
    */

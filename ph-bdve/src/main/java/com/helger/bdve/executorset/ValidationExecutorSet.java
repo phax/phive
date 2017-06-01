@@ -128,6 +128,13 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     return this;
   }
 
+  public void setValidationExecutorDoCache (final boolean bCache)
+  {
+    for (final IValidationExecutor aExecutor : m_aList)
+      if (aExecutor instanceof IValidationExecutor.ICacheSupport)
+        ((IValidationExecutor.ICacheSupport) aExecutor).setCacheArtefact (bCache);
+  }
+
   @Override
   public boolean equals (final Object o)
   {
