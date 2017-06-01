@@ -81,10 +81,8 @@
 
 
     <!-- SimplerInvoicing Version 1.0 -->
-    <!--  
     <include href="v1.0/SI-UBL-INV-V10-FATAL.SCH"/>
     <include href="v1.0/SI-UBL-INV-V10-WARNING.SCH"/>
-    -->
 
 <!-- Uncomment this to enable BII content checks on SI-UBL 1.0 documents (strict mode)
     <include href="v1.0/biirules/abstract/BIIRULES-T10.sch"/>
