@@ -90,6 +90,7 @@
           </excludes>
         </configuration>
       </plugin>
+      <!-- Enable if something changed only 
       <plugin>
         <groupId>com.helger.maven</groupId>
         <artifactId>ph-sch2xslt-maven-plugin</artifactId>
@@ -106,6 +107,7 @@
           </execution>
         </executions>
       </plugin>
+       -->
     </plugins>
   </build>
 </project>
