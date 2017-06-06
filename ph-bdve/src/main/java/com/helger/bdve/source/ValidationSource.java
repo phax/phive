@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.xml.XMLHelper;
 import com.helger.xml.serialize.read.DOMReader;
 
 /**
@@ -60,7 +61,7 @@ public class ValidationSource implements IValidationSource
   {
     ValueEnforcer.notNull (aNode, "Node");
     // Use the owner Document
-    return new ValidationSource (sSystemID, aNode.getOwnerDocument ());
+    return new ValidationSource (sSystemID, XMLHelper.getOwnerDocument (aNode));
   }
 
   /**

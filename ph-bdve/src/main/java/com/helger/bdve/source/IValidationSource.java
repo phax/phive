@@ -24,6 +24,7 @@ import javax.xml.transform.Source;
 
 import org.w3c.dom.Node;
 
+import com.helger.xml.XMLHelper;
 import com.helger.xml.transform.TransformSourceFactory;
 
 /**
@@ -61,7 +62,7 @@ public interface IValidationSource extends Serializable
     {
       // Always use the Document node! Otherwise this may lead to weird XSLT
       // errors
-      ret = TransformSourceFactory.create (aNode.getOwnerDocument ());
+      ret = TransformSourceFactory.create (XMLHelper.getOwnerDocument (aNode));
     }
     if (ret == null)
       throw new IllegalStateException ("No valid input object is present!");
