@@ -44,7 +44,7 @@ public final class SimplerInvoicingValidation
   {}
 
   @Nonnull
-  private static TypedValidationResource _create (@Nonnull final IReadableResource aRes)
+  private static TypedValidationResource _createXSLT (@Nonnull final IReadableResource aRes)
   {
     return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_XSLT);
   }
@@ -65,19 +65,19 @@ public final class SimplerInvoicingValidation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
                                                                            "Simplerinvoicing Invoice 1.1",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
-                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
+                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11_STRICT,
                                                                            "Simplerinvoicing Invoice 1.1 (strict)",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE_STRICT,
-                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI11_STRICT)));
+                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI11_STRICT)));
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
-                                                                           _create (CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_ORDER_V12,
                                                                            "Simplerinvoicing Order 1.2",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_ORDER,
-                                                                           _create (CSimplerInvoicingValidationArtefact.ORDER_SI12)));
+                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.ORDER_SI12)));
   }
 }
