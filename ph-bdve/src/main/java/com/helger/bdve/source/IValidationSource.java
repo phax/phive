@@ -58,7 +58,11 @@ public interface IValidationSource extends Serializable
     Source ret = null;
     final Node aNode = getNode ();
     if (aNode != null)
-      ret = TransformSourceFactory.create (aNode);
+    {
+      // Always use the Document node! Otherwise this may lead to weird XSLT
+      // errors
+      ret = TransformSourceFactory.create (aNode.getOwnerDocument ());
+    }
     if (ret == null)
       throw new IllegalStateException ("No valid input object is present!");
 

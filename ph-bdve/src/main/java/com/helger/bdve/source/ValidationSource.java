@@ -19,6 +19,7 @@ package com.helger.bdve.source;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
@@ -58,13 +59,14 @@ public class ValidationSource implements IValidationSource
   public static ValidationSource create (@Nullable final String sSystemID, @Nonnull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
-    return new ValidationSource (sSystemID, aNode);
+    // Use the owner Document
+    return new ValidationSource (sSystemID, aNode.getOwnerDocument ());
   }
 
   /**
    * Assume the provided resource as an XML file, parse it and use the contained
    * DOM Node as the basis for validation.
-   * 
+   *
    * @param aResource
    *        The original resource. May not be <code>null</code>.
    * @return The validation source to be used. Never <code>null</code>.
@@ -74,6 +76,7 @@ public class ValidationSource implements IValidationSource
   @Nonnull
   public static ValidationSource createXMLSource (@Nonnull final IReadableResource aResource) throws SAXException
   {
-    return create (aResource.getPath (), DOMReader.readXMLDOM (aResource));
+    final Document aXMLDoc = DOMReader.readXMLDOM (aResource);
+    return create (aResource.getPath (), aXMLDoc);
   }
 }
