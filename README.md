@@ -11,6 +11,8 @@ This project is divided into 3 sub-projects for maximum flexibility
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
+  * v3.1.2 - 2017-06-06
+    * Fixed a problem with XSLT based validation when using anything different from a DOM Document as the validation source 
   * v3.1.1 - 2017-06-01
     * Re-added SimplerInvoicing 1.1 rules
     * Enabled Schematron caching by default
@@ -38,19 +40,19 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>3.1.1</version>
+  <version>3.1.2</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>3.1.1</version>
+  <version>3.1.2</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>3.1.1</version>
+  <version>3.1.2</version>
 </dependency>
 ```
 
