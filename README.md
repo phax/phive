@@ -1,16 +1,19 @@
-# peppol-validation-engine
-PEPPOL BIS v2 validation engine.
+# ph-bdve
+
+A generic document validation engine originally developed for PEPPOL but now also supporting EN 16931 documents and SimplerInvoicing documents.
 A running example can be found on [PEPPOL Practical](http://peppol.helger.com/public/menuitem-validation-bis2)
 
 Licensed under the Apache 2 license.
 
-This project is divided into 3 sub-projects for maximum flexibility
+This project is divided into sub-projects for maximum flexibility:
   * ph-bdve - generic "Business Document Validation Engine"
   * ph-bdve-peppol - the PEPPOL specific setup etc
   * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.x support from https://github.com/SimplerInvoicing/validation
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
+  * v3.1.4 - 2017-07-12
+    * Fixed an error where warnings in Schematron validation lead to not evaluating the SVRL
   * v3.1.3 - 2017-06-07
     * Re-release because v3.1.2 had issues with Maven Central deployment
   * v3.1.2 - 2017-06-06
@@ -42,24 +45,21 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>3.1.3</version>
+  <version>3.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>3.1.3</version>
+  <version>3.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>3.1.3</version>
+  <version>3.1.4</version>
 </dependency>
 ```
-
-# Origin of some elements
-The rule source files were originating from https://github.com/oriol/validation-tools
 
 ---
 
