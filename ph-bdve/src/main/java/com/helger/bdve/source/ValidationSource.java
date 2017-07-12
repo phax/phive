@@ -25,6 +25,7 @@ import org.xml.sax.SAXException;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.serialize.read.DOMReader;
 
@@ -54,6 +55,12 @@ public class ValidationSource implements IValidationSource
   public Node getNode ()
   {
     return m_aNode;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("SystemID", m_sSystemID).append ("Node", m_aNode).getToString ();
   }
 
   @Nonnull
