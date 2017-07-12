@@ -59,8 +59,8 @@ import com.helger.xml.xpath.XPathHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorSchematron extends AbstractValidationExecutor
-                                          implements IValidationExecutor.ICacheSupport
+public class ValidationExecutorSchematron extends AbstractValidationExecutor implements
+                                          IValidationExecutor.ICacheSupport
 {
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
 
@@ -208,7 +208,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor
       if (s_aLogger.isDebugEnabled ())
         s_aLogger.debug ("SVRL: " + new SVRLMarshaller (false).getAsString (aSVRL));
 
-      if (aSVRL != null && aErrorList.isEmpty ())
+      if (aSVRL != null)
       {
         // Valid Schematron - interpret result
 
