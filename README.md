@@ -12,7 +12,7 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
-  * v3.2.0 - work in progress
+  * v3.2.0 - 2017-07-27
     * Improved ClassLoader handling, so that each validation artefact has a defined class loader. 
   * v3.1.4 - 2017-07-12
     * Fixed an error where warnings in Schematron validation lead to not evaluating the SVRL
@@ -47,19 +47,19 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>3.1.4</version>
+  <version>3.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>3.1.4</version>
+  <version>3.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>3.1.4</version>
+  <version>3.2.0</version>
 </dependency>
 ```
 
