@@ -61,7 +61,7 @@ public interface IValidationExecutor extends Serializable
      * @return this for chaining
      */
     @Nonnull
-    ICacheSupport setCacheArtefact (final boolean bCacheArtefact);
+    ICacheSupport setCacheArtefact (boolean bCacheArtefact);
   }
 
   /**
