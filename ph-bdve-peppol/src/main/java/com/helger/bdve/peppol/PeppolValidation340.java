@@ -169,13 +169,17 @@ public final class PeppolValidation340
   @Nonnull
   private static TypedValidationResource _create (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_PURE);
+    return new TypedValidationResource (EValidationType.SCHEMATRON_PURE,
+                                        PeppolValidation340.class.getClassLoader (),
+                                        aRes);
   }
 
   @Nonnull
   private static TypedValidationResource _createSCH (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_SCH);
+    return new TypedValidationResource (EValidationType.SCHEMATRON_SCH,
+                                        PeppolValidation340.class.getClassLoader (),
+                                        aRes);
   }
 
   public static void init (@Nonnull final ValidationExecutorSetRegistry aRegistry)

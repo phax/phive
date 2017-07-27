@@ -54,7 +54,7 @@ public interface IValidationExecutor extends Serializable
 
     /**
      * Enable or disable caching.
-     * 
+     *
      * @param bCacheArtefact
      *        <code>true</code> to enable caching, <code>false</code> to disable
      *        it.
@@ -82,7 +82,7 @@ public interface IValidationExecutor extends Serializable
   }
 
   /**
-   * Perform validation
+   * Perform validation. The class loader of the validation artefact is used.
    *
    * @param aSource
    *        Source to be validated. May not be <code>null</code>.
@@ -91,7 +91,7 @@ public interface IValidationExecutor extends Serializable
   @Nonnull
   default ValidationResult applyValidation (@Nonnull final IValidationSource aSource)
   {
-    return applyValidation (aSource, (ClassLoader) null);
+    return applyValidation (aSource, getValidationArtefact ().getClassLoader ());
   }
 
   /**
@@ -100,8 +100,7 @@ public interface IValidationExecutor extends Serializable
    * @param aSource
    *        Source to be validated. May not be <code>null</code>.
    * @param aClassLoader
-   *        Optional class loader to use. May be <code>null</code> to use the
-   *        default context class loader.
+   *        The class loader to use. May be <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull

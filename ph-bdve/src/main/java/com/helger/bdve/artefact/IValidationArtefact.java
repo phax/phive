@@ -19,6 +19,7 @@ package com.helger.bdve.artefact;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.key.ValidationArtefactKey;
@@ -40,6 +41,17 @@ public interface IValidationArtefact extends Serializable
    */
   @Nonnull
   EValidationType getValidationArtefactType ();
+
+  /**
+   * Get the preferred class loader to be used to load the resource of this
+   * validation artefact. May be <code>null</code> to indicate usage of the
+   * default class loader.
+   *
+   * @return The class loader to be used. May be <code>null</code>.
+   * @since 3.2.0
+   */
+  @Nullable
+  ClassLoader getClassLoader ();
 
   /**
    * @return The resource that contains the rules depending on the type (like

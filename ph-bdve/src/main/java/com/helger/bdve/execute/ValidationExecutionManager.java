@@ -44,7 +44,7 @@ import com.helger.commons.collection.ext.ICommonsList;
 @NotThreadSafe
 public class ValidationExecutionManager
 {
-  private final ICommonsList <IValidationExecutor> m_aExecutors = new CommonsArrayList<> ();
+  private final ICommonsList <IValidationExecutor> m_aExecutors = new CommonsArrayList <> ();
   private ClassLoader m_aClassLoader;
 
   /**
@@ -201,8 +201,6 @@ public class ValidationExecutionManager
     ValueEnforcer.notNull (aSource, "Source");
     ValueEnforcer.notNull (aValidationResults, "ValidationResults");
 
-    final ClassLoader aClassLoader = getClassLoader ();
-
     boolean bIgnoreRest = false;
     for (final IValidationExecutor aExecutor : getAllExecutors ())
     {
@@ -213,8 +211,17 @@ public class ValidationExecutionManager
       }
       else
       {
+        // Find the matching class loader
+        ClassLoader aValidationCL = aExecutor.getValidationArtefact ().getClassLoader ();
+        if (aValidationCL == null)
+        {
+          // Use the global one as fallback, if none is defined in the
+          // validation artefact
+          aValidationCL = getClassLoader ();
+        }
+
         // Execute validation
-        final ValidationResult aResult = aExecutor.applyValidation (aSource, aClassLoader);
+        final ValidationResult aResult = aExecutor.applyValidation (aSource, aValidationCL);
         assert aResult != null;
         aValidationResults.add (aResult);
 

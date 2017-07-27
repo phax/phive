@@ -150,7 +150,9 @@ public final class PeppolValidation330
   @Nonnull
   private static TypedValidationResource _create (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (aRes, EValidationType.SCHEMATRON_PURE);
+    return new TypedValidationResource (EValidationType.SCHEMATRON_PURE,
+                                        PeppolValidation330.class.getClassLoader (),
+                                        aRes);
   }
 
   public static void init (@Nonnull final ValidationExecutorSetRegistry aRegistry)

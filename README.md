@@ -12,6 +12,8 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
+  * v3.2.0 - work in progress
+    * Improved ClassLoader handling, so that each validation artefact has a defined class loader. 
   * v3.1.4 - 2017-07-12
     * Fixed an error where warnings in Schematron validation lead to not evaluating the SVRL
   * v3.1.3 - 2017-06-07

@@ -21,6 +21,7 @@ import java.util.Iterator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
@@ -123,8 +124,13 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public ValidationExecutorSet addAllXSDExecutors (@Nonnull final IJAXBDocumentType aDocType)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
+
+    final ClassLoader aClassLoader = aDocType.getImplementationClass ().getClassLoader ();
     for (final IReadableResource aXSDRes : aDocType.getAllXSDResources ())
-      addExecutor (new ValidationExecutorXSD (ValidationArtefact.createXSD (aXSDRes, m_aValidationArtefactKey)));
+      addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
+                                                                      aClassLoader,
+                                                                      aXSDRes,
+                                                                      m_aValidationArtefactKey)));
     return this;
   }
 
@@ -181,6 +187,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     // Add Schematrons
     for (final TypedValidationResource aRes : aSchematrons)
       ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (aRes.getValidationType (),
+                                                                                 aRes.getClassLoader (),
                                                                                  aRes.getResource (),
                                                                                  aValidationArtefactKey)));
 
@@ -209,6 +216,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     // Add Schematrons
     for (final TypedValidationResource aRes : aSchematrons)
       ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (aRes.getValidationType (),
+                                                                                 aRes.getClassLoader (),
                                                                                  aRes.getResource (),
                                                                                  aValidationArtefactKey)));
 
