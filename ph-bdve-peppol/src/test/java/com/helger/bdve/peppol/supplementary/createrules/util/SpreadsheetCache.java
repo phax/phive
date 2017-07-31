@@ -22,8 +22,8 @@ import javax.annotation.Nonnull;
 
 import org.odftoolkit.simple.SpreadsheetDocument;
 
-import com.helger.commons.collection.ext.CommonsHashMap;
-import com.helger.commons.collection.ext.ICommonsMap;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 
 public final class SpreadsheetCache
 {

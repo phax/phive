@@ -16,7 +16,6 @@
  */
 package com.helger.bdve.result;
 
-import java.io.Serializable;
 import java.util.Iterator;
 
 import javax.annotation.Nonnegative;
@@ -24,9 +23,9 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsIterable;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsIterable;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -35,7 +34,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-public class ValidationResultList implements ICommonsIterable <ValidationResult>, Serializable
+public class ValidationResultList implements ICommonsIterable <ValidationResult>
 {
   private final ICommonsList <ValidationResult> m_aResults = new CommonsArrayList <> ();
 

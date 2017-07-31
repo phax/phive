@@ -26,10 +26,10 @@ import javax.annotation.Nullable;
 import com.helger.bdve.peppol.supplementary.createrules.util.ODFHelper;
 import com.helger.bdve.peppol.supplementary.createrules.util.SpreadsheetCache;
 import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ext.CommonsTreeMap;
-import com.helger.commons.collection.ext.ICommonsSortedMap;
+import com.helger.commons.collection.impl.CommonsTreeMap;
+import com.helger.commons.collection.impl.ICommonsSortedMap;
+import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.file.iterate.FileSystemIterator;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 

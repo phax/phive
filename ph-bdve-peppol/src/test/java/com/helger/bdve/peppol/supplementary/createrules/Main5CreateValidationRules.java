@@ -24,8 +24,8 @@ import com.helger.bdve.peppol.supplementary.createrules.codelist.RuleSourceCodeL
 import com.helger.bdve.peppol.supplementary.createrules.sch.RuleSchematronCreator;
 import com.helger.bdve.peppol.supplementary.createrules.sch.RuleXSLTCreator;
 import com.helger.bdve.peppol.supplementary.createrules.util.CreateHelper;
-import com.helger.commons.collection.ext.CommonsArrayList;
-import com.helger.commons.collection.ext.ICommonsList;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
 import com.helger.commons.io.file.FileOperations;
 
