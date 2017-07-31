@@ -65,7 +65,6 @@
     <dependency>
       <groupId>com.helger.en16931</groupId>
       <artifactId>en16931-edifact-xml</artifactId>
-      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

@@ -110,6 +110,13 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>com.helger.en16931</groupId>
+        <artifactId>en16931-parent-pom</artifactId>
+        <version>0.2.0-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
 
       <dependency>
         <groupId>org.apache.odftoolkit</groupId>
