@@ -77,7 +77,7 @@ public final class RuleXSLTCreator
                                                                  .setPutNamespaceContextPrefixesInRoot (true);
 
           final File aXSLTFile = new File (FilenameHelper.getWithoutExtension (aSCHFile.getPath ()) + ".xslt");
-          if (SimpleFileIO.writeFile (aXSLTFile, XMLWriter.getNodeAsString (aXSLTDoc, aXWS), aXWS.getCharsetObj ())
+          if (SimpleFileIO.writeFile (aXSLTFile, XMLWriter.getNodeAsString (aXSLTDoc, aXWS), aXWS.getCharset ())
                           .isFailure ())
             throw new IllegalStateException ("Failed to write " + aXSLTFile);
         }
