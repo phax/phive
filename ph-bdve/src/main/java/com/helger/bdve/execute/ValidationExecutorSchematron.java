@@ -34,8 +34,8 @@ import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.error.location.ErrorLocation;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.location.SimpleLocation;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
@@ -223,7 +223,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     {
       // Usually an error in the Schematron
       aErrorList.add (SingleError.builderError ()
-                                 .setErrorLocation (new ErrorLocation (aSCHRes.getPath ()))
+                                 .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
                                  .setErrorText (ex.getMessage ())
                                  .setLinkedException (ex)
                                  .build ());

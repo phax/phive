@@ -29,7 +29,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.error.location.ErrorLocation;
+import com.helger.commons.location.SimpleLocation;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
@@ -81,7 +81,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
       else
       {
         aErrorList.add (SingleError.builderFatalError ()
-                                   .setErrorLocation (new ErrorLocation (aVA.getRuleResource ().getPath ()))
+                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
                                    .setErrorText ("The document to be validated is not an XML document")
                                    .setLinkedException (ex)
                                    .build ());
