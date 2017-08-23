@@ -17,12 +17,10 @@
 package com.helger.bdve.executorset;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
@@ -40,19 +38,6 @@ public final class TypedValidationResource
   private final IReadableResource m_aRes;
 
   /**
-   * Constructor without a special class loader.
-   *
-   * @param eType
-   *        The validation type. May not be <code>null</code>.
-   * @param aRes
-   *        The resource. May not be <code>null</code>.
-   */
-  public TypedValidationResource (@Nonnull final EValidationType eType, @Nonnull final IReadableResource aRes)
-  {
-    this (eType, (ClassLoader) null, aRes);
-  }
-
-  /**
    * Constructor with a custom class loader.
    *
    * @param eType
@@ -64,7 +49,7 @@ public final class TypedValidationResource
    *        The resource. May not be <code>null</code>.
    */
   public TypedValidationResource (@Nonnull final EValidationType eType,
-                                  @Nullable final ClassLoader aClassLoader,
+                                  @Nonnull final ClassLoader aClassLoader,
                                   @Nonnull final IReadableResource aRes)
   {
     m_eType = ValueEnforcer.notNull (eType, "Type");
@@ -83,10 +68,10 @@ public final class TypedValidationResource
   }
 
   /**
-   * @return The class loader passed in the constructor. May be
+   * @return The class loader passed in the constructor. Never
    *         <code>null</code>.
    */
-  @Nullable
+  @Nonnull
   public ClassLoader getClassLoader ()
   {
     return m_aClassLoader;
@@ -109,9 +94,7 @@ public final class TypedValidationResource
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final TypedValidationResource rhs = (TypedValidationResource) o;
-    return m_eType.equals (rhs.m_eType) &&
-           EqualsHelper.equals (m_aClassLoader, rhs.m_aClassLoader) &&
-           m_aRes.equals (rhs.m_aRes);
+    return m_eType.equals (rhs.m_eType) && m_aClassLoader.equals (rhs.m_aClassLoader) && m_aRes.equals (rhs.m_aRes);
   }
 
   @Override
