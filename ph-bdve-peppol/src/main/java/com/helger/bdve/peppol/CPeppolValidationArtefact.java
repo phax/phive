@@ -125,11 +125,15 @@ public final class CPeppolValidationArtefact
                                                                                                    "Austrian Government");
 
   // Third party
-  public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/invoice/ATNAT-UBL-T10.sch");
-  public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/invoice/ATGOV-UBL-T10.sch");
+  public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/invoice/ATNAT-UBL-T10.sch",
+                                                                                CPeppolValidationArtefact.class.getClassLoader ());
+  public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/invoice/ATGOV-UBL-T10.sch",
+                                                                                CPeppolValidationArtefact.class.getClassLoader ());
 
-  public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/creditnote/ATNAT-UBL-T14.sch");
-  public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/creditnote/ATGOV-UBL-T14.sch");
+  public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/creditnote/ATNAT-UBL-T14.sch",
+                                                                                    CPeppolValidationArtefact.class.getClassLoader ());
+  public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/creditnote/ATGOV-UBL-T14.sch",
+                                                                                    CPeppolValidationArtefact.class.getClassLoader ());
 
   private CPeppolValidationArtefact ()
   {}

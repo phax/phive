@@ -16,6 +16,7 @@
  */
 package com.helger.bdve.simplerinvoicing;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.key.ValidationArtefactKey;
@@ -46,13 +47,23 @@ public final class CSimplerInvoicingValidationArtefact
                                                                                                                                        .setSectorKey (SECTOR_NL_SI)
                                                                                                                                        .build ();
 
+  @Nonnull
+  private static ClassLoader _getCL ()
+  {
+    return CSimplerInvoicingValidationArtefact.class.getClassLoader ();
+  }
+
   // SimplerInvoicing
   // 1.1
-  public static final IReadableResource INVOICE_SI11 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11.xslt");
-  public static final IReadableResource INVOICE_SI11_STRICT = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11-STRICT.xslt");
+  public static final IReadableResource INVOICE_SI11 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11.xslt",
+                                                                              _getCL ());
+  public static final IReadableResource INVOICE_SI11_STRICT = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11-STRICT.xslt",
+                                                                                     _getCL ());
   // 1.2
-  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-12.xslt");
-  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO-12.xslt");
+  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-12.xslt",
+                                                                              _getCL ());
+  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO-12.xslt",
+                                                                            _getCL ());
 
   private CSimplerInvoicingValidationArtefact ()
   {}

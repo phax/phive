@@ -78,11 +78,22 @@ public final class CEN19631
                                                                                                                                                 UBL21NamespaceContext.getInstance ()))
                                                                                                  .build ();
 
-  public static final IReadableResource INVOICE_CII_SCH = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.sch");
-  public static final IReadableResource INVOICE_CII_XSLT = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.xslt");
-  public static final IReadableResource INVOICE_EDIFACT_SCH = new ClassPathResource ("/en16931/edifact/schematron/EN16931-EDIFACT-validation.sch");
-  public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/edifact/stylesheet/EN16931-EDIFACT-validation-compiled.xsl");
-  public static final IReadableResource INVOICE_UBL = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-validation.sch");
+  @Nonnull
+  private static ClassLoader _getCL ()
+  {
+    return CEN19631.class.getClassLoader ();
+  }
+
+  public static final IReadableResource INVOICE_CII_SCH = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.sch",
+                                                                                 _getCL ());
+  public static final IReadableResource INVOICE_CII_XSLT = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.xslt",
+                                                                                  _getCL ());
+  public static final IReadableResource INVOICE_EDIFACT_SCH = new ClassPathResource ("/en16931/edifact/schematron/EN16931-EDIFACT-validation.sch",
+                                                                                     _getCL ());
+  public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/edifact/stylesheet/EN16931-EDIFACT-validation-compiled.xsl",
+                                                                                      _getCL ());
+  public static final IReadableResource INVOICE_UBL = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-validation.sch",
+                                                                             _getCL ());
 
   private CEN19631 ()
   {}
