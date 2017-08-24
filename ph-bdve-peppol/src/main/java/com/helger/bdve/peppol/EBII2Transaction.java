@@ -27,7 +27,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
-import com.helger.xml.namespace.IIterableNamespaceContext;
 
 /**
  * Represents a single CEN BII2 transaction used in several profiles.<br>
@@ -182,7 +181,7 @@ public enum EBII2Transaction implements ISpecificationTransaction
   }
 
   @Nonnull
-  public IIterableNamespaceContext getNamespaceContext ()
+  public UBL21NamespaceContext getNamespaceContext ()
   {
     return UBL21NamespaceContext.getInstance ();
   }
