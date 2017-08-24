@@ -16,6 +16,8 @@
  */
 package com.helger.bdve.execute;
 
+import java.lang.ref.WeakReference;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,6 +31,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.lang.IHasClassLoader;
 
 /**
  * Execute multiple {@link IValidationExecutor}s at once. It is basically a
@@ -42,10 +45,10 @@ import com.helger.commons.collection.impl.ICommonsList;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ValidationExecutionManager
+public class ValidationExecutionManager implements IHasClassLoader
 {
   private final ICommonsList <IValidationExecutor> m_aExecutors = new CommonsArrayList <> ();
-  private ClassLoader m_aClassLoader;
+  private WeakReference <ClassLoader> m_aClassLoader = new WeakReference <> (null);
 
   /**
    * Default constructor without executors.
@@ -165,9 +168,9 @@ public class ValidationExecutionManager
    * @return The class loader to be used. <code>null</code> by default.
    */
   @Nullable
-  public ClassLoader getClassLoader ()
+  public final ClassLoader getClassLoader ()
   {
-    return m_aClassLoader;
+    return m_aClassLoader.get ();
   }
 
   /**
@@ -178,9 +181,9 @@ public class ValidationExecutionManager
    * @return this for chaining
    */
   @Nonnull
-  public ValidationExecutionManager setClassLoader (@Nullable final ClassLoader aClassLoader)
+  public final ValidationExecutionManager setClassLoader (@Nullable final ClassLoader aClassLoader)
   {
-    m_aClassLoader = aClassLoader;
+    m_aClassLoader = new WeakReference <> (aClassLoader);
     return this;
   }
 
