@@ -16,96 +16,40 @@
  */
 package com.helger.bdve.result;
 
-import java.util.Iterator;
-
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsIterable;
-import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.string.ToStringGenerator;
 
 /**
  * A managed list of {@link ValidationResult} objects
  *
  * @author Philip Helger
  */
-public class ValidationResultList implements ICommonsIterable <ValidationResult>
+public class ValidationResultList extends CommonsArrayList <ValidationResult>
 {
-  private final ICommonsList <ValidationResult> m_aResults = new CommonsArrayList <> ();
-
   public ValidationResultList ()
   {}
 
-  public void add (@Nonnull final ValidationResult aValidationResult)
-  {
-    ValueEnforcer.notNull (aValidationResult, "ValidationResult");
-    m_aResults.add (aValidationResult);
-  }
-
-  public void add (@Nonnegative final int nIndex, @Nonnull final ValidationResult aValidationResult)
-  {
-    ValueEnforcer.notNull (aValidationResult, "ValidationResult");
-    m_aResults.add (nIndex, aValidationResult);
-  }
-
-  public void addAll (@Nonnull final ValidationResultList aValidationResultList)
-  {
-    ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
-    m_aResults.addAll (aValidationResultList.m_aResults);
-  }
-
-  @Nonnegative
-  public int getSize ()
-  {
-    return m_aResults.size ();
-  }
-
-  public boolean isEmpty ()
-  {
-    return m_aResults.isEmpty ();
-  }
-
-  public boolean isNotEmpty ()
-  {
-    return m_aResults.isNotEmpty ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ICommonsList <ValidationResult> getAllResults ()
-  {
-    return m_aResults.getClone ();
-  }
-
-  @Nonnull
-  public Iterator <ValidationResult> iterator ()
-  {
-    return m_aResults.iterator ();
-  }
-
   public boolean containsNoFailure ()
   {
-    return m_aResults.containsOnly (x -> x.getErrorList ().containsNoFailure ());
+    return containsOnly (x -> x.getErrorList ().containsNoFailure ());
   }
 
   public boolean containsNoError ()
   {
-    return m_aResults.containsOnly (x -> x.getErrorList ().containsNoError ());
+    return containsOnly (x -> x.getErrorList ().containsNoError ());
   }
 
   public boolean containsAtLeastOneFailure ()
   {
-    return m_aResults.containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
+    return containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
   }
 
   public boolean containsAtLeastOneError ()
   {
-    return m_aResults.containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
+    return containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
   }
 
   @Nonnull
@@ -113,7 +57,7 @@ public class ValidationResultList implements ICommonsIterable <ValidationResult>
   public ErrorList getAllFailures ()
   {
     final ErrorList ret = new ErrorList ();
-    for (final ValidationResult aItem : m_aResults)
+    for (final ValidationResult aItem : this)
       ret.addAll (aItem.getErrorList ().getAllFailures ());
     return ret;
   }
@@ -123,14 +67,8 @@ public class ValidationResultList implements ICommonsIterable <ValidationResult>
   public ErrorList getAllErrors ()
   {
     final ErrorList ret = new ErrorList ();
-    for (final ValidationResult aItem : m_aResults)
+    for (final ValidationResult aItem : this)
       ret.addAll (aItem.getErrorList ().getAllErrors ());
     return ret;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).append ("Results", m_aResults).getToString ();
   }
 }
