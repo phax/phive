@@ -36,7 +36,7 @@ import com.helger.xml.XMLSystemProperties;
 @Immutable
 public final class EN16931Validation
 {
-  private static final String VERSION = "1.0.0.20170421";
+  private static final String VERSION = "1.0.0.20170831";
   public static final VESID VID_UBL = new VESID ("eu.cen.en16931", "ubl", VERSION);
   public static final VESID VID_CII = new VESID ("eu.cen.en16931", "cii", VERSION);
   public static final VESID VID_EDIFACT = new VESID ("eu.cen.en16931", "edifact", VERSION);
@@ -77,7 +77,7 @@ public final class EN16931Validation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
-    final String sVersion = " (2017-04-21)";
+    final String sVersion = " (2017-08-31)";
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII,
                                                                            "EN 16931 CII" + sVersion,
                                                                            CEN19631.VK_INVOICE_CII,
