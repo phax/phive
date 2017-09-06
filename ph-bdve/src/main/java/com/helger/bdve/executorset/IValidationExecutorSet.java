@@ -64,4 +64,10 @@ public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName,
   {
     return new ValidationExecutionManager (this);
   }
+
+  /**
+   * @return <code>true</code> if this document is deprecated (phased-out or end
+   *         of life)?
+   */
+  boolean isDeprecated ();
 }

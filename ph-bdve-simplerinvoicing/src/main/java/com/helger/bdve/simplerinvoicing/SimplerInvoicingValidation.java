@@ -63,23 +63,28 @@ public final class SimplerInvoicingValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     // SimplerInvoicing is self-contained
+    final boolean bDeprecated = false;
     // 1.1
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
                                                                            "Simplerinvoicing Invoice 1.1",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
+                                                                           bDeprecated,
                                                                            _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11_STRICT,
                                                                            "Simplerinvoicing Invoice 1.1 (strict)",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE_STRICT,
+                                                                           bDeprecated,
                                                                            _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI11_STRICT)));
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
+                                                                           bDeprecated,
                                                                            _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_ORDER_V12,
                                                                            "Simplerinvoicing Order 1.2",
                                                                            CSimplerInvoicingValidationArtefact.VK_SI_ORDER,
+                                                                           bDeprecated,
                                                                            _createXSLT (CSimplerInvoicingValidationArtefact.ORDER_SI12)));
   }
 }

@@ -20,6 +20,7 @@ import java.util.Iterator;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
@@ -42,20 +43,24 @@ import com.helger.jaxb.builder.IJAXBDocumentType;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class ValidationExecutorSet implements IValidationExecutorSet
 {
   private final VESID m_aID;
   private final String m_sDisplayName;
   private final ValidationArtefactKey m_aValidationArtefactKey;
   private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
+  private final boolean m_bDeprecated;
 
   public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
-                                @Nonnull final ValidationArtefactKey aValidationArtefactKey)
+                                @Nonnull final ValidationArtefactKey aValidationArtefactKey,
+                                final boolean bDeprecated)
   {
     m_aID = ValueEnforcer.notNull (aID, "ID");
     m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     m_aValidationArtefactKey = ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
+    m_bDeprecated = bDeprecated;
   }
 
   @Nonnull
@@ -94,6 +99,11 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public ICommonsList <IValidationExecutor> getAllExecutors ()
   {
     return m_aList.getClone ();
+  }
+
+  public boolean isDeprecated ()
+  {
+    return m_bDeprecated;
   }
 
   /**
@@ -168,10 +178,31 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                             .getToString ();
   }
 
+  /**
+   * Create a new validation executor set (VES). It uses all XML Schema
+   * Definitions (XSDs) defined in the validation artefact key.
+   *
+   * @param aID
+   *        The ID to use. May not be <code>null</code>.
+   * @param sDisplayName
+   *        The name of the VES. May neither be <code>null</code> nor empty.
+   * @param aValidationArtefactKey
+   *        The validation artefact key to use (defining the business
+   *        requirements). May not be <code>null</code>. This key contains the
+   *        references to the XSDs.
+   * @param bIsDeprecated
+   *        <code>true</code> if this VES is considered deprecated,
+   *        <code>false</code> if not.
+   * @param aSchematrons
+   *        The schematron resources to be associated with the VES. May not be
+   *        <code>null</code>.
+   * @return The newly created VES. Never <code>null</code>.
+   */
   @Nonnull
   public static ValidationExecutorSet create (@Nonnull final VESID aID,
                                               @Nonnull @Nonempty final String sDisplayName,
                                               @Nonnull final ValidationArtefactKey aValidationArtefactKey,
+                                              final boolean bIsDeprecated,
                                               @Nonnull final TypedValidationResource... aSchematrons)
   {
     ValueEnforcer.notNull (aID, "ID");
@@ -179,7 +210,10 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, aValidationArtefactKey);
+    final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
+                                                                 sDisplayName,
+                                                                 aValidationArtefactKey,
+                                                                 bIsDeprecated);
 
     // Add XSDs at the beginning
     ret.addAllXSDExecutors (aValidationArtefactKey.getJAXBDocumentType ());
@@ -194,11 +228,33 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     return ret;
   }
 
+  /**
+   * Create a derived VES from an existing VES. This means that only Schematrons
+   * can be added, but the XSDs are taken from the base VES only.
+   *
+   * @param aBaseVES
+   *        The base VES to copy from. May not be <code>null</code>.
+   * @param aID
+   *        The ID to use. May not be <code>null</code>.
+   * @param sDisplayName
+   *        The name of the VES. May neither be <code>null</code> nor empty.
+   * @param aValidationArtefactKey
+   *        The validation artefact key to use (defining the business
+   *        requirements). May not be <code>null</code>.
+   * @param bIsDeprecated
+   *        <code>true</code> if this VES is considered deprecated,
+   *        <code>false</code> if not.
+   * @param aSchematrons
+   *        The schematron resources to be associated with the VES. May not be
+   *        <code>null</code>.
+   * @return The newly created VES. Never <code>null</code>.
+   */
   @Nonnull
   public static ValidationExecutorSet createDerived (@Nonnull final IValidationExecutorSet aBaseVES,
                                                      @Nonnull final VESID aID,
                                                      @Nonnull @Nonempty final String sDisplayName,
                                                      @Nonnull final ValidationArtefactKey aValidationArtefactKey,
+                                                     final boolean bIsDeprecated,
                                                      @Nonnull final TypedValidationResource... aSchematrons)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
@@ -207,7 +263,10 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, aValidationArtefactKey);
+    final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
+                                                                 sDisplayName,
+                                                                 aValidationArtefactKey,
+                                                                 bIsDeprecated || aBaseVES.isDeprecated ());
 
     // Copy all existing ones
     for (final IValidationExecutor aVE : aBaseVES)

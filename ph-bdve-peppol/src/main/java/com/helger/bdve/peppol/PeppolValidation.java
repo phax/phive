@@ -78,25 +78,30 @@ public final class PeppolValidation
     if (aVESInvoice == null || aVESCreditNote == null)
       throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before third-party artefacts!");
 
+    final boolean bDeprecated = false;
     final IValidationExecutorSet aVESInvoiceAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoice,
                                                                                                                                VID_OPENPEPPOL_T10_V2_5_AT,
                                                                                                                                "OpenPEPPOL Invoice (Austria)",
                                                                                                                                CPeppolValidationArtefact.VK_INVOICE_04_T10_ATNAT,
+                                                                                                                               bDeprecated,
                                                                                                                                _create (CPeppolValidationArtefact.INVOICE_AT_NAT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoiceAT,
                                                                                   VID_OPENPEPPOL_T10_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Invoice (Austrian Government)",
                                                                                   CPeppolValidationArtefact.VK_INVOICE_04_T10_ATGOV,
+                                                                                  bDeprecated,
                                                                                   _create (CPeppolValidationArtefact.INVOICE_AT_GOV)));
     final IValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
                                                                                                                                   VID_OPENPEPPOL_T14_V2_5_AT,
                                                                                                                                   "OpenPEPPOL Credit Note (Austria)",
                                                                                                                                   CPeppolValidationArtefact.VK_BILLING_05_T14_ATNAT,
+                                                                                                                                  bDeprecated,
                                                                                                                                   _create (CPeppolValidationArtefact.CREDIT_NOTE_AT_NAT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNoteAT,
                                                                                   VID_OPENPEPPOL_T14_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Credit Note (Austrian Government)",
                                                                                   CPeppolValidationArtefact.VK_BILLING_05_T14_ATGOV,
+                                                                                  bDeprecated,
                                                                                   _create (CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV)));
   }
 }
