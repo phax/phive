@@ -32,6 +32,8 @@ import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
+import com.helger.commons.error.IError;
+import com.helger.commons.string.StringHelper;
 
 /**
  * Test class for class {@link ValidationExecutionManager}.
@@ -65,7 +67,10 @@ public final class ValidationExecutionManagerFuncTest
       final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());
       final ValidationResultList aErrors = aValidator.executeValidation (aSource);
       if (aTestFile.isGoodCase ())
-        assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
+        assertTrue (aErrors.getAllCount (IError::isError) +
+                    " error:\n" +
+                    StringHelper.getImploded ('\n', aErrors.getAllErrors ()),
+                    aErrors.containsNoError ());
       else
         assertTrue (aErrors.containsAtLeastOneError ());
     }
