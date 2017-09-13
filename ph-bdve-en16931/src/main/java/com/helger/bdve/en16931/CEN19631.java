@@ -92,7 +92,7 @@ public final class CEN19631
                                                                                      _getCL ());
   public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/edifact/stylesheet/EN16931-EDIFACT-validation-compiled.xsl",
                                                                                       _getCL ());
-  public static final IReadableResource INVOICE_UBL = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-validation.sch",
+  public static final IReadableResource INVOICE_UBL = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-model.sch",
                                                                              _getCL ());
 
   private CEN19631 ()
