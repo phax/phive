@@ -16,10 +16,14 @@
  */
 package com.helger.bdve.result;
 
+import java.util.function.Predicate;
+
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.error.IError;
 import com.helger.commons.error.list.ErrorList;
 
 /**
@@ -69,6 +73,15 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
     final ErrorList ret = new ErrorList ();
     for (final ValidationResult aItem : this)
       ret.addAll (aItem.getErrorList ().getAllErrors ());
+    return ret;
+  }
+
+  @Nonnegative
+  public int getAllCount (final Predicate <? super IError> aFilter)
+  {
+    int ret = 0;
+    for (final ValidationResult aItem : this)
+      ret += aItem.getErrorList ().getCount (aFilter);
     return ret;
   }
 }
