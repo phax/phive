@@ -67,8 +67,6 @@ public final class CTestFiles
     {
       // CII files fail with pure!
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_01.xml"));
-      if (false)
-        ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_02.xml"));
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example1.xml"));
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example2.xml"));
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example3.xml"));
@@ -95,15 +93,19 @@ public final class CTestFiles
       else
         if (aVESID.equals (EN16931Validation.VID_UBL))
         {
-          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
-          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));
+          if (false)
+            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
+          if (false)
+            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example3.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example4.xml"));
-          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example5.xml"));
+          if (false)
+            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example5.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example6.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example7.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example8.xml"));
-          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example9.xml"));
+          if (false)
+            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example9.xml"));
         }
         else
           throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
