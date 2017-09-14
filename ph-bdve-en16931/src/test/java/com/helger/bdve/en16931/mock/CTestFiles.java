@@ -93,19 +93,15 @@ public final class CTestFiles
       else
         if (aVESID.equals (EN16931Validation.VID_UBL))
         {
-          if (false)
-            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
-          if (false)
-            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example3.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example4.xml"));
-          if (false)
-            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example5.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example5.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example6.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example7.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example8.xml"));
-          if (false)
-            ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example9.xml"));
+          ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example9.xml"));
         }
         else
           throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
