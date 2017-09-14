@@ -58,6 +58,7 @@ public final class PeppolValidation
   {
     PeppolValidation330.init (aRegistry);
     PeppolValidation340.init (aRegistry);
+    PeppolValidation350.init (aRegistry);
   }
 
   @Nonnull
