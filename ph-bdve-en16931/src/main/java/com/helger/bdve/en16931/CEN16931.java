@@ -42,7 +42,7 @@ import eu.cen.en16931.edifact.invoicd14b.iso20625.MINVOIC;
  * @author Philip Helger
  */
 @Immutable
-public final class CEN19631
+public final class CEN16931
 {
   @Nonnull
   private static BusinessSpecification _createBusinessSpec (@Nonnull @Nonempty final String sGroupID,
@@ -81,7 +81,7 @@ public final class CEN19631
   @Nonnull
   private static ClassLoader _getCL ()
   {
-    return CEN19631.class.getClassLoader ();
+    return CEN16931.class.getClassLoader ();
   }
 
   public static final IReadableResource INVOICE_CII_SCH = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.sch",
@@ -95,6 +95,6 @@ public final class CEN19631
   public static final IReadableResource INVOICE_UBL = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-model.sch",
                                                                              _getCL ());
 
-  private CEN19631 ()
+  private CEN16931 ()
   {}
 }

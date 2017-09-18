@@ -41,7 +41,7 @@ import com.helger.xml.XMLSystemProperties;
 @Immutable
 public final class EN16931Validation
 {
-  private static final LocalDate LAST_MOD = PDTFactory.createLocalDate (2016, Month.SEPTEMBER, 15);
+  private static final LocalDate LAST_MOD = PDTFactory.createLocalDate (2017, Month.SEPTEMBER, 15);
   private static final String VERSION = "1.0.0." + PDTFormatter.getForPattern ("uuuuMMdd").format (LAST_MOD);
   public static final VESID VID_UBL = new VESID ("eu.cen.en16931", "ubl", VERSION);
   public static final VESID VID_CII = new VESID ("eu.cen.en16931", "cii", VERSION);
@@ -87,22 +87,22 @@ public final class EN16931Validation
     final boolean bDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII,
                                                                            "EN 16931 CII" + sVersion,
-                                                                           CEN19631.VK_INVOICE_CII,
+                                                                           CEN16931.VK_INVOICE_CII,
                                                                            bDeprecated,
                                                                            new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
                                                                                                         EN16931Validation.class.getClassLoader (),
-                                                                                                        CEN19631.INVOICE_CII_XSLT)));
+                                                                                                        CEN16931.INVOICE_CII_XSLT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT,
                                                                            "EN 16931 EDIFACT/ISO 20625" + sVersion,
-                                                                           CEN19631.VK_INVOICE_EDIFACT,
+                                                                           CEN16931.VK_INVOICE_EDIFACT,
                                                                            bDeprecated,
                                                                            new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
                                                                                                         EN16931Validation.class.getClassLoader (),
-                                                                                                        CEN19631.INVOICE_EDIFACT_XSLT)));
+                                                                                                        CEN16931.INVOICE_EDIFACT_XSLT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL,
                                                                            "EN 16931 UBL" + sVersion,
-                                                                           CEN19631.VK_INVOICE_UBL,
+                                                                           CEN16931.VK_INVOICE_UBL,
                                                                            bDeprecated,
-                                                                           _createPure (CEN19631.INVOICE_UBL)));
+                                                                           _createPure (CEN16931.INVOICE_UBL)));
   }
 }
