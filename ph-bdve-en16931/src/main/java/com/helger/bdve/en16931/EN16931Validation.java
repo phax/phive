@@ -34,7 +34,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.xml.XMLSystemProperties;
 
 /**
- * SimplerInvoicing validation configuration
+ * CEN/TC 434 - EN 16931 validation configuration
  *
  * @author Philip Helger
  */
