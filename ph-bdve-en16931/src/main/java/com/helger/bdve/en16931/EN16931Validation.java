@@ -41,7 +41,7 @@ import com.helger.xml.XMLSystemProperties;
 @Immutable
 public final class EN16931Validation
 {
-  private static final LocalDate LAST_MOD = PDTFactory.createLocalDate (2017, Month.SEPTEMBER, 26);
+  private static final LocalDate LAST_MOD = PDTFactory.createLocalDate (2017, Month.OCTOBER, 4);
   private static final String VERSION = "1.0.0." + PDTFormatter.getForPattern ("uuuuMMdd").format (LAST_MOD);
   public static final VESID VID_UBL = new VESID ("eu.cen.en16931", "ubl", VERSION);
   public static final VESID VID_CII = new VESID ("eu.cen.en16931", "cii", VERSION);
