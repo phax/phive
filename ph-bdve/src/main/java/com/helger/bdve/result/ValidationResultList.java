@@ -16,10 +16,12 @@
  */
 package com.helger.bdve.result;
 
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -36,26 +38,47 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   public ValidationResultList ()
   {}
 
+  /**
+   * @return <code>true</code> if this list contains no failure,
+   *         <code>false</code> otherwise.
+   */
   public boolean containsNoFailure ()
   {
     return containsOnly (x -> x.getErrorList ().containsNoFailure ());
   }
 
+  /**
+   * @return <code>true</code> if this list contains no error,
+   *         <code>false</code> otherwise.
+   */
   public boolean containsNoError ()
   {
     return containsOnly (x -> x.getErrorList ().containsNoError ());
   }
 
+  /**
+   * @return <code>true</code> if this list contains at least one failure,
+   *         <code>false</code> otherwise.
+   */
   public boolean containsAtLeastOneFailure ()
   {
     return containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
   }
 
+  /**
+   * @return <code>true</code> if this list contains at least one error,
+   *         <code>false</code> otherwise.
+   */
   public boolean containsAtLeastOneError ()
   {
     return containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
   }
 
+  /**
+   * @return A flattened list of all failures. In this case the association to
+   *         the different layers is lost. Never <code>null</code> but maybe
+   *         empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public ErrorList getAllFailures ()
@@ -66,6 +89,10 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
     return ret;
   }
 
+  /**
+   * @return A flattened list of all errors. In this case the association to the
+   *         different layers is lost. Never <code>null</code> but maybe empty.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public ErrorList getAllErrors ()
@@ -76,12 +103,33 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
     return ret;
   }
 
+  /**
+   * Count all items according to the provided filter.
+   *
+   * @param aFilter
+   *        Optional filter to use. May be <code>null</code>.
+   * @return The number of errors matching the provided filter.
+   */
   @Nonnegative
-  public int getAllCount (final Predicate <? super IError> aFilter)
+  public int getAllCount (@Nullable final Predicate <? super IError> aFilter)
   {
     int ret = 0;
     for (final ValidationResult aItem : this)
       ret += aItem.getErrorList ().getCount (aFilter);
     return ret;
+  }
+
+  /**
+   * Invoke the provided consumer on all items.
+   *
+   * @param aConsumer
+   *        Consumer to be invoked for each {@link IError}. May not be
+   *        <code>null</code>.
+   * @since 4.0.0
+   */
+  public void forEachFlattened (@Nonnull final Consumer <? super IError> aConsumer)
+  {
+    for (final ValidationResult aItem : this)
+      aItem.getErrorList ().forEach (aConsumer);
   }
 }
