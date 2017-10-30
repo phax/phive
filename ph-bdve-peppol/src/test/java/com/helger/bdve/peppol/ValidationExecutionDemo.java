@@ -33,14 +33,18 @@ import com.helger.xml.serialize.read.DOMReader;
  */
 public final class ValidationExecutionDemo
 {
+  private static final ValidationExecutorSetRegistry REGISTRY = new ValidationExecutorSetRegistry ();
+
+  static
+  {
+    PeppolValidation.initStandard (REGISTRY);
+    PeppolValidation.initThirdParty (REGISTRY);
+  }
+
   public void testCode (final byte [] aXML) throws SAXException
   {
-    final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
-    PeppolValidation.initStandard (aRegistry);
-    PeppolValidation.initThirdParty (aRegistry);
-
     // Validate against orders
-    final IValidationExecutorSet aExecutors = aRegistry.getOfID (PeppolValidation340.VID_OPENPEPPOL_T01_V2);
+    final IValidationExecutorSet aExecutors = REGISTRY.getOfID (PeppolValidation340.VID_OPENPEPPOL_T01_V2);
 
     final Document aXMLDoc = DOMReader.readXMLDOM (aXML);
     final IValidationSource aSource = ValidationSource.create (null, aXMLDoc);
