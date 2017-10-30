@@ -16,10 +16,14 @@
  */
 package com.helger.bdve.peppol;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import com.helger.bdve.executorset.IValidationExecutorSet;
+import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
@@ -33,6 +37,7 @@ import com.helger.xml.serialize.read.DOMReader;
  */
 public final class ValidationExecutionDemo
 {
+  // Do this only once - it contains all the validation executor sets
   private static final ValidationExecutorSetRegistry REGISTRY = new ValidationExecutorSetRegistry ();
 
   static
@@ -41,13 +46,21 @@ public final class ValidationExecutionDemo
     PeppolValidation.initThirdParty (REGISTRY);
   }
 
-  public void testCode (final byte [] aXML) throws SAXException
+  public void testCode (@Nullable final String sSystemID, @Nonnull final byte [] aXML) throws SAXException
   {
-    // Validate against orders
-    final IValidationExecutorSet aExecutors = REGISTRY.getOfID (PeppolValidation340.VID_OPENPEPPOL_T01_V2);
+    // Example: validate against orders
+    final VESID aVESID = PeppolValidation340.VID_OPENPEPPOL_T01_V2;
 
+    // Note: Use the currently active version
+    final IValidationExecutorSet aExecutors = REGISTRY.getOfID (aVESID.getWithVersion (PeppolValidation.VERSION_TO_USE));
+
+    // Parse the XML document to be validated
     final Document aXMLDoc = DOMReader.readXMLDOM (aXML);
-    final IValidationSource aSource = ValidationSource.create (null, aXMLDoc);
+
+    // Build object to be validated (with some metadata)
+    final IValidationSource aSource = ValidationSource.create (sSystemID, aXMLDoc);
+
+    // Perform the execution
     final ValidationResultList aErrors = aExecutors.createExecutionManager ().executeValidation (aSource);
     if (aErrors.containsNoError ())
     {
