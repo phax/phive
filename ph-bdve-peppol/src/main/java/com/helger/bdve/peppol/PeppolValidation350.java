@@ -30,7 +30,8 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.version.Version;
 
 /**
- * OpenPEPPOL validation artefacts release 3.5.0. Autumn 2017 release.
+ * OpenPEPPOL validation artefacts release 3.5.0. Autumn 2017 release. Valid per
+ * November 15th, 2017
  *
  * @author Philip Helger
  */
@@ -38,7 +39,7 @@ import com.helger.commons.version.Version;
 public final class PeppolValidation350
 {
   // Standard resources
-  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 5, 0, "RC1");
+  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 5, 0);
   public static final String VERSION_STR = PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
 
   // Standard

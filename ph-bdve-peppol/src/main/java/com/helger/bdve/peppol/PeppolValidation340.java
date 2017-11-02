@@ -35,6 +35,7 @@ import com.helger.commons.version.Version;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public final class PeppolValidation340
 {
   // Standard resources
