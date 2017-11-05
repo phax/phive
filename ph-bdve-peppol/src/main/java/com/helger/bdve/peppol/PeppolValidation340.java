@@ -218,7 +218,7 @@ public final class PeppolValidation340
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     final String sVersion = " (" + VERSION_STR + ")";
-    final boolean bDeprecated = false;
+    final boolean bDeprecated = true;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T01_V2,
                                                                            "OpenPEPPOL Order" + sVersion,
                                                                            CPeppolValidationArtefact.VK_ORDER_03_T01,
