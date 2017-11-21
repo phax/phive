@@ -25,20 +25,32 @@ import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.name.IHasName;
 
 /**
- * Enum to note the validation artefact type.
+ * Enum with the validation artefact type. Depending on this type, different
+ * implementation logic must be used!
  *
  * @author Philip Helger
  */
 public enum EValidationType implements IHasID <String>, IHasName
 {
+  /** Validate XML syntax by parsing without assigned XSDs */
   XML ("xml", "XML Syntax"),
+  /** Validate XML against the rules of an XML Schema (XSD) */
   XSD ("xsd", "XML Schema"),
+  /**
+   * Pure Java implementation of Schematron - can only handle XPath 2 (was
+   * originally called SCHEMATRON)
+   */
   SCHEMATRON_PURE ("schematron-pure", "Schematron (XPath)"),
+  /**
+   * Schematron implementation that must convert the SCH to XSLT before
+   * validation
+   */
   SCHEMATRON_SCH ("schematron-sch", "Schematron (SCH)"),
+  /**
+   * Schematron validation with a pre-build XSLT file (e.g. from the Maven
+   * plugin)
+   */
   SCHEMATRON_XSLT ("schematron-xslt", "Schematron (XSLT)");
-
-  @Deprecated
-  public static final EValidationType SCHEMATRON = SCHEMATRON_PURE;
 
   private final String m_sID;
   private final String m_sName;
