@@ -106,14 +106,14 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>peppol-commons-parent-pom</artifactId>
-        <version>6.0.0-SNAPSHOT</version>
+        <version>6.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.en16931</groupId>
         <artifactId>en16931-parent-pom</artifactId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
