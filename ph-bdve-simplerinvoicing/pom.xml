@@ -28,7 +28,7 @@
   <packaging>bundle</packaging>
   <name>ph-bdve-simplerinvoicing</name>
   <description>SimplerInvoicing validation engine</description>
-  <url>https://github.com/phax/peppol-validation-engine/ph-bdve-simplerinvoicing</url>
+  <url>https://github.com/phax/ph-bdve/ph-bdve-simplerinvoicing</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>

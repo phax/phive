@@ -28,7 +28,7 @@
   <packaging>bundle</packaging>
   <name>ph-bdve-peppol</name>
   <description>PEPPOL BIS v2 validation engine</description>
-  <url>https://github.com/phax/peppol-validation-engine/ph-bdve-peppol</url>
+  <url>https://github.com/phax/ph-bdve/ph-bdve-peppol</url>
   <inceptionYear>2014</inceptionYear>
   <licenses>
     <license>

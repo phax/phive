@@ -28,7 +28,7 @@
   <packaging>bundle</packaging>
   <name>ph-bdve-en16931</name>
   <description>EN16931 - CEN/TC 434 validation engine</description>
-  <url>https://github.com/phax/peppol-validation-engine/ph-bdve-en16931</url>
+  <url>https://github.com/phax/ph-bdve/ph-bdve-en16931</url>
   <inceptionYear>2017</inceptionYear>
   <licenses>
     <license>

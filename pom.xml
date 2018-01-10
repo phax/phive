@@ -29,7 +29,7 @@
   <packaging>pom</packaging>
   <name>ph-bdve-parent-pom</name>
   <description>Base POM to build the BDVE projects</description>
-  <url>https://github.com/phax/peppol-validation-engine</url>
+  <url>https://github.com/phax/ph-bdve</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
@@ -41,9 +41,9 @@
   </licenses>
   
   <scm>
-    <connection>scm:git:git@github.com:phax/peppol-validation-engine.git</connection>
-    <developerConnection>scm:git:git@github.com:phax/peppol-validation-engine.git</developerConnection>
-    <url>http://github.com/phax/peppol-validation-engine</url>
+    <connection>scm:git:git@github.com:phax/ph-bdve.git</connection>
+    <developerConnection>scm:git:git@github.com:phax/ph-bdve.git</developerConnection>
+    <url>http://github.com/phax/ph-bdve</url>
     <tag>HEAD</tag>
   </scm>
 
