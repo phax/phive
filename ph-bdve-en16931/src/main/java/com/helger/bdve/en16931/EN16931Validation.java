@@ -65,9 +65,9 @@ public final class EN16931Validation
   }
 
   @Nonnull
-  private static TypedValidationResource _createSCH (@Nonnull final IReadableResource aRes)
+  private static TypedValidationResource _createXSLT (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_SCH,
+    return new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
                                         EN16931Validation.class.getClassLoader (),
                                         aRes);
   }
@@ -89,16 +89,12 @@ public final class EN16931Validation
                                                                            "EN 16931 CII" + sVersion,
                                                                            CEN16931.VK_INVOICE_CII,
                                                                            bDeprecated,
-                                                                           new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
-                                                                                                        EN16931Validation.class.getClassLoader (),
-                                                                                                        CEN16931.INVOICE_CII_XSLT)));
+                                                                           _createXSLT (CEN16931.INVOICE_CII_XSLT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT,
                                                                            "EN 16931 EDIFACT/ISO 20625" + sVersion,
                                                                            CEN16931.VK_INVOICE_EDIFACT,
                                                                            bDeprecated,
-                                                                           new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
-                                                                                                        EN16931Validation.class.getClassLoader (),
-                                                                                                        CEN16931.INVOICE_EDIFACT_XSLT)));
+                                                                           _createXSLT (CEN16931.INVOICE_EDIFACT_XSLT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL,
                                                                            "EN 16931 UBL" + sVersion,
                                                                            CEN16931.VK_INVOICE_UBL,

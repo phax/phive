@@ -63,7 +63,7 @@ public final class PeppolValidation
   }
 
   @Nonnull
-  private static TypedValidationResource _create (@Nonnull final IReadableResource aRes)
+  private static TypedValidationResource _createPure (@Nonnull final IReadableResource aRes)
   {
     return new TypedValidationResource (EValidationType.SCHEMATRON_PURE,
                                         PeppolValidation.class.getClassLoader (),
@@ -86,24 +86,24 @@ public final class PeppolValidation
                                                                                                                                "OpenPEPPOL Invoice (Austria)",
                                                                                                                                CPeppolValidationArtefact.VK_INVOICE_04_T10_ATNAT,
                                                                                                                                bDeprecated,
-                                                                                                                               _create (CPeppolValidationArtefact.INVOICE_AT_NAT)));
+                                                                                                                               _createPure (CPeppolValidationArtefact.INVOICE_AT_NAT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoiceAT,
                                                                                   VID_OPENPEPPOL_T10_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Invoice (Austrian Government)",
                                                                                   CPeppolValidationArtefact.VK_INVOICE_04_T10_ATGOV,
                                                                                   bDeprecated,
-                                                                                  _create (CPeppolValidationArtefact.INVOICE_AT_GOV)));
+                                                                                  _createPure (CPeppolValidationArtefact.INVOICE_AT_GOV)));
     final IValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
                                                                                                                                   VID_OPENPEPPOL_T14_V2_5_AT,
                                                                                                                                   "OpenPEPPOL Credit Note (Austria)",
                                                                                                                                   CPeppolValidationArtefact.VK_BILLING_05_T14_ATNAT,
                                                                                                                                   bDeprecated,
-                                                                                                                                  _create (CPeppolValidationArtefact.CREDIT_NOTE_AT_NAT)));
+                                                                                                                                  _createPure (CPeppolValidationArtefact.CREDIT_NOTE_AT_NAT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNoteAT,
                                                                                   VID_OPENPEPPOL_T14_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Credit Note (Austrian Government)",
                                                                                   CPeppolValidationArtefact.VK_BILLING_05_T14_ATGOV,
                                                                                   bDeprecated,
-                                                                                  _create (CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV)));
+                                                                                  _createPure (CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV)));
   }
 }
