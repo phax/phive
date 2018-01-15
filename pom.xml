@@ -158,6 +158,13 @@
         <artifactId>ph-bdve-en16931</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <!--  
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-bdve-energieefactuur</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      -->
     </dependencies>
   </dependencyManagement>
 
@@ -184,5 +191,8 @@
     <module>ph-bdve-peppol</module>
     <module>ph-bdve-simplerinvoicing</module>
     <module>ph-bdve-en16931</module>
+    <!--  
+    <module>ph-bdve-energieefactuur</module>
+    -->
   </modules>
 </project>

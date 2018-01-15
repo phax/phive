@@ -12,35 +12,36 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   
 # News
-  * v4.0.0 - work in progress
-    * Updated to ph-commons 9.0.0
-    * Updated to the latest official EN-16931 rules
-    * Updated to the PEPPOL Autumn 2017 release (3.5.0)
-  * v3.2.0 - 2017-07-27
-    * Improved ClassLoader handling, so that each validation artefact has a defined class loader. 
-  * v3.1.4 - 2017-07-12
-    * Fixed an error where warnings in Schematron validation lead to not evaluating the SVRL
-  * v3.1.3 - 2017-06-07
-    * Re-release because v3.1.2 had issues with Maven Central deployment
-  * v3.1.2 - 2017-06-06
-    * Fixed a problem with XSLT based validation when using anything different from a DOM Document as the validation source 
-  * v3.1.1 - 2017-06-01
-    * Re-added SimplerInvoicing 1.1 rules
-    * Enabled Schematron caching by default
-    * Improved caching API
-  * v3.1.0 - 2017-05-15
-    * Added EN 16931 rules
-    * Update to OpenPEPPOL 3.4.0 rules
-    * Update to SimplerInvoicing 1.2 rules
-    * Updated to ph-schematron 4.3.0
-  * v3.0.0 - 2017-01-26
-    * Is a complete rewrite with different structure etc.
-    * Binds to ph-commons 8.6.x
-    * Requires at least ph-schematron 4.2.1
-  * v2.0.1 - 2016-09-12
-    * Binds to ph-commons 8.5.x
-  * v2.0.0 - 2016-08-22
-    * Requires JDK 8
+
+* v4.0.0 - 2018-01-15
+  * Updated to ph-commons 9.0.0
+  * Updated to the latest official EN-16931 rules
+  * Updated to the PEPPOL Autumn 2017 release (3.5.0)
+* v3.2.0 - 2017-07-27
+  * Improved ClassLoader handling, so that each validation artefact has a defined class loader. 
+* v3.1.4 - 2017-07-12
+  * Fixed an error where warnings in Schematron validation lead to not evaluating the SVRL
+* v3.1.3 - 2017-06-07
+  * Re-release because v3.1.2 had issues with Maven Central deployment
+* v3.1.2 - 2017-06-06
+  * Fixed a problem with XSLT based validation when using anything different from a DOM Document as the validation source 
+* v3.1.1 - 2017-06-01
+  * Re-added SimplerInvoicing 1.1 rules
+  * Enabled Schematron caching by default
+  * Improved caching API
+* v3.1.0 - 2017-05-15
+  * Added EN 16931 rules
+  * Update to OpenPEPPOL 3.4.0 rules
+  * Update to SimplerInvoicing 1.2 rules
+  * Updated to ph-schematron 4.3.0
+* v3.0.0 - 2017-01-26
+  * Is a complete rewrite with different structure etc.
+  * Binds to ph-commons 8.6.x
+  * Requires at least ph-schematron 4.2.1
+* v2.0.1 - 2016-09-12
+  * Binds to ph-commons 8.5.x
+* v2.0.0 - 2016-08-22
+  * Requires JDK 8
 
 # Usage notes
 Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle runtime, this can be achieved by passing `-Xss1m` on the command line. This only seems to be a problem when running 32bit Java. With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
@@ -51,19 +52,19 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>3.2.0</version>
+  <version>4.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>3.2.0</version>
+  <version>4.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>3.2.0</version>
+  <version>4.0.0</version>
 </dependency>
 ```
 
