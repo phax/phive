@@ -150,6 +150,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-bdve-cii</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-bdve-peppol</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -199,6 +204,7 @@
   <modules>
     <module>ph-bdve</module>
     <module>ph-bdve-ubl</module>
+    <module>ph-bdve-cii</module>
     <module>ph-bdve-peppol</module>
     <module>ph-bdve-simplerinvoicing</module>
     <module>ph-bdve-en16931</module>

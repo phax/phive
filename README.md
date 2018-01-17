@@ -12,12 +12,14 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   * ph-bdve-ehf - Validation rules for EHF (Norwegian public procurement) - since 4.0.1
   * ph-bdve-ubl - Validation rules for pure UBL (without any Schematron) - since 4.0.1
+  * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
   
 # News
 
 * v4.0.1 - work in progress
   * Added support for some EHF document formats (new artefact `ph-bdve-ehf`)
   * Added support to validate UBL documents only (without Schematron) (new artefact `ph-bdve-ubl`)
+  * Added support to validate CII documents only (without Schematron) (new artefact `ph-bdve-cii`)
 * v4.0.0 - 2018-01-15
   * Updated to ph-commons 9.0.0
   * Updated to the latest official EN-16931 rules
