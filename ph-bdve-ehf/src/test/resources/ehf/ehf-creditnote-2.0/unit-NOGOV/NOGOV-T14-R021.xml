@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R021</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify total charge is presented when charge is presented on document level.</description>
+			<success>NOGOV-T14-R021</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+			</cac:AllowanceCharge>
+
+			<cac:LegalMonetaryTotal>
+				<cbc:ChargeTotalAmount>0</cbc:ChargeTotalAmount>
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger when total charge is not presented when charge is presented on document level.</description>
+			<error>NOGOV-T14-R021</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+			</cac:AllowanceCharge>
+
+			<cac:LegalMonetaryTotal>
+				<!-- <cbc:ChargeTotalAmount>0</cbc:ChargeTotalAmount> -->
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>No action when charge is not set.</description>
+			<success>NOGOV-T14-R0021</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<!-- <cac:AllowanceCharge>
+				<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+			</cac:AllowanceCharge> -->
+
+			<cac:LegalMonetaryTotal>
+				<!-- <cbc:ChargeTotalAmount>0</cbc:ChargeTotalAmount> -->
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+</testSet>

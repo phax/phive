@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R005</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify contract document reference is provided.</description>
+			<success>NOGOV-T10-R005</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:ContractDocumentReference>
+				<cbc:ID>1234567890</cbc:ID>
+			</cac:ContractDocumentReference>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when contract document reference is not provided.</description>
+			<warning>NOGOV-T10-R005</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:ContractDocumentReference>
+				<!-- <cbc:ID>1234567890</cbc:ID> -->
+			</cac:ContractDocumentReference>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when contract document reference is not provided.</description>
+			<warning>NOGOV-T10-R005</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cac:ContractDocumentReference>
+				<cbc:ID>1234567890</cbc:ID>
+			</cac:ContractDocumentReference> -->
+
+		</Invoice>
+	</test>
+</testSet>

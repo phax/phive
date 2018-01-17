@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>BII2-T10-R056</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify correct behaviour when using prepaid amount.</description>
+			<success>BII2-T10-R056</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:TaxInclusiveAmount>100.00</cbc:TaxInclusiveAmount>
+				<cbc:PayableAmount>100.00</cbc:PayableAmount>
+			</cac:LegalMonetaryTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct behaviour when using prepaid amount.</description>
+			<error>BII2-T10-R056</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:TaxInclusiveAmount>100.00</cbc:TaxInclusiveAmount>
+				<cbc:PayableAmount>90.00</cbc:PayableAmount>
+			</cac:LegalMonetaryTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct behaviour when using prepaid amount.</description>
+			<success>BII2-T10-R056</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:TaxInclusiveAmount>100.00</cbc:TaxInclusiveAmount>
+				<cbc:PrepaidAmount>0.00</cbc:PrepaidAmount>
+				<cbc:PayableAmount>100.00</cbc:PayableAmount>
+			</cac:LegalMonetaryTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct behaviour when using prepaid amount.</description>
+			<success>BII2-T10-R056</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:TaxInclusiveAmount>100.00</cbc:TaxInclusiveAmount>
+				<cbc:PrepaidAmount>10.00</cbc:PrepaidAmount>
+				<cbc:PayableAmount>90.00</cbc:PayableAmount>
+			</cac:LegalMonetaryTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct behaviour when using prepaid amount.</description>
+			<error>BII2-T10-R056</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:TaxInclusiveAmount>100.00</cbc:TaxInclusiveAmount>
+				<cbc:PrepaidAmount>20.00</cbc:PrepaidAmount>
+				<cbc:PayableAmount>90.00</cbc:PayableAmount>
+			</cac:LegalMonetaryTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct behaviour when using prepaid amount.</description>
+			<error>BII2-T10-R056</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:TaxInclusiveAmount>100.00</cbc:TaxInclusiveAmount>
+				<cbc:PrepaidAmount>20.00</cbc:PrepaidAmount>
+				<cbc:PayableAmount>100.00</cbc:PayableAmount>
+			</cac:LegalMonetaryTotal>
+
+		</Invoice>
+	</test>
+</testSet>

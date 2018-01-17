@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R022</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify identification is provided when origin country is provided.</description>
+			<success>NOGOV-T10-R022</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:OriginCountry>
+						<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+					</cac:OriginCountry>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify identification is provided when origin country is provided.</description>
+			<success>NOGOV-T10-R022</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:OriginCountry>
+						<cbc:IdentificationCode>1234567890</cbc:IdentificationCode>
+					</cac:OriginCountry>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify identification is provided when origin country is provided.</description>
+			<success>NOGOV-T10-R022</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<!-- <cac:OriginCountry>
+						<cbc:IdentificationCode>1234567890</cbc:IdentificationCode>
+					</cac:OriginCountry> -->
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when identification is not provided when origin country is provided.</description>
+			<warning>NOGOV-T10-R022</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:OriginCountry>
+						<!-- <cbc:IdentificationCode>NO</cbc:IdentificationCode> -->
+					</cac:OriginCountry>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+</testSet>

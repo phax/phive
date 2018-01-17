@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R025</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify currencyID has same value as DocumentCurrencyCode.</description>
+			<success>NOGOV-T10-R025</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:DocumentCurrencyCode>NOK</cbc:DocumentCurrencyCode>
+
+			<cac:TaxTotal>
+				<cbc:TaxAmount currencyID="NOK">100</cbc:TaxAmount>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify currencyID has same value as DocumentCurrencyCode except for TransactionCurrencyTaxAmount.</description>
+			<success>NOGOV-T10-R025</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:DocumentCurrencyCode>NOK</cbc:DocumentCurrencyCode>
+
+			<cbc:TransactionCurrencyTaxAmount currencyID="EUR">100</cbc:TransactionCurrencyTaxAmount>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when currencyID is different than DocumentCurrencyCode.</description>
+			<error>NOGOV-T10-R025</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:DocumentCurrencyCode>NOK</cbc:DocumentCurrencyCode>
+
+			<cac:TaxTotal>
+				<cbc:TaxAmount currencyID="EUR">100</cbc:TaxAmount>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+</testSet>

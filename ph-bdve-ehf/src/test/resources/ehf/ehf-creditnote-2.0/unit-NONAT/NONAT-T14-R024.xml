@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R024</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Simple example.</description>
+			<success>NONAT-T14-R024</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>200.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Calculation error based on the test above.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>201.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Simple example.</description>
+			<success>NONAT-T14-R024</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>200.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<!-- <cbc:BaseQuantity>1</cbc:BaseQuantity> -->
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Calculation error based on the test above.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>201.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<!-- <cbc:BaseQuantity>1</cbc:BaseQuantity> -->
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Simple example.</description>
+			<success>NONAT-T14-R024</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>200.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>500.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>2</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Calculation error based on the test above.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>201.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>500.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>2</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Calculation error based on the test above.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>251.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Simple example.</description>
+			<success>NONAT-T14-R024</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>250.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Calculation error based on the test above.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>251.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Amount set to zero even though it is not correct.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>0.00</cbc:LineExtensionAmount>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Simple example.</description>
+			<success>NONAT-T14-R024</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>2</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>500.00</cbc:LineExtensionAmount>
+				<cac:Price>
+					<cbc:PriceAmount>375.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1.5</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Calculation error based on the test above.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>2</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>501.00</cbc:LineExtensionAmount>
+				<cac:Price>
+					<cbc:PriceAmount>375.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1.5</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Simple example. Negative quantity with allowance.</description>
+			<success>NONAT-T14-R024</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>-1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>-300.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Calculation error based on the test above.</description>
+			<error>NONAT-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:CreditNoteLine>
+				<cbc:CreditedQuantity>-1</cbc:CreditedQuantity>
+				<cbc:LineExtensionAmount>-301.00</cbc:LineExtensionAmount>
+				<cac:AllowanceCharge>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:Amount>50.00</cbc:Amount>
+				</cac:AllowanceCharge>
+				<cac:Price>
+					<cbc:PriceAmount>250.00</cbc:PriceAmount>
+					<cbc:BaseQuantity>1</cbc:BaseQuantity>
+				</cac:Price>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+</testSet>

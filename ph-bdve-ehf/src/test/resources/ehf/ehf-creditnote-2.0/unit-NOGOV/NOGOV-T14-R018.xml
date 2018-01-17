@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R018</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no error when tax subtotal is present.</description>
+			<success>NOGOV-T14-R018</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal/>
+			</cac:TaxTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when tax subtotal is not present.</description>
+			<error>NOGOV-T14-R018</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:TaxTotal>
+				<!-- <cac:TaxSubtotal/> -->
+			</cac:TaxTotal>
+
+		</CreditNote>
+	</test>
+</testSet>

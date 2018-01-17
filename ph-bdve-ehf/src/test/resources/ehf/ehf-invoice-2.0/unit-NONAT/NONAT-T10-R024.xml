@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R024</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify 'IBAN' is allowed as account identifier scheme.</description>
+			<success>NONAT-T10-R024</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PayeeFinancialAccount>
+				<cbc:ID schemeID="IBAN" />
+			</cac:PayeeFinancialAccount>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify 'BBAN' is allowed as account identifier scheme.</description>
+			<success>NONAT-T10-R024</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PayeeFinancialAccount>
+				<cbc:ID schemeID="BBAN" />
+			</cac:PayeeFinancialAccount>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify 'LOCAL' is allowed as account identifier scheme.</description>
+			<success>NONAT-T10-R024</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PayeeFinancialAccount>
+				<cbc:ID schemeID="LOCAL" />
+			</cac:PayeeFinancialAccount>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify 'OTHER' is not allowed as account identifier scheme.</description>
+			<error>NONAT-T10-R024</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PayeeFinancialAccount>
+				<cbc:ID schemeID="OTHER" />
+			</cac:PayeeFinancialAccount>
+
+		</Invoice>
+	</test>
+</testSet>

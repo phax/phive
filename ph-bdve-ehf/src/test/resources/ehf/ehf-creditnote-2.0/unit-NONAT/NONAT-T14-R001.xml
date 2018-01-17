@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R001</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify correct data in accounting supplier party.</description>
+			<success>NONAT-T14-R001</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<cbc:CompanyID>123456789</cbc:CompanyID>
+					</cac:PartyLegalEntity>
+					<cac:PostalAddress>
+						<cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:PostalAddress>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct data in accounting supplier party.</description>
+			<error>NONAT-T14-R001</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<!-- <cbc:CompanyID>123456789</cbc:CompanyID> -->
+					</cac:PartyLegalEntity>
+					<cac:PostalAddress>
+						<cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:PostalAddress>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct data in accounting supplier party.</description>
+			<success>NONAT-T14-R001</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PostalAddress>
+						<cac:Country>
+							<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:PostalAddress>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</CreditNote>
+	</test>
+</testSet>

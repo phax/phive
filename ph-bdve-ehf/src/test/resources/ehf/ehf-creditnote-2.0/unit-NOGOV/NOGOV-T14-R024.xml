@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R024</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify document level amount contains no more than 2 decimals.</description>
+			<success number="3">NOGOV-T14-R024</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:LineExtensionAmount>100000</cbc:LineExtensionAmount>
+				<cbc:TaxExclusiveAmount>10000.0</cbc:TaxExclusiveAmount>
+				<cbc:TaxInclusiveAmount>1000.00</cbc:TaxInclusiveAmount>
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify document level amount contains no more than 2 decimals.</description>
+			<error number="3">NOGOV-T14-R024</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:LineExtensionAmount>100.000</cbc:LineExtensionAmount>
+				<cbc:TaxExclusiveAmount>10.0000</cbc:TaxExclusiveAmount>
+				<cbc:TaxInclusiveAmount>1.00000</cbc:TaxInclusiveAmount>
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify document level amount contains no more than 2 decimals.</description>
+			<error number="3">NOGOV-T14-R024</error>
+		</assert>
+		<ns0:CreditNote xmlns:ns1="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:ns2="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns:ns0="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<ns1:LegalMonetaryTotal>
+				<ns2:LineExtensionAmount>100.000</ns2:LineExtensionAmount>
+				<ns2:TaxExclusiveAmount>10.0000</ns2:TaxExclusiveAmount>
+				<ns2:TaxInclusiveAmount>1.00000</ns2:TaxInclusiveAmount>
+			</ns1:LegalMonetaryTotal>
+
+		</ns0:CreditNote>
+	</test>
+</testSet>

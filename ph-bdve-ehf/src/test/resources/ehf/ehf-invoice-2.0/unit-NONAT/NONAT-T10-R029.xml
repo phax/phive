@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R029</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no warning when taxable amount is correct.</description>
+			<success>NONAT-T10-R029</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>100</cbc:TaxableAmount>
+					<cac:TaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no warning when taxable amount is correct.</description>
+			<success>NONAT-T10-R029</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>100</cbc:TaxableAmount>
+					<cac:TaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no warning when taxable amount is correct.</description>
+			<success>NONAT-T10-R029</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>90</cbc:TaxableAmount> <!-- 50 + 50 - 30 + 20 -->
+					<cac:TaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+			<!-- + 20 -->
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+				<cbc:Amount currencyID="NOK">20</cbc:Amount>
+				<cac:TaxCategory>
+					<cbc:ID>S</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+				</cac:TaxCategory>
+			</cac:AllowanceCharge>
+
+			<!-- - 30 -->
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+				<cbc:Amount currencyID="NOK">30</cbc:Amount>
+				<cac:TaxCategory>
+					<cbc:ID>S</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+				</cac:TaxCategory>
+			</cac:AllowanceCharge>
+
+			<!-- + 50 -->
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+			<!-- + 50 -->
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when taxable amount is incorrect.</description>
+			<error>NONAT-T10-R029</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>100.01</cbc:TaxableAmount>
+					<cac:TaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+			<cac:InvoiceLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+</testSet>

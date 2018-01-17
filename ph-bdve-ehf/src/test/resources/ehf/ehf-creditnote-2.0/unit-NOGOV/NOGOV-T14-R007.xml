@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R007</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no warning when contact identifier is present.</description>
+			<success>NOGOV-T14-R007</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingCustomerParty>
+				<cac:Party>
+					<cac:Contact>
+						<cbc:ID>123456785</cbc:ID>
+					</cac:Contact>
+				</cac:Party>
+			</cac:AccountingCustomerParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when contact identifier is missing.</description>
+			<error>NOGOV-T14-R007</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingCustomerParty>
+				<cac:Party>
+					<cac:Contact>
+						<!-- <cbc:ID>123456785</cbc:ID> -->
+					</cac:Contact>
+				</cac:Party>
+			</cac:AccountingCustomerParty>
+
+		</CreditNote>
+	</test>
+</testSet>

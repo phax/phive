@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R015</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify item price is provided on invoice line.</description>
+			<success>NONAT-T10-R015</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Price>
+					<cbc:PriceAmount>0</cbc:PriceAmount>
+				</cac:Price>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when item price is not provided on invoice line.</description>
+			<error>NONAT-T10-R015</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Price>
+					<!-- <cbc:PriceAmount>0</cbc:PriceAmount> -->
+				</cac:Price>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when item price is not provided on invoice line.</description>
+			<error>NONAT-T10-R015</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<!-- <cac:Price>
+					<cbc:PriceAmount>0</cbc:PriceAmount>
+				</cac:Price> -->
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+</testSet>

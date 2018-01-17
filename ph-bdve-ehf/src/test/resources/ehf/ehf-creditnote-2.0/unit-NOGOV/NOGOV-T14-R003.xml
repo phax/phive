@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R003</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify no error when company identifier is present and tax is declared.</description>
+			<success>NOGOV-T14-R003</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyTaxScheme>
+						<cbc:CompanyID>123456785</cbc:CompanyID>
+					</cac:PartyTaxScheme>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cbc:TaxAmount>100.00</cbc:TaxAmount>
+			</cac:TaxTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when company identifier not is present and tax is declared.</description>
+			<error>NOGOV-T14-R003</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyTaxScheme>
+						<!-- <cbc:CompanyID>123456785</cbc:CompanyID> -->
+					</cac:PartyTaxScheme>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cbc:TaxAmount>100.00</cbc:TaxAmount>
+			</cac:TaxTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify no error when declared tax is zero.</description>
+			<success>NOGOV-T14-R003</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyTaxScheme>
+						<!-- <cbc:CompanyID>123456785</cbc:CompanyID> -->
+					</cac:PartyTaxScheme>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cbc:TaxAmount>0.00</cbc:TaxAmount>
+			</cac:TaxTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify no error when declared tax is not zero and company identifier is not declared.</description>
+			<error>NOGOV-T14-R003</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyTaxScheme>
+						<!-- <cbc:CompanyID>123456785</cbc:CompanyID> -->
+					</cac:PartyTaxScheme>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cbc:TaxAmount>0.01</cbc:TaxAmount>
+			</cac:TaxTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify no error when there are no declared tax.</description>
+			<success>NOGOV-T14-R003</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:TaxTotal>
+				<!-- <cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal> -->
+				<cbc:TaxAmount>100.00</cbc:TaxAmount>
+			</cac:TaxTotal>
+
+		</CreditNote>
+	</test>
+</testSet>

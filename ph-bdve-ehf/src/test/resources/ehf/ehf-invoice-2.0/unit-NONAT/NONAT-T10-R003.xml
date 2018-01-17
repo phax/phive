@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R003</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify delivery date is present.</description>
+			<success>NONAT-T10-R003</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cbc:ActualDeliveryDate/>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when delivery date is not present.</description>
+			<warning>NONAT-T10-R003</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<!-- <cbc:ActualDeliveryDate/> -->
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify delivery date is present at least somewhere in document.</description>
+			<success>NONAT-T10-R003</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cac:Delivery>
+				<cbc:ActualDeliveryDate/>
+			</cac:Delivery> -->
+
+			<cac:InvoiceLine>
+				<cac:Delivery>
+					<cbc:ActualDeliveryDate/>
+				</cac:Delivery>
+			</cac:InvoiceLine>
+			<cac:InvoiceLine>
+				<cac:Delivery>
+					<!-- <cbc:ActualDeliveryDate/> -->
+				</cac:Delivery>
+			</cac:InvoiceLine>
+
+
+		</Invoice>
+	</test>
+</testSet>

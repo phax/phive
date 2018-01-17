@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R023</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify code is provided when classification is provided.</description>
+			<success>NOGOV-T10-R023</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:CommodityClassification>
+						<cbc:ItemClassificationCode>1234567890</cbc:ItemClassificationCode>
+					</cac:CommodityClassification>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify code is not expected when classification is not provided.</description>
+			<success>NOGOV-T10-R023</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<!-- <cac:CommodityClassification>
+						<cbc:ItemClassificationCode>1234567890</cbc:ItemClassificationCode>
+					</cac:CommodityClassification> -->
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when code is not provided when classification is provided.</description>
+			<warning>NOGOV-T10-R023</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:CommodityClassification>
+						<!-- <cbc:ItemClassificationCode>1234567890</cbc:ItemClassificationCode> -->
+					</cac:CommodityClassification>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+</testSet>

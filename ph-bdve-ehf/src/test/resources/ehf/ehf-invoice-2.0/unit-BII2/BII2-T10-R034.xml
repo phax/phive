@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>BII2-T10-R034</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify price higher than zero does not trigger error.</description>
+			<success>BII2-T10-R034</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Price>
+					<cbc:PriceAmount>100</cbc:PriceAmount>
+				</cac:Price>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify price at zero does not trigger error.</description>
+			<success>BII2-T10-R034</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Price>
+					<cbc:PriceAmount>0</cbc:PriceAmount>
+				</cac:Price>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify price below zero does trigger error.</description>
+			<error>BII2-T10-R034</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Price>
+					<cbc:PriceAmount>-100</cbc:PriceAmount>
+				</cac:Price>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+</testSet>

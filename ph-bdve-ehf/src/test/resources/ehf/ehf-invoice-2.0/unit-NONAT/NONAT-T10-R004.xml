@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R004</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify delivery address is present.</description>
+			<success>NONAT-T10-R004</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cac:DeliveryLocation>
+					<cac:Address>
+						<cbc:CityName>Test</cbc:CityName>
+						<cbc:PostalZone>0000</cbc:PostalZone>
+						<cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:Address>
+				</cac:DeliveryLocation>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when delivery address is not present.</description>
+			<warning>NONAT-T10-R004</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cac:Delivery>
+				<cac:DeliveryLocation>
+					<cac:Address>
+						<cbc:CityName>Test</cbc:CityName>
+						<cbc:PostalZone>0000</cbc:PostalZone>
+						<cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:Address>
+				</cac:DeliveryLocation>
+			</cac:Delivery> -->
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when delivery address is not complete.</description>
+			<warning>NONAT-T10-R004</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cac:DeliveryLocation>
+					<cac:Address>
+						<!-- <cbc:CityName>Test</cbc:CityName> -->
+						<cbc:PostalZone>0000</cbc:PostalZone>
+						<cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:Address>
+				</cac:DeliveryLocation>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when delivery address is not complete.</description>
+			<warning>NONAT-T10-R004</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cac:DeliveryLocation>
+					<cac:Address>
+						<cbc:CityName>Test</cbc:CityName>
+						<!-- <cbc:PostalZone>0000</cbc:PostalZone> -->
+						<cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:Address>
+				</cac:DeliveryLocation>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when delivery address is not complete.</description>
+			<warning>NONAT-T10-R004</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cac:DeliveryLocation>
+					<cac:Address>
+						<cbc:CityName>Test</cbc:CityName>
+						<cbc:PostalZone>0000</cbc:PostalZone>
+						<!-- <cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country> -->
+					</cac:Address>
+				</cac:DeliveryLocation>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+</testSet>

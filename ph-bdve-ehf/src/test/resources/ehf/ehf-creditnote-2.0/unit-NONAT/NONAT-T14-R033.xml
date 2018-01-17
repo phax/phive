@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<description>Verify use of base quantity</description>
+		<scope>NONAT-T14-R033</scope>
+	</assert>
+	<test>
+		<assert>
+			<success>NONAT-T14-R033</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:Price>
+				<cbc:BaseQuantity>1</cbc:BaseQuantity>
+			</cac:Price>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<success>NONAT-T14-R033</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:Price>
+				<cbc:BaseQuantity>0.01</cbc:BaseQuantity>
+			</cac:Price>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<warning>NONAT-T14-R033</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:Price>
+				<cbc:BaseQuantity>0</cbc:BaseQuantity>
+			</cac:Price>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<warning>NONAT-T14-R033</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:Price>
+				<cbc:BaseQuantity>-1</cbc:BaseQuantity>
+			</cac:Price>
+
+		</CreditNote>
+	</test>
+</testSet>

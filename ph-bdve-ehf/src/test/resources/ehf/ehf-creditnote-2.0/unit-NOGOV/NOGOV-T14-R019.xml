@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R019</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no error witem classification is present in commodity classification.</description>
+			<success>NOGOV-T14-R019</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:CreditNoteLine>
+				<cac:Item>
+					<cac:CommodityClassification>
+						<cbc:ItemClassificationCode>42</cbc:ItemClassificationCode>
+					</cac:CommodityClassification>
+				</cac:Item>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error witem classification is not present in commodity classification.</description>
+			<warning>NOGOV-T14-R019</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:CreditNoteLine>
+				<cac:Item>
+					<cac:CommodityClassification>
+						<!-- <cbc:ItemClassificationCode/> -->
+					</cac:CommodityClassification>
+				</cac:Item>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+</testSet>

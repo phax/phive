@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R014</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify tax scheme identifier is 'VAT'.</description>
+			<success>NONAT-T10-R014</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxScheme>
+				<cbc:ID>VAT</cbc:ID>
+			</cac:TaxScheme>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when tax scheme identifier is not 'VAT'.</description>
+			<error number="2">NONAT-T10-R014</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxScheme>
+				<cbc:ID>MVA</cbc:ID>
+				<cbc:ID></cbc:ID>
+			</cac:TaxScheme>
+
+		</Invoice>
+	</test>
+</testSet>

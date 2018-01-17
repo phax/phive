@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R042</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify only valid invoice type codes are used.</description>
+			<success number="5">NOGOV-T10-R042</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>384</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>393</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>Z01</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>Z02</cbc:InvoiceTypeCode>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify only valid invoice type codes are used.</description>
+			<error number="5">NOGOV-T10-R042</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:InvoiceTypeCode>381</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>385</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>394</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>Z03</cbc:InvoiceTypeCode>
+			<cbc:InvoiceTypeCode>Z04</cbc:InvoiceTypeCode>
+
+		</Invoice>
+	</test>
+</testSet>

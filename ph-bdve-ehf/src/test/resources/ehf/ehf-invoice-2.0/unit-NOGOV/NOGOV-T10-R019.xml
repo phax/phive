@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R019</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify payment means is defined.</description>
+			<success>NOGOV-T10-R019</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PaymentMeans/>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when payment means is not defined.</description>
+			<error>NOGOV-T10-R019</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cac:PaymentMeans/> -->
+
+		</Invoice>
+	</test>
+</testSet>

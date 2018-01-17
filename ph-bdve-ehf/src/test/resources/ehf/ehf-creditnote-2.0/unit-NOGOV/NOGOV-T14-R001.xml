@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R001</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of reference.</description>
+			<success>NOGOV-T14-R001</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:Contact>
+						<cbc:ID>Reference</cbc:ID>
+					</cac:Contact>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when reference does not exists.</description>
+			<warning>NOGOV-T14-R001</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:Contact>
+						<!-- <cbc:ID>Reference</cbc:ID> -->
+					</cac:Contact>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</CreditNote>
+	</test>
+</testSet>

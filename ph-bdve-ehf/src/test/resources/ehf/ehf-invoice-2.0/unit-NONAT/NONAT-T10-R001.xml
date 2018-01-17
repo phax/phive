@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R001</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify company identifier is present.</description>
+			<success>NONAT-T10-R001</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<cbc:CompanyID>123456789</cbc:CompanyID>
+					</cac:PartyLegalEntity>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when company identifier is not present.</description>
+			<error>NONAT-T10-R001</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<!-- <cbc:CompanyID>123456789</cbc:CompanyID> -->
+					</cac:PartyLegalEntity>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when company identifier is not present.</description>
+			<error>NONAT-T10-R001</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<!-- <cac:PartyLegalEntity>
+						<cbc:CompanyID>123456789</cbc:CompanyID>
+					</cac:PartyLegalEntity> -->
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</Invoice>
+	</test>
+</testSet>

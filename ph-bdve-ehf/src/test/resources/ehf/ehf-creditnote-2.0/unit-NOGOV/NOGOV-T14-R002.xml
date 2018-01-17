@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R002</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify no warning is triggered when sellers identifier is present.</description>
+			<success>NOGOV-T14-R002</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:Item>
+				<cac:SellersItemIdentification>
+					<cbc:ID>123</cbc:ID>
+				</cac:SellersItemIdentification>
+			</cac:Item>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when sellers identifier is missing.</description>
+			<warning>NOGOV-T14-R002</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:Item>
+				<cac:SellersItemIdentification>
+					<!-- <cbc:ID>123</cbc:ID> -->
+				</cac:SellersItemIdentification>
+			</cac:Item>
+
+		</CreditNote>
+	</test>
+</testSet>

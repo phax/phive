@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R002</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify sellers identifier is provided.</description>
+			<success>NOGOV-T10-R002</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Item>
+				<cac:SellersItemIdentification>
+					<cbc:ID>123456789</cbc:ID>
+				</cac:SellersItemIdentification>
+			</cac:Item>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Triggers warning when sellers identifier is not provided.</description>
+			<warning>NOGOV-T10-R002</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Item>
+				<cac:SellersItemIdentification>
+					<!-- <cbc:ID>123456789</cbc:ID> -->
+				</cac:SellersItemIdentification>
+			</cac:Item>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Triggers warning when sellers identifier is not provided.</description>
+			<warning>NOGOV-T10-R002</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Item>
+				<!-- <cac:SellersItemIdentification>
+					<cbc:ID>123456789</cbc:ID>
+				</cac:SellersItemIdentification> -->
+			</cac:Item>
+
+		</Invoice>
+	</test>
+</testSet>

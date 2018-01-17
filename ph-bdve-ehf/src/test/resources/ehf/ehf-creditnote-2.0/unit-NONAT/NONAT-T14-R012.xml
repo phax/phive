@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R012</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of element.</description>
+			<success>NONAT-T14-R012</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:CreditNoteLine>
+				<cac:Item>
+					<cbc:Name/>
+				</cac:Item>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify existence of element.</description>
+			<error>NONAT-T14-R012</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:CreditNoteLine>
+				<cac:Item>
+					<!-- <cbc:Name/> -->
+				</cac:Item>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify existence of element.</description>
+			<error>NONAT-T14-R012</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:CreditNoteLine>
+				<!-- <cac:Item>
+					<cbc:Name/>
+				</cac:Item> -->
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+</testSet>

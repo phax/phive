@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>EHFPROFILE-T14-R002</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no error for profile xx.</description>
+			<success>EHFPROFILE-T14-R002</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:ProfileID>urn:www.cenbii.eu:profile:biixx:ver2.0</cbc:ProfileID>
+
+		</CreditNote>
+	</test>
+	<assert>
+		<scope>EHFPROFILE-T14-R002</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no error with invoice and credit note reference.</description>
+			<success>EHFPROFILE-T14-R002</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:BillingReference>
+				<cac:InvoiceDocumentReference>
+					<cbc:ID/>
+				</cac:InvoiceDocumentReference>
+				<cac:CreditNoteDocumentReference>
+					<cbc:ID/>
+				</cac:CreditNoteDocumentReference>
+			</cac:BillingReference>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no error with invoice reference.</description>
+			<success>EHFPROFILE-T14-R002</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:BillingReference>
+				<cac:InvoiceDocumentReference>
+					<cbc:ID/>
+				</cac:InvoiceDocumentReference>
+				<!-- <cac:CreditNoteDocumentReference>
+					<cbc:ID/>
+				</cac:CreditNoteDocumentReference> -->
+			</cac:BillingReference>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no error with credit note reference.</description>
+			<success>EHFPROFILE-T14-R002</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:BillingReference>
+				<!-- <cac:InvoiceDocumentReference>
+					<cbc:ID/>
+				</cac:InvoiceDocumentReference> -->
+				<cac:CreditNoteDocumentReference>
+					<cbc:ID/>
+				</cac:CreditNoteDocumentReference>
+			</cac:BillingReference>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when invoice and credit note reference is not present.</description>
+			<error>EHFPROFILE-T14-R002</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:BillingReference>
+				<!-- <cac:InvoiceDocumentReference>
+					<cbc:ID/>
+				</cac:InvoiceDocumentReference> -->
+				<!-- <cac:CreditNoteDocumentReference>
+					<cbc:ID/>
+				</cac:CreditNoteDocumentReference> -->
+			</cac:BillingReference>
+
+		</CreditNote>
+	</test>
+</testSet>

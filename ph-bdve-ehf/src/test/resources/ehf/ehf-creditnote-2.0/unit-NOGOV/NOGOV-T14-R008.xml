@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R008</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no error when company name is present.</description>
+			<success>NOGOV-T14-R008</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingCustomerParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<cbc:RegistrationName>Test</cbc:RegistrationName>
+					</cac:PartyLegalEntity>
+				</cac:Party>
+			</cac:AccountingCustomerParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no error when invoice is B2C.</description>
+			<success>NOGOV-T14-R008</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AdditionalDocumentReference>
+				<cbc:DocumentType>elektroniskB2Cfaktura</cbc:DocumentType>
+			</cac:AdditionalDocumentReference>
+
+			<cac:AccountingCustomerParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<!-- <cbc:RegistrationName>Test</cbc:RegistrationName> -->
+					</cac:PartyLegalEntity>
+				</cac:Party>
+			</cac:AccountingCustomerParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when company name is missing.</description>
+			<error>NOGOV-T14-R008</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AccountingCustomerParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<!-- <cbc:RegistrationName>Test</cbc:RegistrationName> -->
+					</cac:PartyLegalEntity>
+				</cac:Party>
+			</cac:AccountingCustomerParty>
+
+		</CreditNote>
+	</test>
+</testSet>

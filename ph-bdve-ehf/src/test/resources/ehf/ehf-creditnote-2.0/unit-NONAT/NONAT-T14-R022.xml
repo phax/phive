@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R022</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify correct data in schemeID.</description>
+			<success number="3">NONAT-T14-R022</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PayeeFinancialAccount>
+				<cbc:ID schemeID="IBAN"/>
+				<cbc:ID schemeID="BBAN"/>
+				<cbc:ID schemeID="LOCAL"/>
+			</cac:PayeeFinancialAccount>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify correct data in schemeID.</description>
+			<error number="2">NONAT-T14-R022</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PayeeFinancialAccount>
+				<cbc:ID schemeID="VISA"/>
+				<cbc:ID schemeID="TEST"/>
+			</cac:PayeeFinancialAccount>
+
+		</CreditNote>
+	</test>
+</testSet>

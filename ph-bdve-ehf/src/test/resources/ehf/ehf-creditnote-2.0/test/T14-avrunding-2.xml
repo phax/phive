@@ -1,0 +1,840 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+        Content:
+        This file contains a norwegian creditnote, profile invoice and creditnote
+
+        Errors:
+        EHF-COMMON-R012 2 times
+        NOGOV-T14-R025
+        NOGOV-T14-R026 4 times
+        NOGOV-T14-R024 4 times
+				EUGEN-T14-R050
+				EUGEN-T14-R049 x 4
+				EUGEN-T14-R051 x 2
+				EUGEN-T14-R052 x 2
+				NOGOV-T14-R041
+				NONAT-T14-R029 x 2
+
+				Warnings:
+				None
+-->
+<CreditNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns014:ver2.0:extended:urn:www.peppol.eu:bis:peppol5a:ver2.0:extended:urn:www.difi.no:ehf:kreditnota:ver2.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii05:ver2.0</cbc:ProfileID>
+	<cbc:ID>32</cbc:ID>
+	<cbc:IssueDate>2012-07-24</cbc:IssueDate>
+	<cbc:DocumentCurrencyCode listID="ISO4217">NOK</cbc:DocumentCurrencyCode>
+	<cac:BillingReference>
+	    <cac:InvoiceDocumentReference>
+		<cbc:ID>INV1234</cbc:ID>
+		</cac:InvoiceDocumentReference>
+	</cac:BillingReference>
+	<cac:AccountingSupplierParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="NO:ORGNR">913536770</cbc:EndpointID>
+      <cac:PartyName>
+        <cbc:Name>Veidekke Industri AS</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Skabosvei 4Postboks 508, Skøyen</cbc:StreetName>
+        <cbc:CityName>OSLO</cbc:CityName>
+        <cbc:PostalZone>0214</cbc:PostalZone>
+        <cac:Country>
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID schemeID="NO:VAT">NO913536770MVA</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Veidekke Industri</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="NO:ORGNR">913536770</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>N/A</cbc:ID>
+      </cac:Contact>
+    </cac:Party>
+  </cac:AccountingSupplierParty>
+  <cac:AccountingCustomerParty>
+    <cac:Party>
+      <cbc:EndpointID schemeID="NO:ORGNR">971032081</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="ZZZ">971032081</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Statens Vegvesen Regnskap</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Båtsfjordveien 18</cbc:StreetName>
+        <cbc:CityName>VADSØ</cbc:CityName>
+        <cbc:PostalZone>9815</cbc:PostalZone>
+        <cac:Country>
+        <cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PartyTaxScheme>
+        <cbc:CompanyID schemeID="NO:VAT">NO971032081MVA</cbc:CompanyID>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Statens Vegvesen Regnskap</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="NO:ORGNR">971032081</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>N/A</cbc:ID>
+      </cac:Contact>
+    </cac:Party>
+  </cac:AccountingCustomerParty>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="NOK">511752.180000</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="NOK">2047008.730000</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="NOK">511752.180000</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="NOK">798392.650000</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="NOK">0.000000</cbc:TaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:LegalMonetaryTotal>
+    <cbc:LineExtensionAmount currencyID="NOK">2845401.380000</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="NOK">2845401.380000</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="NOK">3357153.560000</cbc:TaxInclusiveAmount>
+    <cbc:PayableAmount currencyID="NOK">3357153.560000</cbc:PayableAmount>
+  </cac:LegalMonetaryTotal>
+  <cac:CreditNoteLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">90000.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Midlertidig trafikkavvikling</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>0</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">90000.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>2</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">847.25</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">526989.500000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 Pmb - oppretting</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>1</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">622.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>3</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">2604.10</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">1775996.200000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 16 Pmb - slitelag</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>2</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">682.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>4</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">35890.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">53835.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Klebing</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>3</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">1.5000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>5</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1008.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">49392.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Traufresing - rundkjøring</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>4</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">49.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>6</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1612.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">78988.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Traufresing - kulvrt</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>5</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">49.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>7</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">640.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">48000.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Traufresing - busslomme</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>6</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">75.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>8</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">138.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">13110.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Buttskjøt</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>7</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">95.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>9</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">9.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">8100.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Justering kummer og sluk</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>8</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">900.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>10</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">3.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">2700.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>senking av kummer og sluk PDA</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>9</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">900.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>11</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">176.25</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">43710.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Oppjustering av skuldre</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>10</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">248.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>12</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">2604.10</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">67706.600000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Steinmaterialer Mv = &amp;lt; 4</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>11</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">26.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>13</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">3573.50</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">219770.250000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Transport</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>12</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">615.000</cbc:PriceAmount>
+       <cbc:BaseQuantity>10</cbc:BaseQuantity>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>14</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">-174.65</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">-10740.980000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Transport  - overlast</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>13</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">61.5000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>15</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">4.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">22000.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Fjerning av fartsdempere</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>14</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">5500.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>16</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">100.85</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">78864.700000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 - utspleis kryss</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>15</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">782.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>17</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">21.30</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">16656.600000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 Pmb - HP 3</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>16</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">782.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>18</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">192.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">18240.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Traufresing - Hp 3</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>17</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">95.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>19</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">5500.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Dirigering for fres/asfalt - Hp 3</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>18</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">5500.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>20</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">88.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">8360.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Fresing - leggekanter</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>19</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">95.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>21</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">10380.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Bonus pkt. 9 - felt 1 - 3</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>20</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">10380.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>22</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">27785.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Bonus pkt. 12 - felt 2 - 4</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>21</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">27785.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>23</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">-1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">-335714.000000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Kredit avtalt</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>22</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">335714.0000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>24</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">6100.020000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 Pmb - oppretting (Prisregulering)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>23</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">6100.0200</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>25</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">21118.050000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 16 Pmb - slitelag (Prisregulering)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>24</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">21118.0500</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>26</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">915.210000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 - utspleis kryss (Prisregulering)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>25</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">915.2100</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>27</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">216.490000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 Pmb - HP 3 (Prisregulering)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>26</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">216.4900</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>28</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">455800.990000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 Pmb - oppretting (mva. grunnlag)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>27</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">455800.9900</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>29</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">1450874.320000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 16 Pmb - slitelag (mva. grunnlag)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>28</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">1450874.3200</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>30</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">43426.900000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Klebing (mva. grunnlag)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>29</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">43426.9000</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>31</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">18418.130000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Oppjustering av skuldre (mva. grunnlag)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>30</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">18418.1300</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>32</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">38679.710000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 - utspleis kryss (mva. grunnlag)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>31</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">38679.7100</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>33</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">11458.910000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Ab 11 Pmb - HP 3 (mva. grunnlag)</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>32</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>25.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">11458.9100</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+  <cac:CreditNoteLine>
+    <cbc:ID>34</cbc:ID>
+    <cbc:CreditedQuantity unitCode="LS" unitCodeListID="UNECERec20">-1.00</cbc:CreditedQuantity>
+    <cbc:LineExtensionAmount currencyID="NOK">-2021236.220000</cbc:LineExtensionAmount>
+    <cac:Item>
+      <cbc:Name>Utligning av mva. grunnlag linjer</cbc:Name>
+      <cac:SellersItemIdentification>
+        <cbc:ID>33</cbc:ID>
+      </cac:SellersItemIdentification>
+      <cac:ClassifiedTaxCategory>
+      <cbc:ID schemeID="UNCL5305">S</cbc:ID>
+        <cbc:Percent>0.0000</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID>VAT</cbc:ID>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
+    </cac:Item>
+    <cac:Price>
+      <cbc:PriceAmount currencyID="NOK">2021236.2200</cbc:PriceAmount>
+    </cac:Price>
+  </cac:CreditNoteLine>
+</CreditNote>

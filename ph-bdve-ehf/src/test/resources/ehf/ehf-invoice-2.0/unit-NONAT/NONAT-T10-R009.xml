@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R009</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify issue date is in the past when present.</description>
+			<success>NONAT-T10-R009</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:IssueDate>2016-01-01</cbc:IssueDate>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify issue date is in the past only when present.</description>
+			<success>NONAT-T10-R009</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cbc:IssueDate>2016-01-01</cbc:IssueDate> -->
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when issue date is in the future when present.</description>
+			<warning>NONAT-T10-R009</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:IssueDate>2025-01-01</cbc:IssueDate>
+
+		</Invoice>
+	</test>
+</testSet>

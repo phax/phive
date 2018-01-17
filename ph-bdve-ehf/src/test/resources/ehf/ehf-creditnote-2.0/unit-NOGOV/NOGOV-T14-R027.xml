@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R027</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify allowance and change on document level has no more than 2 decimals.</description>
+			<success>NOGOV-T14-R027</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AllowanceCharge>
+				<cbc:Amount>0.00</cbc:Amount>
+			</cac:AllowanceCharge>
+			<cac:AllowanceCharge>
+				<cbc:Amount>0.0</cbc:Amount>
+			</cac:AllowanceCharge>
+			<cac:AllowanceCharge>
+				<cbc:Amount>0</cbc:Amount>
+			</cac:AllowanceCharge>
+			<cac:AllowanceCharge>
+				<cbc:Amount>10</cbc:Amount>
+			</cac:AllowanceCharge>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when allowance and change on document level has more than 2 decimals.</description>
+			<error number="4">NOGOV-T14-R027</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AllowanceCharge>
+				<cbc:Amount>0.000</cbc:Amount>
+			</cac:AllowanceCharge>
+			<cac:AllowanceCharge>
+				<cbc:Amount>0.0000</cbc:Amount>
+			</cac:AllowanceCharge>
+			<cac:AllowanceCharge>
+				<cbc:Amount>0.00000</cbc:Amount>
+			</cac:AllowanceCharge>
+			<cac:AllowanceCharge>
+				<cbc:Amount>0.000000</cbc:Amount>
+			</cac:AllowanceCharge>
+
+		</CreditNote>
+	</test>
+</testSet>

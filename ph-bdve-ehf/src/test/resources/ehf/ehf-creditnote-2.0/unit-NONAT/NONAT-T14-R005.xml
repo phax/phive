@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R005</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify date is today or earlier.</description>
+			<success>NONAT-T14-R005</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:IssueDate>2016-09-21</cbc:IssueDate>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no error when issue date is not set.</description>
+			<success>NONAT-T14-R005</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<!-- <cbc:IssueDate>2016-09-21</cbc:IssueDate> -->
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error if date later than today.</description>
+			<warning>NONAT-T14-R005</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:IssueDate>2030-01-01</cbc:IssueDate>
+
+		</CreditNote>
+	</test>
+</testSet>

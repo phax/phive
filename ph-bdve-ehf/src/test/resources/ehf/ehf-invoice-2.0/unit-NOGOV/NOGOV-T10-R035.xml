@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R035</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify total allowance is available when allowance is specified on document level.</description>
+			<success>NOGOV-T10-R035</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+			</cac:AllowanceCharge>
+
+			<cac:LegalMonetaryTotal>
+				<cbc:AllowanceTotalAmount>1</cbc:AllowanceTotalAmount>
+			</cac:LegalMonetaryTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify total allowance is available only when allowance is specified on document level.</description>
+			<success>NOGOV-T10-R035</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+			</cac:AllowanceCharge>
+
+			<!-- <cac:LegalMonetaryTotal>
+				<cbc:AllowanceTotalAmount>1</cbc:AllowanceTotalAmount>
+			</cac:LegalMonetaryTotal> -->
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when total allowance is not available when allowance is specified on document level.</description>
+			<error>NOGOV-T10-R035</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+			</cac:AllowanceCharge>
+
+			<!-- <cac:LegalMonetaryTotal>
+				<cbc:AllowanceTotalAmount>1</cbc:AllowanceTotalAmount>
+			</cac:LegalMonetaryTotal> -->
+
+		</Invoice>
+	</test>
+</testSet>

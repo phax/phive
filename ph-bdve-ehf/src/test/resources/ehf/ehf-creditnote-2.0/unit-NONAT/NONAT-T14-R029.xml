@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R029</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no warning when taxable amount is correct.</description>
+			<success>NONAT-T14-R029</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>100</cbc:TaxableAmount>
+					<cac:TaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+			<cac:CreditNoteLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:CreditNoteLine>
+			<cac:CreditNoteLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no warning when taxable amount is correct.</description>
+			<success>NONAT-T14-R029</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>50</cbc:TaxableAmount>
+					<cac:TaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>50</cbc:TaxableAmount>
+					<cac:TaxCategory>
+						<cbc:ID>E</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+			<cac:CreditNoteLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:CreditNoteLine>
+			<cac:CreditNoteLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>E</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when taxable amount is incorrect.</description>
+			<error>NONAT-T14-R029</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cbc:TaxableAmount>100.01</cbc:TaxableAmount>
+					<cac:TaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+			<cac:CreditNoteLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:CreditNoteLine>
+			<cac:CreditNoteLine>
+				<cbc:LineExtensionAmount>50</cbc:LineExtensionAmount>
+				<cac:Item>
+					<cac:ClassifiedTaxCategory>
+						<cbc:ID>S</cbc:ID>
+					</cac:ClassifiedTaxCategory>
+				</cac:Item>
+			</cac:CreditNoteLine>
+
+		</CreditNote>
+	</test>
+</testSet>

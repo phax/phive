@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R019</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify correct data in amount.</description>
+			<success>NONAT-T14-R019</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:PayableAmount>12</cbc:PayableAmount>
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify amount exists.</description>
+			<warning>NONAT-T14-R019</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:LegalMonetaryTotal>
+				<!-- <cbc:PayableAmount>test</cbc:PayableAmount> -->
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+</testSet>

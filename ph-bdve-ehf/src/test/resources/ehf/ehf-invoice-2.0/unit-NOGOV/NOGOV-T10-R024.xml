@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R024</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify name is provided when manufacturer is provided.</description>
+			<success>NOGOV-T10-R024</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:ManufacturerParty>
+						<cac:PartyName>
+							<cbc:Name>Test</cbc:Name>
+						</cac:PartyName>
+					</cac:ManufacturerParty>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning if name is not provided when manufacturer is provided.</description>
+			<warning>NOGOV-T10-R024</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:ManufacturerParty>
+						<cac:PartyName>
+							<!-- <cbc:Name>Test</cbc:Name> -->
+						</cac:PartyName>
+					</cac:ManufacturerParty>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning if name is not provided when manufacturer is provided.</description>
+			<warning>NOGOV-T10-R024</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:InvoiceLine>
+				<cac:Item>
+					<cac:ManufacturerParty>
+						<!-- <cac:PartyName>
+							<cbc:Name>Test</cbc:Name>
+						</cac:PartyName> -->
+					</cac:ManufacturerParty>
+				</cac:Item>
+			</cac:InvoiceLine>
+
+		</Invoice>
+	</test>
+</testSet>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R012</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify Payment identifier is provided.</description>
+			<success>NOGOV-T10-R012</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PaymentMeans>
+				<cbc:PaymentID>123456789</cbc:PaymentID>
+			</cac:PaymentMeans>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when Verify Payment identifier is not provided.</description>
+			<warning>NOGOV-T10-R012</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PaymentMeans>
+				<!-- <cbc:PaymentID>123456789</cbc:PaymentID> -->
+			</cac:PaymentMeans>
+
+		</Invoice>
+	</test>
+</testSet>

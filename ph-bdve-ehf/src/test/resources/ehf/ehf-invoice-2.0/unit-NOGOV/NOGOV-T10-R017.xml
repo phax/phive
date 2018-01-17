@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R017</scope>
+	</assert>
+	<test xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+		<assert>
+			<description>Verify name is provided when tax representative is defined.</description>
+			<success>NOGOV-T10-R017</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxRepresentativeParty>
+				<cac:PartyName>
+					<cbc:Name>Test</cbc:Name>
+				</cac:PartyName>
+			</cac:TaxRepresentativeParty>
+
+		</Invoice>
+	</test>
+	<test xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+		<assert>
+			<description>Verify name is provided when tax representative is defined.</description>
+			<success>NOGOV-T10-R017</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cac:TaxRepresentativeParty>
+				<cac:PartyName>
+					<cbc:Name>Test</cbc:Name>
+				</cac:PartyName>
+			</cac:TaxRepresentativeParty> -->
+
+		</Invoice>
+	</test>
+	<test xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+		<assert>
+			<description>Trigger error when name is not provided when tax representative is defined.</description>
+			<error>NOGOV-T10-R017</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxRepresentativeParty>
+				<cac:PartyName>
+					<!-- <cbc:Name>Test</cbc:Name> -->
+				</cac:PartyName>
+			</cac:TaxRepresentativeParty>
+
+		</Invoice>
+	</test>
+</testSet>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R041</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify a single instance of a tax subtotal of a given tax category doesn't trigger warning.</description>
+			<success>NOGOV-T10-R041</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cbc:ID>Z</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify two instances of a tax subtotal with different tax categories doesn't trigger warning.</description>
+			<success>NOGOV-T10-R041</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cbc:ID>Z</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cbc:ID>E</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify two instances of a tax subtotal of the same tax category triggers warning.</description>
+			<error>NOGOV-T10-R041</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cbc:ID>Z</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cbc:ID>Z</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify that code 'Z' and 'Z ' triggers warning (normalize-space).</description>
+			<error>NOGOV-T10-R041</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxTotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cbc:ID>Z </cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cbc:ID>Z</cbc:ID>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+</testSet>

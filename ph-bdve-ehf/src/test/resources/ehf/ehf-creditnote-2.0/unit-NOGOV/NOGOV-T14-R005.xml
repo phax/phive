@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R005</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify amount element without currencyID does not trigger error.</description>
+			<success>NOGOV-T14-R005</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:Amount>100</cbc:Amount>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify amount element with currencyID equal document currency code does not trigger error.</description>
+			<success>NOGOV-T14-R005</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:DocumentCurrencyCode>NOK</cbc:DocumentCurrencyCode>
+
+			<cbc:TaxAmount currencyID="NOK">100</cbc:TaxAmount>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify amount element with currencyID different from document currency code does trigger error.</description>
+			<error>NOGOV-T14-R005</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:DocumentCurrencyCode>NOK</cbc:DocumentCurrencyCode>
+
+			<cbc:TaxAmount currencyID="EUR">100</cbc:TaxAmount>
+
+		</CreditNote>
+	</test>
+</testSet>

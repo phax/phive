@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R015</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no error when BBAN number contains numbers only.</description>
+			<success number="2">NOGOV-T14-R015</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PaymentMeans>
+				<cac:PayeeFinancialAccount>
+					<cbc:ID schemeID="BBAN">123457890</cbc:ID>
+					<cbc:ID schemeID="BBAN">0987654321</cbc:ID>
+				</cac:PayeeFinancialAccount>
+			</cac:PaymentMeans>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when BBAN number contains more than numbers only.</description>
+			<error number="2">NOGOV-T14-R015</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PaymentMeans>
+				<cac:PayeeFinancialAccount>
+					<cbc:ID schemeID="BBAN">123 45 7890</cbc:ID>
+					<cbc:ID schemeID="BBAN">123457890a</cbc:ID>
+				</cac:PayeeFinancialAccount>
+			</cac:PaymentMeans>
+
+		</CreditNote>
+	</test>
+</testSet>

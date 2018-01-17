@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R014</scope>
+	</assert>
+	<test xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+		<assert>
+			<description>Verify suppliers VAT number exists if VAT is specified.</description>
+			<success>NOGOV-T10-R014</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyTaxScheme>
+						<cbc:CompanyID>1234567890</cbc:CompanyID>
+					</cac:PartyTaxScheme>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+			<cac:TaxTotal>
+				<cbc:TaxAmount currencyID="NOK">25.00</cbc:TaxAmount>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+	<test xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+		<assert>
+			<description>Verify suppliers VAT number exists if VAT is specified.</description>
+			<success>NOGOV-T10-R014</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyTaxScheme>
+						<cbc:CompanyID>1234567890</cbc:CompanyID>
+					</cac:PartyTaxScheme>
+				</cac:Party>
+			</cac:AccountingSupplierParty> -->
+
+			<cac:TaxTotal>
+				<cbc:TaxAmount currencyID="NOK">0</cbc:TaxAmount>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+	<test xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+		<assert>
+			<description>Triggers error if suppliers VAT number doesn't exists when VAT is specified.</description>
+			<error>NOGOV-T10-R014</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyTaxScheme>
+						<cbc:CompanyID>1234567890</cbc:CompanyID>
+					</cac:PartyTaxScheme>
+				</cac:Party>
+			</cac:AccountingSupplierParty> -->
+
+			<cac:TaxTotal>
+				<cbc:TaxAmount currencyID="NOK">25.00</cbc:TaxAmount>
+				<cac:TaxSubtotal>
+					<cac:TaxCategory>
+						<cac:TaxScheme>
+							<cbc:ID>VAT</cbc:ID>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:TaxSubtotal>
+			</cac:TaxTotal>
+
+		</Invoice>
+	</test>
+</testSet>

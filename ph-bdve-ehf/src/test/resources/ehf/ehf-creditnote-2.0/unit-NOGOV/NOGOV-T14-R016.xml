@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R016</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no warning then IBAN number seems Norwegian.</description>
+			<success number="2">NOGOV-T14-R016</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PaymentMeans>
+				<cac:PayeeFinancialAccount>
+					<cbc:ID schemeID="IBAN">NO123457890</cbc:ID>
+					<cbc:ID schemeID="IBAN">DK0987654321</cbc:ID>
+				</cac:PayeeFinancialAccount>
+			</cac:PaymentMeans>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning then IBAN number seems non-Norwegian.</description>
+			<warning number="2">NOGOV-T14-R016</warning>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PaymentMeans>
+				<cac:PayeeFinancialAccount>
+					<cbc:ID schemeID="IBAN">NOS123 45 7890</cbc:ID>
+					<cbc:ID schemeID="IBAN">NO123457890a</cbc:ID>
+				</cac:PayeeFinancialAccount>
+			</cac:PaymentMeans>
+
+		</CreditNote>
+	</test>
+</testSet>

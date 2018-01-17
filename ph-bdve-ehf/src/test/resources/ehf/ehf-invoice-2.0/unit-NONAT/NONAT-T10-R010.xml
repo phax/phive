@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NONAT-T10-R010</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify 'GLN' is valid schemeID for delivery location.</description>
+			<success>NONAT-T10-R010</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cac:DeliveryLocation>
+					<cbc:ID schemeID="GLN"/>
+				</cac:DeliveryLocation>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify 'GSRN' is valid schemeID for delivery location.</description>
+			<success>NONAT-T10-R010</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cac:DeliveryLocation>
+					<cbc:ID schemeID="GSRN"/>
+				</cac:DeliveryLocation>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning when non of the given values for schemeID for delivery location is used.</description>
+			<warning>NONAT-T10-R010</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Delivery>
+				<cac:DeliveryLocation>
+					<cbc:ID schemeID="ORG:NR"/>
+				</cac:DeliveryLocation>
+			</cac:Delivery>
+
+		</Invoice>
+	</test>
+</testSet>

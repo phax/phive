@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R016</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify UBL version is as expected.</description>
+			<success>NONAT-T14-R016</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify UBL version is as expected.</description>
+			<error>NONAT-T14-R016</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cbc:UBLVersionID>2.2</cbc:UBLVersionID>
+
+		</CreditNote>
+	</test>
+</testSet>

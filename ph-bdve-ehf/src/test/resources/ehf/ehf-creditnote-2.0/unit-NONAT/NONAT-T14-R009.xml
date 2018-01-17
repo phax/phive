@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NONAT-T14-R009</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify name exists when payee is defined.</description>
+			<success>NONAT-T14-R009</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PayeeParty>
+				<cac:PartyName>
+					<cbc:Name></cbc:Name>
+				</cac:PartyName>
+			</cac:PayeeParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no error if payee is not defined.</description>
+			<success>NONAT-T14-R009</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PayeeParty>
+				<cac:PartyName>
+					<cbc:Name></cbc:Name>
+				</cac:PartyName>
+			</cac:PayeeParty>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when payee name is not defined.</description>
+			<error>NONAT-T14-R009</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PayeeParty>
+				<cac:PartyName>
+					<!-- <cbc:Name></cbc:Name> -->
+				</cac:PartyName>
+			</cac:PayeeParty>
+
+		</CreditNote>
+	</test>
+</testSet>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Warnings:
+EUGEN-T10-R039
+
+-->
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.difi.no:ehf:faktura:ver2.0</cbc:CustomizationID>
+  <cbc:ProfileID>urn:www.cenbii.eu:profile:bii04:ver2.0</cbc:ProfileID>
+  <cbc:ID>TOSL108</cbc:ID>
+	<cbc:IssueDate>2016-01-01</cbc:IssueDate>
+	<cbc:InvoiceTypeCode listID="UNCL1001">Z02</cbc:InvoiceTypeCode>
+	<cbc:TaxPointDate>2016-01-01</cbc:TaxPointDate>
+	<cbc:DocumentCurrencyCode listID="ISO4217">NOK</cbc:DocumentCurrencyCode>
+	<cbc:AccountingCost>Project cost code 123</cbc:AccountingCost>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cac:PartyName>
+				<cbc:Name>Kari Igloskaper</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:StreetName>Torgallmenningen 1337</cbc:StreetName>
+				<cbc:CityName>Bergen</cbc:CityName>
+				<cbc:PostalZone>5014</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="NO:ORGNR">987654325</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="GLN">6291041500213</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Governmental organization</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:StreetName>Anystreet 8</cbc:StreetName>
+				<cbc:CityName>Oslo</cbc:CityName>
+				<cbc:PostalZone>0026</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="NO:VAT">987654325MVA</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Governmental organization</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="NO:ORGNR">987654325</cbc:CompanyID>
+				<cac:RegistrationAddress>
+					<cbc:CityName>Oslo</cbc:CityName>
+					<cac:Country>
+						<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:RegistrationAddress>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>3150bdn</cbc:ID>
+			</cac:Contact>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:PaymentMeans>
+	  <cbc:PaymentMeansCode listID="UNCL4461">3</cbc:PaymentMeansCode>
+	  <cbc:PaymentDueDate>2016-02-01</cbc:PaymentDueDate>
+	  <cbc:PaymentID>0265590215686</cbc:PaymentID>
+	  <cac:PayeeFinancialAccount>
+    	<cbc:ID schemeID="BBAN">51401099999</cbc:ID>
+  	</cac:PayeeFinancialAccount>
+	</cac:PaymentMeans>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="NOK">0.00</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="NOK">5000.00</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="NOK">0.00</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeID="UNCL5305">Z</cbc:ID>
+				<cbc:Percent>0</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="NOK">5000.00</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="NOK">5000.00</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="NOK">5000.00</cbc:TaxInclusiveAmount>
+		<cbc:PayableAmount currencyID="NOK">5000.00</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="NAR" unitCodeListID="UNECERec20">1</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="NOK">5000</cbc:LineExtensionAmount>
+		<cbc:AccountingCost>BookingCode001</cbc:AccountingCost>
+		<cac:Item>
+			<cbc:Name>Tilskudd til produksjon av virtuelle igloer.</cbc:Name>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID schemeID="UNCL5305">Z</cbc:ID>
+				<cbc:Percent>0</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="NOK">5000</cbc:PriceAmount>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>

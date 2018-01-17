@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t14-base-2.0">
+	<assert>
+		<scope>NOGOV-T14-R022</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify total allowance is presented when allowance is presented on document level.</description>
+			<success>NOGOV-T14-R022</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+			</cac:AllowanceCharge>
+
+			<cac:LegalMonetaryTotal>
+				<cbc:AllowanceTotalAmount>0</cbc:AllowanceTotalAmount>
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger when total allowance is not presented when allowance is presented on document level.</description>
+			<error>NOGOV-T14-R022</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+			</cac:AllowanceCharge>
+
+			<cac:LegalMonetaryTotal>
+				<!-- <cbc:AllowanceTotalAmount>0</cbc:AllowanceTotalAmount> -->
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>No action when allowance is not set.</description>
+			<success>NOGOV-T14-R0022</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<!-- <cac:AllowanceCharge>
+				<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+			</cac:AllowanceCharge> -->
+
+			<cac:LegalMonetaryTotal>
+				<!-- <cbc:AllowanceTotalAmount>0</cbc:AllowanceTotalAmount> -->
+			</cac:LegalMonetaryTotal>
+
+		</CreditNote>
+	</test>
+</testSet>

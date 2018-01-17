@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t10-base-2.0">
+	<assert>
+		<scope>NOGOV-T10-R032</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify PayeeFinancialAccount identifiers apply to rules.</description>
+			<success>NOGOV-T10-R032</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PaymentMeans>
+				<cac:PayeeFinancialAccount>
+					<cbc:ID schemeID="BBAN">123456789</cbc:ID>
+				</cac:PayeeFinancialAccount>
+			</cac:PaymentMeans>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error if PayeeFinancialAccount identifiers doesn't apply to rules.</description>
+			<error>NOGOV-T10-R032</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PaymentMeans>
+				<cac:PayeeFinancialAccount>
+					<cbc:ID schemeID="BBAN">123456789i</cbc:ID>
+				</cac:PayeeFinancialAccount>
+			</cac:PaymentMeans>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error if PayeeFinancialAccount identifiers doesn't apply to rules.</description>
+			<error>NOGOV-T10-R032</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PaymentMeans>
+				<cac:PayeeFinancialAccount>
+					<cbc:ID schemeID="BBAN">1234 56 78901</cbc:ID>
+				</cac:PayeeFinancialAccount>
+			</cac:PaymentMeans>
+
+		</Invoice>
+	</test>
+</testSet>
