@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R012</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no error when tax party identifier is valid organization number.</description>
+			<success>EHF-COMMON-R012</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID>123456785MVA</cbc:CompanyID>
+			</cac:PartyTaxScheme>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when tax party identifier is invalid organization number.</description>
+			<error number="5">EHF-COMMON-R012</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:PartyTaxScheme>
+				<!-- <cbc:CompanyID>123456789</cbc:CompanyID> -->
+				<cbc:CompanyID>1234567856</cbc:CompanyID>
+				<cbc:CompanyID>MVA123456785</cbc:CompanyID>
+				<cbc:CompanyID>123456785mva</cbc:CompanyID>
+				<cbc:CompanyID>123 456 785MVA</cbc:CompanyID>
+				<cbc:CompanyID>123.456.785MVA</cbc:CompanyID>
+			</cac:PartyTaxScheme>
+
+		</CreditNote>
+	</test>
+</testSet>

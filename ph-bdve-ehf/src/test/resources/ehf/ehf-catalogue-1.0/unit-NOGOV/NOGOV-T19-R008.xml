@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t19-base-1.0">
+	<assert>
+		<scope>NOGOV-T19-R008</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of ValidityPeriod throws no error.</description>
+			<success>NOGOV-T19-R008</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+		  <cac:ValidityPeriod></cac:ValidityPeriod>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify missing ValidityPeriod throws error.</description>
+			<error>NOGOV-T19-R008</error>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+		  <!-- <cac:ValidityPeriod></cac:ValidityPeriod> -->
+
+		</Catalogue>
+	</test>
+</testSet>

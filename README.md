@@ -13,6 +13,8 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News
 
+* v4.0.1 - work in progress
+  * Added support for EHF Invoice and EHF Creditnote 2.0.12 (new artefact `ph-bdve-ehf`)
 * v4.0.0 - 2018-01-15
   * Updated to ph-commons 9.0.0
   * Updated to the latest official EN-16931 rules

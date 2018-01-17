@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t19-base-1.0">
+	<assert>
+		<scope>NOGOV-T19-R020</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify only allowed codes are used.</description>
+			<success number="3">NOGOV-T19-R020</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cbc:DocumentTypeCode listID="urn:gs1:gdd:cl:ReferencedFileTypeCode">LOGO</cbc:DocumentTypeCode>
+			<cbc:DocumentTypeCode listID="urn:gs1:gdd:cl:ReferencedFileTypeCode">PRODUCT_IMAGE</cbc:DocumentTypeCode>
+			<cbc:DocumentTypeCode listID="urn:gs1:gdd:cl:ReferencedFileTypeCode">QR_CODE</cbc:DocumentTypeCode>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify no error is triggered when GS1 code list is not defined.</description>
+			<success number="2">NOGOV-T19-R020</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cbc:DocumentTypeCode>MY HOMEPAGE</cbc:DocumentTypeCode>
+			<cbc:DocumentTypeCode listID="SomeCodeList">PRODUCT_IMAGE_FRONT</cbc:DocumentTypeCode>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify only allowed codes are used.</description>
+			<error number="3">NOGOV-T19-R020</error>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cbc:DocumentTypeCode listID="urn:gs1:gdd:cl:ReferencedFileTypeCode">logo</cbc:DocumentTypeCode>
+			<cbc:DocumentTypeCode listID="urn:gs1:gdd:cl:ReferencedFileTypeCode">PRODUCT IMAGE</cbc:DocumentTypeCode>
+			<cbc:DocumentTypeCode listID="urn:gs1:gdd:cl:ReferencedFileTypeCode">QR-code</cbc:DocumentTypeCode>
+
+		</Catalogue>
+	</test>
+</testSet>

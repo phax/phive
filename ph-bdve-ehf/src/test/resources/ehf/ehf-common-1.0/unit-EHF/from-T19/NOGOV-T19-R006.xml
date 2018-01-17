@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<!-- <scope>NOGOV-T19-R006</scope> -->
+		<scope>EHF-COMMON-R030</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify correct format of date elements.</description>
+			<!-- <success>NOGOV-T19-R005</success> -->
+			<success>EHF-COMMON-R030</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cbc:AnyDate>2016-01-01</cbc:AnyDate>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error on incorrect format of date elements.</description>
+			<!-- <error number="2">NOGOV-T19-R006</error> -->
+			<error number="2">EHF-COMMON-R030</error>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cbc:AnyDate>2016-01-01Z</cbc:AnyDate>
+			<cbc:AnyDate>2016.01.01</cbc:AnyDate>
+
+		</Catalogue>
+	</test>
+</testSet>

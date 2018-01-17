@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t76-base-1.0">
+	<assert>
+		<scope>NOGOV-T76-R004</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Delivery period is expected.</description>
+			<success>NOGOV-T76-R004</success>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cac:Delivery>
+				<cac:PromisedDeliveryPeriod/>
+			</cac:Delivery>
+
+		</OrderResponse>
+	</test>
+	<test>
+		<assert>
+			<description>Delivery period is expected.</description>
+			<error>NOGOV-T76-R004</error>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cac:Delivery>
+				<!-- <cac:PromisedDeliveryPeriod/> -->
+			</cac:Delivery>
+
+		</OrderResponse>
+	</test>
+</testSet>

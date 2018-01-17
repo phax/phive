@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t19-base-1.0">
+	<assert>
+		<scope>NOGOV-T19-R021</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify non-sterile products does not trigger warning regarding code lists..</description>
+			<success>NOGOV-T19-R021</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:AdditionalItemProperty>
+				<cbc:Name>STERILE</cbc:Name>
+				<cbc:Value>NO</cbc:Value>
+			</cac:AdditionalItemProperty>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify sterile products does trigger warning regarding code lists if not specified.</description>
+			<warning>NOGOV-T19-R021</warning>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:AdditionalItemProperty>
+				<cbc:Name>STERILE</cbc:Name>
+				<cbc:Value>ETHANOL</cbc:Value>
+			</cac:AdditionalItemProperty>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify sterile products does not trigger warning regarding code lists specified.</description>
+			<success>NOGOV-T19-R021</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:AdditionalItemProperty>
+				<cbc:Name>STERILE</cbc:Name>
+				<cbc:Value>ETHANOL</cbc:Value>
+				<cbc:ValueQualifier>gs1:SterilisationTypeCode</cbc:ValueQualifier>
+			</cac:AdditionalItemProperty>
+
+		</Catalogue>
+	</test>
+</testSet>

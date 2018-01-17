@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R040</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify GLN number.</description>
+			<success>EHF-COMMON-R040</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:ID schemeID="GLN">6291041500213</cbc:ID>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify GLN number.</description>
+			<warning number="9">EHF-COMMON-R040</warning>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:ID schemeID="GLN">6291041500210</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500211</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500212</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500214</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500215</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500216</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500217</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500218</cbc:ID>
+			<cbc:ID schemeID="GLN">6291041500219</cbc:ID>
+
+		</Invoice>
+	</test>
+</testSet>

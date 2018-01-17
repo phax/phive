@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t76-base-1.0">
+	<assert>
+		<scope>NOGOV-T76-R006</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify uyer has EndpointID.</description>
+			<success>NOGOV-T76-R006</success>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cac:SellerSupplierParty>
+				<cac:Party>
+					<cbc:EndpointID/>
+				</cac:Party>
+			</cac:SellerSupplierParty>
+
+		</OrderResponse>
+	</test>
+	<test>
+		<assert>
+			<description>Verify uyer has EndpointID.</description>
+			<warning>NOGOV-T76-R006</warning>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cac:SellerSupplierParty>
+				<cac:Party>
+					<!-- <cbc:EndpointID/> -->
+				</cac:Party>
+			</cac:SellerSupplierParty>
+
+		</OrderResponse>
+	</test>
+</testSet>

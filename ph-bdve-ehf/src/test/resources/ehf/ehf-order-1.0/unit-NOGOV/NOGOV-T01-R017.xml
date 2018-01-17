@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t01-base-1.0">
+	<assert>
+		<scope>NOGOV-T01-R017</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of element performs correct.</description>
+			<success>NOGOV-T01-R017</success>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:TaxScheme>
+				<cbc:ID></cbc:ID>
+			</cac:TaxScheme>
+
+		</Order>
+	</test>
+	<test>
+		<assert>
+			<description>Verify trigger of message when element not found.</description>
+			<error>NOGOV-T01-R017</error>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:TaxScheme>
+				<!-- <cbc:ID></cbc:ID> -->
+			</cac:TaxScheme>
+
+		</Order>
+	</test>
+</testSet>

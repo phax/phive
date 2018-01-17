@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R012</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify tax number apply to rules.</description>
+			<success>EHF-COMMON-R012</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="NO:VAT">991825827MVA</cbc:CompanyID>
+			</cac:PartyTaxScheme>
+
+		</Invoice>
+	</test>
+
+	<test>
+		<assert>
+			<description>Trigger error when tax number doesn't apply to rules.</description>
+			<error number="7">EHF-COMMON-R012</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="NO:VAT">123456789MVA</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:VAT">123 456 785MVA</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:VAT">123456785</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:VAT">123 456  785</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:VAT">A23456785MVA</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:VAT">MVA123456785</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:VAT">NO123456785MVA</cbc:CompanyID>
+			</cac:PartyTaxScheme>
+
+		</Invoice>
+	</test>
+</testSet>

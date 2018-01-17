@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t17-base-1.1">
+	<assert>
+		<scope>NONAT-T17-R016</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify ProfileID for profile XY.</description>
+			<success>NONAT-T17-R016</success>
+		</assert>
+		<Reminder xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Reminder-2">
+
+			<cbc:ProfileID>urn:www.cenbii.eu:profile:biixy:ver1.0</cbc:ProfileID>
+
+		</Reminder>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error on invalid ProfileID.</description>
+			<error number="3">NONAT-T17-R016</error>
+		</assert>
+		<Reminder xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Reminder-2">
+
+			<cbc:ProfileID>urn:www.cenbii.eu:profile:bii01:ver2.0</cbc:ProfileID>
+			<cbc:ProfileID>urn:www.cenbii.eu:profile:bii02:ver2.0</cbc:ProfileID>
+			<cbc:ProfileID>urn:www.cenbii.eu:profile:bii03:ver2.0</cbc:ProfileID>
+
+		</Reminder>
+	</test>
+</testSet>

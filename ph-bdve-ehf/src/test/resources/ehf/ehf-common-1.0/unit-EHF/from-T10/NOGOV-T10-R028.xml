@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R030</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify date elements are correctly formated.</description>
+			<success>EHF-COMMON-R030</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:IssueDate>2013-06-30</cbc:IssueDate>
+
+			<cbc:TaxPointDate>2013-06-30</cbc:TaxPointDate>
+
+			<cac:InvoicePeriod>
+				<cbc:StartDate>2013-06-01</cbc:StartDate>
+				<cbc:EndDate>2013-06-30</cbc:EndDate>
+			</cac:InvoicePeriod>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when date elements are not correctly formated.</description>
+			<error number="10">EHF-COMMON-R030</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<b><cbc:IssueDate>30.06.2013</cbc:IssueDate></b>
+			<c><cbc:IssueDate>30-06-2013</cbc:IssueDate></c>
+			<d><cbc:IssueDate>2013-06-30T12:00:00</cbc:IssueDate></d>
+
+			<b><cbc:TaxPointDate>30.06.2013</cbc:TaxPointDate></b>
+			<c><cbc:TaxPointDate>30-06-2013</cbc:TaxPointDate></c>
+			<d><cbc:TaxPointDate>2013-06-30T12:00:00</cbc:TaxPointDate></d>
+
+			<cac:InvoicePeriod>
+				<a><cbc:StartDate>01.06.2013</cbc:StartDate></a>
+				<b><cbc:StartDate>2013-06-01T12:00:00</cbc:StartDate></b>
+				<a><cbc:EndDate>30.06.2013</cbc:EndDate></a>
+				<b><cbc:EndDate>2013-06-30T12:00:00</cbc:EndDate></b>
+			</cac:InvoicePeriod>
+
+		</Invoice>
+	</test>
+</testSet>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<!-- <scope>NOGOV-T76-R010</scope> -->
+		<scope>EHF-COMMON-R001</scope>
+		<scope>EHF-COMMON-R002</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify elements with content throws no errors.</description>
+			<!-- <success>NOGOV-T76-R010</success> -->
+			<success>EHF-COMMON-R001</success>
+			<success>EHF-COMMON-R002</success>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cbc:EndDate>2025-01-01</cbc:EndDate>
+			<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+		  <cbc:VersionID>Test</cbc:VersionID>
+
+		</OrderResponse>
+	</test>
+	<test>
+		<assert>
+			<description>Verify elements without content throws errors.</description>
+			<!-- <error>NOGOV-T76-R010</error> -->
+			<error number="2">EHF-COMMON-R001</error>
+			<error>EHF-COMMON-R002</error>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cbc:EndDate></cbc:EndDate>
+			<cbc:UBLVersionID></cbc:UBLVersionID>
+		  <cac:VersionID></cac:VersionID>
+
+		</OrderResponse>
+	</test>
+</testSet>

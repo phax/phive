@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<!-- <scope>NOGOV-T58-R002</scope> -->
+		<scope>EHF-COMMON-R004</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of UBLVersionID performs correct.</description>
+			<!-- <success>NOGOV-T58-R002</success> -->
+			<success>EHF-COMMON-R004</success>
+		</assert>
+		<ApplicationResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2">
+
+		  <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+
+		</ApplicationResponse>
+	</test>
+	<test>
+		<assert>
+			<description>Missing UBLVersionID should trigger error.</description>
+			<!-- <error>NOGOV-T58-R002</error> -->
+			<error>EHF-COMMON-R004</error>
+		</assert>
+		<ApplicationResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2">
+
+		  <!-- <cbc:UBLVersionID>2.1</cbc:UBLVersionID> -->
+
+		</ApplicationResponse>
+	</test>
+</testSet>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<!-- <scope>NOGOV-T01-R009</scope> -->
+		<scope>EHF-COMMON-R010</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify valid organization number on EndpointID throws no error.</description>
+			<!-- <success>NOGOV-T01-R009</success> -->
+			<success>EHF-COMMON-R010</success>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:Party>
+				<cbc:EndpointID schemeID="NO:ORGNR">987654325</cbc:EndpointID>
+			</cac:Party>
+
+		</Order>
+	</test>
+	<test>
+		<assert>
+			<description>Verify non-valid organization number on EndpointID throws error.</description>
+			<!-- <error number="4">NOGOV-T01-R009</error> -->
+			<error number="4">EHF-COMMON-R010</error>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:Party>
+				<cbc:EndpointID schemeID="NO:ORGNR">987654321</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">987 654 325</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">987.654.325</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">9876543250</cbc:EndpointID>
+			</cac:Party>
+
+		</Order>
+	</test>
+</testSet>

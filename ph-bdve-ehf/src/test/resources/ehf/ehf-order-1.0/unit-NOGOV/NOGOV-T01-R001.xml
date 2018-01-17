@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t01-base-1.0">
+	<assert>
+		<scope>NOGOV-T01-R001</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of element performs correct.</description>
+			<success>NOGOV-T01-R001</success>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+		  <cac:BuyerCustomerParty>
+				<cac:Party>
+					<cac:Contact>
+						<cbc:ID>test</cbc:ID>
+					</cac:Contact>
+				</cac:Party>
+			</cac:BuyerCustomerParty>
+
+		</Order>
+	</test>
+	<test>
+		<assert>
+			<description>Verify trigger of message when element not found.</description>
+			<warning>NOGOV-T01-R001</warning>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:BuyerCustomerParty>
+				<cac:Party>
+					<cac:Contact>
+						<cbc:ID></cbc:ID>
+					</cac:Contact>
+				</cac:Party>
+			</cac:BuyerCustomerParty>
+
+		</Order>
+	</test>
+	<test>
+		<assert>
+			<description>Verify trigger of message when element not found.</description>
+			<warning>NOGOV-T01-R001</warning>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:BuyerCustomerParty>
+				<cac:Party>
+					<cac:Contact>
+						<!-- <cbc:ID></cbc:ID> -->
+					</cac:Contact>
+				</cac:Party>
+			</cac:BuyerCustomerParty>
+
+		</Order>
+	</test>
+</testSet>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R003</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>No warnings when XSI is not used.</description>
+			<success>EHF-COMMON-R003</success>
+		</assert>
+		<ApplicationResponse
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+			xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+
+		</ApplicationResponse>
+	</test>
+	<test>
+		<assert>
+			<description>No warnings when XSI is not used.</description>
+			<success>EHF-COMMON-R003</success>
+		</assert>
+		<ApplicationResponse
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+
+		</ApplicationResponse>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warnings when XSI is used.</description>
+			<warning>EHF-COMMON-R003</warning>
+		</assert>
+		<ApplicationResponse
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2 UBL-ApplicationResponse-2.1.xsd">
+
+		</ApplicationResponse>
+	</test>
+	<!-- <test>
+		<assert>
+			<description>Trigger warnings when XSI is tried to be used.</description>
+			<warning>EHF-COMMON-R003</warning>
+		</assert>
+		<ApplicationResponse
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+			xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2 UBL-ApplicationResponse-2.1.xsd">
+
+		</ApplicationResponse>
+	</test> -->
+</testSet>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<!-- <scope>NOGOV-T01-R011</scope> -->
+		<scope>EHF-COMMON-R012</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify valid content performs correct.</description>
+			<!-- <success>NOGOV-T01-R011</success> -->
+			<success>EHF-COMMON-R012</success>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+		  <cac:PartyTaxScheme>
+				<cbc:CompanyID>123456785MVA</cbc:CompanyID>
+			</cac:PartyTaxScheme>
+
+		</Order>
+	</test>
+	<test>
+		<assert>
+			<description>Verify invalid content triggers error.</description>
+			<!-- <error number="5">NOGOV-T01-R011</error> -->
+			<error number="5">EHF-COMMON-R012</error>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+		  <cac:PartyTaxScheme>
+				<cbc:CompanyID>123456789MVA</cbc:CompanyID>
+				<cbc:CompanyID>123456785mva</cbc:CompanyID>
+				<cbc:CompanyID>123 456 785MVA</cbc:CompanyID>
+				<cbc:CompanyID>123.456.785MVA</cbc:CompanyID>
+				<cbc:CompanyID>1234567850MVA</cbc:CompanyID>
+			</cac:PartyTaxScheme>
+
+		</Order>
+	</test>
+</testSet>

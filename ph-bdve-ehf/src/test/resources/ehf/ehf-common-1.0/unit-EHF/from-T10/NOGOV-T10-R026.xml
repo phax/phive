@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R010</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify EndpointID contains Norwegian organization number.</description>
+			<success>EHF-COMMON-R010</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Party>
+				<cbc:EndpointID schemeID="NO:ORGNR">123456785</cbc:EndpointID>
+			</cac:Party>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when EndpointID doesn't contain Norwegian organization number.</description>
+			<error number="6">EHF-COMMON-R010</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:Party>
+				<cbc:EndpointID schemeID="NO:ORGNR">123456789</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">123.456.785</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">123 456 785</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">NO123456785</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">123456785MVA</cbc:EndpointID>
+				<cbc:EndpointID schemeID="NO:ORGNR">NO123456785MVA</cbc:EndpointID>
+			</cac:Party>
+
+		</Invoice>
+	</test>
+</testSet>

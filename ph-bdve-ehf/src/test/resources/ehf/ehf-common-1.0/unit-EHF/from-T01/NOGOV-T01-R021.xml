@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<!-- <scope>NOGOV-T01-R021</scope> -->
+		<scope>EHF-COMMON-R100</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify mimecode attribute.</description>
+			<!-- <success number="2">NOGOV-T01-R021</success> -->
+			<success number="2">EHF-COMMON-R100</success>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cbc:EmbeddedDocumentBinaryObject mimeCode="application/pdf"/>
+			<cbc:EmbeddedDocumentBinaryObject mimeCode="image/jpeg"/>
+
+		</Order>
+	</test>
+	<test>
+		<assert>
+			<description>Verify mimecode attribute.</description>
+			<!-- <warning number="2">NOGOV-T01-R021</warning> -->
+			<warning number="2">EHF-COMMON-R100</warning>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cbc:EmbeddedDocumentBinaryObject mimeCode="application/pdf2"/>
+			<cbc:EmbeddedDocumentBinaryObject mimeCode="image/jpeg2"/>
+
+		</Order>
+	</test>
+</testSet>

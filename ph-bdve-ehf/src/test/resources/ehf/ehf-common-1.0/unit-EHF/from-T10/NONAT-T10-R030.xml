@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R020</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify only allowed tax categories are used.</description>
+			<success>EHF-COMMON-R020</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:TaxCategory>
+				<cbc:ID>AA</cbc:ID>
+			</cac:TaxCategory>
+			<cac:TaxCategory>
+				<cbc:ID>E</cbc:ID>
+			</cac:TaxCategory>
+			<cac:TaxCategory>
+				<cbc:ID>H</cbc:ID>
+			</cac:TaxCategory>
+			<cac:TaxCategory>
+				<cbc:ID>K</cbc:ID>
+			</cac:TaxCategory>
+			<cac:TaxCategory>
+				<cbc:ID>R</cbc:ID>
+			</cac:TaxCategory>
+			<cac:TaxCategory>
+				<cbc:ID>S</cbc:ID>
+			</cac:TaxCategory>
+			<cac:TaxCategory>
+				<cbc:ID>Z</cbc:ID>
+			</cac:TaxCategory>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when non-allowed tax categories are used.</description>
+			<error number="2">EHF-COMMON-R020</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID>AAA</cbc:ID>
+			</cac:ClassifiedTaxCategory>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID></cbc:ID>
+			</cac:ClassifiedTaxCategory>
+
+		</Invoice>
+	</test>
+</testSet>

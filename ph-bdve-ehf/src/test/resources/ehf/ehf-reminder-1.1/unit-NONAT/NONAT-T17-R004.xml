@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t17-base-1.1">
+	<assert>
+		<scope>NONAT-T17-R004</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of payable amount on document level.</description>
+			<success>NONAT-T17-R004</success>
+		</assert>
+		<Reminder xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Reminder-2">
+
+			<cac:LegalMonetaryTotal>
+				<cbc:PayableAmount/>
+			</cac:LegalMonetaryTotal>
+
+		</Reminder>
+	</test>
+	<test>
+		<assert>
+			<description>Verify existence of payable amount on document level.</description>
+			<error>NONAT-T17-R004</error>
+		</assert>
+		<Reminder xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Reminder-2">
+
+			<cac:LegalMonetaryTotal>
+				<!-- <cbc:PayableAmount/> -->
+			</cac:LegalMonetaryTotal>
+
+		</Reminder>
+	</test>
+	<test>
+		<assert>
+			<description>Verify existence of payable amount on document level.</description>
+			<error>NONAT-T17-R004</error>
+		</assert>
+		<Reminder xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Reminder-2">
+
+			<!-- <cac:LegalMonetaryTotal>
+				<cbc:PayableAmount/>
+			</cac:LegalMonetaryTotal> -->
+
+		</Reminder>
+	</test>
+</testSet>

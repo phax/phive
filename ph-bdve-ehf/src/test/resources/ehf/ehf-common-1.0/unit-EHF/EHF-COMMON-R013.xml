@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R013</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify organization number apply to rules.</description>
+			<success>EHF-COMMON-R013</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PartyLegalEntity>
+				<cbc:CompanyID schemeID="NO:ORGNR">123456785</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when organization number doesn't apply to rules.</description>
+			<error number="7">EHF-COMMON-R013</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PartyLegalEntity>
+				<cbc:CompanyID schemeID="NO:ORGNR">123456789</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:ORGNR">122</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:ORGNR">123 456 785</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:ORGNR">A23456785</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:ORGNR">NO123456785</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:ORGNR">123456785MVA</cbc:CompanyID>
+				<cbc:CompanyID schemeID="NO:ORGNR">NO123456785MVA</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+
+		</Invoice>
+	</test>
+</testSet>

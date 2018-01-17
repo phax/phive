@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R002</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>No errors when no empty elements are present.</description>
+			<success>EHF-COMMON-R002</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyLegalEntity>
+						<cbc:CompanyID>123456789</cbc:CompanyID>
+						<cbc:RegistrationName>Test</cbc:RegistrationName>
+					</cac:PartyLegalEntity>
+					<cac:PostalAddress>
+						<cbc:CityName>Test</cbc:CityName>
+						<cbc:PostalZone>0000</cbc:PostalZone>
+						<cac:Country>
+							<cbc:IdentificationCode>NO</cbc:IdentificationCode>
+						</cac:Country>
+					</cac:PostalAddress>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when empty elements are present.</description>
+			<error number="2">EHF-COMMON-R002</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:AccountingSupplierParty>
+				<cac:Party>
+					<cac:PartyLegalEntity></cac:PartyLegalEntity>
+					<cac:PostalAddress>
+						<cac:Country></cac:Country>
+					</cac:PostalAddress>
+				</cac:Party>
+			</cac:AccountingSupplierParty>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when empty elements are present.</description>
+			<error>EHF-COMMON-R002</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:IdentificationCode><!-- No content --></cac:IdentificationCode>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when element contains space.</description>
+			<error>EHF-COMMON-R002</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:IdentificationCode> </cac:IdentificationCode>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when element contains tab.</description>
+			<error>EHF-COMMON-R002</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:IdentificationCode>	</cac:IdentificationCode>
+
+		</Invoice>
+	</test>
+</testSet>

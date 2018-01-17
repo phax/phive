@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R014</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify Norwegian schemeId on EndpointID throws no error.</description>
+			<success>EHF-COMMON-R014</success>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:Party>
+				<cbc:EndpointID schemeID="NO:ORGNR"></cbc:EndpointID>
+			</cac:Party>
+
+		</Order>
+	</test>
+	<test>
+		<assert>
+			<description>Verify non-Norwegian schemeId on EndpointID throws error.</description>
+			<error>EHF-COMMON-R014</error>
+		</assert>
+		<Order xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Order-2">
+
+			<cac:Party>
+				<cbc:EndpointID schemeID="GLN"></cbc:EndpointID>
+			</cac:Party>
+
+		</Order>
+	</test>
+</testSet>

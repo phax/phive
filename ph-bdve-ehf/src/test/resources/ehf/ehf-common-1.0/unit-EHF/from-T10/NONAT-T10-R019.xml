@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R004</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify syntax identifier is present.</description>
+			<success>EHF-COMMON-R004</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when syntax identifier is not present.</description>
+			<error>EHF-COMMON-R004</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<!-- <cbc:UBLVersionID>2.1</cbc:UBLVersionID> -->
+
+		</Invoice>
+	</test>
+</testSet>

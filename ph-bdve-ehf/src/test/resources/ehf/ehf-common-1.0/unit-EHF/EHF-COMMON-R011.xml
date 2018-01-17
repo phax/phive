@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R011</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify Norwegian party identification must be a Norwegian organization number.</description>
+			<success>EHF-COMMON-R011</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">123456785</cbc:ID>
+			</cac:PartyIdentification>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Verify only Norwegian party identification must be a Norwegian organization number.</description>
+			<success>EHF-COMMON-R011</success>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="BE:VAT">ABC</cbc:ID>
+			</cac:PartyIdentification>
+
+		</Invoice>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger error when Norwegian party identification is not a Norwegian organization number.</description>
+			<error number="6">EHF-COMMON-R011</error>
+		</assert>
+		<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">123456789</cbc:ID>
+				<cbc:ID schemeID="NO:ORGNR">123 456 785</cbc:ID>
+				<cbc:ID schemeID="NO:ORGNR">123.456.785</cbc:ID>
+				<cbc:ID schemeID="NO:ORGNR">NO123456785</cbc:ID>
+				<cbc:ID schemeID="NO:ORGNR">123456785MVA</cbc:ID>
+				<cbc:ID schemeID="NO:ORGNR">NO123456785MVA</cbc:ID>
+			</cac:PartyIdentification>
+
+		</Invoice>
+	</test>
+</testSet>

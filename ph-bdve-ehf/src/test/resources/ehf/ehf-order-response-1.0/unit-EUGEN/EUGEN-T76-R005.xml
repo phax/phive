@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t76-base-1.0">
+	<assert>
+		<scope>EUGEN-T76-R005</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify elements with content throws no errors.</description>
+			<success>EUGEN-T76-R005</success>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cbc:EndDate>2025-01-01</cbc:EndDate>
+			<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+		  <cbc:VersionID>Test</cbc:VersionID>
+
+		</OrderResponse>
+	</test>
+	<test>
+		<assert>
+			<description>Verify elements without content throws errors.</description>
+			<warning>EUGEN-T76-R005</warning>
+		</assert>
+		<OrderResponse xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2">
+
+			<cbc:EndDate></cbc:EndDate>
+			<cbc:UBLVersionID></cbc:UBLVersionID>
+		  <cbc:VersionID></cbc:VersionID>
+
+		</OrderResponse>
+	</test>
+</testSet>

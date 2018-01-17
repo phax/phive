@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t77-base-1.0">
+	<assert>
+		<scope>EHF-T77-R001</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify existence of element performs correct.</description>
+			<success>EHF-T77-R001</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cbc:ProfileID/>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify existence of element performs correct.</description>
+			<error>EHF-T77-R001</error>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<!-- <cbc:ProfileID/> -->
+
+		</Catalogue>
+	</test>
+</testSet>

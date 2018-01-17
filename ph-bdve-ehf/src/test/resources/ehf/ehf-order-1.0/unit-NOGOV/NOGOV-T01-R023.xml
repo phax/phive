@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t01-base-1.0">
+	<assert>
+		<scope>NOGOV-T01-R023</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Trigger no warning on non-existing qualifier.</description>
+			<success>NOGOV-T01-R023</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:PartyLegalEntity>
+				<cbc:CompanyID/>
+			</cac:PartyLegalEntity>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger no warning on valid qualifier.</description>
+			<success>NOGOV-T01-R023</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:PartyLegalEntity>
+				<cbc:CompanyID schemeID="NO:ORGNR"/>
+			</cac:PartyLegalEntity>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Trigger warning on invalid qualifier.</description>
+			<warning>NOGOV-T01-R023</warning>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:PartyLegalEntity>
+				<cbc:CompanyID schemeID="NO:VAT"/>
+			</cac:PartyLegalEntity>
+
+		</Catalogue>
+	</test>
+</testSet>

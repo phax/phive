@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-common-ubl-1.0">
+	<assert>
+		<scope>EHF-COMMON-R020</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify tax category id.</description>
+			<success number="2">EHF-COMMON-R020</success>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID>AA</cbc:ID>
+				<cbc:ID>Z</cbc:ID>
+			</cac:ClassifiedTaxCategory>
+
+		</CreditNote>
+	</test>
+	<test>
+		<assert>
+			<description>Verify tax category id.</description>
+			<error number="2">EHF-COMMON-R020</error>
+		</assert>
+		<CreditNote xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2">
+
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID>B</cbc:ID>
+				<cbc:ID>Y</cbc:ID>
+			</cac:ClassifiedTaxCategory>
+
+		</CreditNote>
+	</test>
+</testSet>

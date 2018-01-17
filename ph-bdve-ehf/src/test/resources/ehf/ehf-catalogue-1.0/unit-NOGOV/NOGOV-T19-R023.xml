@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="ehf-t19-base-1.0">
+	<assert>
+		<scope>NOGOV-T19-R023</scope>
+	</assert>
+	<test>
+		<assert>
+			<description>Verify qualifier.</description>
+			<success>NOGOV-T19-R023</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:AdditionalItemProperty>
+				<cbc:Name>STERILE</cbc:Name>
+				<cbc:Value>HIGH_INTENSITY_OR_PULSE_LIGHT</cbc:Value>
+				<cbc:ValueQualifier>gs1:SterilisationTypeCode</cbc:ValueQualifier>
+			</cac:AdditionalItemProperty>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify qualifier.</description>
+			<success>NOGOV-T19-R023</success>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:AdditionalItemProperty>
+				<cbc:Name>STERILE</cbc:Name>
+				<cbc:Value>OZONE</cbc:Value>
+				<cbc:ValueQualifier>gs1:SterilisationTypeCode</cbc:ValueQualifier>
+			</cac:AdditionalItemProperty>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify qualifier.</description>
+			<error>NOGOV-T19-R023</error>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:AdditionalItemProperty>
+				<cbc:Name>STERILE</cbc:Name>
+				<cbc:Value>NO</cbc:Value>
+				<cbc:ValueQualifier>gs1:SterilisationTypeCode</cbc:ValueQualifier>
+			</cac:AdditionalItemProperty>
+
+		</Catalogue>
+	</test>
+	<test>
+		<assert>
+			<description>Verify qualifier.</description>
+			<error>NOGOV-T19-R023</error>
+		</assert>
+		<Catalogue xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+			xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+			xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2">
+
+			<cac:AdditionalItemProperty>
+				<cbc:Name>STERILE</cbc:Name>
+				<cbc:Value>PERACETIC-ACID</cbc:Value>
+				<cbc:ValueQualifier>gs1:SterilisationTypeCode</cbc:ValueQualifier>
+			</cac:AdditionalItemProperty>
+
+		</Catalogue>
+	</test>
+</testSet>

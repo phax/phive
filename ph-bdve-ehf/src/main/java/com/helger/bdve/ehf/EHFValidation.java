@@ -27,7 +27,6 @@ import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.version.Version;
 
 /**
  * Generic EHF validation configuration
@@ -37,11 +36,9 @@ import com.helger.commons.version.Version;
 @Immutable
 public final class EHFValidation
 {
-  public static final Version EHF_VALIDATION_ARTEFACT_VERSION = new Version (2, 0, 12);
-  public static final String VERSION_STR = EHF_VALIDATION_ARTEFACT_VERSION.getAsString (true);
-
-  public static final VESID VID_EHF_INVOICE_20 = new VESID ("no.ehf", "invoice", VERSION_STR);
-  public static final VESID VID_EHF_CREDITNOTE_20 = new VESID ("no.ehf", "creditnote", VERSION_STR);
+  public static final VESID VID_EHF_CATALOGUTE_10 = new VESID ("no.ehf", "catalogue", "1.0.10");
+  public static final VESID VID_EHF_CREDITNOTE_20 = new VESID ("no.ehf", "creditnote", "2.0.12");
+  public static final VESID VID_EHF_INVOICE_20 = new VESID ("no.ehf", "invoice", "2.0.12");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -49,12 +46,13 @@ public final class EHFValidation
     return EHFValidation.class.getClassLoader ();
   }
 
-  private static final IReadableResource INVOICE_EHFCORE = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/EHFCORE-UBL-T10.sch",
+  private static final IReadableResource EHF_COMMON = new ClassPathResource ("/ehf/ehf-common-1.0/sch/EHF-UBL-COMMON.sch",
+                                                                             _getCL ());
+
+  private static final IReadableResource CATALOGUE_EHFCORE = new ClassPathResource ("/ehf/ehf-catalogue-1.0/sch/EHFCORE-UBL-T19.sch",
+                                                                                    _getCL ());
+  private static final IReadableResource CATALOGUE_NOGOV = new ClassPathResource ("/ehf/ehf-catalogue-1.0/sch/NOGOV-UBL-T19.sch",
                                                                                   _getCL ());
-  private static final IReadableResource INVOICE_NONAT = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NONAT-UBL-T10.sch",
-                                                                                _getCL ());
-  private static final IReadableResource INVOICE_NOGOV = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NOGOV-UBL-T10.sch",
-                                                                                _getCL ());
 
   private static final IReadableResource CREDITNOTE_EHFCORE = new ClassPathResource ("/ehf/ehf-creditnote-2.0/sch/EHFCORE-UBL-T14.sch",
                                                                                      _getCL ());
@@ -62,6 +60,13 @@ public final class EHFValidation
                                                                                    _getCL ());
   private static final IReadableResource CREDITNOTE_NOGOV = new ClassPathResource ("/ehf/ehf-creditnote-2.0/sch/NOGOV-UBL-T14.sch",
                                                                                    _getCL ());
+
+  private static final IReadableResource INVOICE_EHFCORE = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/EHFCORE-UBL-T10.sch",
+                                                                                  _getCL ());
+  private static final IReadableResource INVOICE_NONAT = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NONAT-UBL-T10.sch",
+                                                                                _getCL ());
+  private static final IReadableResource INVOICE_NOGOV = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NOGOV-UBL-T10.sch",
+                                                                                _getCL ());
 
   private EHFValidation ()
   {}
@@ -90,19 +95,31 @@ public final class EHFValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     final boolean bDeprecated = false;
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_INVOICE_20,
-                                                                           "EHF Invoice " + VERSION_STR,
-                                                                           CEHFValidationArtefact.VK_EHF_INVOICE_T10,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUTE_10,
+                                                                           "EHF Catalogue " +
+                                                                                                  VID_EHF_CATALOGUTE_10.getVersion (),
+                                                                           CEHFValidationArtefact.VK_EHF_CATALOGUE_T19,
                                                                            bDeprecated,
-                                                                           _createPure (INVOICE_EHFCORE),
-                                                                           _createSCH (INVOICE_NONAT),
-                                                                           _createSCH (INVOICE_NOGOV)));
+                                                                           _createSCH (EHF_COMMON),
+                                                                           _createPure (CATALOGUE_EHFCORE),
+                                                                           _createSCH (CATALOGUE_NOGOV)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CREDITNOTE_20,
-                                                                           "EHF Creditnote " + VERSION_STR,
+                                                                           "EHF Creditnote " +
+                                                                                                  VID_EHF_CREDITNOTE_20.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_CREDITNOTE_T14,
                                                                            bDeprecated,
+                                                                           _createSCH (EHF_COMMON),
                                                                            _createPure (CREDITNOTE_EHFCORE),
                                                                            _createSCH (CREDITNOTE_NONAT),
                                                                            _createSCH (CREDITNOTE_NOGOV)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_INVOICE_20,
+                                                                           "EHF Invoice " +
+                                                                                               VID_EHF_INVOICE_20.getVersion (),
+                                                                           CEHFValidationArtefact.VK_EHF_INVOICE_T10,
+                                                                           bDeprecated,
+                                                                           _createSCH (EHF_COMMON),
+                                                                           _createPure (INVOICE_EHFCORE),
+                                                                           _createSCH (INVOICE_NONAT),
+                                                                           _createSCH (INVOICE_NOGOV)));
   }
 }
