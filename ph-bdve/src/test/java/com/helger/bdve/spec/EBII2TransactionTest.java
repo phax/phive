@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.ehf;
+package com.helger.bdve.spec;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -23,7 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.ehf.EBII2Transaction;
+import com.helger.bdve.spec.EBII2Transaction;
 import com.helger.commons.string.StringHelper;
 
 /**

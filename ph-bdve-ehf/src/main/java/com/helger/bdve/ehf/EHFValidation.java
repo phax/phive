@@ -36,9 +36,10 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class EHFValidation
 {
-  public static final VESID VID_EHF_CATALOGUTE_10 = new VESID ("no.ehf", "catalogue", "1.0.10");
-  public static final VESID VID_EHF_CREDITNOTE_20 = new VESID ("no.ehf", "creditnote", "2.0.12");
-  public static final VESID VID_EHF_INVOICE_20 = new VESID ("no.ehf", "invoice", "2.0.12");
+  public static final VESID VID_EHF_CATALOGUTE_1_0_10 = new VESID ("no.ehf", "catalogue", "1.0.10");
+  public static final VESID VID_EHF_CREDITNOTE_2_0_12 = new VESID ("no.ehf", "creditnote", "2.0.12");
+  public static final VESID VID_EHF_DESPATCH_ADVICE_1_0_8 = new VESID ("no.ehf", "despatch-advice", "1.0.8");
+  public static final VESID VID_EHF_INVOICE_2_0_12 = new VESID ("no.ehf", "invoice", "2.0.12");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -60,6 +61,11 @@ public final class EHFValidation
                                                                                    _getCL ());
   private static final IReadableResource CREDITNOTE_NOGOV = new ClassPathResource ("/ehf/ehf-creditnote-2.0/sch/NOGOV-UBL-T14.sch",
                                                                                    _getCL ());
+
+  private static final IReadableResource DESPATCH_ADVICE_EHFCORE = new ClassPathResource ("/ehf/ehf-despatch-advice-1.0/sch/EHFCORE-UBL-T16.sch",
+                                                                                          _getCL ());
+  private static final IReadableResource DESPATCH_ADVICE_NOGOV = new ClassPathResource ("/ehf/ehf-despatch-advice-1.0/sch/NOGOV-UBL-T16.sch",
+                                                                                        _getCL ());
 
   private static final IReadableResource INVOICE_EHFCORE = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/EHFCORE-UBL-T10.sch",
                                                                                   _getCL ());
@@ -95,26 +101,34 @@ public final class EHFValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     final boolean bDeprecated = false;
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUTE_10,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUTE_1_0_10,
                                                                            "EHF Catalogue " +
-                                                                                                  VID_EHF_CATALOGUTE_10.getVersion (),
+                                                                                                      VID_EHF_CATALOGUTE_1_0_10.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_CATALOGUE_T19,
                                                                            bDeprecated,
                                                                            _createSCH (EHF_COMMON),
                                                                            _createPure (CATALOGUE_EHFCORE),
                                                                            _createSCH (CATALOGUE_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CREDITNOTE_20,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CREDITNOTE_2_0_12,
                                                                            "EHF Creditnote " +
-                                                                                                  VID_EHF_CREDITNOTE_20.getVersion (),
+                                                                                                      VID_EHF_CREDITNOTE_2_0_12.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_CREDITNOTE_T14,
                                                                            bDeprecated,
                                                                            _createSCH (EHF_COMMON),
                                                                            _createPure (CREDITNOTE_EHFCORE),
                                                                            _createSCH (CREDITNOTE_NONAT),
                                                                            _createSCH (CREDITNOTE_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_INVOICE_20,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_DESPATCH_ADVICE_1_0_8,
+                                                                           "EHF Catalogue " +
+                                                                                                          VID_EHF_DESPATCH_ADVICE_1_0_8.getVersion (),
+                                                                           CEHFValidationArtefact.VK_EHF_DESPATCH_ADVICE_T14,
+                                                                           bDeprecated,
+                                                                           _createSCH (EHF_COMMON),
+                                                                           _createPure (DESPATCH_ADVICE_EHFCORE),
+                                                                           _createSCH (DESPATCH_ADVICE_NOGOV)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_INVOICE_2_0_12,
                                                                            "EHF Invoice " +
-                                                                                               VID_EHF_INVOICE_20.getVersion (),
+                                                                                                   VID_EHF_INVOICE_2_0_12.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_INVOICE_T10,
                                                                            bDeprecated,
                                                                            _createSCH (EHF_COMMON),

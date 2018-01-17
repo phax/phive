@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.spec.BusinessSpecification;
 import com.helger.bdve.spec.BusinessSpecificationRegistry;
+import com.helger.bdve.spec.EBII2Transaction;
 import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.commons.annotation.Nonempty;
 
@@ -82,6 +83,9 @@ public final class CEHFValidationArtefact
   public static final ValidationArtefactKey VK_EHF_CREDITNOTE_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_CREDITNOTE)
                                                                                                         .setTransaction (EBII2Transaction.T14)
                                                                                                         .build ();
+  public static final ValidationArtefactKey VK_EHF_DESPATCH_ADVICE_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_DESPATCH_ADVICE)
+                                                                                                             .setTransaction (EBII2Transaction.T16)
+                                                                                                             .build ();
   public static final ValidationArtefactKey VK_EHF_INVOICE_T10 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_INVOICE)
                                                                                                      .setTransaction (EBII2Transaction.T10)
                                                                                                      .build ();

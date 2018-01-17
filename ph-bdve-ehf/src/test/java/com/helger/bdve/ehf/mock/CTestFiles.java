@@ -47,9 +47,10 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { EHFValidation.VID_EHF_CATALOGUTE_10,
-                                            EHFValidation.VID_EHF_CREDITNOTE_20,
-                                            EHFValidation.VID_EHF_INVOICE_20 })
+    for (final VESID aESID : new VESID [] { EHFValidation.VID_EHF_CATALOGUTE_1_0_10,
+                                            EHFValidation.VID_EHF_CREDITNOTE_2_0_12,
+                                            EHFValidation.VID_EHF_DESPATCH_ADVICE_1_0_8,
+                                            EHFValidation.VID_EHF_INVOICE_2_0_12 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -62,18 +63,23 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (aVESID.equals (EHFValidation.VID_EHF_CATALOGUTE_10))
+    if (aVESID.equals (EHFValidation.VID_EHF_CATALOGUTE_1_0_10))
     {
       // final String sPath = "/ehf/ehf-catalogue-1.0/";
       return new CommonsArrayList <> ();
     }
-    if (aVESID.equals (EHFValidation.VID_EHF_CREDITNOTE_20))
+    if (aVESID.equals (EHFValidation.VID_EHF_CREDITNOTE_2_0_12))
     {
       final String sPath = "/ehf/ehf-creditnote-2.0/";
       return new CommonsArrayList <> (new ClassPathResource (sPath + "test/T14-valid-profile-xx.xml"),
                                       new ClassPathResource (sPath + "test/T14-Valuta-EUR.xml"));
     }
-    if (aVESID.equals (EHFValidation.VID_EHF_INVOICE_20))
+    if (aVESID.equals (EHFValidation.VID_EHF_DESPATCH_ADVICE_1_0_8))
+    {
+      // final String sPath = "/ehf/ehf-despatch-advice-1.0/";
+      return new CommonsArrayList <> ();
+    }
+    if (aVESID.equals (EHFValidation.VID_EHF_INVOICE_2_0_12))
     {
       final String sPath = "/ehf/ehf-invoice-2.0/";
       return new CommonsArrayList <> (new ClassPathResource (sPath + "test/T10-B2C.xml"),
