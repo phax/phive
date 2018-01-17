@@ -10,11 +10,14 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-peppol - the PEPPOL specific setup etc
   * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.x support from https://github.com/SimplerInvoicing/validation
   * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
+  * ph-bdve-ehf - Validation rules for EHF (Norwegian public procurement) - since 4.0.1
+  * ph-bdve-ubl - Validation rules for pure UBL (without any Schematron) - since 4.0.1
   
 # News
 
 * v4.0.1 - work in progress
-  * Added support for EHF Invoice and EHF Creditnote 2.0.12 (new artefact `ph-bdve-ehf`)
+  * Added support for some EHF document formats (new artefact `ph-bdve-ehf`)
+  * Added support to validate UBL documents only (without Schematron) (new artefact `ph-bdve-ubl')
 * v4.0.0 - 2018-01-15
   * Updated to ph-commons 9.0.0
   * Updated to the latest official EN-16931 rules

@@ -195,7 +195,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
    *        <code>false</code> if not.
    * @param aSchematrons
    *        The schematron resources to be associated with the VES. May not be
-   *        <code>null</code>.
+   *        <code>null</code> but maybe empty (for e.g. XSD only layers).
    * @return The newly created VES. Never <code>null</code>.
    */
   @Nonnull
@@ -208,7 +208,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
-    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
+    ValueEnforcer.noNullValue (aSchematrons, "Schematrons");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
                                                                  sDisplayName,
