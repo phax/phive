@@ -40,6 +40,7 @@ public final class EHFValidation
   public static final VESID VID_EHF_CREDITNOTE_2_0_12 = new VESID ("no.ehf", "creditnote", "2.0.12");
   public static final VESID VID_EHF_DESPATCH_ADVICE_1_0_8 = new VESID ("no.ehf", "despatch-advice", "1.0.8");
   public static final VESID VID_EHF_INVOICE_2_0_12 = new VESID ("no.ehf", "invoice", "2.0.12");
+  public static final VESID VID_EHF_ORDER_AGREEMENT_1_0_0 = new VESID ("no.ehf", "order-agreement", "1.0.0");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -73,6 +74,9 @@ public final class EHFValidation
                                                                                 _getCL ());
   private static final IReadableResource INVOICE_NOGOV = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NOGOV-UBL-T10.sch",
                                                                                 _getCL ());
+
+  private static final IReadableResource ORDER_AGREEMENT_EHFCORE = new ClassPathResource ("/ehf/ehf-order-agreement-1.0/sch/EHF-UBL-T110.sch",
+                                                                                          _getCL ());
 
   private EHFValidation ()
   {}
@@ -135,5 +139,12 @@ public final class EHFValidation
                                                                            _createPure (INVOICE_EHFCORE),
                                                                            _createSCH (INVOICE_NONAT),
                                                                            _createSCH (INVOICE_NOGOV)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_AGREEMENT_1_0_0,
+                                                                           "EHF Order Agreement " +
+                                                                                                          VID_EHF_ORDER_AGREEMENT_1_0_0.getVersion (),
+                                                                           CEHFValidationArtefact.VK_EHF_ORDER_AGREEMENT_T110,
+                                                                           bDeprecated,
+                                                                           _createSCH (EHF_COMMON),
+                                                                           _createPure (ORDER_AGREEMENT_EHFCORE)));
   }
 }

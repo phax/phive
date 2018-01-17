@@ -50,7 +50,8 @@ public final class CTestFiles
     for (final VESID aESID : new VESID [] { EHFValidation.VID_EHF_CATALOGUTE_1_0_10,
                                             EHFValidation.VID_EHF_CREDITNOTE_2_0_12,
                                             EHFValidation.VID_EHF_DESPATCH_ADVICE_1_0_8,
-                                            EHFValidation.VID_EHF_INVOICE_2_0_12 })
+                                            EHFValidation.VID_EHF_INVOICE_2_0_12,
+                                            EHFValidation.VID_EHF_ORDER_AGREEMENT_1_0_0 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -84,6 +85,11 @@ public final class CTestFiles
       final String sPath = "/ehf/ehf-invoice-2.0/";
       return new CommonsArrayList <> (new ClassPathResource (sPath + "test/T10-B2C.xml"),
                                       new ClassPathResource (sPath + "test/T10-Valuta-EUR.xml"));
+    }
+    if (aVESID.equals (EHFValidation.VID_EHF_ORDER_AGREEMENT_1_0_0))
+    {
+      // final String sPath = "/ehf/ehf-order-agreement-1.0/";
+      return new CommonsArrayList <> ();
     }
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
