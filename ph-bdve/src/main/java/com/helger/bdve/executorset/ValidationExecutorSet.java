@@ -35,6 +35,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 
@@ -149,6 +150,21 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     for (final IValidationExecutor aExecutor : m_aList)
       if (aExecutor instanceof IValidationExecutor.ICacheSupport)
         ((IValidationExecutor.ICacheSupport) aExecutor).setCacheArtefact (bCache);
+  }
+
+  /**
+   * As some {@link IValidationExecutor} instances may contain a hard reference
+   * to a {@link ClassLoader} this methods removes all executors and allows for
+   * them to be garbage collected.<br>
+   * New executors may be added afterwards but this method is mainly meant for
+   * safe cleanup.
+   *
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public EChange removeAllExecutors ()
+  {
+    return m_aList.removeAll ();
   }
 
   @Override

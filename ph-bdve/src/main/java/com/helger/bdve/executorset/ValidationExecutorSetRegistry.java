@@ -24,12 +24,14 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
@@ -133,6 +135,39 @@ public class ValidationExecutorSetRegistry implements Serializable
       return null;
 
     return m_aRWLock.readLocked ( () -> m_aMap.get (aID));
+  }
+
+  /**
+   * This is a cleanup method that frees all resources when they are no longer
+   * needed. This may be helpful because some {@link IValidationExecutor}
+   * implementations contained in the {@link IValidationExecutorSet} contained
+   * in this registry might have strong references to {@link ClassLoader}
+   * instances. By calling this method, you can clear the contained map and
+   * invoke {@link ValidationExecutorSet#removeAllExecutors()} if applicable.
+   *
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public EChange removeAll ()
+  {
+    EChange ret = EChange.UNCHANGED;
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (m_aMap.isNotEmpty ())
+      {
+        ret = EChange.CHANGED;
+        for (final IValidationExecutorSet aVES : m_aMap.values ())
+          if (aVES instanceof ValidationExecutorSet)
+            ((ValidationExecutorSet) aVES).removeAllExecutors ();
+        m_aMap.clear ();
+      }
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+    return ret;
   }
 
   @Override

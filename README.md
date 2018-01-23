@@ -17,7 +17,7 @@ This project is divided into sub-projects for maximum flexibility:
 # News
 
 * v4.0.1 - work in progress
-  * Added support for some EHF document formats (new artefact `ph-bdve-ehf`)
+  * Added support for EHF document formats (new artefact `ph-bdve-ehf`) - based on https://vefa.difi.no/ehf/standard/
   * Added support to validate UBL documents only (without Schematron) (new artefact `ph-bdve-ubl`)
   * Added support to validate CII documents only (without Schematron) (new artefact `ph-bdve-cii`)
 * v4.0.0 - 2018-01-15

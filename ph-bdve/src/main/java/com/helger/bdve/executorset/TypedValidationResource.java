@@ -108,7 +108,7 @@ public final class TypedValidationResource
   {
     return new ToStringGenerator (this).append ("Type", m_eType)
                                        .append ("ClassLoader", m_aClassLoader)
-                                       .append ("Res", m_aRes)
+                                       .append ("Resource", m_aRes)
                                        .getToString ();
   }
 }
