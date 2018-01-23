@@ -16,7 +16,7 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News
 
-* v4.0.1 - work in progress
+* v4.0.1 - 2018-01-23
   * Added support for EHF document formats (new artefact `ph-bdve-ehf`) - based on https://vefa.difi.no/ehf/standard/
   * Added support to validate UBL documents only (without Schematron) (new artefact `ph-bdve-ubl`)
   * Added support to validate CII documents only (without Schematron) (new artefact `ph-bdve-cii`)
@@ -59,19 +59,37 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.1</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.1</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>4.0.0</version>
+  <version>4.0.1</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-ubl</artifactId>
+  <version>4.0.1</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-cii</artifactId>
+  <version>4.0.1</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-ehf</artifactId>
+  <version>4.0.1</version>
 </dependency>
 ```
 
