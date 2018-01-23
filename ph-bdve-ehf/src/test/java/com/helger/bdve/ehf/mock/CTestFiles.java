@@ -51,7 +51,8 @@ public final class CTestFiles
                                             EHFValidation.VID_EHF_CREDITNOTE_2_0_12,
                                             EHFValidation.VID_EHF_DESPATCH_ADVICE_1_0_8,
                                             EHFValidation.VID_EHF_INVOICE_2_0_12,
-                                            EHFValidation.VID_EHF_ORDER_AGREEMENT_1_0_0 })
+                                            EHFValidation.VID_EHF_ORDER_AGREEMENT_1_0_0,
+                                            EHFValidation.VID_EHF_ORDER_1_0_9 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -89,6 +90,11 @@ public final class CTestFiles
     if (aVESID.equals (EHFValidation.VID_EHF_ORDER_AGREEMENT_1_0_0))
     {
       // final String sPath = "/ehf/ehf-order-agreement-1.0/";
+      return new CommonsArrayList <> ();
+    }
+    if (aVESID.equals (EHFValidation.VID_EHF_ORDER_1_0_9))
+    {
+      // final String sPath = "/ehf/ehf-order-1.0/";
       return new CommonsArrayList <> ();
     }
 

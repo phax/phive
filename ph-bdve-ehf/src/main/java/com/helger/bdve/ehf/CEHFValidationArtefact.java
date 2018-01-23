@@ -92,6 +92,9 @@ public final class CEHFValidationArtefact
   public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER_AGREEMENT)
                                                                                                               .setTransaction (EBII2Transaction.T110)
                                                                                                               .build ();
+  public static final ValidationArtefactKey VK_EHF_ORDER_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER)
+                                                                                                   .setTransaction (EBII2Transaction.T01)
+                                                                                                   .build ();
 
   private CEHFValidationArtefact ()
   {}

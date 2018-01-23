@@ -41,6 +41,7 @@ public final class EHFValidation
   public static final VESID VID_EHF_DESPATCH_ADVICE_1_0_8 = new VESID ("no.ehf", "despatch-advice", "1.0.8");
   public static final VESID VID_EHF_INVOICE_2_0_12 = new VESID ("no.ehf", "invoice", "2.0.12");
   public static final VESID VID_EHF_ORDER_AGREEMENT_1_0_0 = new VESID ("no.ehf", "order-agreement", "1.0.0");
+  public static final VESID VID_EHF_ORDER_1_0_9 = new VESID ("no.ehf", "order", "1.0.9");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -77,6 +78,11 @@ public final class EHFValidation
 
   private static final IReadableResource ORDER_AGREEMENT_EHFCORE = new ClassPathResource ("/ehf/ehf-order-agreement-1.0/sch/EHF-UBL-T110.sch",
                                                                                           _getCL ());
+
+  private static final IReadableResource ORDER_EHFCORE = new ClassPathResource ("/ehf/ehf-order-1.0/sch/EHFCORE-UBL-T01.sch",
+                                                                                _getCL ());
+  private static final IReadableResource ORDER_NOGOV = new ClassPathResource ("/ehf/ehf-order-1.0/sch/NOGOV-UBL-T01.sch",
+                                                                              _getCL ());
 
   private EHFValidation ()
   {}
@@ -146,5 +152,13 @@ public final class EHFValidation
                                                                            bDeprecated,
                                                                            _createSCH (EHF_COMMON),
                                                                            _createPure (ORDER_AGREEMENT_EHFCORE)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_1_0_9,
+                                                                           "EHF Order " +
+                                                                                                VID_EHF_ORDER_1_0_9.getVersion (),
+                                                                           CEHFValidationArtefact.VK_EHF_ORDER_T01,
+                                                                           bDeprecated,
+                                                                           _createSCH (EHF_COMMON),
+                                                                           _createPure (ORDER_EHFCORE),
+                                                                           _createPure (ORDER_NOGOV)));
   }
 }
