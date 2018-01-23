@@ -24,11 +24,11 @@
     <artifactId>ph-bdve-parent-pom</artifactId>
     <version>4.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-bdve-ennergieefactuur</artifactId>
+  <artifactId>ph-bdve-energieefactuur</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-bdve-ennergieefactuur</name>
+  <name>ph-bdve-energieefactuur</name>
   <description>Energie eFactuur - Dutch utility sector invoices</description>
-  <url>https://github.com/phax/ph-bdve/ph-bdve-ennergieefactuur</url>
+  <url>https://github.com/phax/ph-bdve/ph-bdve-energieefactuur</url>
   <inceptionYear>2017</inceptionYear>
   <licenses>
     <license>
@@ -76,8 +76,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.bdve.ennergieefactuur</Automatic-Module-Name>
-            <Export-Package>com.helger.bdveennergieefactuur.*</Export-Package>
+            <Automatic-Module-Name>com.helger.bdve.energieefactuur</Automatic-Module-Name>
+            <Export-Package>com.helger.bdve.energieefactuur.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
