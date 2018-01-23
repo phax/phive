@@ -18,12 +18,12 @@ package com.helger.bdve.peppol.supplementary.createrules;
 
 import java.io.File;
 
-import com.helger.bdve.peppol.EBII2Transaction;
 import com.helger.bdve.peppol.supplementary.createrules.codelist.RuleCodeListCreator;
 import com.helger.bdve.peppol.supplementary.createrules.codelist.RuleSourceCodeList;
 import com.helger.bdve.peppol.supplementary.createrules.sch.RuleSchematronCreator;
 import com.helger.bdve.peppol.supplementary.createrules.sch.RuleXSLTCreator;
 import com.helger.bdve.peppol.supplementary.createrules.util.CreateHelper;
+import com.helger.bdve.spec.EBII2Transaction;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;

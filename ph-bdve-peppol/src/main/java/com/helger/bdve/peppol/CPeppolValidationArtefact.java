@@ -23,6 +23,7 @@ import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.key.ValidationArtefactSectorKey;
 import com.helger.bdve.spec.BusinessSpecification;
 import com.helger.bdve.spec.BusinessSpecificationRegistry;
+import com.helger.bdve.spec.EBII2Transaction;
 import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.ClassPathResource;

@@ -20,7 +20,7 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 
-import com.helger.bdve.peppol.EBII2Transaction;
+import com.helger.bdve.spec.EBII2Transaction;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsTreeMap;

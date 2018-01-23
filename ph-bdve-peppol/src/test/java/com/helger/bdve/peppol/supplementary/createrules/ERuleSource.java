@@ -21,7 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.peppol.EBII2Transaction;
+import com.helger.bdve.spec.EBII2Transaction;
 
 /**
  * Don't alter the codes of this enum manually. They are automatically created

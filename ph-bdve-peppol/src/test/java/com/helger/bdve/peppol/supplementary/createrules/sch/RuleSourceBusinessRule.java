@@ -21,8 +21,8 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.peppol.EBII2Transaction;
 import com.helger.bdve.peppol.supplementary.createrules.ESyntaxBinding;
+import com.helger.bdve.spec.EBII2Transaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -36,7 +36,7 @@ public final class RuleSourceBusinessRule
   private final File m_aOutputDirectory;
   private final String m_sID;
   private final EBII2Transaction m_eCodeListTransaction;
-  private final ICommonsList <File> m_aResultSCHFiles = new CommonsArrayList<> ();
+  private final ICommonsList <File> m_aResultSCHFiles = new CommonsArrayList <> ();
 
   public RuleSourceBusinessRule (@Nonnull final File aSourceFilename,
                                  @Nonnull final File aOutputDirectory,
