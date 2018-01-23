@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is a fictional invoice and serves as an example of an invoice message sent by a network operator. -->
+<!-- Authors: Michiel Stornebrink & Wouter van den Berg (TNO) -->
+<!-- Documentation: Standaard Energie eFactuur (http://www.energie-efactuur.nl) -->
+<!-- Date: 2016-03-16 -->
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:seef="urn:www.energie-efactuur.nl:profile:invoice:ver2.0" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2
+    http://docs.oasis-open.org/ubl/os-UBL-2.1/xsd/maindoc/UBL-Invoice-2.1.xsd urn:www.energie-efactuur.nl:profile:invoice:ver2.0 ../SEeF_UBLExtension_v2.0.0.xsd">
+    
+	<!-- Het UBLExtensions element bevat de Energie-specifieke uitbreidingen, waaronder de specificatie van meterstanden die ten grondslag liggen aan het verbuik -->
+	<ext:UBLExtensions>
+		<ext:UBLExtension>
+			<ext:ExtensionContent>
+				<seef:SEEFExtensionWrapper>
+					<seef:UtilityConsumptionPoint>
+						<cbc:ID schemeName="EAN">871687120050333619</cbc:ID> <!--  EAN testnummer -->
+						<seef:Address>
+							<cbc:StreetName>Stadhuisplein</cbc:StreetName>
+							<cbc:BuildingNumber>1</cbc:BuildingNumber>
+							<cbc:CityName>Stedendorp</cbc:CityName>
+							<cbc:PostalZone>1234AB</cbc:PostalZone>
+							<cac:Country>
+								<cbc:IdentificationCode listID="ISO3166-1:Alpha2" listAgencyID="6">NL</cbc:IdentificationCode>
+							</cac:Country>
+						</seef:Address>
+						<seef:UtilityMeter>
+							<seef:MeterNumber>RNB_E12345678</seef:MeterNumber> 
+							<seef:MeterConstant>1</seef:MeterConstant>
+							<seef:MeterConstant>1</seef:MeterConstant>
+							<!-- MeterReading 1-->
+							<seef:MeterReading>
+								<seef:MeterReadingTypeCode listID="SEeF:MeterReadingTypes">LAAG</seef:MeterReadingTypeCode>
+								<seef:PreviousMeterReadingDate>2015-10-01</seef:PreviousMeterReadingDate>
+								<seef:PreviousMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KWH">0</seef:PreviousMeterQuantity> 
+								<seef:LatestMeterReadingDate>2015-10-31</seef:LatestMeterReadingDate>
+								<seef:LatestMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KWH">10822</seef:LatestMeterQuantity>
+							</seef:MeterReading>
+							<!-- MeterReading 2-->						
+							<seef:MeterReading>
+								<seef:MeterReadingTypeCode listID="SEeF:MeterReadingTypes">HOOG</seef:MeterReadingTypeCode>
+								<seef:PreviousMeterReadingDate>2015-10-01</seef:PreviousMeterReadingDate>
+								<seef:PreviousMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KWH">0</seef:PreviousMeterQuantity>
+								<seef:LatestMeterReadingDate>2015-10-31</seef:LatestMeterReadingDate>
+								<seef:LatestMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KWH">8790</seef:LatestMeterQuantity>
+							</seef:MeterReading>
+							<!-- MeterReading 3-->						
+							<seef:MeterReading>
+								<seef:MeterReadingTypeCode listID="SEeF:MeterReadingTypes">MAXBELASTING</seef:MeterReadingTypeCode> <!-- Probleem geidentificeerd bij het opstellen van dit voorbeeld: dit MeterReadingType komt niet voor in de codelijst. De SEeF werkgroep pakt dit op -->
+								<seef:PreviousMeterReadingDate>2015-10-01</seef:PreviousMeterReadingDate>
+								<seef:PreviousMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KWT">0</seef:PreviousMeterQuantity>
+								<seef:LatestMeterReadingDate>2015-10-31</seef:LatestMeterReadingDate>
+								<seef:LatestMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KWT">81</seef:LatestMeterQuantity>
+							</seef:MeterReading>
+							<!-- MeterReading 4-->
+							<seef:MeterReading>
+								<seef:MeterReadingTypeCode listID="SEeF:MeterReadingTypes">BLINDINTEGRAAL</seef:MeterReadingTypeCode>
+								<seef:PreviousMeterReadingDate>2015-10-01</seef:PreviousMeterReadingDate>
+								<seef:PreviousMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KVR">0</seef:PreviousMeterQuantity> <!-- Probleem geidentificeerd bij het opstellen van dit voorbeeld: de werkelijke eenheid betreft hier 'kVarh', maar is niet beschikbaar in de codelijst. De SEeF werkgroep pakt dit punt op -->
+								<seef:LatestMeterReadingDate>2015-10-31</seef:LatestMeterReadingDate>
+								<seef:LatestMeterQuantity unitCodeListID="SEeF:unitCodes" unitCode="KVR">6054</seef:LatestMeterQuantity> <!-- Zie eerdere opmerking -->
+							</seef:MeterReading>
+						</seef:UtilityMeter>
+					</seef:UtilityConsumptionPoint>
+				</seef:SEEFExtensionWrapper>
+			</ext:ExtensionContent>
+		</ext:UBLExtension>
+	</ext:UBLExtensions>
+	
+	<!-- Technische elementen voor interpretatie van UBL bericht: -->
+	<!-- Required by SI v1.1: -->
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID> 
+	 <!-- Required by SI v1.1: -->	
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.energie-efactuur.nl:profile:invoice:ver1.0</cbc:ProfileID>
+	
+	<!-- Vanaf hier: kernfactuur elementen -->
+	<cbc:ID>90125432759</cbc:ID>
+	<cbc:IssueDate>2015-11-11</cbc:IssueDate>
+	<cbc:InvoiceTypeCode listID="UNCL1001" listAgencyID="6">384</cbc:InvoiceTypeCode>		
+	<cbc:Note>Heeft u een vraag over de factuur of wilt u uitleg over de vermelde begrippen? Zie website http://www.liander.nl/facturen voor meer informatie. U kunt ook telefonisch contact opnemen.
+	Voor de algemene voorwaarden, zie: https://www.liander.nl/algemene-voorwaarden</cbc:Note>
+	<cbc:DocumentCurrencyCode listID="ISO4217">EUR</cbc:DocumentCurrencyCode>
+	<cac:InvoicePeriod>
+		<cbc:StartDate>2015-10-01</cbc:StartDate>
+		<cbc:EndDate>2015-10-31</cbc:EndDate>
+	</cac:InvoicePeriod>
+	
+	
+	<cac:BillingReference>
+		<cac:InvoiceDocumentReference>
+			<cbc:ID>90125432758</cbc:ID>
+		</cac:InvoiceDocumentReference>
+	</cac:BillingReference>
+	
+	<!-- Specificatie van Leverancier -->
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="ZZZ" schemeID="NL:KVK">09104351</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Liander N.V.</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:Postbox>50</cbc:Postbox>
+				<cbc:CityName>Duiven</cbc:CityName>
+				<cbc:PostalZone>6920</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode listAgencyID="6" listID="ISO3166-1:Alpha2">NL</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeAgencyID="ZZZ" schemeID="NL:VAT">NL807562166B01</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:CompanyID schemeAgencyID="ZZZ" schemeID="NL:KVK">09104351</cbc:CompanyID>
+				<cac:RegistrationAddress>
+					<cbc:CityName>Arnhem</cbc:CityName>
+					<cac:Country>
+						<cbc:IdentificationCode listID="ISO3166-1:Alpha2" listAgencyID="6">NL</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:RegistrationAddress>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:Name>Klant &amp; Service Zakelijk</cbc:Name>
+				<cbc:Telephone>088-5426362</cbc:Telephone>
+				<cbc:ElectronicMail>zakelijk@liander.nl</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	
+	<!-- Specificatie van Klant:-->
+	<cac:AccountingCustomerParty>
+		<cbc:SupplierAssignedAccountID>987654321</cbc:SupplierAssignedAccountID>
+		<cac:Party>
+			<cac:PartyName>
+				<cbc:Name>Voorbeeld Bedrijf B.V.</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:Postbox>100</cbc:Postbox>
+				<cbc:StreetName>Stadsstraat</cbc:StreetName>
+				<cbc:BuildingNumber>1</cbc:BuildingNumber>
+				<cbc:CityName>Stedendorp</cbc:CityName>
+				<cbc:PostalZone>1000AB</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2" listAgencyID="6">NL</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Voorbeeld Bedrijf B.V.</cbc:RegistrationName>
+				<cbc:CompanyID schemeAgencyID="ZZZ" schemeID="NL:VAT">NL123456789B01</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	
+
+<!-- Betalingsgegevens: -->
+	<cac:PaymentMeans>  
+		<cbc:PaymentMeansCode listID="UNCL4461" listAgencyID="6">42</cbc:PaymentMeansCode> <!-- 42 = Payment to bank account, 49 = Direct debit/incasso  -->
+		<cac:PayerFinancialAccount>
+			<cbc:ID schemeID="IBAN">NL1234567890</cbc:ID>
+		</cac:PayerFinancialAccount>	
+		<!-- Bankgegevens van de leverancier waarop betaald dient te worden: -->
+		<cac:PayeeFinancialAccount>
+			<cbc:ID schemeID="IBAN">NL95INGB0000005585</cbc:ID> 
+			<cac:FinancialInstitutionBranch>
+				<cac:FinancialInstitution>
+					<cbc:ID schemeID="BIC">INGBNL20</cbc:ID>
+					<cbc:Name>ING Bank</cbc:Name>
+				</cac:FinancialInstitution>
+			</cac:FinancialInstitutionBranch>
+		</cac:PayeeFinancialAccount>
+	</cac:PaymentMeans>
+	<cac:PaymentTerms>
+		<cbc:Note>Opmerking tbv betaling</cbc:Note>
+	</cac:PaymentTerms>
+	
+	<!-- BTW totalen: -->
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="EUR">-106.67</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="EUR">-507.95</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="EUR">-106.67</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeAgencyID="6" schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>21</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	
+	
+<!-- Factuur totalen: -->
+	<cac:LegalMonetaryTotal> 
+		<cbc:LineExtensionAmount currencyID="EUR">-507.95</cbc:LineExtensionAmount> 
+		<cbc:TaxExclusiveAmount currencyID="EUR">-507.95</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="EUR">-614.62</cbc:TaxInclusiveAmount>
+		<cbc:PayableAmount currencyID="EUR">-614.62</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	
+
+	<!-- Factuurregels: --> 
+
+	<!-- Invoice line 1: -->
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="C62"  unitCodeListID="UNECERec20">1</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="EUR">-507.95</cbc:LineExtensionAmount>
+		<cac:InvoicePeriod>
+			<cbc:StartDate>2015-10-01</cbc:StartDate>
+			<cbc:EndDate>2015-10-31</cbc:EndDate>
+		</cac:InvoicePeriod>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="EUR">-106.67</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="EUR">-507.95</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="EUR">-106.67</cbc:TaxAmount> 
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="6" schemeID="UNCL5305">S</cbc:ID>
+					<cbc:Percent>21</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="6" schemeID="UN/ECE 5153">VAT</cbc:ID>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Name>Netbeheer</cbc:Name>
+			<cac:CommodityClassification>
+				<cbc:CommodityCode listID="UNSPSC">83101800</cbc:CommodityCode>
+				<cbc:ItemClassificationCode listID="SEeF:ItemClassificationCodes">NETMNGT</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="EUR">-507.95</cbc:PriceAmount>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>
