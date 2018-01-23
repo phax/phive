@@ -42,6 +42,7 @@ public final class EHFValidation
   public static final VESID VID_EHF_INVOICE_2_0_12 = new VESID ("no.ehf", "invoice", "2.0.12");
   public static final VESID VID_EHF_ORDER_AGREEMENT_1_0_0 = new VESID ("no.ehf", "order-agreement", "1.0.0");
   public static final VESID VID_EHF_ORDER_1_0_9 = new VESID ("no.ehf", "order", "1.0.9");
+  public static final VESID VID_EHF_PUNCH_OUT_1_0_0 = new VESID ("no.ehf", "punch-out", "1.0.0");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -76,13 +77,16 @@ public final class EHFValidation
   private static final IReadableResource INVOICE_NOGOV = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NOGOV-UBL-T10.sch",
                                                                                 _getCL ());
 
-  private static final IReadableResource ORDER_AGREEMENT_EHFCORE = new ClassPathResource ("/ehf/ehf-order-agreement-1.0/sch/EHF-UBL-T110.sch",
-                                                                                          _getCL ());
+  private static final IReadableResource ORDER_AGREEMENT_EHF = new ClassPathResource ("/ehf/ehf-order-agreement-1.0/sch/EHF-UBL-T110.sch",
+                                                                                      _getCL ());
 
   private static final IReadableResource ORDER_EHFCORE = new ClassPathResource ("/ehf/ehf-order-1.0/sch/EHFCORE-UBL-T01.sch",
                                                                                 _getCL ());
   private static final IReadableResource ORDER_NOGOV = new ClassPathResource ("/ehf/ehf-order-1.0/sch/NOGOV-UBL-T01.sch",
                                                                               _getCL ());
+
+  private static final IReadableResource PUNCH_OUT_EHF = new ClassPathResource ("/ehf/ehf-punch-out-1.0/sch/EHF-UBL-T77.sch",
+                                                                                _getCL ());
 
   private EHFValidation ()
   {}
@@ -151,14 +155,21 @@ public final class EHFValidation
                                                                            CEHFValidationArtefact.VK_EHF_ORDER_AGREEMENT_T110,
                                                                            bDeprecated,
                                                                            _createSCH (EHF_COMMON),
-                                                                           _createPure (ORDER_AGREEMENT_EHFCORE)));
+                                                                           _createPure (ORDER_AGREEMENT_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_1_0_9,
-                                                                           "EHF Order " +
+                                                                           "EHF Ordering " +
                                                                                                 VID_EHF_ORDER_1_0_9.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_ORDER_T01,
                                                                            bDeprecated,
                                                                            _createSCH (EHF_COMMON),
                                                                            _createPure (ORDER_EHFCORE),
                                                                            _createPure (ORDER_NOGOV)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_PUNCH_OUT_1_0_0,
+                                                                           "EHF Punch Out " +
+                                                                                                    VID_EHF_PUNCH_OUT_1_0_0.getVersion (),
+                                                                           CEHFValidationArtefact.VK_EHF_PUNCH_OUT_T77,
+                                                                           bDeprecated,
+                                                                           _createSCH (EHF_COMMON),
+                                                                           _createPure (PUNCH_OUT_EHF)));
   }
 }
