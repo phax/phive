@@ -80,6 +80,9 @@ public final class CEHFValidationArtefact
   public static final ValidationArtefactKey VK_EHF_CATALOGUE_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_CATALOGUE)
                                                                                                        .setTransaction (EBII2Transaction.T19)
                                                                                                        .build ();
+  public static final ValidationArtefactKey VK_EHF_CATALOGUE_RESPONSE_T58 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_CATALOGUE_RESPONSE)
+                                                                                                                .setTransaction (EBII2Transaction.T58)
+                                                                                                                .build ();
   public static final ValidationArtefactKey VK_EHF_CREDITNOTE_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_CREDITNOTE)
                                                                                                         .setTransaction (EBII2Transaction.T14)
                                                                                                         .build ();
@@ -89,15 +92,21 @@ public final class CEHFValidationArtefact
   public static final ValidationArtefactKey VK_EHF_INVOICE_T10 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_INVOICE)
                                                                                                      .setTransaction (EBII2Transaction.T10)
                                                                                                      .build ();
-  public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER_AGREEMENT)
-                                                                                                              .setTransaction (EBII2Transaction.T110)
-                                                                                                              .build ();
   public static final ValidationArtefactKey VK_EHF_ORDER_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER)
                                                                                                    .setTransaction (EBII2Transaction.T01)
                                                                                                    .build ();
+  public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER_AGREEMENT)
+                                                                                                              .setTransaction (EBII2Transaction.T110)
+                                                                                                              .build ();
+  public static final ValidationArtefactKey VK_EHF_ORDER_RESPONSE_T76 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER_RESPONSE)
+                                                                                                            .setTransaction (EBII2Transaction.T76)
+                                                                                                            .build ();
   public static final ValidationArtefactKey VK_EHF_PUNCH_OUT_T77 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_PUNCH_OUT)
                                                                                                        .setTransaction (EBII2Transaction.T77)
                                                                                                        .build ();
+  public static final ValidationArtefactKey VK_EHF_REMINDER_T17 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_REMINDER)
+                                                                                                      .setTransaction (EBII2Transaction.T17)
+                                                                                                      .build ();
 
   private CEHFValidationArtefact ()
   {}
