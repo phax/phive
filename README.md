@@ -13,9 +13,12 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-ehf - Validation rules for EHF (Norwegian public procurement) - since 4.0.1
   * ph-bdve-ubl - Validation rules for pure UBL (without any Schematron) - since 4.0.1
   * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
+  * ph-bdve-energieefactuur - Validation rules for Dutch Energie eFactuur - since 4.0.2
   
 # News
 
+* v4.0.2 - work in progress
+  * Started adding support for Dutch Energie eFactuur(new artefact `ph-bdve-energieefactuur`)
 * v4.0.1 - 2018-01-23
   * Added support for EHF document formats (new artefact `ph-bdve-ehf`) - based on https://vefa.difi.no/ehf/standard/
   * Added support to validate UBL documents only (without Schematron) (new artefact `ph-bdve-ubl`)
