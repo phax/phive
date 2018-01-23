@@ -23,6 +23,7 @@ This project is divided into sub-projects for maximum flexibility:
   * Added support for EHF document formats (new artefact `ph-bdve-ehf`) - based on https://vefa.difi.no/ehf/standard/
   * Added support to validate UBL documents only (without Schematron) (new artefact `ph-bdve-ubl`)
   * Added support to validate CII documents only (without Schematron) (new artefact `ph-bdve-cii`)
+  * Extended API to support better cleanup
 * v4.0.0 - 2018-01-15
   * Updated to ph-commons 9.0.0
   * Updated to the latest official EN-16931 rules
