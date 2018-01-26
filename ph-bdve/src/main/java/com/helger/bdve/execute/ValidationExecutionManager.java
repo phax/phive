@@ -17,6 +17,7 @@
 package com.helger.bdve.execute;
 
 import java.lang.ref.WeakReference;
+import java.util.Locale;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -196,10 +197,14 @@ public class ValidationExecutionManager implements IHasClassLoader
    *        The result list to be filled. May not be <code>null</code>. Note:
    *        this list is NOT altered before start. For each contained executor a
    *        result is added to the result list.
-   * @see #executeValidation(IValidationSource)
+   * @param aLocale
+   *        Custom locale to use e.g. for error messages. May be
+   *        <code>null</code> to use the system default locale.
+   * @see #executeValidation(IValidationSource, Locale)
    */
   public void executeValidation (@Nonnull final IValidationSource aSource,
-                                 @Nonnull final ValidationResultList aValidationResults)
+                                 @Nonnull final ValidationResultList aValidationResults,
+                                 @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
     ValueEnforcer.notNull (aValidationResults, "ValidationResults");
@@ -224,7 +229,7 @@ public class ValidationExecutionManager implements IHasClassLoader
         }
 
         // Execute validation
-        final ValidationResult aResult = aExecutor.applyValidation (aSource, aValidationCL);
+        final ValidationResult aResult = aExecutor.applyValidation (aSource, aValidationCL, aLocale);
         assert aResult != null;
         aValidationResults.add (aResult);
 
@@ -242,15 +247,19 @@ public class ValidationExecutionManager implements IHasClassLoader
    *
    * @param aSource
    *        The source artefact to be validated. May not be <code>null</code>.
+   * @param aLocale
+   *        Custom locale to use e.g. for error messages. May be
+   *        <code>null</code> to use the system default locale.
    * @return The validation result list. Never <code>null</code>. For each
    *         contained executor a result is added to the result list.
-   * @see #executeValidation(IValidationSource, ValidationResultList)
+   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
   @Nonnull
-  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
+  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource,
+                                                 @Nullable final Locale aLocale)
   {
     final ValidationResultList ret = new ValidationResultList ();
-    executeValidation (aSource, ret);
+    executeValidation (aSource, ret, aLocale);
     return ret;
   }
 }

@@ -19,6 +19,8 @@ package com.helger.bdve.en16931;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +67,7 @@ public final class ValidationExecutionManagerFuncTest
 
       // Read as desired type
       final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());
-      final ValidationResultList aErrors = aValidator.executeValidation (aSource);
+      final ValidationResultList aErrors = aValidator.executeValidation (aSource, Locale.US);
       if (aTestFile.isGoodCase ())
         assertTrue (aErrors.getAllCount (IError::isError) +
                     " error:\n" +

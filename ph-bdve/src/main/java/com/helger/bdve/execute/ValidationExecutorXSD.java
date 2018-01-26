@@ -16,6 +16,8 @@
  */
 package com.helger.bdve.execute;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.validation.Schema;
@@ -49,7 +51,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
 
   @Nonnull
   public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
-                                           @Nullable final ClassLoader aClassLoader)
+                                           @Nullable final ClassLoader aClassLoader,
+                                           @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -68,7 +71,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
     try
     {
       // Apply the XML schema validation
-      XMLSchemaValidationHelper.validate (aSchema, aSource.getAsTransformSource (), aErrorList);
+      XMLSchemaValidationHelper.validate (aSchema, aSource.getAsTransformSource (), aErrorList, aLocale);
     }
     catch (final IllegalArgumentException ex)
     {

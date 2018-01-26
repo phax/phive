@@ -19,6 +19,8 @@ package com.helger.bdve.ubl;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +33,6 @@ import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
-import com.helger.bdve.ubl.UBLValidation;
 import com.helger.bdve.ubl.mock.CTestFiles;
 
 /**
@@ -64,7 +65,7 @@ public final class ValidationExecutionManagerFuncTest
 
       // Read as desired type
       final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());
-      final ValidationResultList aErrors = aValidator.executeValidation (aSource);
+      final ValidationResultList aErrors = aValidator.executeValidation (aSource, Locale.US);
       if (aTestFile.isGoodCase ())
         assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
       else

@@ -16,6 +16,8 @@
  */
 package com.helger.bdve.execute;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
@@ -36,6 +38,7 @@ import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
+import com.helger.commons.string.StringHelper;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
@@ -89,7 +92,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
 
   @Nonnull
   public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
-                                           @Nullable final ClassLoader aClassLoader)
+                                           @Nullable final ClassLoader aClassLoader,
+                                           @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -183,6 +187,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
       {
         final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
         aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+        if (aLocale != null && StringHelper.hasText (aLocale.getLanguage ()))
+          aSCHSCH.setLanguageCode (aLocale.getLanguage ());
         aSCH = aSCHSCH;
         break;
       }

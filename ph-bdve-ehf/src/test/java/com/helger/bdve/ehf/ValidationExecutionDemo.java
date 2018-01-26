@@ -16,6 +16,8 @@
  */
 package com.helger.bdve.ehf;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -60,7 +62,7 @@ public final class ValidationExecutionDemo
     final IValidationSource aSource = ValidationSource.create (sSystemID, aXMLDoc);
 
     // Perform the execution
-    final ValidationResultList aErrors = aExecutors.createExecutionManager ().executeValidation (aSource);
+    final ValidationResultList aErrors = aExecutors.createExecutionManager ().executeValidation (aSource, Locale.US);
     if (aErrors.containsNoError ())
     {
       // TODO success
