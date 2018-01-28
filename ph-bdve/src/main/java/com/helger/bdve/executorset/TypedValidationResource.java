@@ -17,10 +17,12 @@
 package com.helger.bdve.executorset;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
@@ -31,9 +33,10 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class TypedValidationResource
+public class TypedValidationResource
 {
   private final EValidationType m_eType;
+  private final String m_sContext;
   private final ClassLoader m_aClassLoader;
   private final IReadableResource m_aRes;
 
@@ -52,9 +55,39 @@ public final class TypedValidationResource
                                   @Nonnull final ClassLoader aClassLoader,
                                   @Nonnull final IReadableResource aRes)
   {
-    m_eType = ValueEnforcer.notNull (eType, "Type");
-    m_aClassLoader = ValueEnforcer.notNull (aClassLoader, "ClassLoader");
-    m_aRes = ValueEnforcer.notNull (aRes, "Res");
+    this (eType, null, aClassLoader, aRes);
+  }
+
+  /**
+   * Constructor with a custom class loader.
+   *
+   * @param eType
+   *        The validation type. May not be <code>null</code>.
+   * @param sContext
+   *        The optional context that may be used, if the type requires it. Must
+   *        be <code>null</code> for all types that need no parameter.
+   * @param aClassLoader
+   *        The special class loader to be used to load the resource. May be
+   *        <code>null</code>.
+   * @param aRes
+   *        The resource. May not be <code>null</code>.
+   */
+  public TypedValidationResource (@Nonnull final EValidationType eType,
+                                  @Nullable final String sContext,
+                                  @Nonnull final ClassLoader aClassLoader,
+                                  @Nonnull final IReadableResource aRes)
+  {
+    ValueEnforcer.notNull (eType, "Type");
+    if (eType.requiresContext ())
+      ValueEnforcer.notNull (sContext, "Context");
+    else
+      ValueEnforcer.isNull (sContext, "Context");
+    ValueEnforcer.notNull (aClassLoader, "ClassLoader");
+    ValueEnforcer.notNull (aRes, "Res");
+    m_eType = eType;
+    m_sContext = sContext;
+    m_aClassLoader = aClassLoader;
+    m_aRes = aRes;
   }
 
   /**
@@ -65,6 +98,18 @@ public final class TypedValidationResource
   public EValidationType getValidationType ()
   {
     return m_eType;
+  }
+
+  /**
+   * @return The context to be used. Is only non-<code>null</code> if the
+   *         validation type requires an additional context.
+   * @see EValidationType#requiresContext()
+   * @see #getValidationType()
+   */
+  @Nullable
+  public String getContext ()
+  {
+    return m_sContext;
   }
 
   /**
@@ -94,19 +139,27 @@ public final class TypedValidationResource
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final TypedValidationResource rhs = (TypedValidationResource) o;
-    return m_eType.equals (rhs.m_eType) && m_aClassLoader.equals (rhs.m_aClassLoader) && m_aRes.equals (rhs.m_aRes);
+    return m_eType.equals (rhs.m_eType) &&
+           EqualsHelper.equals (m_sContext, rhs.m_sContext) &&
+           m_aClassLoader.equals (rhs.m_aClassLoader) &&
+           m_aRes.equals (rhs.m_aRes);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eType).append (m_aClassLoader).append (m_aRes).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eType)
+                                       .append (m_sContext)
+                                       .append (m_aClassLoader)
+                                       .append (m_aRes)
+                                       .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return new ToStringGenerator (this).append ("Type", m_eType)
+                                       .appendIfNotNull ("Context", m_sContext)
                                        .append ("ClassLoader", m_aClassLoader)
                                        .append ("Resource", m_aRes)
                                        .getToString ();

@@ -112,7 +112,7 @@ public enum EValidationType implements IHasID <String>, IHasName
    * @return <code>true</code> if the application of this validation type
    *         requires additional context parameters.
    */
-  public boolean requiresAdditionalParameter ()
+  public boolean requiresContext ()
   {
     return this == PARTIAL_XSD;
   }

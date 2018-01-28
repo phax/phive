@@ -145,6 +145,34 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     return this;
   }
 
+  @Nonnull
+  public ValidationExecutorSet addMatchingExecutor (@Nonnull final TypedValidationResource aRes)
+  {
+    switch (aRes.getValidationType ())
+    {
+      case XML:
+        // Nothing to do
+        break;
+      case XSD:
+        addExecutor (new ValidationExecutorXSD (new ValidationArtefact (aRes.getValidationType (),
+                                                                        aRes.getClassLoader (),
+                                                                        aRes.getResource (),
+                                                                        m_aValidationArtefactKey)));
+        break;
+      case SCHEMATRON_PURE:
+      case SCHEMATRON_SCH:
+      case SCHEMATRON_XSLT:
+        addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (aRes.getValidationType (),
+                                                                               aRes.getClassLoader (),
+                                                                               aRes.getResource (),
+                                                                               m_aValidationArtefactKey)));
+        break;
+      default:
+        throw new IllegalArgumentException ("Unsupported validation type " + aRes.getValidationType ());
+    }
+    return this;
+  }
+
   public void setValidationExecutorDoCache (final boolean bCache)
   {
     for (final IValidationExecutor aExecutor : m_aList)
@@ -209,7 +237,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
    * @param bIsDeprecated
    *        <code>true</code> if this VES is considered deprecated,
    *        <code>false</code> if not.
-   * @param aSchematrons
+   * @param aValidationResources
    *        The schematron resources to be associated with the VES. May not be
    *        <code>null</code> but maybe empty (for e.g. XSD only layers).
    * @return The newly created VES. Never <code>null</code>.
@@ -219,12 +247,12 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                                               @Nonnull @Nonempty final String sDisplayName,
                                               @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                               final boolean bIsDeprecated,
-                                              @Nonnull final TypedValidationResource... aSchematrons)
+                                              @Nonnull final TypedValidationResource... aValidationResources)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
-    ValueEnforcer.noNullValue (aSchematrons, "Schematrons");
+    ValueEnforcer.noNullValue (aValidationResources, "ValidationResources");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
                                                                  sDisplayName,
@@ -235,11 +263,8 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ret.addAllXSDExecutors (aValidationArtefactKey.getJAXBDocumentType ());
 
     // Add Schematrons
-    for (final TypedValidationResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (aRes.getValidationType (),
-                                                                                 aRes.getClassLoader (),
-                                                                                 aRes.getResource (),
-                                                                                 aValidationArtefactKey)));
+    for (final TypedValidationResource aRes : aValidationResources)
+      ret.addMatchingExecutor (aRes);
 
     return ret;
   }
@@ -260,7 +285,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
    * @param bIsDeprecated
    *        <code>true</code> if this VES is considered deprecated,
    *        <code>false</code> if not.
-   * @param aSchematrons
+   * @param aValidationResources
    *        The schematron resources to be associated with the VES. May not be
    *        <code>null</code>.
    * @return The newly created VES. Never <code>null</code>.
@@ -271,13 +296,13 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                                                      @Nonnull @Nonempty final String sDisplayName,
                                                      @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                                      final boolean bIsDeprecated,
-                                                     @Nonnull final TypedValidationResource... aSchematrons)
+                                                     @Nonnull final TypedValidationResource... aValidationResources)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
-    ValueEnforcer.notEmptyNoNullValue (aSchematrons, "Schematrons");
+    ValueEnforcer.notEmptyNoNullValue (aValidationResources, "ValidationResources");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
                                                                  sDisplayName,
@@ -289,11 +314,8 @@ public class ValidationExecutorSet implements IValidationExecutorSet
       ret.addExecutor (aVE);
 
     // Add Schematrons
-    for (final TypedValidationResource aRes : aSchematrons)
-      ret.addExecutor (new ValidationExecutorSchematron (new ValidationArtefact (aRes.getValidationType (),
-                                                                                 aRes.getClassLoader (),
-                                                                                 aRes.getResource (),
-                                                                                 aValidationArtefactKey)));
+    for (final TypedValidationResource aRes : aValidationResources)
+      ret.addMatchingExecutor (aRes);
 
     return ret;
   }
