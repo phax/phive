@@ -37,6 +37,11 @@ public enum EValidationType implements IHasID <String>, IHasName
   /** Validate XML against the rules of an XML Schema (XSD) */
   XSD ("xsd", "XML Schema"),
   /**
+   * Validate part of an XML against the rules of an XML Schema (XSD) - e.g. for
+   * extension/plugins
+   */
+  PARTIAL_XSD ("partial-xsd", "Partial XML Schema"),
+  /**
    * Pure Java implementation of Schematron - can only handle XPath 2 (was
    * originally called SCHEMATRON)
    */
@@ -85,7 +90,7 @@ public enum EValidationType implements IHasID <String>, IHasName
 
   public boolean isXSDBased ()
   {
-    return this == XSD;
+    return this == XSD || this == PARTIAL_XSD;
   }
 
   public boolean isSchematronBased ()
@@ -101,6 +106,15 @@ public enum EValidationType implements IHasID <String>, IHasName
   public boolean isStopValidationOnError ()
   {
     return isXMLBased () || isXSDBased ();
+  }
+
+  /**
+   * @return <code>true</code> if the application of this validation type
+   *         requires additional context parameters.
+   */
+  public boolean requiresAdditionalParameter ()
+  {
+    return this == PARTIAL_XSD;
   }
 
   @Nullable

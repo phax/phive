@@ -45,7 +45,7 @@ public final class CEnergieEFactuur
     return CEnergieEFactuur.class.getClassLoader ();
   }
 
-  public static final IReadableResource SEEF_EXT_XSD_2_0_0 = new ClassPathResource ("/energieefactuur/SEeF_UBLExtension_v2.0.0.xsd",
+  public static final IReadableResource SEEF_EXT_XSD_2_0_0 = new ClassPathResource ("/schemas/energieefactuur/SEeF_UBLExtension_v2.0.0.xsd",
                                                                                     _getCL ());
 
   private CEnergieEFactuur ()
