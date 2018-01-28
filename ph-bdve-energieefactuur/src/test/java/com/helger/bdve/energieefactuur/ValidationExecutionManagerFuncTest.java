@@ -70,11 +70,14 @@ public final class ValidationExecutionManagerFuncTest
       final ValidationResultList aErrors = aValidator.executeValidation (aSource, Locale.US);
       if (aTestFile.isGoodCase ())
         assertTrue (aErrors.getAllCount (IError::isError) +
-                    " error:\n" +
+                    " error(s):\n" +
                     StringHelper.getImploded ('\n', aErrors.getAllErrors ()),
                     aErrors.containsNoError ());
       else
-        assertTrue (aErrors.containsAtLeastOneError ());
+        assertTrue (aErrors.getAllCount (IError::isError) +
+                    " error(s):\n" +
+                    StringHelper.getImploded ('\n', aErrors.getAllErrors ()),
+                    aErrors.containsAtLeastOneError ());
     }
   }
 }

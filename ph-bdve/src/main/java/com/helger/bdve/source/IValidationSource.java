@@ -48,6 +48,12 @@ public interface IValidationSource extends Serializable
   Node getNode ();
 
   /**
+   * @return <code>true</code> if this source is partial and <code>false</code>
+   *         if the whole Document should be used.
+   */
+  boolean isPartialSource ();
+
+  /**
    * @return This validation source as a `javax.xml.transform.Source`. Never
    *         <code>null</code>.
    * @throws IllegalStateException
@@ -60,9 +66,14 @@ public interface IValidationSource extends Serializable
     final Node aNode = getNode ();
     if (aNode != null)
     {
-      // Always use the Document node! Otherwise this may lead to weird XSLT
-      // errors
-      ret = TransformSourceFactory.create (XMLHelper.getOwnerDocument (aNode));
+      if (isPartialSource ())
+        ret = TransformSourceFactory.create (aNode);
+      else
+      {
+        // Always use the Document node! Otherwise this may lead to weird XSLT
+        // errors
+        ret = TransformSourceFactory.create (XMLHelper.getOwnerDocument (aNode));
+      }
     }
     if (ret == null)
       throw new IllegalStateException ("No valid input object is present!");

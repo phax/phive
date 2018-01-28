@@ -36,7 +36,7 @@ import com.helger.commons.string.ToStringGenerator;
 public class TypedValidationResource
 {
   private final EValidationType m_eType;
-  private final String m_sContext;
+  private final Object m_aContext;
   private final ClassLoader m_aClassLoader;
   private final IReadableResource m_aRes;
 
@@ -63,9 +63,10 @@ public class TypedValidationResource
    *
    * @param eType
    *        The validation type. May not be <code>null</code>.
-   * @param sContext
-   *        The optional context that may be used, if the type requires it. Must
-   *        be <code>null</code> for all types that need no parameter.
+   * @param aContext
+   *        The optional context that may be used, if the type requires it. The
+   *        required class depends on the validation type requirements. Must be
+   *        <code>null</code> for all types that need no parameter.
    * @param aClassLoader
    *        The special class loader to be used to load the resource. May be
    *        <code>null</code>.
@@ -73,19 +74,19 @@ public class TypedValidationResource
    *        The resource. May not be <code>null</code>.
    */
   public TypedValidationResource (@Nonnull final EValidationType eType,
-                                  @Nullable final String sContext,
+                                  @Nullable final Object aContext,
                                   @Nonnull final ClassLoader aClassLoader,
                                   @Nonnull final IReadableResource aRes)
   {
     ValueEnforcer.notNull (eType, "Type");
     if (eType.requiresContext ())
-      ValueEnforcer.notNull (sContext, "Context");
+      ValueEnforcer.notNull (aContext, "Context");
     else
-      ValueEnforcer.isNull (sContext, "Context");
+      ValueEnforcer.isNull (aContext, "Context");
     ValueEnforcer.notNull (aClassLoader, "ClassLoader");
     ValueEnforcer.notNull (aRes, "Res");
     m_eType = eType;
-    m_sContext = sContext;
+    m_aContext = aContext;
     m_aClassLoader = aClassLoader;
     m_aRes = aRes;
   }
@@ -107,9 +108,9 @@ public class TypedValidationResource
    * @see #getValidationType()
    */
   @Nullable
-  public String getContext ()
+  public Object getContext ()
   {
-    return m_sContext;
+    return m_aContext;
   }
 
   /**
@@ -140,7 +141,7 @@ public class TypedValidationResource
       return false;
     final TypedValidationResource rhs = (TypedValidationResource) o;
     return m_eType.equals (rhs.m_eType) &&
-           EqualsHelper.equals (m_sContext, rhs.m_sContext) &&
+           EqualsHelper.equals (m_aContext, rhs.m_aContext) &&
            m_aClassLoader.equals (rhs.m_aClassLoader) &&
            m_aRes.equals (rhs.m_aRes);
   }
@@ -149,7 +150,7 @@ public class TypedValidationResource
   public int hashCode ()
   {
     return new HashCodeGenerator (this).append (m_eType)
-                                       .append (m_sContext)
+                                       .append (m_aContext)
                                        .append (m_aClassLoader)
                                        .append (m_aRes)
                                        .getHashCode ();
@@ -159,7 +160,7 @@ public class TypedValidationResource
   public String toString ()
   {
     return new ToStringGenerator (this).append ("Type", m_eType)
-                                       .appendIfNotNull ("Context", m_sContext)
+                                       .appendIfNotNull ("Context", m_aContext)
                                        .append ("ClassLoader", m_aClassLoader)
                                        .append ("Resource", m_aRes)
                                        .getToString ();

@@ -38,11 +38,13 @@ public class ValidationSource implements IValidationSource
 {
   private final String m_sSystemID;
   private final Node m_aNode;
+  private final boolean m_bPartialSource;
 
-  protected ValidationSource (@Nullable final String sSystemID, @Nullable final Node aNode)
+  public ValidationSource (@Nullable final String sSystemID, @Nullable final Node aNode, final boolean bPartialSource)
   {
     m_sSystemID = sSystemID;
     m_aNode = aNode;
+    m_bPartialSource = bPartialSource;
   }
 
   @Nullable
@@ -57,18 +59,35 @@ public class ValidationSource implements IValidationSource
     return m_aNode;
   }
 
+  public boolean isPartialSource ()
+  {
+    return m_bPartialSource;
+  }
+
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("SystemID", m_sSystemID).append ("Node", m_aNode).getToString ();
+    return new ToStringGenerator (this).append ("SystemID", m_sSystemID)
+                                       .append ("Node", m_aNode)
+                                       .append ("PartialSource", m_bPartialSource)
+                                       .getToString ();
   }
 
+  /**
+   * Create a complete validation source from an existing DOM node.
+   *
+   * @param sSystemID
+   *        System ID to use. May be <code>null</code>.
+   * @param aNode
+   *        The node to use. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static ValidationSource create (@Nullable final String sSystemID, @Nonnull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
     // Use the owner Document
-    return new ValidationSource (sSystemID, XMLHelper.getOwnerDocument (aNode));
+    return new ValidationSource (sSystemID, XMLHelper.getOwnerDocument (aNode), false);
   }
 
   /**

@@ -33,6 +33,9 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class CEnergieEFactuur
 {
+  /** Namespace URL for Energie e-Factuur 2.0.0 */
+  public static final String SEEF_EXT_NS_2_0_0 = "urn:www.energie-efactuur.nl:profile:invoice:ver2.0";
+
   public static final ValidationArtefactSectorKey SECTOR_NL_EE = new ValidationArtefactSectorKey ("NLEE",
                                                                                                   "Energie eFactuur");
 

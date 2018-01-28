@@ -18,6 +18,9 @@ package com.helger.bdve.energieefactuur;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.executorset.TypedValidationResource;
@@ -27,6 +30,10 @@ import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.simplerinvoicing.CSimplerInvoicingValidationArtefact;
 import com.helger.bdve.simplerinvoicing.SimplerInvoicingValidation;
 import com.helger.commons.ValueEnforcer;
+import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.ubl21.UBL21NamespaceContext;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.xml.xpath.XPathHelper;
 
 /**
  * Energie e-Factuur validation configuration
@@ -41,6 +48,12 @@ public final class EnergieEFactuurValidation
   private EnergieEFactuurValidation ()
   {}
 
+  @Nonnull
+  private static ClassLoader _getCL ()
+  {
+    return EnergieEFactuurValidation.class.getClassLoader ();
+  }
+
   /**
    * Register all standard Energie eFactuur validation execution sets to the
    * provided registry.
@@ -52,6 +65,16 @@ public final class EnergieEFactuurValidation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
+    // Create XPathExpression for extension validation
+    final XPathFactory aXF = XPathHelper.createXPathFactorySaxonFirst ();
+    final XPath aXP = aXF.newXPath ();
+    final MapBasedNamespaceContext aCtx = UBL21NamespaceContext.getInstance ().getClone ();
+    aCtx.addMapping ("ubl", EUBL21DocumentType.INVOICE.getNamespaceURI ());
+    aCtx.addMapping ("eef", CEnergieEFactuur.SEEF_EXT_NS_2_0_0);
+    aXP.setNamespaceContext (aCtx);
+    final XPathExpression aXE = XPathHelper.createNewXPathExpression (aXP,
+                                                                      "/ubl:Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/eef:SEEFExtensionWrapper");
+
     final boolean bNotDeprecated = false;
     // Same Schematrons as SimplerInvoicing - and same classloader!
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_2_0_0,
@@ -59,6 +82,10 @@ public final class EnergieEFactuurValidation
                                                                                                        VID_ENERGIE_EFACTUUR_2_0_0.getVersion (),
                                                                            CEnergieEFactuur.VK_ENERGIE_EFACTUUR,
                                                                            bNotDeprecated,
+                                                                           new TypedValidationResource (EValidationType.PARTIAL_XSD,
+                                                                                                        aXE,
+                                                                                                        _getCL (),
+                                                                                                        CEnergieEFactuur.SEEF_EXT_XSD_2_0_0),
                                                                            new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
                                                                                                         SimplerInvoicingValidation.class.getClassLoader (),
                                                                                                         CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
