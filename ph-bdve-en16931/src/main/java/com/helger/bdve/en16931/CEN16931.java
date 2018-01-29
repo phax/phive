@@ -86,11 +86,11 @@ public final class CEN16931
 
   public static final IReadableResource INVOICE_CII_SCH = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.sch",
                                                                                  _getCL ());
-  public static final IReadableResource INVOICE_CII_XSLT = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.xslt",
+  public static final IReadableResource INVOICE_CII_XSLT = new ClassPathResource ("/en16931/cii/xslt/EN16931-CII-validation.xslt",
                                                                                   _getCL ());
   public static final IReadableResource INVOICE_EDIFACT_SCH = new ClassPathResource ("/en16931/edifact/schematron/EN16931-EDIFACT-validation.sch",
                                                                                      _getCL ());
-  public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/edifact/stylesheet/EN16931-EDIFACT-validation-compiled.xsl",
+  public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/edifact/xslt/EN16931-EDIFACT-validation.xslt",
                                                                                       _getCL ());
   public static final IReadableResource INVOICE_UBL = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-model.sch",
                                                                              _getCL ());
