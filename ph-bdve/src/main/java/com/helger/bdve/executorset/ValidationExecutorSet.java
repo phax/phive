@@ -21,7 +21,6 @@ import java.util.Iterator;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.xml.xpath.XPathExpression;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
@@ -168,7 +167,8 @@ public class ValidationExecutorSet implements IValidationExecutorSet
         addExecutor (new ValidationExecutorXSD (aVA));
         break;
       case PARTIAL_XSD:
-        addExecutor (new ValidationExecutorXSDPartial (aVA, (XPathExpression) aRes.getContext ()));
+        addExecutor (new ValidationExecutorXSDPartial (aVA,
+                                                       (ValidationExecutorXSDPartial.ContextData) aRes.getContext ()));
         break;
       case SCHEMATRON_PURE:
       case SCHEMATRON_SCH:

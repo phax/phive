@@ -39,7 +39,7 @@ public enum EValidationType implements IHasID <String>, IHasName
   /**
    * Validate part of an XML against the rules of an XML Schema (XSD) - e.g. for
    * extension/plugins. The context object needed for this type is an
-   * <code>javax.xml.xpath.XPathExpression</code>.
+   * <code>ValidationExecutorXSDPartial.ContextData</code>.
    */
   PARTIAL_XSD ("partial-xsd", "Partial XML Schema"),
   /**

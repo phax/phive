@@ -23,6 +23,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import com.helger.bdve.EValidationType;
+import com.helger.bdve.execute.ValidationExecutorXSDPartial;
 import com.helger.bdve.executorset.TypedValidationResource;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
@@ -83,7 +84,9 @@ public final class EnergieEFactuurValidation
                                                                            CEnergieEFactuur.VK_ENERGIE_EFACTUUR,
                                                                            bNotDeprecated,
                                                                            new TypedValidationResource (EValidationType.PARTIAL_XSD,
-                                                                                                        aXE,
+                                                                                                        new ValidationExecutorXSDPartial.ContextData (aXE,
+                                                                                                                                                      Integer.valueOf (1),
+                                                                                                                                                      Integer.valueOf (1)),
                                                                                                         _getCL (),
                                                                                                         CEnergieEFactuur.SEEF_EXT_XSD_2_0_0),
                                                                            new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,

@@ -49,10 +49,27 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  */
 public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
 {
-  private final XPathExpression m_aContext;
+  public static final class ContextData
+  {
+    private final XPathExpression m_aXE;
+    private final Integer m_aMinNodeCount;
+    private final Integer m_aMaxNodeCount;
+
+    public ContextData (@Nonnull final XPathExpression aXE,
+                        @Nullable final Integer aMinNodeCount,
+                        @Nullable final Integer aMaxNodeCount)
+    {
+      ValueEnforcer.notNull (aXE, "XPathExpression");
+      m_aXE = aXE;
+      m_aMinNodeCount = aMinNodeCount;
+      m_aMaxNodeCount = aMaxNodeCount;
+    }
+  }
+
+  private final ContextData m_aContext;
 
   public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact,
-                                       @Nonnull final XPathExpression aContext)
+                                       @Nonnull final ContextData aContext)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSDBased (), "Artifact is not XSD");
@@ -71,24 +88,49 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
     NodeList aNodeSet;
     try
     {
-      aNodeSet = (NodeList) m_aContext.evaluate (aSource.getNode (), XPathConstants.NODESET);
-      if (aNodeSet.getLength () == 0)
-      {
-        // No match found - nothing to do
-        return new ValidationResult (aVA, new ErrorList ());
-      }
+      aNodeSet = (NodeList) m_aContext.m_aXE.evaluate (aSource.getNode (), XPathConstants.NODESET);
     }
     catch (final XPathExpressionException ex)
     {
       throw new IllegalStateException (ex);
     }
 
+    final ErrorList aErrorList = new ErrorList ();
+    final int nMatchingNodes = aNodeSet.getLength ();
+
+    if (m_aContext.m_aMinNodeCount != null)
+      if (nMatchingNodes < m_aContext.m_aMinNodeCount.intValue ())
+      {
+        // Too little matches found
+        aErrorList.add (SingleError.builderFatalError ()
+                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
+                                   .setErrorText ("The minimum number of result nodes (" +
+                                                  m_aContext.m_aMinNodeCount +
+                                                  ") is not met")
+                                   .build ());
+      }
+    if (m_aContext.m_aMaxNodeCount != null)
+      if (nMatchingNodes > m_aContext.m_aMaxNodeCount.intValue ())
+      {
+        // Too little matches found
+        aErrorList.add (SingleError.builderFatalError ()
+                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
+                                   .setErrorText ("The maximum number of result nodes (" +
+                                                  m_aContext.m_aMaxNodeCount +
+                                                  ") is not met")
+                                   .build ());
+      }
+
+    if (nMatchingNodes == 0)
+    {
+      // No match found - nothing to do
+      return new ValidationResult (aVA, aErrorList);
+    }
+
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
     final Schema aSchema = XMLSchemaCache.getInstanceOfClassLoader (aClassLoader).getSchema (aVA.getRuleResource ());
     assert aSchema != null;
-
-    final ErrorList aErrorList = new ErrorList ();
 
     for (int i = 0; i < aNodeSet.getLength (); ++i)
     {
