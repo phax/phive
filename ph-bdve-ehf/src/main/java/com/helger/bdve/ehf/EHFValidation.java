@@ -24,9 +24,11 @@ import com.helger.bdve.executorset.TypedValidationResource;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
  * Generic EHF validation configuration
@@ -129,6 +131,9 @@ public final class EHFValidation
   public static void initEHF (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
+
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     final boolean bNotDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUTE_1_0,

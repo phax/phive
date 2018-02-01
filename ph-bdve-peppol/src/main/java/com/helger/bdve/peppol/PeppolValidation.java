@@ -25,8 +25,10 @@ import com.helger.bdve.executorset.TypedValidationResource;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
  * Generic Peppol validation configuration
@@ -57,6 +59,9 @@ public final class PeppolValidation
   @SuppressWarnings ("deprecation")
   public static void initStandard (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
+
     PeppolValidation330.init (aRegistry);
     PeppolValidation340.init (aRegistry);
     PeppolValidation350.init (aRegistry);
@@ -73,6 +78,9 @@ public final class PeppolValidation
   public static void initThirdParty (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
+
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     // Extending third-party artefacts
     final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation350.VID_OPENPEPPOL_T10_V2.getWithVersion (VERSION_TO_USE));

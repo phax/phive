@@ -20,6 +20,7 @@ This project is divided into sub-projects for maximum flexibility:
 * v4.0.2 - work in progress
   * Started adding support for Dutch Energie eFactuur(new artefact `ph-bdve-energieefactuur`)
   * Updated to ph-commons 9.0.1 (Locale specific XSD error messages)
+  * Schematron error messages are more easily readable
 * v4.0.1 - 2018-01-23
   * Added support for EHF document formats (new artefact `ph-bdve-ehf`) - based on https://vefa.difi.no/ehf/standard/
   * Added support to validate UBL documents only (without Schematron) (new artefact `ph-bdve-ubl`)

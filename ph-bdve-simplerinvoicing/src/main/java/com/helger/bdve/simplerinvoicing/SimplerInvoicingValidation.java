@@ -24,8 +24,10 @@ import com.helger.bdve.executorset.TypedValidationResource;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
  * SimplerInvoicing validation configuration
@@ -61,6 +63,9 @@ public final class SimplerInvoicingValidation
   public static void initSimplerInvoicing (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
+
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     // SimplerInvoicing is self-contained
     final boolean bDeprecated = false;

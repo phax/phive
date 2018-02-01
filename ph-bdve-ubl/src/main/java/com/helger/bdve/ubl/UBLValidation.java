@@ -30,6 +30,7 @@ import com.helger.bdve.spec.BusinessSpecificationRegistry;
 import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.bdve.spec.SpecificationTransaction;
+import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.ubl21.EUBL21DocumentType;
@@ -179,7 +180,10 @@ public final class UBLValidation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
-    final boolean bDeprecated = false;
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
+
+    final boolean bNotDeprecated = false;
     for (final EUBL21DocumentType e : EUBL21DocumentType.values ())
     {
       final String sName = e.getLocalName ();
@@ -195,7 +199,7 @@ public final class UBLValidation
                                                                              new ValidationArtefactKey.Builder ().setBusinessSpecification (UBL_21)
                                                                                                                  .setTransaction (aTransaction)
                                                                                                                  .build (),
-                                                                             bDeprecated));
+                                                                             bNotDeprecated));
     }
   }
 

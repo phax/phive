@@ -30,6 +30,7 @@ import com.helger.bdve.spec.BusinessSpecificationRegistry;
 import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.bdve.spec.SpecificationTransaction;
+import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.cii.d16b.ECIID16BDocumentType;
 import com.helger.commons.ValueEnforcer;
@@ -74,6 +75,9 @@ public final class CIIValidation
   public static void initCIID16B (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
+
+    // For better error messages
+    LocationBeautifierSPI.addMappings (CIID16BNamespaceContext.getInstance ());
 
     final boolean bDeprecated = false;
     for (final ECIID16BDocumentType e : ECIID16BDocumentType.values ())

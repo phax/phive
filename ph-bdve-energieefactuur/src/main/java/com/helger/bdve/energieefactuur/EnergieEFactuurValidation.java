@@ -30,6 +30,7 @@ import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.simplerinvoicing.CSimplerInvoicingValidationArtefact;
 import com.helger.bdve.simplerinvoicing.SimplerInvoicingValidation;
+import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
@@ -65,6 +66,9 @@ public final class EnergieEFactuurValidation
   public static void initEnergieEFactuur (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
+
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     // Create XPathExpression for extension validation
     final XPathFactory aXF = XPathHelper.createXPathFactorySaxonFirst ();

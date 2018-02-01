@@ -27,10 +27,13 @@ import com.helger.bdve.executorset.TypedValidationResource;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.spi.LocationBeautifierSPI;
+import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTFormatter;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.ubl21.UBL21NamespaceContext;
 import com.helger.xml.XMLSystemProperties;
 
 /**
@@ -82,6 +85,10 @@ public final class EN16931Validation
   public static void initEN16931 (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
+
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
+    LocationBeautifierSPI.addMappings (CIID16BNamespaceContext.getInstance ());
 
     final String sVersion = " (" + PDTFormatter.getForPattern ("uuuu-MM-dd").format (LAST_MOD) + ")";
     final boolean bDeprecated = false;
