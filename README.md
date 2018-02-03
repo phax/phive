@@ -15,10 +15,10 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
   * ph-bdve-energieefactuur - Validation rules for Dutch Energie eFactuur - since 4.0.2
   
-# News
+# News and noteworthy
 
-* v4.0.2 - work in progress
-  * Started adding support for Dutch Energie eFactuur(new artefact `ph-bdve-energieefactuur`)
+* v4.0.2 - 2018-02-03
+  * Started adding support for Dutch Energie eFactuur (new artefact `ph-bdve-energieefactuur`)
   * Updated to ph-commons 9.0.1 (Locale specific XSD error messages)
   * Schematron error messages are more easily readable
   * EN 16031 rules were updated
@@ -67,37 +67,43 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>4.0.1</version>
+  <version>4.0.2</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>4.0.1</version>
+  <version>4.0.2</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>4.0.1</version>
+  <version>4.0.2</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>4.0.1</version>
+  <version>4.0.2</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>4.0.1</version>
+  <version>4.0.2</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>4.0.1</version>
+  <version>4.0.2</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-energieefactuur</artifactId>
+  <version>4.0.2</version>
 </dependency>
 ```
 
