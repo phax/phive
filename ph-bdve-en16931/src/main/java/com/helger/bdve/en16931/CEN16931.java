@@ -92,8 +92,10 @@ public final class CEN16931
                                                                                      _getCL ());
   public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/edifact/xslt/EN16931-EDIFACT-validation.xslt",
                                                                                       _getCL ());
-  public static final IReadableResource INVOICE_UBL = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-model.sch",
-                                                                             _getCL ());
+  public static final IReadableResource INVOICE_UBL_SCH = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-model.sch",
+                                                                                 _getCL ());
+  public static final IReadableResource INVOICE_UBL_XSLT = new ClassPathResource ("/en16931/ubl/xslt/EN16931-UBL-model.xslt",
+                                                                                  _getCL ());
 
   private CEN16931 ()
   {}

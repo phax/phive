@@ -102,10 +102,11 @@ public final class EN16931Validation
                                                                            CEN16931.VK_INVOICE_EDIFACT,
                                                                            bDeprecated,
                                                                            _createXSLT (CEN16931.INVOICE_EDIFACT_XSLT)));
+    // Pure SCH is quicker than XSLT!
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL,
                                                                            "EN 16931 UBL" + sVersion,
                                                                            CEN16931.VK_INVOICE_UBL,
                                                                            bDeprecated,
-                                                                           _createPure (CEN16931.INVOICE_UBL)));
+                                                                           _createPure (CEN16931.INVOICE_UBL_SCH)));
   }
 }
