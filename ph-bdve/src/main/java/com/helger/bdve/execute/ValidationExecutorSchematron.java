@@ -27,6 +27,7 @@ import javax.xml.xpath.XPath;
 import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import com.helger.bdve.artefact.IValidationArtefact;
@@ -34,6 +35,7 @@ import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
@@ -53,6 +55,7 @@ import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.serialize.read.DOMReaderSettings;
+import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
 import com.helger.xml.xpath.XPathExpressionHelper;
 import com.helger.xml.xpath.XPathHelper;
@@ -88,6 +91,53 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
   {
     m_bCacheSchematron = bCacheArtefact;
     return this;
+  }
+
+  @OverrideOnDemand
+  protected void performValidation (@Nonnull final AbstractSchematronResource aSCH,
+                                    @Nonnull final IReadableResource aSCHRes,
+                                    @Nonnull final Node aNode,
+                                    @Nonnull final IValidationSource aSource,
+                                    @Nonnull final ErrorList aErrorList)
+  {
+    try
+    {
+      // Main application of Schematron
+      final Document aDoc = aSCH.applySchematronValidation (new DOMSource (aNode));
+
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
+
+      final SchematronOutputType aSVRL = aDoc == null ? null : new SVRLMarshaller ().read (aDoc);
+      if (aSVRL != null)
+      {
+        // Valid Schematron - interpret result
+
+        // Convert failed asserts and successful reports to error objects
+        for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
+          aErrorList.add (aFailedAssert.getAsResourceError (aSource.getSystemID ()));
+        for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
+          aErrorList.add (aSuccessfulReport.getAsResourceError (aSource.getSystemID ()));
+      }
+      else
+      {
+        // Schematron does not create SVRL!
+        aErrorList.add (SingleError.builderError ()
+                                   .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                   .setErrorText ("Internal error interpreting Schematron result")
+                                   .setErrorFieldName (XMLWriter.getNodeAsString (aDoc))
+                                   .build ());
+      }
+    }
+    catch (final Exception ex)
+    {
+      // Usually an error in the Schematron
+      aErrorList.add (SingleError.builderError ()
+                                 .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                 .setErrorText (ex.getMessage ())
+                                 .setLinkedException (ex)
+                                 .build ());
+    }
   }
 
   @Nonnull
@@ -206,34 +256,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     // consecutive calls!
     aSCH.setUseCache (m_bCacheSchematron);
 
-    try
-    {
-      // Main application of Schematron
-      final SchematronOutputType aSVRL = aSCH.applySchematronValidationToSVRL (new DOMSource (aNode));
+    performValidation (aSCH, aSCHRes, aNode, aSource, aErrorList);
 
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("SVRL: " + new SVRLMarshaller (false).getAsString (aSVRL));
-
-      if (aSVRL != null)
-      {
-        // Valid Schematron - interpret result
-
-        // Convert failed asserts and successful reports to error objects
-        for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
-          aErrorList.add (aFailedAssert.getAsResourceError (aSource.getSystemID ()));
-        for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
-          aErrorList.add (aSuccessfulReport.getAsResourceError (aSource.getSystemID ()));
-      }
-    }
-    catch (final Exception ex)
-    {
-      // Usually an error in the Schematron
-      aErrorList.add (SingleError.builderError ()
-                                 .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
-                                 .setErrorText (ex.getMessage ())
-                                 .setLinkedException (ex)
-                                 .build ());
-    }
     return new ValidationResult (aArtefact, aErrorList);
   }
 }

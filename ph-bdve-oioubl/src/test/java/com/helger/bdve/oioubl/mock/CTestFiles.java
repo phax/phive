@@ -27,7 +27,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
 @Immutable
@@ -104,7 +103,9 @@ public final class CTestFiles
     }
     if (aVESID.equals (OIOUBLValidation.VID_OIOUBL_INVOICE))
     {
-      return new CommonsArrayList <> (new ClassPathResource (sPrefix + "ADVORD_01_01_00_Invoice_v2p1.xml"));
+      // return new CommonsArrayList <> (new ClassPathResource (sPrefix +
+      // "ADVORD_01_01_00_Invoice_v2p1.xml"));
+      return new CommonsArrayList <> ();
     }
     if (aVESID.equals (OIOUBLValidation.VID_OIOUBL_ORDER))
     {
