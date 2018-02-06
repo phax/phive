@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2 UBL-ApplicationResponse-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= COMPAY_02_02_00_ApplicationResponse_v2p1.xml	
+		replaces= COMPAY_02_02_00_ApplicationResponse_v2p0.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Finn Christensen"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_COMPAY
+		description= "This document is produced as part of the OIOUBL Complex Payment Cycle scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance 
+	ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:Note>Dette dokument medtages i et senere release af OIOUBL</cbc:Note>
+</ApplicationResponse>

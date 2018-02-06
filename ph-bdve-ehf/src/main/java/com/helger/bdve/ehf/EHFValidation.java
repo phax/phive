@@ -38,8 +38,8 @@ import com.helger.ubl21.UBL21NamespaceContext;
 @Immutable
 public final class EHFValidation
 {
-  public static final VESID VID_EHF_CATALOGUTE_1_0 = new VESID ("no.ehf", "catalogue", "1.0.10");
-  public static final VESID VID_EHF_CATALOGUTE_RESPONSE_1_0 = new VESID ("no.ehf", "catalogue-response", "1.0.10");
+  public static final VESID VID_EHF_CATALOGUE_1_0 = new VESID ("no.ehf", "catalogue", "1.0.10");
+  public static final VESID VID_EHF_CATALOGUE_RESPONSE_1_0 = new VESID ("no.ehf", "catalogue-response", "1.0.10");
   public static final VESID VID_EHF_CREDITNOTE_2_0 = new VESID ("no.ehf", "creditnote", "2.0.12");
   public static final VESID VID_EHF_DESPATCH_ADVICE_1_0 = new VESID ("no.ehf", "despatch-advice", "1.0.8");
   public static final VESID VID_EHF_INVOICE_2_0 = new VESID ("no.ehf", "invoice", "2.0.12");
@@ -136,17 +136,17 @@ public final class EHFValidation
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     final boolean bNotDeprecated = false;
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUTE_1_0,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_1_0,
                                                                            "EHF Catalogue " +
-                                                                                                   VID_EHF_CATALOGUTE_1_0.getVersion (),
+                                                                                                   VID_EHF_CATALOGUE_1_0.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_CATALOGUE_T19,
                                                                            bNotDeprecated,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (CATALOGUE_V1_EHFCORE),
                                                                            _createSCH (CATALOGUE_V1_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUTE_RESPONSE_1_0,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_RESPONSE_1_0,
                                                                            "EHF Catalogue Response " +
-                                                                                                            VID_EHF_CATALOGUTE_RESPONSE_1_0.getVersion (),
+                                                                                                            VID_EHF_CATALOGUE_RESPONSE_1_0.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_CATALOGUE_RESPONSE_T58,
                                                                            bNotDeprecated,
                                                                            _createSCH (EHF_COMMON_V1),
