@@ -21,7 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -34,7 +34,7 @@ public final class RuleSourceGroup
 {
   private final File m_aRuleDstDir;
   private final ESyntaxBinding m_eBinding;
-  private final EBII2Transaction m_eTransaction;
+  private final EBIITransaction m_eTransaction;
   private File m_aBIICoreSchematronFile;
   // Status vars
   private final ICommonsList <RuleSourceItem> m_aItems = new CommonsArrayList<> ();
@@ -50,7 +50,7 @@ public final class RuleSourceGroup
    */
   public RuleSourceGroup (@Nonnull final File aRuleDstDir,
                           @Nullable final ESyntaxBinding eBinding,
-                          @Nonnull final EBII2Transaction eTransaction)
+                          @Nonnull final EBIITransaction eTransaction)
   {
     FileOperations.createDirRecursiveIfNotExisting (aRuleDstDir);
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");

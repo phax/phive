@@ -22,7 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -38,29 +38,29 @@ import com.helger.commons.string.StringHelper;
 public enum ERuleSourceThirdparty
 {
   ATGOV_T10 ("atgov",
-             EBII2Transaction.T10,
+             EBIITransaction.T10,
              "v07",
              "(/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
   ATGOV_T14 ("atgov",
-             EBII2Transaction.T14,
+             EBIITransaction.T14,
              "v07",
              "(/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
   ATNAT_T10 ("atnat",
-             EBII2Transaction.T10,
+             EBIITransaction.T10,
              "v05",
              "(/ubl:Invoice/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')"),
   ATNAT_T14 ("atnat",
-             EBII2Transaction.T14,
+             EBIITransaction.T14,
              "v05",
              "(/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT')");
 
   private final String m_sPackageName;
-  private final EBII2Transaction m_eTransaction;
+  private final EBIITransaction m_eTransaction;
   private final String m_sVersion;
   private String m_sGlobalPrerequisite;
 
   private ERuleSourceThirdparty (@Nonnull @Nonempty final String sPackageName,
-                                 @Nonnull final EBII2Transaction eTransaction,
+                                 @Nonnull final EBIITransaction eTransaction,
                                  @Nonnull @Nonempty final String sVersion,
                                  @Nonnull final String sGlobalPrerequisite)
   {
@@ -78,7 +78,7 @@ public enum ERuleSourceThirdparty
   }
 
   @Nonnull
-  public EBII2Transaction getTransaction ()
+  public EBIITransaction getTransaction ()
   {
     return m_eTransaction;
   }
@@ -110,7 +110,7 @@ public enum ERuleSourceThirdparty
 
   @Nonnull
   @ReturnsMutableCopy
-  public static ICommonsList <ERuleSourceThirdparty> getAllForTransaction (@Nullable final EBII2Transaction eTransaction)
+  public static ICommonsList <ERuleSourceThirdparty> getAllForTransaction (@Nullable final EBIITransaction eTransaction)
   {
     final ICommonsList <ERuleSourceThirdparty> ret = new CommonsArrayList<> ();
     if (eTransaction != null)

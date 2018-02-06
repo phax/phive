@@ -23,7 +23,7 @@ import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.key.ValidationArtefactSectorKey;
 import com.helger.bdve.spec.BusinessSpecification;
 import com.helger.bdve.spec.BusinessSpecificationRegistry;
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -79,16 +79,16 @@ public final class CPeppolValidationArtefact
 
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
   public static final ValidationArtefactKey VK_CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
-                                                                                                      .setTransaction (EBII2Transaction.T19)
+                                                                                                      .setTransaction (EBIITransaction.T19)
                                                                                                       .build ();
   public static final ValidationArtefactKey VK_CATALOGUE_01_T58 = new ValidationArtefactKey.Builder ().setBusinessSpecification (CATALOGUE_01)
-                                                                                                      .setTransaction (EBII2Transaction.T58)
+                                                                                                      .setTransaction (EBIITransaction.T58)
                                                                                                       .build ();
   public static final ValidationArtefactKey VK_ORDER_03_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDER_03)
-                                                                                                  .setTransaction (EBII2Transaction.T01)
+                                                                                                  .setTransaction (EBIITransaction.T01)
                                                                                                   .build ();
   public static final ValidationArtefactKey VK_INVOICE_04_T10 = new ValidationArtefactKey.Builder ().setBusinessSpecification (INVOICE_04)
-                                                                                                    .setTransaction (EBII2Transaction.T10)
+                                                                                                    .setTransaction (EBIITransaction.T10)
                                                                                                     .build ();
   public static final ValidationArtefactKey VK_INVOICE_04_T10_ATNAT = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10).setCountry ("AT")
                                                                                                                            .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
@@ -96,7 +96,7 @@ public final class CPeppolValidationArtefact
   public static final ValidationArtefactKey VK_INVOICE_04_T10_ATGOV = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                                                  .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (BILLING_05)
-                                                                                                    .setTransaction (EBII2Transaction.T14)
+                                                                                                    .setTransaction (EBIITransaction.T14)
                                                                                                     .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14_ATNAT = new ValidationArtefactKey.Builder (VK_BILLING_05_T14).setCountry ("AT")
                                                                                                                            .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
@@ -104,22 +104,22 @@ public final class CPeppolValidationArtefact
   public static final ValidationArtefactKey VK_BILLING_05_T14_ATGOV = new ValidationArtefactKey.Builder (VK_BILLING_05_T14_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                                                  .build ();
   public static final ValidationArtefactKey VK_PUNCH_OUT_18_T77 = new ValidationArtefactKey.Builder ().setBusinessSpecification (PUNCH_OUT_18)
-                                                                                                      .setTransaction (EBII2Transaction.T77)
+                                                                                                      .setTransaction (EBIITransaction.T77)
                                                                                                       .build ();
   public static final ValidationArtefactKey VK_ORDERING_28_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDERING_28)
-                                                                                                     .setTransaction (EBII2Transaction.T01)
+                                                                                                     .setTransaction (EBIITransaction.T01)
                                                                                                      .build ();
   public static final ValidationArtefactKey VK_ORDERING_28_T76 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDERING_28)
-                                                                                                     .setTransaction (EBII2Transaction.T76)
+                                                                                                     .setTransaction (EBIITransaction.T76)
                                                                                                      .build ();
   public static final ValidationArtefactKey VK_DESPATCH_ADVICE_30_T16 = new ValidationArtefactKey.Builder ().setBusinessSpecification (DESPATCH_ADVICE_30)
-                                                                                                            .setTransaction (EBII2Transaction.T16)
+                                                                                                            .setTransaction (EBIITransaction.T16)
                                                                                                             .build ();
   public static final ValidationArtefactKey VK_MLR_36_T71 = new ValidationArtefactKey.Builder ().setBusinessSpecification (MLR_36)
-                                                                                                .setTransaction (EBII2Transaction.T71)
+                                                                                                .setTransaction (EBIITransaction.T71)
                                                                                                 .build ();
   public static final ValidationArtefactKey VK_ORDER_AGREEMENT_42_T110 = new ValidationArtefactKey.Builder ().setBusinessSpecification (ORDER_AGREEMENT_42)
-                                                                                                             .setTransaction (EBII2Transaction.T110)
+                                                                                                             .setTransaction (EBIITransaction.T110)
                                                                                                              .build ();
 
   public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV",

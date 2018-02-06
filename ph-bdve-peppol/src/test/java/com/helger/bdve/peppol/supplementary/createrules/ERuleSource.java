@@ -21,7 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 
 /**
  * Don't alter the codes of this enum manually. They are automatically created
@@ -31,50 +31,50 @@ import com.helger.bdve.spec.EBII2Transaction;
  */
 public enum ERuleSource
 {
-  T01 (EBII2Transaction.T01, "V1.0", "v09", false, "v01", true),
-  T02 (EBII2Transaction.T02, "V1.0", "v05", false, null, false),
-  T04 (EBII2Transaction.T04, null, "v02", false, null, false),
-  T05 (EBII2Transaction.T05, null, "v02", false, null, false),
-  T10 (EBII2Transaction.T10, "V1.0", "v12", true, "v03", true),
-  T14 (EBII2Transaction.T14, "V1.0", "v09", true, "v03", true),
-  T16 (EBII2Transaction.T16, "V1.0", "v05", false, "v03", true),
-  T17 (EBII2Transaction.T17, null, "v04", true, null, false),
-  T18 (EBII2Transaction.T18, null, "v02", false, null, false),
-  T19 (EBII2Transaction.T19, "V1.0", "v05", true, "v01", true),
-  T20 (EBII2Transaction.T20, null, "v01", true, null, false),
-  T21 (EBII2Transaction.T21, null, "v01", true, null, false),
-  T22 (EBII2Transaction.T22, null, "v01", false, null, false),
-  T23 (EBII2Transaction.T23, null, "v01", false, null, false),
-  T26 (EBII2Transaction.T26, null, "v02", true, null, false),
-  T40 (EBII2Transaction.T40, "V1.0", "v06", true, null, false),
-  T41 (EBII2Transaction.T41, null, "v04", true, null, false),
-  T42 (EBII2Transaction.T42, null, "v01", false, null, false),
-  T44 (EBII2Transaction.T44, "V1.0", "v03", true, null, false),
-  T45 (EBII2Transaction.T45, null, "v02", false, null, false),
-  T54 (EBII2Transaction.T54, null, "v01", true, null, false),
-  T55 (EBII2Transaction.T55, null, "v01", false, null, false),
-  T58 (EBII2Transaction.T58, null, "v01", false, "v01", true),
-  T59 (EBII2Transaction.T59, null, "v01", false, null, false),
-  T64A (EBII2Transaction.T64A, null, null, false, null, false),
-  T64B (EBII2Transaction.T64B, null, null, false, null, false),
-  T64C (EBII2Transaction.T64C, null, null, false, null, false),
-  T65 (EBII2Transaction.T65, null, "v01", false, null, false),
-  T68 (EBII2Transaction.T68, null, "v02", false, null, false),
-  T69 (EBII2Transaction.T69, null, "v03", false, null, false),
-  T71 (EBII2Transaction.T71, null, "v03", true, "v01", true),
-  T72 (EBII2Transaction.T72, null, "v01", false, null, false),
-  T73 (EBII2Transaction.T73, null, "v01", false, null, false),
-  T76 (EBII2Transaction.T76, null, "v01", false, "v01", true),
+  T01 (EBIITransaction.T01, "V1.0", "v09", false, "v01", true),
+  T02 (EBIITransaction.T02, "V1.0", "v05", false, null, false),
+  T04 (EBIITransaction.T04, null, "v02", false, null, false),
+  T05 (EBIITransaction.T05, null, "v02", false, null, false),
+  T10 (EBIITransaction.T10, "V1.0", "v12", true, "v03", true),
+  T14 (EBIITransaction.T14, "V1.0", "v09", true, "v03", true),
+  T16 (EBIITransaction.T16, "V1.0", "v05", false, "v03", true),
+  T17 (EBIITransaction.T17, null, "v04", true, null, false),
+  T18 (EBIITransaction.T18, null, "v02", false, null, false),
+  T19 (EBIITransaction.T19, "V1.0", "v05", true, "v01", true),
+  T20 (EBIITransaction.T20, null, "v01", true, null, false),
+  T21 (EBIITransaction.T21, null, "v01", true, null, false),
+  T22 (EBIITransaction.T22, null, "v01", false, null, false),
+  T23 (EBIITransaction.T23, null, "v01", false, null, false),
+  T26 (EBIITransaction.T26, null, "v02", true, null, false),
+  T40 (EBIITransaction.T40, "V1.0", "v06", true, null, false),
+  T41 (EBIITransaction.T41, null, "v04", true, null, false),
+  T42 (EBIITransaction.T42, null, "v01", false, null, false),
+  T44 (EBIITransaction.T44, "V1.0", "v03", true, null, false),
+  T45 (EBIITransaction.T45, null, "v02", false, null, false),
+  T54 (EBIITransaction.T54, null, "v01", true, null, false),
+  T55 (EBIITransaction.T55, null, "v01", false, null, false),
+  T58 (EBIITransaction.T58, null, "v01", false, "v01", true),
+  T59 (EBIITransaction.T59, null, "v01", false, null, false),
+  T64A (EBIITransaction.T64A, null, null, false, null, false),
+  T64B (EBIITransaction.T64B, null, null, false, null, false),
+  T64C (EBIITransaction.T64C, null, null, false, null, false),
+  T65 (EBIITransaction.T65, null, "v01", false, null, false),
+  T68 (EBIITransaction.T68, null, "v02", false, null, false),
+  T69 (EBIITransaction.T69, null, "v03", false, null, false),
+  T71 (EBIITransaction.T71, null, "v03", true, "v01", true),
+  T72 (EBIITransaction.T72, null, "v01", false, null, false),
+  T73 (EBIITransaction.T73, null, "v01", false, null, false),
+  T76 (EBIITransaction.T76, null, "v01", false, "v01", true),
   CODELISTS (null, null, "v04", false, "v01", false);
 
-  private EBII2Transaction m_eTransaction;
+  private EBIITransaction m_eTransaction;
   private final String m_sBIICoreVersion;
   private final String m_sBIIVersion;
   private final boolean m_bUsesBIICodeLists;
   private final String m_sOpenPEPPOLVersion;
   private final boolean m_bUsesOpenPEPPOLCodeLists;
 
-  private ERuleSource (@Nullable final EBII2Transaction eTransaction,
+  private ERuleSource (@Nullable final EBIITransaction eTransaction,
                        @Nullable final String sBIICoreVersion,
                        @Nullable final String sBIIVersion,
                        final boolean bUsesBIICodeLists,
@@ -90,7 +90,7 @@ public enum ERuleSource
   }
 
   @Nullable
-  public EBII2Transaction getTransaction ()
+  public EBIITransaction getTransaction ()
   {
     return m_eTransaction;
   }

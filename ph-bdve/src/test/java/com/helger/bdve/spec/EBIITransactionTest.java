@@ -23,23 +23,23 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.string.StringHelper;
 
 /**
- * Test class for class {@link EBII2Transaction}.
+ * Test class for class {@link EBIITransaction}.
  *
  * @author PEPPOL.AT, BRZ, Philip Helger
  */
-public final class EBII2TransactionTest
+public final class EBIITransactionTest
 {
   @Test
   public void testBasic ()
   {
     // Add one for the MLR which has no transaction ID!
-    assertEquals (35 + 1, EBII2Transaction.values ().length);
+    assertEquals (35 + 1, EBIITransaction.values ().length);
 
-    for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
+    for (final EBIITransaction eTransaction : EBIITransaction.values ())
     {
       assertTrue (StringHelper.hasText (eTransaction.getID ()));
       assertTrue (StringHelper.hasText (eTransaction.getName ()));
@@ -49,18 +49,18 @@ public final class EBII2TransactionTest
       assertTrue (StringHelper.hasText (eTransaction.getTransactionKeyShort ()));
       assertNotNull (eTransaction.getJAXBDocumentType ());
 
-      assertSame (eTransaction, EBII2Transaction.valueOf (eTransaction.name ()));
-      assertSame (eTransaction, EBII2Transaction.getFromIDOrNull (eTransaction.getID ()));
+      assertSame (eTransaction, EBIITransaction.valueOf (eTransaction.name ()));
+      assertSame (eTransaction, EBIITransaction.getFromIDOrNull (eTransaction.getID ()));
     }
 
     // Compare with
     // http://www.cenbii.eu/wp-content/uploads/TransactionCustomisationID.pdf
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBII2Transaction.T01.getID ());
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBII2Transaction.T01.getID ());
-    assertEquals ("2.0", EBII2Transaction.T01.getVersionNumber ());
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064A:ver1.0", EBII2Transaction.T64A.getID ());
-    assertEquals ("1.0", EBII2Transaction.T64A.getVersionNumber ());
-    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064C:ver1.0", EBII2Transaction.T64C.getID ());
-    assertEquals ("1.0", EBII2Transaction.T64C.getVersionNumber ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBIITransaction.T01.getID ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns001:ver2.0", EBIITransaction.T01.getID ());
+    assertEquals ("2.0", EBIITransaction.T01.getVersionNumber ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064A:ver1.0", EBIITransaction.T64A.getID ());
+    assertEquals ("1.0", EBIITransaction.T64A.getVersionNumber ());
+    assertEquals ("urn:www.cenbii.eu:transaction:biitrns064C:ver1.0", EBIITransaction.T64C.getID ());
+    assertEquals ("1.0", EBIITransaction.T64C.getVersionNumber ());
   }
 }

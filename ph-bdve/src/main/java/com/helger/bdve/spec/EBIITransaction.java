@@ -41,7 +41,7 @@ import com.helger.ubl21.UBL21NamespaceContext;
  *
  * @author Philip Helger
  */
-public enum EBII2Transaction implements ISpecificationTransaction
+public enum EBIITransaction implements ISpecificationTransaction
 {
   T01 ("Order", 1, null, "2.0", EUBL21DocumentType.ORDER),
   T02 ("Simple Order Response", 2, null, "2.0", EUBL21DocumentType.ORDER_RESPONSE_SIMPLE),
@@ -87,7 +87,7 @@ public enum EBII2Transaction implements ISpecificationTransaction
   private final String m_sVersion;
   private final IJAXBDocumentType m_aJAXBDocumentType;
 
-  private EBII2Transaction (@Nonnull @Nonempty final String sName,
+  private EBIITransaction (@Nonnull @Nonempty final String sName,
                             @Nonnegative final int nNumber,
                             @Nullable final String sSubNumber,
                             @Nonnull @Nonempty final String sVersion,
@@ -186,8 +186,8 @@ public enum EBII2Transaction implements ISpecificationTransaction
   }
 
   @Nullable
-  public static EBII2Transaction getFromIDOrNull (@Nullable final String sID)
+  public static EBIITransaction getFromIDOrNull (@Nullable final String sID)
   {
-    return EnumHelper.getFromIDOrNull (EBII2Transaction.class, sID);
+    return EnumHelper.getFromIDOrNull (EBIITransaction.class, sID);
   }
 }

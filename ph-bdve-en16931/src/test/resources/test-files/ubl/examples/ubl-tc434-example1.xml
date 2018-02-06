@@ -103,7 +103,7 @@
     </cac:LegalMonetaryTotal>
     <cac:InvoiceLine>
         <cbc:ID>1</cbc:ID>
-        <cbc:InvoicedQuantity unitCode="EA">2</cbc:InvoicedQuantity>
+        <cbc:InvoicedQuantity unitCode="EA">100</cbc:InvoicedQuantity>
         <cbc:LineExtensionAmount currencyID="EUR">19.90</cbc:LineExtensionAmount>
         <cac:Item>
             <cbc:Name>PATAT FRITES 10MM 10KG</cbc:Name>
@@ -119,7 +119,16 @@
             </cac:ClassifiedTaxCategory>
        </cac:Item>
         <cac:Price>
-            <cbc:PriceAmount currencyID="EUR">9.95</cbc:PriceAmount>
+            <cbc:PriceAmount currencyID="EUR">0.0199</cbc:PriceAmount>
+            <cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+<!-- error in https://github.com/CenPC434/validation/issues/49 -->
+<!--  
+            <cac:AllowanceCharge>
+              <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+              <cbc:Amount currencyID="EUR">1.0001</cbc:Amount>
+              <cbc:BaseAmount currencyID="EUR">1.0200</cbc:BaseAmount>
+            </cac:AllowanceCharge>
+-->
         </cac:Price>
     </cac:InvoiceLine>
     <cac:InvoiceLine>

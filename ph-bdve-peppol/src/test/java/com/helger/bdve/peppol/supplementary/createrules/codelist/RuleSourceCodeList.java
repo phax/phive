@@ -21,7 +21,7 @@ import java.io.File;
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.peppol.supplementary.createrules.ESyntaxBinding;
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FileOperations;
@@ -32,13 +32,13 @@ public final class RuleSourceCodeList
   private final File m_aSchematronOutputDirectory;
   private final String m_sID;
   private final ESyntaxBinding m_eBinding;
-  private final EBII2Transaction m_eTransaction;
+  private final EBIITransaction m_eTransaction;
 
   public RuleSourceCodeList (@Nonnull final File aSourceFilename,
                              @Nonnull final File aSchematronOutputDirectory,
                              @Nonnull @Nonempty final String sID,
                              @Nonnull final ESyntaxBinding eBinding,
-                             @Nonnull final EBII2Transaction eTransaction)
+                             @Nonnull final EBIITransaction eTransaction)
   {
     ValueEnforcer.isTrue (aSourceFilename.isFile (), "Source file does not exist: " + aSourceFilename);
     ValueEnforcer.notNull (eTransaction, "Transaction");

@@ -23,7 +23,7 @@ import com.helger.bdve.peppol.supplementary.createrules.codelist.RuleSourceCodeL
 import com.helger.bdve.peppol.supplementary.createrules.sch.RuleSchematronCreator;
 import com.helger.bdve.peppol.supplementary.createrules.sch.RuleXSLTCreator;
 import com.helger.bdve.peppol.supplementary.createrules.util.CreateHelper;
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.debug.GlobalDebug;
@@ -45,52 +45,52 @@ public final class Main5CreateValidationRules
       // Billing
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/Billing"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T14).addDefault (ERuleSource.T14));
+                                                  EBIITransaction.T14).addDefault (ERuleSource.T14));
 
       // Catalogue
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/Catalogue"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T19).addDefault (ERuleSource.T19));
+                                                  EBIITransaction.T19).addDefault (ERuleSource.T19));
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/Catalogue"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T58).addDefault (ERuleSource.T58));
+                                                  EBIITransaction.T58).addDefault (ERuleSource.T58));
 
       // Despatch Advice
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/DespatchAdvice"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T16).addDefault (ERuleSource.T16));
+                                                  EBIITransaction.T16).addDefault (ERuleSource.T16));
 
       // Invoice
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/Invoice"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T10).addDefault (ERuleSource.T10));
+                                                  EBIITransaction.T10).addDefault (ERuleSource.T10));
 
       // Message Level Response
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/MLR"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T71).addDefault (ERuleSource.T71));
+                                                  EBIITransaction.T71).addDefault (ERuleSource.T71));
 
       // Order
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/Order"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T01).addDefault (ERuleSource.T01));
+                                                  EBIITransaction.T01).addDefault (ERuleSource.T01));
 
       // Ordering
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/Ordering"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T01).addDefault (ERuleSource.T01));
+                                                  EBIITransaction.T01).addDefault (ERuleSource.T01));
       aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "peppol-rules/Ordering"),
                                                   ESyntaxBinding.UBL,
-                                                  EBII2Transaction.T76).addDefault (ERuleSource.T76));
+                                                  EBIITransaction.T76).addDefault (ERuleSource.T76));
     }
 
     // Thirdparty
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "thirdparty/invoice"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T10).addThirdparty ());
+                                                EBIITransaction.T10).addThirdparty ());
     aRuleSourceGroups.add (new RuleSourceGroup (new File (aRuleTarget, "thirdparty/creditnote"),
                                                 ESyntaxBinding.UBL,
-                                                EBII2Transaction.T14).addThirdparty ());
+                                                EBIITransaction.T14).addThirdparty ());
 
     for (final RuleSourceGroup aRuleSourceGroup : aRuleSourceGroups)
     {

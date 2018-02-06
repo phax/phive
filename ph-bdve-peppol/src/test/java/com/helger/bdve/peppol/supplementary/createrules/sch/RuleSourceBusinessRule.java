@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.bdve.peppol.supplementary.createrules.ESyntaxBinding;
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -35,13 +35,13 @@ public final class RuleSourceBusinessRule
   private final File m_aSourceFile;
   private final File m_aOutputDirectory;
   private final String m_sID;
-  private final EBII2Transaction m_eCodeListTransaction;
+  private final EBIITransaction m_eCodeListTransaction;
   private final ICommonsList <File> m_aResultSCHFiles = new CommonsArrayList <> ();
 
   public RuleSourceBusinessRule (@Nonnull final File aSourceFilename,
                                  @Nonnull final File aOutputDirectory,
                                  @Nonnull @Nonempty final String sID,
-                                 @Nullable final EBII2Transaction eCodeListTransaction)
+                                 @Nullable final EBIITransaction eCodeListTransaction)
   {
     ValueEnforcer.notNull (aSourceFilename, "SourceFilename");
     ValueEnforcer.isTrue (aSourceFilename.isFile (), "Source file does not exist: " + aSourceFilename);
@@ -103,7 +103,7 @@ public final class RuleSourceBusinessRule
   }
 
   @Nullable
-  public EBII2Transaction getCodeList ()
+  public EBIITransaction getCodeList ()
   {
     return m_eCodeListTransaction;
   }

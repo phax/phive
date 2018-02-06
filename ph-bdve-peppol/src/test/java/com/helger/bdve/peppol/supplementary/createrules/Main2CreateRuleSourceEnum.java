@@ -20,7 +20,7 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsTreeMap;
@@ -141,7 +141,7 @@ public final class Main2CreateRuleSourceEnum
     final MyMap aOpenPEPPOL = _getOpenPEPPOLVersions ();
 
     final ICommonsList <String> aKeys = new CommonsArrayList<> ();
-    for (final EBII2Transaction eTransaction : EBII2Transaction.values ())
+    for (final EBIITransaction eTransaction : EBIITransaction.values ())
       aKeys.add (eTransaction.getTransactionKeyShort ());
     aKeys.add (KEY_CODELISTS);
 
@@ -150,7 +150,7 @@ public final class Main2CreateRuleSourceEnum
       String sTransaction;
       try
       {
-        EBII2Transaction.valueOf (sKey);
+        EBIITransaction.valueOf (sKey);
         sTransaction = "EBII2Transaction." + sKey;
       }
       catch (final IllegalArgumentException ex)

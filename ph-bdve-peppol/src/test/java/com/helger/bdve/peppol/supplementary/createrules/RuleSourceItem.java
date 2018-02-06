@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 
 import com.helger.bdve.peppol.supplementary.createrules.codelist.RuleSourceCodeList;
 import com.helger.bdve.peppol.supplementary.createrules.sch.RuleSourceBusinessRule;
-import com.helger.bdve.spec.EBII2Transaction;
+import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -37,7 +37,7 @@ public final class RuleSourceItem implements IHasID <String>
   private final File m_aRuleDstDir;
   private final String m_sID;
   private final ESyntaxBinding m_eBinding;
-  private final EBII2Transaction m_eTransaction;
+  private final EBIITransaction m_eTransaction;
   // status vars
   private final ICommonsList <RuleSourceCodeList> m_aCodeLists = new CommonsArrayList<> ();
   private final ICommonsList <RuleSourceBusinessRule> m_aBusinessRules = new CommonsArrayList<> ();
@@ -57,7 +57,7 @@ public final class RuleSourceItem implements IHasID <String>
   public RuleSourceItem (@Nonnull final File aRuleDstDir,
                          @Nonnull @Nonempty final String sID,
                          @Nullable final ESyntaxBinding eBinding,
-                         @Nonnull final EBII2Transaction eTransaction)
+                         @Nonnull final EBIITransaction eTransaction)
   {
     ValueEnforcer.isTrue (aRuleDstDir.isDirectory (), aRuleDstDir + " is not a directory!");
     m_aRuleDstDir = aRuleDstDir;
