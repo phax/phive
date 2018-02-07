@@ -1,0 +1,434 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2 UBL-ApplicationResponse-2.0.xsd">
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdSimR-BilSim-1.0</cbc:ProfileID>
+	<cbc:ID>B65830</cbc:ID>
+	<cbc:UUID>9756b516-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:IssueDate>2005-11-20</cbc:IssueDate>
+  <cbc:IssueTime>12:00:00</cbc:IssueTime>
+  <cbc:ResponseDate>2005-11-20</cbc:ResponseDate>
+  <cbc:ResponseTime>11:59:00</cbc:ResponseTime>
+  <cbc:Note>Dannet af Broker version 1.1</cbc:Note>
+  
+  <cbc:VersionID></cbc:VersionID>  
+  <cac:Signature>
+    <cbc:ID>123</cbc:ID>
+    <cbc:Note>Signatur note</cbc:Note>
+    <cbc:ValidationDate>2007-02-20</cbc:ValidationDate>
+    <cbc:ValidationTime>12:00:00</cbc:ValidationTime>
+    <cbc:ValidatorID>9000000001</cbc:ValidatorID>
+    <cbc:CanonicalizationMethod>Metode 1</cbc:CanonicalizationMethod>
+    <cbc:SignatureMethod>Metode 2</cbc:SignatureMethod>
+    <cac:SignatoryParty>
+      <cbc:EndpointID schemeID="DK:CVR">DK16356712</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK12457812</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Signatør A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Signatørvej</cbc:StreetName>
+        <cbc:BuildingNumber>11</cbc:BuildingNumber>
+        <cbc:CityName>Dyssegård</cbc:CityName>
+        <cbc:PostalZone>2870</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>456</cbc:ID>
+        <cbc:Description>Text</cbc:Description>
+        <cbc:Conditions>Text</cbc:Conditions>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyTaxScheme>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:SE">DK16356713</cbc:CompanyID>
+        <cbc:ExemptionReasonCode>UndtagelsesKode</cbc:ExemptionReasonCode>
+        <cbc:ExemptionReason>Undtagelse</cbc:ExemptionReason>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+        <cac:TaxScheme>
+          <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+          <cbc:Name>Moms</cbc:Name>
+          <cbc:CurrencyCode>DKK</cbc:CurrencyCode>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:CVR">DK16356714</cbc:CompanyID>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:SignatoryParty>
+  </cac:Signature>
+	<cac:SenderParty>
+    <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+    <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+    <cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:EndpointID>
+    <cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:ID>
+			</cac:PartyIdentification>
+    <cac:PartyName>
+				<cbc:Name>Den Lille Skole</cbc:Name>
+			</cac:PartyName>
+    <cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Fredericiavej</cbc:StreetName>
+				<cbc:BuildingNumber>10</cbc:BuildingNumber>
+				<cbc:CityName>Helsingør</cbc:CityName>
+				<cbc:PostalZone>3000</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+    <cac:PartyLegalEntity>
+				<cbc:RegistrationName>Den Lille Skole</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356709</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+    <cac:Contact>
+				<cbc:ID>7778</cbc:ID>
+				<cbc:Name>Hans Hansen</cbc:Name>
+				<cbc:Telephone>26532147</cbc:Telephone>
+				<cbc:ElectronicMail>Hans@dls.dk</cbc:ElectronicMail>
+			</cac:Contact>
+	</cac:SenderParty>
+	<cac:ReceiverParty>
+    <cbc:WebsiteURI>http://www.kmd.dk</cbc:WebsiteURI>
+    <cbc:LogoReferenceID>http://www.kmd.dk/logo_2007</cbc:LogoReferenceID>
+    <cbc:EndpointID schemeID="DK:CVR">DK16356706</cbc:EndpointID>
+    <cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK16356706</cbc:ID>
+			</cac:PartyIdentification>
+    <cac:PartyName>
+				<cbc:Name>Modtager A/S</cbc:Name>
+			</cac:PartyName>
+    <cac:Language>
+      <cbc:ID>DK</cbc:ID>
+      <cbc:Name>Danish</cbc:Name>
+      <cbc:LocaleCode>850</cbc:LocaleCode>
+    </cac:Language>
+    <cac:PostalAddress>
+      <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+      <cbc:StreetName>Modtagervang</cbc:StreetName>
+      <cbc:BuildingNumber>11</cbc:BuildingNumber>
+      <cbc:CityName>Ballerup</cbc:CityName>
+      <cbc:PostalZone>2870</cbc:PostalZone>
+      <cac:Country>
+        <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+      </cac:Country>
+    </cac:PostalAddress>
+    
+    <cac:PhysicalLocation>
+      <cbc:ID>123</cbc:ID>
+      <cbc:Description>Hovedkontor</cbc:Description>
+      <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+      <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+      <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+      <cac:ValidityPeriod>
+        <cbc:StartDate>2006-04-30</cbc:StartDate>
+        <cbc:StartTime>12:00:00</cbc:StartTime>
+        <cbc:EndDate>2007-06-30</cbc:EndDate>
+        <cbc:EndTime>12:00:00</cbc:EndTime>
+        <cbc:Description>To måneder</cbc:Description>
+      </cac:ValidityPeriod>
+      <cac:Address>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:Address>
+    </cac:PhysicalLocation>
+    <cac:PartyTaxScheme>
+      <cbc:RegistrationName>Modtager A/S</cbc:RegistrationName>
+      <cbc:CompanyID schemeID="DK:SE">DK16356713</cbc:CompanyID>
+      <cbc:ExemptionReasonCode>UndtagelsesKode</cbc:ExemptionReasonCode>
+      <cbc:ExemptionReason>Undtagelse</cbc:ExemptionReason>
+      <cac:RegistrationAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Modtagervang</cbc:StreetName>
+        <cbc:BuildingNumber>46</cbc:BuildingNumber>
+        <cbc:CityName>Ballerup</cbc:CityName>
+        <cbc:PostalZone>2870</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:RegistrationAddress>
+      <cac:TaxScheme>
+        <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+        <cbc:Name>Moms</cbc:Name>
+        <cbc:CurrencyCode>DKK</cbc:CurrencyCode>
+      </cac:TaxScheme>
+    </cac:PartyTaxScheme>
+    <cac:PartyLegalEntity>
+      <cbc:RegistrationName>Modtager A/S</cbc:RegistrationName>
+      <cbc:CompanyID schemeID="DK:CVR">DK16356714</cbc:CompanyID>
+      <cac:RegistrationAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Modtagervang</cbc:StreetName>
+        <cbc:BuildingNumber>MMN</cbc:BuildingNumber>
+        <cbc:CityName>Ballerup</cbc:CityName>
+        <cbc:PostalZone>2870</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:RegistrationAddress>
+    </cac:PartyLegalEntity>    
+    <cac:Contact>
+				<cbc:ID>23456</cbc:ID>
+				<cbc:Name>Hugo Jensen</cbc:Name>
+				<cbc:Telephone>15812337</cbc:Telephone>
+				<cbc:ElectronicMail>Hugo@Modtager.dk</cbc:ElectronicMail>
+			</cac:Contact>
+    <cac:Person>
+      <cbc:FirstName>Søren</cbc:FirstName>
+      <cbc:FamilyName>Jensen</cbc:FamilyName>
+      <cbc:MiddleName>Back</cbc:MiddleName>
+    </cac:Person> 
+	</cac:ReceiverParty>
+	<cac:DocumentResponse>
+		<cac:Response>
+			<cbc:ReferenceID>1</cbc:ReferenceID>
+			<cbc:ResponseCode listAgencyID="320" listID="urn:oioubl:codelist:responsecode-1.1">BusinessReject</cbc:ResponseCode>
+			<cbc:Description>Vi har ikke fået de aftalte 800,- kr i rabat</cbc:Description>
+		</cac:Response>
+		<cac:DocumentReference>
+			<cbc:ID>A00095678</cbc:ID>
+			<cbc:CopyIndicator>false</cbc:CopyIndicator>
+			<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+			<cbc:IssueDate>2005-11-20</cbc:IssueDate>
+			<cbc:DocumentTypeCode listAgencyID="320" listID="urn:oioubl:codelist:responsedocumenttypecode-1.1">Invoice</cbc:DocumentTypeCode>
+		</cac:DocumentReference>
+    <cac:IssuerParty>
+      <cbc:EndpointID schemeID="DK:CVR">DK16356712</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK12457812</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Signatør A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Signatørvej</cbc:StreetName>
+        <cbc:BuildingNumber>11</cbc:BuildingNumber>
+        <cbc:CityName>Dyssegård</cbc:CityName>
+        <cbc:PostalZone>2870</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>456</cbc:ID>
+        <cbc:Description>Text</cbc:Description>
+        <cbc:Conditions>Text</cbc:Conditions>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyTaxScheme>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:SE">DK16356713</cbc:CompanyID>
+        <cbc:ExemptionReasonCode>UndtagelsesKode</cbc:ExemptionReasonCode>
+        <cbc:ExemptionReason>Undtagelse</cbc:ExemptionReason>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+        <cac:TaxScheme>
+          <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+          <cbc:Name>Moms</cbc:Name>
+          <cbc:CurrencyCode>DKK</cbc:CurrencyCode>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:CVR">DK16356714</cbc:CompanyID>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:IssuerParty>
+    <cac:RecipientParty>
+      <cbc:EndpointID schemeID="DK:CVR">DK16356712</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK12457812</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Signatør A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Signatørvej</cbc:StreetName>
+        <cbc:BuildingNumber>11</cbc:BuildingNumber>
+        <cbc:CityName>Dyssegård</cbc:CityName>
+        <cbc:PostalZone>2870</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>456</cbc:ID>
+        <cbc:Description>Text</cbc:Description>
+        <cbc:Conditions>Text</cbc:Conditions>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyTaxScheme>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:SE">DK16356713</cbc:CompanyID>
+        <cbc:ExemptionReasonCode>UndtagelsesKode</cbc:ExemptionReasonCode>
+        <cbc:ExemptionReason>Undtagelse</cbc:ExemptionReason>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+        <cac:TaxScheme>
+          <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+          <cbc:Name>Moms</cbc:Name>
+          <cbc:CurrencyCode>DKK</cbc:CurrencyCode>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:CVR">DK16356714</cbc:CompanyID>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:RecipientParty>
+    <cac:LineResponse>
+      <cac:LineReference>
+        <cbc:LineID>1</cbc:LineID>
+      </cac:LineReference>
+      <cac:Response>
+        <cbc:ReferenceID>1</cbc:ReferenceID>
+        <cbc:ResponseCode listAgencyID="320" listID="urn:oioubl:codelist:lineresponsecode-1.1">BusinessReject</cbc:ResponseCode>
+        <cbc:Description>Vi har ikke fået de aftalte 800,- kr i rabat</cbc:Description>
+      </cac:Response>      
+    </cac:LineResponse>  
+</cac:DocumentResponse>
+</ApplicationResponse>

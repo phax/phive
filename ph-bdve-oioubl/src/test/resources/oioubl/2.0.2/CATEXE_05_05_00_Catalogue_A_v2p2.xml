@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2 UBL-Catalogue-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= CATEXE_05_05_00_Catalogue_A_v2p2.xml	
+		replaces= CATEXE_05_05_00_Catalogue_A_v2p1.xml_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Charlotte Dahl Skovhus"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_CATEXE
+		description= "This document is produced as part of the OIOUBL Catalogue Exchange scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Catalogue-CatAdv-1.0</cbc:ProfileID>
+	<cbc:ID>MP-UPD-1</cbc:ID>
+	<cbc:IssueDate>2006-08-15</cbc:IssueDate>
+	<cbc:RevisionDate>2006-08-10</cbc:RevisionDate>
+	<cbc:Description>Opdatering af HospitalSupplies markedsplads</cbc:Description>
+	<cbc:VersionID>1.1</cbc:VersionID>
+	<cac:ValidityPeriod>
+		<cbc:StartDate>2006-04-30</cbc:StartDate>
+		<cbc:EndDate>2007-04-30</cbc:EndDate>
+	</cac:ValidityPeriod>
+	<cac:ProviderParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK12312312</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK12312312</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Kanyler A/S</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Nordvej </cbc:StreetName>
+			<cbc:BuildingNumber>3</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Kanyler A/S</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK12312312</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>9000055555</cbc:ID>
+			<cbc:Name>Salgsafdelingen</cbc:Name>
+			<cbc:Telephone>24565656</cbc:Telephone>
+			<cbc:ElectronicMail>katalog@kanyler.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Bo</cbc:FirstName>
+			<cbc:FamilyName>Pind</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+		</cac:Person>
+	</cac:ProviderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK85285285</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK85285285</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>HospitalSupplies</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Vestergade</cbc:StreetName>
+			<cbc:BuildingNumber>45</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>HospitalSupplies</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK85285285</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>HS123</cbc:ID>
+			<cbc:Telephone>85858585</cbc:Telephone>
+			<cbc:ElectronicMail>info@hs.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Signe</cbc:FirstName>
+			<cbc:FamilyName>Skov</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+		</cac:Person>
+	</cac:ReceiverParty>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK12312312</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK12312312</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Kanyler A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Nordvej </cbc:StreetName>
+				<cbc:BuildingNumber>3</cbc:BuildingNumber>
+				<cbc:CityName>København K</cbc:CityName>
+				<cbc:PostalZone>1171</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Kanyler A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK12312312</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>9000055555</cbc:ID>
+				<cbc:Name>Salgsafdelingen</cbc:Name>
+				<cbc:Telephone>24565656</cbc:Telephone>
+				<cbc:ElectronicMail>katalog@kanyler.dk</cbc:ElectronicMail>
+			</cac:Contact>
+			<cac:Person>
+				<cbc:FirstName>Bo</cbc:FirstName>
+				<cbc:FamilyName>Pind</cbc:FamilyName>
+				<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+			</cac:Person>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:CatalogueLine>
+		<cbc:ID>12312312-951951</cbc:ID>
+		<cbc:ActionCode listAgencyID="320" listID="urn:oioubl:codelist:catalogueactioncode-1.1">Update</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>PK</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="EA">20</cbc:ContentUnitQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">1</cbc:LeadTimeMeasure>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="PK">1</cbc:BatchQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Kanyle 0.25 x 6 mm, flergangs</cbc:Description>
+			<cbc:PackQuantity unitCode="PK">1</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>20</cbc:PackSizeNumeric>
+			<cbc:Name>Kanyle 0.25 x 6 mm</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>951951</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">42142500</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>12312312-951952</cbc:ID>
+		<cbc:ActionCode listAgencyID="320" listID="urn:oioubl:codelist:catalogueactioncode-1.1">Delete</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>PK</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="EA">18</cbc:ContentUnitQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">1</cbc:LeadTimeMeasure>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="PK">1</cbc:BatchQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Kanyle 0.25 x 8 mm, flergangs</cbc:Description>
+			<cbc:PackQuantity unitCode="PK">1</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>20</cbc:PackSizeNumeric>
+			<cbc:Name>Kanyle 0.25 x 8 mm</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>951952</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">42142500</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+		</cac:Item>
+	</cac:CatalogueLine>
+</Catalogue>

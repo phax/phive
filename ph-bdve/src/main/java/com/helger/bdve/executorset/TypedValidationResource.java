@@ -79,7 +79,7 @@ public class TypedValidationResource
                                   @Nonnull final IReadableResource aRes)
   {
     ValueEnforcer.notNull (eType, "Type");
-    if (eType.requiresContext ())
+    if (eType.isContextRequired ())
       ValueEnforcer.notNull (aContext, "Context");
     else
       ValueEnforcer.isNull (aContext, "Context");
@@ -104,7 +104,7 @@ public class TypedValidationResource
   /**
    * @return The context to be used. Is only non-<code>null</code> if the
    *         validation type requires an additional context.
-   * @see EValidationType#requiresContext()
+   * @see EValidationType#isContextRequired()
    * @see #getValidationType()
    */
   @Nullable

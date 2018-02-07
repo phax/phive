@@ -1,0 +1,3142 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Statement xmlns="urn:oasis:names:specification:ubl:schema:xsd:Statement-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Statement-2 UBL-Statement-2.0.xsd">
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdSim-BilSimR-1.0</cbc:ProfileID>
+	<cbc:ID>A00095678</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:IssueDate>2005-11-20</cbc:IssueDate>
+  <cbc:IssueTime>10:00:00</cbc:IssueTime>
+  <cbc:Note languageID ="da">Dansk note</cbc:Note>
+  <cbc:Note languageID ="en">English note</cbc:Note>
+	<cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+	<cbc:TotalDebitAmount currencyID="DKK">500.00</cbc:TotalDebitAmount>
+	<cbc:TotalBalanceAmount currencyID="DKK">500.00</cbc:TotalBalanceAmount>
+	<cac:StatementPeriod>
+		<cbc:StartDate>2007-01-01</cbc:StartDate>
+    <cbc:StartTime>12:00:00</cbc:StartTime>
+		<cbc:EndDate>2007-02-01</cbc:EndDate>
+    <cbc:EndTime>12:00:00</cbc:EndTime>    
+		<cbc:Description>Januar måned</cbc:Description>
+	</cac:StatementPeriod>
+  <cac:AdditionalDocumentReference>
+    <cbc:ID>1</cbc:ID>
+    <cbc:CopyIndicator>false</cbc:CopyIndicator>
+    <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+    <cbc:IssueDate>2005-12-15</cbc:IssueDate>
+    <cbc:DocumentTypeCode listAgencyID="6" listID="UN/ECE 1001" >743</cbc:DocumentTypeCode>
+    <cac:Attachment>
+      <cac:ExternalReference>
+        <cbc:URI>http://www.oioubl.info/guidelines/da/OIOUBL_GUIDE_DOKUMENTREF.pdf</cbc:URI>
+        <cbc:DocumentHash>SC4LSYSAkKILp2rPW1ZVpOP1WK7g</cbc:DocumentHash>
+        <cbc:ExpiryDate>2025-12-15</cbc:ExpiryDate>
+        <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+      </cac:ExternalReference>
+    </cac:Attachment>
+  </cac:AdditionalDocumentReference>
+  <cac:Signature>
+    <cbc:ID>123</cbc:ID>
+    <cbc:Note>Signatur note</cbc:Note>
+    <cbc:ValidationDate>2007-02-20</cbc:ValidationDate>
+    <cbc:ValidationTime>12:00:00</cbc:ValidationTime>
+    <cbc:ValidatorID>9000000001</cbc:ValidatorID>
+    <cbc:CanonicalizationMethod>Metode 1</cbc:CanonicalizationMethod>
+    <cbc:SignatureMethod>Metode 2</cbc:SignatureMethod>
+    <cac:SignatoryParty>
+      <cbc:EndpointID schemeID="DK:CVR">DK16356712</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK12457812</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Signatør A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Signatørvej</cbc:StreetName>
+        <cbc:BuildingNumber>11</cbc:BuildingNumber>
+        <cbc:CityName>Dyssegård</cbc:CityName>
+        <cbc:PostalZone>2870</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>456</cbc:ID>
+        <cbc:Description>Text</cbc:Description>
+        <cbc:Conditions>Text</cbc:Conditions>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyTaxScheme>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:SE">DK16356713</cbc:CompanyID>
+        <cbc:ExemptionReasonCode>UndtagelsesKode</cbc:ExemptionReasonCode>
+        <cbc:ExemptionReason>Undtagelse</cbc:ExemptionReason>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+        <cac:TaxScheme>
+          <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+          <cbc:Name>Moms</cbc:Name>
+          <cbc:CurrencyCode>DKK</cbc:CurrencyCode>
+        </cac:TaxScheme>
+      </cac:PartyTaxScheme>
+      <cac:PartyLegalEntity>
+        <cbc:RegistrationName>Signatør A/S</cbc:RegistrationName>
+        <cbc:CompanyID schemeID="DK:CVR">DK16356714</cbc:CompanyID>
+        <cac:RegistrationAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Signatørvej</cbc:StreetName>
+          <cbc:BuildingNumber>12</cbc:BuildingNumber>
+          <cbc:CityName>Dyssegård</cbc:CityName>
+          <cbc:PostalZone>2870</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:RegistrationAddress>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:SignatoryParty>
+    <cac:DigitalSignatureAttachment>
+      
+      <cac:ExternalReference>
+        <cbc:URI>http://www.signaturreference.dk</cbc:URI>
+        <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+        <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+        <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+      </cac:ExternalReference>
+    </cac:DigitalSignatureAttachment>
+    <cac:OriginalDocumentReference>
+      <cbc:ID>2345</cbc:ID>
+      <cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B1</cbc:UUID>
+      <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+      <cbc:DocumentType>OriginalDocument</cbc:DocumentType>
+      <cac:Attachment>
+        
+        <cac:ExternalReference>
+          <cbc:URI>http://www.signaturdokumentreference.dk</cbc:URI>
+          <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+          <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+          <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+        </cac:ExternalReference>
+      </cac:Attachment>
+    </cac:OriginalDocumentReference>
+  </cac:Signature>
+	<cac:AccountingSupplierParty>
+    <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+    <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+		<cac:Party>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:Party>
+    <cac:DespatchContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>     
+    </cac:DespatchContact>
+    <cac:AccountingContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>    
+    </cac:AccountingContact>
+    <cac:SellerContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:SellerContact>
+	</cac:AccountingSupplierParty>  
+	<cac:AccountingCustomerParty>
+    <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+    <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+    <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+    <cac:Party>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:Party>
+    <cac:DeliveryContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:DeliveryContact>
+    <cac:AccountingContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:AccountingContact>
+    <cac:BuyerContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:BuyerContact>
+  </cac:AccountingCustomerParty>
+  <cac:BuyerCustomerParty>
+    <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+    <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+    <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+    <cac:Party>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:Party>
+    <cac:DeliveryContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:DeliveryContact>
+    <cac:AccountingContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:AccountingContact>
+    <cac:BuyerContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:BuyerContact>
+  </cac:BuyerCustomerParty>
+  <cac:SellerSupplierParty>
+    <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+    <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+    <cac:Party>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:Party>
+    <cac:DespatchContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:DespatchContact>
+    <cac:AccountingContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:AccountingContact>
+    <cac:SellerContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:SellerContact>  
+  </cac:SellerSupplierParty>
+  <cac:OriginatorCustomerParty>
+    <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+    <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+    <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+    <cac:Party>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:Party>
+    <cac:DeliveryContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:DeliveryContact>
+    <cac:AccountingContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:AccountingContact>
+    <cac:BuyerContact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:BuyerContact>
+  </cac:OriginatorCustomerParty>
+  <cac:PayeeParty>
+    <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+    <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+    <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+    <cac:PartyIdentification>
+      <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+    </cac:PartyIdentification>
+    <cac:PartyName>
+      <cbc:Name>Value Facturing A/S</cbc:Name>
+    </cac:PartyName>
+    <cac:Language>
+      <cbc:ID>DK</cbc:ID>
+      <cbc:Name>Danish</cbc:Name>
+      <cbc:LocaleCode>850</cbc:LocaleCode>
+    </cac:Language>
+    <cac:PostalAddress>
+      <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+      <cbc:StreetName>Bredgade</cbc:StreetName>
+      <cbc:BuildingNumber>40</cbc:BuildingNumber>
+      <cbc:CityName>København K</cbc:CityName>
+      <cbc:PostalZone>1260</cbc:PostalZone>
+      <cac:Country>
+        <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+      </cac:Country>
+    </cac:PostalAddress>
+    <cac:PhysicalLocation>
+      <cbc:ID>123</cbc:ID>
+      <cbc:Description>Hovedkontor</cbc:Description>
+      <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+      <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+      <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+      <cac:ValidityPeriod>
+        <cbc:StartDate>2006-04-30</cbc:StartDate>
+        <cbc:StartTime>12:00:00</cbc:StartTime>
+        <cbc:EndDate>2007-06-30</cbc:EndDate>
+        <cbc:EndTime>12:00:00</cbc:EndTime>
+        <cbc:Description>To måneder</cbc:Description>
+      </cac:ValidityPeriod>
+      <cac:Address>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:Address>
+    </cac:PhysicalLocation>
+    <cac:PartyLegalEntity>
+      <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+    </cac:PartyLegalEntity>
+    <cac:Contact>
+      <cbc:ID>9000000002</cbc:ID>
+      <cbc:Name>Salgsafdelingen</cbc:Name>
+      <cbc:Telephone>15812337</cbc:Telephone>
+      <cbc:Telefax>15812330</cbc:Telefax>
+      <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+      <cbc:Note>tekst</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:Channel>Skype</cbc:Channel>
+        <cbc:Value>signatør@signatør.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:Contact>
+    <cac:Person>
+      <cbc:FirstName>Søren</cbc:FirstName>
+      <cbc:FamilyName>Jensen</cbc:FamilyName>
+      <cbc:MiddleName>Back</cbc:MiddleName>
+    </cac:Person>
+  </cac:PayeeParty>
+  <cac:PaymentMeans>
+    <cbc:ID>1</cbc:ID>
+    <cbc:PaymentMeansCode>49</cbc:PaymentMeansCode>
+    <cbc:PaymentDueDate>2005-12-31</cbc:PaymentDueDate>
+    <cbc:InstructionID>123456789012345678901234567890123456789012345678901234567890</cbc:InstructionID>
+  </cac:PaymentMeans>
+  <cac:PaymentTerms>
+    <cbc:ID>1</cbc:ID>
+    <cbc:PaymentMeansID>1</cbc:PaymentMeansID>
+    <cbc:Amount currencyID="DKK">500.00</cbc:Amount>
+  </cac:PaymentTerms>
+  <cac:AllowanceCharge>
+    <cbc:ID>1</cbc:ID>
+    <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+    <cbc:AllowanceChargeReason>Aftalt rabat</cbc:AllowanceChargeReason>
+    <cbc:MultiplierFactorNumeric>1</cbc:MultiplierFactorNumeric>
+    <cbc:SequenceNumeric>1</cbc:SequenceNumeric>
+    <cbc:Amount currencyID="DKK">100.00</cbc:Amount>
+    <cbc:BaseAmount currencyID="DKK">100.00</cbc:BaseAmount>
+    <cac:TaxCategory>
+      <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+      <cbc:Percent>25</cbc:Percent>
+      <cac:TaxScheme>
+        <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+        <cbc:Name>Moms</cbc:Name>
+      </cac:TaxScheme>
+    </cac:TaxCategory>
+  </cac:AllowanceCharge>
+  <cac:TaxTotal>
+    <cbc:TaxAmount currencyID="DKK">2925.00</cbc:TaxAmount>
+    <cac:TaxSubtotal>
+      <cbc:TaxableAmount currencyID="DKK">11700.00</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID ="DKK">2925.00</cbc:TaxAmount>
+      <cbc:TransactionCurrencyTaxAmount currencyID ="DKK">0.00</cbc:TransactionCurrencyTaxAmount>
+      <cac:TaxCategory>
+        <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+        <cbc:Percent>25</cbc:Percent>
+        <cac:TaxScheme>
+          <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+          <cbc:Name>Moms</cbc:Name>
+        </cac:TaxScheme>
+      </cac:TaxCategory>
+    </cac:TaxSubtotal>
+  </cac:TaxTotal>
+  <cac:StatementLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:Note languageID ="da">Dansk bemærkning</cbc:Note>
+		<cbc:UUID>9756b4d0-8815-1029-857a-e388fe631001</cbc:UUID>
+		<cbc:BalanceBroughtForwardIndicator>false</cbc:BalanceBroughtForwardIndicator>
+		<cbc:DebitLineAmount currencyID="DKK">500.00</cbc:DebitLineAmount>
+		<cbc:BalanceAmount currencyID="DKK">500.00</cbc:BalanceAmount>
+	<cac:PaymentMeans>
+      <cbc:ID>1</cbc:ID>
+      <cbc:PaymentMeansCode>49</cbc:PaymentMeansCode>
+      <cbc:PaymentDueDate>2005-12-31</cbc:PaymentDueDate>
+      <cbc:InstructionID>123456789012345678901234567890123456789012345678901234567890</cbc:InstructionID>
+    </cac:PaymentMeans>
+    <cac:PaymentTerms>
+      <cbc:ID>1</cbc:ID>
+      <cbc:PaymentMeansID>1</cbc:PaymentMeansID>
+      <cbc:Amount currencyID="DKK">500.00</cbc:Amount>
+    </cac:PaymentTerms>
+    <cac:BuyerCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:BuyerCustomerParty>
+    <cac:SellerSupplierParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DespatchContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DespatchContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:SellerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:SellerContact>
+    </cac:SellerSupplierParty>
+    <cac:OriginatorCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:OriginatorCustomerParty>
+    <cac:AccountingCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:AccountingCustomerParty>
+    <cac:AccountingSupplierParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DespatchContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DespatchContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:SellerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:SellerContact>
+    </cac:AccountingSupplierParty>
+    <cac:PayeeParty>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:PayeeParty>
+    <cac:InvoicePeriod>
+      <cbc:StartDate>2007-01-01</cbc:StartDate>
+      <cbc:StartTime>12:00:00</cbc:StartTime>
+      <cbc:EndDate>2007-02-01</cbc:EndDate>
+      <cbc:EndTime>12:00:00</cbc:EndTime>
+      <cbc:Description>Januar måned</cbc:Description>
+    </cac:InvoicePeriod>
+    <cac:BillingReference>
+      <cac:InvoiceDocumentReference>
+        <cbc:ID>A000956O7</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+        <cbc:IssueDate>2007-02-21</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.fakturareference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:InvoiceDocumentReference>
+      <cac:SelfBilledInvoiceDocumentReference>
+        <cbc:ID>A00095680</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f400</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cbc:EmbeddedDocumentBinaryObject mimeCode="image/tiff">
+            TIFF
+          </cbc:EmbeddedDocumentBinaryObject>
+        </cac:Attachment>
+      </cac:SelfBilledInvoiceDocumentReference>
+      <cac:CreditNoteDocumentReference>
+        <cbc:ID>A00095681</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f401</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.kreditnotareference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:CreditNoteDocumentReference>
+      <cac:SelfBilledCreditNoteDocumentReference>
+        <cbc:ID>A00095680</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f400</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cbc:EmbeddedDocumentBinaryObject mimeCode="image/tiff">
+            TIFF
+          </cbc:EmbeddedDocumentBinaryObject>
+        </cac:Attachment>
+      </cac:SelfBilledCreditNoteDocumentReference>
+      <cac:ReminderDocumentReference>
+        <cbc:ID>A00095682</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f402</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.rykkerreference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:ReminderDocumentReference>
+      <cac:BillingReferenceLine>
+        <cbc:ID>1</cbc:ID>
+        <cbc:Amount currencyID ="DKK">100.00</cbc:Amount>
+        <cac:AllowanceCharge>
+          <cbc:ID>1</cbc:ID>
+          
+          <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+          <cbc:AllowanceChargeReason>Aftalt rabat</cbc:AllowanceChargeReason>
+          <cbc:MultiplierFactorNumeric>1</cbc:MultiplierFactorNumeric>
+          <cbc:SequenceNumeric>1</cbc:SequenceNumeric>
+          <cbc:Amount currencyID="DKK">100.00</cbc:Amount>
+          <cbc:BaseAmount currencyID="DKK">100.00</cbc:BaseAmount>
+          <cac:TaxCategory>
+            <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+            <cbc:Percent>25</cbc:Percent>
+            <cac:TaxScheme>
+              <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+              <cbc:Name>Moms</cbc:Name>
+            </cac:TaxScheme>
+          </cac:TaxCategory>
+        </cac:AllowanceCharge>     
+      </cac:BillingReferenceLine>
+    </cac:BillingReference>
+    <cac:DocumentReference>
+      <cbc:ID>1</cbc:ID>
+      <cbc:CopyIndicator>false</cbc:CopyIndicator>
+      <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+      <cbc:IssueDate>2005-12-15</cbc:IssueDate>
+      <cbc:DocumentType>Statement</cbc:DocumentType>
+      <cac:Attachment>
+        <cac:ExternalReference>
+          <cbc:URI>http://www.oioubl.info/guidelines/da/OIOUBL_GUIDE_DOKUMENTREF.pdf</cbc:URI>
+          <cbc:DocumentHash>SC4LSYSAkKILp2rPW1ZVpOP1WK7g</cbc:DocumentHash>
+          <cbc:ExpiryDate>2025-12-15</cbc:ExpiryDate>
+          <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+        </cac:ExternalReference>
+      </cac:Attachment>
+    </cac:DocumentReference>
+    <cac:ExchangeRate>
+      <cbc:SourceCurrencyCode>DKK</cbc:SourceCurrencyCode>
+      <cbc:SourceCurrencyBaseRate>1.0000</cbc:SourceCurrencyBaseRate>
+      <cbc:TargetCurrencyCode>EUR</cbc:TargetCurrencyCode>
+      <cbc:TargetCurrencyBaseRate>2.0000</cbc:TargetCurrencyBaseRate>
+      <cbc:ExchangeMarketID>Valutamarked</cbc:ExchangeMarketID>
+      <cbc:CalculationRate>2.0000</cbc:CalculationRate>
+      <cbc:MathematicOperatorCode>*</cbc:MathematicOperatorCode>
+      <cbc:Date>2006-12-15</cbc:Date>
+      <cac:ForeignExchangeContract>
+        <cbc:ID>215</cbc:ID>
+        <cac:ContractDocumentReference>
+          <cbc:ID>123</cbc:ID>
+          <cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B1</cbc:UUID>
+          <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+          <cac:Attachment>
+            <cac:ExternalReference>
+              <cbc:URI>http://www.valutakursfererence.dk</cbc:URI>
+              <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+              <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+              <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+            </cac:ExternalReference>
+          </cac:Attachment>
+        </cac:ContractDocumentReference>
+      </cac:ForeignExchangeContract>
+    </cac:ExchangeRate>
+  </cac:StatementLine>
+  <cac:StatementLine>
+    <cbc:ID>1</cbc:ID>
+    <cbc:Note languageID ="da">Dansk bemærkning</cbc:Note>
+    <cbc:UUID>9756b4d0-8815-1029-857a-e388fe631000</cbc:UUID>
+    <cbc:BalanceBroughtForwardIndicator>false</cbc:BalanceBroughtForwardIndicator>
+    <cbc:DebitLineAmount currencyID="DKK">4000.00</cbc:DebitLineAmount>
+   <cbc:BalanceAmount currencyID="DKK">4000.00</cbc:BalanceAmount>
+    <cac:PaymentMeans>
+      <cbc:ID>1</cbc:ID>
+      <cbc:PaymentMeansCode>49</cbc:PaymentMeansCode>
+      <cbc:PaymentDueDate>2005-12-31</cbc:PaymentDueDate>
+      <cbc:InstructionID>123456789012345678901234567890123456789012345678901234567890</cbc:InstructionID>
+    </cac:PaymentMeans>
+    <cac:PaymentTerms>
+      <cbc:ID>1</cbc:ID>
+      <cbc:PaymentMeansID>1</cbc:PaymentMeansID>
+      <cbc:Amount currencyID="DKK">500.00</cbc:Amount>
+    </cac:PaymentTerms>
+    <cac:BuyerCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:BuyerCustomerParty>
+    <cac:SellerSupplierParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DespatchContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DespatchContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:SellerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:SellerContact>
+    </cac:SellerSupplierParty>
+    <cac:OriginatorCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:OriginatorCustomerParty>
+    <cac:AccountingCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:AccountingCustomerParty>
+    <cac:AccountingSupplierParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DespatchContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DespatchContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:SellerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:SellerContact>
+    </cac:AccountingSupplierParty>
+    <cac:PayeeParty>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:PayeeParty>
+    <cac:InvoicePeriod>
+      <cbc:StartDate>2007-01-01</cbc:StartDate>
+      <cbc:StartTime>12:00:00</cbc:StartTime>
+      <cbc:EndDate>2007-02-01</cbc:EndDate>
+      <cbc:EndTime>12:00:00</cbc:EndTime>
+      <cbc:Description>Januar måned</cbc:Description>
+    </cac:InvoicePeriod>
+    <cac:BillingReference>
+      <cac:InvoiceDocumentReference>
+        <cbc:ID>A00095678</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.fakturareference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:InvoiceDocumentReference>
+      <cac:SelfBilledInvoiceDocumentReference>
+        <cbc:ID>A00095680</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f400</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cbc:EmbeddedDocumentBinaryObject mimeCode="image/tiff">
+            TIFF
+          </cbc:EmbeddedDocumentBinaryObject>
+        </cac:Attachment>
+      </cac:SelfBilledInvoiceDocumentReference>
+      <cac:CreditNoteDocumentReference>
+        <cbc:ID>A00095681</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f401</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.kreditnotareference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:CreditNoteDocumentReference>
+      <cac:SelfBilledCreditNoteDocumentReference>
+        <cbc:ID>A00095680</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f400</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cbc:EmbeddedDocumentBinaryObject mimeCode="image/tiff">
+            TIFF
+          </cbc:EmbeddedDocumentBinaryObject>
+        </cac:Attachment>
+      </cac:SelfBilledCreditNoteDocumentReference>
+      <cac:ReminderDocumentReference>
+        <cbc:ID>A00095682</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f402</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.rykkerreference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:ReminderDocumentReference>
+      <cac:BillingReferenceLine>
+        <cbc:ID>1</cbc:ID>
+        <cbc:Amount currencyID ="DKK">100.00</cbc:Amount>
+        <cac:AllowanceCharge>
+          <cbc:ID>1</cbc:ID>
+          
+          <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+          <cbc:AllowanceChargeReason>Aftalt rabat</cbc:AllowanceChargeReason>
+          <cbc:MultiplierFactorNumeric>1</cbc:MultiplierFactorNumeric>
+          <cbc:SequenceNumeric>1</cbc:SequenceNumeric>
+          <cbc:Amount currencyID="DKK">100.00</cbc:Amount>
+          <cbc:BaseAmount currencyID="DKK">100.00</cbc:BaseAmount>
+          <cac:TaxCategory>
+            <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+            <cbc:Percent>25</cbc:Percent>
+            <cac:TaxScheme>
+              <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+              <cbc:Name>Moms</cbc:Name>
+            </cac:TaxScheme>
+          </cac:TaxCategory>
+        </cac:AllowanceCharge>     
+      </cac:BillingReferenceLine>
+    </cac:BillingReference>
+    <cac:DocumentReference>
+      <cbc:ID>1</cbc:ID>
+      <cbc:CopyIndicator>false</cbc:CopyIndicator>
+      <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+      <cbc:IssueDate>2005-12-15</cbc:IssueDate>
+      <cbc:DocumentType>Statement</cbc:DocumentType>
+      <cac:Attachment>
+        <cac:ExternalReference>
+          <cbc:URI>http://www.oioubl.info/guidelines/da/OIOUBL_GUIDE_DOKUMENTREF.pdf</cbc:URI>
+          <cbc:DocumentHash>SC4LSYSAkKILp2rPW1ZVpOP1WK7g</cbc:DocumentHash>
+          <cbc:ExpiryDate>2025-12-15</cbc:ExpiryDate>
+          <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+        </cac:ExternalReference>
+      </cac:Attachment>
+    </cac:DocumentReference>
+    <cac:ExchangeRate>
+      <cbc:SourceCurrencyCode>DKK</cbc:SourceCurrencyCode>
+      <cbc:SourceCurrencyBaseRate>1.0000</cbc:SourceCurrencyBaseRate>
+      <cbc:TargetCurrencyCode>EUR</cbc:TargetCurrencyCode>
+      <cbc:TargetCurrencyBaseRate>2.0000</cbc:TargetCurrencyBaseRate>
+      <cbc:ExchangeMarketID>Valutamarked</cbc:ExchangeMarketID>
+      <cbc:CalculationRate>2.0000</cbc:CalculationRate>
+      <cbc:MathematicOperatorCode>*</cbc:MathematicOperatorCode>
+      <cbc:Date>2006-12-15</cbc:Date>
+      <cac:ForeignExchangeContract>
+        <cbc:ID>215</cbc:ID>
+        <cac:ContractDocumentReference>
+          <cbc:ID>123</cbc:ID>
+          <cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B1</cbc:UUID>
+          <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+          <cac:Attachment>
+            <cac:ExternalReference>
+              <cbc:URI>http://www.valutakursfererence.dk</cbc:URI>
+              <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+              <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+              <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+            </cac:ExternalReference>
+          </cac:Attachment>
+        </cac:ContractDocumentReference>
+      </cac:ForeignExchangeContract>
+    </cac:ExchangeRate>
+  </cac:StatementLine>
+  <cac:StatementLine>
+    <cbc:ID>2</cbc:ID>
+    <cbc:Note languageID ="da">Dansk bemærkning</cbc:Note>
+    <cbc:UUID>9756b4d0-8815-1029-857a-e388fe631000</cbc:UUID>
+    <cbc:BalanceBroughtForwardIndicator>false</cbc:BalanceBroughtForwardIndicator>
+    <cbc:DebitLineAmount currencyID="DKK">7200.00</cbc:DebitLineAmount>
+    <cbc:BalanceAmount currencyID="DKK">7200.00</cbc:BalanceAmount>
+    <cac:PaymentMeans>
+      <cbc:ID>1</cbc:ID>
+      <cbc:PaymentMeansCode>49</cbc:PaymentMeansCode>
+      <cbc:PaymentDueDate>2005-12-31</cbc:PaymentDueDate>
+      <cbc:InstructionID>123456789012345678901234567890123456789012345678901234567890</cbc:InstructionID>
+    </cac:PaymentMeans>
+    <cac:PaymentTerms>
+      <cbc:ID>1</cbc:ID>
+      <cbc:PaymentMeansID>1</cbc:PaymentMeansID>
+      <cbc:Amount currencyID="DKK">500.00</cbc:Amount>
+    </cac:PaymentTerms>
+    <cac:BuyerCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:BuyerCustomerParty>
+    <cac:SellerSupplierParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DespatchContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DespatchContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:SellerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:SellerContact>
+    </cac:SellerSupplierParty>
+    <cac:OriginatorCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:OriginatorCustomerParty>
+    <cac:AccountingCustomerParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:SupplierAssignedAccountID>222111223</cbc:SupplierAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DeliveryContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DeliveryContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:BuyerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:BuyerContact>
+    </cac:AccountingCustomerParty>
+    <cac:AccountingSupplierParty>
+      <cbc:CustomerAssignedAccountID>123245678</cbc:CustomerAssignedAccountID>
+      <cbc:AdditionalAccountID>4000</cbc:AdditionalAccountID>
+      <cac:Party>
+        <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+        <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+        <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+        <cac:PartyIdentification>
+          <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+        </cac:PartyIdentification>
+        <cac:PartyName>
+          <cbc:Name>Value Facturing A/S</cbc:Name>
+        </cac:PartyName>
+        <cac:Language>
+          <cbc:ID>DK</cbc:ID>
+          <cbc:Name>Danish</cbc:Name>
+          <cbc:LocaleCode>850</cbc:LocaleCode>
+        </cac:Language>
+        <cac:PostalAddress>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:PostalAddress>
+        <cac:PhysicalLocation>
+          <cbc:ID>123</cbc:ID>
+          <cbc:Description>Hovedkontor</cbc:Description>
+          <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+          <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+          <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+          <cac:ValidityPeriod>
+            <cbc:StartDate>2006-04-30</cbc:StartDate>
+            <cbc:StartTime>12:00:00</cbc:StartTime>
+            <cbc:EndDate>2007-06-30</cbc:EndDate>
+            <cbc:EndTime>12:00:00</cbc:EndTime>
+            <cbc:Description>To måneder</cbc:Description>
+          </cac:ValidityPeriod>
+          <cac:Address>
+            <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+            <cbc:StreetName>Bredgade</cbc:StreetName>
+            <cbc:BuildingNumber>40</cbc:BuildingNumber>
+            <cbc:CityName>København K</cbc:CityName>
+            <cbc:PostalZone>1260</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:Address>
+        </cac:PhysicalLocation>
+        <cac:PartyLegalEntity>
+          <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+        </cac:PartyLegalEntity>
+        <cac:Contact>
+          <cbc:ID>9000000002</cbc:ID>
+          <cbc:Name>Salgsafdelingen</cbc:Name>
+          <cbc:Telephone>15812337</cbc:Telephone>
+          <cbc:Telefax>15812330</cbc:Telefax>
+          <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+          <cbc:Note>tekst</cbc:Note>
+          <cac:OtherCommunication>
+            <cbc:Channel>Skype</cbc:Channel>
+            <cbc:Value>signatør@signatør.dk</cbc:Value>
+          </cac:OtherCommunication>
+        </cac:Contact>
+        <cac:Person>
+          <cbc:FirstName>Søren</cbc:FirstName>
+          <cbc:FamilyName>Jensen</cbc:FamilyName>
+          <cbc:MiddleName>Back</cbc:MiddleName>
+        </cac:Person>
+      </cac:Party>
+      <cac:DespatchContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:DespatchContact>
+      <cac:AccountingContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:AccountingContact>
+      <cac:SellerContact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:SellerContact>
+    </cac:AccountingSupplierParty>
+    <cac:PayeeParty>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>9000000002</cbc:ID>
+        <cbc:Name>Salgsafdelingen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:Telefax>15812330</cbc:Telefax>
+        <cbc:ElectronicMail>salg@signatør.dk</cbc:ElectronicMail>
+        <cbc:Note>tekst</cbc:Note>
+        <cac:OtherCommunication>
+          <cbc:Channel>Skype</cbc:Channel>
+          <cbc:Value>signatør@signatør.dk</cbc:Value>
+        </cac:OtherCommunication>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FirstName>Søren</cbc:FirstName>
+        <cbc:FamilyName>Jensen</cbc:FamilyName>
+        <cbc:MiddleName>Back</cbc:MiddleName>
+      </cac:Person>
+    </cac:PayeeParty>
+    <cac:InvoicePeriod>
+      <cbc:StartDate>2007-01-01</cbc:StartDate>
+      <cbc:StartTime>12:00:00</cbc:StartTime>
+      <cbc:EndDate>2007-02-01</cbc:EndDate>
+      <cbc:EndTime>12:00:00</cbc:EndTime>
+      <cbc:Description>Januar måned</cbc:Description>
+    </cac:InvoicePeriod>
+    <cac:BillingReference>
+      <cac:InvoiceDocumentReference>
+        <cbc:ID>A00095678</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.fakturareference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:InvoiceDocumentReference>
+      <cac:SelfBilledInvoiceDocumentReference>
+        <cbc:ID>A00095680</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f400</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cbc:EmbeddedDocumentBinaryObject mimeCode="image/tiff">
+            TIFF
+          </cbc:EmbeddedDocumentBinaryObject>
+        </cac:Attachment>
+      </cac:SelfBilledInvoiceDocumentReference>
+      <cac:CreditNoteDocumentReference>
+        <cbc:ID>A00095681</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f401</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.kreditnotareference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:CreditNoteDocumentReference>
+      <cac:SelfBilledCreditNoteDocumentReference>
+        <cbc:ID>A00095680</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f400</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cbc:EmbeddedDocumentBinaryObject mimeCode="image/tiff">
+            TIFF
+          </cbc:EmbeddedDocumentBinaryObject>
+        </cac:Attachment>
+      </cac:SelfBilledCreditNoteDocumentReference>
+      <cac:ReminderDocumentReference>
+        <cbc:ID>A00095682</cbc:ID>
+        <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f402</cbc:UUID>
+        <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+        <cac:Attachment>
+          <cac:ExternalReference>
+            <cbc:URI>http://www.rykkerreference.dk</cbc:URI>
+            <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+            <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+            <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+          </cac:ExternalReference>
+        </cac:Attachment>
+      </cac:ReminderDocumentReference>
+      <cac:BillingReferenceLine>
+        <cbc:ID>1</cbc:ID>
+        <cbc:Amount currencyID ="DKK">100.00</cbc:Amount>
+        <cac:AllowanceCharge>
+          <cbc:ID>1</cbc:ID>
+          <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+          <cbc:AllowanceChargeReason>Aftalt rabat</cbc:AllowanceChargeReason>
+          <cbc:MultiplierFactorNumeric>1</cbc:MultiplierFactorNumeric>
+          <cbc:SequenceNumeric>1</cbc:SequenceNumeric>
+          <cbc:Amount currencyID="DKK">100.00</cbc:Amount>
+          <cbc:BaseAmount currencyID="DKK">100.00</cbc:BaseAmount>
+          <cac:TaxCategory>
+            <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+            <cbc:Percent>25</cbc:Percent>
+            <cac:TaxScheme>
+              <cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+              <cbc:Name>Moms</cbc:Name>
+            </cac:TaxScheme>
+          </cac:TaxCategory>
+        </cac:AllowanceCharge>
+      </cac:BillingReferenceLine>
+    </cac:BillingReference>
+    <cac:DocumentReference>
+      <cbc:ID>1</cbc:ID>
+      <cbc:CopyIndicator>false</cbc:CopyIndicator>
+      <cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+      <cbc:IssueDate>2005-12-15</cbc:IssueDate>
+      <cbc:DocumentTypeCode listURI="urn:oioubl:codelist:documenttypecode-1.0" >Invoice</cbc:DocumentTypeCode>
+      <cac:Attachment>
+        <cac:ExternalReference>
+          <cbc:URI>http://www.oioubl.info/guidelines/da/OIOUBL_GUIDE_DOKUMENTREF.pdf</cbc:URI>
+          <cbc:DocumentHash>SC4LSYSAkKILp2rPW1ZVpOP1WK7g</cbc:DocumentHash>
+          <cbc:ExpiryDate>2025-12-15</cbc:ExpiryDate>
+          <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+        </cac:ExternalReference>
+      </cac:Attachment>
+    </cac:DocumentReference>
+    <cac:ExchangeRate>
+      <cbc:SourceCurrencyCode>DKK</cbc:SourceCurrencyCode>
+      <cbc:SourceCurrencyBaseRate>1.0000</cbc:SourceCurrencyBaseRate>
+      <cbc:TargetCurrencyCode>EUR</cbc:TargetCurrencyCode>
+      <cbc:TargetCurrencyBaseRate>2.0000</cbc:TargetCurrencyBaseRate>
+      <cbc:ExchangeMarketID>Valutamarked</cbc:ExchangeMarketID>
+      <cbc:CalculationRate>2.0000</cbc:CalculationRate>
+      <cbc:MathematicOperatorCode>*</cbc:MathematicOperatorCode>
+      <cbc:Date>2006-12-15</cbc:Date>
+      <cac:ForeignExchangeContract>
+        <cbc:ID>215</cbc:ID>
+        <cac:ContractDocumentReference>
+          <cbc:ID>123</cbc:ID>
+          <cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B1</cbc:UUID>
+          <cbc:IssueDate>2007-02-20</cbc:IssueDate>
+          <cac:Attachment>
+            <cac:ExternalReference>
+              <cbc:URI>http://www.valutakursfererence.dk</cbc:URI>
+              <cbc:DocumentHash>dkfgqasdfæaljrtg9q0</cbc:DocumentHash>
+              <cbc:ExpiryDate>2007-02-20</cbc:ExpiryDate>
+              <cbc:ExpiryTime>12:00:00</cbc:ExpiryTime>
+            </cac:ExternalReference>
+          </cac:Attachment>
+        </cac:ContractDocumentReference>
+      </cac:ForeignExchangeContract>
+    </cac:ExchangeRate>
+  </cac:StatementLine>
+</Statement>

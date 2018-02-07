@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderCancellation xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderCancellation-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:OrderCancellation-2 UBL-OrderCancellation-2.0.xsd">
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdAdvR-BilSim-1.0</cbc:ProfileID>
+	<cbc:ID>65830</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B3</cbc:UUID>
+	<cbc:IssueDate>2006-04-01</cbc:IssueDate>
+	<cbc:IssueTime>10:00:00</cbc:IssueTime>
+	<cbc:CancellationNote>Forkerte varer</cbc:CancellationNote>
+	<cac:OrderReference>
+		<cbc:ID>5002701</cbc:ID>
+		<cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B1</cbc:UUID>
+		<cbc:IssueDate>2006-04-01</cbc:IssueDate>
+	</cac:OrderReference>
+	<cac:BuyerCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000417777</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Den Lille Skole</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Fredericiavej</cbc:StreetName>
+				<cbc:BuildingNumber>10</cbc:BuildingNumber>
+				<cbc:CityName>Helsingør</cbc:CityName>
+				<cbc:PostalZone>3000</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="DK:SE">DK16356709</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Den Lille Skole</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356709</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>87656</cbc:ID>
+				<cbc:Name>Hans Hansen</cbc:Name>
+				<cbc:Telephone>2653214</cbc:Telephone>
+				<cbc:ElectronicMail>hans@dls.dk</cbc:ElectronicMail>
+			</cac:Contact>
+			<cac:Person>
+				<cbc:FirstName>Hans</cbc:FirstName>
+				<cbc:FamilyName>Hansen</cbc:FamilyName>
+			</cac:Person>
+		</cac:Party>
+	</cac:BuyerCustomerParty>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK16356706</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK16356706</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Tavleleverandøren</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Leverandørvej</cbc:StreetName>
+				<cbc:BuildingNumber>10</cbc:BuildingNumber>
+				<cbc:CityName>Dyssegård</cbc:CityName>
+				<cbc:PostalZone>2870</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="DK:SE">DK16356706</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Tavleleverandøren</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356706</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>345243</cbc:ID>
+				<cbc:Name>Hugo Jensen</cbc:Name>
+				<cbc:Telephone>26532147</cbc:Telephone>
+				<cbc:ElectronicMail>hugo@tavl.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+<cac:OriginatorCustomerParty>
+    <cbc:CustomerAssignedAccountID>10001</cbc:CustomerAssignedAccountID>
+    <cbc:AdditionalAccountID>11100</cbc:AdditionalAccountID>
+    <cac:Party>
+      <cbc:WebsiteURI>http://www.oioubl.info</cbc:WebsiteURI>
+      <cbc:LogoReferenceID>http://www.oioubl.info/images/oio_logo_top.gif</cbc:LogoReferenceID>
+      <cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+      <cac:PartyIdentification>
+        <cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+      </cac:PartyIdentification>
+      <cac:PartyName>
+        <cbc:Name>Value Facturing A/S</cbc:Name>
+      </cac:PartyName>
+      <cac:Language>
+        <cbc:ID>DK</cbc:ID>
+        <cbc:Name>Danish</cbc:Name>
+        <cbc:LocaleCode>850</cbc:LocaleCode>
+      </cac:Language>
+      <cac:PostalAddress>
+        <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+        <cbc:StreetName>Bredgade</cbc:StreetName>
+        <cbc:BuildingNumber>40</cbc:BuildingNumber>
+        <cbc:CityName>København K</cbc:CityName>
+        <cbc:PostalZone>1260</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
+      <cac:PhysicalLocation>
+        <cbc:ID>123</cbc:ID>
+        <cbc:Description>Hovedkontor</cbc:Description>
+        <cbc:Conditions>Henvendelse efter aftale</cbc:Conditions>
+        <cbc:CountrySubentity>København K</cbc:CountrySubentity>
+        <cbc:CountrySubentityCode>1260</cbc:CountrySubentityCode>
+        <cac:ValidityPeriod>
+          <cbc:StartDate>2006-04-30</cbc:StartDate>
+          <cbc:StartTime>12:00:00</cbc:StartTime>
+          <cbc:EndDate>2007-06-30</cbc:EndDate>
+          <cbc:EndTime>12:00:00</cbc:EndTime>
+          <cbc:Description>To måneder</cbc:Description>
+        </cac:ValidityPeriod>
+        <cac:Address>
+          <cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+          <cbc:StreetName>Bredgade</cbc:StreetName>
+          <cbc:BuildingNumber>40</cbc:BuildingNumber>
+          <cbc:CityName>København K</cbc:CityName>
+          <cbc:PostalZone>1260</cbc:PostalZone>
+          <cac:Country>
+            <cbc:IdentificationCode>DK</cbc:IdentificationCode>
+          </cac:Country>
+        </cac:Address>
+      </cac:PhysicalLocation>
+      <cac:PartyLegalEntity>
+        <cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+      </cac:PartyLegalEntity>
+      <cac:Contact>
+        <cbc:ID>23456</cbc:ID>
+        <cbc:Name>Hugo Jensen</cbc:Name>
+        <cbc:Telephone>15812337</cbc:Telephone>
+        <cbc:ElectronicMail>Hugo@tavl.dk</cbc:ElectronicMail>
+      </cac:Contact>
+      <cac:Person>
+        <cbc:FamilyName>Sørensen</cbc:FamilyName>
+        <cbc:MiddleName>Frederik</cbc:MiddleName>
+        <cbc:NameSuffix>Hr.</cbc:NameSuffix>
+        <cbc:JobTitle>Bogholder</cbc:JobTitle>
+        <cbc:OrganizationDepartment>Regnskabet</cbc:OrganizationDepartment>
+      </cac:Person>
+    </cac:Party>
+    <cac:DeliveryContact>
+      <cbc:ID>13</cbc:ID>
+      <cbc:Name>Sally Seller</cbc:Name>
+      <cbc:Telephone >12121212</cbc:Telephone>
+      <cbc:Telefax>12121213</cbc:Telefax>
+      <cbc:ElectronicMail>Sally@seller.dk</cbc:ElectronicMail>
+      <cbc:Note>Jeg har mange opgaver i dette firma.</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:ChannelCode listID ="vores:channelcode:liste - Defineret af os selv" listAgencyID ="ID - Defineret af os selv">SKYPE</cbc:ChannelCode>
+        <cbc:Value >Sally@seller.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:DeliveryContact>
+    <cac:AccountingContact>
+      <cbc:ID>13</cbc:ID>
+      <cbc:Name>Inger Buyer</cbc:Name>
+      <cbc:Telephone >12121212</cbc:Telephone>
+      <cbc:Telefax>12121213</cbc:Telefax>
+      <cbc:ElectronicMail>Inger@buyer.dk</cbc:ElectronicMail>
+      <cbc:Note>Jeg har mange opgaver i dette firma.</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:ChannelCode listID ="vores:channelcode:liste - Defineret af os selv" listAgencyID ="ID - Defineret af os selv">SKYPE</cbc:ChannelCode>
+        <cbc:Value >Inger@buyer.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:AccountingContact>
+    <cac:BuyerContact>
+      <cbc:ID>13</cbc:ID>
+      <cbc:Name>Inger Buyer</cbc:Name>
+      <cbc:Telephone >12121212</cbc:Telephone>
+      <cbc:Telefax>12121213</cbc:Telefax>
+      <cbc:ElectronicMail>Inger@buyer.dk</cbc:ElectronicMail>
+      <cbc:Note>Jeg har mange opgaver i dette firma.</cbc:Note>
+      <cac:OtherCommunication>
+        <cbc:ChannelCode listID ="vores:channelcode:liste - Defineret af os selv" listAgencyID ="ID - Defineret af os selv">SKYPE</cbc:ChannelCode>
+        <cbc:Value >Inger@buyer.dk</cbc:Value>
+      </cac:OtherCommunication>
+    </cac:BuyerContact>
+  </cac:OriginatorCustomerParty>
+</OrderCancellation>
+	
+	

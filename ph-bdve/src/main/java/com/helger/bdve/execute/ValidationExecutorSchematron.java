@@ -28,6 +28,7 @@ import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.helger.bdve.artefact.IValidationArtefact;
@@ -35,7 +36,6 @@ import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.OverrideOnDemand;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
@@ -49,6 +49,7 @@ import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
+import com.helger.schematron.svrl.SVRLResourceError.SVRLErrorBuilder;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
@@ -68,6 +69,12 @@ import com.helger.xml.xpath.XPathHelper;
 public class ValidationExecutorSchematron extends AbstractValidationExecutor implements
                                           IValidationExecutor.ICacheSupport
 {
+  private static enum ESchematronOutput
+  {
+    SVRL,
+    OIOUBL
+  }
+
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
@@ -91,53 +98,6 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
   {
     m_bCacheSchematron = bCacheArtefact;
     return this;
-  }
-
-  @OverrideOnDemand
-  protected void performValidation (@Nonnull final AbstractSchematronResource aSCH,
-                                    @Nonnull final IReadableResource aSCHRes,
-                                    @Nonnull final Node aNode,
-                                    @Nonnull final IValidationSource aSource,
-                                    @Nonnull final ErrorList aErrorList)
-  {
-    try
-    {
-      // Main application of Schematron
-      final Document aDoc = aSCH.applySchematronValidation (new DOMSource (aNode));
-
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
-
-      final SchematronOutputType aSVRL = aDoc == null ? null : new SVRLMarshaller ().read (aDoc);
-      if (aSVRL != null)
-      {
-        // Valid Schematron - interpret result
-
-        // Convert failed asserts and successful reports to error objects
-        for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
-          aErrorList.add (aFailedAssert.getAsResourceError (aSource.getSystemID ()));
-        for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
-          aErrorList.add (aSuccessfulReport.getAsResourceError (aSource.getSystemID ()));
-      }
-      else
-      {
-        // Schematron does not create SVRL!
-        aErrorList.add (SingleError.builderError ()
-                                   .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
-                                   .setErrorText ("Internal error interpreting Schematron result")
-                                   .setErrorFieldName (XMLWriter.getNodeAsString (aDoc))
-                                   .build ());
-      }
-    }
-    catch (final Exception ex)
-    {
-      // Usually an error in the Schematron
-      aErrorList.add (SingleError.builderError ()
-                                 .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
-                                 .setErrorText (ex.getMessage ())
-                                 .setLinkedException (ex)
-                                 .build ());
-    }
   }
 
   @Nonnull
@@ -222,6 +182,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     // No prerequisite or prerequisite matched
     final ErrorList aErrorList = new ErrorList ();
     AbstractSchematronResource aSCH;
+    ESchematronOutput eOutput = ESchematronOutput.SVRL;
     switch (getValidationType ())
     {
       case SCHEMATRON_PURE:
@@ -249,6 +210,14 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
         aSCH = aSCHXSLT;
         break;
       }
+      case SCHEMATRON_OIOUBL:
+      {
+        final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
+        aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+        aSCH = aSCHXSLT;
+        eOutput = ESchematronOutput.OIOUBL;
+        break;
+      }
       default:
         throw new IllegalStateException ("Unsupported validation type: " + getValidationType ());
     }
@@ -256,7 +225,94 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     // consecutive calls!
     aSCH.setUseCache (m_bCacheSchematron);
 
-    performValidation (aSCH, aSCHRes, aNode, aSource, aErrorList);
+    try
+    {
+      // Main application of Schematron
+      final Document aDoc = aSCH.applySchematronValidation (new DOMSource (aNode));
+
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
+
+      switch (eOutput)
+      {
+        case SVRL:
+        {
+          final SchematronOutputType aSVRL = aDoc == null ? null : new SVRLMarshaller ().read (aDoc);
+          if (aSVRL != null)
+          {
+            // Valid Schematron - interpret result
+
+            // Convert failed asserts and successful reports to error objects
+            for (final SVRLFailedAssert aFailedAssert : SVRLHelper.getAllFailedAssertions (aSVRL))
+              aErrorList.add (aFailedAssert.getAsResourceError (aSource.getSystemID ()));
+            for (final SVRLSuccessfulReport aSuccessfulReport : SVRLHelper.getAllSuccessfulReports (aSVRL))
+              aErrorList.add (aSuccessfulReport.getAsResourceError (aSource.getSystemID ()));
+          }
+          else
+          {
+            // Schematron does not create SVRL!
+            aErrorList.add (SingleError.builderError ()
+                                       .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                       .setErrorText ("Internal error interpreting Schematron result")
+                                       .setErrorFieldName (XMLWriter.getNodeAsString (aDoc))
+                                       .build ());
+          }
+          break;
+        }
+        case OIOUBL:
+        {
+          if (aDoc != null && aDoc.getDocumentElement () != null)
+          {
+            // interpret result
+            /**
+             * <pre>
+             * <Schematron>
+             *   <Information>Checking OIOUBL-2.02 Invoice, 2017-09-15, Version 1.9.0.34429</Information>
+             *   <Error context="/Invoice">
+             *     <Pattern>cbc:UBLVersionID = '2.0'</Pattern>
+             *     <Description>[F-LIB001] Invalid UBLVersionID. Must be '2.0'</Description>
+             *     <Xpath>/Invoice[1]</Xpath>
+             *   </Error>
+             * </Schematron>
+             * </pre>
+             */
+
+            for (final Element eError : XMLHelper.getChildElementIterator (aDoc.getDocumentElement (), "Error"))
+            {
+              // final String sContext = eError.getAttribute ("context");
+              final String sPattern = XMLHelper.getFirstChildElementOfName (eError, "Pattern").getTextContent ();
+              final String sDescription = XMLHelper.getFirstChildElementOfName (eError, "Description")
+                                                   .getTextContent ();
+              final String sXPath = XMLHelper.getFirstChildElementOfName (eError, "Xpath").getTextContent ();
+              aErrorList.add (new SVRLErrorBuilder (sPattern).setErrorLocation (new SimpleLocation (aSource.getSystemID ()))
+                                                             .setErrorText (sDescription)
+                                                             .setErrorFieldName (sXPath)
+                                                             .build ());
+            }
+          }
+          else
+          {
+            // Schematron does not create SVRL!
+            aErrorList.add (SingleError.builderError ()
+                                       .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                       .setErrorText ("Internal error - no Schematron output created for OIOUBL")
+                                       .build ());
+          }
+          break;
+        }
+        default:
+          throw new IllegalStateException ("Unsupported output type");
+      }
+    }
+    catch (final Exception ex)
+    {
+      // Usually an error in the Schematron
+      aErrorList.add (SingleError.builderError ()
+                                 .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                 .setErrorText (ex.getMessage ())
+                                 .setLinkedException (ex)
+                                 .build ());
+    }
 
     return new ValidationResult (aArtefact, aErrorList);
   }

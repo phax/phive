@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CatalogueRequest xmlns="urn:oasis:names:specification:ubl:schema:xsd:CatalogueRequest-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:CatalogueRequest-2 UBL-CatalogueRequest-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= CATEXE_05_05_00_CatalogueRequest_v2p2.xml	
+		replaces= CATEXE_05_05_00_CatalogueRequest_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Charlotte Dahl Skovhus"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_CATEXE
+		description= "This document is produced as part of the OIOUBL Catalogue Exchange scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance 
+	ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Catalogue-CatAdv-1.0</cbc:ProfileID>
+	<cbc:ID>KANYLER</cbc:ID>
+	<cbc:IssueDate>2006-08-20</cbc:IssueDate>
+	<cbc:PricingUpdateRequestIndicator>false</cbc:PricingUpdateRequestIndicator>
+	<cbc:ItemUpdateRequestIndicator>false</cbc:ItemUpdateRequestIndicator>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK98798798</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK98798798</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Aalborg Sygehus</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Hobrovej</cbc:StreetName>
+			<cbc:BuildingNumber>18</cbc:BuildingNumber>
+			<cbc:CityName>Aalborg</cbc:CityName>
+			<cbc:PostalZone>9100</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Aalborg Sygehus</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK98798798</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>9000000852</cbc:ID>
+			<cbc:Name>Indkøbsafdelingen</cbc:Name>
+			<cbc:Telephone>26435467</cbc:Telephone>
+			<cbc:ElectronicMail>indkøb@as.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Anders</cbc:FirstName>
+			<cbc:FamilyName>Gren</cbc:FamilyName>
+			<cbc:JobTitle>katalogadministrator</cbc:JobTitle>
+		</cac:Person>
+	</cac:ReceiverParty>
+	<cac:ProviderParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK85285285</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK85285285</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>HospitalSupplies</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Vestergade</cbc:StreetName>
+			<cbc:BuildingNumber>45</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>HospitalSupplies</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK85285285</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>HS123</cbc:ID>
+			<cbc:Telephone>85858585</cbc:Telephone>
+			<cbc:ElectronicMail>info@hs.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Signe</cbc:FirstName>
+			<cbc:FamilyName>Skov</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+		</cac:Person>
+	</cac:ProviderParty>
+	<cac:RequestedClassificationScheme>
+		<cbc:ID>UNSPSC</cbc:ID>
+		<cbc:Name>UNSPSC</cbc:Name>
+		<cbc:AgencyName>UNECE</cbc:AgencyName>
+		<cbc:VersionID>7.0401</cbc:VersionID>
+		<cac:ClassificationCategory>
+			<cbc:CodeValue>42142500</cbc:CodeValue>
+			<cbc:Description>Injection and aspiration needles and accessories</cbc:Description>
+		</cac:ClassificationCategory>
+	</cac:RequestedClassificationScheme>
+</CatalogueRequest>

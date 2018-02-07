@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= COMDEL_02_02_00_Invoice_v2p2.xml	
+		replaces= COMDEL_02_02_00_Invoice_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Finn Christensen"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_COMDEL
+		description= "This document is produced as part of the OIOUBL Complex delivery procurement scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance 
+	ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdSimR-BilSim-1.0</cbc:ProfileID>
+	<cbc:ID>A00095678</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:IssueDate>2005-12-29</cbc:IssueDate>
+	<cbc:InvoiceTypeCode listAgencyID="320" listID="urn:oioubl:codelist:invoicetypecode-1.1">380</cbc:InvoiceTypeCode>
+	<cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+	<cac:OrderReference>
+		<cbc:ID>5002701</cbc:ID>
+		<cbc:UUID>9756b468-8815-1029-857a-e388fe63f399</cbc:UUID>
+		<cbc:IssueDate>2005-12-20</cbc:IssueDate>
+	</cac:OrderReference>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798003041308</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798003041308</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Revacenter BOMI</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Viborgvej</cbc:StreetName>
+				<cbc:BuildingNumber>7</cbc:BuildingNumber>
+				<cbc:CityName>Skive</cbc:CityName>
+				<cbc:PostalZone>7800</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="DK:SE">DK16356706</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Revacenter BOMI</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356706</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>23456</cbc:ID>
+				<cbc:Name>Bodil Skarv</cbc:Name>
+				<cbc:Telephone>98056689</cbc:Telephone>
+				<cbc:ElectronicMail>bs@reva-bomi.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK88666553</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK88666553</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Falck Hjælpemidler A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Grydevang</cbc:StreetName>
+				<cbc:BuildingNumber>2D</cbc:BuildingNumber>
+				<cbc:CityName>Allerød</cbc:CityName>
+				<cbc:PostalZone>3450</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Falck Hjælpemidler A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK88666553</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>7778</cbc:ID>
+				<cbc:Name>Diane Birk</cbc:Name>
+				<cbc:Telephone>45900248</cbc:Telephone>
+				<cbc:ElectronicMail>db@falck-hjaelpemidler.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:PaymentMeans>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansCode>42</cbc:PaymentMeansCode>
+		<cbc:PaymentDueDate>2006-01-15</cbc:PaymentDueDate>
+		<cbc:PaymentChannelCode listAgencyID="320" listID="urn:oioubl:codelist:paymentchannelcode-1.1">DK:BANK</cbc:PaymentChannelCode>
+		<cac:PayeeFinancialAccount>
+			<cbc:ID>1234567890</cbc:ID>
+			<cbc:PaymentNote>A00095678</cbc:PaymentNote>
+			<cac:FinancialInstitutionBranch>
+				<cbc:ID>1234</cbc:ID>
+			</cac:FinancialInstitutionBranch>
+		</cac:PayeeFinancialAccount>
+	</cac:PaymentMeans>
+	<cac:PaymentTerms>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansID>1</cbc:PaymentMeansID>
+		<cbc:Amount currencyID="DKK">41675.00</cbc:Amount>
+	</cac:PaymentTerms>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="DKK">8335.00</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="DKK">33340.00</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID ="DKK">8335.00</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID ="DKK">33340.00</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID ="DKK">8335.00</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID ="DKK">41675.00</cbc:TaxInclusiveAmount>
+		<cbc:PayableAmount currencyID ="DKK">41675.00</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">8335.00</cbc:LineExtensionAmount>
+		<cac:OrderLineReference>
+			<cbc:LineID>1</cbc:LineID>
+		</cac:OrderLineReference>
+		<cac:Delivery>
+			<cbc:ActualDeliveryDate>2005-12-29</cbc:ActualDeliveryDate>
+			<cac:DeliveryLocation>
+				<cac:Address>
+					<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+					<cbc:StreetName>Solvangen</cbc:StreetName>
+					<cbc:BuildingNumber>102</cbc:BuildingNumber>
+					<cbc:MarkAttention>Janni Andersen</cbc:MarkAttention>
+					<cbc:CityName>Hillerød</cbc:CityName>
+					<cbc:PostalZone>3400</cbc:PostalZone>
+					<cac:Country>
+						<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:Address>
+			</cac:DeliveryLocation>
+		</cac:Delivery>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">8335.00</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>Star Barn</cbc:Description>
+			<cbc:Name>Star Barn</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GTIN">5712345780121</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">8335.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+			<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+		</cac:Price>
+	</cac:InvoiceLine>
+	<cac:InvoiceLine>
+		<cbc:ID>2</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">8335.00</cbc:LineExtensionAmount>
+		<cac:OrderLineReference>
+			<cbc:LineID>2</cbc:LineID>
+		</cac:OrderLineReference>
+		<cac:Delivery>
+			<cbc:ActualDeliveryDate>2005-12-29</cbc:ActualDeliveryDate>
+			<cac:DeliveryLocation>
+				<cac:Address>
+					<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+					<cbc:StreetName>Solvangen</cbc:StreetName>
+					<cbc:BuildingNumber>102</cbc:BuildingNumber>
+					<cbc:MarkAttention>Janni Andersen</cbc:MarkAttention>
+					<cbc:CityName>Hillerød</cbc:CityName>
+					<cbc:PostalZone>3400</cbc:PostalZone>
+					<cac:Country>
+						<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:Address>
+			</cac:DeliveryLocation>
+		</cac:Delivery>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">8335.00</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>Star Barn</cbc:Description>
+			<cbc:Name>Star Barn</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GTIN">5712345780121</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">8335.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+			<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+		</cac:Price>
+	</cac:InvoiceLine>
+	<cac:InvoiceLine>
+		<cbc:ID>3</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">8335.00</cbc:LineExtensionAmount>
+		<cac:OrderLineReference>
+			<cbc:LineID>3</cbc:LineID>
+		</cac:OrderLineReference>
+		<cac:Delivery>
+			<cbc:ActualDeliveryDate>2005-12-29</cbc:ActualDeliveryDate>
+			<cac:DeliveryLocation>
+				<cac:Address>
+					<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+					<cbc:Floor>2</cbc:Floor>
+					<cbc:Room>th.</cbc:Room>
+					<cbc:StreetName>Ryvang 22</cbc:StreetName>
+					<cbc:BuildingNumber>22</cbc:BuildingNumber>
+					<cbc:MarkAttention>Per Damsgaard</cbc:MarkAttention>
+					<cbc:CityName>Allerød</cbc:CityName>
+					<cbc:PostalZone>3450</cbc:PostalZone>
+					<cac:Country>
+						<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:Address>
+			</cac:DeliveryLocation>
+		</cac:Delivery>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">8335.00</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>Star Barn</cbc:Description>
+			<cbc:Name>Star Barn</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GTIN">5712345780121</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">8335.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+			<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+		</cac:Price>
+	</cac:InvoiceLine>
+	<cac:InvoiceLine>
+		<cbc:ID>4</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">8335.00</cbc:LineExtensionAmount>
+		<cac:OrderLineReference>
+			<cbc:LineID>4</cbc:LineID>
+		</cac:OrderLineReference>
+		<cac:Delivery>
+			<cbc:ActualDeliveryDate>2005-12-29</cbc:ActualDeliveryDate>
+			<cac:DeliveryLocation>
+				<cac:Address>
+					<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+					<cbc:StreetName>Grydevang</cbc:StreetName>
+					<cbc:BuildingNumber>2D</cbc:BuildingNumber>
+					<cbc:MarkAttention>Falck Hjælpemidler A/S, Att. Diane Birk</cbc:MarkAttention>
+					<cbc:CityName>Allerød</cbc:CityName>
+					<cbc:PostalZone>3450</cbc:PostalZone>
+					<cac:Country>
+						<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:Address>
+			</cac:DeliveryLocation>
+		</cac:Delivery>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">8335.00</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">2083.75</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>Star Barn</cbc:Description>
+			<cbc:Name>Star Barn</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GTIN">5712345780121</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">8335.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+			<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>

@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderResponseSimple xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponseSimple-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:OrderResponseSimple-2 UBL-OrderResponseSimple-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= BASPRO_01_01_00_OrderResponseSimple_v2p2.xml	
+		replaces= BASPRO_01_01_00_OrderResponseSimple_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Finn Christensen"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_BASPRO
+		description= "This document is produced as part of the OIOUBL Basic procurement scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance 
+	ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdSimR-BilSim-1.0</cbc:ProfileID>
+	<cbc:ID>65830</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:UUID>9756b4ac-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:IssueDate>2005-11-02</cbc:IssueDate>
+	<cbc:AcceptedIndicator>true</cbc:AcceptedIndicator>
+	<cac:OrderReference>
+		<cbc:ID>5002701</cbc:ID>
+		<cbc:UUID>9756b468-8815-1029-857a-e388fe63f399</cbc:UUID>
+		<cbc:IssueDate>2005-11-01</cbc:IssueDate>
+	</cac:OrderReference>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK16356706</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK16356706</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Tavleverandøren</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Leverandørvej</cbc:StreetName>
+				<cbc:BuildingNumber>11</cbc:BuildingNumber>
+				<cbc:CityName>Dyssegård</cbc:CityName>
+				<cbc:PostalZone>2870</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Tavleleverandøren</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356706</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>23456</cbc:ID>
+				<cbc:Name>Hugo Jensen</cbc:Name>
+				<cbc:Telephone>15812337</cbc:Telephone>
+				<cbc:ElectronicMail>Hugo@tavl.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:BuyerCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Den Lille Skole</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Fredericiavej</cbc:StreetName>
+				<cbc:BuildingNumber>10</cbc:BuildingNumber>
+				<cbc:CityName>Helsingør</cbc:CityName>
+				<cbc:PostalZone>3000</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Den Lille Skole</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356709</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>7778</cbc:ID>
+				<cbc:Name>Hans Hansen</cbc:Name>
+				<cbc:Telephone>26532147</cbc:Telephone>
+				<cbc:ElectronicMail>Hans@dls.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:BuyerCustomerParty>
+</OrderResponseSimple>

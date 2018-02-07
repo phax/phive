@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderResponseSimple xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponseSimple-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:OrderResponseSimple-2 UBL-OrderResponseSimple-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= ADVORD_03_03_00_OrderResponseSimple_v2p2.xml	
+		replaces= ADVORD_03_03_00_OrderResponseSimple_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Finn Christensen"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_ADVORD
+		description= "This document is produced as part of the OIOUBL Advanced Ordering procurement scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance 
+	ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdAdvR-BilSim-1.0</cbc:ProfileID>
+	<cbc:ID>65830</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B2</cbc:UUID>
+	<cbc:IssueDate>2006-04-02</cbc:IssueDate>
+	<cbc:AcceptedIndicator>true</cbc:AcceptedIndicator>
+	<cac:OrderReference>
+		<cbc:ID>5002701</cbc:ID>
+		<cbc:UUID>6E09886B-DC6E-439F-82D1-7CCAC7F4E3B1</cbc:UUID>
+		<cbc:IssueDate>2006-04-01</cbc:IssueDate>
+	</cac:OrderReference>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK16356706</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK16356706</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>PricewaterhouseCoopers</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Strandvejen</cbc:StreetName>
+				<cbc:BuildingNumber>44</cbc:BuildingNumber>
+				<cbc:CityName>Hellerup</cbc:CityName>
+				<cbc:PostalZone>2900</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>PricewaterhouseCoopers</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356706</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>8149</cbc:ID>
+				<cbc:Name>Peter Skovborg</cbc:Name>
+				<cbc:Telephone>26532147</cbc:Telephone>
+				<cbc:ElectronicMail>Peter@pwc.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:BuyerCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000416642</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>IT- og Telestyrelsen</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Holsteinsgade</cbc:StreetName>
+				<cbc:BuildingNumber>300</cbc:BuildingNumber>
+				<cbc:CityName>København Ø</cbc:CityName>
+				<cbc:PostalZone>2100</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="DK:SE">DK16356709</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>IT- og Telestyrelsen</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356709</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>90015</cbc:ID>
+				<cbc:Name>Lasse Jensen</cbc:Name>
+				<cbc:Telephone>2653214</cbc:Telephone>
+				<cbc:ElectronicMail>Lasse@itst.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:BuyerCustomerParty>
+</OrderResponseSimple>

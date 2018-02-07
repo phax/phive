@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= COMPAY_03_03_00_Invoice_v2p2.xml	
+		replaces= COMPAY_03_03_00_Invoice_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Finn Christensen"
+		created= 2006-09-08
+		modified= 2006-09-15
+		issued= 2006-09-15
+		conformsTo= OIOUBL_ScenarioPackage_COMPAY
+		description= "This document is produced as part of the OIOUBL Complex Payment Cycle scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance 
+	ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdAdv-BilSim-1.0</cbc:ProfileID>
+	<cbc:ID>65830241</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:UUID>569ED478-0EBE-4817-A234-DFB9ACA85432</cbc:UUID>
+	<cbc:IssueDate>2006-04-01</cbc:IssueDate>
+	<cbc:InvoiceTypeCode listAgencyID="320" listID="urn:oioubl:codelist:invoicetypecode-1.1">380</cbc:InvoiceTypeCode>
+	<cbc:Note>Invoice note</cbc:Note>
+	<cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+	<cbc:AccountingCost>5250124502</cbc:AccountingCost>
+	<cac:OrderReference>
+		<cbc:ID>5002902</cbc:ID>
+		<cbc:IssueDate>2006-04-01</cbc:IssueDate>
+	</cac:OrderReference>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK73624230</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK73624230</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>High Tech Computer A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Gl. Køge Landevej</cbc:StreetName>
+				<cbc:BuildingNumber>40</cbc:BuildingNumber>
+				<cbc:CityName>Valby</cbc:CityName>
+				<cbc:PostalZone>2500</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="DK:SE">DK73624230</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>High Tech Computer A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK73624230</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK11223344</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK11223344</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>IT- og Telestyrelsen </cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Holsteinsgade</cbc:StreetName>
+				<cbc:BuildingNumber>300</cbc:BuildingNumber>
+				<cbc:CityName>København K</cbc:CityName>
+				<cbc:PostalZone>2100</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="DK:SE">DK11223344</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>IT- og Telestyrelsen</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK11223344</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>37854993</cbc:ID>
+				<cbc:Name>Jens Troelsen</cbc:Name>
+				<cbc:Telephone>26532150</cbc:Telephone>
+				<cbc:ElectronicMail>jenstroelsen@dls.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:PayeeParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK73624570</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK73624570</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Value Facturing A/S</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Bredgade</cbc:StreetName>
+			<cbc:BuildingNumber>40</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1260</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:CompanyID schemeID="DK:CVR">DK73624570</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+	</cac:PayeeParty>
+	<cac:Delivery>
+		<cbc:ActualDeliveryDate>2006-04-02</cbc:ActualDeliveryDate>
+	</cac:Delivery>
+	<cac:PaymentMeans>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansCode>42</cbc:PaymentMeansCode>
+		<cbc:PaymentDueDate>2006-04-25</cbc:PaymentDueDate>
+		<cbc:PaymentChannelCode listAgencyID="320" listID="urn:oioubl:codelist:paymentchannelcode-1.1">DK:BANK</cbc:PaymentChannelCode>
+		<cac:PayeeFinancialAccount>
+			<cbc:ID>0005704966</cbc:ID>
+			<cac:FinancialInstitutionBranch>
+				<cbc:ID>9566</cbc:ID>
+				<cbc:Name>New Bank</cbc:Name>
+			</cac:FinancialInstitutionBranch>
+		</cac:PayeeFinancialAccount>
+	</cac:PaymentMeans>
+	<cac:PaymentTerms>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansID>1</cbc:PaymentMeansID>
+		<cbc:Amount currencyID="DKK">9981.25</cbc:Amount>
+	</cac:PaymentTerms>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="DKK">1996.25</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="DKK">7985.00</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="DKK">1996.25</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="DKK">7985.00</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID ="DKK">1996.25</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="DKK">9981.25</cbc:TaxInclusiveAmount>
+		<cbc:PayableAmount currencyID="DKK">9981.25</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">7985.00</cbc:LineExtensionAmount>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">1996.25</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">7985.00</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">1996.25</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>LIFEBOOK E8020 with 15,4” widescreen display</cbc:Description>
+			<cbc:Name>LIFEBOOK E8020</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>VFY:C1320BT-11DK</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">7985.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+			<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CatalogueRequest xmlns="urn:oasis:names:specification:ubl:schema:xsd:CatalogueRequest-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:CatalogueRequest-2 UBL-CatalogueRequest-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= CATEXE_02_02_07_CatalogueRequest_v2p2.xml	
+		replaces= CATEXE_02_02_07_CatalogueRequest_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Charlotte Dahl Skovhus"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_CATEXE
+		description= "This document is produced as part of the OIOUBL Catalogue Exchange scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Catalogue-CatAdv-1.0</cbc:ProfileID>
+	<cbc:ID>23456</cbc:ID>
+	<cbc:Name>Mobile phones</cbc:Name>
+	<cbc:IssueDate>2006-05-28</cbc:IssueDate>
+	<cbc:IssueTime>09:30:00</cbc:IssueTime>
+	<cbc:PricingUpdateRequestIndicator>true</cbc:PricingUpdateRequestIndicator>
+	<cbc:ItemUpdateRequestIndicator>true</cbc:ItemUpdateRequestIndicator>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK98879887</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK98879887</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>KatalogAdm ApS</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Bredgade</cbc:StreetName>
+			<cbc:BuildingNumber>2</cbc:BuildingNumber>
+			<cbc:CityName>Helsingør</cbc:CityName>
+			<cbc:PostalZone>3000</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>KatalogAdm ApS</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK98879887</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>7913</cbc:ID>
+			<cbc:Name>Poul Poulsen</cbc:Name>
+			<cbc:Telephone>26435467</cbc:Telephone>
+			<cbc:ElectronicMail>info@katadm.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Poul</cbc:FirstName>
+			<cbc:FamilyName>Poulsen</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+		</cac:Person>
+	</cac:ReceiverParty>
+	<cac:ProviderParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK45656787</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK45656787</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Teleeksperten A/S</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Televej</cbc:StreetName>
+			<cbc:BuildingNumber>9</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Teleeksperten A/S</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK45656787</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>9000012345</cbc:ID>
+			<cbc:Name>Salgsafdelingen</cbc:Name>
+			<cbc:Telephone>40121212</cbc:Telephone>
+			<cbc:ElectronicMail>katalog@tele.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Henrik</cbc:FirstName>
+			<cbc:FamilyName>Holm</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+			<cbc:OrganizationDepartment>Salgsafdelingen</cbc:OrganizationDepartment>
+		</cac:Person>
+	</cac:ProviderParty>
+	<cac:ContractorCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Den Lille Skole</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Fredericiavej</cbc:StreetName>
+				<cbc:BuildingNumber>10</cbc:BuildingNumber>
+				<cbc:CityName>Helsingør</cbc:CityName>
+				<cbc:PostalZone>3000</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:Contact>
+				<cbc:ID>98765</cbc:ID>
+				<cbc:Name>Administrationen</cbc:Name>
+				<cbc:Telephone>26532147</cbc:Telephone>
+				<cbc:ElectronicMail>info@dls.dk</cbc:ElectronicMail>
+			</cac:Contact>
+			<cac:Person>
+				<cbc:FirstName>Søren</cbc:FirstName>
+				<cbc:FamilyName>Ibsen</cbc:FamilyName>
+				<cbc:Title>Hr</cbc:Title>
+				<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+				<cbc:OrganizationDepartment>Administrationen</cbc:OrganizationDepartment>
+			</cac:Person>
+		</cac:Party>
+	</cac:ContractorCustomerParty>
+	<cac:RequestedCatalogueReference>
+		<cbc:ID>CAT-EX-1</cbc:ID>
+		<cbc:Description languageID="en-us">Mobile phones and accessories</cbc:Description>
+		<cbc:VersionID>1.0</cbc:VersionID>
+	</cac:RequestedCatalogueReference>
+	<cac:RequestedClassificationScheme>
+		<cbc:ID>UNSPSC</cbc:ID>
+		<cbc:Name>UNSPSC</cbc:Name>
+		<cbc:AgencyName>UNECE</cbc:AgencyName>
+		<cbc:VersionID>7.0401</cbc:VersionID>
+		<cbc:LanguageID>en-US</cbc:LanguageID>
+		<cac:ClassificationCategory>
+			<cbc:CodeValue>4319150</cbc:CodeValue>
+			<cbc:Description languageID="en-us">Mobile phones</cbc:Description>
+		</cac:ClassificationCategory>
+		<cac:ClassificationCategory>
+			<cbc:CodeValue>43191609</cbc:CodeValue>
+			<cbc:Description languageID="en-us">Phone headsets</cbc:Description>
+		</cac:ClassificationCategory>
+	</cac:RequestedClassificationScheme>
+</CatalogueRequest>

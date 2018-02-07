@@ -173,6 +173,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
       case SCHEMATRON_PURE:
       case SCHEMATRON_SCH:
       case SCHEMATRON_XSLT:
+      case SCHEMATRON_OIOUBL:
         addExecutor (new ValidationExecutorSchematron (aVA));
         break;
       default:

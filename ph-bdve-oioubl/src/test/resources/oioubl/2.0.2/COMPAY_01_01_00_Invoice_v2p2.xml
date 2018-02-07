@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2 UBL-Invoice-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= COMPAY_01_01_00_Invoice_v2p2.xml	
+		replaces= COMPAY_01_01_00_Invoice_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Finn Christensen"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_COMPAY
+		description= "This document is produced as part of the OIOUBL Complex Payment Cycle scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance 
+	ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Procurement-OrdSel-BilSim-1.0</cbc:ProfileID>
+	<cbc:ID>A00095678</cbc:ID>
+	<cbc:CopyIndicator>false</cbc:CopyIndicator>
+	<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:IssueDate>2005-11-20</cbc:IssueDate>
+	<cbc:InvoiceTypeCode listAgencyID="320" listID="urn:oioubl:codelist:invoicetypecode-1.1">380</cbc:InvoiceTypeCode>
+	<cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+	<cbc:AccountingCost>5250124502</cbc:AccountingCost>
+	<cac:OrderReference>
+		<cbc:ID>5002701</cbc:ID>
+		<cbc:SalesOrderID>YTETXP</cbc:SalesOrderID>
+		<cbc:UUID>9756b468-8815-1029-857a-e388fe63f399</cbc:UUID>
+		<cbc:IssueDate>2005-11-01</cbc:IssueDate>
+	</cac:OrderReference>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK73624118</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK73624118</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>TQ3 Travel Solutions</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Gl. Køge Landevej</cbc:StreetName>
+				<cbc:BuildingNumber>22</cbc:BuildingNumber>
+				<cbc:CityName>Valby</cbc:CityName>
+				<cbc:PostalZone>2500</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID schemeID="DK:SE">DK73624118</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>TQ3 Travel Solutions</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK73624118</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>7778</cbc:ID>
+				<cbc:Name>Helle Navntofte</cbc:Name>
+				<cbc:Telephone>26804708</cbc:Telephone>
+				<cbc:ElectronicMail>hn@tq3.dk</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000700814</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000700814</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>IT- og Telestyrelsen</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Holsteinsgade</cbc:StreetName>
+				<cbc:BuildingNumber>63</cbc:BuildingNumber>
+				<cbc:CityName>København Ø</cbc:CityName>
+				<cbc:PostalZone>2100</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>IT- og Telestyrelsen</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356709</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>EBS123123123</cbc:ID>
+				<cbc:Name>Keld Thomsen</cbc:Name>
+			</cac:Contact>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:PayeeParty>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000416642</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000416642</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Eurocard A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>H. J. Holst Vej 5</cbc:StreetName>
+				<cbc:BuildingNumber>4</cbc:BuildingNumber>
+				<cbc:CityName>Brøndby</cbc:CityName>
+				<cbc:PostalZone>2605</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Eurocard A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK16356709</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>EBS123123123</cbc:ID>
+				<cbc:Name>Keld Thomsen</cbc:Name>
+			</cac:Contact>
+	</cac:PayeeParty>
+	<cac:DeliveryTerms>
+		<cbc:SpecialTerms>LIMITS OF LIABILITY: The applicable limits of liability for your journey on a flight operated by a carrier</cbc:SpecialTerms>
+	</cac:DeliveryTerms>
+	<cac:PaymentMeans>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansCode>48</cbc:PaymentMeansCode>
+		<cbc:PaymentDueDate>2006-01-15</cbc:PaymentDueDate>
+	</cac:PaymentMeans>
+	<cac:PaymentTerms>
+		<cbc:ID>1</cbc:ID>
+		<cbc:PaymentMeansID>1</cbc:PaymentMeansID>
+		<cbc:Amount currencyID="DKK">5031.25</cbc:Amount>
+	</cac:PaymentTerms>
+	<cac:AllowanceCharge>
+		<cbc:ID>1</cbc:ID>
+		<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+		<cbc:AllowanceChargeReason>Service Fee</cbc:AllowanceChargeReason>
+		<cbc:MultiplierFactorNumeric>1.000</cbc:MultiplierFactorNumeric>
+		<cbc:SequenceNumeric>1</cbc:SequenceNumeric>
+		<cbc:Amount currencyID="DKK">75.00</cbc:Amount>
+		<cbc:BaseAmount currencyID="DKK">75.00</cbc:BaseAmount>
+		<cac:TaxCategory>
+			<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+			<cbc:Percent>25</cbc:Percent>
+			<cac:TaxScheme>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+				<cbc:Name>Moms</cbc:Name>
+			</cac:TaxScheme>
+		</cac:TaxCategory>
+	</cac:AllowanceCharge>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="DKK">1006.25</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="DKK">4025.00</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID ="DKK">1006.25</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID ="DKK">3950.00</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID ="DKK">1006.25</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID ="DKK">5031.25</cbc:TaxInclusiveAmount>
+		<cbc:ChargeTotalAmount currencyID ="DKK">75.00</cbc:ChargeTotalAmount>
+		<cbc:PayableAmount currencyID ="DKK">5031.25</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">1975.00</cbc:LineExtensionAmount>
+		<cac:OrderLineReference>
+			<cbc:LineID>1</cbc:LineID>
+		</cac:OrderLineReference>
+		<cac:Delivery>
+			<cbc:ActualDeliveryDate>2006-04-24</cbc:ActualDeliveryDate>
+			<cac:DeliveryLocation>
+				<cac:Address>
+					<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+					<cbc:StreetName>Ellehammervej</cbc:StreetName>
+					<cbc:BuildingNumber>Terminal 3</cbc:BuildingNumber>
+					<cbc:MarkAttention>Keld Thomsen</cbc:MarkAttention>
+					<cbc:CityName>Kastrup</cbc:CityName>
+					<cbc:PostalZone>3400</cbc:PostalZone>
+					<cac:Country>
+						<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:Address>
+			</cac:DeliveryLocation>
+		</cac:Delivery>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">493.75</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">1975.00</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">493.75</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>Copenhagen - HAMBURG</cbc:Description>
+			<cbc:Name>Business</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>SK1218</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">1975.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+			<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+		</cac:Price>
+	</cac:InvoiceLine>
+	<cac:InvoiceLine>
+		<cbc:ID>2</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="EA">1.00</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="DKK">1975.00</cbc:LineExtensionAmount>
+		<cac:OrderLineReference>
+			<cbc:LineID>1</cbc:LineID>
+		</cac:OrderLineReference>
+		<cac:Delivery>
+			<cbc:ActualDeliveryDate>2006-04-25</cbc:ActualDeliveryDate>
+			<cac:DeliveryLocation>
+				<cac:Address>
+					<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+					<cbc:StreetName>Hamburgerstrasse</cbc:StreetName>
+					<cbc:BuildingNumber>Terminal 6</cbc:BuildingNumber>
+					<cbc:MarkAttention>Keld Thomsen</cbc:MarkAttention>
+					<cbc:CityName>Hamburg</cbc:CityName>
+					<cbc:PostalZone>3400</cbc:PostalZone>
+					<cac:Country>
+						<cbc:IdentificationCode>D</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:Address>
+			</cac:DeliveryLocation>
+		</cac:Delivery>
+		<cac:TaxTotal>
+			<cbc:TaxAmount currencyID="DKK">493.75</cbc:TaxAmount>
+			<cac:TaxSubtotal>
+				<cbc:TaxableAmount currencyID="DKK">1975.00</cbc:TaxableAmount>
+				<cbc:TaxAmount currencyID="DKK">493.75</cbc:TaxAmount>
+				<cac:TaxCategory>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+						<cbc:Name>Moms</cbc:Name>
+					</cac:TaxScheme>
+				</cac:TaxCategory>
+			</cac:TaxSubtotal>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Description>Hamburg - COPENHAGEN</cbc:Description>
+			<cbc:Name>Business</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>SK1426</cbc:ID>
+			</cac:SellersItemIdentification>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="DKK">1975.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+			<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>

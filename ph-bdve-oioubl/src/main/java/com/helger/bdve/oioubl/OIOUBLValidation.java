@@ -54,6 +54,7 @@ public final class OIOUBLValidation
   public static final VESID VID_OIOUBL_INVOICE = new VESID (GROUPID, "invoice", VERSION);
   public static final VESID VID_OIOUBL_ORDER = new VESID (GROUPID, "order", VERSION);
   public static final VESID VID_OIOUBL_ORDER_CANCELLATION = new VESID (GROUPID, "order-cancellation", VERSION);
+  public static final VESID VID_OIOUBL_ORDER_CHANGE = new VESID (GROUPID, "order-change", VERSION);
   public static final VESID VID_OIOUBL_ORDER_RESPONSE = new VESID (GROUPID, "order-response", VERSION);
   public static final VESID VID_OIOUBL_ORDER_RESPONSE_SIMPLE = new VESID (GROUPID, "order-response-simple", VERSION);
   public static final VESID VID_OIOUBL_REMINDER = new VESID (GROUPID, "reminder", VERSION);
@@ -85,6 +86,8 @@ public final class OIOUBLValidation
                                                                                _getCL ());
   private static final IReadableResource OIOUBL_ORDER_CANCELLATION = new ClassPathResource ("/oioubl/2.0.2/OIOUBL_OrderCancellation_Schematron.xsl",
                                                                                             _getCL ());
+  private static final IReadableResource OIOUBL_ORDER_CHANGE = new ClassPathResource ("/oioubl/2.0.2/OIOUBL_OrderChange_Schematron.xsl",
+                                                                                      _getCL ());
   private static final IReadableResource OIOUBL_ORDER_RESPONSE = new ClassPathResource ("/oioubl/2.0.2/OIOUBL_OrderResponse_Schematron.xsl",
                                                                                         _getCL ());
   private static final IReadableResource OIOUBL_ORDER_RESPONSE_SIMPLE = new ClassPathResource ("/oioubl/2.0.2/OIOUBL_OrderResponseSimple_Schematron.xsl",
@@ -98,9 +101,9 @@ public final class OIOUBLValidation
   {}
 
   @Nonnull
-  private static TypedValidationResource _createXSLT (@Nonnull final IReadableResource aRes)
+  private static TypedValidationResource _createTVR (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
+    return new TypedValidationResource (EValidationType.SCHEMATRON_OIOUBL,
                                         OIOUBLValidation.class.getClassLoader (),
                                         aRes);
   }
@@ -125,84 +128,90 @@ public final class OIOUBLValidation
                                                                                                             VID_OIOUBL_APPLICATION_RESPONSE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_APPLICATION_RESPONSE_T71,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_APPLICATION_RESPONSE)));
+                                                                           _createTVR (OIOUBL_APPLICATION_RESPONSE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE,
                                                                            "OIOUBL Catalogue " +
                                                                                                  VID_OIOUBL_CATALOGUE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_CATALOGUE_T19,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_CATALOGUE)));
+                                                                           _createTVR (OIOUBL_CATALOGUE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_DELETION,
                                                                            "OIOUBL Catalogue Deletion " +
                                                                                                           VID_OIOUBL_CATALOGUE_DELETION.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_CATALOGUE_DELETION_T22,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_CATALOGUE_DELETION)));
+                                                                           _createTVR (OIOUBL_CATALOGUE_DELETION)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE,
                                                                            "OIOUBL Catalogue Item Specification Update " +
                                                                                                                            VID_OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE_T20,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE)));
+                                                                           _createTVR (OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_PRICING_UPDATE,
                                                                            "OIOUBL Catalogue Pricing Update " +
                                                                                                                 VID_OIOUBL_CATALOGUE_PRICING_UPDATE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_CATALOGUE_PRICING_UPDATE_T21,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_CATALOGUE_PRICING_UPDATE)));
+                                                                           _createTVR (OIOUBL_CATALOGUE_PRICING_UPDATE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_REQUEST,
                                                                            "OIOUBL Catalogue Request " +
                                                                                                          VID_OIOUBL_CATALOGUE_REQUEST.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_CATALOGUE_REQUEST_T18,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_CATALOGUE_REQUEST)));
+                                                                           _createTVR (OIOUBL_CATALOGUE_REQUEST)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CREDIT_NOTE,
                                                                            "OIOUBL Credit Note " +
                                                                                                    VID_OIOUBL_CREDIT_NOTE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_CREDIT_NOTE_T14,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_CREDIT_NOTE)));
+                                                                           _createTVR (OIOUBL_CREDIT_NOTE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_INVOICE,
                                                                            "OIOUBL Invoice " +
                                                                                                VID_OIOUBL_INVOICE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_INVOICE_T10,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_INVOICE)));
+                                                                           _createTVR (OIOUBL_INVOICE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER,
                                                                            "OIOUBL Order " +
                                                                                              VID_OIOUBL_ORDER.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_ORDER_T01,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_ORDER)));
+                                                                           _createTVR (OIOUBL_ORDER)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_CANCELLATION,
                                                                            "OIOUBL Order Cancellation " +
                                                                                                           VID_OIOUBL_ORDER_CANCELLATION.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_ORDER_CANCELLATION,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_ORDER_CANCELLATION)));
+                                                                           _createTVR (OIOUBL_ORDER_CANCELLATION)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_CHANGE,
+                                                                           "OIOUBL Order Change " +
+                                                                                                    VID_OIOUBL_ORDER_CHANGE.getVersion (),
+                                                                           COIOUBLValidationArtefact.VK_OIOUBL_ORDER_CHANGE,
+                                                                           bNotDeprecated,
+                                                                           _createTVR (OIOUBL_ORDER_CHANGE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_RESPONSE,
                                                                            "OIOUBL Order Response " +
                                                                                                       VID_OIOUBL_ORDER_RESPONSE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_ORDER_RESPONSE_T76,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_ORDER_RESPONSE)));
+                                                                           _createTVR (OIOUBL_ORDER_RESPONSE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_RESPONSE_SIMPLE,
                                                                            "OIOUBL Order Response Simple " +
                                                                                                              VID_OIOUBL_ORDER_RESPONSE_SIMPLE.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_ORDER_RESPONSE_SIMPLE_T02,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_ORDER_RESPONSE_SIMPLE)));
+                                                                           _createTVR (OIOUBL_ORDER_RESPONSE_SIMPLE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_REMINDER,
                                                                            "OIOUBL Reminder " +
                                                                                                 VID_OIOUBL_REMINDER.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_REMINDER_T17,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_REMINDER)));
+                                                                           _createTVR (OIOUBL_REMINDER)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_STATEMENT,
                                                                            "OIOUBL Statement " +
                                                                                                  VID_OIOUBL_STATEMENT.getVersion (),
                                                                            COIOUBLValidationArtefact.VK_OIOUBL_STATEMENT_T26,
                                                                            bNotDeprecated,
-                                                                           _createXSLT (OIOUBL_STATEMENT)));
+                                                                           _createTVR (OIOUBL_STATEMENT)));
   }
 }

@@ -79,6 +79,9 @@ public final class COIOUBLValidationArtefact
   public static final IBusinessSpecification OIOUBL_ORDER_CANCELLATION = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
                                                                                               "order-cancellation",
                                                                                               "OIOUBL Order Cancellation");
+  public static final IBusinessSpecification OIOUBL_ORDER_CHANGE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
+                                                                                        "order-change",
+                                                                                        "OIOUBL Order Change");
   public static final IBusinessSpecification OIOUBL_ORDER_RESPONSE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
                                                                                           "order-response",
                                                                                           "OIOUBL Order Response");
@@ -126,6 +129,13 @@ public final class COIOUBLValidationArtefact
   public static final ValidationArtefactKey VK_OIOUBL_ORDER_CANCELLATION = new ValidationArtefactKey.Builder ().setBusinessSpecification (OIOUBL_ORDER_CANCELLATION)
                                                                                                                .setTransaction (T_O_C)
                                                                                                                .build ();
+  private static SpecificationTransaction T_O_C2 = new SpecificationTransaction ("urn:id:oioubl:order-change",
+                                                                                 "Order Change",
+                                                                                 EUBL21DocumentType.ORDER_CHANGE,
+                                                                                 UBL21NamespaceContext.getInstance ());
+  public static final ValidationArtefactKey VK_OIOUBL_ORDER_CHANGE = new ValidationArtefactKey.Builder ().setBusinessSpecification (OIOUBL_ORDER_CHANGE)
+                                                                                                         .setTransaction (T_O_C2)
+                                                                                                         .build ();
   public static final ValidationArtefactKey VK_OIOUBL_ORDER_RESPONSE_T76 = new ValidationArtefactKey.Builder ().setBusinessSpecification (OIOUBL_ORDER_RESPONSE)
                                                                                                                .setTransaction (EBIITransaction.T76)
                                                                                                                .build ();

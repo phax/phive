@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Catalogue xmlns="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2 UBL-Catalogue-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= CATEXE_02_02_07_Catalogue_v2p2.xml	
+		replaces= CATEXE_02_02_07_Catalogue_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Charlotte Dahl Skovhus"
+		created= 2006-09-08
+		modified= 2007-06-19
+		issued= 2007-06-19
+		conformsTo= OIOUBL_ScenarioPackage_CATEXE
+		description= "This document is produced as part of the OIOUBL Catalogue Exchange scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Catalogue-CatAdv-1.0</cbc:ProfileID>
+	<cbc:ID>CAT-EX-1</cbc:ID>
+	<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:Name>Mobile phone</cbc:Name>
+	<cbc:IssueDate>2006-05-30</cbc:IssueDate>
+	<cbc:IssueTime>12:00:00</cbc:IssueTime>
+	<cbc:RevisionDate>2006-05-01</cbc:RevisionDate>
+	<cbc:RevisionTime>09:30:47</cbc:RevisionTime>
+	<cbc:Description>Teleekspertens sells alle the best-known models in mobile phone and accessories.</cbc:Description>
+	<cbc:VersionID>1.1</cbc:VersionID>
+	<cbc:PreviousVersionID>1.0</cbc:PreviousVersionID>
+	<cac:ValidityPeriod>
+		<cbc:StartDate>2006-05-30</cbc:StartDate>
+		<cbc:EndDate>2007-05-30</cbc:EndDate>
+	</cac:ValidityPeriod>
+	<cac:ReferencedContract>
+		<cbc:ID>TELE-1</cbc:ID>
+		<cac:ContractDocumentReference>
+			<cbc:ID>TELE-1-CON</cbc:ID>
+			<cac:Attachment>
+				<cac:ExternalReference>
+					<cbc:URI>http://www.teleeksperten.dk/aftale_TELE-1-CON.pdf</cbc:URI>
+				</cac:ExternalReference>
+			</cac:Attachment>
+		</cac:ContractDocumentReference>
+	</cac:ReferencedContract>
+	<cac:ProviderParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK45656787</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK45656787</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Teleeksperten A/S</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Televej</cbc:StreetName>
+			<cbc:BuildingNumber>9</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Teleeksperten A/S</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK45656787</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>90000012345</cbc:ID>
+			<cbc:Name>Salgsafdelingen</cbc:Name>
+			<cbc:Telephone>40121212</cbc:Telephone>
+			<cbc:ElectronicMail>katalog@tele.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Henrik</cbc:FirstName>
+			<cbc:FamilyName>Holm</cbc:FamilyName>
+			<cbc:Title>Hr</cbc:Title>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+			<cbc:OrganizationDepartment>Salgsafdelingen</cbc:OrganizationDepartment>
+		</cac:Person>
+	</cac:ProviderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK98879887</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK98879887</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>KatalogAdm ApS</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Bredgade</cbc:StreetName>
+			<cbc:BuildingNumber>2</cbc:BuildingNumber>
+			<cbc:CityName>Helsingør</cbc:CityName>
+			<cbc:PostalZone>3000</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>KatalogAdm ApS</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK98879887</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>7913</cbc:ID>
+			<cbc:Name>Poul Poulsen</cbc:Name>
+			<cbc:Telephone>26435467</cbc:Telephone>
+			<cbc:ElectronicMail>info@katadm.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Poul</cbc:FirstName>
+			<cbc:FamilyName>Poulsen</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+		</cac:Person>
+	</cac:ReceiverParty>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK45656787</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK45656787</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Teleeksperten A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Televej</cbc:StreetName>
+				<cbc:BuildingNumber>9</cbc:BuildingNumber>
+				<cbc:CityName>København K</cbc:CityName>
+				<cbc:PostalZone>1171</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Teleeksperten A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK45656787</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>90000012345</cbc:ID>
+				<cbc:Name>Salgsafdelingen</cbc:Name>
+				<cbc:Telephone>40121212</cbc:Telephone>
+				<cbc:ElectronicMail>katalog@tele.dk</cbc:ElectronicMail>
+			</cac:Contact>
+			<cac:Person>
+				<cbc:FirstName>Henrik</cbc:FirstName>
+				<cbc:FamilyName>Holm</cbc:FamilyName>
+				<cbc:Title>Hr</cbc:Title>
+				<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+				<cbc:OrganizationDepartment>Salgsafdelingen</cbc:OrganizationDepartment>
+			</cac:Person>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:ContractorCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeAgencyID="9" schemeID="GLN">5798000416604</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Den Lille Skole</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Fredericiavej</cbc:StreetName>
+				<cbc:BuildingNumber>10</cbc:BuildingNumber>
+				<cbc:CityName>Helsingør</cbc:CityName>
+				<cbc:PostalZone>3000</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:Contact>
+				<cbc:ID>98765</cbc:ID>
+				<cbc:Name>Administrationen</cbc:Name>
+				<cbc:Telephone>26532147</cbc:Telephone>
+				<cbc:ElectronicMail>info@dls.dk</cbc:ElectronicMail>
+			</cac:Contact>
+			<cac:Person>
+				<cbc:FirstName>Søren</cbc:FirstName>
+				<cbc:FamilyName>Ibsen</cbc:FamilyName>
+				<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+				<cbc:OrganizationDepartment>Administrationen</cbc:OrganizationDepartment>
+			</cac:Person>
+		</cac:Party>
+	</cac:ContractorCustomerParty>
+	<cac:TradingTerms>
+		<cbc:Information>2 % discount on payment within 10 days</cbc:Information>
+	</cac:TradingTerms>
+	<cac:CatalogueLine>
+		<cbc:ID>NM-457896432</cbc:ID>
+		<cbc:ActionCode listAgencyID="320" listID="urn:oioubl:codelist:catalogueactioncode-1.1">Delete</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>EA</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="EA">1</cbc:ContentUnitQuantity>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cbc:MaximumOrderQuantity>1000</cbc:MaximumOrderQuantity>
+		<cbc:WarrantyInformation>12 months warranty from purchase date</cbc:WarrantyInformation>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2006-08-01</cbc:StartDate>
+			<cbc:EndDate>2007-03-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:AccessoryRelatedItem>
+			<cbc:ID>BTH-567892356 </cbc:ID>
+			<cbc:Quantity unitCode="EA">1</cbc:Quantity>
+			<cbc:Description>The Blue Toth headset is an optional priced headset. An ordinary wire based headset is included in the mobile telephone price</cbc:Description>
+		</cac:AccessoryRelatedItem>
+		<cac:RequiredRelatedItem>
+			<cbc:ID>SUB-678953345</cbc:ID>
+			<cbc:Quantity unitCode="EA">1</cbc:Quantity>
+			<cbc:Description>The price for Nokia mobile telephone ABC requires a 12 months subscription of type C</cbc:Description>
+		</cac:RequiredRelatedItem>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">3</cbc:LeadTimeMeasure>
+			<cbc:TradingRestrictions/>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">760.00</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-08-01</cbc:StartDate>
+					<cbc:EndDate>2007-03-31</cbc:EndDate>
+				</cac:ValidityPeriod>
+				<cac:AllowanceCharge>
+					<cbc:ID>1</cbc:ID>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:MultiplierFactorNumeric>0.05</cbc:MultiplierFactorNumeric>
+					<cbc:Amount currencyID="DKK">40.00</cbc:Amount>
+					<cbc:BaseAmount currencyID="DKK">800.00</cbc:BaseAmount>
+					<cac:TaxCategory>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+						<cbc:Percent>25</cbc:Percent>
+						<cac:TaxScheme>
+							<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+							<cbc:Name>Moms</cbc:Name>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:AllowanceCharge>
+			</cac:Price>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="EA">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="EA">1</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Nokia Mobile telephone - Type ABC</cbc:Description>
+			<cbc:PackQuantity unitCode="EA">1</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>1</cbc:PackSizeNumeric>
+			<cbc:Name>Nokia ABC</cbc:Name>
+			<cac:SellersItemIdentification>
+				<cbc:ID>87067606</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:ManufacturersItemIdentification>
+				<cbc:ID>N70UK</cbc:ID>
+			</cac:ManufacturersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">43191501</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>NM-457896789</cbc:ID>
+		<cbc:ActionCode listAgencyID="320" listID="urn:oioubl:codelist:catalogueactioncode-1.1">Add</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>EA</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="EA">1</cbc:ContentUnitQuantity>
+		<cbc:OrderQuantityIncrementNumeric>1</cbc:OrderQuantityIncrementNumeric>
+		<cbc:MinimumOrderQuantity>1</cbc:MinimumOrderQuantity>
+		<cbc:MaximumOrderQuantity>1000</cbc:MaximumOrderQuantity>
+		<cbc:WarrantyInformation>12 months warranty from purchase date</cbc:WarrantyInformation>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2006-08-01</cbc:StartDate>
+			<cbc:EndDate>2007-03-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:AccessoryRelatedItem>
+			<cbc:ID>BTH-567892356 </cbc:ID>
+			<cbc:Quantity unitCode="EA">1</cbc:Quantity>
+			<cbc:Description>The Blue Toth headset is an optional priced headset. An ordinary wire based headset is included in the mobile telephone price</cbc:Description>
+		</cac:AccessoryRelatedItem>
+		<cac:RequiredRelatedItem>
+			<cbc:ID>SUB-678953345</cbc:ID>
+			<cbc:Quantity unitCode="EA">1</cbc:Quantity>
+			<cbc:Description>The price for Nokia mobile telephone BCD requires a 12 months subscription of type C</cbc:Description>
+		</cac:RequiredRelatedItem>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">3</cbc:LeadTimeMeasure>
+			<cbc:TradingRestrictions/>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">807.50</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-08-01</cbc:StartDate>
+					<cbc:EndDate>2007-03-31</cbc:EndDate>
+				</cac:ValidityPeriod>
+				<cac:AllowanceCharge>
+					<cbc:ID>DIS</cbc:ID>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:MultiplierFactorNumeric>0.05</cbc:MultiplierFactorNumeric>
+					<cbc:Amount currencyID="DKK">42.50</cbc:Amount>
+					<cbc:BaseAmount currencyID="DKK">850.00</cbc:BaseAmount>
+					<cac:TaxCategory>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+						<cbc:Percent>25</cbc:Percent>
+						<cac:TaxScheme>
+							<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+							<cbc:Name>Moms</cbc:Name>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:AllowanceCharge>
+			</cac:Price>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="EA">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="EA">1</cbc:ConsumerUnitQuantity>
+				<cbc:HazardousRiskIndicator>false</cbc:HazardousRiskIndicator>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Nokia Mobile telephone - Type BCD</cbc:Description>
+			<cbc:PackQuantity unitCode="EA">1</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>1</cbc:PackSizeNumeric>
+			<cbc:Name>Nokia BCD</cbc:Name>
+			<cbc:Keyword>Mobile Phone</cbc:Keyword>
+			<cbc:Keyword>Phone</cbc:Keyword>
+			<cbc:Keyword>Cell Phone</cbc:Keyword>
+			<cbc:BrandName>Nokia</cbc:BrandName>
+			<cbc:ModelName>BCD</cbc:ModelName>
+			<cac:SellersItemIdentification>
+				<cbc:ID>87067610</cbc:ID>
+				<cac:PhysicalAttribute>
+					<cbc:AttributeID>CAM</cbc:AttributeID>
+					<cbc:Description>3.1 megapixel camera with 20x digital zoom</cbc:Description>
+				</cac:PhysicalAttribute>
+				<cac:MeasurementDimension>
+					<cbc:AttributeID schemeID="UOM">WT</cbc:AttributeID>
+					<cbc:Measure unitCode="GRM">132</cbc:Measure>
+					<cbc:Description>Weight</cbc:Description>
+				</cac:MeasurementDimension>
+			</cac:SellersItemIdentification>
+			<cac:ManufacturersItemIdentification>
+				<cbc:ID>N10UK</cbc:ID>
+			</cac:ManufacturersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">43191501</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>NM-457896432</cbc:ID>
+		<cbc:ActionCode listAgencyID="320" listID="urn:oioubl:codelist:catalogueactioncode-1.1">Update</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>EA</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="EA">1</cbc:ContentUnitQuantity>
+		<cbc:WarrantyInformation>12 months warranty from purchase date</cbc:WarrantyInformation>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2006-08-01</cbc:StartDate>
+			<cbc:EndDate>2007-03-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">3</cbc:LeadTimeMeasure>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">449.00</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-08-01</cbc:StartDate>
+					<cbc:EndDate>2007-03-31</cbc:EndDate>
+				</cac:ValidityPeriod>
+			</cac:Price>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="EA">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="EA">1</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Nokia Mobile BlueToth Headset B2 - 750i</cbc:Description>
+			<cbc:PackQuantity unitCode="EA">1</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>1</cbc:PackSizeNumeric>
+			<cbc:Name>Nokia B2</cbc:Name>
+			<cbc:BrandName>Nokia BT</cbc:BrandName>
+			<cbc:ModelName>750i</cbc:ModelName>
+			<cac:SellersItemIdentification>
+				<cbc:ID>87067606</cbc:ID>
+				<cac:MeasurementDimension>
+					<cbc:AttributeID>WT</cbc:AttributeID>
+					<cbc:Measure unitCode="GRM">17</cbc:Measure>
+				</cac:MeasurementDimension>
+			</cac:SellersItemIdentification>
+			<cac:ManufacturersItemIdentification>
+				<cbc:ID>B2-750i</cbc:ID>
+			</cac:ManufacturersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">43191609</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+		</cac:Item>
+	</cac:CatalogueLine>
+	<cac:CatalogueLine>
+		<cbc:ID>SUB-53478965</cbc:ID>
+		<cbc:ActionCode listAgencyID="320" listID="urn:oioubl:codelist:catalogueactioncode-1.1">Update</cbc:ActionCode>
+		<cbc:OrderableIndicator>true</cbc:OrderableIndicator>
+		<cbc:OrderableUnit>EA</cbc:OrderableUnit>
+		<cbc:ContentUnitQuantity unitCode="EA">1</cbc:ContentUnitQuantity>
+		<cac:LineValidityPeriod>
+			<cbc:StartDate>2006-04-30</cbc:StartDate>
+			<cbc:EndDate>2007-03-31</cbc:EndDate>
+		</cac:LineValidityPeriod>
+		<cac:RequiredItemLocationQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">500.00</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="EA">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-08-01</cbc:StartDate>
+					<cbc:EndDate>2006-08-31</cbc:EndDate>
+				</cac:ValidityPeriod>
+			</cac:Price>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:Item>
+			<cbc:Description>Subscription C - 6 months sold with mobile phone</cbc:Description>
+			<cbc:Name>Subscription 6 months</cbc:Name>
+			<cbc:BrandName>TeleDanmark</cbc:BrandName>
+			<cbc:ModelName>Subscription C</cbc:ModelName>
+			<cac:SellersItemIdentification>
+				<cbc:ID>SUB-C</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">87654321</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+		</cac:Item>
+	</cac:CatalogueLine>
+</Catalogue>

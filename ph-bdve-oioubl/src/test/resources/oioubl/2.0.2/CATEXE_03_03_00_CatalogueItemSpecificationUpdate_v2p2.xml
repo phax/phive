@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CatalogueItemSpecificationUpdate xmlns="urn:oasis:names:specification:ubl:schema:xsd:CatalogueItemSpecificationUpdate-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:CatalogueItemSpecificationUpdate-2 UBL-CatalogueItemSpecificationUpdate-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= CATEXE_03_03_00_CatalogueItemSpecificationUpdate_v2p2.xml	
+		replaces= CATEXE_03_03_00_CatalogueItemSpecificationUpdate_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Charlotte Dahl Skovhus"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_CATEXE
+		description= "This document is produced as part of the OIOUBL Catalogue Exchange scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Catalogue-CatAdv-1.0</cbc:ProfileID>
+	<cbc:ID>CAT-EX-2_ITEMUPDATE</cbc:ID>
+	<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:Name>Paper</cbc:Name>
+	<cbc:IssueDate>2006-05-01</cbc:IssueDate>
+	<cbc:IssueTime>12:00:00</cbc:IssueTime>
+	<cbc:RevisionDate>2006-04-01</cbc:RevisionDate>
+	<cbc:RevisionTime>09:30:00</cbc:RevisionTime>
+	<cbc:Note>Papirhuset A/S has recently updated the specifications on most product descriptions</cbc:Note>
+	<cbc:Description>Catalogue update for paper products</cbc:Description>
+	<cbc:VersionID>1.3</cbc:VersionID>
+	<cac:RelatedCatalogueReference>
+		<cbc:ID>CAT-EX-2</cbc:ID>
+		<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f398</cbc:UUID>
+	</cac:RelatedCatalogueReference>
+	<cac:ReferencedContract>
+		<cbc:ID>PAPER-1</cbc:ID>
+		<cac:ContractDocumentReference>
+			<cbc:ID>PAPER-1-CON</cbc:ID>
+			<cac:Attachment>
+				<cac:ExternalReference>
+					<cbc:URI>http://www.papirhuset.dk/aftale_PAPIR-1-CON.pdf</cbc:URI>
+				</cac:ExternalReference>
+			</cac:Attachment>
+		</cac:ContractDocumentReference>
+	</cac:ReferencedContract>
+	<cac:ProviderParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK87493746</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK87493746</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Papirhuset A/S</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Papirstræde</cbc:StreetName>
+			<cbc:BuildingNumber>9</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Papirhuset A/S</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK87493746</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>9000009876</cbc:ID>
+			<cbc:Name>Salgsafdelingen</cbc:Name>
+			<cbc:Telephone>26908978</cbc:Telephone>
+			<cbc:ElectronicMail>katalog@papirhuset.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Lene</cbc:FirstName>
+			<cbc:FamilyName>Olsen</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+			<cbc:OrganizationDepartment>Salgsafdelingen</cbc:OrganizationDepartment>
+		</cac:Person>
+	</cac:ProviderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK98879887</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK98879887</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>KatalogAdm ApS</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Bredgade</cbc:StreetName>
+			<cbc:BuildingNumber>2</cbc:BuildingNumber>
+			<cbc:CityName>Helsingør</cbc:CityName>
+			<cbc:PostalZone>3000</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>KatalogAdm ApS</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK98879887</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>7913</cbc:ID>
+			<cbc:Name>Poul Poulsen</cbc:Name>
+			<cbc:Telephone>26435467</cbc:Telephone>
+			<cbc:ElectronicMail>info@katadm.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Poul</cbc:FirstName>
+			<cbc:FamilyName>Poulsen</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+		</cac:Person>
+	</cac:ReceiverParty>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK87493746</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK87493746</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Papirhuset A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Papirstræde</cbc:StreetName>
+				<cbc:BuildingNumber>9</cbc:BuildingNumber>
+				<cbc:CityName>København K</cbc:CityName>
+				<cbc:PostalZone>1171</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Papirhuset A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK87493746</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>9000009876</cbc:ID>
+				<cbc:Name>Salgsafdelingen</cbc:Name>
+				<cbc:Telephone>26908978</cbc:Telephone>
+				<cbc:ElectronicMail>katalog@papirhuset.dk</cbc:ElectronicMail>
+			</cac:Contact>
+			<cac:Person>
+				<cbc:FirstName>Lene</cbc:FirstName>
+				<cbc:FamilyName>Olsen</cbc:FamilyName>
+				<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+				<cbc:OrganizationDepartment>Salgsafdelingen</cbc:OrganizationDepartment>
+			</cac:Person>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:CatalogueItemSpecificationUpdateLine>
+		<cbc:ID>87493746-121643</cbc:ID>
+		<cac:Item>
+			<cbc:Description>A4 Paper, White</cbc:Description>
+			<cbc:PackQuantity unitCode="CS">1</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>5</cbc:PackSizeNumeric>
+			<cbc:Name>A4 Paper</cbc:Name>
+			<cbc:Keyword>Copying paper</cbc:Keyword>
+			<cbc:Keyword>Printing paper</cbc:Keyword>
+			<cbc:BrandName>Papirhuset</cbc:BrandName>
+			<cac:SellersItemIdentification>
+				<cbc:ID>121643</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">14111507</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Colour</cbc:Name>
+				<cbc:Value>White</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Environment code</cbc:Name>
+				<cbc:Value>Svanemærket</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Weight</cbc:Name>
+				<cbc:Value>80 Grm per m2</cbc:Value>
+			</cac:AdditionalItemProperty>
+		</cac:Item>
+	</cac:CatalogueItemSpecificationUpdateLine>
+	<cac:CatalogueItemSpecificationUpdateLine>
+		<cbc:ID>87493746-121645</cbc:ID>
+		<cac:Item>
+			<cbc:Description>A3 Paper, White</cbc:Description>
+			<cbc:PackQuantity unitCode="CS">1</cbc:PackQuantity>
+			<cbc:PackSizeNumeric>5</cbc:PackSizeNumeric>
+			<cbc:Name>A3 Paper</cbc:Name>
+			<cbc:Keyword>Copying paper</cbc:Keyword>
+			<cbc:Keyword>Printing paper</cbc:Keyword>
+			<cbc:BrandName>Papirhuset</cbc:BrandName>
+			<cac:SellersItemIdentification>
+				<cbc:ID>121645</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="UNSPSC" listAgencyID="113" listVersionID="7.0401">14111507</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Colour</cbc:Name>
+				<cbc:Value>White</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Environment code</cbc:Name>
+				<cbc:Value>Svanemærket</cbc:Value>
+			</cac:AdditionalItemProperty>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Weight</cbc:Name>
+				<cbc:Value>80 Grm per m2</cbc:Value>
+			</cac:AdditionalItemProperty>
+		</cac:Item>
+	</cac:CatalogueItemSpecificationUpdateLine>
+</CatalogueItemSpecificationUpdate>

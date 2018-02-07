@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2 UBL-ApplicationResponse-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= CATEXE_02_02_07_ApplicationResponse_v2p2.xml	
+		replaces= CATEXE_02_02_07_ApplicationResponse_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Charlotte Dahl Skovhus"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_CATEXE
+		description= "This document is produced as part of the OIOUBL Catalogue Exchange scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Catalogue-CatAdv-1.0</cbc:ProfileID>
+	<cbc:ID>2346</cbc:ID>
+	<cbc:IssueDate>2006-06-01</cbc:IssueDate>
+	<cbc:IssueTime>10:00:00</cbc:IssueTime>
+	<cbc:Note languageID="en-us">The catalogue is rejected because of the mandatory subscriptions</cbc:Note>
+	<cac:SenderParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK98879887</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK98879887</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>KatalogAdm ApS</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Bredgade</cbc:StreetName>
+			<cbc:BuildingNumber>2</cbc:BuildingNumber>
+			<cbc:CityName>Helsingør</cbc:CityName>
+			<cbc:PostalZone>3000</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>KatalogAdm ApS</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK98879887</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+	</cac:SenderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK45656787</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK45656787</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name languageID="en-us">Teleeksperten A/S</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Televej</cbc:StreetName>
+			<cbc:BuildingNumber>9</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Teleeksperten A/S</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK45656787</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+	</cac:ReceiverParty>
+	<cac:DocumentResponse>
+		<cac:Response>
+			<cbc:ReferenceID>2</cbc:ReferenceID>
+			<cbc:ResponseCode listAgencyID="320" listID="urn:oioubl:codelist:responsecode-1.1">BusinessReject</cbc:ResponseCode>
+			<cbc:Description languageID="en-us">The code BusinessReject means that the document was rejected by the Receiver</cbc:Description>
+		</cac:Response>
+		<cac:DocumentReference>
+			<cbc:ID>1234</cbc:ID>
+			<cbc:CopyIndicator>false</cbc:CopyIndicator>
+			<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+			<cbc:IssueDate>2006-04-30</cbc:IssueDate>
+			<cbc:DocumentTypeCode listAgencyID="320" listID="urn:oioubl:codelist:responsedocumenttypecode-1.1">Catalogue</cbc:DocumentTypeCode>
+		</cac:DocumentReference>
+	</cac:DocumentResponse>
+</ApplicationResponse>

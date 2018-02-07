@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CataloguePricingUpdate xmlns="urn:oasis:names:specification:ubl:schema:xsd:CataloguePricingUpdate-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:oasis:names:specification:ubl:schema:xsd:CoreComponentParameters-2" xmlns:sdt="urn:oasis:names:specification:ubl:schema:xsd:SpecializedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:specification:ubl:schema:xsd:CataloguePricingUpdate-2 UBL-CataloguePricingUpdate-2.0.xsd">
+
+<!--
+******************************************************************************************************************
+
+		OIOUBL Instance Documentation	
+
+		title= CATEXE_04_04_00_CataloguePricingUpdate_v2p2.xml	
+		replaces= CATEXE_04_04_00_CataloguePricingUpdate_v2p1.xml	
+		publisher= "IT og Telestyrelsen"
+		Creator= "Charlotte Dahl Skovhus"
+		created= 2006-09-08
+		modified= 2007-03-26
+		issued= 2007-03-26
+		conformsTo= OIOUBL_ScenarioPackage_CATEXE
+		description= "This document is produced as part of the OIOUBL Catalogue Exchange scenario package"
+		rights= "It can be used following the Common Creative Licence"
+		
+		all terms derived from http://dublincore.org/documents/dcmi-terms/
+
+		For more information, see www.oioubl.dk	or email oioubl@itst.dk
+		
+******************************************************************************************************************
+-->
+<!-- The following TestInstance process instruction is for customization usage. It indicates that the instance is for testing purposes -->
+<?TestInstance ResponseTo="smtp:test@company.dk"
+	description= "apply your comment here"
+?>
+
+	<cbc:UBLVersionID>2.0</cbc:UBLVersionID>
+	<cbc:CustomizationID>OIOUBL-2.02</cbc:CustomizationID>
+	<cbc:ProfileID schemeAgencyID="320" schemeID="urn:oioubl:id:profileid-1.2">Catalogue-CatAdv-1.0</cbc:ProfileID>
+	<cbc:ID>CAT-EX-2_PRICEUPDATE</cbc:ID>
+	<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f399</cbc:UUID>
+	<cbc:Name>Paper</cbc:Name>
+	<cbc:IssueDate>2006-05-15</cbc:IssueDate>
+	<cbc:IssueTime>12:00:00</cbc:IssueTime>
+	<cbc:RevisionDate>2006-05-15</cbc:RevisionDate>
+	<cbc:RevisionTime>09:30:00</cbc:RevisionTime>
+	<cbc:Note>The price update is valid from june 1.</cbc:Note>
+	<cbc:Description>Annual price update according to contract</cbc:Description>
+	<cbc:VersionID>1.4</cbc:VersionID>
+	<cac:ValidityPeriod>
+		<cbc:StartDate>2006-06-01</cbc:StartDate>
+		<cbc:EndDate>2007-05-30</cbc:EndDate>
+		<cbc:Description>The Catalogue prices are valid for a year</cbc:Description>
+	</cac:ValidityPeriod>
+	<cac:RelatedCatalogueReference>
+		<cbc:ID>CAT-EX-2</cbc:ID>
+		<cbc:UUID>9756b4d0-8815-1029-857a-e388fe63f398</cbc:UUID>
+	</cac:RelatedCatalogueReference>
+	<cac:ReferencedContract>
+		<cbc:ID>PAPER-1</cbc:ID>
+		<cac:ContractDocumentReference>
+			<cbc:ID>PAPER-1-CON</cbc:ID>
+			<cac:Attachment>
+				<cac:ExternalReference>
+					<cbc:URI>http://www.papirhuset.dk/aftale_PAPIR-1-CON.pdf</cbc:URI>
+				</cac:ExternalReference>
+			</cac:Attachment>
+		</cac:ContractDocumentReference>
+	</cac:ReferencedContract>
+	<cac:ProviderParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK87493746</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK87493746</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Papirhuset A/S</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Papirstræde</cbc:StreetName>
+			<cbc:BuildingNumber>9</cbc:BuildingNumber>
+			<cbc:CityName>København K</cbc:CityName>
+			<cbc:PostalZone>1171</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Papirhuset A/S</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK87493746</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>9000009876</cbc:ID>
+			<cbc:Name>Salgsafdelingen</cbc:Name>
+			<cbc:Telephone>26908978</cbc:Telephone>
+			<cbc:ElectronicMail>katalog@papirhuset.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Lene</cbc:FirstName>
+			<cbc:FamilyName>Olsen</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+			<cbc:OrganizationDepartment>Salgsafdelingen</cbc:OrganizationDepartment>
+		</cac:Person>
+	</cac:ProviderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="DK:CVR">DK98879887</cbc:EndpointID>
+		<cac:PartyIdentification>
+			<cbc:ID schemeID="DK:CVR">DK98879887</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>KatalogAdm ApS</cbc:Name>
+		</cac:PartyName>
+		<cac:PostalAddress>
+			<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+			<cbc:StreetName>Bredgade</cbc:StreetName>
+			<cbc:BuildingNumber>2</cbc:BuildingNumber>
+			<cbc:CityName>Helsingør</cbc:CityName>
+			<cbc:PostalZone>3000</cbc:PostalZone>
+			<cac:Country>
+				<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>KatalogAdm ApS</cbc:RegistrationName>
+			<cbc:CompanyID schemeID="DK:CVR">DK98879887</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+		<cac:Contact>
+			<cbc:ID>7913</cbc:ID>
+			<cbc:Name>Poul Poulsen</cbc:Name>
+			<cbc:Telephone>26435467</cbc:Telephone>
+			<cbc:ElectronicMail>info@katadm.dk</cbc:ElectronicMail>
+		</cac:Contact>
+		<cac:Person>
+			<cbc:FirstName>Poul</cbc:FirstName>
+			<cbc:FamilyName>Poulsen</cbc:FamilyName>
+			<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+		</cac:Person>
+	</cac:ReceiverParty>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="DK:CVR">DK87493746</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="DK:CVR">DK87493746</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Papirhuset A/S</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:AddressFormatCode listAgencyID="320" listID="urn:oioubl:codelist:addressformatcode-1.1">StructuredDK</cbc:AddressFormatCode>
+				<cbc:StreetName>Papirstræde</cbc:StreetName>
+				<cbc:BuildingNumber>9</cbc:BuildingNumber>
+				<cbc:CityName>København K</cbc:CityName>
+				<cbc:PostalZone>1171</cbc:PostalZone>
+				<cac:Country>
+					<cbc:IdentificationCode>DK</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Papirhuset A/S</cbc:RegistrationName>
+				<cbc:CompanyID schemeID="DK:CVR">DK87493746</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+			<cac:Contact>
+				<cbc:ID>9000009876</cbc:ID>
+				<cbc:Name>Salgsafdelingen</cbc:Name>
+				<cbc:Telephone>26908978</cbc:Telephone>
+				<cbc:ElectronicMail>katalog@papirhuset.dk</cbc:ElectronicMail>
+			</cac:Contact>
+			<cac:Person>
+				<cbc:FirstName>Lene</cbc:FirstName>
+				<cbc:FamilyName>Olsen</cbc:FamilyName>
+				<cbc:JobTitle>katalogmanager</cbc:JobTitle>
+				<cbc:OrganizationDepartment>Salgsafdelingen</cbc:OrganizationDepartment>
+			</cac:Person>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:CataloguePricingUpdateLine>
+		<cbc:ID>87493746-121643</cbc:ID>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">2</cbc:LeadTimeMeasure>
+			<cbc:MinimumQuantity unitCode="CS">1</cbc:MinimumQuantity>
+			<cbc:MaximumQuantity unitCode="CS">120</cbc:MaximumQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">47.50</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="CS">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-06-01</cbc:StartDate>
+					<cbc:EndDate>2007-05-30</cbc:EndDate>
+				</cac:ValidityPeriod>
+				<cac:AllowanceCharge>
+					<cbc:ID>1</cbc:ID>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:MultiplierFactorNumeric>0.05</cbc:MultiplierFactorNumeric>
+					<cbc:Amount currencyID="DKK">2.50</cbc:Amount>
+					<cbc:BaseAmount currencyID="DKK">50</cbc:BaseAmount>
+					<cac:TaxCategory>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+						<cbc:Percent>25</cbc:Percent>
+						<cac:TaxScheme>
+							<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+							<cbc:Name>Moms</cbc:Name>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:AllowanceCharge>
+			</cac:Price>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="CS">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="PK">5</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="PF">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="CS">120</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">3</cbc:LeadTimeMeasure>
+			<cbc:MinimumQuantity unitCode="CS">120</cbc:MinimumQuantity>
+			<cbc:MaximumQuantity unitCode="CS">240</cbc:MaximumQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">45.00</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="CS">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-06-01</cbc:StartDate>
+					<cbc:EndDate>2007-05-30</cbc:EndDate>
+				</cac:ValidityPeriod>
+				<cac:AllowanceCharge>
+					<cbc:ID>2</cbc:ID>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:MultiplierFactorNumeric>0.10</cbc:MultiplierFactorNumeric>
+					<cbc:Amount currencyID="DKK">5.00</cbc:Amount>
+					<cbc:BaseAmount currencyID="DKK">50.00</cbc:BaseAmount>
+					<cac:TaxCategory>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+						<cbc:Percent>25</cbc:Percent>
+						<cac:TaxScheme>
+							<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+							<cbc:Name>Moms</cbc:Name>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:AllowanceCharge>
+			</cac:Price>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="CS">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="PK">5</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+	</cac:CataloguePricingUpdateLine>
+	<cac:CataloguePricingUpdateLine>
+		<cbc:ID>87493746-121645</cbc:ID>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">2</cbc:LeadTimeMeasure>
+			<cbc:MinimumQuantity unitCode="CS">1</cbc:MinimumQuantity>
+			<cbc:MaximumQuantity unitCode="CS">60</cbc:MaximumQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">71.25</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="CS">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-06-01</cbc:StartDate>
+					<cbc:EndDate>2007-05-30</cbc:EndDate>
+				</cac:ValidityPeriod>
+				<cac:AllowanceCharge>
+					<cbc:ID>3</cbc:ID>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:MultiplierFactorNumeric>0.05</cbc:MultiplierFactorNumeric>
+					<cbc:Amount currencyID="DKK">3.75</cbc:Amount>
+					<cbc:BaseAmount currencyID="DKK">75</cbc:BaseAmount>
+					<cac:TaxCategory>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+						<cbc:Percent>25</cbc:Percent>
+						<cac:TaxScheme>
+							<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+							<cbc:Name>Moms</cbc:Name>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:AllowanceCharge>
+			</cac:Price>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="CS">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="PK">5</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="PF">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="CS">60</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+		<cac:RequiredItemLocationQuantity>
+			<cbc:LeadTimeMeasure unitCode="DAY">3</cbc:LeadTimeMeasure>
+			<cbc:MinimumQuantity unitCode="CS">61</cbc:MinimumQuantity>
+			<cbc:MaximumQuantity unitCode="CS">120</cbc:MaximumQuantity>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="DKK">67.50</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="CS">1</cbc:BaseQuantity>
+				<cbc:OrderableUnitFactorRate>1</cbc:OrderableUnitFactorRate>
+				<cac:ValidityPeriod>
+					<cbc:StartDate>2006-06-01</cbc:StartDate>
+					<cbc:EndDate>2007-05-30</cbc:EndDate>
+				</cac:ValidityPeriod>
+				<cac:AllowanceCharge>
+					<cbc:ID>4</cbc:ID>
+					<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+					<cbc:MultiplierFactorNumeric>0.10</cbc:MultiplierFactorNumeric>
+					<cbc:Amount currencyID="DKK">7.50</cbc:Amount>
+					<cbc:BaseAmount currencyID="DKK">75</cbc:BaseAmount>
+					<cac:TaxCategory>
+						<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+						<cbc:Percent>25</cbc:Percent>
+						<cac:TaxScheme>
+							<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+							<cbc:Name>Moms</cbc:Name>
+						</cac:TaxScheme>
+					</cac:TaxCategory>
+				</cac:AllowanceCharge>
+			</cac:Price>
+			<cac:DeliveryUnit>
+				<cbc:BatchQuantity unitCode="CS">1</cbc:BatchQuantity>
+				<cbc:ConsumerUnitQuantity unitCode="PK">5</cbc:ConsumerUnitQuantity>
+			</cac:DeliveryUnit>
+			<cac:ApplicableTaxCategory>
+				<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxcategoryid-1.1">StandardRated</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID schemeAgencyID="320" schemeID="urn:oioubl:id:taxschemeid-1.1">63</cbc:ID>
+					<cbc:Name>Moms</cbc:Name>
+				</cac:TaxScheme>
+			</cac:ApplicableTaxCategory>
+		</cac:RequiredItemLocationQuantity>
+	</cac:CataloguePricingUpdateLine>
+</CataloguePricingUpdate>
