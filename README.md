@@ -14,9 +14,12 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-ubl - Validation rules for pure UBL (without any Schematron) - since 4.0.1
   * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
   * ph-bdve-energieefactuur - Validation rules for Dutch Energie eFactuur - since 4.0.2
+  * ph-bdve-oioubl - Validation rules for Danish OIOUBL - since 4.0.3
   
 # News and noteworthy
 
+* v4.0.3 - work in progress
+  * Added OIOUBL 2.0.2 support (new artefact `ph-bdve-oioubl`)
 * v4.0.2 - 2018-02-03
   * Started adding support for Dutch Energie eFactuur (new artefact `ph-bdve-energieefactuur`)
   * Updated to ph-commons 9.0.1 (Locale specific XSD error messages)
