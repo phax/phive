@@ -20,6 +20,7 @@ This project is divided into sub-projects for maximum flexibility:
 
 * v4.0.3 - work in progress
   * Added OIOUBL 2.0.2 support (new artefact `ph-bdve-oioubl`)
+  * EN 16031 rules were updated
 * v4.0.2 - 2018-02-03
   * Started adding support for Dutch Energie eFactuur (new artefact `ph-bdve-energieefactuur`)
   * Updated to ph-commons 9.0.1 (Locale specific XSD error messages)
