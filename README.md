@@ -18,7 +18,7 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
-* v4.0.3 - work in progress
+* v4.0.3 - 2018-02-07
   * Added OIOUBL 2.0.2 support (new artefact `ph-bdve-oioubl`)
   * EN 16031 rules were updated
 * v4.0.2 - 2018-02-03
@@ -71,43 +71,49 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-oioubl</artifactId>
+  <version>4.0.3</version>
 </dependency>
 ```
 
