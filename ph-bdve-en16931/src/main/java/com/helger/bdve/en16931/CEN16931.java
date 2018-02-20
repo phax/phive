@@ -84,17 +84,17 @@ public final class CEN16931
     return CEN16931.class.getClassLoader ();
   }
 
-  public static final IReadableResource INVOICE_CII_SCH = new ClassPathResource ("/en16931/cii/schematron/EN16931-CII-validation.sch",
+  public static final IReadableResource INVOICE_CII_SCH = new ClassPathResource ("/en16931/1.0.0/cii/schematron/EN16931-CII-validation.sch",
                                                                                  _getCL ());
-  public static final IReadableResource INVOICE_CII_XSLT = new ClassPathResource ("/en16931/cii/xslt/EN16931-CII-validation.xslt",
+  public static final IReadableResource INVOICE_CII_XSLT = new ClassPathResource ("/en16931/1.0.0/cii/xslt/EN16931-CII-validation.xslt",
                                                                                   _getCL ());
-  public static final IReadableResource INVOICE_EDIFACT_SCH = new ClassPathResource ("/en16931/edifact/schematron/EN16931-EDIFACT-validation.sch",
+  public static final IReadableResource INVOICE_EDIFACT_SCH = new ClassPathResource ("/en16931/1.0.0/edifact/schematron/EN16931-EDIFACT-validation.sch",
                                                                                      _getCL ());
-  public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/edifact/xslt/EN16931-EDIFACT-validation.xslt",
+  public static final IReadableResource INVOICE_EDIFACT_XSLT = new ClassPathResource ("/en16931/1.0.0/edifact/xslt/EN16931-EDIFACT-validation.xslt",
                                                                                       _getCL ());
-  public static final IReadableResource INVOICE_UBL_SCH = new ClassPathResource ("/en16931/ubl/schematron/EN16931-UBL-model.sch",
+  public static final IReadableResource INVOICE_UBL_SCH = new ClassPathResource ("/en16931/1.0.0/ubl/schematron/EN16931-UBL-model.sch",
                                                                                  _getCL ());
-  public static final IReadableResource INVOICE_UBL_XSLT = new ClassPathResource ("/en16931/ubl/xslt/EN16931-UBL-model.xslt",
+  public static final IReadableResource INVOICE_UBL_XSLT = new ClassPathResource ("/en16931/1.0.0/ubl/xslt/EN16931-UBL-model.xslt",
                                                                                   _getCL ());
 
   private CEN16931 ()

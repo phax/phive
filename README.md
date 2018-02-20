@@ -18,6 +18,8 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
+* v4.0.4 - work in progress
+  * Updated to EN 16931 rules 1.0.0
 * v4.0.3 - 2018-02-07
   * Added OIOUBL 2.0.2 support (new artefact `ph-bdve-oioubl`)
   * EN 16031 rules were updated

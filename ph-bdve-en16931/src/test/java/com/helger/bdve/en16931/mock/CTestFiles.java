@@ -47,9 +47,9 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aVESID : new VESID [] { EN16931Validation.VID_CII,
-                                             EN16931Validation.VID_EDIFACT,
-                                             EN16931Validation.VID_UBL })
+    for (final VESID aVESID : new VESID [] { EN16931Validation.VID_CII_1,
+                                             EN16931Validation.VID_EDIFACT_1,
+                                             EN16931Validation.VID_UBL_1 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
 
@@ -63,7 +63,7 @@ public final class CTestFiles
     ValueEnforcer.notNull (aVESID, "VESID");
 
     final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-    if (aVESID.equals (EN16931Validation.VID_CII))
+    if (aVESID.equals (EN16931Validation.VID_CII_1))
     {
       // CII files fail with pure!
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_01.xml"));
@@ -79,7 +79,7 @@ public final class CTestFiles
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example9.xml"));
     }
     else
-      if (aVESID.equals (EN16931Validation.VID_EDIFACT))
+      if (aVESID.equals (EN16931Validation.VID_EDIFACT_1))
       {
         ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE1.xml"));
         ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE2.xml"));
@@ -92,7 +92,7 @@ public final class CTestFiles
         ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE9.xml"));
       }
       else
-        if (aVESID.equals (EN16931Validation.VID_UBL))
+        if (aVESID.equals (EN16931Validation.VID_UBL_1))
         {
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));

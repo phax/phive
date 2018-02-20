@@ -16,9 +16,6 @@
  */
 package com.helger.bdve.en16931;
 
-import java.time.LocalDate;
-import java.time.Month;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -30,8 +27,6 @@ import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTFormatter;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.ubl21.UBL21NamespaceContext;
 import com.helger.xml.XMLSystemProperties;
@@ -44,11 +39,10 @@ import com.helger.xml.XMLSystemProperties;
 @Immutable
 public final class EN16931Validation
 {
-  private static final LocalDate LAST_MOD = PDTFactory.createLocalDate (2018, Month.FEBRUARY, 6);
-  private static final String VERSION = "1.0.0." + PDTFormatter.getForPattern ("uuuuMMdd").format (LAST_MOD);
-  public static final VESID VID_UBL = new VESID ("eu.cen.en16931", "ubl", VERSION);
-  public static final VESID VID_CII = new VESID ("eu.cen.en16931", "cii", VERSION);
-  public static final VESID VID_EDIFACT = new VESID ("eu.cen.en16931", "edifact", VERSION);
+  private static final String VERSION = "1.0.0";
+  public static final VESID VID_UBL_1 = new VESID ("eu.cen.en16931", "ubl", VERSION);
+  public static final VESID VID_CII_1 = new VESID ("eu.cen.en16931", "cii", VERSION);
+  public static final VESID VID_EDIFACT_1 = new VESID ("eu.cen.en16931", "edifact", VERSION);
 
   static
   {
@@ -90,21 +84,21 @@ public final class EN16931Validation
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
     LocationBeautifierSPI.addMappings (CIID16BNamespaceContext.getInstance ());
 
-    final String sVersion = " (" + PDTFormatter.getForPattern ("uuuu-MM-dd").format (LAST_MOD) + ")";
     final boolean bDeprecated = false;
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII,
-                                                                           "EN 16931 CII" + sVersion,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII_1,
+                                                                           "EN 16931 CII " + VID_CII_1.getVersion (),
                                                                            CEN16931.VK_INVOICE_CII,
                                                                            bDeprecated,
                                                                            _createXSLT (CEN16931.INVOICE_CII_XSLT)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT,
-                                                                           "EN 16931 EDIFACT/ISO 20625" + sVersion,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT_1,
+                                                                           "EN 16931 EDIFACT/ISO 20625 " +
+                                                                                          VID_EDIFACT_1.getVersion (),
                                                                            CEN16931.VK_INVOICE_EDIFACT,
                                                                            bDeprecated,
                                                                            _createXSLT (CEN16931.INVOICE_EDIFACT_XSLT)));
     // Pure SCH is quicker than XSLT!
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL,
-                                                                           "EN 16931 UBL" + sVersion,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_1,
+                                                                           "EN 16931 UBL " + VID_UBL_1.getVersion (),
                                                                            CEN16931.VK_INVOICE_UBL,
                                                                            bDeprecated,
                                                                            _createPure (CEN16931.INVOICE_UBL_SCH)));
