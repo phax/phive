@@ -99,7 +99,7 @@ public final class EnergieEFactuurValidation
                                                                                                           CEnergieEFactuur.SEEF_EXT_XSD_1_0_0),
                                                                              new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
                                                                                                           SimplerInvoicingValidation.class.getClassLoader (),
-                                                                                                          CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+                                                                                                          CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
     }
 
     {
@@ -127,7 +127,7 @@ public final class EnergieEFactuurValidation
                                                                                                           CEnergieEFactuur.SEEF_EXT_XSD_1_0_1),
                                                                              new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
                                                                                                           SimplerInvoicingValidation.class.getClassLoader (),
-                                                                                                          CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+                                                                                                          CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
     }
 
     {

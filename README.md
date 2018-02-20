@@ -20,11 +20,13 @@ This project is divided into sub-projects for maximum flexibility:
 
 * v4.0.4 - work in progress
   * Updated to EN 16931 rules 1.0.0
+  * Added support for Dutch Energie eFactuur 1.0.0 (based on SimplerInvoicing 1.1)
+  * Added support for Dutch Energie eFactuur 1.0.1 (based on SimplerInvoicing 1.1)
 * v4.0.3 - 2018-02-07
   * Added OIOUBL 2.0.2 support (new artefact `ph-bdve-oioubl`)
   * EN 16031 rules were updated
 * v4.0.2 - 2018-02-03
-  * Started adding support for Dutch Energie eFactuur (new artefact `ph-bdve-energieefactuur`)
+  * Added support for Dutch Energie eFactuur 2.0.0 (new artefact `ph-bdve-energieefactuur`) - based on SimplerInvoicing 1.2 
   * Updated to ph-commons 9.0.1 (Locale specific XSD error messages)
   * Schematron error messages are more easily readable
   * EN 16031 rules were updated

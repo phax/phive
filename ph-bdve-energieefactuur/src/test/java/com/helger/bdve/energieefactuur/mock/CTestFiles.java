@@ -48,7 +48,8 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aVESID : new VESID [] { EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_1,
+    for (final VESID aVESID : new VESID [] { EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_0,
+                                             EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_1,
                                              EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0 })
     {
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
