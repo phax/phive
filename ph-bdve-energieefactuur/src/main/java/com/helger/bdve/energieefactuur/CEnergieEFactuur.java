@@ -33,6 +33,10 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class CEnergieEFactuur
 {
+  /** Namespace URL for Energie e-Factuur 1.0.0 */
+  public static final String SEEF_EXT_NS_1_0_0 = "urn:www.energie-efactuur.nl:profile:invoice:ver1.0.0";
+  /** Namespace URL for Energie e-Factuur 1.0.1 */
+  public static final String SEEF_EXT_NS_1_0_1 = "urn:www.energie-efactuur.nl:profile:invoice:ver1.0";
   /** Namespace URL for Energie e-Factuur 2.0.0 */
   public static final String SEEF_EXT_NS_2_0_0 = "urn:www.energie-efactuur.nl:profile:invoice:ver2.0";
 
@@ -48,6 +52,10 @@ public final class CEnergieEFactuur
     return CEnergieEFactuur.class.getClassLoader ();
   }
 
+  public static final IReadableResource SEEF_EXT_XSD_1_0_0 = new ClassPathResource ("/schemas/energieefactuur/SEeF_UBLExtension_v1.0.0.xsd",
+                                                                                    _getCL ());
+  public static final IReadableResource SEEF_EXT_XSD_1_0_1 = new ClassPathResource ("/schemas/energieefactuur/SEeF_UBLExtension_v1.0.1.xsd",
+                                                                                    _getCL ());
   public static final IReadableResource SEEF_EXT_XSD_2_0_0 = new ClassPathResource ("/schemas/energieefactuur/SEeF_UBLExtension_v2.0.0.xsd",
                                                                                     _getCL ());
 

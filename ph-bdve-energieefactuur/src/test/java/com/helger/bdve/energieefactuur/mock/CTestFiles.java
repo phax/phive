@@ -48,7 +48,8 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aVESID : new VESID [] { EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0 })
+    for (final VESID aVESID : new VESID [] { EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_1,
+                                             EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0 })
     {
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
@@ -65,16 +66,30 @@ public final class CTestFiles
     ValueEnforcer.notNull (aVESID, "VESID");
 
     final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-    if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0))
+    if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_0))
     {
-      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 001 - levering.xml"));
-      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 002 - netbeheer.xml"));
-      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 003 - netbeheer.xml"));
-      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 004 - netbeheer credit.xml"));
-      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 005 - meetdiensten.xml"));
+      ret.add (new ClassPathResource ("/test-files/1.0.0/good/20151117_SEeF - Voorbeeldfactuur 001 - Energie levering.xml"));
     }
     else
-      throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+      if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_1))
+      {
+        ret.add (new ClassPathResource ("/test-files/1.0.1/good/20160704_SEeF - Voorbeeldfactuur 001 - levering.xml"));
+        ret.add (new ClassPathResource ("/test-files/1.0.1/good/20160704_SEeF - Voorbeeldfactuur 002 - netbeheer.xml"));
+        ret.add (new ClassPathResource ("/test-files/1.0.1/good/20160704_SEeF - Voorbeeldfactuur 004 - netbeheer credit.xml"));
+        ret.add (new ClassPathResource ("/test-files/1.0.1/good/20160704_SEeF - Voorbeeldfactuur 005 - meetdiensten.xml"));
+        ret.add (new ClassPathResource ("/test-files/1.0.1/good/20161208_SEeF - Voorbeeldfactuur 003 - netbeheer.xml"));
+      }
+      else
+        if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0))
+        {
+          ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 001 - levering.xml"));
+          ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 002 - netbeheer.xml"));
+          ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 003 - netbeheer.xml"));
+          ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 004 - netbeheer credit.xml"));
+          ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 005 - meetdiensten.xml"));
+        }
+        else
+          throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
     return ret;
   }
 
@@ -85,20 +100,30 @@ public final class CTestFiles
     ValueEnforcer.notNull (aVESID, "VESID");
 
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0))
+    if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_0))
     {
-      ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-meternumber-twice.xml"),
-                             aVESID,
-                             new CommonsHashSet <> ("")));
-      ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-no-extension.xml"),
-                             aVESID,
-                             new CommonsHashSet <> ("")));
-      ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-two-extensions.xml"),
-                             aVESID,
-                             new CommonsHashSet <> ("")));
+      // TODO
     }
     else
-      throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+      if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_1_0_1))
+      {
+        // TODO
+      }
+      else
+        if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0))
+        {
+          ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-meternumber-twice.xml"),
+                                 aVESID,
+                                 new CommonsHashSet <> ("")));
+          ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-no-extension.xml"),
+                                 aVESID,
+                                 new CommonsHashSet <> ("")));
+          ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-two-extensions.xml"),
+                                 aVESID,
+                                 new CommonsHashSet <> ("")));
+        }
+        else
+          throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
     return ret;
   }
 }

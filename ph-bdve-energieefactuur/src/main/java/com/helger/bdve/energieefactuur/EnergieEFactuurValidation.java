@@ -45,6 +45,8 @@ import com.helger.xml.xpath.XPathHelper;
 @Immutable
 public final class EnergieEFactuurValidation
 {
+  public static final VESID VID_ENERGIE_EFACTUUR_1_0_0 = new VESID ("nl.energie-efactuur", "energie-efactuur", "1.0.0");
+  public static final VESID VID_ENERGIE_EFACTUUR_1_0_1 = new VESID ("nl.energie-efactuur", "energie-efactuur", "1.0.1");
   public static final VESID VID_ENERGIE_EFACTUUR_2_0_0 = new VESID ("nl.energie-efactuur", "energie-efactuur", "2.0.0");
 
   private EnergieEFactuurValidation ()
@@ -70,31 +72,90 @@ public final class EnergieEFactuurValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
-    // Create XPathExpression for extension validation
-    final XPathFactory aXF = XPathHelper.createXPathFactorySaxonFirst ();
-    final XPath aXP = aXF.newXPath ();
-    final MapBasedNamespaceContext aCtx = UBL21NamespaceContext.getInstance ().getClone ();
-    aCtx.addMapping ("ubl", EUBL21DocumentType.INVOICE.getNamespaceURI ());
-    aCtx.addMapping ("eef", CEnergieEFactuur.SEEF_EXT_NS_2_0_0);
-    aXP.setNamespaceContext (aCtx);
-    final XPathExpression aXE = XPathHelper.createNewXPathExpression (aXP,
-                                                                      "/ubl:Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/eef:SEEFExtensionWrapper");
-
     final boolean bNotDeprecated = false;
-    // Same Schematrons as SimplerInvoicing - and same classloader!
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_2_0_0,
-                                                                           "Energie eFactuur " +
-                                                                                                       VID_ENERGIE_EFACTUUR_2_0_0.getVersion (),
-                                                                           CEnergieEFactuur.VK_ENERGIE_EFACTUUR,
-                                                                           bNotDeprecated,
-                                                                           new TypedValidationResource (EValidationType.PARTIAL_XSD,
-                                                                                                        new ValidationExecutorXSDPartial.ContextData (aXE,
-                                                                                                                                                      Integer.valueOf (1),
-                                                                                                                                                      Integer.valueOf (1)),
-                                                                                                        _getCL (),
-                                                                                                        CEnergieEFactuur.SEEF_EXT_XSD_2_0_0),
-                                                                           new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
-                                                                                                        SimplerInvoicingValidation.class.getClassLoader (),
-                                                                                                        CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+
+    {
+      // Create XPathExpression for extension validation
+      final XPathFactory aXF = XPathHelper.createXPathFactorySaxonFirst ();
+      final XPath aXP = aXF.newXPath ();
+      final MapBasedNamespaceContext aCtx = UBL21NamespaceContext.getInstance ().getClone ();
+      aCtx.addMapping ("ubl", EUBL21DocumentType.INVOICE.getNamespaceURI ());
+      aCtx.addMapping ("seef", CEnergieEFactuur.SEEF_EXT_NS_1_0_0);
+      aXP.setNamespaceContext (aCtx);
+      final XPathExpression aXE100 = XPathHelper.createNewXPathExpression (aXP,
+                                                                           "/ubl:Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/seef:UtilityConsumptionPoint");
+
+      // Same Schematrons as SimplerInvoicing - and same classloader!
+      aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_1_0_0,
+                                                                             "Energie eFactuur " +
+                                                                                                         VID_ENERGIE_EFACTUUR_1_0_0.getVersion (),
+                                                                             CEnergieEFactuur.VK_ENERGIE_EFACTUUR,
+                                                                             bNotDeprecated,
+                                                                             new TypedValidationResource (EValidationType.PARTIAL_XSD,
+                                                                                                          new ValidationExecutorXSDPartial.ContextData (aXE100,
+                                                                                                                                                        Integer.valueOf (1),
+                                                                                                                                                        Integer.valueOf (1)),
+                                                                                                          _getCL (),
+                                                                                                          CEnergieEFactuur.SEEF_EXT_XSD_1_0_0),
+                                                                             new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
+                                                                                                          SimplerInvoicingValidation.class.getClassLoader (),
+                                                                                                          CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+    }
+
+    {
+      // Create XPathExpression for extension validation
+      final XPathFactory aXF = XPathHelper.createXPathFactorySaxonFirst ();
+      final XPath aXP = aXF.newXPath ();
+      final MapBasedNamespaceContext aCtx = UBL21NamespaceContext.getInstance ().getClone ();
+      aCtx.addMapping ("ubl", EUBL21DocumentType.INVOICE.getNamespaceURI ());
+      aCtx.addMapping ("seef", CEnergieEFactuur.SEEF_EXT_NS_1_0_1);
+      aXP.setNamespaceContext (aCtx);
+      final XPathExpression aXE101 = XPathHelper.createNewXPathExpression (aXP,
+                                                                           "/ubl:Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/seef:SEEFExtensionWrapper");
+
+      // Same Schematrons as SimplerInvoicing - and same classloader!
+      aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_1_0_1,
+                                                                             "Energie eFactuur " +
+                                                                                                         VID_ENERGIE_EFACTUUR_1_0_1.getVersion (),
+                                                                             CEnergieEFactuur.VK_ENERGIE_EFACTUUR,
+                                                                             bNotDeprecated,
+                                                                             new TypedValidationResource (EValidationType.PARTIAL_XSD,
+                                                                                                          new ValidationExecutorXSDPartial.ContextData (aXE101,
+                                                                                                                                                        Integer.valueOf (1),
+                                                                                                                                                        Integer.valueOf (1)),
+                                                                                                          _getCL (),
+                                                                                                          CEnergieEFactuur.SEEF_EXT_XSD_1_0_1),
+                                                                             new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
+                                                                                                          SimplerInvoicingValidation.class.getClassLoader (),
+                                                                                                          CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+    }
+
+    {
+      // Create XPathExpression for extension validation
+      final XPathFactory aXF = XPathHelper.createXPathFactorySaxonFirst ();
+      final XPath aXP = aXF.newXPath ();
+      final MapBasedNamespaceContext aCtx = UBL21NamespaceContext.getInstance ().getClone ();
+      aCtx.addMapping ("ubl", EUBL21DocumentType.INVOICE.getNamespaceURI ());
+      aCtx.addMapping ("eef", CEnergieEFactuur.SEEF_EXT_NS_2_0_0);
+      aXP.setNamespaceContext (aCtx);
+      final XPathExpression aXE200 = XPathHelper.createNewXPathExpression (aXP,
+                                                                           "/ubl:Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/eef:SEEFExtensionWrapper");
+
+      // Same Schematrons as SimplerInvoicing - and same classloader!
+      aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_2_0_0,
+                                                                             "Energie eFactuur " +
+                                                                                                         VID_ENERGIE_EFACTUUR_2_0_0.getVersion (),
+                                                                             CEnergieEFactuur.VK_ENERGIE_EFACTUUR,
+                                                                             bNotDeprecated,
+                                                                             new TypedValidationResource (EValidationType.PARTIAL_XSD,
+                                                                                                          new ValidationExecutorXSDPartial.ContextData (aXE200,
+                                                                                                                                                        Integer.valueOf (1),
+                                                                                                                                                        Integer.valueOf (1)),
+                                                                                                          _getCL (),
+                                                                                                          CEnergieEFactuur.SEEF_EXT_XSD_2_0_0),
+                                                                             new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
+                                                                                                          SimplerInvoicingValidation.class.getClassLoader (),
+                                                                                                          CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+    }
   }
 }
