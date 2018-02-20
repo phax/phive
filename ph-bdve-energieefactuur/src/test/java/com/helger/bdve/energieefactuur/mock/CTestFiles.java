@@ -67,11 +67,11 @@ public final class CTestFiles
     final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
     if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0))
     {
-      ret.add (new ClassPathResource ("/test-files/good/20170713_SEeF - Voorbeeldfactuur 001 - levering.xml"));
-      ret.add (new ClassPathResource ("/test-files/good/20170713_SEeF - Voorbeeldfactuur 002 - netbeheer.xml"));
-      ret.add (new ClassPathResource ("/test-files/good/20170713_SEeF - Voorbeeldfactuur 003 - netbeheer.xml"));
-      ret.add (new ClassPathResource ("/test-files/good/20170713_SEeF - Voorbeeldfactuur 004 - netbeheer credit.xml"));
-      ret.add (new ClassPathResource ("/test-files/good/20170713_SEeF - Voorbeeldfactuur 005 - meetdiensten.xml"));
+      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 001 - levering.xml"));
+      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 002 - netbeheer.xml"));
+      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 003 - netbeheer.xml"));
+      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 004 - netbeheer credit.xml"));
+      ret.add (new ClassPathResource ("/test-files/2.0.0/good/20170713_SEeF - Voorbeeldfactuur 005 - meetdiensten.xml"));
     }
     else
       throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
@@ -87,13 +87,13 @@ public final class CTestFiles
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     if (aVESID.equals (EnergieEFactuurValidation.VID_ENERGIE_EFACTUUR_2_0_0))
     {
-      ret.add (new MockFile (new ClassPathResource ("/test-files/bad/bad-meternumber-twice.xml"),
+      ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-meternumber-twice.xml"),
                              aVESID,
                              new CommonsHashSet <> ("")));
-      ret.add (new MockFile (new ClassPathResource ("/test-files/bad/bad-no-extension.xml"),
+      ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-no-extension.xml"),
                              aVESID,
                              new CommonsHashSet <> ("")));
-      ret.add (new MockFile (new ClassPathResource ("/test-files/bad/bad-two-extensions.xml"),
+      ret.add (new MockFile (new ClassPathResource ("/test-files/2.0.0/bad/bad-two-extensions.xml"),
                              aVESID,
                              new CommonsHashSet <> ("")));
     }
