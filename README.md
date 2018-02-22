@@ -18,7 +18,7 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
-* v4.0.4 - work in progress
+* v4.0.4 - 2018-02-22
   * Updated to EN 16931 rules 1.0.0
   * Added support for Dutch Energie eFactuur 1.0.0 (based on SimplerInvoicing 1.1)
   * Added support for Dutch Energie eFactuur 1.0.1 (based on SimplerInvoicing 1.1)
@@ -75,49 +75,49 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>4.0.3</version>
+  <version>4.0.4</version>
 </dependency>
 ```
 
