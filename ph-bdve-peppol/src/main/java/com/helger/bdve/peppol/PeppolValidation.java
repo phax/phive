@@ -62,7 +62,6 @@ public final class PeppolValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
-    PeppolValidation330.init (aRegistry);
     PeppolValidation340.init (aRegistry);
     PeppolValidation350.init (aRegistry);
   }

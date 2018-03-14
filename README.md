@@ -18,6 +18,8 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
+* v4.0.5 - work in progress
+  * Support for OpenPEPPOL rules 3.3.0 was removed - too old
 * v4.0.4 - 2018-02-22
   * Updated to EN 16931 rules 1.0.0
   * Added support for Dutch Energie eFactuur 1.0.0 (based on SimplerInvoicing 1.1)
