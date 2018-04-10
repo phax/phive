@@ -67,6 +67,7 @@ public final class CTestFiles
     {
       // CII files fail with pure!
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_01.xml"));
+      ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_01a.xml"));
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_business_example_02.xml"));
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example1.xml"));
       ret.add (new ClassPathResource ("/test-files/cii/instance/CII_example2.xml"));

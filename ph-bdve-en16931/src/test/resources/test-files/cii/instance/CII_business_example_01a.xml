@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rsm:CrossIndustryInvoice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100 ../validator/uncefact/data/standard/CrossIndustryInvoice_100pD16B.xsd"
+  xmlns:qdt="urn:un:unece:uncefact:data:standard:QualifiedDataType:100" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:100"
+  xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100" xmlns:xyz="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100">
+  <rsm:ExchangedDocumentContext>
+    <xyz:GuidelineSpecifiedDocumentContextParameter>
+      <xyz:ID>urn:ferd:CrossIndustryDocument:invoice:1p0:comfort</xyz:ID>
+    </xyz:GuidelineSpecifiedDocumentContextParameter>
+  </rsm:ExchangedDocumentContext>
+  <rsm:ExchangedDocument>
+    <xyz:ID>2016166</xyz:ID>
+    <xyz:Name>Rechnung</xyz:Name>
+    <xyz:TypeCode>380</xyz:TypeCode>
+    <xyz:IssueDateTime>
+      <udt:DateTimeString format="102">20150109</udt:DateTimeString>
+    </xyz:IssueDateTime>
+    <xyz:IncludedNote>
+      <xyz:Content>This is an example invoice based on data that is used in real business.Sehr geehrter Herr xxx,
+
+        für die Unterstützung im September stellen wir Ihnen gemäß Auftrag foldende Rechnung.
+
+        Für das in uns gesetzte Vertrauen bedanken wir uns auf diesem Wege herzlich.
+      </xyz:Content>
+      <xyz:SubjectCode>AAR</xyz:SubjectCode>
+    </xyz:IncludedNote>
+    <xyz:IncludedNote>
+      <xyz:Content>Sehr geehrter Herr xxx,
+
+        für die Unterstützung im September stellen wir Ihnen gemäß Auftrag foldende Rechnung.
+
+        Für das in uns gesetzte Vertrauen bedanken wir uns auf diesem Wege herzlich.
+      </xyz:Content>
+
+    </xyz:IncludedNote>
+  </rsm:ExchangedDocument>
+  <rsm:SupplyChainTradeTransaction>
+    <xyz:IncludedSupplyChainTradeLineItem>
+      <xyz:AssociatedDocumentLineDocument>
+        <xyz:LineID>1</xyz:LineID>
+      </xyz:AssociatedDocumentLineDocument>
+      <xyz:SpecifiedTradeProduct>
+        <xyz:SellerAssignedID>846</xyz:SellerAssignedID>
+        <xyz:Name>Festpreis</xyz:Name>
+        <xyz:Description>Neues DSL Portfolio 2016</xyz:Description>
+      </xyz:SpecifiedTradeProduct>
+      <xyz:SpecifiedLineTradeAgreement>
+        <xyz:NetPriceProductTradePrice>
+          <xyz:ChargeAmount>12122.5900</xyz:ChargeAmount>
+        </xyz:NetPriceProductTradePrice>
+      </xyz:SpecifiedLineTradeAgreement>
+      <xyz:SpecifiedLineTradeDelivery>
+        <xyz:BilledQuantity unitCode="C62">1.000</xyz:BilledQuantity>
+      </xyz:SpecifiedLineTradeDelivery>
+      <xyz:SpecifiedLineTradeSettlement>
+        <xyz:ApplicableTradeTax>
+          <xyz:TypeCode>VAT</xyz:TypeCode>
+          <xyz:CategoryCode>S</xyz:CategoryCode>
+          <xyz:RateApplicablePercent>19.00</xyz:RateApplicablePercent>
+        </xyz:ApplicableTradeTax>
+        <xyz:SpecifiedTradeSettlementLineMonetarySummation>
+          <xyz:LineTotalAmount>12122.59</xyz:LineTotalAmount>
+        </xyz:SpecifiedTradeSettlementLineMonetarySummation>
+      </xyz:SpecifiedLineTradeSettlement>
+    </xyz:IncludedSupplyChainTradeLineItem>
+
+    <xyz:IncludedSupplyChainTradeLineItem>
+      <xyz:AssociatedDocumentLineDocument>
+        <xyz:LineID>2</xyz:LineID>
+      </xyz:AssociatedDocumentLineDocument>
+      <xyz:SpecifiedTradeProduct>
+        <xyz:SellerAssignedID>832</xyz:SellerAssignedID>
+        <xyz:Name>Abzug</xyz:Name>
+      </xyz:SpecifiedTradeProduct>
+      <xyz:SpecifiedLineTradeAgreement>
+        <xyz:NetPriceProductTradePrice>
+          <xyz:ChargeAmount>606.1300</xyz:ChargeAmount>
+        </xyz:NetPriceProductTradePrice>
+      </xyz:SpecifiedLineTradeAgreement>
+      <xyz:SpecifiedLineTradeDelivery>
+        <xyz:BilledQuantity unitCode="C62">-1</xyz:BilledQuantity>
+      </xyz:SpecifiedLineTradeDelivery>
+      <xyz:SpecifiedLineTradeSettlement>
+        <xyz:ApplicableTradeTax>
+          <xyz:TypeCode>VAT</xyz:TypeCode>
+          <xyz:CategoryCode>S</xyz:CategoryCode>
+          <xyz:RateApplicablePercent>19.00</xyz:RateApplicablePercent>
+        </xyz:ApplicableTradeTax>
+        <xyz:SpecifiedTradeSettlementLineMonetarySummation>
+          <xyz:LineTotalAmount>-606.13</xyz:LineTotalAmount>
+        </xyz:SpecifiedTradeSettlementLineMonetarySummation>
+      </xyz:SpecifiedLineTradeSettlement>
+    </xyz:IncludedSupplyChainTradeLineItem>
+
+    <xyz:IncludedSupplyChainTradeLineItem>
+      <xyz:AssociatedDocumentLineDocument>
+        <xyz:LineID>16</xyz:LineID>
+      </xyz:AssociatedDocumentLineDocument>
+      <xyz:SpecifiedTradeProduct>
+        <xyz:SellerAssignedID>870</xyz:SellerAssignedID>
+        <xyz:Name>zzgl. </xyz:Name>
+      </xyz:SpecifiedTradeProduct>
+      <xyz:SpecifiedLineTradeAgreement>
+        <xyz:NetPriceProductTradePrice>
+          <xyz:ChargeAmount>1.5000</xyz:ChargeAmount>
+        </xyz:NetPriceProductTradePrice>
+      </xyz:SpecifiedLineTradeAgreement>
+      <xyz:SpecifiedLineTradeDelivery>
+        <xyz:BilledQuantity unitCode="C62">1.000</xyz:BilledQuantity>
+      </xyz:SpecifiedLineTradeDelivery>
+      <xyz:SpecifiedLineTradeSettlement>
+        <xyz:ApplicableTradeTax>
+          <xyz:TypeCode>VAT</xyz:TypeCode>
+          <xyz:CategoryCode>S</xyz:CategoryCode>
+          <xyz:RateApplicablePercent>19.00</xyz:RateApplicablePercent>
+        </xyz:ApplicableTradeTax>
+        <xyz:SpecifiedTradeSettlementLineMonetarySummation>
+          <xyz:LineTotalAmount>177.41</xyz:LineTotalAmount>
+        </xyz:SpecifiedTradeSettlementLineMonetarySummation>
+      </xyz:SpecifiedLineTradeSettlement>
+    </xyz:IncludedSupplyChainTradeLineItem>
+    <xyz:ApplicableHeaderTradeAgreement>
+      <xyz:SellerTradeParty>
+        <xyz:Name>XXX AG</xyz:Name>
+        <xyz:SpecifiedLegalOrganization>
+          <xyz:ID>57151520</xyz:ID>
+        </xyz:SpecifiedLegalOrganization>
+        <xyz:PostalTradeAddress>
+          <xyz:PostcodeCode>10369</xyz:PostcodeCode>
+          <xyz:LineOne>Storkower Straße 207</xyz:LineOne>
+          <xyz:CityName>Berlin</xyz:CityName>
+          <xyz:CountryID>DE</xyz:CountryID>
+        </xyz:PostalTradeAddress>
+        <xyz:SpecifiedTaxRegistration>
+          <xyz:ID schemeID="VA">DE37/302/30168</xyz:ID>
+        </xyz:SpecifiedTaxRegistration>
+      </xyz:SellerTradeParty>
+      <xyz:BuyerTradeParty>
+        <xyz:ID>10202</xyz:ID>
+        <xyz:Name>XXX AG</xyz:Name>
+        <xyz:DefinedTradeContact>
+          <xyz:PersonName>XXXX</xyz:PersonName>
+        </xyz:DefinedTradeContact>
+        <xyz:PostalTradeAddress>
+          <xyz:PostcodeCode>10369</xyz:PostcodeCode>
+          <xyz:LineOne>Storkower Straße 207</xyz:LineOne>
+          <xyz:CityName>Berlin</xyz:CityName>
+          <xyz:CountryID>DE</xyz:CountryID>
+        </xyz:PostalTradeAddress>
+      </xyz:BuyerTradeParty>
+    </xyz:ApplicableHeaderTradeAgreement>
+
+    <xyz:ApplicableHeaderTradeDelivery>
+      <xyz:ActualDeliverySupplyChainEvent>
+        <xyz:OccurrenceDateTime>
+          <udt:DateTimeString format="102">20160906</udt:DateTimeString>
+        </xyz:OccurrenceDateTime>
+      </xyz:ActualDeliverySupplyChainEvent>
+    </xyz:ApplicableHeaderTradeDelivery>
+
+    <xyz:ApplicableHeaderTradeSettlement>
+      <xyz:PaymentReference>2016166</xyz:PaymentReference>
+      <xyz:InvoiceCurrencyCode>EUR</xyz:InvoiceCurrencyCode>
+      <xyz:SpecifiedTradeSettlementPaymentMeans>
+        <xyz:TypeCode>30</xyz:TypeCode>
+        <xyz:PayeePartyCreditorFinancialAccount>
+          <xyz:IBANID>DE12500105170648489890</xyz:IBANID>
+        </xyz:PayeePartyCreditorFinancialAccount>
+      </xyz:SpecifiedTradeSettlementPaymentMeans>
+      <xyz:ApplicableTradeTax>
+        <xyz:CalculatedAmount>2221.84</xyz:CalculatedAmount>
+        <xyz:TypeCode>VAT</xyz:TypeCode>
+        <xyz:BasisAmount>11693.87</xyz:BasisAmount>
+        <xyz:CategoryCode>S</xyz:CategoryCode>
+        <xyz:RateApplicablePercent>19.00</xyz:RateApplicablePercent>
+      </xyz:ApplicableTradeTax>
+      <xyz:SpecifiedTradePaymentTerms>
+        <xyz:DueDateDateTime>
+          <udt:DateTimeString format="102">20150109</udt:DateTimeString>
+        </xyz:DueDateDateTime>
+      </xyz:SpecifiedTradePaymentTerms>
+      <xyz:SpecifiedTradeSettlementHeaderMonetarySummation>
+        <xyz:LineTotalAmount>11693.87</xyz:LineTotalAmount>
+        <xyz:TaxBasisTotalAmount>11693.87</xyz:TaxBasisTotalAmount>
+        <xyz:TaxTotalAmount currencyID="EUR">2221.84</xyz:TaxTotalAmount>
+        <xyz:GrandTotalAmount>13915.71</xyz:GrandTotalAmount>
+        <xyz:DuePayableAmount>13915.71</xyz:DuePayableAmount>
+      </xyz:SpecifiedTradeSettlementHeaderMonetarySummation>
+    </xyz:ApplicableHeaderTradeSettlement>
+  </rsm:SupplyChainTradeTransaction>
+</rsm:CrossIndustryInvoice>
