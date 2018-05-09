@@ -23,7 +23,7 @@ import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.peppol.PeppolValidation;
-import com.helger.bdve.peppol.PeppolValidation350;
+import com.helger.bdve.peppol.PeppolValidation360;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -49,13 +49,13 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { PeppolValidation350.VID_OPENPEPPOL_T19_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation350.VID_OPENPEPPOL_T58_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation350.VID_OPENPEPPOL_T01_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation350.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation350.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation350.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation350.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE), })
+    for (final VESID aESID : new VESID [] { PeppolValidation360.VID_OPENPEPPOL_T19_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
+                                            PeppolValidation360.VID_OPENPEPPOL_T58_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
+                                            PeppolValidation360.VID_OPENPEPPOL_T01_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
+                                            PeppolValidation360.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
+                                            PeppolValidation360.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
+                                            PeppolValidation360.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
+                                            PeppolValidation360.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE), })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -68,19 +68,19 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (aVESID.equals (PeppolValidation350.VID_OPENPEPPOL_T19_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
+    if (aVESID.equals (PeppolValidation360.VID_OPENPEPPOL_T19_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
-    if (aVESID.equals (PeppolValidation350.VID_OPENPEPPOL_T58_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
+    if (aVESID.equals (PeppolValidation360.VID_OPENPEPPOL_T58_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
-    if (aVESID.equals (PeppolValidation350.VID_OPENPEPPOL_T01_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
+    if (aVESID.equals (PeppolValidation360.VID_OPENPEPPOL_T01_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
-    if (aVESID.equals (PeppolValidation350.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
+    if (aVESID.equals (PeppolValidation360.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
-    if (aVESID.equals (PeppolValidation350.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
+    if (aVESID.equals (PeppolValidation360.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
-    if (aVESID.equals (PeppolValidation350.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
+    if (aVESID.equals (PeppolValidation360.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
-    if (aVESID.equals (PeppolValidation350.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
+    if (aVESID.equals (PeppolValidation360.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
