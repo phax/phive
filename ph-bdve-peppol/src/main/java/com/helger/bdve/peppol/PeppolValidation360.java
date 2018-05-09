@@ -34,19 +34,18 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.version.Version;
 
 /**
- * OpenPEPPOL validation artefacts release 3.5.0. Autumn 2017 release. Valid per
- * November 15th, 2017
+ * OpenPEPPOL validation artefacts release 3.6.0. Spring 2018 release. Valid per
+ * May 14th, 2018
  *
  * @author Philip Helger
  */
 @Immutable
-@Deprecated
-public final class PeppolValidation350
+public final class PeppolValidation360
 {
   // Standard resources
-  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 5, 0);
+  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 6, 0);
   public static final String VERSION_STR = PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
-  public static final LocalDate VALID_PER = PDTFactory.createLocalDate (2017, Month.NOVEMBER, 15);
+  public static final LocalDate VALID_PER = PDTFactory.createLocalDate (2018, Month.MAY, 14);
 
   // Standard
   public static final VESID VID_OPENPEPPOL_T01_V2 = new VESID ("eu.peppol.bis2", "t01", VERSION_STR);
@@ -81,7 +80,7 @@ public final class PeppolValidation350
   @Nonnull
   private static ClassLoader _getCL ()
   {
-    return PeppolValidation350.class.getClassLoader ();
+    return PeppolValidation360.class.getClassLoader ();
   }
 
   private static final IReadableResource ORDER_RULES = new ClassPathResource (ORDER +
@@ -204,7 +203,7 @@ public final class PeppolValidation350
                                                                                              "OPENPEPPOL-UBL-T110.sch",
                                                                                              _getCL ());
 
-  private PeppolValidation350 ()
+  private PeppolValidation360 ()
   {}
 
   @Nonnull
@@ -224,7 +223,7 @@ public final class PeppolValidation350
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     final String sVersion = " (" + VERSION_STR + ")";
-    final boolean bDeprecated = PeppolValidation360.VALID_PER.compareTo (PDTFactory.getCurrentLocalDate ()) >= 0;
+    final boolean bDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T01_V2,
                                                                            "OpenPEPPOL Order" + sVersion,
                                                                            CPeppolValidationArtefact.VK_ORDER_03_T01,
