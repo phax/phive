@@ -25,8 +25,6 @@ import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.ISpecificationTransaction;
-import com.helger.bdve.spec.SpecificationTransaction;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.ubl21.EUBL21DocumentType;
@@ -173,15 +171,12 @@ public final class UBLValidation
     {
       final String sName = e.getLocalName ();
       final VESID aVESID = new VESID (GROUP_ID, sName.toLowerCase (Locale.US), VERSION_21);
-      final ISpecificationTransaction aTransaction = new SpecificationTransaction (sName.toLowerCase (Locale.US),
-                                                                                   "UBL " + sName + " " + VERSION_21,
-                                                                                   e,
-                                                                                   UBL21NamespaceContext.getInstance ());
 
       // No Schematrons here
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                              "UBL " + sName + " " + VERSION_21,
-                                                                             new ValidationArtefactKey.Builder ().setTransaction (aTransaction)
+                                                                             new ValidationArtefactKey.Builder ().setDocType (e)
+                                                                                                                 .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                                  .build (),
                                                                              bNotDeprecated));
     }

@@ -25,8 +25,6 @@ import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.ISpecificationTransaction;
-import com.helger.bdve.spec.SpecificationTransaction;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.cii.d16b.ECIID16BDocumentType;
@@ -69,30 +67,14 @@ public final class CIIValidation
     {
       final String sName = e.getLocalName ();
       final VESID aVESID = new VESID (GROUP_ID, sName.toLowerCase (Locale.US), VERSION_D16B);
-      final ISpecificationTransaction aTransaction = new SpecificationTransaction (sName.toLowerCase (Locale.US),
-                                                                                   "CII " + sName + " " + VERSION_D16B,
-                                                                                   e,
-                                                                                   CIID16BNamespaceContext.getInstance ());
 
       // No Schematrons here
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                              "CII " + sName + " " + VERSION_D16B,
-                                                                             new ValidationArtefactKey.Builder ().setTransaction (aTransaction)
+                                                                             new ValidationArtefactKey.Builder ().setDocType (e)
+                                                                                                                 .setNamespaceContext (CIID16BNamespaceContext.getInstance ())
                                                                                                                  .build (),
                                                                              bDeprecated));
     }
   }
-
-  // public static void main (final String [] args)
-  // {
-  // for (final ECIID16BDocumentType e : ECIID16BDocumentType.values ())
-  // {
-  // final String sName = e.getLocalName ();
-  // System.out.println ("public static final VESID VID_CII_D16B_" +
-  // sName.toUpperCase (Locale.US) +
-  // " = new VESID (GROUP_ID, \"" +
-  // sName.toLowerCase (Locale.US) +
-  // "\", VERSION_D16B);");
-  // }
-  // }
 }

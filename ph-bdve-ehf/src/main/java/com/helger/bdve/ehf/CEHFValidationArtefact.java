@@ -19,7 +19,8 @@ package com.helger.bdve.ehf;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.EBIITransaction;
+import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
  * EHF validation artefacts etc
@@ -29,25 +30,35 @@ import com.helger.bdve.spec.EBIITransaction;
 @Immutable
 public final class CEHFValidationArtefact
 {
-  public static final ValidationArtefactKey VK_EHF_CATALOGUE_T19 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T19)
+  public static final ValidationArtefactKey VK_EHF_CATALOGUE_T19 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CATALOGUE)
+                                                                                                       .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                        .build ();
-  public static final ValidationArtefactKey VK_EHF_CATALOGUE_RESPONSE_T58 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T58)
+  public static final ValidationArtefactKey VK_EHF_CATALOGUE_RESPONSE_T58 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.APPLICATION_RESPONSE)
+                                                                                                                .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                                 .build ();
-  public static final ValidationArtefactKey VK_EHF_CREDITNOTE_T14 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T14)
+  public static final ValidationArtefactKey VK_EHF_CREDITNOTE_T14 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CREDIT_NOTE)
+                                                                                                        .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                         .build ();
-  public static final ValidationArtefactKey VK_EHF_DESPATCH_ADVICE_T14 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T16)
+  public static final ValidationArtefactKey VK_EHF_DESPATCH_ADVICE_T14 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.DESPATCH_ADVICE)
+                                                                                                             .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                              .build ();
-  public static final ValidationArtefactKey VK_EHF_INVOICE_T10 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T10)
+  public static final ValidationArtefactKey VK_EHF_INVOICE_T10 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.INVOICE)
+                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                      .build ();
-  public static final ValidationArtefactKey VK_EHF_ORDER_T01 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T01)
+  public static final ValidationArtefactKey VK_EHF_ORDER_T01 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER)
+                                                                                                   .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                    .build ();
-  public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T110)
+  public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER_RESPONSE)
+                                                                                                              .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                               .build ();
-  public static final ValidationArtefactKey VK_EHF_ORDER_RESPONSE_T76 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T76)
+  public static final ValidationArtefactKey VK_EHF_ORDER_RESPONSE_T76 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER_RESPONSE)
+                                                                                                            .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                             .build ();
-  public static final ValidationArtefactKey VK_EHF_PUNCH_OUT_T77 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T77)
+  public static final ValidationArtefactKey VK_EHF_PUNCH_OUT_T77 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CATALOGUE)
+                                                                                                       .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                        .build ();
-  public static final ValidationArtefactKey VK_EHF_REMINDER_T17 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T17)
+  public static final ValidationArtefactKey VK_EHF_REMINDER_T17 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.REMINDER)
+                                                                                                      .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                       .build ();
 
   private CEHFValidationArtefact ()

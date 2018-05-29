@@ -24,11 +24,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.locale.country.CountryCache;
@@ -41,7 +38,9 @@ import com.helger.xml.namespace.IIterableNamespaceContext;
  * A validation key that uniquely identifies a set of validation artefacts. It
  * consists of the following elements:
  * <ul>
- * <li>A transaction of type {@link ISpecificationTransaction}</li>
+ * <li>A JAXB document type of type {@link IJAXBDocumentType}</li>
+ * <li>An optional namespace context of type
+ * {@link IIterableNamespaceContext}</li>
  * <li>An optional country code in case validation is country dependent.</li>
  * <li>An optional "sector key" of type {@link ValidationArtefactSectorKey} that
  * identifies the industry or sector to which the validation applies.</li>
@@ -53,24 +52,24 @@ import com.helger.xml.namespace.IIterableNamespaceContext;
  */
 @Immutable
 @MustImplementEqualsAndHashcode
-public class ValidationArtefactKey implements Serializable, Comparable <ValidationArtefactKey>
+public class ValidationArtefactKey implements Serializable
 {
-  private final ISpecificationTransaction m_aTransaction;
+  private final IJAXBDocumentType m_aDocType;
+  private final IIterableNamespaceContext m_aNamespaceContext;
   private final Locale m_aCountry;
   private final ValidationArtefactSectorKey m_aSectorKey;
   private final String m_sPrerequisiteXPath;
 
-  // Status vars
-  private final String m_sID;
-
-  public ValidationArtefactKey (@Nonnull final ISpecificationTransaction aTransaction,
+  public ValidationArtefactKey (@Nonnull final IJAXBDocumentType aDocType,
+                                @Nullable final IIterableNamespaceContext aNamespaceContext,
                                 @Nullable final String sCountryCode,
                                 @Nullable final ValidationArtefactSectorKey aSectorKey,
                                 @Nullable final String sPrerequisiteXPath)
   {
-    ValueEnforcer.notNull (aTransaction, "Transaction");
+    ValueEnforcer.notNull (aDocType, "DocType");
 
-    m_aTransaction = aTransaction;
+    m_aDocType = aDocType;
+    m_aNamespaceContext = aNamespaceContext;
     if (StringHelper.hasText (sCountryCode))
     {
       m_aCountry = CountryCache.getInstance ().getCountry (sCountryCode);
@@ -81,29 +80,15 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
       m_aCountry = null;
     m_aSectorKey = aSectorKey;
     m_sPrerequisiteXPath = sPrerequisiteXPath;
-
-    String sID = aTransaction.getID ();
-    if (m_aCountry != null)
-      sID += "~" + m_aCountry.getCountry ();
-    if (aSectorKey != null)
-      sID += "~" + aSectorKey.getID ();
-    m_sID = sID;
-  }
-
-  @Nonnull
-  @Nonempty
-  public String getID ()
-  {
-    return m_sID;
   }
 
   /**
-   * @return The JAXB document type referenced by the transaction.
+   * @return The JAXB document type to be used. Never <code>null</code>.
    */
   @Nonnull
   public IJAXBDocumentType getJAXBDocumentType ()
   {
-    return m_aTransaction.getJAXBDocumentType ();
+    return m_aDocType;
   }
 
   /**
@@ -113,7 +98,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   @Nullable
   public IIterableNamespaceContext getNamespaceContext ()
   {
-    return m_aTransaction.getNamespaceContext ();
+    return m_aNamespaceContext;
   }
 
   /**
@@ -182,54 +167,6 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     return m_sPrerequisiteXPath;
   }
 
-  /**
-   * Check if this and the passed validation artefact key have the same business
-   * specification and transaction!
-   *
-   * @param aOther
-   *        The validation artefact key to compare to. May be <code>null</code>.
-   * @return <code>true</code> if the passed object is not <code>null</code> and
-   *         if business specification and transaction are equal,
-   *         <code>false</code> otherwise.
-   */
-  public boolean hasSameTransaction (@Nullable final ValidationArtefactKey aOther)
-  {
-    if (aOther == null)
-      return false;
-    return m_aTransaction.equals (aOther.m_aTransaction);
-  }
-
-  public boolean hasSameTransactionAndCountryAndSector (@Nullable final ValidationArtefactKey aOther)
-  {
-    if (aOther == null)
-      return false;
-
-    // If this has no sector key, but the other has a sector key, it's also a
-    // match!
-    return m_aTransaction.equals (aOther.m_aTransaction) &&
-           EqualsHelper.equals (m_aCountry, aOther.m_aCountry) &&
-           (EqualsHelper.equals (m_aSectorKey, aOther.m_aSectorKey) ||
-            (m_aSectorKey == null && aOther.m_aSectorKey != null));
-  }
-
-  public int compareTo (@Nonnull final ValidationArtefactKey aOther)
-  {
-    int ret = m_aTransaction.getName ().compareTo (aOther.m_aTransaction.getName ());
-    if (ret == 0)
-    {
-      ret = CompareHelper.compare (getCountryCode (), aOther.getCountryCode ());
-      if (ret == 0)
-      {
-        ret = CompareHelper.compare (m_aSectorKey, m_aSectorKey);
-        if (ret == 0)
-        {
-          ret = CompareHelper.compare (m_sPrerequisiteXPath, aOther.m_sPrerequisiteXPath);
-        }
-      }
-    }
-    return ret;
-  }
-
   @Override
   public boolean equals (final Object o)
   {
@@ -238,7 +175,8 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ValidationArtefactKey rhs = (ValidationArtefactKey) o;
-    return m_aTransaction.equals (rhs.m_aTransaction) &&
+    return m_aDocType.equals (rhs.m_aDocType) &&
+           EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
            EqualsHelper.equals (m_aCountry, rhs.m_aCountry) &&
            EqualsHelper.equals (m_aSectorKey, rhs.m_aSectorKey) &&
            EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath);
@@ -247,7 +185,8 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aTransaction)
+    return new HashCodeGenerator (this).append (m_aDocType)
+                                       .append (m_aNamespaceContext)
                                        .append (m_aCountry)
                                        .append (m_aSectorKey)
                                        .append (m_sPrerequisiteXPath)
@@ -257,7 +196,8 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Transaction", m_aTransaction)
+    return new ToStringGenerator (this).append ("DocType", m_aDocType)
+                                       .appendIfNotNull ("NamespaceContext", m_aNamespaceContext)
                                        .appendIfNotNull ("Country", m_aCountry)
                                        .appendIfNotNull ("SectorKey", m_aSectorKey)
                                        .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
@@ -266,15 +206,16 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
 
   /**
    * Builder class for {@link ValidationArtefactKey} objects.
-   * {@link #setTransaction(ISpecificationTransaction)} must be filled, as these
-   * are the mandatory fields.
+   * {@link #setDocType(IJAXBDocumentType)} must be filled, as this field is
+   * mandatory.
    *
    * @author Philip Helger
    */
   @NotThreadSafe
   public static class Builder
   {
-    private ISpecificationTransaction m_aTransaction;
+    private IJAXBDocumentType m_aDocType;
+    private IIterableNamespaceContext m_aNamespaceContext;
     private String m_sCountry;
     private ValidationArtefactSectorKey m_aSectorKey;
     private String m_sPrerequisiteXPath;
@@ -293,21 +234,34 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
      */
     public Builder (@Nonnull final ValidationArtefactKey aOther)
     {
-      m_aTransaction = aOther.m_aTransaction;
+      m_aDocType = aOther.m_aDocType;
+      m_aNamespaceContext = aOther.m_aNamespaceContext;
       m_sCountry = aOther.getCountryCode ();
       m_aSectorKey = aOther.m_aSectorKey;
       m_sPrerequisiteXPath = aOther.m_sPrerequisiteXPath;
     }
 
     /**
-     * @param aTransaction
-     *        The transaction to be used. May be <code>null</code>.
+     * @param aDocType
+     *        The JAXB document type to be used. May be <code>null</code>.
      * @return this for chaining
      */
     @Nonnull
-    public Builder setTransaction (@Nullable final ISpecificationTransaction aTransaction)
+    public Builder setDocType (@Nullable final IJAXBDocumentType aDocType)
     {
-      m_aTransaction = aTransaction;
+      m_aDocType = aDocType;
+      return this;
+    }
+
+    /**
+     * @param aNamespaceContext
+     *        The namespace context to be used. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @Nonnull
+    public Builder setNamespaceContext (@Nullable final IIterableNamespaceContext aNamespaceContext)
+    {
+      m_aNamespaceContext = aNamespaceContext;
       return this;
     }
 
@@ -361,9 +315,13 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     @Nonnull
     public ValidationArtefactKey build ()
     {
-      if (m_aTransaction == null)
-        throw new IllegalStateException ("The Transaction must be provided");
-      return new ValidationArtefactKey (m_aTransaction, m_sCountry, m_aSectorKey, m_sPrerequisiteXPath);
+      if (m_aDocType == null)
+        throw new IllegalStateException ("The DocType must be provided");
+      return new ValidationArtefactKey (m_aDocType,
+                                        m_aNamespaceContext,
+                                        m_sCountry,
+                                        m_aSectorKey,
+                                        m_sPrerequisiteXPath);
     }
   }
 }

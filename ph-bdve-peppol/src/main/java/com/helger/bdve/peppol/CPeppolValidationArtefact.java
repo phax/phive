@@ -21,9 +21,10 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.key.ValidationArtefactSectorKey;
-import com.helger.bdve.spec.EBIITransaction;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.ubl21.EUBL21DocumentType;
+import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
  * Peppol validation artefacts etc
@@ -40,37 +41,48 @@ public final class CPeppolValidationArtefact
   }
 
   // Predefined transaction keys, ordered by BIS and than by BII2 transaction
-  public static final ValidationArtefactKey VK_CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T19)
+  public static final ValidationArtefactKey VK_CATALOGUE_01_T19 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CATALOGUE)
+                                                                                                      .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                       .build ();
-  public static final ValidationArtefactKey VK_CATALOGUE_01_T58 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T58)
+  public static final ValidationArtefactKey VK_CATALOGUE_01_T58 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.APPLICATION_RESPONSE)
+                                                                                                      .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                       .build ();
-  public static final ValidationArtefactKey VK_ORDER_03_T01 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T01)
+  public static final ValidationArtefactKey VK_ORDER_03_T01 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER)
+                                                                                                  .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                   .build ();
-  public static final ValidationArtefactKey VK_INVOICE_04_T10 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T10)
+  public static final ValidationArtefactKey VK_INVOICE_04_T10 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.INVOICE)
+                                                                                                    .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                     .build ();
   public static final ValidationArtefactKey VK_INVOICE_04_T10_ATNAT = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10).setCountry ("AT")
                                                                                                                            .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                                                            .build ();
   public static final ValidationArtefactKey VK_INVOICE_04_T10_ATGOV = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                                                  .build ();
-  public static final ValidationArtefactKey VK_BILLING_05_T14 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T14)
+  public static final ValidationArtefactKey VK_BILLING_05_T14 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CREDIT_NOTE)
+                                                                                                    .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                     .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14_ATNAT = new ValidationArtefactKey.Builder (VK_BILLING_05_T14).setCountry ("AT")
                                                                                                                            .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                                                            .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14_ATGOV = new ValidationArtefactKey.Builder (VK_BILLING_05_T14_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                                                  .build ();
-  public static final ValidationArtefactKey VK_PUNCH_OUT_18_T77 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T77)
+  public static final ValidationArtefactKey VK_PUNCH_OUT_18_T77 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CATALOGUE)
+                                                                                                      .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                       .build ();
-  public static final ValidationArtefactKey VK_ORDERING_28_T01 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T01)
+  public static final ValidationArtefactKey VK_ORDERING_28_T01 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER)
+                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                      .build ();
-  public static final ValidationArtefactKey VK_ORDERING_28_T76 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T76)
+  public static final ValidationArtefactKey VK_ORDERING_28_T76 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER_RESPONSE)
+                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                      .build ();
-  public static final ValidationArtefactKey VK_DESPATCH_ADVICE_30_T16 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T16)
+  public static final ValidationArtefactKey VK_DESPATCH_ADVICE_30_T16 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.DESPATCH_ADVICE)
+                                                                                                            .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                             .build ();
-  public static final ValidationArtefactKey VK_MLR_36_T71 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T71)
+  public static final ValidationArtefactKey VK_MLR_36_T71 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.APPLICATION_RESPONSE)
+                                                                                                .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                 .build ();
-  public static final ValidationArtefactKey VK_ORDER_AGREEMENT_42_T110 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T110)
+  public static final ValidationArtefactKey VK_ORDER_AGREEMENT_42_T110 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER_RESPONSE)
+                                                                                                             .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                              .build ();
 
   public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV",

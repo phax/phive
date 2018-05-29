@@ -219,8 +219,6 @@
     <module>ph-bdve-ehf</module>
     <module>ph-bdve-energieefactuur</module>
     <module>ph-bdve-oioubl</module>
-    <!--
     <module>ph-bdve-teapps</module>
-    -->
   </modules>
 </project>

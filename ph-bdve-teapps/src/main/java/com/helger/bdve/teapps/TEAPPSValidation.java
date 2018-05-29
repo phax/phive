@@ -23,7 +23,6 @@ import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.SpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.jaxb.builder.JAXBDocumentType;
@@ -47,7 +46,7 @@ public final class TEAPPSValidation
   {}
 
   /**
-   * Register all standard TEAPPS D16B validation execution sets to the provided
+   * Register all standard TEAPPS validation execution sets to the provided
    * registry.
    *
    * @param aRegistry
@@ -60,12 +59,9 @@ public final class TEAPPSValidation
     // No Schematrons here
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_TEAPPS_272,
                                                                            "TEAPPSXML " + VERSION_272,
-                                                                           new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("teapps272",
-                                                                                                                                                              "TEAPPSXML 2.7.2",
-                                                                                                                                                              new JAXBDocumentType (String.class,
-                                                                                                                                                                                    new CommonsArrayList <> ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"),
-                                                                                                                                                                                    null),
-                                                                                                                                                              null))
+                                                                           new ValidationArtefactKey.Builder ().setDocType (new JAXBDocumentType (String.class,
+                                                                                                                                                  new CommonsArrayList <> ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"),
+                                                                                                                                                  null))
                                                                                                                .build (),
                                                                            false));
   }

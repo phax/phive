@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.SpecificationTransaction;
 import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.cii.d16b.ECIID16BDocumentType;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -41,22 +40,15 @@ import eu.cen.en16931.edifact.invoicd14b.iso20625.MINVOIC;
 public final class CEN16931
 {
   // Predefined keys for UBL, CII and EDIFACT
-  public static final ValidationArtefactKey VK_INVOICE_CII = new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("cii",
-                                                                                                                                                "CII Invoice",
-                                                                                                                                                ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE,
-                                                                                                                                                CIID16BNamespaceContext.getInstance ()))
+  public static final ValidationArtefactKey VK_INVOICE_CII = new ValidationArtefactKey.Builder ().setDocType (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE)
+                                                                                                 .setNamespaceContext (CIID16BNamespaceContext.getInstance ())
                                                                                                  .build ();
-  public static final ValidationArtefactKey VK_INVOICE_EDIFACT = new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("edifact",
-                                                                                                                                                    "EDIFACT/ISO 20625 Invoice",
-                                                                                                                                                    new JAXBDocumentType (MINVOIC.class,
-                                                                                                                                                                          new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
-                                                                                                                                                                          x -> x),
-                                                                                                                                                    null))
+  public static final ValidationArtefactKey VK_INVOICE_EDIFACT = new ValidationArtefactKey.Builder ().setDocType (new JAXBDocumentType (MINVOIC.class,
+                                                                                                                                        new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
+                                                                                                                                        x -> x))
                                                                                                      .build ();
-  public static final ValidationArtefactKey VK_INVOICE_UBL = new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("ubl",
-                                                                                                                                                "UBL Invoice",
-                                                                                                                                                EUBL21DocumentType.INVOICE,
-                                                                                                                                                UBL21NamespaceContext.getInstance ()))
+  public static final ValidationArtefactKey VK_INVOICE_UBL = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.INVOICE)
+                                                                                                 .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                  .build ();
 
   @Nonnull
