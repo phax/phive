@@ -183,6 +183,11 @@
         <artifactId>ph-bdve-oioubl</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-bdve-teapps</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -214,5 +219,8 @@
     <module>ph-bdve-ehf</module>
     <module>ph-bdve-energieefactuur</module>
     <module>ph-bdve-oioubl</module>
+    <!--
+    <module>ph-bdve-teapps</module>
+    -->
   </modules>
 </project>
