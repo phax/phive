@@ -32,7 +32,6 @@ import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.location.SimpleLocation;
-import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
 
@@ -58,13 +57,9 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
 
     final IValidationArtefact aVA = getValidationArtefact ();
 
-    // Find the document type that is required for the configured
-    // validation
-    final IJAXBDocumentType aJAXBDocumentType = aVA.getValidationKey ().getJAXBDocumentType ();
-
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
-    final Schema aSchema = aJAXBDocumentType.getSchema (aClassLoader);
+    final Schema aSchema = aVA.getValidationKey ().getSchema (aClassLoader);
     assert aSchema != null;
 
     final ErrorList aErrorList = new ErrorList ();

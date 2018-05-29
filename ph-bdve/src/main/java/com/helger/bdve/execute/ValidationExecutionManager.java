@@ -135,7 +135,7 @@ public class ValidationExecutionManager implements IHasClassLoader
   }
 
   /**
-   * @return The number contained exeuctors. Always &ge; 0.
+   * @return The number contained executors. Always &ge; 0.
    */
   @Nonnegative
   public int getExecutorCount ()

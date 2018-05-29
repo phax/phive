@@ -38,7 +38,6 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.jaxb.builder.IJAXBDocumentType;
 
 /**
  * Default implementation of {@link IValidationExecutorSet}.
@@ -50,18 +49,15 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 {
   private final VESID m_aID;
   private final String m_sDisplayName;
-  private final ValidationArtefactKey m_aValidationArtefactKey;
   private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
   private final boolean m_bDeprecated;
 
   public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
-                                @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                 final boolean bDeprecated)
   {
     m_aID = ValueEnforcer.notNull (aID, "ID");
     m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    m_aValidationArtefactKey = ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     m_bDeprecated = bDeprecated;
   }
 
@@ -76,12 +72,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public String getDisplayName ()
   {
     return m_sDisplayName;
-  }
-
-  @Nonnull
-  public ValidationArtefactKey getValidationArtefactKey ()
-  {
-    return m_aValidationArtefactKey;
   }
 
   @Nonnegative
@@ -123,40 +113,16 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     return this;
   }
 
-  /**
-   * Shortcut method to add all XSD executors of a single JAXB document type.
-   * The validation artefact key passed in the constructor is used for the XSD
-   * executors.
-   *
-   * @param aDocType
-   *        The JAXB document type. May not be <code>null</code>.
-   * @return this for chaining
-   */
   @Nonnull
-  public ValidationExecutorSet addAllXSDExecutors (@Nonnull final IJAXBDocumentType aDocType)
-  {
-    ValueEnforcer.notNull (aDocType, "DocType");
-
-    // The class loader of the JAXB implementation class is usually located in
-    // the same JAR file as the respective XSD resource file
-    final ClassLoader aClassLoader = aDocType.getImplementationClass ().getClassLoader ();
-
-    for (final IReadableResource aXSDRes : aDocType.getAllXSDResources ())
-      addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                                      aClassLoader,
-                                                                      aXSDRes,
-                                                                      m_aValidationArtefactKey)));
-    return this;
-  }
-
-  @Nonnull
-  public ValidationExecutorSet addMatchingExecutor (@Nonnull final TypedValidationResource aRes)
+  public ValidationExecutorSet addMatchingExecutor (@Nonnull final TypedValidationResource aRes,
+                                                    @Nonnull final ValidationArtefactKey aValidationArtefactKey)
   {
     ValueEnforcer.notNull (aRes, "ValidationResource");
+
     final ValidationArtefact aVA = new ValidationArtefact (aRes.getValidationType (),
                                                            aRes.getClassLoader (),
                                                            aRes.getResource (),
-                                                           m_aValidationArtefactKey);
+                                                           aValidationArtefactKey);
 
     switch (aRes.getValidationType ())
     {
@@ -263,17 +229,19 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.noNullValue (aValidationResources, "ValidationResources");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
-                                                                 sDisplayName,
-                                                                 aValidationArtefactKey,
-                                                                 bIsDeprecated);
+    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, bIsDeprecated);
 
     // Add XSDs at the beginning
-    ret.addAllXSDExecutors (aValidationArtefactKey.getJAXBDocumentType ());
+    final ClassLoader aClassLoader = aValidationArtefactKey.getClassLoader ();
+    for (final IReadableResource aXSDRes : aValidationArtefactKey.getAllXSDResources ())
+      ret.addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
+                                                                          aClassLoader,
+                                                                          aXSDRes,
+                                                                          aValidationArtefactKey)));
 
     // Add Schematrons
     for (final TypedValidationResource aRes : aValidationResources)
-      ret.addMatchingExecutor (aRes);
+      ret.addMatchingExecutor (aRes, aValidationArtefactKey);
 
     return ret;
   }
@@ -315,7 +283,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
                                                                  sDisplayName,
-                                                                 aValidationArtefactKey,
                                                                  bIsDeprecated || aBaseVES.isDeprecated ());
 
     // Copy all existing ones
@@ -324,7 +291,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 
     // Add Schematrons
     for (final TypedValidationResource aRes : aValidationResources)
-      ret.addMatchingExecutor (aRes);
+      ret.addMatchingExecutor (aRes, aValidationArtefactKey);
 
     return ret;
   }

@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutionManager;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -35,12 +34,6 @@ import com.helger.commons.name.IHasDisplayName;
  */
 public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName, ICommonsIterable <IValidationExecutor>
 {
-  /**
-   * @return The main validation artefact key assigned to this VES
-   */
-  @Nonnull
-  ValidationArtefactKey getValidationArtefactKey ();
-
   /**
    * @return The number of contained validation executors. Always &ge; 0.
    */

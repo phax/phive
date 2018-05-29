@@ -20,7 +20,6 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.xml.XMLConstants;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 
@@ -41,7 +40,6 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.StringHelper;
-import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
@@ -54,7 +52,6 @@ import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.XMLHelper;
-import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.serialize.read.DOMReaderSettings;
 import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
@@ -130,20 +127,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
       // Check if the artefact can be applied on the given document by
       // checking the prerequisite XPath
       final XPath aXPathContext = XPathHelper.createNewXPath ();
-
-      {
-        // Get all from the transaction
-        final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext (aVAK.getNamespaceContext ());
-
-        // Add the default mapping for the root namespace
-        final IJAXBDocumentType aDocumentType = aVAK.getJAXBDocumentType ();
-        aNSContext.addMapping (XMLConstants.DEFAULT_NS_PREFIX, aDocumentType.getNamespaceURI ());
-        // For historical reasons, the "ubl" prefix is also mapped to this
-        // namespace URI
-        aNSContext.addMapping ("ubl", aDocumentType.getNamespaceURI ());
-
-        aXPathContext.setNamespaceContext (aNSContext);
-      }
+      aXPathContext.setNamespaceContext (aVAK.getNamespaceContext ());
 
       try
       {

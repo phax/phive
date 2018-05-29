@@ -23,16 +23,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.XMLConstants;
+import javax.xml.validation.Schema;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.namespace.IIterableNamespaceContext;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * A validation key that uniquely identifies a set of validation artefacts. It
@@ -83,12 +88,35 @@ public class ValidationArtefactKey implements Serializable
   }
 
   /**
-   * @return The JAXB document type to be used. Never <code>null</code>.
+   * @return The class loader to be used. Never <code>null</code>.
    */
   @Nonnull
-  public IJAXBDocumentType getJAXBDocumentType ()
+  public ClassLoader getClassLoader ()
   {
-    return m_aDocType;
+    return m_aDocType.getImplementationClass ().getClassLoader ();
+  }
+
+  /**
+   * @return All XSD resources to be used, in the correct order.
+   */
+  @Nonnull
+  public ICommonsList <? extends IReadableResource> getAllXSDResources ()
+  {
+    return m_aDocType.getAllXSDResources (getClassLoader ());
+  }
+
+  /**
+   * @param aClassLoader
+   *        The class loader to be used. May be <code>null</code> indicating
+   *        that the default class loader should be used.
+   * @return The compiled {@link Schema} object retrieved by the
+   *         {@link com.helger.xml.schema.XMLSchemaCache}. May be
+   *         <code>null</code> if no XSD was provided.
+   */
+  @Nullable
+  public Schema getSchema (@Nullable final ClassLoader aClassLoader)
+  {
+    return m_aDocType.getSchema (aClassLoader);
   }
 
   /**
@@ -317,11 +345,18 @@ public class ValidationArtefactKey implements Serializable
     {
       if (m_aDocType == null)
         throw new IllegalStateException ("The DocType must be provided");
-      return new ValidationArtefactKey (m_aDocType,
-                                        m_aNamespaceContext,
-                                        m_sCountry,
-                                        m_aSectorKey,
-                                        m_sPrerequisiteXPath);
+
+      // Build the effective namespace context
+      final String sNamespaceURI = m_aDocType.getNamespaceURI ();
+      final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext (m_aNamespaceContext);
+
+      // Add the default mapping for the root namespace
+      aNSContext.addMapping (XMLConstants.DEFAULT_NS_PREFIX, sNamespaceURI);
+      // For historical reasons, the "ubl" prefix is also mapped to this
+      // namespace URI
+      aNSContext.addMapping ("ubl", sNamespaceURI);
+
+      return new ValidationArtefactKey (m_aDocType, aNSContext, m_sCountry, m_aSectorKey, m_sPrerequisiteXPath);
     }
   }
 }
