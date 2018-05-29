@@ -69,7 +69,7 @@ public final class CEN16931
                                                                                                                                                     new JAXBDocumentType (MINVOIC.class,
                                                                                                                                                                           new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
                                                                                                                                                                           x -> x),
-                                                                                                                                                    CIID16BNamespaceContext.getInstance ()))
+                                                                                                                                                    null))
                                                                                                      .build ();
   public static final ValidationArtefactKey VK_INVOICE_UBL = new ValidationArtefactKey.Builder ().setBusinessSpecification (EN16931)
                                                                                                  .setTransaction (new SpecificationTransaction ("ubl",
