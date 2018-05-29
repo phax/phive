@@ -133,8 +133,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
 
       {
         // Get all from the transaction
-        final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext (aVAK.getTransaction ()
-                                                                                      .getNamespaceContext ());
+        final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext (aVAK.getNamespaceContext ());
 
         // Add the default mapping for the root namespace
         final IJAXBDocumentType aDocumentType = aVAK.getJAXBDocumentType ();

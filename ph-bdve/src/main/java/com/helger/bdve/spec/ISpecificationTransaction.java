@@ -53,7 +53,8 @@ public interface ISpecificationTransaction extends IHasID <String>, IHasName, Se
   IJAXBDocumentType getJAXBDocumentType ();
 
   /**
-   * @return An optional namespace prefix-to-url mapping to be used.
+   * @return An optional namespace prefix-to-url mapping to be used. Maybe
+   *         <code>null</code>.
    */
   @Nullable
   IIterableNamespaceContext getNamespaceContext ();

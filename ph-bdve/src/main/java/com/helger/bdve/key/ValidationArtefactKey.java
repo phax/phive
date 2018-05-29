@@ -36,6 +36,7 @@ import com.helger.commons.locale.country.CountryCache;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
+import com.helger.xml.namespace.IIterableNamespaceContext;
 
 /**
  * A validation key that uniquely identifies a set of validation artefacts. It
@@ -103,26 +104,6 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   }
 
   /**
-   * @return The business specification this validation key refers to. This is
-   *         the object passed in the constructor. Never <code>null</code>.
-   */
-  @Nonnull
-  public IBusinessSpecification getBusinessSpecification ()
-  {
-    return m_aBusinessSpecification;
-  }
-
-  /**
-   * @return The transaction of the specification as passed in the constructor.
-   *         Never <code>null</code>.
-   */
-  @Nonnull
-  public ISpecificationTransaction getTransaction ()
-  {
-    return m_aTransaction;
-  }
-
-  /**
    * @return The JAXB document type referenced by the transaction.
    */
   @Nonnull
@@ -132,13 +113,13 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   }
 
   /**
-   * @return The JAXB class implementing the document type referenced by the
-   *         transaction.
+   * @return An optional namespace prefix-to-url mapping to be used. Maybe
+   *         <code>null</code>.
    */
-  @Nonnull
-  public Class <?> getImplementationClass ()
+  @Nullable
+  public IIterableNamespaceContext getNamespaceContext ()
   {
-    return getJAXBDocumentType ().getImplementationClass ();
+    return m_aTransaction.getNamespaceContext ();
   }
 
   /**
