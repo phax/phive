@@ -23,12 +23,8 @@ import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.BusinessSpecification;
-import com.helger.bdve.spec.BusinessSpecificationRegistry;
-import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.bdve.spec.SpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.jaxb.builder.JAXBDocumentType;
 
@@ -40,20 +36,9 @@ import com.helger.jaxb.builder.JAXBDocumentType;
 @Immutable
 public final class TEAPPSValidation
 {
-  @Nonnull
-  private static BusinessSpecification _createBusinessSpec (@Nonnull @Nonempty final String sGroupID,
-                                                            @Nonnull @Nonempty final String sSpecID,
-                                                            @Nonnull @Nonempty final String sDisplayName)
-  {
-    final BusinessSpecification ret = new BusinessSpecification (sGroupID, sSpecID, sDisplayName);
-    BusinessSpecificationRegistry.INSTANCE.registerBusinessSpecification (ret);
-    return ret;
-  }
-
   public static final String GROUP_ID = "com.tieto";
   public static final String VERSION_272 = "2.7.2";
   public static final String VERSION_30 = "3.0";
-  public static final IBusinessSpecification TEAPPS = _createBusinessSpec (GROUP_ID, "TEAPPS", "TEAPPSXML");
 
   public static final VESID VID_TEAPPS_272 = new VESID (GROUP_ID, "TEAPPSXML", VERSION_272);
   public static final VESID VID_TEAPPS_30 = new VESID (GROUP_ID, "TEAPPSXML", VERSION_30);
@@ -75,8 +60,7 @@ public final class TEAPPSValidation
     // No Schematrons here
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_TEAPPS_272,
                                                                            "TEAPPSXML " + VERSION_272,
-                                                                           new ValidationArtefactKey.Builder ().setBusinessSpecification (TEAPPS)
-                                                                                                               .setTransaction (new SpecificationTransaction ("teapps272",
+                                                                           new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("teapps272",
                                                                                                                                                               "TEAPPSXML 2.7.2",
                                                                                                                                                               new JAXBDocumentType (String.class,
                                                                                                                                                                                     new CommonsArrayList <> ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"),

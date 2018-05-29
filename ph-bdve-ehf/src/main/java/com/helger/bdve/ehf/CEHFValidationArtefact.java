@@ -16,15 +16,10 @@
  */
 package com.helger.bdve.ehf;
 
-import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.BusinessSpecification;
-import com.helger.bdve.spec.BusinessSpecificationRegistry;
 import com.helger.bdve.spec.EBIITransaction;
-import com.helger.bdve.spec.IBusinessSpecification;
-import com.helger.commons.annotation.Nonempty;
 
 /**
  * EHF validation artefacts etc
@@ -34,78 +29,25 @@ import com.helger.commons.annotation.Nonempty;
 @Immutable
 public final class CEHFValidationArtefact
 {
-  private static final String BUSINESS_SPEC_GROUP_ID = "no.ehf";
-
-  @Nonnull
-  private static BusinessSpecification _createBusinessSpec (@Nonnull @Nonempty final String sGroupID,
-                                                            @Nonnull @Nonempty final String sSpecID,
-                                                            @Nonnull @Nonempty final String sDisplayName)
-  {
-    final BusinessSpecification ret = new BusinessSpecification (sGroupID, sSpecID, sDisplayName);
-    BusinessSpecificationRegistry.INSTANCE.registerBusinessSpecification (ret);
-    return ret;
-  }
-
-  public static final IBusinessSpecification EHF_CATALOGUE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                  "catalogue",
-                                                                                  "EHF Catalogue");
-  public static final IBusinessSpecification EHF_CATALOGUE_RESPONSE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                           "catalogue-response",
-                                                                                           "EHF Catalogue Response");
-  public static final IBusinessSpecification EHF_CREDITNOTE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                   "creditnote",
-                                                                                   "EHF Creditnote");
-  public static final IBusinessSpecification EHF_DESPATCH_ADVICE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                        "despatch-advice",
-                                                                                        "EHF Despatch Advice");
-  public static final IBusinessSpecification EHF_INVOICE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                "invoice",
-                                                                                "EHF Invoice");
-  public static final IBusinessSpecification EHF_ORDER = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                              "order",
-                                                                              "EHF Order");
-  public static final IBusinessSpecification EHF_ORDER_AGREEMENT = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                        "order-agreement",
-                                                                                        "EHF Order Agreement");
-  public static final IBusinessSpecification EHF_ORDER_RESPONSE = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                       "order-response",
-                                                                                       "EHF Order Response");
-  public static final IBusinessSpecification EHF_PUNCH_OUT = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                  "punch-out",
-                                                                                  "EHF Punch Out");
-  public static final IBusinessSpecification EHF_REMINDER = _createBusinessSpec (BUSINESS_SPEC_GROUP_ID,
-                                                                                 "reminder",
-                                                                                 "EHF Reminder");
-
-  public static final ValidationArtefactKey VK_EHF_CATALOGUE_T19 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_CATALOGUE)
-                                                                                                       .setTransaction (EBIITransaction.T19)
+  public static final ValidationArtefactKey VK_EHF_CATALOGUE_T19 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T19)
                                                                                                        .build ();
-  public static final ValidationArtefactKey VK_EHF_CATALOGUE_RESPONSE_T58 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_CATALOGUE_RESPONSE)
-                                                                                                                .setTransaction (EBIITransaction.T58)
+  public static final ValidationArtefactKey VK_EHF_CATALOGUE_RESPONSE_T58 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T58)
                                                                                                                 .build ();
-  public static final ValidationArtefactKey VK_EHF_CREDITNOTE_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_CREDITNOTE)
-                                                                                                        .setTransaction (EBIITransaction.T14)
+  public static final ValidationArtefactKey VK_EHF_CREDITNOTE_T14 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T14)
                                                                                                         .build ();
-  public static final ValidationArtefactKey VK_EHF_DESPATCH_ADVICE_T14 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_DESPATCH_ADVICE)
-                                                                                                             .setTransaction (EBIITransaction.T16)
+  public static final ValidationArtefactKey VK_EHF_DESPATCH_ADVICE_T14 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T16)
                                                                                                              .build ();
-  public static final ValidationArtefactKey VK_EHF_INVOICE_T10 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_INVOICE)
-                                                                                                     .setTransaction (EBIITransaction.T10)
+  public static final ValidationArtefactKey VK_EHF_INVOICE_T10 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T10)
                                                                                                      .build ();
-  public static final ValidationArtefactKey VK_EHF_ORDER_T01 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER)
-                                                                                                   .setTransaction (EBIITransaction.T01)
+  public static final ValidationArtefactKey VK_EHF_ORDER_T01 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T01)
                                                                                                    .build ();
-  public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER_AGREEMENT)
-                                                                                                              .setTransaction (EBIITransaction.T110)
+  public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T110)
                                                                                                               .build ();
-  public static final ValidationArtefactKey VK_EHF_ORDER_RESPONSE_T76 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_ORDER_RESPONSE)
-                                                                                                            .setTransaction (EBIITransaction.T76)
+  public static final ValidationArtefactKey VK_EHF_ORDER_RESPONSE_T76 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T76)
                                                                                                             .build ();
-  public static final ValidationArtefactKey VK_EHF_PUNCH_OUT_T77 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_PUNCH_OUT)
-                                                                                                       .setTransaction (EBIITransaction.T77)
+  public static final ValidationArtefactKey VK_EHF_PUNCH_OUT_T77 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T77)
                                                                                                        .build ();
-  public static final ValidationArtefactKey VK_EHF_REMINDER_T17 = new ValidationArtefactKey.Builder ().setBusinessSpecification (EHF_REMINDER)
-                                                                                                      .setTransaction (EBIITransaction.T17)
+  public static final ValidationArtefactKey VK_EHF_REMINDER_T17 = new ValidationArtefactKey.Builder ().setTransaction (EBIITransaction.T17)
                                                                                                       .build ();
 
   private CEHFValidationArtefact ()

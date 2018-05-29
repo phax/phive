@@ -20,13 +20,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.BusinessSpecification;
-import com.helger.bdve.spec.BusinessSpecificationRegistry;
-import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.bdve.spec.SpecificationTransaction;
 import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.cii.d16b.ECIID16BDocumentType;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
@@ -44,35 +40,20 @@ import eu.cen.en16931.edifact.invoicd14b.iso20625.MINVOIC;
 @Immutable
 public final class CEN16931
 {
-  @Nonnull
-  private static BusinessSpecification _createBusinessSpec (@Nonnull @Nonempty final String sGroupID,
-                                                            @Nonnull @Nonempty final String sSpecID,
-                                                            @Nonnull @Nonempty final String sDisplayName)
-  {
-    final BusinessSpecification ret = new BusinessSpecification (sGroupID, sSpecID, sDisplayName);
-    BusinessSpecificationRegistry.INSTANCE.registerBusinessSpecification (ret);
-    return ret;
-  }
-
-  public static final IBusinessSpecification EN16931 = _createBusinessSpec ("eu.cen", "en16931", "EN 16931");
-
   // Predefined keys for UBL, CII and EDIFACT
-  public static final ValidationArtefactKey VK_INVOICE_CII = new ValidationArtefactKey.Builder ().setBusinessSpecification (EN16931)
-                                                                                                 .setTransaction (new SpecificationTransaction ("cii",
+  public static final ValidationArtefactKey VK_INVOICE_CII = new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("cii",
                                                                                                                                                 "CII Invoice",
                                                                                                                                                 ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE,
                                                                                                                                                 CIID16BNamespaceContext.getInstance ()))
                                                                                                  .build ();
-  public static final ValidationArtefactKey VK_INVOICE_EDIFACT = new ValidationArtefactKey.Builder ().setBusinessSpecification (EN16931)
-                                                                                                     .setTransaction (new SpecificationTransaction ("edifact",
+  public static final ValidationArtefactKey VK_INVOICE_EDIFACT = new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("edifact",
                                                                                                                                                     "EDIFACT/ISO 20625 Invoice",
                                                                                                                                                     new JAXBDocumentType (MINVOIC.class,
                                                                                                                                                                           new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
                                                                                                                                                                           x -> x),
                                                                                                                                                     null))
                                                                                                      .build ();
-  public static final ValidationArtefactKey VK_INVOICE_UBL = new ValidationArtefactKey.Builder ().setBusinessSpecification (EN16931)
-                                                                                                 .setTransaction (new SpecificationTransaction ("ubl",
+  public static final ValidationArtefactKey VK_INVOICE_UBL = new ValidationArtefactKey.Builder ().setTransaction (new SpecificationTransaction ("ubl",
                                                                                                                                                 "UBL Invoice",
                                                                                                                                                 EUBL21DocumentType.INVOICE,
                                                                                                                                                 UBL21NamespaceContext.getInstance ()))

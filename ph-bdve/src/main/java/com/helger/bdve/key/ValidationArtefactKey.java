@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
@@ -42,7 +41,6 @@ import com.helger.xml.namespace.IIterableNamespaceContext;
  * A validation key that uniquely identifies a set of validation artefacts. It
  * consists of the following elements:
  * <ul>
- * <li>A business specification of type {@link IBusinessSpecification}</li>
  * <li>A transaction of type {@link ISpecificationTransaction}</li>
  * <li>An optional country code in case validation is country dependent.</li>
  * <li>An optional "sector key" of type {@link ValidationArtefactSectorKey} that
@@ -57,7 +55,6 @@ import com.helger.xml.namespace.IIterableNamespaceContext;
 @MustImplementEqualsAndHashcode
 public class ValidationArtefactKey implements Serializable, Comparable <ValidationArtefactKey>
 {
-  private final IBusinessSpecification m_aBusinessSpecification;
   private final ISpecificationTransaction m_aTransaction;
   private final Locale m_aCountry;
   private final ValidationArtefactSectorKey m_aSectorKey;
@@ -66,16 +63,13 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   // Status vars
   private final String m_sID;
 
-  public ValidationArtefactKey (@Nonnull final IBusinessSpecification aBusinessSpecification,
-                                @Nonnull final ISpecificationTransaction aTransaction,
+  public ValidationArtefactKey (@Nonnull final ISpecificationTransaction aTransaction,
                                 @Nullable final String sCountryCode,
                                 @Nullable final ValidationArtefactSectorKey aSectorKey,
                                 @Nullable final String sPrerequisiteXPath)
   {
-    ValueEnforcer.notNull (aBusinessSpecification, "BusinessSpecification");
     ValueEnforcer.notNull (aTransaction, "Transaction");
 
-    m_aBusinessSpecification = aBusinessSpecification;
     m_aTransaction = aTransaction;
     if (StringHelper.hasText (sCountryCode))
     {
@@ -88,7 +82,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     m_aSectorKey = aSectorKey;
     m_sPrerequisiteXPath = sPrerequisiteXPath;
 
-    String sID = aBusinessSpecification.getID () + "~" + aTransaction.getID ();
+    String sID = aTransaction.getID ();
     if (m_aCountry != null)
       sID += "~" + m_aCountry.getCountry ();
     if (aSectorKey != null)
@@ -198,23 +192,21 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
    *         if business specification and transaction are equal,
    *         <code>false</code> otherwise.
    */
-  public boolean hasSameSpecificationAndTransaction (@Nullable final ValidationArtefactKey aOther)
+  public boolean hasSameTransaction (@Nullable final ValidationArtefactKey aOther)
   {
     if (aOther == null)
       return false;
-    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
-           m_aTransaction.equals (aOther.m_aTransaction);
+    return m_aTransaction.equals (aOther.m_aTransaction);
   }
 
-  public boolean hasSameSpecificationAndTransactionAndCountryAndSector (@Nullable final ValidationArtefactKey aOther)
+  public boolean hasSameTransactionAndCountryAndSector (@Nullable final ValidationArtefactKey aOther)
   {
     if (aOther == null)
       return false;
 
     // If this has no sector key, but the other has a sector key, it's also a
     // match!
-    return m_aBusinessSpecification.equals (aOther.m_aBusinessSpecification) &&
-           m_aTransaction.equals (aOther.m_aTransaction) &&
+    return m_aTransaction.equals (aOther.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, aOther.m_aCountry) &&
            (EqualsHelper.equals (m_aSectorKey, aOther.m_aSectorKey) ||
             (m_aSectorKey == null && aOther.m_aSectorKey != null));
@@ -222,20 +214,16 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
 
   public int compareTo (@Nonnull final ValidationArtefactKey aOther)
   {
-    int ret = m_aBusinessSpecification.getDisplayName ().compareTo (aOther.m_aBusinessSpecification.getDisplayName ());
+    int ret = m_aTransaction.getName ().compareTo (aOther.m_aTransaction.getName ());
     if (ret == 0)
     {
-      ret = m_aTransaction.getName ().compareTo (aOther.m_aTransaction.getName ());
+      ret = CompareHelper.compare (getCountryCode (), aOther.getCountryCode ());
       if (ret == 0)
       {
-        ret = CompareHelper.compare (getCountryCode (), aOther.getCountryCode ());
+        ret = CompareHelper.compare (m_aSectorKey, m_aSectorKey);
         if (ret == 0)
         {
-          ret = CompareHelper.compare (m_aSectorKey, m_aSectorKey);
-          if (ret == 0)
-          {
-            ret = CompareHelper.compare (m_sPrerequisiteXPath, aOther.m_sPrerequisiteXPath);
-          }
+          ret = CompareHelper.compare (m_sPrerequisiteXPath, aOther.m_sPrerequisiteXPath);
         }
       }
     }
@@ -250,8 +238,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ValidationArtefactKey rhs = (ValidationArtefactKey) o;
-    return m_aBusinessSpecification.equals (rhs.m_aBusinessSpecification) &&
-           m_aTransaction.equals (rhs.m_aTransaction) &&
+    return m_aTransaction.equals (rhs.m_aTransaction) &&
            EqualsHelper.equals (m_aCountry, rhs.m_aCountry) &&
            EqualsHelper.equals (m_aSectorKey, rhs.m_aSectorKey) &&
            EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath);
@@ -260,8 +247,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aBusinessSpecification)
-                                       .append (m_aTransaction)
+    return new HashCodeGenerator (this).append (m_aTransaction)
                                        .append (m_aCountry)
                                        .append (m_aSectorKey)
                                        .append (m_sPrerequisiteXPath)
@@ -271,8 +257,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("BusinessSpecification", m_aBusinessSpecification)
-                                       .append ("Transaction", m_aTransaction)
+    return new ToStringGenerator (this).append ("Transaction", m_aTransaction)
                                        .appendIfNotNull ("Country", m_aCountry)
                                        .appendIfNotNull ("SectorKey", m_aSectorKey)
                                        .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
@@ -281,7 +266,6 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
 
   /**
    * Builder class for {@link ValidationArtefactKey} objects.
-   * {@link #setBusinessSpecification(IBusinessSpecification)} and
    * {@link #setTransaction(ISpecificationTransaction)} must be filled, as these
    * are the mandatory fields.
    *
@@ -290,7 +274,6 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
   @NotThreadSafe
   public static class Builder
   {
-    private IBusinessSpecification m_aBusinessSpecification;
     private ISpecificationTransaction m_aTransaction;
     private String m_sCountry;
     private ValidationArtefactSectorKey m_aSectorKey;
@@ -310,23 +293,10 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
      */
     public Builder (@Nonnull final ValidationArtefactKey aOther)
     {
-      m_aBusinessSpecification = aOther.m_aBusinessSpecification;
       m_aTransaction = aOther.m_aTransaction;
       m_sCountry = aOther.getCountryCode ();
       m_aSectorKey = aOther.m_aSectorKey;
       m_sPrerequisiteXPath = aOther.m_sPrerequisiteXPath;
-    }
-
-    /**
-     * @param aBusinessSpecification
-     *        The business specification to be used. May be <code>null</code>.
-     * @return this for chaining
-     */
-    @Nonnull
-    public Builder setBusinessSpecification (@Nullable final IBusinessSpecification aBusinessSpecification)
-    {
-      m_aBusinessSpecification = aBusinessSpecification;
-      return this;
     }
 
     /**
@@ -367,7 +337,7 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
 
     /**
      * @param sPrerequisiteXPath
-     *        The optional prerequisite XPath that must be fullfilled to perform
+     *        The optional prerequisite XPath that must be fulfilled to perform
      *        the validation. May be <code>null</code>.
      * @return this for chaining
      */
@@ -391,15 +361,9 @@ public class ValidationArtefactKey implements Serializable, Comparable <Validati
     @Nonnull
     public ValidationArtefactKey build ()
     {
-      if (m_aBusinessSpecification == null)
-        throw new IllegalStateException ("The Business specification must be provided");
       if (m_aTransaction == null)
         throw new IllegalStateException ("The Transaction must be provided");
-      return new ValidationArtefactKey (m_aBusinessSpecification,
-                                        m_aTransaction,
-                                        m_sCountry,
-                                        m_aSectorKey,
-                                        m_sPrerequisiteXPath);
+      return new ValidationArtefactKey (m_aTransaction, m_sCountry, m_aSectorKey, m_sPrerequisiteXPath);
     }
   }
 }

@@ -25,14 +25,10 @@ import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.spec.BusinessSpecification;
-import com.helger.bdve.spec.BusinessSpecificationRegistry;
-import com.helger.bdve.spec.IBusinessSpecification;
 import com.helger.bdve.spec.ISpecificationTransaction;
 import com.helger.bdve.spec.SpecificationTransaction;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 
@@ -44,19 +40,8 @@ import com.helger.ubl21.UBL21NamespaceContext;
 @Immutable
 public final class UBLValidation
 {
-  @Nonnull
-  private static BusinessSpecification _createBusinessSpec (@Nonnull @Nonempty final String sGroupID,
-                                                            @Nonnull @Nonempty final String sSpecID,
-                                                            @Nonnull @Nonempty final String sDisplayName)
-  {
-    final BusinessSpecification ret = new BusinessSpecification (sGroupID, sSpecID, sDisplayName);
-    BusinessSpecificationRegistry.INSTANCE.registerBusinessSpecification (ret);
-    return ret;
-  }
-
   public static final String GROUP_ID = "org.oasis-open";
   public static final String VERSION_21 = "2.1";
-  public static final IBusinessSpecification UBL_21 = _createBusinessSpec (GROUP_ID, "ubl", "UBL " + VERSION_21);
 
   public static final VESID VID_UBL_21_APPLICATIONRESPONSE = new VESID (GROUP_ID, "applicationresponse", VERSION_21);
   public static final VESID VID_UBL_21_ATTACHEDDOCUMENT = new VESID (GROUP_ID, "attacheddocument", VERSION_21);
@@ -196,8 +181,7 @@ public final class UBLValidation
       // No Schematrons here
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                              "UBL " + sName + " " + VERSION_21,
-                                                                             new ValidationArtefactKey.Builder ().setBusinessSpecification (UBL_21)
-                                                                                                                 .setTransaction (aTransaction)
+                                                                             new ValidationArtefactKey.Builder ().setTransaction (aTransaction)
                                                                                                                  .build (),
                                                                              bNotDeprecated));
     }
