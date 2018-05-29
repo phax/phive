@@ -18,6 +18,9 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
+* v4.5.0 - work in progress
+  * Started adding TEAPPSXML support
+  * Simplified internal API backwards incompatible (removed all the bloat overhead where possible)
 * v4.0.5 - 2018-05-14
   * Support for OpenPEPPOL rules 3.3.0 was removed - too old
   * Updated to OpenPEPPOL 3.6.0 (Spring 2018) rules
