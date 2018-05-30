@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="MESOinvoice302.xslt"?>
+<!--
+
+    Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
 <eb:Invoice xmlns:eb="http://www.ebinterface.at/schema/3p02/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ebinterface.at/schema/3p02/ http://www.ebinterface.at/schema/3p02/Invoice.xsd" eb:GeneratingSystem="MESONIC WINLine 9.0 (Unicode Build 9003.12)" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:DocumentTitle="Rechnung" eb:Language="ger">
 	<dsig:Signature xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
 		<dsig:SignedInfo>
@@ -90,7 +108,7 @@ RfczsmyDe7Sa9M8VVCBBFpxFmc4fAGvIzYU=</dsig:X509Certificate>
 			<eb:Street>Linzer Str. 12</eb:Street>
 			<eb:Town>Altheim</eb:Town>
 			<eb:ZIP>4950</eb:ZIP>
-			<eb:Country>Österreich</eb:Country>
+			<eb:Country>ï¿½sterreich</eb:Country>
 			<eb:Contact>Herr Sebastian</eb:Contact>
 		</eb:Address>
 	</eb:InvoiceRecipient>
@@ -143,7 +161,7 @@ RfczsmyDe7Sa9M8VVCBBFpxFmc4fAGvIzYU=</dsig:X509Certificate>
 				<eb:LineItemAmount>6.55</eb:LineItemAmount>
 			</eb:ListLineItem>
 		</eb:ItemList>
-		<eb:FooterDescription>Wir danken für Ihren Auftrag.</eb:FooterDescription>
+		<eb:FooterDescription>Wir danken fï¿½r Ihren Auftrag.</eb:FooterDescription>
 	</eb:Details>
 	<eb:Tax>
 		<eb:VAT>
