@@ -178,7 +178,8 @@ public final class UBLValidation
                                                                              new ValidationArtefactKey.Builder ().setDocType (e)
                                                                                                                  .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                                  .build (),
-                                                                             bNotDeprecated));
+                                                                             bNotDeprecated,
+                                                                             e));
     }
   }
 

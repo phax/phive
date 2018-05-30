@@ -24,9 +24,12 @@ import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.peppol.CPeppolValidationArtefact;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
@@ -41,6 +44,24 @@ public final class SimplerInvoicingValidation
   public static final VESID VID_SI_INVOICE_V11_STRICT = VID_SI_INVOICE_V11.getWithClassifier ("strict");
   public static final VESID VID_SI_INVOICE_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
   public static final VESID VID_SI_ORDER_V12 = new VESID ("org.simplerinvoicing", "order", "1.2");
+
+  @Nonnull
+  private static ClassLoader _getCL ()
+  {
+    return SimplerInvoicingValidation.class.getClassLoader ();
+  }
+
+  // SimplerInvoicing
+  // 1.1
+  public static final IReadableResource INVOICE_SI11 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11.xslt",
+                                                                              _getCL ());
+  public static final IReadableResource INVOICE_SI11_STRICT = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11-STRICT.xslt",
+                                                                                     _getCL ());
+  // 1.2
+  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-12.xslt",
+                                                                              _getCL ());
+  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO-12.xslt",
+                                                                            _getCL ());
 
   private SimplerInvoicingValidation ()
   {}
@@ -68,28 +89,32 @@ public final class SimplerInvoicingValidation
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     // SimplerInvoicing is self-contained
-    final boolean bDeprecated = false;
+    final boolean bNotDeprecated = false;
     // 1.1
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
                                                                            "Simplerinvoicing Invoice 1.1",
-                                                                           CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
-                                                                           bDeprecated,
-                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
+                                                                           CPeppolValidationArtefact.VK_INVOICE_04_T10,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.INVOICE,
+                                                                           _createXSLT (INVOICE_SI11)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11_STRICT,
                                                                            "Simplerinvoicing Invoice 1.1 (strict)",
-                                                                           CSimplerInvoicingValidationArtefact.VK_SI_INVOICE_STRICT,
-                                                                           bDeprecated,
-                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI11_STRICT)));
+                                                                           CPeppolValidationArtefact.VK_INVOICE_04_T10,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.INVOICE,
+                                                                           _createXSLT (INVOICE_SI11_STRICT)));
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
-                                                                           CSimplerInvoicingValidationArtefact.VK_SI_INVOICE,
-                                                                           bDeprecated,
-                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+                                                                           CPeppolValidationArtefact.VK_INVOICE_04_T10,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.INVOICE,
+                                                                           _createXSLT (INVOICE_SI12)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_ORDER_V12,
                                                                            "Simplerinvoicing Order 1.2",
-                                                                           CSimplerInvoicingValidationArtefact.VK_SI_ORDER,
-                                                                           bDeprecated,
-                                                                           _createXSLT (CSimplerInvoicingValidationArtefact.ORDER_SI12)));
+                                                                           CPeppolValidationArtefact.VK_ORDER_03_T01,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.ORDER,
+                                                                           _createXSLT (ORDER_SI12)));
   }
 }

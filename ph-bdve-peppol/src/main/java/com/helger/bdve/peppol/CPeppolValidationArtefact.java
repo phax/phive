@@ -20,7 +20,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.key.ValidationArtefactSectorKey;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.ubl21.EUBL21DocumentType;
@@ -53,17 +52,9 @@ public final class CPeppolValidationArtefact
   public static final ValidationArtefactKey VK_INVOICE_04_T10 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.INVOICE)
                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                     .build ();
-  public static final ValidationArtefactKey VK_INVOICE_04_T10_ATNAT = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10).setCountry ("AT")
-                                                                                                                           .build ();
-  public static final ValidationArtefactKey VK_INVOICE_04_T10_ATGOV = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
-                                                                                                                                 .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CREDIT_NOTE)
                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                     .build ();
-  public static final ValidationArtefactKey VK_BILLING_05_T14_ATNAT = new ValidationArtefactKey.Builder (VK_BILLING_05_T14).setCountry ("AT")
-                                                                                                                           .build ();
-  public static final ValidationArtefactKey VK_BILLING_05_T14_ATGOV = new ValidationArtefactKey.Builder (VK_BILLING_05_T14_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
-                                                                                                                                 .build ();
   public static final ValidationArtefactKey VK_PUNCH_OUT_18_T77 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CATALOGUE)
                                                                                                       .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                       .build ();
@@ -82,9 +73,6 @@ public final class CPeppolValidationArtefact
   public static final ValidationArtefactKey VK_ORDER_AGREEMENT_42_T110 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER_RESPONSE)
                                                                                                              .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                              .build ();
-
-  public static final ValidationArtefactSectorKey SECTOR_AT_GOV = new ValidationArtefactSectorKey ("ATGOV",
-                                                                                                   "Austrian Government");
 
   // Third party
   public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/invoice/ATNAT-UBL-T10.sch",

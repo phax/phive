@@ -19,9 +19,6 @@ package com.helger.bdve.energieefactuur;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.key.ValidationArtefactKey;
-import com.helger.bdve.key.ValidationArtefactSectorKey;
-import com.helger.bdve.simplerinvoicing.CSimplerInvoicingValidationArtefact;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
@@ -39,12 +36,6 @@ public final class CEnergieEFactuur
   public static final String SEEF_EXT_NS_1_0_1 = "urn:www.energie-efactuur.nl:profile:invoice:ver1.0";
   /** Namespace URL for Energie e-Factuur 2.0.0 */
   public static final String SEEF_EXT_NS_2_0_0 = "urn:www.energie-efactuur.nl:profile:invoice:ver2.0";
-
-  public static final ValidationArtefactSectorKey SECTOR_NL_EE = new ValidationArtefactSectorKey ("NLEE",
-                                                                                                  "Energie eFactuur");
-
-  public static final ValidationArtefactKey VK_ENERGIE_EFACTUUR = new ValidationArtefactKey.Builder (CSimplerInvoicingValidationArtefact.VK_SI_INVOICE).setSectorKey (SECTOR_NL_EE)
-                                                                                                                                                       .build ();
 
   @Nonnull
   private static ClassLoader _getCL ()

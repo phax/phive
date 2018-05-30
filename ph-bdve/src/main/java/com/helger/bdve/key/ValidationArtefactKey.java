@@ -17,7 +17,6 @@
 package com.helger.bdve.key;
 
 import java.io.Serializable;
-import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,8 +30,6 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.locale.country.CountryCache;
-import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.namespace.IIterableNamespaceContext;
@@ -44,11 +41,6 @@ import com.helger.xml.namespace.IIterableNamespaceContext;
  * <li>A JAXB document type of type {@link IJAXBDocumentType}</li>
  * <li>An optional namespace context of type
  * {@link IIterableNamespaceContext}</li>
- * <li>An optional country code in case validation is country dependent.</li>
- * <li>An optional "sector key" of type {@link ValidationArtefactSectorKey} that
- * identifies the industry or sector to which the validation applies.</li>
- * <li>An optional "prerequisite expression" (like XPath) that may be used to
- * identify whether this validation key is applicable to a document or not.</li>
  * </ul>
  *
  * @author Philip Helger
@@ -59,29 +51,16 @@ public class ValidationArtefactKey implements Serializable
 {
   private final IJAXBDocumentType m_aDocType;
   private final IIterableNamespaceContext m_aNamespaceContext;
-  private final Locale m_aCountry;
-  private final ValidationArtefactSectorKey m_aSectorKey;
   private final XSDPartialContext m_aXSDPartialContext;
 
   public ValidationArtefactKey (@Nonnull final IJAXBDocumentType aDocType,
                                 @Nullable final IIterableNamespaceContext aNamespaceContext,
-                                @Nullable final String sCountryCode,
-                                @Nullable final ValidationArtefactSectorKey aSectorKey,
                                 @Nullable final XSDPartialContext aXSDPartialContext)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
 
     m_aDocType = aDocType;
     m_aNamespaceContext = aNamespaceContext;
-    if (StringHelper.hasText (sCountryCode))
-    {
-      m_aCountry = CountryCache.getInstance ().getCountry (sCountryCode);
-      if (m_aCountry == null)
-        throw new IllegalArgumentException ("The passed country '" + sCountryCode + "' does not exist!");
-    }
-    else
-      m_aCountry = null;
-    m_aSectorKey = aSectorKey;
     m_aXSDPartialContext = aXSDPartialContext;
   }
 
@@ -127,53 +106,6 @@ public class ValidationArtefactKey implements Serializable
     return m_aNamespaceContext;
   }
 
-  /**
-   * @return <code>true</code> if this validation key is country specific,
-   *         <code>false</code> otherwise.
-   */
-  public boolean isCountrySpecific ()
-  {
-    return m_aCountry != null;
-  }
-
-  /**
-   * @return The country locale as specified in the constructor.
-   */
-  @Nullable
-  public Locale getCountryLocale ()
-  {
-    return m_aCountry;
-  }
-
-  /**
-   * @return The country code extracted from the contained locale. Never
-   *         <code>null</code>.
-   */
-  @Nullable
-  public String getCountryCode ()
-  {
-    return m_aCountry == null ? null : m_aCountry.getCountry ();
-  }
-
-  /**
-   * @return <code>true</code> if sector specific is enabled, <code>false</code>
-   *         if not.
-   */
-  public boolean isSectorSpecific ()
-  {
-    return m_aSectorKey != null;
-  }
-
-  /**
-   * @return The validation sector key specified in the constructor. May be
-   *         <code>null</code> if not sector specific.
-   */
-  @Nullable
-  public ValidationArtefactSectorKey getSectorKey ()
-  {
-    return m_aSectorKey;
-  }
-
   @Nullable
   public XSDPartialContext getXSDPartialContext ()
   {
@@ -188,21 +120,13 @@ public class ValidationArtefactKey implements Serializable
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ValidationArtefactKey rhs = (ValidationArtefactKey) o;
-    return m_aDocType.equals (rhs.m_aDocType) &&
-           EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
-           EqualsHelper.equals (m_aCountry, rhs.m_aCountry) &&
-           EqualsHelper.equals (m_aSectorKey, rhs.m_aSectorKey);
+    return m_aDocType.equals (rhs.m_aDocType) && EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aDocType)
-                                       .append (m_aNamespaceContext)
-                                       .append (m_aCountry)
-                                       .append (m_aSectorKey)
-                                       .append (m_aXSDPartialContext)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_aDocType).append (m_aNamespaceContext).getHashCode ();
   }
 
   @Override
@@ -210,8 +134,6 @@ public class ValidationArtefactKey implements Serializable
   {
     return new ToStringGenerator (this).append ("DocType", m_aDocType)
                                        .appendIfNotNull ("NamespaceContext", m_aNamespaceContext)
-                                       .appendIfNotNull ("Country", m_aCountry)
-                                       .appendIfNotNull ("SectorKey", m_aSectorKey)
                                        .appendIfNotNull ("XSDPartialContext", m_aXSDPartialContext)
                                        .getToString ();
   }
@@ -228,8 +150,6 @@ public class ValidationArtefactKey implements Serializable
   {
     private IJAXBDocumentType m_aDocType;
     private IIterableNamespaceContext m_aNamespaceContext;
-    private String m_sCountry;
-    private ValidationArtefactSectorKey m_aSectorKey;
     private XSDPartialContext m_aXSDPartialContext;
 
     /**
@@ -249,8 +169,6 @@ public class ValidationArtefactKey implements Serializable
       ValueEnforcer.notNull (aOther, "Other");
       m_aDocType = aOther.m_aDocType;
       m_aNamespaceContext = aOther.m_aNamespaceContext;
-      m_sCountry = aOther.getCountryCode ();
-      m_aSectorKey = aOther.m_aSectorKey;
       m_aXSDPartialContext = aOther.m_aXSDPartialContext;
     }
 
@@ -275,30 +193,6 @@ public class ValidationArtefactKey implements Serializable
     public Builder setNamespaceContext (@Nullable final IIterableNamespaceContext aNamespaceContext)
     {
       m_aNamespaceContext = aNamespaceContext;
-      return this;
-    }
-
-    /**
-     * @param sCountry
-     *        The country code to be used. May be <code>null</code>.
-     * @return this for chaining
-     */
-    @Nonnull
-    public Builder setCountry (@Nullable final String sCountry)
-    {
-      m_sCountry = sCountry;
-      return this;
-    }
-
-    /**
-     * @param aSectorKey
-     *        The sector specific validation key. May be <code>null</code>.
-     * @return this for chaining
-     */
-    @Nonnull
-    public Builder setSectorKey (@Nullable final ValidationArtefactSectorKey aSectorKey)
-    {
-      m_aSectorKey = aSectorKey;
       return this;
     }
 
@@ -333,11 +227,7 @@ public class ValidationArtefactKey implements Serializable
       if (m_aDocType == null)
         throw new IllegalStateException ("The DocType must be provided");
 
-      return new ValidationArtefactKey (m_aDocType,
-                                        m_aNamespaceContext,
-                                        m_sCountry,
-                                        m_aSectorKey,
-                                        m_aXSDPartialContext);
+      return new ValidationArtefactKey (m_aDocType, m_aNamespaceContext, m_aXSDPartialContext);
     }
   }
 }

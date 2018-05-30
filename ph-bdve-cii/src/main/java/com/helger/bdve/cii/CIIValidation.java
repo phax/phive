@@ -62,7 +62,7 @@ public final class CIIValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (CIID16BNamespaceContext.getInstance ());
 
-    final boolean bDeprecated = false;
+    final boolean bNotDeprecated = false;
     for (final ECIID16BDocumentType e : ECIID16BDocumentType.values ())
     {
       final String sName = e.getLocalName ();
@@ -74,7 +74,8 @@ public final class CIIValidation
                                                                              new ValidationArtefactKey.Builder ().setDocType (e)
                                                                                                                  .setNamespaceContext (CIID16BNamespaceContext.getInstance ())
                                                                                                                  .build (),
-                                                                             bDeprecated));
+                                                                             bNotDeprecated,
+                                                                             e));
     }
   }
 }

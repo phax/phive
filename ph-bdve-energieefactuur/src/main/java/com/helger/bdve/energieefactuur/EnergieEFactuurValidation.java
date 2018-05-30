@@ -29,7 +29,7 @@ import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.key.XSDPartialContext;
-import com.helger.bdve.simplerinvoicing.CSimplerInvoicingValidationArtefact;
+import com.helger.bdve.peppol.CPeppolValidationArtefact;
 import com.helger.bdve.simplerinvoicing.SimplerInvoicingValidation;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
@@ -90,17 +90,18 @@ public final class EnergieEFactuurValidation
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_1_0_0,
                                                                              "Energie eFactuur " +
                                                                                                          VID_ENERGIE_EFACTUUR_1_0_0.getVersion (),
-                                                                             new ValidationArtefactKey.Builder (CEnergieEFactuur.VK_ENERGIE_EFACTUUR).setXSDPartialContext (new XSDPartialContext (aXE100,
-                                                                                                                                                                                                   Integer.valueOf (1),
-                                                                                                                                                                                                   Integer.valueOf (1)))
-                                                                                                                                                     .build (),
+                                                                             new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setXSDPartialContext (new XSDPartialContext (aXE100,
+                                                                                                                                                                                                          Integer.valueOf (1),
+                                                                                                                                                                                                          Integer.valueOf (1)))
+                                                                                                                                                            .build (),
                                                                              bNotDeprecated,
+                                                                             EUBL21DocumentType.INVOICE,
                                                                              new ValidationArtefact (EValidationType.PARTIAL_XSD,
                                                                                                      _getCL (),
                                                                                                      CEnergieEFactuur.SEEF_EXT_XSD_1_0_0),
                                                                              new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
                                                                                                      SimplerInvoicingValidation.class.getClassLoader (),
-                                                                                                     CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
+                                                                                                     SimplerInvoicingValidation.INVOICE_SI11)));
     }
 
     {
@@ -118,17 +119,18 @@ public final class EnergieEFactuurValidation
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_1_0_1,
                                                                              "Energie eFactuur " +
                                                                                                          VID_ENERGIE_EFACTUUR_1_0_1.getVersion (),
-                                                                             new ValidationArtefactKey.Builder (CEnergieEFactuur.VK_ENERGIE_EFACTUUR).setXSDPartialContext (new XSDPartialContext (aXE101,
-                                                                                                                                                                                                   Integer.valueOf (1),
-                                                                                                                                                                                                   Integer.valueOf (1)))
-                                                                                                                                                     .build (),
+                                                                             new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setXSDPartialContext (new XSDPartialContext (aXE101,
+                                                                                                                                                                                                          Integer.valueOf (1),
+                                                                                                                                                                                                          Integer.valueOf (1)))
+                                                                                                                                                            .build (),
                                                                              bNotDeprecated,
+                                                                             EUBL21DocumentType.INVOICE,
                                                                              new ValidationArtefact (EValidationType.PARTIAL_XSD,
                                                                                                      _getCL (),
                                                                                                      CEnergieEFactuur.SEEF_EXT_XSD_1_0_1),
                                                                              new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
                                                                                                      SimplerInvoicingValidation.class.getClassLoader (),
-                                                                                                     CSimplerInvoicingValidationArtefact.INVOICE_SI11)));
+                                                                                                     SimplerInvoicingValidation.INVOICE_SI11)));
     }
 
     {
@@ -146,17 +148,18 @@ public final class EnergieEFactuurValidation
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_2_0_0,
                                                                              "Energie eFactuur " +
                                                                                                          VID_ENERGIE_EFACTUUR_2_0_0.getVersion (),
-                                                                             new ValidationArtefactKey.Builder (CEnergieEFactuur.VK_ENERGIE_EFACTUUR).setXSDPartialContext (new XSDPartialContext (aXE200,
-                                                                                                                                                                                                   Integer.valueOf (1),
-                                                                                                                                                                                                   Integer.valueOf (1)))
-                                                                                                                                                     .build (),
+                                                                             new ValidationArtefactKey.Builder (CPeppolValidationArtefact.VK_INVOICE_04_T10).setXSDPartialContext (new XSDPartialContext (aXE200,
+                                                                                                                                                                                                          Integer.valueOf (1),
+                                                                                                                                                                                                          Integer.valueOf (1)))
+                                                                                                                                                            .build (),
                                                                              bNotDeprecated,
+                                                                             EUBL21DocumentType.INVOICE,
                                                                              new ValidationArtefact (EValidationType.PARTIAL_XSD,
                                                                                                      _getCL (),
                                                                                                      CEnergieEFactuur.SEEF_EXT_XSD_2_0_0),
                                                                              new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
                                                                                                      SimplerInvoicingValidation.class.getClassLoader (),
-                                                                                                     CSimplerInvoicingValidationArtefact.INVOICE_SI12)));
+                                                                                                     SimplerInvoicingValidation.INVOICE_SI12)));
     }
   }
 }

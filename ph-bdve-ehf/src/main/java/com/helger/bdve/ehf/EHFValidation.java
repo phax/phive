@@ -24,10 +24,12 @@ import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
@@ -106,6 +108,37 @@ public final class EHFValidation
   private static final IReadableResource REMINDER_V1_NONAT = new ClassPathResource ("/ehf/ehf-reminder-1.1/sch/NONAT-UBL-T17.sch",
                                                                                     _getCL ());
 
+  public static final ValidationArtefactKey VK_EHF_CATALOGUE_T19 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CATALOGUE)
+                                                                                                       .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                       .build ();
+  public static final ValidationArtefactKey VK_EHF_CATALOGUE_RESPONSE_T58 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.APPLICATION_RESPONSE)
+                                                                                                                .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                                .build ();
+  public static final ValidationArtefactKey VK_EHF_CREDITNOTE_T14 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CREDIT_NOTE)
+                                                                                                        .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                        .build ();
+  public static final ValidationArtefactKey VK_EHF_DESPATCH_ADVICE_T14 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.DESPATCH_ADVICE)
+                                                                                                             .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                             .build ();
+  public static final ValidationArtefactKey VK_EHF_INVOICE_T10 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.INVOICE)
+                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                     .build ();
+  public static final ValidationArtefactKey VK_EHF_ORDER_T01 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER)
+                                                                                                   .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                   .build ();
+  public static final ValidationArtefactKey VK_EHF_ORDER_AGREEMENT_T110 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER_RESPONSE)
+                                                                                                              .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                              .build ();
+  public static final ValidationArtefactKey VK_EHF_ORDER_RESPONSE_T76 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.ORDER_RESPONSE)
+                                                                                                            .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                            .build ();
+  public static final ValidationArtefactKey VK_EHF_PUNCH_OUT_T77 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.CATALOGUE)
+                                                                                                       .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                       .build ();
+  public static final ValidationArtefactKey VK_EHF_REMINDER_T17 = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.REMINDER)
+                                                                                                      .setNamespaceContext (UBL21NamespaceContext.getInstance ())
+                                                                                                      .build ();
+
   private EHFValidation ()
   {}
 
@@ -139,24 +172,27 @@ public final class EHFValidation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_1_0,
                                                                            "EHF Catalogue " +
                                                                                                   VID_EHF_CATALOGUE_1_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_CATALOGUE_T19,
+                                                                           VK_EHF_CATALOGUE_T19,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.CATALOGUE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (CATALOGUE_V1_EHFCORE),
                                                                            _createSCH (CATALOGUE_V1_NOGOV)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_RESPONSE_1_0,
                                                                            "EHF Catalogue Response " +
                                                                                                            VID_EHF_CATALOGUE_RESPONSE_1_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_CATALOGUE_RESPONSE_T58,
+                                                                           VK_EHF_CATALOGUE_RESPONSE_T58,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.APPLICATION_RESPONSE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (CATALOGUE_RESPONSE_V1_EHFCORE),
                                                                            _createSCH (CATALOGUE_RESPONSE_V1_NOGOV)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CREDITNOTE_2_0,
                                                                            "EHF Creditnote " +
                                                                                                    VID_EHF_CREDITNOTE_2_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_CREDITNOTE_T14,
+                                                                           VK_EHF_CREDITNOTE_T14,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.CREDIT_NOTE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (CREDITNOTE_V2_EHFCORE),
                                                                            _createSCH (CREDITNOTE_V2_NONAT),
@@ -164,16 +200,18 @@ public final class EHFValidation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_DESPATCH_ADVICE_1_0,
                                                                            "EHF Catalogue " +
                                                                                                         VID_EHF_DESPATCH_ADVICE_1_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_DESPATCH_ADVICE_T14,
+                                                                           VK_EHF_DESPATCH_ADVICE_T14,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.DESPATCH_ADVICE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (DESPATCH_ADVICE_V1_EHFCORE),
                                                                            _createSCH (DESPATCH_ADVICE_V1_NOGOV)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_INVOICE_2_0,
                                                                            "EHF Invoice " +
                                                                                                 VID_EHF_INVOICE_2_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_INVOICE_T10,
+                                                                           VK_EHF_INVOICE_T10,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.INVOICE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (INVOICE_V2_EHFCORE),
                                                                            _createSCH (INVOICE_V2_NONAT),
@@ -181,38 +219,43 @@ public final class EHFValidation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_1_0,
                                                                            "EHF Ordering " +
                                                                                               VID_EHF_ORDER_1_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_ORDER_T01,
+                                                                           VK_EHF_ORDER_T01,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.ORDER,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (ORDER_V1_EHFCORE),
                                                                            _createPure (ORDER_V1_NOGOV)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_AGREEMENT_1_0,
                                                                            "EHF Order Agreement " +
                                                                                                         VID_EHF_ORDER_AGREEMENT_1_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_ORDER_AGREEMENT_T110,
+                                                                           VK_EHF_ORDER_AGREEMENT_T110,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.ORDER_RESPONSE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (ORDER_AGREEMENT_V1_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_RESPONSE_1_0,
                                                                            "EHF Order Response " +
                                                                                                        VID_EHF_ORDER_RESPONSE_1_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_ORDER_RESPONSE_T76,
+                                                                           VK_EHF_ORDER_RESPONSE_T76,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.ORDER_RESPONSE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (ORDER_RESPONSE_V1_EHFCORE),
                                                                            _createPure (ORDER_RESPONSE_V1_NOGOV)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_PUNCH_OUT_1_0,
                                                                            "EHF Punch Out " +
                                                                                                   VID_EHF_PUNCH_OUT_1_0.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_PUNCH_OUT_T77,
+                                                                           VK_EHF_PUNCH_OUT_T77,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.CATALOGUE,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (PUNCH_OUT_V1_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_REMINDER_1_1,
                                                                            "EHF Reminder " +
                                                                                                  VID_EHF_REMINDER_1_1.getVersion (),
-                                                                           CEHFValidationArtefact.VK_EHF_REMINDER_T17,
+                                                                           VK_EHF_REMINDER_T17,
                                                                            bNotDeprecated,
+                                                                           EUBL21DocumentType.REMINDER,
                                                                            _createSCH (EHF_COMMON_V1),
                                                                            _createPure (REMINDER_V1_NONAT)));
   }

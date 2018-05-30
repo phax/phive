@@ -39,6 +39,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 
 /**
  * Default implementation of {@link IValidationExecutorSet}.
@@ -218,6 +219,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                                               @Nonnull @Nonempty final String sDisplayName,
                                               @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                               final boolean bIsDeprecated,
+                                              @Nonnull final IJAXBDocumentType aDocType,
                                               @Nonnull final IValidationArtefact... aValidationArtefacts)
   {
     ValueEnforcer.notNull (aID, "ID");
@@ -250,9 +252,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
    *        The ID to use. May not be <code>null</code>.
    * @param sDisplayName
    *        The name of the VES. May neither be <code>null</code> nor empty.
-   * @param aValidationArtefactKey
-   *        The validation artefact key to use (defining the business
-   *        requirements). May not be <code>null</code>.
    * @param bIsDeprecated
    *        <code>true</code> if this VES is considered deprecated,
    *        <code>false</code> if not.
@@ -265,14 +264,12 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public static ValidationExecutorSet createDerived (@Nonnull final IValidationExecutorSet aBaseVES,
                                                      @Nonnull final VESID aID,
                                                      @Nonnull @Nonempty final String sDisplayName,
-                                                     @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                                      final boolean bIsDeprecated,
                                                      @Nonnull final IValidationExecutor... aValidationExecutors)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
     ValueEnforcer.notEmptyNoNullValue (aValidationExecutors, "ValidationExecutors");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID,

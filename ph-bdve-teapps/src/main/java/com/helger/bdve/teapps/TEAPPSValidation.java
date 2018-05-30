@@ -25,6 +25,7 @@ import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.jaxb.builder.JAXBDocumentType;
 
 /**
@@ -56,13 +57,17 @@ public final class TEAPPSValidation
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
 
+    final boolean bNotDeprecated = false;
+
     // No Schematrons here
+    final IJAXBDocumentType aDocType = new JAXBDocumentType (String.class,
+                                                             new CommonsArrayList <> ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"),
+                                                             null);
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_TEAPPS_272,
                                                                            "TEAPPSXML " + VERSION_272,
-                                                                           new ValidationArtefactKey.Builder ().setDocType (new JAXBDocumentType (String.class,
-                                                                                                                                                  new CommonsArrayList <> ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"),
-                                                                                                                                                  null))
+                                                                           new ValidationArtefactKey.Builder ().setDocType (aDocType)
                                                                                                                .build (),
-                                                                           false));
+                                                                           bNotDeprecated,
+                                                                           aDocType));
   }
 }

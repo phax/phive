@@ -32,6 +32,7 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.version.Version;
+import com.helger.ubl21.EUBL21DocumentType;
 
 /**
  * OpenPEPPOL validation artefacts release 3.6.0. Spring 2018 release. Valid per
@@ -225,74 +226,84 @@ public final class PeppolValidation360
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     final String sVersion = " (" + VERSION_STR + ")";
-    final boolean bDeprecated = false;
+    final boolean bNotDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T01_V2,
                                                                            "OpenPEPPOL Order" + sVersion,
                                                                            CPeppolValidationArtefact.VK_ORDER_03_T01,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.ORDER,
                                                                            _createPure (ORDER_RULES),
                                                                            _createPure (ORDER_OPENPEPPOL),
                                                                            _createPure (ORDER_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T10_V2,
                                                                            "OpenPEPPOL Invoice" + sVersion,
                                                                            CPeppolValidationArtefact.VK_INVOICE_04_T10,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.INVOICE,
                                                                            _createPure (INVOICE_RULES),
                                                                            _createPure (INVOICE_OPENPEPPOL),
                                                                            _createPure (INVOICE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T14_V2,
                                                                            "OpenPEPPOL Credit Note" + sVersion,
                                                                            CPeppolValidationArtefact.VK_BILLING_05_T14,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.CREDIT_NOTE,
                                                                            _createPure (CREDIT_NOTE_RULES),
                                                                            _createPure (CREDIT_NOTE_OPENPEPPOL),
                                                                            _createPure (CREDIT_NOTE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T16_V2,
                                                                            "OpenPEPPOL Despatch Advice" + sVersion,
                                                                            CPeppolValidationArtefact.VK_DESPATCH_ADVICE_30_T16,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.DESPATCH_ADVICE,
                                                                            _createPure (DESPATCH_ADVICE_RULES),
                                                                            _createPure (DESPATCH_ADVICE_OPENPEPPOL),
                                                                            _createPure (DESPATCH_ADVICE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T19_V2,
                                                                            "OpenPEPPOL Catalogue" + sVersion,
                                                                            CPeppolValidationArtefact.VK_CATALOGUE_01_T19,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.CATALOGUE,
                                                                            _createPure (CATALOGUE_RULES),
                                                                            _createXSLT (CATALOGUE_OPENPEPPOL_XSLT),
                                                                            _createPure (CATALOGUE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T58_V2,
                                                                            "OpenPEPPOL Catalogue Response" + sVersion,
                                                                            CPeppolValidationArtefact.VK_CATALOGUE_01_T58,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.APPLICATION_RESPONSE,
                                                                            _createPure (CATALOGUE_RESPONSE_RULES),
                                                                            _createPure (CATALOGUE_RESPONSE_OPENPEPPOL),
                                                                            _createPure (CATALOGUE_RESPONSE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T71_V2,
                                                                            "OpenPEPPOL MLR" + sVersion,
                                                                            CPeppolValidationArtefact.VK_MLR_36_T71,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.APPLICATION_RESPONSE,
                                                                            _createPure (MLR_RULES),
                                                                            _createPure (MLR_OPENPEPPOL),
                                                                            _createPure (MLR_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T76_V2,
                                                                            "OpenPEPPOL Order Response" + sVersion,
                                                                            CPeppolValidationArtefact.VK_ORDERING_28_T76,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.ORDER_RESPONSE,
                                                                            _createPure (ORDER_RESPONSE_RULES),
                                                                            _createPure (ORDER_RESPONSE_OPENPEPPOL),
                                                                            _createPure (ORDER_RESPONSE_OPENPEPPOL_CORE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T77_V1,
                                                                            "OpenPEPPOL Punch Out" + sVersion,
                                                                            CPeppolValidationArtefact.VK_PUNCH_OUT_18_T77,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.CATALOGUE,
                                                                            _createPure (PUNCH_OUT_RULES),
                                                                            _createPure (PUNCH_OUT_OPENPEPPOL)));
     // Must use XSLT based conversion because of custom XSLT function!
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T110_V1,
                                                                            "OpenPEPPOL Order Agreement" + sVersion,
                                                                            CPeppolValidationArtefact.VK_ORDER_AGREEMENT_42_T110,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
+                                                                           EUBL21DocumentType.ORDER_RESPONSE,
                                                                            _createXSLT (ORDER_AGREEMENT_RULES_XSLT),
                                                                            _createXSLT (ORDER_AGREEMENT_OPENPEPPOL_XSLT)));
   }
