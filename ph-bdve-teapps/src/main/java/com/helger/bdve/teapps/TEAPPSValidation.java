@@ -36,8 +36,8 @@ public final class TEAPPSValidation
 {
   public static final String GROUP_ID = "com.tieto";
 
-  public static final VESID VID_TEAPPS_272 = new VESID (GROUP_ID, "TEAPPSXML", "2.7.2");
-  public static final VESID VID_TEAPPS_30 = new VESID (GROUP_ID, "TEAPPSXML", "3.0");
+  public static final VESID VID_TEAPPS_272 = new VESID (GROUP_ID, "teappsxml", "2.7.2");
+  public static final VESID VID_TEAPPS_30 = new VESID (GROUP_ID, "teappsxml", "3.0");
 
   private TEAPPSValidation ()
   {}
