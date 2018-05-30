@@ -85,6 +85,7 @@
           <excludes>
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
+            <exclude>src/main/resources/schemas/**</exclude>
           </excludes>
         </configuration>
       </plugin>

@@ -74,16 +74,17 @@ public final class EbInterfaceValidation
     }
   }
 
-  public static void main (final String [] args)
-  {
-    for (final EEbInterfaceDocumentType e : EEbInterfaceDocumentType.values ())
-    {
-      final String sVersion = e.name ().charAt (3) + "." + e.name ().substring (4);
-      System.out.println ("public static final VESID VID_EBI_" +
-                          e.name ().substring (3) +
-                          " = new VESID (GROUP_ID, \"invoice\", \"" +
-                          sVersion +
-                          "\");");
-    }
-  }
+  // public static void main (final String [] args)
+  // {
+  // for (final EEbInterfaceDocumentType e : EEbInterfaceDocumentType.values ())
+  // {
+  // final String sVersion = e.name ().charAt (3) + "." + e.name ().substring
+  // (4);
+  // System.out.println ("public static final VESID VID_EBI_" +
+  // e.name ().substring (3) +
+  // " = new VESID (GROUP_ID, \"invoice\", \"" +
+  // sVersion +
+  // "\");");
+  // }
+  // }
 }

@@ -32,6 +32,7 @@ import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
@@ -46,11 +47,27 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
 @Immutable
 public final class PeppolValidation
 {
+  @Nonnull
+  private static ClassLoader _getCL ()
+  {
+    return PeppolValidation.class.getClassLoader ();
+  }
+
   // Third-party
   public static final VESID VID_OPENPEPPOL_T10_V2_5_AT = new VESID ("eu.peppol.bis2", "t10", "5", "at");
   public static final VESID VID_OPENPEPPOL_T10_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t10", "7", "at-gov");
   public static final VESID VID_OPENPEPPOL_T14_V2_5_AT = new VESID ("eu.peppol.bis2", "t14", "5", "at");
   public static final VESID VID_OPENPEPPOL_T14_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t14", "7", "at-gov");
+
+  public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/invoice/ATNAT-UBL-T10.sch",
+                                                                                _getCL ());
+  public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/invoice/ATGOV-UBL-T10.sch",
+                                                                                _getCL ());
+
+  public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/creditnote/ATNAT-UBL-T14.sch",
+                                                                                    _getCL ());
+  public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/creditnote/ATGOV-UBL-T14.sch",
+                                                                                    _getCL ());
 
   public static final String VERSION_TO_USE = PeppolValidation360.VERSION_STR;
 
@@ -121,28 +138,28 @@ public final class PeppolValidation
                                                                                                                                VID_OPENPEPPOL_T10_V2_5_AT,
                                                                                                                                "OpenPEPPOL Invoice (Austria)",
                                                                                                                                bDeprecated,
-                                                                                                                               _createPure (CPeppolValidationArtefact.INVOICE_AT_NAT,
+                                                                                                                               _createPure (INVOICE_AT_NAT,
                                                                                                                                             sPreReqInvoice,
                                                                                                                                             _createUBLNSContext (EUBL21DocumentType.INVOICE.getNamespaceURI ()))));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoiceAT,
                                                                                   VID_OPENPEPPOL_T10_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Invoice (Austrian Government)",
                                                                                   bDeprecated,
-                                                                                  _createPure (CPeppolValidationArtefact.INVOICE_AT_GOV,
+                                                                                  _createPure (INVOICE_AT_GOV,
                                                                                                sPreReqInvoice,
                                                                                                _createUBLNSContext (EUBL21DocumentType.INVOICE.getNamespaceURI ()))));
     final IValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
                                                                                                                                   VID_OPENPEPPOL_T14_V2_5_AT,
                                                                                                                                   "OpenPEPPOL Credit Note (Austria)",
                                                                                                                                   bDeprecated,
-                                                                                                                                  _createPure (CPeppolValidationArtefact.CREDIT_NOTE_AT_NAT,
+                                                                                                                                  _createPure (CREDIT_NOTE_AT_NAT,
                                                                                                                                                sPreReqCreditNote,
                                                                                                                                                _createUBLNSContext (EUBL21DocumentType.CREDIT_NOTE.getNamespaceURI ()))));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNoteAT,
                                                                                   VID_OPENPEPPOL_T14_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Credit Note (Austrian Government)",
                                                                                   bDeprecated,
-                                                                                  _createPure (CPeppolValidationArtefact.CREDIT_NOTE_AT_GOV,
+                                                                                  _createPure (CREDIT_NOTE_AT_GOV,
                                                                                                sPreReqCreditNote,
                                                                                                _createUBLNSContext (EUBL21DocumentType.CREDIT_NOTE.getNamespaceURI ()))));
   }
