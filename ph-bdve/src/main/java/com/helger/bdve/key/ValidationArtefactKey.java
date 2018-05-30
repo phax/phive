@@ -23,7 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.xml.XMLConstants;
 import javax.xml.validation.Schema;
 
 import com.helger.commons.ValueEnforcer;
@@ -37,7 +36,6 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.namespace.IIterableNamespaceContext;
-import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * A validation key that uniquely identifies a set of validation artefacts. It
@@ -63,14 +61,12 @@ public class ValidationArtefactKey implements Serializable
   private final IIterableNamespaceContext m_aNamespaceContext;
   private final Locale m_aCountry;
   private final ValidationArtefactSectorKey m_aSectorKey;
-  private final String m_sPrerequisiteXPath;
   private final XSDPartialContext m_aXSDPartialContext;
 
   public ValidationArtefactKey (@Nonnull final IJAXBDocumentType aDocType,
                                 @Nullable final IIterableNamespaceContext aNamespaceContext,
                                 @Nullable final String sCountryCode,
                                 @Nullable final ValidationArtefactSectorKey aSectorKey,
-                                @Nullable final String sPrerequisiteXPath,
                                 @Nullable final XSDPartialContext aXSDPartialContext)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
@@ -86,7 +82,6 @@ public class ValidationArtefactKey implements Serializable
     else
       m_aCountry = null;
     m_aSectorKey = aSectorKey;
-    m_sPrerequisiteXPath = sPrerequisiteXPath;
     m_aXSDPartialContext = aXSDPartialContext;
   }
 
@@ -179,25 +174,6 @@ public class ValidationArtefactKey implements Serializable
     return m_aSectorKey;
   }
 
-  /**
-   * @return <code>true</code> if a prerequisite XPath expression is present,
-   *         <code>false</code> if not
-   */
-  public boolean hasPrerequisiteXPath ()
-  {
-    return StringHelper.hasText (m_sPrerequisiteXPath);
-  }
-
-  /**
-   * @return An optional prerequisite XPath expression that must match before
-   *         the validation artefact can be applied. May be <code>null</code>.
-   */
-  @Nullable
-  public String getPrerequisiteXPath ()
-  {
-    return m_sPrerequisiteXPath;
-  }
-
   @Nullable
   public XSDPartialContext getXSDPartialContext ()
   {
@@ -215,8 +191,7 @@ public class ValidationArtefactKey implements Serializable
     return m_aDocType.equals (rhs.m_aDocType) &&
            EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
            EqualsHelper.equals (m_aCountry, rhs.m_aCountry) &&
-           EqualsHelper.equals (m_aSectorKey, rhs.m_aSectorKey) &&
-           EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath);
+           EqualsHelper.equals (m_aSectorKey, rhs.m_aSectorKey);
   }
 
   @Override
@@ -226,7 +201,6 @@ public class ValidationArtefactKey implements Serializable
                                        .append (m_aNamespaceContext)
                                        .append (m_aCountry)
                                        .append (m_aSectorKey)
-                                       .append (m_sPrerequisiteXPath)
                                        .append (m_aXSDPartialContext)
                                        .getHashCode ();
   }
@@ -238,7 +212,6 @@ public class ValidationArtefactKey implements Serializable
                                        .appendIfNotNull ("NamespaceContext", m_aNamespaceContext)
                                        .appendIfNotNull ("Country", m_aCountry)
                                        .appendIfNotNull ("SectorKey", m_aSectorKey)
-                                       .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
                                        .appendIfNotNull ("XSDPartialContext", m_aXSDPartialContext)
                                        .getToString ();
   }
@@ -257,7 +230,6 @@ public class ValidationArtefactKey implements Serializable
     private IIterableNamespaceContext m_aNamespaceContext;
     private String m_sCountry;
     private ValidationArtefactSectorKey m_aSectorKey;
-    private String m_sPrerequisiteXPath;
     private XSDPartialContext m_aXSDPartialContext;
 
     /**
@@ -279,7 +251,6 @@ public class ValidationArtefactKey implements Serializable
       m_aNamespaceContext = aOther.m_aNamespaceContext;
       m_sCountry = aOther.getCountryCode ();
       m_aSectorKey = aOther.m_aSectorKey;
-      m_sPrerequisiteXPath = aOther.m_sPrerequisiteXPath;
       m_aXSDPartialContext = aOther.m_aXSDPartialContext;
     }
 
@@ -332,19 +303,6 @@ public class ValidationArtefactKey implements Serializable
     }
 
     /**
-     * @param sPrerequisiteXPath
-     *        The optional prerequisite XPath that must be fulfilled to perform
-     *        the validation. May be <code>null</code>.
-     * @return this for chaining
-     */
-    @Nonnull
-    public Builder setPrerequisiteXPath (@Nullable final String sPrerequisiteXPath)
-    {
-      m_sPrerequisiteXPath = sPrerequisiteXPath;
-      return this;
-    }
-
-    /**
      * Set the optional XSD partial context to be used. Muse be present for
      * validation type "XSD partial".
      *
@@ -375,21 +333,10 @@ public class ValidationArtefactKey implements Serializable
       if (m_aDocType == null)
         throw new IllegalStateException ("The DocType must be provided");
 
-      // Build the effective namespace context
-      final String sNamespaceURI = m_aDocType.getNamespaceURI ();
-      final MapBasedNamespaceContext aNSContext = new MapBasedNamespaceContext (m_aNamespaceContext);
-
-      // Add the default mapping for the root namespace
-      aNSContext.addMapping (XMLConstants.DEFAULT_NS_PREFIX, sNamespaceURI);
-      // For historical reasons, the "ubl" prefix is also mapped to this
-      // namespace URI
-      aNSContext.addMapping ("ubl", sNamespaceURI);
-
       return new ValidationArtefactKey (m_aDocType,
-                                        aNSContext,
+                                        m_aNamespaceContext,
                                         m_sCountry,
                                         m_aSectorKey,
-                                        m_sPrerequisiteXPath,
                                         m_aXSDPartialContext);
     }
   }

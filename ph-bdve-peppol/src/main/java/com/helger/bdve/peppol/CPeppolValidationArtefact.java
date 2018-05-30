@@ -54,7 +54,6 @@ public final class CPeppolValidationArtefact
                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                     .build ();
   public static final ValidationArtefactKey VK_INVOICE_04_T10_ATNAT = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10).setCountry ("AT")
-                                                                                                                           .setPrerequisiteXPath ("/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                                                            .build ();
   public static final ValidationArtefactKey VK_INVOICE_04_T10_ATGOV = new ValidationArtefactKey.Builder (VK_INVOICE_04_T10_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                                                  .build ();
@@ -62,7 +61,6 @@ public final class CPeppolValidationArtefact
                                                                                                     .setNamespaceContext (UBL21NamespaceContext.getInstance ())
                                                                                                     .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14_ATNAT = new ValidationArtefactKey.Builder (VK_BILLING_05_T14).setCountry ("AT")
-                                                                                                                           .setPrerequisiteXPath ("/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'")
                                                                                                                            .build ();
   public static final ValidationArtefactKey VK_BILLING_05_T14_ATGOV = new ValidationArtefactKey.Builder (VK_BILLING_05_T14_ATNAT).setSectorKey (CPeppolValidationArtefact.SECTOR_AT_GOV)
                                                                                                                                  .build ();

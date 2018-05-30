@@ -136,9 +136,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
       case SCHEMATRON_SCH:
       case SCHEMATRON_XSLT:
       case SCHEMATRON_OIOUBL:
-        addExecutor (new ValidationExecutorSchematron (aVA,
-                                                       aVAKey.getPrerequisiteXPath (),
-                                                       aVAKey.getNamespaceContext ()));
+        addExecutor (new ValidationExecutorSchematron (aVA, null, aVAKey.getNamespaceContext ()));
         break;
       default:
         throw new IllegalArgumentException ("Unsupported validation type " + aVA.getValidationArtefactType ());
@@ -258,8 +256,8 @@ public class ValidationExecutorSet implements IValidationExecutorSet
    * @param bIsDeprecated
    *        <code>true</code> if this VES is considered deprecated,
    *        <code>false</code> if not.
-   * @param aValidationArtefacts
-   *        The schematron resources to be associated with the VES. May not be
+   * @param aValidationExecutors
+   *        The resources to be associated with the VES. May not be
    *        <code>null</code>.
    * @return The newly created VES. Never <code>null</code>.
    */
@@ -269,13 +267,13 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                                                      @Nonnull @Nonempty final String sDisplayName,
                                                      @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                                      final boolean bIsDeprecated,
-                                                     @Nonnull final IValidationArtefact... aValidationArtefacts)
+                                                     @Nonnull final IValidationExecutor... aValidationExecutors)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
-    ValueEnforcer.notEmptyNoNullValue (aValidationArtefacts, "ValidationArtefacts");
+    ValueEnforcer.notEmptyNoNullValue (aValidationExecutors, "ValidationExecutors");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
                                                                  sDisplayName,
@@ -286,8 +284,8 @@ public class ValidationExecutorSet implements IValidationExecutorSet
       ret.addExecutor (aVE);
 
     // Add Schematrons
-    for (final IValidationArtefact aItem : aValidationArtefacts)
-      ret.addMatchingExecutor (aItem, aValidationArtefactKey);
+    for (final IValidationExecutor aVE : aValidationExecutors)
+      ret.addExecutor (aVE);
 
     return ret;
   }
