@@ -15,12 +15,14 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
   * ph-bdve-energieefactuur - Validation rules for Dutch Energie eFactuur - since 4.0.2
   * ph-bdve-oioubl - Validation rules for Danish OIOUBL - since 4.0.3
+  * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
+  * ph-bdve-teapps - Validation rules for Tieto TEAPPSXML - since 5.0.0
   
 # News and noteworthy
 
-* v4.5.0 - work in progress
-  * Added TEAPPSXML support
-  * Added ebInterface support
+* v5.0.0 - work in progress
+  * Added Tieto TEAPPSXML support
+  * Added Austrian ebInterface support
   * Simplified internal API backwards incompatible (removed all the bloat overhead where possible)
 * v4.0.5 - 2018-05-14
   * Support for OpenPEPPOL rules 3.3.0 was removed - too old
