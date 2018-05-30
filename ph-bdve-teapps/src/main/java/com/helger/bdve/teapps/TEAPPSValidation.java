@@ -35,11 +35,9 @@ import com.helger.commons.io.resource.ClassPathResource;
 public final class TEAPPSValidation
 {
   public static final String GROUP_ID = "com.tieto";
-  public static final String VERSION_272 = "2.7.2";
-  public static final String VERSION_30 = "3.0";
 
-  public static final VESID VID_TEAPPS_272 = new VESID (GROUP_ID, "TEAPPSXML", VERSION_272);
-  public static final VESID VID_TEAPPS_30 = new VESID (GROUP_ID, "TEAPPSXML", VERSION_30);
+  public static final VESID VID_TEAPPS_272 = new VESID (GROUP_ID, "TEAPPSXML", "2.7.2");
+  public static final VESID VID_TEAPPS_30 = new VESID (GROUP_ID, "TEAPPSXML", "3.0");
 
   private TEAPPSValidation ()
   {}
@@ -59,8 +57,12 @@ public final class TEAPPSValidation
 
     // No Schematrons here
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_TEAPPS_272,
-                                                                           "TEAPPSXML " + VERSION_272,
+                                                                           "TEAPPSXML " + VID_TEAPPS_272.getVersion (),
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (new ClassPathResource ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"))));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_TEAPPS_30,
+                                                                           "TEAPPSXML " + VID_TEAPPS_30.getVersion (),
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (new ClassPathResource ("/schemas/teappsxmlv30_schema_invoices_0.xsd"))));
   }
 }
