@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eb:Invoice xmlns:eb="http://www.ebinterface.at/schema/4p0/" eb:DocumentTitle="DEMO-Rechnung"
+  eb:GeneratingSystem="Händisch erzeugt" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:Language="ger"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <eb:InvoiceNumber>2012-0001</eb:InvoiceNumber>
+  <eb:InvoiceDate>2012-01-17</eb:InvoiceDate>
+  <eb:Delivery>
+    <eb:Date>2012-01-17</eb:Date>
+  </eb:Delivery>
+  <eb:Biller>
+    <eb:VATIdentificationNumber>ATU62698637</eb:VATIdentificationNumber>
+    <eb:InvoiceRecipientsBillerID>ES00112233</eb:InvoiceRecipientsBillerID>
+    <eb:Address>
+      <eb:Name>Irgendeine Firma</eb:Name>
+      <eb:Street>In einer Straße 3</eb:Street>
+      <eb:Town>Wien</eb:Town>
+      <eb:ZIP>1010</eb:ZIP>
+      <eb:Country eb:CountryCode="AT">Österreich</eb:Country>
+      <eb:Phone>+4312345678</eb:Phone>
+      <eb:Email>office@helger.com</eb:Email>
+      <eb:Contact>Hr. Müller</eb:Contact>
+    </eb:Address>
+  </eb:Biller>
+  <eb:InvoiceRecipient>
+    <eb:VATIdentificationNumber>00000000</eb:VATIdentificationNumber>
+    <eb:BillersInvoiceRecipientID>123123</eb:BillersInvoiceRecipientID>
+    <eb:OrderReference>
+      <eb:OrderID>123:anything-test</eb:OrderID>
+    </eb:OrderReference>
+    <eb:Address>
+      <eb:Salutation>Firma</eb:Salutation>
+      <eb:Name>Max Mustermann</eb:Name>
+      <eb:Street>Kundenstrasse 1</eb:Street>
+      <eb:Town>Kaufort</eb:Town>
+      <eb:ZIP>1234</eb:ZIP>
+      <eb:Country>AT</eb:Country>
+      <eb:Contact>Max Mustermann</eb:Contact>
+    </eb:Address>
+  </eb:InvoiceRecipient>
+  <eb:Details>
+    <eb:HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</eb:HeaderDescription>
+    <eb:ItemList>
+      <eb:ListLineItem>
+        <eb:PositionNumber>1</eb:PositionNumber>
+        <eb:Description>ebInterface Beratung</eb:Description>
+        <eb:ArticleNumber eb:ArticleNumberType="BillersArticleNumber">4711</eb:ArticleNumber>
+        <eb:Quantity eb:Unit="Tag">0.50</eb:Quantity>
+        <eb:UnitPrice>400.00</eb:UnitPrice>
+        <eb:TaxRate>20.00</eb:TaxRate>
+        <eb:DiscountFlag>false</eb:DiscountFlag>
+        <eb:LineItemAmount>200.00</eb:LineItemAmount>
+      </eb:ListLineItem>
+    </eb:ItemList>
+    <eb:FooterDescription>Wir danken für Ihren Auftrag.</eb:FooterDescription>
+  </eb:Details>
+  <eb:Tax>
+    <eb:VAT>
+      <eb:Item>
+        <eb:TaxedAmount>200.00</eb:TaxedAmount>
+        <eb:TaxRate>20.00</eb:TaxRate>
+        <eb:Amount>40.00</eb:Amount>
+      </eb:Item>
+    </eb:VAT>
+  </eb:Tax>
+  <eb:TotalGrossAmount>240.00</eb:TotalGrossAmount>
+  <eb:PaymentMethod eb:ConsolidatorPayable="false" xsi:type="eb:UniversalBankTransactionType">
+    <eb:BeneficiaryAccount>
+      <eb:BankName>Volksbank Wien</eb:BankName>
+      <eb:BankCode eb:BankCodeType="AT">43000</eb:BankCode>
+      <eb:BIC>BIC1BIC1</eb:BIC>
+      <eb:BankAccountNr>12345678</eb:BankAccountNr>
+      <eb:IBAN>IBAN1</eb:IBAN>
+      <eb:BankAccountOwner>Irgendeine Firma GmbH</eb:BankAccountOwner>
+    </eb:BeneficiaryAccount>
+  </eb:PaymentMethod>
+  <eb:PaymentConditions>
+    <eb:DueDate>2013-04-04</eb:DueDate>
+  </eb:PaymentConditions>
+  <eb:PresentationDetails>
+    <eb:URL>www.helger.com</eb:URL>
+    <eb:SuppressZero>true</eb:SuppressZero>
+  </eb:PresentationDetails>
+</eb:Invoice>

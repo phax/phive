@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="MESOinvoice302.xslt"?>
+<eb:Invoice xmlns:eb="http://www.ebinterface.at/schema/3p02/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ebinterface.at/schema/3p02/ http://www.ebinterface.at/schema/3p02/Invoice.xsd" eb:GeneratingSystem="MESONIC WINLine 9.0 (Unicode Build 9003.12)" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:DocumentTitle="Rechnung" eb:Language="ger">
+	<dsig:Signature xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+		<dsig:SignedInfo>
+			<dsig:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<dsig:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+			<dsig:Reference URI="">
+				<dsig:Transforms>
+					<dsig:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+				</dsig:Transforms>
+				<dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<dsig:DigestValue>R4EneZ5wDE//xN+CoFj6qxqpZ80=</dsig:DigestValue>
+			</dsig:Reference>
+		</dsig:SignedInfo>
+		<dsig:SignatureValue>gJz2Aw5Nx2bHz8GL4/vTlcdvgRWbXWMpi02fIe3/zPO8RPJDliVRG8+vSX/WPoC+
+4hWDjN2dcUgem6T7ulpTHIMiodb0JtXGC6dmQtuIvhlG6LnOGdGxOl0ptOwey1hL
+MJV9cv5PZPWQr7oArCj6Ibw3NMv4cL8T0R8hKLIm8OjwG2t4u6vkR7kLeQZjfDBt
+OzlFdyjiXRkkcZchnzWlbfgh98MpbdBskht7edwTxy6FWDU2AgbQE2CtufjyEexB
+od1COlNzq+Q+Z69Ce8utxDHX6EUtO9hFNsu5ZQ3rPJBkDkc1dAEx18KAo96z/7TZ
+r2MU3p1fB57yRSZBKnZeLw==</dsig:SignatureValue>
+		<dsig:KeyInfo>
+			<dsig:KeyName>Dipl. Ing. Dr. Georg Kaes, Mesonic Datenverarbeitung GmbH</dsig:KeyName>
+			<dsig:X509Data>
+			<dsig:X509Certificate>MIIG1jCCBL6gAwIBAgICAM0wDQXJKoZIhvcNAQEFBQAwgaQxCzAJBgNVBAYTAkFU
+MQ8wDQYDVQQHEwZWaWVubmExRjBEBgNVBAoTPUFSR0UgREFURU4gLSBBdXN0cmlh
+biBTb2NpZXR5IGZvciBEYXRhIFByb3RlY3Rpb24gYW5kIFByaXZhY3kxGDAWBgNV
+BAMTD0EtQ0VSVCBBRFZBTkNFRDEiMCAGCSqGSIb3DQEJARYTaW5mb0BnbG9iYWx0
+cnVzdC5ldTAeFw0xMDAzMzAwMDAwMDBaFw0xNDAzMzAxMTA5MzNaMIG6MQswCQYD
+VQQGEwJBVDEbMBkGA1UEBxMSTWF1ZXJiYWNoIGJlaSBXaWVuMScwJQYDVQQKEx5N
+ZXNvbmljIERhdGVudmVyYXJiZWl0dW5nIEdtYkgxQjBABgNVBAMTOURpcGwuIElu
+Zy4gRHIuIEdlb3JnIEthZXMsIE1lc29uaWMgRGF0ZW52ZXJhcmJlaXR1bmcgR21i
+SDEhMB8GCSqGSIb3DQEJARYSb2ZmaWNlQG1lc29uaWMuY29tMIIBIDANBgkqhkiG
+9w0BAQEFAAOCAQ0AMIIBCAKCAQEAhd4n5yYVrtAhIUwZQe5V8F4fZCiq5lgtezcl
+NdrXo4zNLg3XlvAYa1T6N6ypGebgSKxWwdJrFhLdOfVb41vCoOmAEMhb8kBhIitN
+h8TimhOG3EAOjhO3P/vxIYXc4NpbTMKqDQIpHTQAedTcSg/rZQg0Ux3zMtkM+XQa
+SpUTfP8Aluy0ci0BPIzFXKU6UYmueA2uVA2NWaNmcCAFqQEpwC4QgtiW87Kqs0n9
+odKK6O5bw4GMly61f9LyX21B6xkRtSUgzia54EapBRK0atMFCU72BccamzyQG5jF
+RL7zjq5d7AqtaRHXhMK9wKbzGl2d3gmIiRCN0ibr7lUkE9nFtwIBA6OCAfowggH2
+MAwGA1UdEwEB/wQCMAAwHQYDVR0OBBYEFLJxHKVS/j3TdYBaUCtIhStycS+7MB8G
+A1UdIwQYMBaAFDs44isP6WmRVIlvaC++Zlxd546CMB0GA1UdEQQWMBSBEm9mZmlj
+ZUBtZXNvbmljLmNvbTA5BgNVHRIEMjAwgRNpbmZvQGdsb2JhbHRydXN0LmV1hhlo
+dHRwOi8vd3d3Lmdsb2JhbHRydXN0LmV1MEAGA1UdHwQ5MDcwNaAzoDGGL2h0dHA6
+Ly93d3cuZ2xvYmFsdHJ1c3QuZXUvc3RhdGljL2FkdmFuY2VkLTMuY3JsMA4GA1Ud
+DwEB/wQEAwIE8DB+BggrBgEFBQcBAQRyMHAwJgYIKwYBBQUHMAGGGmh0dHA6Ly9v
+Y3NwLmdsb2JhbHRydXN0LmV1MEYGCCsGAQUFBzAChjpodHRwOi8vd3d3Lmdsb2Jh
+bHRydXN0LmV1L3N0YXRpYy9hLWNlcnQtYWR2YW5jZWQtMy1kZXIuY2VyMFYGA1Ud
+IARPME0wSwYIKigAGAEBAwEwPzA9BggrBgEFBQcCARYxaHR0cDovL3d3dy5nbG9i
+YWx0cnVzdC5ldS9jZXJ0aWZpY2F0ZS1wb2xpY3kuaHRtbDAiBgcqKAAYBAEBBBcM
+FUFsYWRkaW4gZVRva2VuIFBybzY0azANBgkqhkiG9w0BAQUFAAOCAgEArOwYcLSm
+hwKkM3euNFKplgoMBuMNu6MRl3AgXcnfwdyAgE58wB9+AGr6Akm3c3NJlG9DZ7KY
+Q19po2tDz2/9ZcWK2xPI9dhH7zaZW8vD71C4jnUo//7fMAmxmJltEyGJcN75N0Tj
+alQAR2qF2u58lonhkVYf3gVzsLT8yE88E8sfvE7Wqvi3bA1ePDB5xR8/EqypNEHi
+rTUp+n3VF0KrsHOJWRMnSg+47x6HrH1J+xw7IuQilFlvw+/zT0Y2Hp3/mzcnbGAM
+/SCI2rsB+EOf+tj5179VEGzfEo6/C0OrbmWJfDFrMCXAloSZumDAt72Y9tpulCXs
+q+XKW4mnC9VU98KxsZkOnUC27B1DoE835pZ1X88/5EDpAeyv5mo6F/3DI9NyJv3f
+UFpAfXLmCywXMkhuuynIN8IIktlscFqBueb/QJzRmiZhUKpvSgAYjYolhJRmbnMd
+6ppJfGVX02LJN4YuoUbg2Ijt31wnmfmVHK6nArcJVpFdnYaFzxyg6rauf+xrZX0O
+6GXYQMrgyPIj0yiZm+8q+UR6OxTTODr1EENfu/UEdJDxrbuZfWm2/t8Pll26AHyA
+6Pl5ymGLOD07Qv+GpjSauOIueTiWQNKYZyi8T9iHpG+4TZtspkPf23f/cwSmmknr
+RfczsmyDe7Sa9M8VVCBBFpxFmc4fAGvIzYU=</dsig:X509Certificate>
+</dsig:X509Data>
+		</dsig:KeyInfo>
+	</dsig:Signature>
+	<eb:InvoiceNumber>FA08-3241</eb:InvoiceNumber>
+	<eb:InvoiceDate>2010-12-31</eb:InvoiceDate>
+	<eb:Delivery>
+		<eb:Date>2011-02-04</eb:Date>
+	</eb:Delivery>
+	<eb:Biller>
+		<eb:VATIdentificationNumber>ATU74589652</eb:VATIdentificationNumber>
+		<eb:Address>
+			<eb:Name>Fun &amp; Workout</eb:Name>
+			<eb:Street>Herzog Friedrich Pl.</eb:Street>
+			<eb:Town>Mauerbach</eb:Town>
+			<eb:ZIP>3001</eb:ZIP>
+			<eb:Country>A</eb:Country>
+			<eb:Phone>+43 1 970 30</eb:Phone>
+			<eb:Email>hhuber@funwork.co.at</eb:Email>
+			<eb:Contact>Herr Walter</eb:Contact>
+			<eb:AddressExtension>Sport &amp; Fitness</eb:AddressExtension>
+		</eb:Address>
+	</eb:Biller>
+	<eb:InvoiceRecipient>
+		<eb:VATIdentificationNumber>00000000</eb:VATIdentificationNumber>
+		<eb:BillersInvoiceRecipientID>230A001</eb:BillersInvoiceRecipientID>
+		<eb:Address>
+			<eb:Salutation>Firma</eb:Salutation>
+			<eb:Name>Annas Sportwelt</eb:Name>
+			<eb:Street>Linzer Str. 12</eb:Street>
+			<eb:Town>Altheim</eb:Town>
+			<eb:ZIP>4950</eb:ZIP>
+			<eb:Country>Österreich</eb:Country>
+			<eb:Contact>Herr Sebastian</eb:Contact>
+		</eb:Address>
+	</eb:InvoiceRecipient>
+	<eb:Details>
+		<eb:HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</eb:HeaderDescription>
+		<eb:ItemList>
+			<eb:ListLineItem>
+				<eb:PositionNumber>1</eb:PositionNumber>
+				<eb:Description>Panther Sportschuh "Streetball"</eb:Description>
+				<eb:BillersArticleNumber>30001</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>30001</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">1.00</eb:Quantity>
+				<eb:UnitPrice>137.53</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:ReductionRate>5.00</eb:ReductionRate>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.60</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>130.65</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>2</eb:PositionNumber>
+				<eb:Description>Versandkosten</eb:Description>
+				<eb:BillersArticleNumber>90</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>90</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">1.00</eb:Quantity>
+				<eb:UnitPrice>0.00</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:ReductionRate>5.00</eb:ReductionRate>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.00</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>0.00</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>3</eb:PositionNumber>
+				<eb:Description>Versicherung</eb:Description>
+				<eb:BillersArticleNumber>99</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>99</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">1.00</eb:Quantity>
+				<eb:UnitPrice>6.90</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:ReductionRate>5.00</eb:ReductionRate>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.00</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>6.55</eb:LineItemAmount>
+			</eb:ListLineItem>
+		</eb:ItemList>
+		<eb:FooterDescription>Wir danken für Ihren Auftrag.</eb:FooterDescription>
+	</eb:Details>
+	<eb:Tax>
+		<eb:VAT>
+			<eb:Item>
+				<eb:TaxedAmount>137.20</eb:TaxedAmount>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:Amount>27.44</eb:Amount>
+			</eb:Item>
+		</eb:VAT>
+	</eb:Tax>
+	<eb:TotalGrossAmount>163.07</eb:TotalGrossAmount>
+	<eb:PaymentMethod xsi:type="eb:UniversalBankTransactionType" eb:ConsolidatorPayable="false">
+		<eb:BeneficiaryAccount>
+			<eb:BankName>Die Erste</eb:BankName>
+			<eb:BankCode eb:BankCodeType="AT">20120</eb:BankCode>
+			<eb:BankAccountNr>4789234789</eb:BankAccountNr>
+			<eb:BankAccountOwner>Herr Maier</eb:BankAccountOwner>
+		</eb:BeneficiaryAccount>
+	</eb:PaymentMethod>
+	<eb:PaymentConditions>
+		<eb:DueDate>2011-01-21</eb:DueDate>
+		<eb:Discount>
+			<eb:PaymentDate>2011-01-07</eb:PaymentDate>
+			<eb:Percentage>2.00</eb:Percentage>
+			<eb:Amount>3.26</eb:Amount>
+		</eb:Discount>
+		<eb:Discount>
+			<eb:PaymentDate>2011-01-14</eb:PaymentDate>
+			<eb:Percentage>1.00</eb:Percentage>
+			<eb:Amount>1.63</eb:Amount>
+		</eb:Discount>
+	</eb:PaymentConditions>
+	<eb:PresentationDetails>
+		<eb:URL>http://www.funwork.co.at</eb:URL>
+		<eb:LayoutID>EBIFA100</eb:LayoutID>
+		<eb:SuppressZero>true</eb:SuppressZero>
+	</eb:PresentationDetails>
+</eb:Invoice>

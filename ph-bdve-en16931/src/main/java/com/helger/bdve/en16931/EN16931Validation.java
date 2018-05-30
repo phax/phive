@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -99,7 +100,7 @@ public final class EN16931Validation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII_1,
                                                                            "EN 16931 CII " + VID_CII_1.getVersion (),
                                                                            bNotDeprecated,
-                                                                           ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE,
+                                                                           ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
                                                                                                                                      _getCL (),
                                                                                                                                      INVOICE_CII_XSLT),
@@ -109,9 +110,9 @@ public final class EN16931Validation
                                                                            "EN 16931 EDIFACT/ISO 20625 " +
                                                                                           VID_EDIFACT_1.getVersion (),
                                                                            bNotDeprecated,
-                                                                           new JAXBDocumentType (MINVOIC.class,
-                                                                                                 new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
-                                                                                                 null),
+                                                                           ValidationExecutorXSD.create (new JAXBDocumentType (MINVOIC.class,
+                                                                                                                               new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
+                                                                                                                               null)),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
                                                                                                                                      _getCL (),
                                                                                                                                      INVOICE_EDIFACT_XSLT),
@@ -121,7 +122,7 @@ public final class EN16931Validation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_1,
                                                                            "EN 16931 UBL " + VID_UBL_1.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.INVOICE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
                                                                                                                                      _getCL (),
                                                                                                                                      INVOICE_UBL_SCH),

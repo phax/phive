@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -175,7 +176,7 @@ public final class UBLValidation
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                              "UBL " + sName + " " + VERSION_21,
                                                                              bNotDeprecated,
-                                                                             e));
+                                                                             ValidationExecutorXSD.create (e)));
     }
   }
 

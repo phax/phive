@@ -23,6 +23,7 @@ import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -132,91 +133,91 @@ public final class OIOUBLValidation
                                                                            "OIOUBL Application Response " +
                                                                                                             VID_OIOUBL_APPLICATION_RESPONSE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.APPLICATION_RESPONSE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.APPLICATION_RESPONSE),
                                                                            _createTVR (OIOUBL_APPLICATION_RESPONSE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE,
                                                                            "OIOUBL Catalogue " +
                                                                                                  VID_OIOUBL_CATALOGUE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.CATALOGUE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE),
                                                                            _createTVR (OIOUBL_CATALOGUE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_DELETION,
                                                                            "OIOUBL Catalogue Deletion " +
                                                                                                           VID_OIOUBL_CATALOGUE_DELETION.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.CATALOGUE_DELETION,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE_DELETION),
                                                                            _createTVR (OIOUBL_CATALOGUE_DELETION)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE,
                                                                            "OIOUBL Catalogue Item Specification Update " +
                                                                                                                            VID_OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.CATALOGUE_ITEM_SPECIFICATION_UPDATE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE_ITEM_SPECIFICATION_UPDATE),
                                                                            _createTVR (OIOUBL_CATALOGUE_ITEM_SPECIFICATION_UPDATE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_PRICING_UPDATE,
                                                                            "OIOUBL Catalogue Pricing Update " +
                                                                                                                 VID_OIOUBL_CATALOGUE_PRICING_UPDATE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.CATALOGUE_PRICING_UPDATE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE_PRICING_UPDATE),
                                                                            _createTVR (OIOUBL_CATALOGUE_PRICING_UPDATE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CATALOGUE_REQUEST,
                                                                            "OIOUBL Catalogue Request " +
                                                                                                          VID_OIOUBL_CATALOGUE_REQUEST.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.CATALOGUE_REQUEST,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE_REQUEST),
                                                                            _createTVR (OIOUBL_CATALOGUE_REQUEST)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_CREDIT_NOTE,
                                                                            "OIOUBL Credit Note " +
                                                                                                    VID_OIOUBL_CREDIT_NOTE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.CREDIT_NOTE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            _createTVR (OIOUBL_CREDIT_NOTE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_INVOICE,
                                                                            "OIOUBL Invoice " +
                                                                                                VID_OIOUBL_INVOICE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.INVOICE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createTVR (OIOUBL_INVOICE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER,
                                                                            "OIOUBL Order " +
                                                                                              VID_OIOUBL_ORDER.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.ORDER,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER),
                                                                            _createTVR (OIOUBL_ORDER)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_CANCELLATION,
                                                                            "OIOUBL Order Cancellation " +
                                                                                                           VID_OIOUBL_ORDER_CANCELLATION.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.ORDER_CANCELLATION,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_CANCELLATION),
                                                                            _createTVR (OIOUBL_ORDER_CANCELLATION)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_CHANGE,
                                                                            "OIOUBL Order Change " +
                                                                                                     VID_OIOUBL_ORDER_CHANGE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.ORDER_CHANGE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_CHANGE),
                                                                            _createTVR (OIOUBL_ORDER_CHANGE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_RESPONSE,
                                                                            "OIOUBL Order Response " +
                                                                                                       VID_OIOUBL_ORDER_RESPONSE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.ORDER_RESPONSE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE),
                                                                            _createTVR (OIOUBL_ORDER_RESPONSE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_ORDER_RESPONSE_SIMPLE,
                                                                            "OIOUBL Order Response Simple " +
                                                                                                              VID_OIOUBL_ORDER_RESPONSE_SIMPLE.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.ORDER_RESPONSE_SIMPLE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE_SIMPLE),
                                                                            _createTVR (OIOUBL_ORDER_RESPONSE_SIMPLE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_REMINDER,
                                                                            "OIOUBL Reminder " +
                                                                                                 VID_OIOUBL_REMINDER.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.REMINDER,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.REMINDER),
                                                                            _createTVR (OIOUBL_REMINDER)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OIOUBL_STATEMENT,
                                                                            "OIOUBL Statement " +
                                                                                                  VID_OIOUBL_STATEMENT.getVersion (),
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.STATEMENT,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.STATEMENT),
                                                                            _createTVR (OIOUBL_STATEMENT)));
   }
 }

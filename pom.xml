@@ -117,6 +117,11 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-ebinterface</artifactId>
+        <version>6.0.1</version>
+      </dependency>
 
       <dependency>
         <groupId>org.apache.odftoolkit</groupId>
@@ -185,6 +190,11 @@
       </dependency>
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-bdve-ebinterface</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>ph-bdve-teapps</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -219,6 +229,7 @@
     <module>ph-bdve-ehf</module>
     <module>ph-bdve-energieefactuur</module>
     <module>ph-bdve-oioubl</module>
+    <module>ph-bdve-ebinterface</module>
     <module>ph-bdve-teapps</module>
   </modules>
 </project>

@@ -19,13 +19,12 @@ package com.helger.bdve.teapps;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.jaxb.builder.IJAXBDocumentType;
-import com.helger.jaxb.builder.JAXBDocumentType;
+import com.helger.commons.io.resource.ClassPathResource;
 
 /**
  * Generic TEAPPS validation configuration
@@ -59,13 +58,9 @@ public final class TEAPPSValidation
     final boolean bNotDeprecated = false;
 
     // No Schematrons here
-    // XXX invalid
-    final IJAXBDocumentType aDocType = new JAXBDocumentType (String.class,
-                                                             new CommonsArrayList <> ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"),
-                                                             null);
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_TEAPPS_272,
                                                                            "TEAPPSXML " + VERSION_272,
                                                                            bNotDeprecated,
-                                                                           aDocType));
+                                                                           ValidationExecutorXSD.create (new ClassPathResource ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"))));
   }
 }

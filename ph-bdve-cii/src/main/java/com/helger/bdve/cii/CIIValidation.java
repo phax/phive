@@ -21,6 +21,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -71,7 +72,7 @@ public final class CIIValidation
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                              "CII " + sName + " " + VERSION_D16B,
                                                                              bNotDeprecated,
-                                                                             e));
+                                                                             ValidationExecutorXSD.create (e)));
     }
   }
 }

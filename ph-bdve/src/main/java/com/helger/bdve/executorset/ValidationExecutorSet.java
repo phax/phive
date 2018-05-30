@@ -22,20 +22,15 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.bdve.EValidationType;
-import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
-import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.jaxb.builder.IJAXBDocumentType;
 
 /**
  * Default implementation of {@link IValidationExecutorSet}.
@@ -164,7 +159,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public static ValidationExecutorSet create (@Nonnull final VESID aID,
                                               @Nonnull @Nonempty final String sDisplayName,
                                               final boolean bIsDeprecated,
-                                              @Nonnull final IJAXBDocumentType aDocType,
                                               @Nonnull final IValidationExecutor... aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
@@ -172,12 +166,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ValueEnforcer.noNullValue (aValidationExecutors, "ValidationExecutors");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, bIsDeprecated);
-
-    // Add XSDs at the beginning
-    final ClassLoader aClassLoader = aDocType.getImplementationClass ().getClassLoader ();
-    for (final IReadableResource aXSDRes : aDocType.getAllXSDResources ())
-      ret.addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aClassLoader, aXSDRes),
-                                                  aCL -> aDocType.getSchema (aCL)));
 
     // Add Schematrons
     for (final IValidationExecutor aItem : aValidationExecutors)

@@ -23,6 +23,7 @@ import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -95,23 +96,23 @@ public final class SimplerInvoicingValidation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
                                                                            "Simplerinvoicing Invoice 1.1",
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.INVOICE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (INVOICE_SI11)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11_STRICT,
                                                                            "Simplerinvoicing Invoice 1.1 (strict)",
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.INVOICE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (INVOICE_SI11_STRICT)));
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.INVOICE,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (INVOICE_SI12)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_ORDER_V12,
                                                                            "Simplerinvoicing Order 1.2",
                                                                            bNotDeprecated,
-                                                                           EUBL21DocumentType.ORDER,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER),
                                                                            _createXSLT (ORDER_SI12)));
   }
 }

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="MESOinvoice30.xslt"?>
+<eb:Invoice xmlns:eb="http://www.ebinterface.at/schema/3p0/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ebinterface.at/schema/3p0/ http://www.ebinterface.at/schema/3p0/Invoice.xsd" eb:GeneratingSystem="MESONIC WINLine 8.7 (Build 2001)" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:DocumentTitle="Rechnung" eb:Language="ger">
+	<dsig:Signature xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+		<dsig:SignedInfo>
+			<dsig:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<dsig:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+			<dsig:Reference URI="">
+				<dsig:Transforms>
+					<dsig:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+				</dsig:Transforms>
+				<dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<dsig:DigestValue>wIQNG/JVHJFlA4CWqeoHzJfxjF4=</dsig:DigestValue>
+			</dsig:Reference>
+		</dsig:SignedInfo>
+		<dsig:SignatureValue>cjhUTXGE8gx3Mf97El9HKZDINfRO2DoSukWLbaU58B7Ne/j1C+wr3/EGzHdVBNQf
+m99IQiQnVHpY2XmpfkVYSzF3fGjKFNNMyUDSMTrijSjrUfJrBryUEmE0ARY/+beI
+pTwWphAOAOT7QK0AEHDF5k+N/1qUQluCnYR3lV4ArqgL2YQ6WE2DmUB6OApu3vb0
+0w00I/upDGIkvcYLfPPvqv83+uTx6i0rNpLdt9xutuShBKlr+qmev780NzHXSdYU
+MfB3JQ4TgMuwKC4ZqaOGLT/Sc0NEiXc4b+VRJjkMFxs6VHXqJcMEq4jO7frNfnrw
+3/rfubRvQeX2osiqnK81tQ==</dsig:SignatureValue>
+		<dsig:KeyInfo>
+			<dsig:KeyName>Dipl. Ing. Dr Georg Kaes, Mesonic Datenverarbeitung GmbH</dsig:KeyName>
+			<dsig:X509Data>
+			<X509Certificate xmlns="http://www.w3.org/2000/09/xmldsig#">MIIGITCCBQmgAwIBAgICA74wDQYJKoZIhvcNAQEFBQAwgcwxCzAJBgNVBAYTAkFU
+MRAwDgYDVQQIEwdBdXN0cmlhMQ8wDQYDVQQHEwZWaWVubmExOjA4BgNVBAoTMUFS
+R0UgREFURU4gLSBBdXN0cmlhbiBTb2NpZXR5IGZvciBEYXRhIFByb3RlY3Rpb24x
+JTAjBgNVBAsTHEEtQ0VSVCBDZXJ0aWZpY2F0aW9uIFNlcnZpY2UxGDAWBgNVBAMT
+D0EtQ0VSVCBBRFZBTkNFRDEdMBsGCSqGSIb3DQEJARYOaW5mb0BhLWNlcnQuYXQw
+HhcNMDYwNDE4MDAwMDAwWhcNMTAwNDE4MTIzMzI4WjCBuTELMAkGA1UEBhMCQVQx
+GzAZBgNVBAcTEk1hdWVyYmFjaCBiZWkgV2llbjEnMCUGA1UEChMeTWVzb25pYyBE
+YXRlbnZlcmFyYmVpdHVuZyBHbWJIMUEwPwYDVQQDEzhEaXBsLiBJbmcuIERyIEdl
+b3JnIEthZXMsIE1lc29uaWMgRGF0ZW52ZXJhcmJlaXR1bmcgR21iSDEhMB8GCSqG
+SIb3DQEJARYSb2ZmaWNlQG1lc29uaWMuY29tMIIBITANBgkqhkiG9w0BAQEFAAOC
+AQ4AMIIBCQKCAQEAgfgMhRAlc+82TnvUyuTRdTd18G6Vc+qMsQSaowYovv54aEW3
+DvhPS6Ke+V/rD+v7ra8DZU5ffYbj5+q2K9gf96bLaKSJ4wbdFHPrEJlA9B530Bhu
+QWO0Tp8jwmqFBzlGSxgdnnmSu6V9BE1RsmIV8ycC6YqrPU94WcFEHVsNTzP5idnm
+N7jICmMd6HFmGVJTCF4R35EHWu2JAa5fK8gMlUvXCfuoOJgA4SYjTTyYvnsSzPUJ
+G3fTsPLCk49Hj9sZCKXkcE5oZMIcg7+BAzuh3T9rEN0wvYVDkJ4/jBTjjYL+lfcq
+I+VUhAiI1OHJ5olRqbQpiM3YXBfnnRK3ZqtUdQICAJejggIdMIICGTAMBgNVHRMB
+Af8EAjAAMB0GA1UdDgQWBBRQkS+U535GXYuuXrWuOclpEPM/HjAfBgNVHSMEGDAW
+gBQ3fz4+mXFgyiTUkRN50HQptKgk2DAdBgNVHREEFjAUgRJvZmZpY2VAbWVzb25p
+Yy5jb20wLwYDVR0SBCgwJoEOaW5mb0BhLWNlcnQuYXSGFGh0dHA6Ly93d3cuYS1j
+ZXJ0LmF0MDkGA1UdHwQyMDAwLqAsoCqGKGh0dHA6Ly93d3cuYS1jZXJ0LmF0L3N0
+YXRpYy9hZHZhbmNlZC5jcmwwDgYDVR0PAQH/BAQDAgTwMDEGCCsGAQUFBwEBBCUw
+IzAhBggrBgEFBQcwAYYVaHR0cDovL29jc3AuYS1jZXJ0LmF0MBEGCWCGSAGG+EIB
+AQQEAwIE8DBRBgNVHSAESjBIMEYGCCooABgBAQEDMDowOAYIKwYBBQUHAgEWLGh0
+dHA6Ly93d3cuYS1jZXJ0LmF0L2NlcnRpZmljYXRlLXBvbGljeS5odG1sMDsGCWCG
+SAGG+EIBCAQuFixodHRwOi8vd3d3LmEtY2VydC5hdC9jZXJ0aWZpY2F0ZS1wb2xp
+Y3kuaHRtbDA0BglghkgBhvhCAQ0EJxYlQS1DRVJUIEFEVkFOQ0VEIENlcnRpZmlj
+YXRpb24gU2VydmljZTAiBgcqKAAYBAEBBBcMFUFsYWRkaW4gZVRva2VuIFBybzY0
+azANBgkqhkiG9w0BAQUFAAOCAQEAjfkRoexb//BO2Hnz7dPBWR0XlRXKZhTWReJK
++RoFWKf8epoFNYRRqXclOh9WZCEUtqNZZA6YAD65EAqHkEGi099GZvRZNtbgeEzy
+7NmxzHbAWwMBKQX6Tmr73Ai/cWVbiumNtFJczbu+cLAPw6PitjoYZUWaLMZlhkMi
+HXgGBzwI5w8ZxIZyZniEozphruslOyM6fTwls5T2P8OCArHYr54QCihuhvUPS4g9
+VecqQY4ZaSvqUw9vL5208lmBjnaxUOBqyLWrEU35qhA4ekuNI2IAGA+ZBTqcFjFx
+Alt6dXc9FU+ptGu6CYpmVJmwkyOwubQv9+OS1BZgW7Sh+3MnKQ==</X509Certificate>
+</dsig:X509Data>
+		</dsig:KeyInfo>
+	</dsig:Signature>
+	<eb:InvoiceNumber>FA08-3245</eb:InvoiceNumber>
+	<eb:InvoiceDate>2010-02-11</eb:InvoiceDate>
+	<eb:Delivery>
+		<eb:Date>2008-05-09</eb:Date>
+	</eb:Delivery>
+	<eb:Biller>
+		<eb:VATIdentificationNumber>ATU74589652</eb:VATIdentificationNumber>
+		<eb:Address>
+			<eb:Name>Fun &amp; Workout</eb:Name>
+			<eb:Street>Herzog Friedrich Pl.</eb:Street>
+			<eb:Town>Mauerbach</eb:Town>
+			<eb:ZIP>3001</eb:ZIP>
+			<eb:Country>A</eb:Country>
+			<eb:Phone>+43 1 970 30</eb:Phone>
+			<eb:Email>hhuber@funwork.co.at</eb:Email>
+			<eb:Contact>Herr Walter</eb:Contact>
+			<eb:AddressExtension>Sport &amp; Fitness</eb:AddressExtension>
+		</eb:Address>
+	</eb:Biller>
+	<eb:InvoiceRecipient>
+		<eb:VATIdentificationNumber>00000000</eb:VATIdentificationNumber>
+		<eb:BillersInvoiceRecipientID>230A004</eb:BillersInvoiceRecipientID>
+		<eb:Address>
+			<eb:Salutation>Firma</eb:Salutation>
+			<eb:Name>Austria Sports</eb:Name>
+			<eb:Street>Operngasse 12</eb:Street>
+			<eb:Town>Wien</eb:Town>
+			<eb:ZIP>1010</eb:ZIP>
+			<eb:Country>�sterreich</eb:Country>
+			<eb:Contact>Herr Pfleger</eb:Contact>
+		</eb:Address>
+	</eb:InvoiceRecipient>
+	<eb:Details>
+		<eb:HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</eb:HeaderDescription>
+		<eb:ItemList>
+			<eb:ListLineItem>
+				<eb:PositionNumber>1</eb:PositionNumber>
+				<eb:Description>Panther Sportschuh "Streetball"</eb:Description>
+				<eb:BillersArticleNumber>30001</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>30001</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">5.00</eb:Quantity>
+				<eb:UnitPrice>137.53</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.60</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>687.65</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>2</eb:PositionNumber>
+				<eb:Description>Panther Sportschuh "Basketball"</eb:Description>
+				<eb:BillersArticleNumber>30002</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>30002</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">5.00</eb:Quantity>
+				<eb:UnitPrice>88.26</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.80</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>441.30</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>3</eb:PositionNumber>
+				<eb:Description>Panther Sportschuh "Tennis"</eb:Description>
+				<eb:BillersArticleNumber>30003</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>30003</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">5.00</eb:Quantity>
+				<eb:UnitPrice>69.77</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.50</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>348.85</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>4</eb:PositionNumber>
+				<eb:Description>Panther Joggingschuhe</eb:Description>
+				<eb:BillersArticleNumber>30004</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>30004</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">5.00</eb:Quantity>
+				<eb:UnitPrice>69.77</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.40</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>348.85</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>5</eb:PositionNumber>
+				<eb:Description>Panther Freizeitschuhe</eb:Description>
+				<eb:BillersArticleNumber>30005</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>30005</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="STK">5.00</eb:Quantity>
+				<eb:UnitPrice>118.59</eb:UnitPrice>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:AdditionalInformation>
+					<eb:Weight eb:Unit="Units">0.70</eb:Weight>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>592.95</eb:LineItemAmount>
+			</eb:ListLineItem>
+		</eb:ItemList>
+		<eb:FooterDescription>Wir danken f�r Ihren Auftrag.</eb:FooterDescription>
+	</eb:Details>
+	<eb:Tax>
+		<eb:VAT>
+			<eb:Item>
+				<eb:TaxedAmount>2419.60</eb:TaxedAmount>
+				<eb:TaxRate>20.00</eb:TaxRate>
+				<eb:Amount>483.92</eb:Amount>
+			</eb:Item>
+		</eb:VAT>
+	</eb:Tax>
+	<eb:TotalGrossAmount>2903.52</eb:TotalGrossAmount>
+	<eb:PaymentMethod xsi:type="eb:UniversalBankTransactionType" eb:ConsolidatorPayable="false">
+		<eb:BeneficiaryAccount>
+			<eb:BankName>Die Erste</eb:BankName>
+			<eb:BankCode eb:BankCodeType="AT">20120</eb:BankCode>
+			<eb:BankAccountNr>4789234789</eb:BankAccountNr>
+			<eb:BankAccountOwner>Herr Maier</eb:BankAccountOwner>
+		</eb:BeneficiaryAccount>
+	</eb:PaymentMethod>
+	<eb:PaymentConditions>
+		<eb:DueDate>2010-03-13</eb:DueDate>
+		<eb:Discount>
+			<eb:PaymentDate>2010-02-25</eb:PaymentDate>
+			<eb:Percentage>3.00</eb:Percentage>
+			<eb:Amount>87.11</eb:Amount>
+		</eb:Discount>
+		<eb:Discount>
+			<eb:PaymentDate>2010-03-04</eb:PaymentDate>
+			<eb:Percentage>2.00</eb:Percentage>
+			<eb:Amount>58.07</eb:Amount>
+		</eb:Discount>
+	</eb:PaymentConditions>
+	<eb:PresentationDetails>
+		<eb:URL>http://www.funwork.co.at</eb:URL>
+		<eb:LayoutID>EBIFA100</eb:LayoutID>
+		<eb:SuppressZero>true</eb:SuppressZero>
+	</eb:PresentationDetails>
+</eb:Invoice>

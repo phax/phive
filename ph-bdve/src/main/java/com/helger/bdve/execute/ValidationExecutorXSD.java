@@ -24,7 +24,9 @@ import javax.xml.validation.Schema;
 
 import org.xml.sax.SAXParseException;
 
+import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.IValidationArtefact;
+import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
@@ -32,8 +34,11 @@ import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.functional.IFunction;
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.location.SimpleLocation;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
+import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
 
 /**
@@ -93,5 +98,23 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
 
     // Build result object
     return new ValidationResult (aVA, aErrorList.getAllFailures ());
+  }
+
+  @Nonnull
+  public static ValidationExecutorXSD create (@Nonnull final IJAXBDocumentType aDocType)
+  {
+    ValueEnforcer.notNull (aDocType, "DocType");
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
+                                                              aDocType.getImplementationClass ().getClassLoader (),
+                                                              aDocType.getAllXSDResources ().getLast ()),
+                                      aCL -> aDocType.getSchema (aCL));
+  }
+
+  @Nonnull
+  public static ValidationExecutorXSD create (@Nonnull final ClassPathResource aXSDRes)
+  {
+    ValueEnforcer.notNull (aXSDRes, "XSDRes");
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes.getClassLoader (), aXSDRes),
+                                      aCL -> XMLSchemaCache.getInstanceOfClassLoader (aCL).getSchema (aXSDRes));
   }
 }

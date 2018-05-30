@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<d1p1:Invoice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" d1p1:GeneratingSystem="ACP rs2 v1.06" d1p1:DocumentType="CreditMemo" d1p1:InvoiceCurrency="EUR" d1p1:ManualProcessing="true" d1p1:DocumentTitle="Gutschrift AO/4169XXX" d1p1:Language="deu" xmlns:d1p1="http://www.ebinterface.at/schema/3p0/">
+  <d1p1:InvoiceNumber>AO/4169XXX</d1p1:InvoiceNumber>
+  <d1p1:InvoiceDate>2009-02-10</d1p1:InvoiceDate>
+  <d1p1:Delivery>
+    <d1p1:DeliveryID>AO/4169XXX</d1p1:DeliveryID>
+    <d1p1:Date>2009-02-10</d1p1:Date>
+    <d1p1:Address>
+      <d1p1:Salutation>Firma</d1p1:Salutation>
+      <d1p1:Name>Mustermann AG</d1p1:Name>
+      <d1p1:Street>Starsse 1</d1p1:Street>
+      <d1p1:Town>Wien</d1p1:Town>
+      <d1p1:ZIP>1100</d1p1:ZIP>
+      <d1p1:Country>sterreich</d1p1:Country>
+    </d1p1:Address>
+  </d1p1:Delivery>
+  <d1p1:Biller>
+    <d1p1:VATIdentificationNumber>ATU15184903 </d1p1:VATIdentificationNumber>
+    <d1p1:InvoiceRecipientsBillerID>31020XXX </d1p1:InvoiceRecipientsBillerID>
+    <d1p1:OrderReference>
+      <d1p1:OrderID>AO/9010XXX</d1p1:OrderID>
+      <d1p1:ReferenceDate>2009-02-10</d1p1:ReferenceDate>
+    </d1p1:OrderReference>
+    <d1p1:Address>
+      <d1p1:Salutation>Firma</d1p1:Salutation>
+      <d1p1:Name>ACP IT Solutions GmbH</d1p1:Name>
+      <d1p1:Street>Pfeiffergasse 2</d1p1:Street>
+      <d1p1:Town>Wien</d1p1:Town>
+      <d1p1:ZIP>1150</d1p1:ZIP>
+      <d1p1:Country>Österreich</d1p1:Country>
+      <d1p1:Phone>+43 1 89193 0</d1p1:Phone>
+    </d1p1:Address>
+  </d1p1:Biller>
+  <d1p1:InvoiceRecipient>
+    <d1p1:VATIdentificationNumber>ATU62895XXX </d1p1:VATIdentificationNumber>
+    <d1p1:BillersInvoiceRecipientID>2027XXX </d1p1:BillersInvoiceRecipientID>
+    <d1p1:Address>
+      <d1p1:Name>Musterfirma AGt</d1p1:Name>
+      <d1p1:Street>Rechnungswesenstr. 2</d1p1:Street>
+      <d1p1:Town>Wien</d1p1:Town>
+      <d1p1:ZIP>1100</d1p1:ZIP>
+      <d1p1:Country>Österreich</d1p1:Country>
+    </d1p1:Address>
+  </d1p1:InvoiceRecipient>
+  <d1p1:OrderingParty>
+    <d1p1:VATIdentificationNumber>ATU62895XXX </d1p1:VATIdentificationNumber>
+    <d1p1:BillersOrderingPartyID>2000XXX</d1p1:BillersOrderingPartyID>
+    <d1p1:OrderReference>
+      <d1p1:OrderID>4200XX00</d1p1:OrderID>
+    </d1p1:OrderReference>
+    <d1p1:Address>
+      <d1p1:Name>Bestellkunde GmbH</d1p1:Name>
+      <d1p1:Street>Bestellerstrasse 9</d1p1:Street>
+      <d1p1:Town>Wels</d1p1:Town>
+      <d1p1:ZIP>4600</d1p1:ZIP>
+      <d1p1:Country>Österreich</d1p1:Country>
+      <d1p1:Phone></d1p1:Phone>
+      <d1p1:Email>office@bestellkunde.at</d1p1:Email>
+      <d1p1:Contact>Frau Besteller</d1p1:Contact>
+    </d1p1:Address>
+  </d1p1:OrderingParty>
+  <d1p1:Details>
+    <d1p1:HeaderDescription>interne Gutschrift zu Rechnung </d1p1:HeaderDescription>
+    <d1p1:ItemList>
+      <d1p1:ListLineItem>
+        <d1p1:PositionNumber>1</d1p1:PositionNumber>
+        <d1p1:Description>HP Serviceguard für Linux</d1p1:Description>
+        <d1p1:BillersArticleNumber>307754-XXX</d1p1:BillersArticleNumber>
+        <d1p1:Quantity d1p1:Unit="STK">1.00</d1p1:Quantity>
+        <d1p1:UnitPrice>941.58</d1p1:UnitPrice>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:DiscountFlag>true</d1p1:DiscountFlag>
+        <d1p1:LineItemAmount>941.58</d1p1:LineItemAmount>
+      </d1p1:ListLineItem>
+      <d1p1:ListLineItem>
+        <d1p1:PositionNumber>2</d1p1:PositionNumber>
+        <d1p1:Description>HP License Media</d1p1:Description>
+        <d1p1:BillersArticleNumber>305199-XXX</d1p1:BillersArticleNumber>
+        <d1p1:Quantity d1p1:Unit="STK">1.00</d1p1:Quantity>
+        <d1p1:UnitPrice>1883.15</d1p1:UnitPrice>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:DiscountFlag>true</d1p1:DiscountFlag>
+        <d1p1:LineItemAmount>1883.15</d1p1:LineItemAmount>
+      </d1p1:ListLineItem>
+      <d1p1:ListLineItem>
+        <d1p1:PositionNumber>3</d1p1:PositionNumber>
+        <d1p1:Description>HP Support</d1p1:Description>
+        <d1p1:BillersArticleNumber>HA106A3</d1p1:BillersArticleNumber>
+        <d1p1:Quantity d1p1:Unit="STK">1.00</d1p1:Quantity>
+        <d1p1:UnitPrice>780.20</d1p1:UnitPrice>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:DiscountFlag>true</d1p1:DiscountFlag>
+        <d1p1:LineItemAmount>780.20</d1p1:LineItemAmount>
+      </d1p1:ListLineItem>
+    </d1p1:ItemList>
+  </d1p1:Details>
+  <d1p1:Tax>
+    <d1p1:VAT>
+      <d1p1:Item>
+        <d1p1:TaxedAmount>3604.93</d1p1:TaxedAmount>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:Amount>720.99</d1p1:Amount>
+      </d1p1:Item>
+    </d1p1:VAT>
+  </d1p1:Tax>
+  <d1p1:TotalGrossAmount>4325.92</d1p1:TotalGrossAmount>
+  <d1p1:PaymentMethod xsi:type="d1p1:UniversalBankTransactionType">
+    <d1p1:Comment>Wir ersuchen um termingerechte Bezahlung.</d1p1:Comment>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>CREDITANSTALT AG</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">11000</d1p1:BankCode>
+      <d1p1:BIC>CABVATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>9686348500</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT941100009686348500</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>ERSTE BANK D.ÖSTERR. SPARK. AG</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">20111</d1p1:BankCode>
+      <d1p1:BIC>GIBAATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>30001042747</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT552011130001042747</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>OESTERR. POSTSPARKASSE</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">60000</d1p1:BankCode>
+      <d1p1:BIC>OPSKATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>9672697</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT816000000009672697</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>RAIFF.ZENTR.BANK OESTERREICH</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">31000</d1p1:BankCode>
+      <d1p1:BIC>RZBAATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>1-00.423.186</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT263100000100423186</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>VOLKSBANK KREMS-ZWETTL</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">41210</d1p1:BankCode>
+      <d1p1:BIC>VBOEATWWKRE</d1p1:BIC>
+      <d1p1:BankAccountNr>31840090000</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT144121031840090000</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+  </d1p1:PaymentMethod>
+  <d1p1:PaymentConditions>
+    <d1p1:DueDate>2009-03-12</d1p1:DueDate>
+  </d1p1:PaymentConditions>
+  <d1p1:PresentationDetails>
+    <d1p1:URL>http://sarsweb03.acp-it.eu/web1/ebInterface30.aspx?belegnr=AO/4169XXX&amp;pin=B6C7CD91B6BE5FC4215B2F431D9BB15688673B13FE</d1p1:URL>
+    <d1p1:LogoURL>http://sarsweb03.acp-it.eu/web1/get_images/acplogo.gif </d1p1:LogoURL>
+    <d1p1:LayoutID>1</d1p1:LayoutID>
+    <d1p1:SuppressZero>false</d1p1:SuppressZero>
+  </d1p1:PresentationDetails>
+</d1p1:Invoice>

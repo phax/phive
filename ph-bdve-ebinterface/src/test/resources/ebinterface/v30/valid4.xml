@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/Users/pl/Documents/ebInterface/xsd/ebInterface3p0/Invoice.xslt"?>
+<d1p1:Invoice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" d1p1:GeneratingSystem="ACP rs2 v1.06" d1p1:DocumentType="Invoice" d1p1:InvoiceCurrency="EUR" d1p1:ManualProcessing="true" d1p1:DocumentTitle="Rechnung AO/4021XXX" d1p1:Language="deu" xmlns:d1p1="http://www.ebinterface.at/schema/3p0/">
+  <d1p1:InvoiceNumber>AO/4021XXX</d1p1:InvoiceNumber>
+  <d1p1:InvoiceDate>2006-08-24</d1p1:InvoiceDate>
+  <d1p1:Delivery>
+    <d1p1:DeliveryID>AO/3011XXX</d1p1:DeliveryID>
+    <d1p1:Date>2006-08-24</d1p1:Date>
+    <d1p1:Address>
+      <d1p1:Name>Systeme GmbH</d1p1:Name>
+      <d1p1:Street>Straße 17</d1p1:Street>
+      <d1p1:Town>Erlauf</d1p1:Town>
+      <d1p1:ZIP>3250</d1p1:ZIP>
+      <d1p1:Country>Österreich</d1p1:Country>
+    </d1p1:Address>
+  </d1p1:Delivery>
+  <d1p1:Biller>
+    <d1p1:VATIdentificationNumber>ATU15184903</d1p1:VATIdentificationNumber>
+    <d1p1:OrderReference>
+      <d1p1:OrderID>AO/2016XXX</d1p1:OrderID>
+      <d1p1:ReferenceDate>2006-08-17</d1p1:ReferenceDate>
+    </d1p1:OrderReference>
+    <d1p1:Address>
+      <d1p1:Salutation>Firma</d1p1:Salutation>
+      <d1p1:Name>ACP IT Solutions GmbH</d1p1:Name>
+      <d1p1:Street>Pfeiffergasse 2</d1p1:Street>
+      <d1p1:Town>Wien</d1p1:Town>
+      <d1p1:ZIP>1150</d1p1:ZIP>
+      <d1p1:Country>Österreich</d1p1:Country>
+      <d1p1:Phone>+43 1 89193 0</d1p1:Phone>
+    </d1p1:Address>
+  </d1p1:Biller>
+  <d1p1:InvoiceRecipient>
+    <d1p1:VATIdentificationNumber>ATU2010XXXX</d1p1:VATIdentificationNumber>
+    <d1p1:BillersInvoiceRecipientID>2026XXX</d1p1:BillersInvoiceRecipientID>
+    <d1p1:Address>
+      <d1p1:Name>Systeme GmbH</d1p1:Name>
+      <d1p1:Street>Straße 17</d1p1:Street>
+      <d1p1:Town>Erlauf</d1p1:Town>
+      <d1p1:ZIP>3250</d1p1:ZIP>
+      <d1p1:Country>Österreich</d1p1:Country>
+    </d1p1:Address>
+  </d1p1:InvoiceRecipient>
+  <d1p1:OrderingParty>
+    <d1p1:VATIdentificationNumber>ATU2010XXX</d1p1:VATIdentificationNumber>
+    <d1p1:BillersOrderingPartyID>2026XXX</d1p1:BillersOrderingPartyID>
+    <d1p1:OrderReference>
+      <d1p1:OrderID>606XXX</d1p1:OrderID>
+    </d1p1:OrderReference>
+    <d1p1:Address>
+      <d1p1:Name>Systeme GmbH</d1p1:Name>
+      <d1p1:Street>Straße 17</d1p1:Street>
+      <d1p1:Town>Erlauf</d1p1:Town>
+      <d1p1:ZIP>3250</d1p1:ZIP>
+      <d1p1:Country>Österreich</d1p1:Country>
+      <d1p1:Phone>407</d1p1:Phone>
+      <d1p1:Email>tanja@systeme.at</d1p1:Email>
+      <d1p1:Contact>Frau Tanja</d1p1:Contact>
+    </d1p1:Address>
+  </d1p1:OrderingParty>
+  <d1p1:Details>
+    <d1p1:ItemList>
+      <d1p1:ListLineItem>
+        <d1p1:PositionNumber>1</d1p1:PositionNumber>
+        <d1p1:Description>IBM M Pro Intel P4 EMT64T 3.4 GHz 651 2MB L2 2x1GB 160 GB SATA DVD/CD-RW Win XP32 Open Graphics</d1p1:Description>
+        <d1p1:BillersArticleNumber>Z185</d1p1:BillersArticleNumber>
+        <d1p1:Quantity d1p1:Unit="STK">3.00</d1p1:Quantity>
+        <d1p1:UnitPrice>1240.00</d1p1:UnitPrice>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:DiscountFlag>true</d1p1:DiscountFlag>
+        <d1p1:ReductionRate>1.00</d1p1:ReductionRate>
+        <d1p1:AdditionalInformation>
+          <d1p1:SerialNumber>SKDLXRZ0</d1p1:SerialNumber>
+          <d1p1:SerialNumber>SKDNNFN0</d1p1:SerialNumber>
+          <d1p1:SerialNumber>SKDNNFN1</d1p1:SerialNumber>
+        </d1p1:AdditionalInformation>
+        <d1p1:LineItemAmount>3682.80</d1p1:LineItemAmount>
+      </d1p1:ListLineItem>
+      <d1p1:ListLineItem>
+        <d1p1:PositionNumber>2</d1p1:PositionNumber>
+        <d1p1:Description>HP ATI FireGL V3100 (128 MB) PCI-Express</d1p1:Description>
+        <d1p1:Description>f xw4200/4300, xw6200/8200</d1p1:Description>
+        <d1p1:BillersArticleNumber>PE94</d1p1:BillersArticleNumber>
+        <d1p1:Quantity d1p1:Unit="STK">3.00</d1p1:Quantity>
+        <d1p1:UnitPrice>115.00</d1p1:UnitPrice>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:DiscountFlag>true</d1p1:DiscountFlag>
+        <d1p1:ReductionRate>1.00</d1p1:ReductionRate>
+        <d1p1:LineItemAmount>341.55</d1p1:LineItemAmount>
+      </d1p1:ListLineItem>
+      <d1p1:ListLineItem>
+        <d1p1:PositionNumber>3</d1p1:PositionNumber>
+        <d1p1:Description>Kingston 2GB Kit (2x1 GB) f. IBM eServer xSerie 100,206m,306m,IntelliStation</d1p1:Description>
+        <d1p1:BillersArticleNumber>KTM514</d1p1:BillersArticleNumber>
+        <d1p1:Quantity d1p1:Unit="STK">3.00</d1p1:Quantity>
+        <d1p1:UnitPrice>279.00</d1p1:UnitPrice>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:DiscountFlag>true</d1p1:DiscountFlag>
+        <d1p1:ReductionRate>1.00</d1p1:ReductionRate>
+        <d1p1:LineItemAmount>828.63</d1p1:LineItemAmount>
+      </d1p1:ListLineItem>
+      <d1p1:ListLineItem>
+        <d1p1:PositionNumber>4</d1p1:PositionNumber>
+        <d1p1:Description>SB/MS OfficePro 2003+SP2/DE CD W32 1pk</d1p1:Description>
+        <d1p1:Description>incl. Word, Excel, Outlook, PowerPoint, Publisher, Access</d1p1:Description>
+        <d1p1:BillersArticleNumber>269-09</d1p1:BillersArticleNumber>
+        <d1p1:Quantity d1p1:Unit="STK">3.00</d1p1:Quantity>
+        <d1p1:UnitPrice>325.00</d1p1:UnitPrice>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:DiscountFlag>true</d1p1:DiscountFlag>
+        <d1p1:ReductionRate>1.00</d1p1:ReductionRate>
+        <d1p1:LineItemAmount>965.25</d1p1:LineItemAmount>
+      </d1p1:ListLineItem>
+    </d1p1:ItemList>
+  </d1p1:Details>
+  <d1p1:Tax>
+    <d1p1:VAT>
+      <d1p1:Item>
+        <d1p1:TaxedAmount>5818.23</d1p1:TaxedAmount>
+        <d1p1:TaxRate>20.00</d1p1:TaxRate>
+        <d1p1:Amount>1163.65</d1p1:Amount>
+      </d1p1:Item>
+    </d1p1:VAT>
+  </d1p1:Tax>
+  <d1p1:TotalGrossAmount>6981.88</d1p1:TotalGrossAmount>
+  <d1p1:PaymentMethod xsi:type="d1p1:UniversalBankTransactionType">
+    <d1p1:Comment>Wir ersuchen um termingerechte Bezahlung.</d1p1:Comment>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>CREDITANSTALT AG</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">11000</d1p1:BankCode>
+      <d1p1:BIC>CABVATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>9686348500</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT941100009686348500</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>ERSTE BANK D.ÖSTERR. SPARK. AG</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">20111</d1p1:BankCode>
+      <d1p1:BIC>GIBAATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>30001042747</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT552011130001042747</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>OESTERR. POSTSPARKASSE</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">60000</d1p1:BankCode>
+      <d1p1:BIC>OPSKATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>9672697</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT816000000009672697</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>RAIFF.ZENTR.BANK OESTERREICH</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">31000</d1p1:BankCode>
+      <d1p1:BIC>RZBAATWWXXX</d1p1:BIC>
+      <d1p1:BankAccountNr>1-00.423.186</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT263100000100423186</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+    <d1p1:BeneficiaryAccount>
+      <d1p1:BankName>VOLKSBANK KREMS-ZWETTL</d1p1:BankName>
+      <d1p1:BankCode d1p1:BankCodeType="AT">41210</d1p1:BankCode>
+      <d1p1:BIC>VBOEATWWKRE</d1p1:BIC>
+      <d1p1:BankAccountNr>31840090000</d1p1:BankAccountNr>
+      <d1p1:IBAN>AT144121031840090000</d1p1:IBAN>
+      <d1p1:BankAccountOwner>ACP IT Solutions GmbH</d1p1:BankAccountOwner>
+    </d1p1:BeneficiaryAccount>
+  </d1p1:PaymentMethod>
+  <d1p1:PaymentConditions>
+    <d1p1:DueDate>2006-09-14</d1p1:DueDate>
+  </d1p1:PaymentConditions>
+  <d1p1:PresentationDetails>
+    <d1p1:URL>http://sarsweb03.acp-it.eu/web1/ebInterface30.aspx?belegnr=AO/4021XXX&amp;pin=46CA50FD55C58B0042B2757FDFA3DD17FF3934</d1p1:URL>
+    <d1p1:LogoURL>http://sarsweb03.acp-it.eu/web1/get_images/acplogo.gif</d1p1:LogoURL>
+    <d1p1:LayoutID>1</d1p1:LayoutID>
+    <d1p1:SuppressZero>false</d1p1:SuppressZero>
+  </d1p1:PresentationDetails>
+</d1p1:Invoice>

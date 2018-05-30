@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="file:///C:/Users/pl/Documents/ebInterface/xsd/ebInterface3p02/invoice.xslt"?>
+<eb:Invoice xmlns:eb="http://www.ebinterface.at/schema/3p02/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:dir="http://xsd.xicrypt.com/directory" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ebinterface.at/schema/3p02/ Invoice.xsd 
+        http://xsd.xicrypt.com/directory http://www.ebinterface.at/download/invoiceexample/2p1/directory.xsd" eb:CancelledOriginalDocument="X2394S" eb:GeneratingSystem="none" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR">
+	<eb:InvoiceNumber>993433000298</eb:InvoiceNumber>
+	<eb:InvoiceDate>2011-02-02</eb:InvoiceDate>
+	<eb:Delivery>
+		<eb:DeliveryID>D323394</eb:DeliveryID>
+		<eb:Date>2011-01-29</eb:Date>
+		<eb:Address>
+			<eb:Salutation>Firma</eb:Salutation>
+			<eb:Name>Mustermann GmbH</eb:Name>
+			<eb:Street>Hauptstraße 10</eb:Street>
+			<eb:Town>Graz</eb:Town>
+			<eb:ZIP>8010 </eb:ZIP>
+			<eb:Country>Österreich</eb:Country>
+			<eb:Contact>Hr. Max Mustermann</eb:Contact>
+			<eb:AddressExtension>Außenstelle Wien</eb:AddressExtension>
+		</eb:Address>
+	</eb:Delivery>
+	<eb:Biller>
+		<eb:VATIdentificationNumber>ATU51507409</eb:VATIdentificationNumber>
+		<eb:FurtherIdentification eb:IdentificationType="GLN">3948374059438</eb:FurtherIdentification>
+		<eb:ConsolidatorsBillerID>CFF45KL</eb:ConsolidatorsBillerID>
+		<eb:InvoiceRecipientsBillerID>ID4456</eb:InvoiceRecipientsBillerID>
+		<eb:OrderReference>
+			<eb:OrderID>OR3456</eb:OrderID>
+			<eb:ReferenceDate>2004-11-03</eb:ReferenceDate>
+			<eb:Description>Eingegangen per Fax.</eb:Description>
+		</eb:OrderReference>
+		<eb:Address>
+			<eb:Name>Schrauben Willi</eb:Name>
+			<eb:Street>Lassallestraße 5</eb:Street>
+			<eb:Town>Wien</eb:Town>
+			<eb:ZIP>1020</eb:ZIP>
+			<eb:Country>Österreich</eb:Country>
+			<eb:Phone>+43 / 1 / 78 56 789</eb:Phone>
+			<eb:Email>schraube@willi.at</eb:Email>
+			<eb:Contact>Sachbearbeiter Meier</eb:Contact>
+			<eb:AddressExtension>Zentrale Verwaltung Wien</eb:AddressExtension>
+		</eb:Address>
+	</eb:Biller>
+	<eb:InvoiceRecipient>
+		<eb:VATIdentificationNumber>ATU59405934</eb:VATIdentificationNumber>
+		<eb:BillersInvoiceRecipientID>12345678</eb:BillersInvoiceRecipientID>
+		<eb:OrderReference>
+			<eb:OrderID>ID3456</eb:OrderID>
+			<eb:ReferenceDate>2004-11-03</eb:ReferenceDate>
+			<eb:Description>Bestellung per Fax</eb:Description>
+		</eb:OrderReference>
+		<eb:Address>
+			<eb:Salutation>Firma</eb:Salutation>
+			<eb:Name>Mustermann GmbH</eb:Name>
+			<eb:Street>Hauptstraße 10</eb:Street>
+			<eb:Town>Graz</eb:Town>
+			<eb:ZIP>8010</eb:ZIP>
+			<eb:Country>Österreich</eb:Country>
+			<eb:Contact>Hr. Max Mustermann</eb:Contact>
+		</eb:Address>
+	</eb:InvoiceRecipient>
+	<eb:OrderingParty>
+		<eb:VATIdentificationNumber>ATU35955976</eb:VATIdentificationNumber>
+		<eb:BillersOrderingPartyID>3944903</eb:BillersOrderingPartyID>
+		<eb:OrderReference>
+			<eb:OrderID>OR3456</eb:OrderID>
+			<eb:ReferenceDate>2004-11-03</eb:ReferenceDate>
+			<eb:Description>Eingegangen per Fax.</eb:Description>
+		</eb:OrderReference>
+		<eb:Address>
+			<eb:Name>Schrauben Willi</eb:Name>
+			<eb:Street>Linzer Str. 34</eb:Street>
+			<eb:Town>Linz</eb:Town>
+			<eb:ZIP>4020</eb:ZIP>
+			<eb:Country>Österreich</eb:Country>
+			<eb:Contact>+ 43 732 123 456 (9934)</eb:Contact>
+		</eb:Address>
+	</eb:OrderingParty>
+	<eb:Details>
+		<eb:HeaderDescription>Die folgenden Positionen werden Ihnen in Rechnung gestellt</eb:HeaderDescription>
+		<eb:ItemList>
+			<eb:HeaderDescription>Rechnungsdetails - Teil 1</eb:HeaderDescription>
+			<eb:ListLineItem>
+				<eb:PositionNumber>1</eb:PositionNumber>
+				<eb:Description>Schraubenzieher</eb:Description>
+				<eb:BillersArticleNumber>I2343</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>R3493</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="Stück">100</eb:Quantity>
+				<eb:UnitPrice>10.20</eb:UnitPrice>
+				<eb:TaxRate>20</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:ReductionRate>5</eb:ReductionRate>
+				<eb:Delivery>
+					<eb:DeliveryID>D304935434</eb:DeliveryID>
+					<eb:Period>
+						<eb:FromDate>2011-01-25</eb:FromDate>
+						<eb:ToDate>2011-01-27</eb:ToDate>
+					</eb:Period>
+					<eb:Address>
+						<eb:Salutation>Firma</eb:Salutation>
+						<eb:Name>Max Mustermann</eb:Name>
+						<eb:Street>Kastanienallee 40</eb:Street>
+						<eb:Town>Wien</eb:Town>
+						<eb:ZIP>1180</eb:ZIP>
+						<eb:Country>Österreich</eb:Country>
+						<eb:Phone>01/30489493</eb:Phone>
+						<eb:Email>office@maxmustermann.org</eb:Email>
+						<eb:Contact>Hr. Max Mustermann</eb:Contact>
+					</eb:Address>
+					<eb:Description>Lieferung bitte beim Hintereingang.</eb:Description>
+				</eb:Delivery>
+				<eb:BillersOrderReference>
+					<eb:OrderID>B3948934</eb:OrderID>
+					<eb:OrderPositionNumber>12</eb:OrderPositionNumber>
+				</eb:BillersOrderReference>
+				<eb:InvoiceRecipientsOrderReference>
+					<eb:OrderID>I34945934</eb:OrderID>
+					<eb:OrderPositionNumber>45</eb:OrderPositionNumber>
+				</eb:InvoiceRecipientsOrderReference>
+				<eb:AdditionalInformation>
+					<eb:SerialNumber>3495493489IDEKEIR4893</eb:SerialNumber>
+					<eb:ChargeNumber>12</eb:ChargeNumber>
+					<eb:Classification eb:ClassificationSchema="EAN">39348948385493483</eb:Classification>
+					<eb:AlternativeQuantity eb:Unit="Schraubenzieherpackungen">4</eb:AlternativeQuantity>
+					<eb:Size>43</eb:Size>
+					<eb:Weight eb:Unit="kg">7.34</eb:Weight>
+					<eb:Boxes>4</eb:Boxes>
+					<eb:Color>Gelb</eb:Color>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>1020</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>2</eb:PositionNumber>
+				<eb:Description>Schraubenzieher (Kreuz)</eb:Description>
+				<eb:BillersArticleNumber>I23434</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>R3492</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="Stück">110</eb:Quantity>
+				<eb:UnitPrice>13.20</eb:UnitPrice>
+				<eb:TaxRate>20</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:ReductionRate>4</eb:ReductionRate>
+				<eb:Delivery>
+					<eb:DeliveryID>D304935434</eb:DeliveryID>
+					<eb:Date>2011-01-22</eb:Date>
+					<eb:Address>
+						<eb:Salutation>Firma</eb:Salutation>
+						<eb:Name>Max Mustermann</eb:Name>
+						<eb:Street>Kastanienallee 40</eb:Street>
+						<eb:Town>Wien</eb:Town>
+						<eb:ZIP>1180</eb:ZIP>
+						<eb:Country>Österreich</eb:Country>
+						<eb:Phone>01/30489493</eb:Phone>
+						<eb:Email>office@maxmustermann.org</eb:Email>
+						<eb:Contact>Hr. Max Mustermann</eb:Contact>
+					</eb:Address>
+					<eb:Description>Lieferung bitte beim Hintereingang.</eb:Description>
+				</eb:Delivery>
+				<eb:BillersOrderReference>
+					<eb:OrderID>B3948933</eb:OrderID>
+					<eb:OrderPositionNumber>13</eb:OrderPositionNumber>
+				</eb:BillersOrderReference>
+				<eb:InvoiceRecipientsOrderReference>
+					<eb:OrderID>I349459344</eb:OrderID>
+					<eb:OrderPositionNumber>44</eb:OrderPositionNumber>
+				</eb:InvoiceRecipientsOrderReference>
+				<eb:AdditionalInformation>
+					<eb:SerialNumber>3495493489IDEKEIR4833</eb:SerialNumber>
+					<eb:ChargeNumber>12</eb:ChargeNumber>
+					<eb:Classification eb:ClassificationSchema="EAN">39348948385493482</eb:Classification>
+					<eb:AlternativeQuantity eb:Unit="Schraubenzieherpackungen">3</eb:AlternativeQuantity>
+					<eb:Size>33</eb:Size>
+					<eb:Weight eb:Unit="kg">6.34</eb:Weight>
+					<eb:Boxes>3</eb:Boxes>
+					<eb:Color>Grün</eb:Color>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>1452</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:FooterDescription>Es gelten die jeweiligen Lieferbedingungen.</eb:FooterDescription>
+		</eb:ItemList>
+		<eb:ItemList>
+			<eb:HeaderDescription>Rechnungsdetails - Teil 2</eb:HeaderDescription>
+			<eb:ListLineItem>
+				<eb:PositionNumber>1</eb:PositionNumber>
+				<eb:Description>Schrauben</eb:Description>
+				<eb:BillersArticleNumber>I2343</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>R35493</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="Stück">10040</eb:Quantity>
+				<eb:UnitPrice>0.30</eb:UnitPrice>
+				<eb:TaxRate>20</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:ReductionRate>2</eb:ReductionRate>
+				<eb:Delivery>
+					<eb:DeliveryID>D34034935</eb:DeliveryID>
+					<eb:Date>2011-01-24</eb:Date>
+					<eb:Address>
+						<eb:Salutation>Firma</eb:Salutation>
+						<eb:Name>Max Example</eb:Name>
+						<eb:Street>Platanenstraße 23</eb:Street>
+						<eb:Town>Wien</eb:Town>
+						<eb:ZIP>1170</eb:ZIP>
+						<eb:Country>Österreich</eb:Country>
+						<eb:Phone>01/55468952</eb:Phone>
+						<eb:Email>office@example.org</eb:Email>
+						<eb:Contact>Hr. Max Example</eb:Contact>
+					</eb:Address>
+					<eb:Description>Lieferung bitte beim Lieferanteneingang.</eb:Description>
+				</eb:Delivery>
+				<eb:BillersOrderReference>
+					<eb:OrderID>B49548934</eb:OrderID>
+					<eb:OrderPositionNumber>8</eb:OrderPositionNumber>
+				</eb:BillersOrderReference>
+				<eb:InvoiceRecipientsOrderReference>
+					<eb:OrderID>I3494837</eb:OrderID>
+					<eb:OrderPositionNumber>3</eb:OrderPositionNumber>
+				</eb:InvoiceRecipientsOrderReference>
+				<eb:AdditionalInformation>
+					<eb:SerialNumber>3494893850583498</eb:SerialNumber>
+					<eb:ChargeNumber>9</eb:ChargeNumber>
+					<eb:Classification eb:ClassificationSchema="EAN">4958490584056840</eb:Classification>
+					<eb:AlternativeQuantity eb:Unit="Schraubenzieherpackungen">5</eb:AlternativeQuantity>
+					<eb:Size>4</eb:Size>
+					<eb:Weight eb:Unit="kg">5.02</eb:Weight>
+					<eb:Boxes>5</eb:Boxes>
+					<eb:Color>Blau</eb:Color>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>3012</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:ListLineItem>
+				<eb:PositionNumber>2</eb:PositionNumber>
+				<eb:Description>Beilagscheiben</eb:Description>
+				<eb:BillersArticleNumber>I23394</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>R35492</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="Stück">9800</eb:Quantity>
+				<eb:UnitPrice>0.10</eb:UnitPrice>
+				<eb:TaxRate>20</eb:TaxRate>
+				<eb:DiscountFlag>true</eb:DiscountFlag>
+				<eb:ReductionRate>3</eb:ReductionRate>
+				<eb:Delivery>
+					<eb:DeliveryID>D34034935</eb:DeliveryID>
+					<eb:Date>2011-01-24</eb:Date>
+					<eb:Address>
+						<eb:Salutation>Firma</eb:Salutation>
+						<eb:Name>Max Example</eb:Name>
+						<eb:Street>Platanenstraße 23</eb:Street>
+						<eb:Town>Wien</eb:Town>
+						<eb:ZIP>1170</eb:ZIP>
+						<eb:Country>Österreich</eb:Country>
+						<eb:Phone>01/55468952</eb:Phone>
+						<eb:Email>office@example.org</eb:Email>
+						<eb:Contact>Hr. Max Example</eb:Contact>
+					</eb:Address>
+					<eb:Description>Lieferung bitte beim Lieferanteneingang.</eb:Description>
+				</eb:Delivery>
+				<eb:BillersOrderReference>
+					<eb:OrderID>B49548935</eb:OrderID>
+					<eb:OrderPositionNumber>3</eb:OrderPositionNumber>
+				</eb:BillersOrderReference>
+				<eb:InvoiceRecipientsOrderReference>
+					<eb:OrderID>I3494834</eb:OrderID>
+					<eb:OrderPositionNumber>1</eb:OrderPositionNumber>
+				</eb:InvoiceRecipientsOrderReference>
+				<eb:AdditionalInformation>
+					<eb:SerialNumber>485956784759567</eb:SerialNumber>
+					<eb:ChargeNumber>19</eb:ChargeNumber>
+					<eb:Classification eb:ClassificationSchema="EAN">65455468454231</eb:Classification>
+					<eb:AlternativeQuantity eb:Unit="Beilagscheibenpackungen">4</eb:AlternativeQuantity>
+					<eb:Size>4</eb:Size>
+					<eb:Weight eb:Unit="kg">3.5</eb:Weight>
+					<eb:Boxes>4</eb:Boxes>
+					<eb:Color>Grün</eb:Color>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>980</eb:LineItemAmount>
+			</eb:ListLineItem>			
+			<eb:ListLineItem>
+				<eb:PositionNumber>3</eb:PositionNumber>
+				<eb:Description>Müsliriegel</eb:Description>
+				<eb:BillersArticleNumber>I232323</eb:BillersArticleNumber>
+				<eb:InvoiceRecipientsArticleNumber>R352342</eb:InvoiceRecipientsArticleNumber>
+				<eb:Quantity eb:Unit="Stück">400</eb:Quantity>
+				<eb:UnitPrice>0.10</eb:UnitPrice>
+				<eb:TaxRate>10</eb:TaxRate>
+				<eb:DiscountFlag>false</eb:DiscountFlag>
+				<eb:Delivery>
+					<eb:DeliveryID>D34034935</eb:DeliveryID>
+					<eb:Date>2011-01-24</eb:Date>
+					<eb:Address>
+						<eb:Salutation>Firma</eb:Salutation>
+						<eb:Name>Max Example</eb:Name>
+						<eb:Street>Platanenstraße 23</eb:Street>
+						<eb:Town>Wien</eb:Town>
+						<eb:ZIP>1170</eb:ZIP>
+						<eb:Country>Österreich</eb:Country>
+						<eb:Phone>01/55468952</eb:Phone>
+						<eb:Email>office@example.org</eb:Email>
+						<eb:Contact>Hr. Max Example</eb:Contact>
+					</eb:Address>
+					<eb:Description>Lieferung bitte beim Lieferanteneingang.</eb:Description>
+				</eb:Delivery>
+				<eb:BillersOrderReference>
+					<eb:OrderID>B49548234</eb:OrderID>
+					<eb:OrderPositionNumber>4</eb:OrderPositionNumber>
+				</eb:BillersOrderReference>
+				<eb:InvoiceRecipientsOrderReference>
+					<eb:OrderID>I3494345</eb:OrderID>
+					<eb:OrderPositionNumber>55</eb:OrderPositionNumber>
+				</eb:InvoiceRecipientsOrderReference>
+				<eb:AdditionalInformation>
+					<eb:SerialNumber>548956747595234</eb:SerialNumber>
+					<eb:ChargeNumber>435</eb:ChargeNumber>
+					<eb:Classification eb:ClassificationSchema="EAN">3456567455464534</eb:Classification>
+					<eb:AlternativeQuantity eb:Unit="Packungen">2</eb:AlternativeQuantity>
+					<eb:Size>2</eb:Size>
+					<eb:Weight eb:Unit="kg">2.5</eb:Weight>
+					<eb:Boxes>2</eb:Boxes>
+					<eb:Color>Ocker</eb:Color>
+				</eb:AdditionalInformation>
+				<eb:LineItemAmount>40</eb:LineItemAmount>
+			</eb:ListLineItem>
+			<eb:FooterDescription>Es gelten die jeweiligen Lieferbedingungen</eb:FooterDescription>
+		</eb:ItemList>
+		<eb:FooterDescription>Die obenen angeführten Positionsdaten wurden automatisch aus unserem ERP System xyz generiert.</eb:FooterDescription>
+	</eb:Details>
+	<eb:ReductionDetails>
+		<eb:Reduction>
+			<eb:BaseAmount>1000</eb:BaseAmount>
+			<eb:TaxRate>20</eb:TaxRate>
+			<eb:Percentage>2</eb:Percentage>
+			<eb:Amount>20</eb:Amount>
+		</eb:Reduction>
+	</eb:ReductionDetails>
+	<eb:Tax>
+		<eb:VAT>
+			<eb:TaxExemption>10</eb:TaxExemption>
+		</eb:VAT>
+		<eb:OtherTax>
+			<eb:Comment>EineNichtVATSteuer</eb:Comment>
+			<eb:Amount>0.00</eb:Amount>
+		</eb:OtherTax>
+	</eb:Tax>
+	<eb:TotalGrossAmount>7800.80</eb:TotalGrossAmount>
+	<eb:PaymentMethod xsi:type="eb:UniversalBankTransactionType">
+		<eb:Comment>Wir ersuchen um termingerechte Bezahlung.</eb:Comment>
+		<eb:BeneficiaryAccount>
+			<eb:BankName>Bank Austria CA</eb:BankName>
+			<eb:BankCode eb:BankCodeType="AT">12000</eb:BankCode>
+			<eb:BIC>BKAUATWW</eb:BIC>
+			<eb:BankAccountNr>11111111111</eb:BankAccountNr>
+			<eb:IBAN>AT491200011111111111</eb:IBAN>
+			<eb:BankAccountOwner>Max Mustermann</eb:BankAccountOwner>
+		</eb:BeneficiaryAccount>
+		<eb:PaymentReference>993433000298</eb:PaymentReference>
+	</eb:PaymentMethod>
+	<eb:PaymentConditions>
+		<eb:DueDate>2011-02-20</eb:DueDate>
+		<eb:Discount>
+			<eb:PaymentDate>2011-02-10</eb:PaymentDate>
+			<eb:Percentage>3.00</eb:Percentage>
+		</eb:Discount>
+		<eb:Discount>
+			<eb:PaymentDate>2011-02-20</eb:PaymentDate>
+			<eb:Percentage>2.00</eb:Percentage>
+		</eb:Discount>
+		<eb:MinimumPayment>3500</eb:MinimumPayment>
+		<eb:Comment>Wir bitten um pünktliche Zahlung.</eb:Comment>
+	</eb:PaymentConditions>
+	<eb:PresentationDetails>
+		<eb:URL>http://www.willi.at</eb:URL>
+		<eb:LogoURL>http://b-test.ebpp.at/comres/ebinterface-willi.gif</eb:LogoURL>
+		<eb:LayoutID>0100</eb:LayoutID>
+		<eb:SuppressZero>false</eb:SuppressZero>
+	</eb:PresentationDetails>
+	<eb:Custom>
+		<dir:directory>
+			<ceo>
+				<name>Bill Gates</name>
+				<email>bigbill@msn.com</email>
+				<homepage>http://www.microsoft.com</homepage>
+				<bdate>12-25-1955</bdate>
+				<compensation>1000000000</compensation>
+			</ceo>
+			<manager>
+				<name>Jack Nicholsen</name>
+				<email>jack@hollywoood.com</email>
+				<homepage>http://www.allworknoplay.com</homepage>
+				<bdate>02-04-1938</bdate>
+				<dept>entertainment</dept>
+				<salary>5600000</salary>
+			</manager>
+			<salaryworker>
+				<name>Leonard Nimoy</name>
+				<email>mrspock@aol.com</email>
+				<homepage>http://www.spock.com</homepage>
+				<bdate>06-06-1948</bdate>
+				<dept>The Final Frontier</dept>
+				<salary>35000</salary>
+			</salaryworker>
+			<hourlyworker>
+				<name>Joe Smith</name>
+				<email>nobody@aol.com</email>
+				<homepage>http://www.nowhereman.org</homepage>
+				<bdate>02-29-1978</bdate>
+				<dept>custodial</dept>
+				<hourlyrate>10.20</hourlyrate>
+			</hourlyworker>
+		</dir:directory>
+	</eb:Custom>
+</eb:Invoice>

@@ -1,0 +1,3513 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Copyright Tieto Finland Oy, Value Networks
+TEAPPSXML v.2.7.2
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<xsd:simpleType name="processType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="(00)|(01)|(02)"/>
+</xsd:restriction>
+<!-- 00 or 01-->
+</xsd:simpleType>
+<xsd:simpleType name="invoiceType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="(00)|(01)|(02)|(03)|(04)|(05)|(06)|(07)|(08)|(09)|(20)|(50)|(51)|(60)|(90)|(91)|(92)|(99)"/>
+</xsd:restriction>
+<!-- -->
+</xsd:simpleType>
+<xsd:complexType name="INCType" mixed="true">
+<xsd:simpleContent>
+<xsd:extension base="invoiceType">
+<xsd:attribute name="EXTENSION" type="xsd:string" use="optional"/>
+<xsd:attribute name="CODE" type="xsd:string" use="optional"/>
+</xsd:extension>
+</xsd:simpleContent>
+</xsd:complexType>
+<!-- -->
+<xsd:simpleType name="methodType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="01"/>
+</xsd:restriction>
+<!-- -->
+</xsd:simpleType>
+<xsd:simpleType name="dayType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="\d{1,2}"/>
+</xsd:restriction>
+<!-- 1, 5, 14, 99-->
+</xsd:simpleType>
+<xsd:simpleType name="rateType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="\d{1,4}(\.\d{1,6})?|\.\d{1,6}"/>
+</xsd:restriction>
+<!-- .121345, 1234.123, 1234 -->
+</xsd:simpleType>
+<xsd:simpleType name="offeredType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="[+\-]?(\d{1,12}(\.\d{1,5})?|\.\d{1,5})"/>
+</xsd:restriction>
+</xsd:simpleType>
+<!-- optional + or - followed by 123451516131, 1,24567, .23456-->
+<xsd:complexType name="qType" mixed="true">
+<xsd:simpleContent>
+<xsd:extension base="offeredType">
+<xsd:attribute name="Q_UNIT" type="xsd:string" use="optional"/>
+<xsd:attribute name="SIGN" type="signType" use="optional"/>
+</xsd:extension>
+</xsd:simpleContent>
+</xsd:complexType>
+<xsd:complexType name="sType" mixed="true">
+<xsd:attribute name="SIGN" type="signType" use="optional"/>
+</xsd:complexType>
+<!-- -->
+<xsd:complexType name="amount_vat_required" mixed="true">
+<xsd:attribute name="SIGN" type="signType" use="optional"/>
+<xsd:attribute name="VAT" type="vatType" use="required"/>
+</xsd:complexType>
+<xsd:complexType name="amount_vat_optional" mixed="true">
+<xsd:attribute name="SIGN" type="signType" use="optional"/>
+<xsd:attribute name="VAT" type="vatType" use="optional"/>
+</xsd:complexType>
+<!--  -->
+<xsd:complexType name="image_fileType">
+<xsd:simpleContent>
+<xsd:extension base="xsd:string">
+<xsd:attribute name="IMAGE_TYPE" type="xsd:string" use="optional"/>
+</xsd:extension>
+</xsd:simpleContent>
+</xsd:complexType>
+<xsd:simpleType name="amountType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="\d{1,15}(\.\d{1,6})?|\.\d{1,6}"/>
+</xsd:restriction>
+<!-- 123478951516131, 1,245967, .239456-->
+</xsd:simpleType>
+<xsd:simpleType name="signType">
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="[+\-]"/>
+</xsd:restriction>
+<!-- + or - -->
+</xsd:simpleType>
+<!-- -->
+<xsd:simpleType name="vatType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INCLUDED"/>
+<xsd:enumeration value="EXCLUDED"/>
+</xsd:restriction>
+<!-- INCLUDED or EXCLUDED -->
+</xsd:simpleType>
+<xsd:simpleType name="imageconType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="INVOICE_IMAGE"/>
+<xsd:enumeration value="VOUCHER_MEMO"/>
+<xsd:enumeration value="STYLESHEET"/>
+<xsd:enumeration value="SCANNED"/>
+<xsd:enumeration value="VOUCHER_IMAGE"/>
+<xsd:enumeration value="SIGNATURE_VALIDATION"/>
+<xsd:enumeration value="SIGNATURE"/>
+<xsd:enumeration value="INVOICE_DATA"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="imageSourceType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ORIGINAL"/>
+<xsd:enumeration value="IC_IMAGE"/>
+<xsd:enumeration value="IC"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="imagesignType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="YES"/>
+<xsd:enumeration value="XADES"/>
+<xsd:enumeration value="CADES"/>
+<xsd:enumeration value="NO"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="acceptType">
+<xsd:restriction base="xsd:string">
+<xsd:enumeration value="ACCEPTED"/>
+<xsd:enumeration value="REJECTED"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="codeType" mixed="true">
+<xsd:attribute name="CODE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="titleType" mixed="true">
+<xsd:attribute name="TITLE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="subaccType" mixed="true">
+<xsd:attribute name="TITLE" type="xsd:string" use="optional"/>
+<xsd:attribute name="KEY" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="authorityType" mixed="true">
+<xsd:attribute name="AUTHORITY" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<!-- -->
+<xsd:simpleType name="transportType">
+<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+<xsd:simpleType name="vatsummaryType">
+<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+<!-- -->
+<xsd:simpleType name="orderType">
+<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+<!-- -->
+<xsd:simpleType name="contractCType">
+<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+<xsd:simpleType name="contractType">
+<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+<!-- -->
+<xsd:simpleType name="projectType">
+<xsd:restriction base="xsd:string"/>
+</xsd:simpleType>
+<!-- -->
+<xsd:simpleType name="freetextType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="1024"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ftType">
+<xsd:simpleContent>
+<xsd:extension base="freetextType">
+<xsd:attribute name="TEXT_TYPE" type="xsd:string" use="optional"/>
+</xsd:extension>
+</xsd:simpleContent>
+</xsd:complexType>
+<xsd:complexType name="linkType" mixed="true">
+<xsd:attribute name="TYPE" type="xsd:string" use="optional"/>
+<xsd:attribute name="OBJECT" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="dimensionType" mixed="true">
+<xsd:attribute name="DIMENSION_LENGTH" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="paymentType" mixed="true">
+<xsd:attribute name="TERMS_OF_PAYMENT_CODE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="deliveryType" mixed="true">
+<xsd:attribute name="TERMS_OF_DELIVERY_CODE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="transportNoteType" mixed="true">
+<xsd:attribute name="TRANSPORT_NOTE_TYPE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="tranportIdType" mixed="true">
+<xsd:attribute name="MODE_OF_TRANSPORT_ID" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="locationType" mixed="true">
+<xsd:attribute name="LOCATION_ID" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="delInfoType" mixed="true">
+<xsd:attribute name="DELIVERY_CODE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="descType" mixed="true">
+<xsd:attribute name="DESCRIPTION_ID" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="statusType" mixed="true">
+<xsd:attribute name="STATUS_CODE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:simpleType name="acType">
+<xsd:restriction base="xsd:string">
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="artCType" mixed="true">
+<xsd:simpleContent>
+<xsd:extension base="acType">
+<xsd:attribute name="ARTICLE_CODE" type="xsd:string" use="optional"/>
+</xsd:extension>
+</xsd:simpleContent>
+</xsd:complexType>
+<xsd:complexType name="DSType" mixed="true">
+<xsd:attribute name="SIGNATURE_LENGTH" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<!-- -->
+<xsd:complexType name="EpiFormat" mixed="true">
+<xsd:attribute name="Format" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="EpiISN" mixed="true">
+<xsd:attribute name="IdentificationSchemeName" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="EpiCurr" mixed="true">
+<xsd:attribute name="AmountCurrencyIdentifier" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<xsd:complexType name="EpiCh" mixed="true">
+<xsd:attribute name="ChargeOption" type="xsd:string" use="optional"/>
+</xsd:complexType>
+<!-- -->
+<xsd:complexType name="PostingImage">
+ <xsd:sequence>
+  <xsd:element ref="IMAGE_CONTROL" minOccurs="0" maxOccurs="unbounded"/>
+ </xsd:sequence>
+</xsd:complexType>
+<!-- -->
+<xsd:element name="AMOUNT" type="amount_vat_optional">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT </xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<!-- -->
+<xsd:simpleType name="hiType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="HIType" mixed="true">
+<xsd:simpleContent>
+<xsd:extension base="hiType">
+<xsd:attribute name="INFO_TYPE" type="xsd:string" use="optional"/>
+</xsd:extension>
+</xsd:simpleContent>
+</xsd:complexType>
+<!-- -->
+<xsd:simpleType name="contentType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="ContentType" mixed="true">
+<xsd:simpleContent>
+<xsd:extension base="contentType">
+<xsd:attribute name="Q_UNIT" type="xsd:string" use="optional"/>
+<xsd:attribute name="SIGN" type="signType" use="optional"/>
+</xsd:extension>
+</xsd:simpleContent>
+</xsd:complexType>
+<!-- -->
+<xsd:element name="INVOICE_CENTER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="TRANSPORT_FRAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTENT_FRAME" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TRANSPORT_FRAME">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="TF_CODE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TIMESTAMP" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BATCH_ID" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="CONTENT_RECEIVER" minOccurs="1" maxOccurs="unbounded"/>
+<xsd:element ref="SENDER" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="INTERMEDIATOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SENDER_DOMAIN" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FB_REQUEST" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="REQUEST_MESSAGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="REQUEST_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TF_SUMMARY" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CONTENT_FRAME">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CF_CODE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="NET_SERVICE_ID" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="INTERMEDIATOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SENDER_DOMAIN" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BLOCK_ID" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TIMESTAMP" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BLOCK_RULES" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BLOCK_DEFAULTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BLOCK_SUMMARY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LINKS" minOccurs="0" maxOccurs="1"/>
+<xsd:choice minOccurs="1" maxOccurs="1">
+<xsd:element ref="INVOICES" minOccurs="0" maxOccurs="1"/>
+</xsd:choice>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICES">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="INVOICE" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CONTROL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="HEADER" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="DIRECTCHARGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_SENDER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYEE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="SALES_CONTACT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_RECIPIENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="RECEIVER" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="DELIVERER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDERER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_PARTY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="MANUFACTURER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="HOLDER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="OTHER_PARTNER" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="ROWS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SUMMARY" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PART_PAYMENTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiDetails" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DIGITAL_SIGNATURE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTROL_TIMESTAMP" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FB_REQUEST" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CONTROL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ARCHIVE_CONTROL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_TRANSACTIONS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IMAGE_CONTROL" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="PAYMENT_CONTROL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TRAVEL_CONTROL" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ARCHIVE_CONTROL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="SUPPLIER_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SUPPLIER_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PERIOD_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CUSTOMER_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CUSTOMER_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IDENTIFIER_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="GROUP_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_BLOCKED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SUPPLIER_GROUP" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EVENT_TYPE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="AGREEMENT_NO" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="STATUS_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_MONTH" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_CENTURY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_DECADE_AND_YEAR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_SEASON" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LEDGER_DIMENSION_TYPE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LEDGER_DIMENSION_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_SERIE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_DAY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_MONTH" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_CENTURY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_DECADE_AND_YEAR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SECOND_TRANSFER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DIMENSIONS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTROL_STAMP" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="ACCEPTANCE_STAMP" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IBAN_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SWIFT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SECRECY_CLASS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_DATE_PROPOSAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORGANIZATION_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_COMPLETED" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="IMAGE_CONTROL">
+<xsd:annotation>
+<xsd:documentation>Mandatory attribute: TYPE, values INVOICE_IMAGE, VOUCHER_MEMO, VOUCHER_IMAGE, STYLESHEET, SCANNED, SIGNATURE_VALIDATION, SIGNATURE or INVOICE_DATA. Optional attribute: SOURCE, values ORIGINAL, IC_IMAGE or IC. Optional attribute: SIGNED, values YES, XADES, CADES or NO. </xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="IMAGE_DIRECTORY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IMAGE_FILE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IMAGE_PROGRAM" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IMAGE_DESCRIPTION" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="TYPE" type="imageconType" use="required"/>
+<xsd:attribute name="SOURCE" type="imageSourceType" use="optional"/>
+<xsd:attribute name="SIGNED" type="imagesignType" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYMENT_CONTROL">
+</xsd:element>
+<xsd:element name="PAYMENT_TRANSACTIONS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PAYMENT_TRANSACTION" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYMENT_TRANSACTION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="VOUCHER_SERIE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CHARGE_ACCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYEE_BANKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYER_BANKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TRANSACTION_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="USER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IDENTIFIER_ID" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TRAVEL_CONTROL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="TRAVEL_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TRAVEL_TYPE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TRAVEL_INFO" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOUCHER_TITLE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICING_BASE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FINANCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL_COST_ESTIMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_MAKER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="APPROVAL" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="FIXED_OPERATOR" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="HEADER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="INVOICE_ID" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PROCESS_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_TYPE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="METHOD_OF_CHARGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="METHOD_OF_INTERCHANGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_STATUS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SUBJECT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_INVOICE_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_INVOICE_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_INVOICE_DUE_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_DATE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="DUE_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="REMARK_TIME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NEXT_DUE_DATE" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="VALUE_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="START_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TERMS_OF_DELIVERY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="END_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NOTE_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TERMS_OF_PAYMENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CASH_DISCOUNT" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="PAYMENT_OVERDUE_FINE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CURRENCY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EU_TRADE_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_SUBJECT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_INSTRUCTION_IDENTIFIER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTROLLER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_INFORMATION" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="ORDER_CONFIRMATION" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="CONTRACT_INFORMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PROJECT_INFORMATION" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="TRANSPORT_INFORMATION" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="PACKING_MARKS" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="TOTAL_PACKING_MARKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_INFORMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FACTORING_INFORMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYER_POSTING_DEFAULTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYER_POSTING_GROUP_DEFAULTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SELLER_ACCOUNT_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_ORDER_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BUYER_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERER_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CLEARANCE_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="HEADER_INFO" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="LINKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_APPENDIX_SERVICE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DIRECTCHARGE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="BANK_BATCH" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BANK_CHARGE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYEE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BANKS" minOccurs="1" maxOccurs="unbounded"/>
+<xsd:element ref="NET_SERVICE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTERMEDIATOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DOMICILE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRELIMINARY_TAX_REGISTERED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARCHIVE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NETTING_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYEE_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="METHOD_OF_PAYMENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DETAILS_OF_PAYMENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_BARCODE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="RECEIVER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="CUSTOMER_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NET_SERVICE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTERMEDIATOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARCHIVE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NETTING_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CUSTOMER_SEGMENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="MAIL_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRINTING" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE_SENDER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SALES_CONTACT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE_RECIPIENT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DELIVERER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ORDERER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DELIVERY_PARTY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="NET_SERVICE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTERMEDIATOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARCHIVE_ID" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYOR">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="MANUFACTURER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="HOLDER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="OTHER_PARTNER">
+<xsd:annotation>
+<xsd:documentation>Mandatory attributes PARTNER_TYPE and PARTNER_TEXT</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="PARTNER_TYPE" type="xsd:string" use="required"/>
+<xsd:attribute name="PARTNER_TEXT" type="xsd:string" use="required"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROWS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ROW" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROW">
+<xsd:annotation>
+<xsd:documentation>Attributes: ROW_TYPE (values: MAIN, SPECIFICATION, SUBTOTAL or INFO) ja ROW_ID (numbering)</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ROW_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_RECEIVER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="OTHER_PARTNER" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="ARTICLE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LOCATION_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="START_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="END_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="QUANTITY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SALES_PERSON" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRICELIST" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_INVOICE_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYEE_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTRACT_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="OFFER_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="REQUEST_OF_QUOTATION_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_INFORMATION" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="CONTRACT_INFORMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PROJECT_INFORMATION" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="TERMS_OF_DELIVERY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NOTE_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_INFORMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TERMINAL_ADDRESS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TRANSPORT_NOTE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TRANSPORT_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PLACE_OF_DISCHARGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FINAL_DESTINATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PACKING_MARKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="UNIT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ROW_ACTION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CURRENCY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRICE_PER_UNIT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DISCOUNT_FROM_PRICE_PER_UNIT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRICE_PER_UNIT_WITH_DISCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRICE_PER_UNIT_NET" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="WHOLESALE_PRICE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LIST_PRICE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DISCOUNT" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="ROW_CHARGE" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="ROW_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ROW_TOTAL_IN_OTHER_CURRENCY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ROW_AMOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ROW_TOTAL_WITHOUT_EXTRA_COSTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INSURANCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INFO_COSTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CURRENCY_INFORMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CN" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="RECEIVER_PRODUCT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INFORMATION_OF_OVERDUE_PAYMENTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DEFAULT_ROW_POSTING" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SELLER_ACCOUNT_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LINKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LINK_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARRIVAL_INFO" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTROL_STAMP" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ACCEPTANCE_STAMP" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+<xsd:attribute name="ROW_TYPE" type="xsd:string" use="optional"/>
+<xsd:attribute name="ROW_ID" type="xsd:string" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SUMMARY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ROWS_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_TOTAL" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="INSURANCE_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_SUMMARY" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="VAT_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DEFAULT_VAT_ACCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ROUNDINGS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DISCOUNT" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="DISCOUNTS_FROM_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DISCOUNTS_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SURCHARGE_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CARGO" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_EXTRA" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ADVANCE_PAYMENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTEREST_CHARGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COLLECTION_SURCHARGE_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COMMISSION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="POSTAGE_COSTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PROCESSING_COSTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_TOTAL_IN_OTHER_CURRENCY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL_INFO_COSTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INCOME_OF_TAX_WITHELD_IN_ADVANCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LINKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PART_PAYMENTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PAYMENT" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYMENT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PART_ID" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PART_COUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PART_DUE_DATE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="UNPAID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="START_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="END_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PARTIAL_PAYMENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTEREST" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PROCESSING_COSTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PART_SUM" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_REFERENCE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<!-- -->
+<xsd:element name="TF_CODE" type="xsd:string"/>
+<xsd:element name="TIMESTAMP">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="BATCH_ID" type="xsd:string"/>
+<xsd:element name="CONTENT_RECEIVER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="RECEIVER_REF" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="INTERMEDIATOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTENT_REF" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SENDER" type="xsd:string"/>
+<xsd:element name="SENDER_DOMAIN">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="50"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="FB_REQUEST" type="xsd:string"/>
+<xsd:element name="REQUEST_MESSAGE" type="xsd:string"/>
+<xsd:element name="REQUEST_TEXT" type="xsd:string"/>
+<xsd:element name="TF_SUMMARY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="COUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BATCH_SIZE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CF_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="NET_SERVICE_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="35"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="INTERMEDIATOR" type="xsd:string"/>
+<xsd:element name="BLOCK_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="BLOCK_RULES">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="TRANSACTION_TYPE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BLOCK_ACTION" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BLOCK_METHOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BLOCK_FORMAT" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="FORMAT_VERSION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CHARACTER_SET" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="LINKS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="LINK" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="BLOCK_DEFAULTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ARCHIVE_INFO" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BLOCK_PRINTING" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ARCHIVE_INFO">
+<xsd:annotation>
+<xsd:documentation>Mandatory attributes: SOURCE_SYSTEM, DOCUMENT_TYPE, ARCHIVE_ORG_ID, YEAR_ID, ARCHIVE_BLOCK, Optional attribute: ARCHIVE_TYPE</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:attribute name="ARCHIVE_BLOCK" type="xsd:string" use="required"/>
+<xsd:attribute name="ARCHIVE_ORG_ID" type="xsd:string" use="required"/>
+<xsd:attribute name="DOCUMENT_TYPE" type="xsd:string" use="required"/>
+<xsd:attribute name="SOURCE_SYSTEM" type="xsd:string" use="required"/>
+<xsd:attribute name="YEAR_ID" type="xsd:string" use="required"/>
+<xsd:attribute name="ARCHIVE_TYPE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="BLOCK_SUMMARY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="COUNT" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TOTAL" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="RECEIVER_REF" type="xsd:string"/>
+<xsd:element name="CONTENT_REF" type="xsd:string"/>
+<xsd:element name="COUNT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="BATCH_SIZE" type="xsd:string"/>
+<xsd:element name="TRANSACTION_TYPE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="00|02"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="BLOCK_ACTION">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="(00)|(01)"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="BLOCK_METHOD" type="methodType"/>
+<xsd:element name="BLOCK_FORMAT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="FORMAT_VERSION">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="5"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CHARACTER_SET">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="LINK" type="linkType">
+<xsd:annotation>
+<xsd:documentation>Optional attributes: TYPE and OBJECT</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="BLOCK_PRINTING">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="E-KIRJE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DIGITAL_SIGNATURE" type="DSType">
+<xsd:annotation>
+<xsd:documentation>Attribute: SIGNATURE_LENGTH</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<!-- -->
+<xsd:element name="INVOICING_BASE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ALLOWANCE_CLASS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ALLOWANCE_NAME" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="FINANCE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="FINANCE_INFO" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="FINANCE_INFO">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="FINANCE_TYPE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EXPLANATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FINANCE_AMOUNT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE_MAKER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="STAMP" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="APPROVAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="STAMP" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="FIXED_OPERATOR">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="STAMP" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="STAMP">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="USER" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TIME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NOTE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="STATUS" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="NEXT_USER" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TRAVEL_ID" type="xsd:string"/>
+<xsd:element name="LINK_ID" type="xsd:string"/>
+<xsd:element name="TRAVEL_TYPE" type="codeType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="VOUCHER_TITLE" type="codeType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TRAVEL_INFO" type="xsd:string"/>
+<xsd:element name="ALLOWANCE_CLASS" type="xsd:string"/>
+<xsd:element name="ALLOWANCE_NAME" type="xsd:string"/>
+<xsd:element name="FINANCE_TYPE" type="xsd:string"/>
+<xsd:element name="EXPLANATION" type="xsd:string"/>
+<xsd:element name="STATUS" type="xsd:string"/>
+<xsd:element name="USER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NAME" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="NEXT_USER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NAME" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ID" type="xsd:string"/>
+<xsd:element name="NAME" type="xsd:string"/>
+<xsd:element name="SECRECY_CLASS" type="xsd:string"/>
+<xsd:element name="PAYMENT_DATE_PROPOSAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="FINANCE_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TOTAL_COST_ESTIMATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_SEASON">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="MONTH" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="CENTURY" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="DECADE_AND_YEAR" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SUPPLIER_ARTICLE_ID" type="xsd:string"/>
+<xsd:element name="SUPPLIER_ARTICLE_NAME" type="xsd:string"/>
+<xsd:element name="METHOD_OF_PAYMENT" type="codeType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="CONTROL_STAMP">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CONTROL_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTROL_USER" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CONTROL_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="E-KIRJE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="APM_ARCHIVE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SERVICE_ACTIONS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LETTER_CLASS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="APM_ARCHIVE_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FORM_FIRST_PAGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FORM_CONT_PAGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FORM_SPEC_PAGE" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="ADVANCED_NOTICE_FIRST_PAGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ADVANCED_NOTICE_CONT_PAGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ADVANCED_NOTICE_SPEC_PAGE" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE_ORDER_NUMBER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="256"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="VAT_TEXT" type="xsd:string"/>
+<xsd:element name="CLEARANCE_NUMBER" type="xsd:string"/>
+<xsd:element name="TERMS_OF_DELIVERY" type="deliveryType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TERMS_OF_DELIVERY_CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TERMS_OF_PAYMENT" type="paymentType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TERMS_OF_PAYMENT_CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="REMARK_TIME" type="xsd:string"/>
+<xsd:element name="CREDIT_INVOICE_DUE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CREDIT_INVOICE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="START_PERIOD">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TIME" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="PERIOD_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="END_PERIOD">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TIME" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CONTROL_TIMESTAMP">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TIME" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="ZONE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ZONE" type="xsd:string"/>
+<xsd:element name="ACCEPTANCE_STAMP">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ACCEPTANCE_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ACCEPT_USER" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ACCEPTANCE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ACCEPT_USER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="256"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="APM_ARCHIVE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="([TBC]|[ ])*"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SERVICE_ACTIONS">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="([0ETJ]|[ ])*"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="LETTER_CLASS">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="[12]"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="APM_ARCHIVE_CODE" type="xsd:string"/>
+<xsd:element name="ORGANIZATION_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="256"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="VOUCHER_SERIE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="6"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="VOUCHER_NUMBER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="IDENTIFIER_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="256"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="FORM_FIRST_PAGE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="FORM_CONT_PAGE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="FORM_SPEC_PAGE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="COPIES" type="xsd:string"/>
+<xsd:element name="ADVANCED_NOTICE_FIRST_PAGE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ADVANCED_NOTICE_CONT_PAGE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ADVANCED_NOTICE_SPEC_PAGE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="8"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="INVOICE_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="35"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ORIGINAL_INVOICE_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="35"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CONTROL_USER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ACCOUNT" type="titleType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TITLE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="ACCOUNT_2" type="titleType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TITLE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="PROCESS_CODE" type="processType"/>
+<xsd:element name="NOTE_NUMBER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="INVOICE_TYPE" type="INCType">
+<xsd:annotation>
+<xsd:documentation>Optional attributes: EXTENSION, CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="METHOD_OF_CHARGE" type="processType"/>
+<xsd:element name="METHOD_OF_INTERCHANGE" type="methodType"/>
+<xsd:element name="CREDIT_INVOICE_NUMBER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="35"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SUBJECT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="40"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="INVOICE_STATUS" type ="statusType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: STATUS_CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="INVOICE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ORIGINAL_INVOICE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DATE_OF_PAYMENT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="COLLECTION_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DUE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:choice>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="VERBOSE_DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:choice>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ORIGINAL_DUE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="NEXT_DUE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VALUE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CASH_DISCOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PER_CENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CASH_DISCOUNT_AMOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="VAT_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_TOTAL_WITH_CASH_DISCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYMENT_OVERDUE_FINE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="INTEREST_RATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SURCHARGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CURRENCY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CODE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="RATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DATE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EU_TRADE_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PAYMENT_SUBJECT_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="3"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PAYMENT_INSTRUCTION_IDENTIFIER" type="xsd:string"/>
+<xsd:element name="ORDER_REFERENCE" type="xsd:string"/>
+<xsd:element name="BUYER_REFERENCE" type="xsd:string"/>
+<xsd:element name="DELIVERER_REFERENCE" type="xsd:string"/>
+<xsd:element name="CONTRACT_REFERENCE" type="xsd:string"/>
+<xsd:element name="OFFER_REFERENCE" type="xsd:string"/>
+<xsd:element name="REQUEST_OF_QUOTATION_REFERENCE" type="xsd:string"/>
+<xsd:element name="CONTROLLER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ORDER_INFORMATION">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: ORDER_TYPE</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ORDER_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_POSITION" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="ORDER_TYPE" type="orderType" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ORDER_CONFIRMATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ORDER_CONFIRMATION_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDER_CONFIRMATION_DATE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CONTRACT_INFORMATION">
+<xsd:annotation>
+<xsd:documentation>Optional attributes: CONTRACT_CODE and CONTRACT_TYPE</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CONTRACT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTRACT_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTRACT_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRICELIST" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="CONTRACT_CODE" type="contractCType" use="optional"/>
+<xsd:attribute name="CONTRACT_TYPE" type="contractType" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CONTRACT_PERIOD">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="START_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="END_PERIOD" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PROJECT_INFORMATION">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: PROJECT_TYPE</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PROJECT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PROJECT_TITLE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="PROJECT_TYPE" type="projectType" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TRANSPORT_INFORMATION">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TRANSPORT_ID</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="MODE_OF_TRANSPORT"  minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CARRIER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LOCATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY_OF_ORIGIN" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY_OF_DESTINATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PLACE_OF_DISCHARGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FINAL_DESTINATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TRANSPORT_NOTE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="TRANSPORT_ID" type="transportType" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CARRIER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CARRIER_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VESSEL" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="MODE_OF_TRANSPORT" type="tranportIdType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: MODE_OF_TRANSPORT_ID</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="LOCATION" type="locationType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: LOCATION_ID</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="PLACE_OF_DISCHARGE" type="xsd:string"/>
+<xsd:element name="FINAL_DESTINATION" type="xsd:string"/>
+<xsd:element name="TRANSPORT_NOTE" type="transportNoteType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TRANSPORT_NOTE_TYPE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="CARRIER_NAME" type="xsd:string"/>
+<xsd:element name="VESSEL" type="xsd:string"/>
+<xsd:element name="COUNTRY_OF_DESTINATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="COUNTRY_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="COUNTRY_OF_ORIGIN">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="COUNTRY_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PACKING_MARKS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PACKING_MARK" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PACKING_DESCRIPTION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CN_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PACK_QUANTITY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="GROSS_WEIGHT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NET_WEIGHT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="MEASUREMENTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="MEASUREMENT_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VOLUME" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="MEASUREMENTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="LENGTH" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="WIDTH" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="HEIGHT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="MEASUREMENT_TEXT" type="xsd:string"/>
+<xsd:element name="PACKING_MARK" type="xsd:string"/>
+<xsd:element name="PACKING_DESCRIPTION" type="xsd:string"/>
+<xsd:element name="PACK_QUANTITY" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="GROSS_WEIGHT" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="NET_WEIGHT" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="LENGTH" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="WIDTH" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="HEIGHT" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="VOLUME" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TOTAL_PACKING_MARKS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="TOTAL_PACK_QUANTITY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL_GROSS_WEIGHT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL_NET_WEIGHT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL_MEASUREMENTS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL_MEASUREMENT_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TOTAL_VOLUME" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TOTAL_MEASUREMENTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="LENGTH" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="WIDTH" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="HEIGHT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TOTAL_PACK_QUANTITY" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TOTAL_GROSS_WEIGHT" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TOTAL_NET_WEIGHT" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TOTAL_VOLUME" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TOTAL_MEASUREMENT_TEXT" type="xsd:string"/>
+<xsd:element name="CREDIT_INFORMATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CREDIT_LIMIT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTEREST" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="OPERATION_LIMIT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INSTALMENT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CREDIT_LIMIT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="OPERATION_LIMIT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INSTALMENT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="FACTORING_INFORMATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AGREEMENT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TRANSMISSION_LIST_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ENDORSEMENT_CLAUSE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FACTORING_TYPE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CUSTOMER_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORGANIZATION_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ACCOUNT_REFERENCE" type="xsd:string"/>
+<xsd:element name="REPORTING_CODE" type="xsd:string"/>
+<xsd:element name="AGREEMENT_NUMBER" type="xsd:string"/>
+<xsd:element name="TRANSMISSION_LIST_NUMBER" type="xsd:string"/>
+<xsd:element name="ENDORSEMENT_CLAUSE" type="xsd:string"/>
+<xsd:element name="FACTORING_TYPE" type="xsd:string"/>
+<xsd:element name="PAYER_POSTING_DEFAULTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CHARGE_ACCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_ACCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SHORT_ACCOUNT_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NORMAL_ACCOUNT_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DIMENSIONS" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYER_POSTING_GROUP_DEFAULTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="POSTING_DEFAULT" minOccurs="1" maxOccurs="unbounded">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ACCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ACCOUNT_2" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="ACCOUNT_AMOUNT" minOccurs="0" maxOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element ref="SHORT_ACCOUNT_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NORMAL_ACCOUNT_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DIMENSIONS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ACCOUNT_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="REPORTING_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTROL_STAMP" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ACCEPTANCE_STAMP" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="HEADER_INFO">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="SERIAL_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TITLE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="CONTENT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SERIAL_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="3"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="TITLE" type="HIType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: INFO_TYPE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="CONTENT" type="ContentType">
+<xsd:annotation>
+<xsd:documentation>Optional attributes: SIGN and Q_UNIT</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="INVOICE_APPENDIX_SERVICE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="LINK" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="APPENDIX_ID" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="APPENDIX_ID" type="xsd:string"/>
+<xsd:element name="FREE_TEXT" type="ftType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TEXT_TYPE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="BANK_BATCH">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PAYEE_SERVICE_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_CODE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="CURRENCY_ID" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="INRESERVE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="BANK_CHARGE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="RECORD_TYPE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TRANSACTION_TYPE_CODE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BANK_DUE_DATE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PROCESSING_CODE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PAYER_ACCOUNT_NUMBER" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="TOTAL" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PAYMENT_SUBJECT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAYEE_ACCOUNT_NUMBER" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="PAYER_CUSTOMER_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DETAILS_OF_PAYMENT" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="MESSAGE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CUSTOMER_INFORMATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_NAME" minOccurs="1" maxOccurs="unbounded"/>
+<xsd:element ref="CUSTOMER_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ADDRESS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_REG" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SOCIAL_SECURITY_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORGANIZATION_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PARTY_IDENTIFICATION_ID" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="TRADE_REGISTRY_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SITE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORGANIZATION_DEPARTMENT" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="CONTACT_INFORMATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EU-COUNTRY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LANGUAGE_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="E-MAIL_ADDRESS" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="NOTE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LINKS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="BANKS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="BANK_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_ADDRESS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SWIFT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IN_FAVOR" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IBAN_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FOREIGN_PAYMENT_METHODS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CLEARING_CODE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SWIFT_CODE" type="xsd:string"/>
+<xsd:element name="IN_FAVOR" type="xsd:string"/>
+<xsd:element name="IBAN_ACCOUNT_NUMBER" type="xsd:string"/>
+<xsd:element name="NETTING_CODE" type="xsd:string"/>
+<xsd:element name="CUSTOMER_SEGMENT" type="xsd:string"/>
+<xsd:element name="ARCHIVE_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="35"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PAYEE_REFERENCE" type="xsd:string"/>
+<xsd:element name="DETAILS_OF_PAYMENT">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: MESSAGE_TYPE </xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="FI_PAYMENT_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IPI_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="MESSAGE_TYPE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="BANK_BARCODE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:choice>
+<xsd:element ref="FI_BANK_BARCODE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="IPI_BANK_BARCODE" minOccurs="1" maxOccurs="1"/>
+</xsd:choice>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PRINTING">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="FORM_FIRST_PAGE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="FORM_CONT_PAGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FORM_SPEC_PAGE" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="COPIES" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="MAIL_ID" type="xsd:string"/>
+<xsd:element name="ARRIVAL_INFO">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ARRIVAL_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARRIVAL_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARRIVED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="RECEIPT_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_NOTE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SUPPLIER_ARTICLE_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_COMPLETED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DELIVERY_COMPLETED" type="xsd:string"/>
+<xsd:element name="ARRIVAL_ID" type="xsd:string"/>
+<xsd:element name="RECEIPT_ID" type="xsd:string"/>
+<xsd:element name="DELIVERY_NOTE" type="xsd:string"/>
+<xsd:element name="ARRIVED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="ARRIVAL_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROWS_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ORIGINAL_INVOICE_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INSURANCE_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_SUMMARY">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: VAT_TYPE</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="RATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ACCORDING" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_ADDITIONAL_INFO" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_RATE_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_GROUP_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DEFAULT_VAT_RATE_ACCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_DESCRIPTION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CURRENCY_CODE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="VAT_TYPE" type="vatsummaryType" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DEFAULT_VAT_ACCOUNT" type="xsd:string"/>
+<xsd:element name="VAT_DESCRIPTION" type="xsd:string"/>
+<xsd:element name="ROUNDINGS">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="([+\-]?(\d{0,1}\.\d{0,2})|[ ])*"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="DISCOUNTS_FROM_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DISCOUNTS_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="SURCHARGE_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CARGO">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DELIVERY_EXTRA">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ADVANCE_PAYMENT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INTEREST_CHARGE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TOTAL_INFO_COSTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INCOME_OF_TAX_WITHELD_IN_ADVANCE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="COMMISSION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="COMMISSION_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PER_CENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="COMMISSION_AMOUNT" minOccurs="0" maxOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="POSTAGE_COSTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_GROUP_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DAY" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="MONTH" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="CENTURY" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="DECADE_AND_YEAR" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TIME">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="HOUR" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="MINUTE" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="SECOND" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="HOUR" type="xsd:string"/>
+<xsd:element name="MINUTE" type="xsd:string"/>
+<xsd:element name="SECOND" type="xsd:string"/>
+<xsd:element name="PAYMENT_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VERBOSE_DATE" type="xsd:string"/>
+<xsd:element name="PER_CENT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="([0-9]{1,3}|100)(\.[0-9]+)?"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CASH_DISCOUNT_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_optional" minOccurs="0" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE_TOTAL_WITH_CASH_DISCOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INTEREST_RATE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="([0-9]{1,2}|100)(\.[0-9]+)?"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SURCHARGE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="3"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="RATE" type="rateType"/>
+<xsd:element name="CHARGE_ACCOUNT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="12"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CREDIT_ACCOUNT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="12"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CREDIT_ACCOUNT_2">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="12"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SHORT_ACCOUNT_ID" type="xsd:string"/>
+<xsd:element name="NORMAL_ACCOUNT_ID" type="xsd:string"/>
+<xsd:element name="SELLER_ACCOUNT_TEXT" type="xsd:string"/>
+<xsd:element name="DIMENSIONS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DIMENSION" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DIMENSION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="LEVEL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DIMENSION_VALUE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DIMENSION_NAME" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="LEVEL" type="titleType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: TITLE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="DIMENSION_VALUE" type="dimensionType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: DIMENSION_LENGTH</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="DIMENSION_NAME" type="xsd:string"/>
+<xsd:element name="PAYEE_SERVICE_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="9"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="BANK_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="\d{0,2}"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CURRENCY_ID">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="0|1"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="INRESERVE" type="xsd:string"/>
+<xsd:element name="RECORD_TYPE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="256"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="TRANSACTION_TYPE_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="(50)|(51)|(52)|(53)|(54)|(55)|(56)"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="BANK_DUE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PROCESSING_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="0|1|2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PAYER_ACCOUNT_NUMBER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="14"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PAYEE_ACCOUNT_NUMBER">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="14"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PAYER_CUSTOMER_NAME">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="19"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="MESSAGE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CUSTOMER_NAME">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="80"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ADDRESS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="STREET_ADDRESS1" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="STREET_ADDRESS2" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="STREET_ADDRESS3" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="STREET_ADDRESS4" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="POSTAL_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="POST_OFFICE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY_CODE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_REG" type="xsd:string"/>
+<xsd:element name="VAT_NUMBER" type="xsd:string"/>
+<xsd:element name="SOCIAL_SECURITY_NUMBER" type="xsd:string"/>
+<xsd:element name="ORGANIZATION_NUMBER" type="xsd:string"/>
+<xsd:element name="PARTY_IDENTIFICATION_ID" type="authorityType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: AUTHORITY</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="TRADE_REGISTRY_NUMBER" type="xsd:string"/>
+<xsd:element name="SITE" type="xsd:string"/>
+<xsd:element name="ORGANIZATION_DEPARTMENT" type="xsd:string"/>
+<xsd:element name="CONTACT_INFORMATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CONTACT_PERSON" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONTACT_PERSON_FUNCTION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="TELEPHONE_NUMBER" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="TELEFAX_NUMBER" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="E-MAIL_ADDRESS" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EU-COUNTRY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="EU_COUNTRY_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EU_COUNTRY_CODE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="LANGUAGE_CODE" type="xsd:string"/>
+<xsd:element name="E-MAIL_ADDRESS">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="256"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="NOTE" type="xsd:string"/>
+<xsd:element name="BANK_ADDRESS" type="xsd:string"/>
+<xsd:element name="FOREIGN_PAYMENT_METHODS" type="xsd:string"/>
+<xsd:element name="CLEARING_CODE" type="xsd:string"/>
+<xsd:element name="BANK_NAME" type="xsd:string"/>
+<xsd:element name="BANK_ACCOUNT_NUMBER" type="xsd:string"/>
+<xsd:element name="FI_PAYMENT_REFERENCE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="23"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="IPI_REFERENCE" type="xsd:string"/>
+<xsd:element name="FI_BANK_BARCODE" type="xsd:string"/>
+<xsd:element name="IPI_BANK_BARCODE" type="xsd:string"/>
+<xsd:element name="DOMICILE" type="xsd:string"/>
+<xsd:element name="PRELIMINARY_TAX_REGISTERED" type="xsd:string"/>
+<xsd:element name="DELIVERY_RECEIVER">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CUSTOMER_INFORMATION" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROW_NUMBER" type="xsd:string"/>
+<xsd:element name="ROW_ACTION" type="xsd:string"/>
+<xsd:element name="SALES_PERSON" type="xsd:string"/>
+<xsd:element name="TERMINAL_ADDRESS" type="xsd:string"/>
+<xsd:element name="DELIVERY_NUMBER" type="xsd:string"/>
+<xsd:element name="ARTICLE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ARTICLE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARTICLE_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARTICLE_NAME2" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERY_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EAN_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SUPPLIER_ARTICLE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="MANUFACTURER_ARTICLE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PRODUCT_GROUP" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SERIAL_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LOT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ARTICLE_DESCRIPTIONS" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ARTICLE_DESCRIPTIONS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ARTICLE_DESCRIPTION" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ARTICLE_DESCRIPTION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DESCRIPTION_TYPE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DESCRIPTION_VALUE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DESCRIPTION_UNIT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DESCRIPTION_TYPE" type="descType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: DESCRIPTION_ID</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="DESCRIPTION_VALUE" type="xsd:string"/>
+<xsd:element name="DESCRIPTION_UNIT" type="xsd:string"/>
+<xsd:element name="EAN_CODE" type="xsd:string"/>
+<xsd:element name="MANUFACTURER_ARTICLE_ID" type="xsd:string"/>
+<xsd:element name="PRODUCT_GROUP" type="xsd:string"/>
+<xsd:element name="SERIAL_NUMBER" type="xsd:string"/>
+<xsd:element name="LOT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="LOT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LOT_DESCRIPTION" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="LOT_NUMBER" type="xsd:string"/>
+<xsd:element name="LOT_DESCRIPTION" type="xsd:string"/>
+<xsd:element name="LOCATION_ID">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="USED_QUANTITY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PREVIOUS_METER_READING" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PREVIOUS_METER_READING_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LATEST_METER_READING" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="LATEST_METER_READING_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CALCULATED_QUANTITY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="AVERAGE_PRICE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="USED_QUANTITY" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="PREVIOUS_METER_READING" type="xsd:string"/>
+<xsd:element name="PREVIOUS_METER_READING_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="LATEST_METER_READING" type="xsd:string"/>
+<xsd:element name="LATEST_METER_READING_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CALCULATED_QUANTITY" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="AVERAGE_PRICE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="QUANTITY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="OFFERED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORDERED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CONFIRMED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DELIVERED" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="CHARGED" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="POSTDELIVERED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_REQUESTED" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="RETURNED" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ORDER_NUMBER" type="xsd:string"/>
+<xsd:element name="ORDER_CONFIRMATION_NUMBER" type="xsd:string"/>
+<xsd:element name="ORDER_POSITION" type="xsd:string"/>
+<xsd:element name="CONTRACT_NUMBER" type="xsd:string"/>
+<xsd:element name="PRICELIST" type="xsd:string"/>
+<xsd:element name="ORDER_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ORDER_CONFIRMATION_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CONTRACT_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PROJECT_NUMBER" type="xsd:string"/>
+<xsd:element name="PROJECT_TITLE" type="xsd:string"/>
+<xsd:element name="TRANSPORT_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DELIVERY_INFORMATION" type="delInfoType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: DELIVERY_CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="UNIT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="5"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PRICE_PER_UNIT">
+<xsd:annotation>
+<xsd:documentation>Attribute: PR_UNIT</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+<xsd:attribute name="PR_UNIT" type="xsd:string" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="WHOLESALE_PRICE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="LIST_PRICE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DISCOUNT_FROM_PRICE_PER_UNIT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PRICE_PER_UNIT_WITH_DISCOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PRICE_PER_UNIT_NET">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INFO_COSTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DISCOUNT">
+<xsd:annotation>
+<xsd:documentation>Attribute: TYPE</xsd:documentation>
+</xsd:annotation>
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DISCOUNT_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PER_CENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DISCOUNT_AMOUNT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="TYPE" type="xsd:string" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DISCOUNT_NAME" type="xsd:string"/>
+<xsd:element name="ROW_CHARGE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="CHARGE_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PER_CENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="CHARGE_FROM_AMOUNT" minOccurs="0" maxOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CHARGE_AMOUNT" minOccurs="1" maxOccurs="1">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROW_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROW_TOTAL_IN_OTHER_CURRENCY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element ref="CURRENCY" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INVOICE_TOTAL_IN_OTHER_CURRENCY">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element ref="CURRENCY" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROW_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ROW_TOTAL_WITHOUT_EXTRA_COSTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: VAT_TYPE</xsd:documentation>
+</xsd:annotation>	
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="RATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VAT_AMOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FREE_TEXT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+<xsd:attribute name="VAT_TYPE" type="vatsummaryType" use="optional"/>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INSURANCE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PER_CENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FROM_AMOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INSURANCE_AMOUNT" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CURRENCY_INFORMATION">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="TERM_EXPLANATION" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FIXED_PRICE_PER_UNIT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="FIXED_EXCHANGE_RATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INVOICE_DATE_RATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CURRENCY_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="VARIANCE_PER_CENT" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="TERM_LINKAGE_PER_CENT" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="CN">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CN_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CN_NAME" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element ref="CN_WEIGHT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CN_TRANSPORT_TEXT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY_OF_ORIGIN_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY_OF_ORIGIN_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY_OF_DESTINATION_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COUNTRY_OF_DESTINATION_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="MODE_OF_TRANSPORT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NATURE_OF_TRANSACTION_CODE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="RECEIVER_PRODUCT_CODE" type="xsd:string"/>
+<xsd:element name="CN_WEIGHT" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="CN_TRANSPORT_TEXT" type="xsd:string"/>
+<xsd:element name="INFORMATION_OF_OVERDUE_PAYMENTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="ORIGINAL_INVOICE_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PART_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORIGINAL_INVOICE_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORIGINAL_DUE_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORIGINAL_INVOICE_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ORIGINAL_PAYMENT_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="PAID_AMOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="UNPAID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DATE_OF_PAYMENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COLLECTION_DATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COLLECTION_TIMES" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="COLLECTION_SURCHARGE_TOTAL" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTEREST_RATE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTEREST_PERIOD" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NUMBER_OF_INTEREST_DAY" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="INTEREST_CHARGE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CURRENCY" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="COLLECTION_TIMES" type="xsd:string"/>
+<xsd:element name="COLLECTION_SURCHARGE_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INTEREST_PERIOD">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="START_PERIOD" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="END_PERIOD" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="NUMBER_OF_INTEREST_DAY" type="xsd:string"/>
+<xsd:element name="REFERENCE" type="xsd:string"/>
+<xsd:element name="DEFAULT_ROW_POSTING">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="CREDIT_ACCOUNT" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="CREDIT_ACCOUNT_2" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SHORT_ACCOUNT_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="NORMAL_ACCOUNT_ID" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="DIMENSIONS" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="ACCOUNT_REFERENCE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="REPORTING_CODE" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ACCORDING">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_ADDITIONAL_INFO">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="VAT_INFO" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_INFO">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="BASE_DESCRIPTION" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="BASE_AMOUNT" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="BASE_DESCRIPTION" type="xsd:string"/>
+<xsd:element name="BASE_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="VAT_RATE_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="DEFAULT_VAT_RATE_ACCOUNT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="12"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="SUPPLIER_ID" type="xsd:string"/>
+<xsd:element name="SUPPLIER_NAME" type="xsd:string"/>
+<xsd:element name="PERIOD_ID" type="xsd:string"/>
+<xsd:element name="CUSTOMER_ID" type="xsd:string"/>
+<xsd:element name="GROUP_ID" type="xsd:string"/>
+<xsd:element name="PAYMENT_BLOCKED" type="xsd:string"/>
+<xsd:element name="SUPPLIER_GROUP" type="xsd:string"/>
+<xsd:element name="EVENT_TYPE" type="xsd:string"/>
+<xsd:element name="AGREEMENT_NO" type="xsd:string"/>
+<xsd:element name="STATUS_ID" type="xsd:string"/>
+<xsd:element name="INVOICE_MONTH" type="xsd:string"/>
+<xsd:element name="INVOICE_CENTURY" type="xsd:string"/>
+<xsd:element name="INVOICE_DECADE_AND_YEAR" type="xsd:string"/>
+<xsd:element name="LEDGER_DIMENSION_ID" type="xsd:string"/>
+<xsd:element name="LEDGER_DIMENSION_TYPE" type="xsd:string"/>
+<xsd:element name="VOUCHER_DAY" type="xsd:string"/>
+<xsd:element name="VOUCHER_MONTH" type="xsd:string"/>
+<xsd:element name="VOUCHER_CENTURY" type="xsd:string"/>
+<xsd:element name="VOUCHER_DECADE_AND_YEAR" type="xsd:string"/>
+<xsd:element name="SECOND_TRANSFER" type="xsd:string"/>
+<xsd:element name="IMAGE_DIRECTORY" type="xsd:string"/>
+<xsd:element name="IMAGE_FILE" type="image_fileType">
+<xsd:annotation>
+<xsd:documentation>Attribute: IMAGE_TYPE (optional)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="IMAGE_PROGRAM" type="xsd:string"/>
+<xsd:element name="IMAGE_DESCRIPTION">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="1024"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="DAY" type="dayType"/>
+<xsd:element name="MONTH" type="dayType"/>
+<xsd:element name="CENTURY" type="dayType"/>
+<xsd:element name="DECADE_AND_YEAR" type="dayType"/>
+<xsd:element name="STREET_ADDRESS1" type="xsd:string"/>
+<xsd:element name="STREET_ADDRESS2" type="xsd:string"/>
+<xsd:element name="STREET_ADDRESS3" type="xsd:string"/>
+<xsd:element name="STREET_ADDRESS4" type="xsd:string"/>
+<xsd:element name="POSTAL_CODE" type="xsd:string"/>
+<xsd:element name="POST_OFFICE" type="xsd:string"/>
+<xsd:element name="COUNTRY" type="xsd:string"/>
+<xsd:element name="COUNTRY_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CONTACT_PERSON">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="60"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CONTACT_PERSON_FUNCTION" type="xsd:string"/>
+<xsd:element name="TELEPHONE_NUMBER" type="xsd:string"/>
+<xsd:element name="TELEFAX_NUMBER" type="xsd:string"/>
+<xsd:element name="EU_COUNTRY_NAME">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="EU_COUNTRY_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ARTICLE_ID" type="artCType">
+<xsd:annotation>
+<xsd:documentation>Optional attribute: ARTICLE_CODE</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="ARTICLE_NAME" type="xsd:string"/>
+<xsd:element name="ARTICLE_NAME2" type="xsd:string"/>
+<xsd:element name="DELIVERY_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="OFFERED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="ORDERED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="CONFIRMED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="DELIVERED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="CHARGED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="POSTDELIVERED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="CREDIT_REQUESTED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="RETURNED" type="qType">
+<xsd:annotation>
+<xsd:documentation>Attributes: Q_UNIT and SIGN</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="DISCOUNT_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<!-- -->
+<xsd:element name="VAT_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="AMOUNT" minOccurs="1" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="FROM_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="1">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INSURANCE_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="1">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TERM_EXPLANATION">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="FIXED_PRICE_PER_UNIT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="1">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="FIXED_EXCHANGE_RATE" type="rateType"/>
+<xsd:element name="INVOICE_DATE_RATE" type="rateType"/>
+<xsd:element name="CURRENCY_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="3"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="VARIANCE_PER_CENT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="\d{0,3}\.\d{0,5}"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="TERM_LINKAGE_PER_CENT">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:pattern value="\d{0,3}\.\d{0,3}"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CN_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CN_NAME">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="COUNTRY_OF_ORIGIN_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="COUNTRY_OF_ORIGIN_NAME">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="COUNTRY_OF_DESTINATION_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="COUNTRY_OF_DESTINATION_NAME">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="MODE_OF_TRANSPORT_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="2"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="NATURE_OF_TRANSACTION_CODE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PART_ID" type="xsd:string"/>
+<xsd:element name="PART_COUNT" type="xsd:string"/>
+<xsd:element name="PART_DUE_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="UNPAID">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAID_AMOUNT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PARTIAL_PAYMENT">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="1">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="INTEREST">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="PER_CENT" minOccurs="0" maxOccurs="1"/>
+<xsd:element name="AMOUNT" type="amount_vat_optional" minOccurs="0" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT </xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PROCESSING_COSTS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PART_SUM">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_required" minOccurs="1" maxOccurs="1">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT (mandatory)</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYMENT_REFERENCE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="ORIGINAL_PAYMENT_REFERENCE">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="30"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="PAYMENT_TOTAL">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="AMOUNT" type="amount_vat_optional" minOccurs="1" maxOccurs="unbounded">
+<xsd:annotation>
+<xsd:documentation>Attributes: SIGN, VAT</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYEE_BANKS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="BANK_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SWIFT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IBAN_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="PAYER_BANKS">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="BANK_NAME" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="BANK_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="SWIFT_CODE" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="IBAN_ACCOUNT_NUMBER" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="TRANSACTION_DATE">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="DATE" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EpiDetails">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="EpiIdentificationDetails" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiPartyDetails" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiPaymentInstructionDetails" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EpiIdentificationDetails">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="EpiDate" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiReference" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiUrl" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiEmail" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiOrderInfo" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EpiDate" type="EpiFormat">
+<xsd:annotation>
+<xsd:documentation>Attribute: Format</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="EpiReference" type="xsd:string"/>
+<xsd:element name="EpiUrl" type="xsd:string"/>
+<xsd:element name="EpiEmail" type="xsd:string"/>
+<xsd:element name="EpiOrderInfo" type="xsd:string"/>
+<xsd:element name="EpiPartyDetails">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="EpiBfiPartyDetails" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiBeneficiaryPartyDetails" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EpiBfiPartyDetails">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="EpiBfiIdentifier" minOccurs="0" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EpiBfiIdentifier" type="EpiISN">
+<xsd:annotation>
+<xsd:documentation>Attribute: IdentificationSchemeName</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="EpiBeneficiaryPartyDetails">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="EpiNameAddressDetails" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiBei" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiAccountID" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EpiNameAddressDetails" type="xsd:string"/>
+<xsd:element name="EpiBei" type="xsd:string"/>
+<xsd:element name="EpiAccountID" type="EpiISN">
+<xsd:annotation>
+<xsd:documentation>Attribute: IdentificationSchemeName</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="EpiPaymentInstructionDetails">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element ref="EpiPaymentInstructionId" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiTransactionTypeCode" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiInstructionCode" minOccurs="0" maxOccurs="1"/>
+<xsd:element ref="EpiRemittanceInfoIdentifier" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiInstructedAmount" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiCharge" minOccurs="1" maxOccurs="1"/>
+<xsd:element ref="EpiDateOptionDate" minOccurs="1" maxOccurs="1"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="EpiPaymentInstructionId" type="xsd:string"/>
+<xsd:element name="EpiTransactionTypeCode" type="xsd:string"/>
+<xsd:element name="EpiInstructionCode" type="xsd:string"/>
+<xsd:element name="EpiRemittanceInfoIdentifier" type="EpiISN">
+<xsd:annotation>
+<xsd:documentation>Attribute: IdentificationSchemeName</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="EpiInstructedAmount" type="EpiCurr">
+<xsd:annotation>
+<xsd:documentation>Attribute: AmountCurrencyIdentifier</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="EpiCharge" type="EpiCh">
+<xsd:annotation>
+<xsd:documentation>Attribute: ChargeOption</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+<xsd:element name="EpiDateOptionDate" type="EpiFormat">
+<xsd:annotation>
+<xsd:documentation>Attribute: Format</xsd:documentation>
+</xsd:annotation>
+</xsd:element>
+</xsd:schema>

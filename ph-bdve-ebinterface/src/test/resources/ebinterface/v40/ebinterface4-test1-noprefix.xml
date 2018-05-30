@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Invoice xmlns="http://www.ebinterface.at/schema/4p0/" DocumentTitle="DEMO-Rechnung"
+  GeneratingSystem="Händisch erzeugt" DocumentType="Invoice" InvoiceCurrency="EUR" Language="ger"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <InvoiceNumber>2012-0001</InvoiceNumber>
+  <InvoiceDate>2012-01-17</InvoiceDate>
+  <Delivery>
+    <Date>2012-01-17</Date>
+  </Delivery>
+  <Biller>
+    <VATIdentificationNumber>ATU62698637</VATIdentificationNumber>
+    <Address>
+      <Name>Irgendeine Firma</Name>
+      <Street>In einer Straße 3</Street>
+      <Town>Wien</Town>
+      <ZIP>1010</ZIP>
+      <Country CountryCode="AT">Österreich</Country>
+      <Phone>+4312345678</Phone>
+      <Email>office@helger.com</Email>
+      <Contact>Hr. Müller</Contact>
+    </Address>
+  </Biller>
+  <InvoiceRecipient>
+    <VATIdentificationNumber>00000000</VATIdentificationNumber>
+    <BillersInvoiceRecipientID>123123</BillersInvoiceRecipientID>
+    <Address>
+      <Salutation>Firma</Salutation>
+      <Name>Max Mustermann</Name>
+      <Street>Kundenstrasse 1</Street>
+      <Town>Kaufort</Town>
+      <ZIP>1234</ZIP>
+      <Country>AT</Country>
+      <Contact>Max Mustermann</Contact>
+    </Address>
+  </InvoiceRecipient>
+  <Details>
+    <HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</HeaderDescription>
+    <ItemList>
+      <ListLineItem>
+        <PositionNumber>1</PositionNumber>
+        <Description>ebInterface Beratung</Description>
+        <ArticleNumber ArticleNumberType="BillersArticleNumber">4711</ArticleNumber>
+        <Quantity Unit="Tag">0.50</Quantity>
+        <UnitPrice>400.00</UnitPrice>
+        <TaxRate>20.00</TaxRate>
+        <DiscountFlag>false</DiscountFlag>
+        <LineItemAmount>200.00</LineItemAmount>
+      </ListLineItem>
+    </ItemList>
+    <FooterDescription>Wir danken für Ihren Auftrag.</FooterDescription>
+  </Details>
+  <Tax>
+    <VAT>
+      <Item>
+        <TaxedAmount>200.00</TaxedAmount>
+        <TaxRate>20.00</TaxRate>
+        <Amount>40.00</Amount>
+      </Item>
+    </VAT>
+  </Tax>
+  <TotalGrossAmount>240.00</TotalGrossAmount>
+  <PaymentMethod ConsolidatorPayable="false" xsi:type="UniversalBankTransactionType">
+    <BeneficiaryAccount>
+      <BankName>Volksbank Wien</BankName>
+      <BankCode BankCodeType="AT">43000</BankCode>
+      <BankAccountNr>12345678</BankAccountNr>
+      <BankAccountOwner>Irgendeine Firma GmbH</BankAccountOwner>
+    </BeneficiaryAccount>
+  </PaymentMethod>
+  <PaymentConditions>
+    <DueDate>2011-09-12</DueDate>
+  </PaymentConditions>
+  <PresentationDetails>
+    <URL>www.helger.com</URL>
+    <SuppressZero>true</SuppressZero>
+  </PresentationDetails>
+</Invoice>

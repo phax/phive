@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Invoice xmlns="http://www.ebinterface.at/schema/5p0/" 
+         GeneratingSystem="Test file" 
+         DocumentType="Invoice"
+         InvoiceCurrency="EUR"
+         DocumentTitle="DEMO-Rechnung"
+         Language="ger">
+  <InvoiceNumber>2017-0001</InvoiceNumber>
+  <InvoiceDate>2017-12-10</InvoiceDate>
+  <Delivery>
+    <Date>2016-12-10</Date>
+  </Delivery>
+  <Biller>
+    <VATIdentificationNumber>ATU62698637</VATIdentificationNumber>
+    <Address>
+      <Name>Bogad &amp; Partner Consulting OG</Name>
+      <Street>Steinbachstraße 17</Street>
+      <Town>Mauerbach</Town>
+      <ZIP>3001</ZIP>
+      <Country>AT</Country>
+      <Phone>+43 (699) 17925908</Phone>
+      <Email>office@bogad.at</Email>
+    </Address>
+    <Contact>
+      <Name>Josef Bogad</Name>
+      <Email>josef@bogad.at</Email>
+    </Contact>
+  </Biller>
+  <InvoiceRecipient>
+    <VATIdentificationNumber>00000000</VATIdentificationNumber>
+    <Address>
+      <Name>Mustermaniac</Name>
+      <TradingName>Max Mustermann GmbH</TradingName>
+      <Street>Kundenstrasse 1</Street>
+      <Town>Kaufort</Town>
+      <ZIP>1234</ZIP>
+      <Country>AT</Country>
+    </Address>
+    <Contact>
+      <Salutation>Firma</Salutation>
+      <Name>Max Mustermann</Name>
+      <Email>max@mustermann.at</Email>
+    </Contact>
+    <BillersInvoiceRecipientID>123123</BillersInvoiceRecipientID>
+  </InvoiceRecipient>
+  <Details>
+    <HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</HeaderDescription>
+    <ItemList>
+      <ListLineItem>
+        <PositionNumber>1</PositionNumber>
+        <Description>ebInterface Beratung</Description>
+        <ArticleNumber>4711</ArticleNumber>
+        <Quantity Unit="Tag">0.50</Quantity>
+        <UnitPrice>400.00</UnitPrice>
+        <ReductionAndSurchargeListLineItemDetails>
+          <ReductionListLineItem>
+            <BaseAmount>200.00</BaseAmount>
+            <Percentage>0.00</Percentage>
+          </ReductionListLineItem>
+        </ReductionAndSurchargeListLineItemDetails>
+        <TaxItem>
+          <TaxableAmount>200.00</TaxableAmount>
+          <TaxPercent TaxCategoryCode="S">20</TaxPercent>
+          <TaxAmount>40.00</TaxAmount>
+        </TaxItem>
+        <LineItemAmount>200.00</LineItemAmount>
+      </ListLineItem>
+      <ListLineItem>
+        <PositionNumber>2</PositionNumber>
+        <Description>ebInterface Upgrade</Description>
+        <ArticleNumber>4712</ArticleNumber>
+        <Quantity Unit="Stunde">3</Quantity>
+        <UnitPrice>120.00</UnitPrice>
+        <ReductionAndSurchargeListLineItemDetails>
+          <SurchargeListLineItem>
+            <BaseAmount>360.00</BaseAmount>
+            <Amount>10.00</Amount>
+            <Comment>AttributeFormDefault-unqualified</Comment>
+          </SurchargeListLineItem>
+        </ReductionAndSurchargeListLineItemDetails>
+        <TaxItem>
+          <TaxableAmount>370.00</TaxableAmount>
+          <TaxPercent TaxCategoryCode="E">0</TaxPercent>
+          <TaxAmount>0</TaxAmount>
+          <Comment>Steuerbefreit auf Grund von UStG §6 (1)</Comment>
+        </TaxItem>
+        <LineItemAmount>370.00</LineItemAmount>
+      </ListLineItem>
+    </ItemList>
+    <FooterDescription>Wir danken für Ihren Auftrag.</FooterDescription>
+  </Details>
+  <Tax>
+    <TaxItem>
+      <TaxableAmount>200.00</TaxableAmount>
+      <TaxPercent TaxCategoryCode="S">20</TaxPercent>
+      <TaxAmount>40.00</TaxAmount>
+    </TaxItem>
+    <TaxItem>
+      <TaxableAmount>370.00</TaxableAmount>
+      <TaxPercent TaxCategoryCode="E">0</TaxPercent>
+      <TaxAmount>0</TaxAmount>
+    </TaxItem>
+  </Tax>
+  <TotalGrossAmount>610.00</TotalGrossAmount>
+  <PrepaidAmount>2</PrepaidAmount>
+  <PayableAmount>608.00</PayableAmount>
+  <PaymentMethod>
+    <UniversalBankTransaction>
+      <BeneficiaryAccount>
+        <BankName>Volksbank Wien</BankName>
+        <IBAN>AT611904300234573201</IBAN>
+        <BankAccountOwner>Bogad &amp; Partner Consulting OG</BankAccountOwner>
+      </BeneficiaryAccount>
+    </UniversalBankTransaction>
+  </PaymentMethod>
+  <PaymentConditions>
+    <DueDate>2011-09-12</DueDate>
+  </PaymentConditions>
+</Invoice>

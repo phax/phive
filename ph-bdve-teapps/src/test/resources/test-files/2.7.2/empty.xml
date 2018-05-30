@@ -38,7 +38,7 @@
       <COUNT/>
       <TOTAL>
         <!-- Total summary of events currency amount in batch -->
-        <AMOUNT SIGN="" VAT=""/>
+        <AMOUNT SIGN="+" VAT="EXCLUDED"/>
       </TOTAL>
       <!-- Batch size in bytes, the total size in bytes of all unzipped files -->
       <BATCH_SIZE/>
@@ -60,13 +60,13 @@
     <TIMESTAMP/>
     <BLOCK_RULES>
       <!-- Transaction type: 00 = invoice, mandatory -->
-      <TRANSACTION_TYPE/>
+      <TRANSACTION_TYPE>00</TRANSACTION_TYPE>
       <!-- Action: 00 = addition, mandatory -->
-      <BLOCK_ACTION/>
+      <BLOCK_ACTION>00</BLOCK_ACTION>
       <!-- Batch-specific method of interchange: 01 = printing of sales invoice -->
-      <BLOCK_METHOD/>
+      <BLOCK_METHOD>01</BLOCK_METHOD>
       <!-- Data format: value is TEAPPSXML, when data is valid against Invoicecenter's XML- description , mandatory -->
-      <BLOCK_FORMAT/>
+      <BLOCK_FORMAT>TEAPPSXML</BLOCK_FORMAT>
       <!-- TEAPPSXML-description version -->
       <FORMAT_VERSION/>
       <!-- Used character set: ISO-8859-1 (For the moment only supported) -->
@@ -85,7 +85,7 @@
           <!-- Service action: 0 = normal, E = special work, T = test print, J = transfer test, no printing -->
           <SERVICE_ACTIONS/>
           <!-- Letter class: 1 = 1.class letter or 2 = 2.class letter -->
-          <LETTER_CLASS/>
+          <LETTER_CLASS>1</LETTER_CLASS>
           <!-- Archive application id -->
           <APM_ARCHIVE_CODE/>
           <!-- Cover page template id -->
@@ -108,7 +108,7 @@
       <COUNT/>
       <!-- Event total currency amount in batch, all events summarized -->
       <TOTAL>
-        <AMOUNT SIGN="" VAT=""/>
+        <AMOUNT SIGN="+" VAT="EXCLUDED"/>
       </TOTAL>
     </BLOCK_SUMMARY>
     <LINKS>
@@ -152,9 +152,9 @@
             <INVOICE_DECADE_AND_YEAR/>
             <!-- Invoice VAT period -->
             <VAT_SEASON>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </VAT_SEASON>
             <!-- Ledger code type -->
             <LEDGER_DIMENSION_TYPE/>
@@ -183,10 +183,10 @@
             <CONTROL_STAMP>
               <CONTROL_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </CONTROL_DATE>
               <CONTROL_USER/>
@@ -195,10 +195,10 @@
             <ACCEPTANCE_STAMP>
               <ACCEPTANCE_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </ACCEPTANCE_DATE>
               <ACCEPT_USER/>
@@ -214,10 +214,10 @@
             <!-- Proposed payment date -->
             <PAYMENT_DATE_PROPOSAL>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </PAYMENT_DATE_PROPOSAL>
             <!-- Organisation code -->
@@ -237,15 +237,15 @@
               <!-- Payment date -->
               <PAYMENT_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </PAYMENT_DATE>
               <!-- Payment sum -->
               <PAYMENT_TOTAL>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </PAYMENT_TOTAL>
               <!-- Payee bank information -->
               <PAYEE_BANKS>
@@ -264,10 +264,10 @@
               <!-- Transaction date, voucher date -->
               <TRANSACTION_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </TRANSACTION_DATE>
               <!-- Payment transaction creator information -->
@@ -285,7 +285,7 @@
           <!-- TYPE-attribute defines appendix type, alternatives: INVOICE_IMAGE (= image), VOUCHER_MEMO (= other appendix) or SCANNED (= scanned image), SIGNATURE_VALIDATION (= validation file), SIGNATURE (= separate signature file), INVOICE_DATA (= original file), mandatory -->
           <!-- SOURCE-attribute defines appendix source, alternatives: ORIGINAL (= payee created image or appendix), IC_IMAGE (= InvoiceCenter created invoice image) or IC (= InvoiceCenter created attachment), optional -->
           <!-- SIGNED-attribute defines type of signature, alternatives: YES (= signed, details of type missing), XADES (= signed with type XADES), CADES (= signed with type CADES) or NO (= not signed), optional -->
-          <IMAGE_CONTROL TYPE="" SOURCE="" SIGNED="">
+          <IMAGE_CONTROL TYPE="SCANNED" SOURCE="IC" SIGNED="NO">
             <!-- Directory name -->
             <IMAGE_DIRECTORY/>
             <!-- File name including extension, in optional IMAGE_TYPE -attribute one should provide file type if it is different from extension -->
@@ -321,22 +321,22 @@
                 <FINANCE_TYPE/>
                 <!-- Date -->
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
                 <!-- Description -->
                 <EXPLANATION/>
                 <!-- Sum, mandatory VAT -attribute -->
                 <FINANCE_AMOUNT>
-                  <AMOUNT SIGN="" VAT=""/>
+                  <AMOUNT SIGN="+" VAT="EXCLUDED"/>
                 </FINANCE_AMOUNT>
               </FINANCE_INFO>
             </FINANCE>
             <!-- Full cost estimate, mandatory VAT -attribute -->
             <TOTAL_COST_ESTIMATION>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </TOTAL_COST_ESTIMATION>
             <!-- Invoicer/Invoice creator -->
             <INVOICE_MAKER>
@@ -348,10 +348,10 @@
                 </USER>
                 <!-- Time stamp -->
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
                 <TIME>
                   <HOUR/>
@@ -379,10 +379,10 @@
                 </USER>
                 <!-- Time stamp -->
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
                 <TIME>
                   <HOUR/>
@@ -410,10 +410,10 @@
                 </USER>
                 <!-- Time stamp -->
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
                 <TIME>
                   <HOUR/>
@@ -440,13 +440,13 @@
           <!-- Invoice number (unique identifier in payee's system), mandatory -->
           <INVOICE_ID/>
           <!-- Invoice processing type identifier: 00 = normal invoice -->
-          <PROCESS_CODE/>
+          <PROCESS_CODE>00</PROCESS_CODE>
           <!-- Invoice type code: 00 = sales invoice, 01 = credit note, 02 = collecting invoice, 03 = transit invoice, 04 = credit invoice, 05 = credit of transit invoice, 06 = interest invoice, 07 = credit of interest invoice, 08 = advance notice, 09 = request for payment, 20 = vehicle invoice, 50 = order, 51= order confirmation, 60 = purchase credit invoice, 90 = travel plan, 91= travel invoice, 99 = test invoice. Optional attribute EXTENSION, that has value 00 for non taxated external invoice. Optional attribute CODE offer possibility to specify invoice type if needed. -->
-          <INVOICE_TYPE EXTENSION="" CODE=""/>
+          <INVOICE_TYPE EXTENSION="" CODE="">00</INVOICE_TYPE>
           <!-- Invoice method of charge: 00 = normal, 01 = direct payment/direct debit -->
-          <METHOD_OF_CHARGE/>
+          <METHOD_OF_CHARGE>00</METHOD_OF_CHARGE>
           <!-- Invoice delivery method: 01 = printing of sales invoice -->
-          <METHOD_OF_INTERCHANGE/>
+          <METHOD_OF_INTERCHANGE>01</METHOD_OF_INTERCHANGE>
           <!-- Invoice status information -->
           <INVOICE_STATUS STATUS_CODE=""/>
           <!-- Descriptive header for the invoice -->
@@ -456,68 +456,70 @@
           <!-- Credit note date -->
           <CREDIT_INVOICE_DATE>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
           </CREDIT_INVOICE_DATE>
           <!-- Credit note due date -->
           <CREDIT_INVOICE_DUE_DATE>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
           </CREDIT_INVOICE_DUE_DATE>
           <!-- Invoice date, mandatory -->
           <INVOICE_DATE>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
           </INVOICE_DATE>
           <!-- Invoice due date -->
           <DUE_DATE>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
             <!-- Alternatives: DATE or VERBOSE_DATE, including for e.g text "Immediately!" -->
+            <!--  
             <VERBOSE_DATE/>
+            -->
           </DUE_DATE>
           <!-- Time to reclaim -->
           <REMARK_TIME/>
           <!-- Next due date or due dates -->
           <NEXT_DUE_DATE>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
           </NEXT_DUE_DATE>
           <!-- Invoice value date -->
           <VALUE_DATE>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
           </VALUE_DATE>
           <!-- Period start date -->
           <START_PERIOD>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
             <TIME>
               <HOUR/>
@@ -530,10 +532,10 @@
           <!-- Actual delivery date -->
           <DELIVERY_DATE>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
           </DELIVERY_DATE>
           <!-- Terms of delivery information -->
@@ -541,10 +543,10 @@
           <!-- Period end date -->
           <END_PERIOD>
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
             <TIME>
               <HOUR/>
@@ -561,35 +563,35 @@
           <CASH_DISCOUNT>
             <!-- Cash date -->
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
             <!-- Cash discount-% -->
-            <PER_CENT/>
+            <PER_CENT>0.00</PER_CENT>
             <!-- Cash discount amount, mandatory VAT -attribute -->
             <CASH_DISCOUNT_AMOUNT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </CASH_DISCOUNT_AMOUNT>
             <!-- Cash discount tax amount in applied tax bases -->
             <VAT>
               <!-- Tax-% -->
-              <RATE/>
+              <RATE>12</RATE>
               <!-- Tax amount -->
               <VAT_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </VAT_AMOUNT>
               <!-- Free text -->
               <FREE_TEXT TEXT_TYPE=""/>
             </VAT>
             <!-- Tax amount for the sum including cash discount -->
             <VAT_TOTAL>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </VAT_TOTAL>
             <!-- Invoice total sum including cash discount, mandatory VAT -attribute -->
             <INVOICE_TOTAL_WITH_CASH_DISCOUNT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </INVOICE_TOTAL_WITH_CASH_DISCOUNT>
             <!-- Cash discount text -->
             <FREE_TEXT TEXT_TYPE=""/>
@@ -597,10 +599,10 @@
           <!-- Overdue interest or fine -->
           <PAYMENT_OVERDUE_FINE>
             <!-- Overdue interest-% -->
-            <INTEREST_RATE/>
+            <INTEREST_RATE>5</INTEREST_RATE>
             <!-- Extra charge -->
             <SURCHARGE>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </SURCHARGE>
             <!-- Interest, free text -->
             <FREE_TEXT TEXT_TYPE=""/>
@@ -610,13 +612,13 @@
             <!-- Currency code -->
             <CODE/>
             <!-- Currency rate -->
-            <RATE/>
+            <RATE>12</RATE>
             <!-- Date for the Currency rate -->
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
           </CURRENCY>
           <!-- Trade code -->
@@ -637,10 +639,10 @@
             <!-- Order date -->
             <ORDER_DATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </ORDER_DATE>
             <!-- Order reference -->
@@ -655,10 +657,10 @@
             <!-- Order confirmation date -->
             <ORDER_CONFIRMATION_DATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </ORDER_CONFIRMATION_DATE>
           </ORDER_CONFIRMATION>
@@ -669,10 +671,10 @@
             <!-- Contract date -->
             <CONTRACT_DATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </CONTRACT_DATE>
             <!-- Contract period -->
@@ -680,10 +682,10 @@
               <!-- Period start date -->
               <START_PERIOD>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
                 <TIME>
                   <HOUR/>
@@ -696,10 +698,10 @@
               <!-- Period end date -->
               <END_PERIOD>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
                 <TIME>
                   <HOUR/>
@@ -738,10 +740,10 @@
             <LOCATION LOCATION_ID=""/>
             <!-- Transportation related date -->
             <DATE>
-              <DAY/>
-              <MONTH/>
-              <CENTURY/>
-              <DECADE_AND_YEAR/>
+              <DAY>6</DAY>
+              <MONTH>7</MONTH>
+              <CENTURY>21</CENTURY>
+              <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
             </DATE>
             <!-- Country of origin -->
             <COUNTRY_OF_ORIGIN>
@@ -773,65 +775,65 @@
             <!-- Customs tariff list number -->
             <CN_NAME/>
             <!-- Box number -->
-            <PACK_QUANTITY Q_UNIT="" SIGN=""/>
+            <PACK_QUANTITY Q_UNIT="" SIGN="+">42</PACK_QUANTITY>
             <!-- Gross weight -->
-            <GROSS_WEIGHT Q_UNIT="" SIGN=""/>
+            <GROSS_WEIGHT Q_UNIT="" SIGN="+">42</GROSS_WEIGHT>
             <!-- Net weight -->
-            <NET_WEIGHT Q_UNIT="" SIGN=""/>
+            <NET_WEIGHT Q_UNIT="" SIGN="+">42</NET_WEIGHT>
             <!-- Measures -->
             <MEASUREMENTS>
               <!-- Length -->
-              <LENGTH Q_UNIT="" SIGN=""/>
+              <LENGTH Q_UNIT="" SIGN="+">42</LENGTH>
               <!-- Width -->
-              <WIDTH Q_UNIT="" SIGN=""/>
+              <WIDTH Q_UNIT="" SIGN="+">42</WIDTH>
               <!-- Height -->
-              <HEIGHT Q_UNIT="" SIGN=""/>
+              <HEIGHT Q_UNIT="" SIGN="+">42</HEIGHT>
             </MEASUREMENTS>
             <!-- Measures as text string, alternative for MEASUREMENTS -structure -->
             <MEASUREMENT_TEXT/>
             <!-- Volume -->
-            <VOLUME Q_UNIT="" SIGN=""/>
+            <VOLUME Q_UNIT="" SIGN="+">42</VOLUME>
           </PACKING_MARKS>
           <!-- Packing marks altogether -->
           <TOTAL_PACKING_MARKS>
             <!-- Box number -->
-            <TOTAL_PACK_QUANTITY Q_UNIT="" SIGN=""/>
+            <TOTAL_PACK_QUANTITY Q_UNIT="" SIGN="+">42</TOTAL_PACK_QUANTITY>
             <!-- Gross weight -->
-            <TOTAL_GROSS_WEIGHT Q_UNIT="" SIGN=""/>
+            <TOTAL_GROSS_WEIGHT Q_UNIT="" SIGN="+">42</TOTAL_GROSS_WEIGHT>
             <!-- Net weight -->
-            <TOTAL_NET_WEIGHT Q_UNIT="" SIGN=""/>
+            <TOTAL_NET_WEIGHT Q_UNIT="" SIGN="+">42</TOTAL_NET_WEIGHT>
             <!-- Measures -->
             <TOTAL_MEASUREMENTS>
               <!-- Length -->
-              <LENGTH Q_UNIT="" SIGN=""/>
+              <LENGTH Q_UNIT="" SIGN="+">42</LENGTH>
               <!-- Width -->
-              <WIDTH Q_UNIT="" SIGN=""/>
+              <WIDTH Q_UNIT="" SIGN="+">42</WIDTH>
               <!-- Height -->
-              <HEIGHT Q_UNIT="" SIGN=""/>
+              <HEIGHT Q_UNIT="" SIGN="+">42</HEIGHT>
             </TOTAL_MEASUREMENTS>
             <!-- Measures as text string, alternative for TOTAL_MEASUREMENTS -structure -->
             <TOTAL_MEASUREMENT_TEXT/>
             <!-- Volume -->
-            <TOTAL_VOLUME Q_UNIT="" SIGN=""/>
+            <TOTAL_VOLUME Q_UNIT="" SIGN="+">42</TOTAL_VOLUME>
           </TOTAL_PACKING_MARKS>
           <!-- Credit card invoice information -->
           <CREDIT_INFORMATION>
             <!-- Credit limit -->
             <CREDIT_LIMIT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </CREDIT_LIMIT>
             <!-- Interest -->
             <INTEREST>
-              <PER_CENT/>
-              <AMOUNT SIGN="" VAT=""/>
+              <PER_CENT>0.00</PER_CENT>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </INTEREST>
             <!-- Available limit -->
             <OPERATION_LIMIT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </OPERATION_LIMIT>
             <!-- Monthly instalment -->
             <INSTALMENT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </INSTALMENT>
           </CREDIT_INFORMATION>
           <!-- Factoring invoice information -->
@@ -881,7 +883,7 @@
               <ACCOUNT_2 TITLE=""/>
               <!-- Booked monetary amount, mandatory VAT-attribute -->
               <ACCOUNT_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </ACCOUNT_AMOUNT>
               <!-- Basic account list, short account number -->
               <SHORT_ACCOUNT_ID/>
@@ -903,10 +905,10 @@
               <CONTROL_STAMP>
                 <CONTROL_DATE>
                   <DATE>
-                    <DAY/>
-                    <MONTH/>
-                    <CENTURY/>
-                    <DECADE_AND_YEAR/>
+                    <DAY>6</DAY>
+                    <MONTH>7</MONTH>
+                    <CENTURY>21</CENTURY>
+                    <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                   </DATE>
                 </CONTROL_DATE>
                 <CONTROL_USER/>
@@ -915,10 +917,10 @@
               <ACCEPTANCE_STAMP>
                 <ACCEPTANCE_DATE>
                   <DATE>
-                    <DAY/>
-                    <MONTH/>
-                    <CENTURY/>
-                    <DECADE_AND_YEAR/>
+                    <DAY>6</DAY>
+                    <MONTH>7</MONTH>
+                    <CENTURY>21</CENTURY>
+                    <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                   </DATE>
                 </ACCEPTANCE_DATE>
                 <ACCEPT_USER/>
@@ -944,7 +946,7 @@
             <!-- Header, INFO_TYPE-attribute includes header code value, more information in TEAPPSXML Implementation Guide -->
             <TITLE INFO_TYPE=""/>
             <!-- Contents -->
-            <CONTENT Q_UNIT="" SIGN=""/>
+            <CONTENT Q_UNIT="" SIGN="+"/>
           </HEADER_INFO>
           <!-- Link, optional attributes TYPE and OBJECT -->
           <LINKS>
@@ -970,7 +972,7 @@
             <!-- Bank group identifier -->
             <BANK_CODE/>
             <!-- Currency id-code: 0 = mk, 1 = euro -->
-            <CURRENCY_ID/>
+            <CURRENCY_ID>1</CURRENCY_ID>
             <!-- Reserved -->
             <INRESERVE/>
           </BANK_BATCH>
@@ -979,23 +981,23 @@
             <!-- Record identifier: 2 = eInvoice, 3 = direct debit -->
             <RECORD_TYPE/>
             <!-- Transaction type code: 50 = charge request, 54 = eInvoice, 55 = charge, 56 = credit, 52 = direct payment -->
-            <TRANSACTION_TYPE_CODE/>
+            <TRANSACTION_TYPE_CODE>50</TRANSACTION_TYPE_CODE>
             <!-- Due date -->
             <BANK_DUE_DATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </BANK_DUE_DATE>
             <!-- Processing identifier: 0 = charge, 1 = cancellation, 2 = credit -->
-            <PROCESSING_CODE/>
+            <PROCESSING_CODE>0</PROCESSING_CODE>
             <!-- Payee account number -->
             <PAYER_ACCOUNT_NUMBER/>
             <!-- Monetary amount -->
             <TOTAL>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </TOTAL>
             <!-- Payment subject -->
             <PAYMENT_SUBJECT_CODE/>
@@ -1877,10 +1879,10 @@
               <!-- Actual delivery date -->
               <DELIVERY_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </DELIVERY_DATE>
               <!-- EAN-code -->
@@ -1918,16 +1920,16 @@
             <!-- Measures and dates -->
             <LOCATION_ID>
               <!-- Used quantity, Q_UNIT -quantity unit attribute, SIGN -attribute for plus/minus sign -->
-              <USED_QUANTITY Q_UNIT="" SIGN=""/>
+              <USED_QUANTITY Q_UNIT="" SIGN="+">42</USED_QUANTITY>
               <!-- Earlier measurement -->
               <PREVIOUS_METER_READING/>
               <!-- Previous reading date -->
               <PREVIOUS_METER_READING_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </PREVIOUS_METER_READING_DATE>
               <!-- New metering value -->
@@ -1935,26 +1937,26 @@
               <!-- New reading date -->
               <LATEST_METER_READING_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </LATEST_METER_READING_DATE>
               <!-- Invoiced amount, Q_UNIT -attribute includes unit for amount, SIGN -attribute used for plus/minus sign -->
-              <CALCULATED_QUANTITY Q_UNIT="" SIGN=""/>
+              <CALCULATED_QUANTITY Q_UNIT="" SIGN="+">42</CALCULATED_QUANTITY>
               <!-- Average price -->
               <AVERAGE_PRICE>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </AVERAGE_PRICE>
             </LOCATION_ID>
             <!-- Period start date -->
             <START_PERIOD>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
               <TIME>
                 <HOUR/>
@@ -1967,10 +1969,10 @@
             <!-- Period end date -->
             <END_PERIOD>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
               <TIME>
                 <HOUR/>
@@ -1981,21 +1983,21 @@
             <!-- Quantity -->
             <QUANTITY>
               <!-- Offered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <OFFERED Q_UNIT="" SIGN=""/>
+              <OFFERED Q_UNIT="" SIGN="+">42</OFFERED>
               <!-- Ordered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <ORDERED Q_UNIT="" SIGN=""/>
+              <ORDERED Q_UNIT="" SIGN="+">42</ORDERED>
               <!-- Confirmed amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <CONFIRMED Q_UNIT="" SIGN=""/>
+              <CONFIRMED Q_UNIT="" SIGN="+">42</CONFIRMED>
               <!-- Delivered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <DELIVERED Q_UNIT="" SIGN=""/>
+              <DELIVERED Q_UNIT="" SIGN="+">42</DELIVERED>
               <!-- Invoiced amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <CHARGED Q_UNIT="" SIGN=""/>
+              <CHARGED Q_UNIT="" SIGN="+">42</CHARGED>
               <!-- Postdelivered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <POSTDELIVERED Q_UNIT="" SIGN=""/>
+              <POSTDELIVERED Q_UNIT="" SIGN="+">42</POSTDELIVERED>
               <!-- Amount requested for credit. Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <CREDIT_REQUESTED Q_UNIT="" SIGN=""/>
+              <CREDIT_REQUESTED Q_UNIT="" SIGN="+">42</CREDIT_REQUESTED>
               <!-- Returned amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign -->
-              <RETURNED Q_UNIT="" SIGN=""/>
+              <RETURNED Q_UNIT="" SIGN="+">42</RETURNED>
             </QUANTITY>
             <!-- Sales contact -->
             <SALES_PERSON/>
@@ -2018,10 +2020,10 @@
             <!-- Order date, preferrebly use ORDER_INFORMATION -structure -->
             <ORDER_DATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </ORDER_DATE>
             <!-- Order information -->
@@ -2032,10 +2034,10 @@
               <!-- Order date -->
               <ORDER_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </ORDER_DATE>
               <!-- Order reference -->
@@ -2050,10 +2052,10 @@
               <!-- Contract date -->
               <CONTRACT_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </CONTRACT_DATE>
               <!-- Contract period -->
@@ -2061,10 +2063,10 @@
                 <!-- Period start date -->
                 <START_PERIOD>
                   <DATE>
-                    <DAY/>
-                    <MONTH/>
-                    <CENTURY/>
-                    <DECADE_AND_YEAR/>
+                    <DAY>6</DAY>
+                    <MONTH>7</MONTH>
+                    <CENTURY>21</CENTURY>
+                    <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                   </DATE>
                   <TIME>
                     <HOUR/>
@@ -2077,10 +2079,10 @@
                 <!-- Period end date -->
                 <END_PERIOD>
                   <DATE>
-                    <DAY/>
-                    <MONTH/>
-                    <CENTURY/>
-                    <DECADE_AND_YEAR/>
+                    <DAY>6</DAY>
+                    <MONTH>7</MONTH>
+                    <CENTURY>21</CENTURY>
+                    <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                   </DATE>
                   <TIME>
                     <HOUR/>
@@ -2117,10 +2119,10 @@
             <!-- Transport note date -->
             <TRANSPORT_DATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </TRANSPORT_DATE>
             <!-- Discharge location -->
@@ -2136,24 +2138,24 @@
               <!-- Customs tariff list name -->
               <CN_NAME/>
               <!-- Number of Boxes/packings -->
-              <PACK_QUANTITY Q_UNIT="" SIGN=""/>
+              <PACK_QUANTITY Q_UNIT="" SIGN="+">42</PACK_QUANTITY>
               <!-- Gross weight -->
-              <GROSS_WEIGHT Q_UNIT="" SIGN=""/>
+              <GROSS_WEIGHT Q_UNIT="" SIGN="+">42</GROSS_WEIGHT>
               <!-- Net weight -->
-              <NET_WEIGHT Q_UNIT="" SIGN=""/>
+              <NET_WEIGHT Q_UNIT="" SIGN="+">42</NET_WEIGHT>
               <!-- Measurements -->
               <MEASUREMENTS>
                 <!-- Length -->
-                <LENGTH Q_UNIT="" SIGN=""/>
+                <LENGTH Q_UNIT="" SIGN="+">42</LENGTH>
                 <!-- Width -->
-                <WIDTH Q_UNIT="" SIGN=""/>
+                <WIDTH Q_UNIT="" SIGN="+">42</WIDTH>
                 <!-- Height -->
-                <HEIGHT Q_UNIT="" SIGN=""/>
+                <HEIGHT Q_UNIT="" SIGN="+">42</HEIGHT>
               </MEASUREMENTS>
               <!-- Measures as text string, alternative for MEASUREMENTS -structure -->
               <MEASUREMENT_TEXT/>
               <!-- Volume -->
-              <VOLUME Q_UNIT="" SIGN=""/>
+              <VOLUME Q_UNIT="" SIGN="+">42</VOLUME>
             </PACKING_MARKS>
             <!-- Unit, preferrebly use element's Q_UNIT -attribute -->
             <UNIT/>
@@ -2164,38 +2166,38 @@
               <!-- Currency code -->
               <CODE/>
               <!-- Currency rate -->
-              <RATE/>
+              <RATE>12</RATE>
               <!-- Currency rate date -->
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </CURRENCY>
             <!-- Unit price for product, VAT -attribute, mandatory, PR_UNIT - attribute for pricing unit -->
             <PRICE_PER_UNIT PR_UNIT="">
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </PRICE_PER_UNIT>
             <!-- Discount/Unit-price, VAT -attribute, mandatory -->
             <DISCOUNT_FROM_PRICE_PER_UNIT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </DISCOUNT_FROM_PRICE_PER_UNIT>
             <!-- Discounted unit-price, VAT -attribute mandatory -->
             <PRICE_PER_UNIT_WITH_DISCOUNT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </PRICE_PER_UNIT_WITH_DISCOUNT>
             <!-- Unit price including discounts and extras, VAT -attribute mandatory -->
             <PRICE_PER_UNIT_NET>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </PRICE_PER_UNIT_NET>
             <!-- Wholesale price, VAT -attribute mandatory -->
             <WHOLESALE_PRICE>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </WHOLESALE_PRICE>
             <!-- List price, VAT -attribute mandatory -->
             <LIST_PRICE>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </LIST_PRICE>
             <!-- Row discount for product -->
             <!-- Type of discount in TYPE-attribute: 00/empty = normal, 01 = cash discount, 02 = contract discount -->
@@ -2203,10 +2205,10 @@
               <!-- Discount description -->
               <DISCOUNT_NAME/>
               <!-- Discount-% -->
-              <PER_CENT/>
+              <PER_CENT>0.00</PER_CENT>
               <!-- Row discount total, VAT -attribute mandatory -->
               <DISCOUNT_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </DISCOUNT_AMOUNT>
             </DISCOUNT>
             <!-- Row level extra or other allowance than discount-->
@@ -2214,49 +2216,49 @@
               <!-- Description -->
               <CHARGE_NAME/>
               <!-- Per cent -->
-              <PER_CENT/>
+              <PER_CENT>0.00</PER_CENT>
               <!-- From total, VAT -attribute mandatory -->
               <CHARGE_FROM_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </CHARGE_FROM_AMOUNT>
               <!-- Total, VAT -attribute mandatory -->
               <CHARGE_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </CHARGE_AMOUNT>
             </ROW_CHARGE>
             <!-- Payable sum, net sum (unit price * amount - discounts/allowances + charges) , VAT -attribute mandatory -->
             <ROW_TOTAL>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </ROW_TOTAL>
             <!-- Net sum in other currency, VAT -attribute mandatory -->
             <ROW_TOTAL_IN_OTHER_CURRENCY>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               <CURRENCY>
                 <CODE/>
-                <RATE/>
+                <RATE>12</RATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </CURRENCY>
             </ROW_TOTAL_IN_OTHER_CURRENCY>
             <!-- Gross sum (unit price * amount), VAT -attribute mandatory -->
             <ROW_AMOUNT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </ROW_AMOUNT>
             <!-- Row sum after discounts before extras, VAT -attribute mandatory -->
             <ROW_TOTAL_WITHOUT_EXTRA_COSTS>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </ROW_TOTAL_WITHOUT_EXTRA_COSTS>
             <!-- Row VAT, optional attribute VAT_TYPE identifier for tax type -->
             <VAT VAT_TYPE="">
               <!-- Row VAT-% -->
-              <RATE/>
+              <RATE>12</RATE>
               <!-- Row VAT-sum -->
               <VAT_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </VAT_AMOUNT>
               <!-- Row VAT, Free text -->
               <FREE_TEXT TEXT_TYPE=""/>
@@ -2264,19 +2266,19 @@
             <!-- Row level insurance information -->
             <INSURANCE>
               <!-- Insurance-% -->
-              <PER_CENT/>
+              <PER_CENT>0.00</PER_CENT>
               <!-- Insurance from sum, VAT -attribute mandatory -->
               <FROM_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </FROM_AMOUNT>
               <!-- Insurance sum, VAT -attribute mandatory -->
               <INSURANCE_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </INSURANCE_AMOUNT>
             </INSURANCE>
             <!-- Information costs, VAT -attribute mandatory -->
             <INFO_COSTS>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </INFO_COSTS>
             <!-- Row currency information -->
             <CURRENCY_INFORMATION>
@@ -2284,18 +2286,18 @@
               <TERM_EXPLANATION/>
               <!-- Original unit price, VAT -attribute mandatory -->
               <FIXED_PRICE_PER_UNIT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </FIXED_PRICE_PER_UNIT>
               <!-- Agreed rate -->
-              <FIXED_EXCHANGE_RATE/>
+              <FIXED_EXCHANGE_RATE>1234.567890</FIXED_EXCHANGE_RATE>
               <!-- Rate at billing time -->
-              <INVOICE_DATE_RATE/>
+              <INVOICE_DATE_RATE>1234.567890</INVOICE_DATE_RATE>
               <!-- Currency code for term -->
               <CURRENCY_CODE/>
               <!-- Currency term variance-% -->
-              <VARIANCE_PER_CENT/>
+              <VARIANCE_PER_CENT>123.45678</VARIANCE_PER_CENT>
               <!-- Currency term binding-% -->
-              <TERM_LINKAGE_PER_CENT/>
+              <TERM_LINKAGE_PER_CENT>123.456</TERM_LINKAGE_PER_CENT>
             </CURRENCY_INFORMATION>
             <!-- Product CN-data -->
             <CN>
@@ -2304,7 +2306,7 @@
               <!-- CN-name -->
               <CN_NAME/>
               <!-- CN-item weight -->
-              <CN_WEIGHT Q_UNIT="" SIGN=""/>
+              <CN_WEIGHT Q_UNIT="" SIGN="+">42</CN_WEIGHT>
               <!-- CN, transportation method, text -->
               <CN_TRANSPORT_TEXT/>
               <!-- CN, origin country, code -->
@@ -2331,69 +2333,69 @@
               <!-- Date for the original invoice -->
               <ORIGINAL_INVOICE_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </ORIGINAL_INVOICE_DATE>
               <!-- Due date for original invoice -->
               <ORIGINAL_DUE_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </ORIGINAL_DUE_DATE>
               <!-- Original invoice total sum, VAT -attribute mandatory -->
               <ORIGINAL_INVOICE_TOTAL>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </ORIGINAL_INVOICE_TOTAL>
               <!-- Original invoice payment reference -->
               <ORIGINAL_PAYMENT_REFERENCE/>
               <!-- Payment sum, VAT -attribute mandatory -->
               <PAID_AMOUNT>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </PAID_AMOUNT>
               <!-- Sum not yet paid, VAT -attribute mandatory -->
               <UNPAID>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </UNPAID>
               <!-- Payment date -->
               <DATE_OF_PAYMENT>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </DATE_OF_PAYMENT>
               <!-- Collection date -->
               <COLLECTION_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </COLLECTION_DATE>
               <!-- Collection time -->
               <COLLECTION_TIMES/>
               <!-- Collection charge, VAT -attribute mandatory -->
               <COLLECTION_SURCHARGE_TOTAL>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </COLLECTION_SURCHARGE_TOTAL>
               <!-- Interest rate -->
-              <INTEREST_RATE/>
+              <INTEREST_RATE>5</INTEREST_RATE>
               <!-- Interest period -->
               <INTEREST_PERIOD>
                 <START_PERIOD>
                   <DATE>
-                    <DAY/>
-                    <MONTH/>
-                    <CENTURY/>
-                    <DECADE_AND_YEAR/>
+                    <DAY>6</DAY>
+                    <MONTH>7</MONTH>
+                    <CENTURY>21</CENTURY>
+                    <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                   </DATE>
                   <TIME>
                     <HOUR/>
@@ -2404,10 +2406,10 @@
                 </START_PERIOD>
                 <END_PERIOD>
                   <DATE>
-                    <DAY/>
-                    <MONTH/>
-                    <CENTURY/>
-                    <DECADE_AND_YEAR/>
+                    <DAY>6</DAY>
+                    <MONTH>7</MONTH>
+                    <CENTURY>21</CENTURY>
+                    <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                   </DATE>
                   <TIME>
                     <HOUR/>
@@ -2420,19 +2422,19 @@
               <NUMBER_OF_INTEREST_DAY/>
               <!-- Interest amount, VAT -attribute mandatory -->
               <INTEREST_CHARGE>
-                <AMOUNT SIGN="" VAT=""/>
+                <AMOUNT SIGN="+" VAT="EXCLUDED"/>
               </INTEREST_CHARGE>
               <!-- Reference -->
               <REFERENCE/>
               <!-- Currency (if different from invoice sum currency) -->
               <CURRENCY>
                 <CODE/>
-                <RATE/>
+                <RATE>12</RATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </CURRENCY>
             </INFORMATION_OF_OVERDUE_PAYMENTS>
@@ -2474,14 +2476,14 @@
               <!-- Arrival date -->
               <ARRIVAL_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </ARRIVAL_DATE>
               <!-- Arrived amount -->
-              <ARRIVED Q_UNIT="" SIGN=""/>
+              <ARRIVED Q_UNIT="" SIGN="+">42</ARRIVED>
               <!-- Receipt identifier -->
               <RECEIPT_ID/>
               <!-- Delivery note identifier (supplier given) -->
@@ -2497,10 +2499,10 @@
             <CONTROL_STAMP>
               <CONTROL_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </CONTROL_DATE>
               <CONTROL_USER/>
@@ -2509,10 +2511,10 @@
             <ACCEPTANCE_STAMP>
               <ACCEPTANCE_DATE>
                 <DATE>
-                  <DAY/>
-                  <MONTH/>
-                  <CENTURY/>
-                  <DECADE_AND_YEAR/>
+                  <DAY>6</DAY>
+                  <MONTH>7</MONTH>
+                  <CENTURY>21</CENTURY>
+                  <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
                 </DATE>
               </ACCEPTANCE_DATE>
               <ACCEPT_USER/>
@@ -2525,42 +2527,42 @@
         <SUMMARY>
           <!-- Product rows together, VAT -attribute mandatory -->
           <ROWS_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </ROWS_TOTAL>
           <!-- Invoice total sum, mandatory element, VAT -attribute mandatory -->
           <!-- INVOICE_TOTAL/AMOUNT with VAT-attributes tells taxable and non-taxable invoice sum -->
           <INVOICE_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </INVOICE_TOTAL>
           <!-- Insurance total, VAT -attribute mandatory -->
           <INSURANCE_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </INSURANCE_TOTAL>
           <!-- Vat sums in different tax base -->
           <!-- Optional attribute VAT_TYPE, identifier for tax type -->
           <VAT_SUMMARY VAT_TYPE="">
             <!-- Tax-% -->
-            <RATE/>
+            <RATE>12</RATE>
             <!-- Basis for tax -->
             <ACCORDING>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </ACCORDING>
             <!-- Additional information for tax base -->
             <VAT_ADDITIONAL_INFO>
               <VAT_INFO>
                 <BASE_DESCRIPTION/>
                 <BASE_AMOUNT>
-                  <AMOUNT SIGN="" VAT=""/>
+                  <AMOUNT SIGN="+" VAT="EXCLUDED"/>
                 </BASE_AMOUNT>
               </VAT_INFO>
             </VAT_ADDITIONAL_INFO>
             <!-- Tax total -->
             <VAT_RATE_TOTAL>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </VAT_RATE_TOTAL>
             <!-- Taxable amount total -->
             <VAT_GROUP_TOTAL>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </VAT_GROUP_TOTAL>
             <!-- Tax account -->
             <DEFAULT_VAT_RATE_ACCOUNT/>
@@ -2571,7 +2573,7 @@
           </VAT_SUMMARY>
           <!-- Tax sum for Invoice -->
           <VAT_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </VAT_TOTAL>
           <!-- Tax account -->
           <DEFAULT_VAT_ACCOUNT/>
@@ -2583,84 +2585,84 @@
             <!-- Discount description -->
             <DISCOUNT_NAME/>
             <!-- Discount-% -->
-            <PER_CENT/>
+            <PER_CENT>0.00</PER_CENT>
             <!-- Total discount, VAT -attribute mandatory -->
             <DISCOUNT_AMOUNT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </DISCOUNT_AMOUNT>
           </DISCOUNT>
           <!-- Invoice discount (from the amount), VAT -attribute mandatory -->
           <DISCOUNTS_FROM_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </DISCOUNTS_FROM_TOTAL>
           <!-- Invoice discount, VAT -attribute mandatory -->
           <DISCOUNTS_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </DISCOUNTS_TOTAL>
           <!-- Total surcharge for the invoice, VAT -attribute mandatory -->
           <SURCHARGE_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </SURCHARGE_TOTAL>
           <!-- Freight (invoice specific), VAT -attribute mandatory -->
           <CARGO>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </CARGO>
           <!-- Extra for delivery (invoice specific), VAT -attribute mandatory -->
           <DELIVERY_EXTRA>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </DELIVERY_EXTRA>
           <!-- Advance payment, VAT -attribute mandatory -->
           <ADVANCE_PAYMENT>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </ADVANCE_PAYMENT>
           <!-- Total interest, VAT -attribute mandatory -->
           <INTEREST_CHARGE>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </INTEREST_CHARGE>
           <!-- Total collection surcharge, VAT -attribute mandatory -->
           <COLLECTION_SURCHARGE_TOTAL>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </COLLECTION_SURCHARGE_TOTAL>
           <!-- Provision -->
           <COMMISSION>
             <!-- Provision name -->
             <COMMISSION_NAME/>
             <!-- Per cent -->
-            <PER_CENT/>
+            <PER_CENT>0.00</PER_CENT>
             <!-- Sum, VAT -attribute mandatory -->
             <COMMISSION_AMOUNT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </COMMISSION_AMOUNT>
           </COMMISSION>
           <!-- Total postage costs, VAT -attribute mandatory -->
           <POSTAGE_COSTS>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </POSTAGE_COSTS>
           <!-- Total processing costs, VAT -attribute mandatory -->
           <PROCESSING_COSTS>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </PROCESSING_COSTS>
           <!-- Invoice total in other currency, VAT -attribute mandatory -->
           <INVOICE_TOTAL_IN_OTHER_CURRENCY>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             <CURRENCY>
               <CODE/>
-              <RATE/>
+              <RATE>12</RATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </CURRENCY>
           </INVOICE_TOTAL_IN_OTHER_CURRENCY>
           <!-- Information costs total, VAT -attribute mandatory -->
           <TOTAL_INFO_COSTS>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </TOTAL_INFO_COSTS>
           <!-- Advance income-tax, VAT -attribute mandatory -->
           <INCOME_OF_TAX_WITHELD_IN_ADVANCE>
-            <AMOUNT SIGN="" VAT=""/>
+            <AMOUNT SIGN="+" VAT="EXCLUDED"/>
           </INCOME_OF_TAX_WITHELD_IN_ADVANCE>
           <!-- Link, optional attributes TYPE and OBJECT -->
           <LINKS>
@@ -2679,23 +2681,23 @@
             <!-- Part due date -->
             <PART_DUE_DATE>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
             </PART_DUE_DATE>
             <!-- Unpaid amount, VAT -attribute mandatory -->
             <UNPAID>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </UNPAID>
             <!-- Start date of period -->
             <START_PERIOD>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
               <TIME>
                 <HOUR/>
@@ -2708,10 +2710,10 @@
             <!-- End date of the period -->
             <END_PERIOD>
               <DATE>
-                <DAY/>
-                <MONTH/>
-                <CENTURY/>
-                <DECADE_AND_YEAR/>
+                <DAY>6</DAY>
+                <MONTH>7</MONTH>
+                <CENTURY>21</CENTURY>
+                <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
               </DATE>
               <TIME>
                 <HOUR/>
@@ -2721,22 +2723,22 @@
             </END_PERIOD>
             <!-- Partial payment, VAT -attribute mandatory -->
             <PARTIAL_PAYMENT>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </PARTIAL_PAYMENT>
             <!-- Interest -->
             <INTEREST>
               <!-- Per cent -->
-              <PER_CENT/>
+              <PER_CENT>0.00</PER_CENT>
               <!-- Monetary amount -->
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </INTEREST>
             <!-- Processing costs, VAT -attribute mandatory -->
             <PROCESSING_COSTS>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </PROCESSING_COSTS>
             <!-- To be paid amount, VAT -attribute mandatory -->
             <PART_SUM>
-              <AMOUNT SIGN="" VAT=""/>
+              <AMOUNT SIGN="+" VAT="EXCLUDED"/>
             </PART_SUM>
             <!-- Payment reference -->
             <PAYMENT_REFERENCE/>
@@ -2778,10 +2780,10 @@
         <!-- Timestamp -->
         <CONTROL_TIMESTAMP>
           <DATE>
-            <DAY/>
-            <MONTH/>
-            <CENTURY/>
-            <DECADE_AND_YEAR/>
+            <DAY>6</DAY>
+            <MONTH>7</MONTH>
+            <CENTURY>21</CENTURY>
+            <DECADE_AND_YEAR>18</DECADE_AND_YEAR>
           </DATE>
           <TIME>
             <HOUR/>

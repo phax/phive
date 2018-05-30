@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="http://www.ebinterface.at/download/invoiceexample/3p0/invoice.xslt"?>
+<eb:Invoice xmlns:eb="http://www.ebinterface.at/schema/3p0/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ebinterface.at/schema/3p0/ http://www.ebinterface.at/schema/3p0/Invoice.xsd" eb:GeneratingSystem="ebInterface 3.0 Word Formular Vorlage Version 2.0.0 RC2 SVN Rev:133" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:DocumentTitle="Beispiel-Rechnung" eb:Language="ger">
+  <eb:InvoiceNumber>23</eb:InvoiceNumber>
+  <eb:InvoiceDate>2010-08-16</eb:InvoiceDate>
+  <eb:Delivery>
+    <eb:Date>2010-08-16</eb:Date>
+  </eb:Delivery>
+  <eb:Biller>
+    <eb:VATIdentificationNumber>30174337</eb:VATIdentificationNumber>
+    <eb:Address>
+      <eb:Name>Musterfirma1</eb:Name>
+      <eb:Street>Haupstraße 1</eb:Street>
+      <eb:Town>Wien</eb:Town>
+      <eb:ZIP>1010</eb:ZIP>
+      <eb:Country>AT </eb:Country>
+      <eb:Email>musterfirma1@aol.de</eb:Email>
+    </eb:Address>
+  </eb:Biller>
+  <eb:InvoiceRecipient>
+    <eb:VATIdentificationNumber>50174555</eb:VATIdentificationNumber>
+    <eb:BillersInvoiceRecipientID>3242</eb:BillersInvoiceRecipientID>
+    <eb:OrderReference>
+      <eb:OrderID>12</eb:OrderID>
+      <eb:ReferenceDate>2010-08-08</eb:ReferenceDate>
+    </eb:OrderReference>
+    <eb:Address>
+      <eb:Name>Mustermann</eb:Name>
+      <eb:Street>Am Hauptplatz 2</eb:Street>
+      <eb:Town>Wien</eb:Town>
+      <eb:ZIP>1020</eb:ZIP>
+      <eb:Country>AT </eb:Country>
+      <eb:Email>mustermann@gmail.com</eb:Email>
+    </eb:Address>
+  </eb:InvoiceRecipient>
+  <eb:Details>
+    <eb:HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</eb:HeaderDescription>
+    <eb:ItemList>
+      <eb:ListLineItem>
+        <eb:PositionNumber>1</eb:PositionNumber>
+        <eb:Description>Testartikel1</eb:Description>
+        <eb:BillersArticleNumber>1</eb:BillersArticleNumber>
+        <eb:Quantity eb:Unit="1">2.00</eb:Quantity>
+        <eb:UnitPrice>60.00</eb:UnitPrice>
+        <eb:TaxRate>20.00</eb:TaxRate>
+        <eb:DiscountFlag>false</eb:DiscountFlag>
+        <eb:ReductionRate>0.00</eb:ReductionRate>
+        <eb:LineItemAmount>120.00</eb:LineItemAmount>
+      </eb:ListLineItem>
+    </eb:ItemList>
+    <eb:FooterDescription>Wir danken für Ihren Auftrag.</eb:FooterDescription>
+  </eb:Details>
+  <eb:Tax>
+    <eb:VAT>
+      <eb:Item>
+        <eb:TaxedAmount>120.00</eb:TaxedAmount>
+        <eb:TaxRate>20.00</eb:TaxRate>
+        <eb:Amount>24.00</eb:Amount>
+      </eb:Item>
+    </eb:VAT>
+  </eb:Tax>
+  <eb:TotalGrossAmount>144.00</eb:TotalGrossAmount>
+  <eb:PaymentMethod xsi:type="eb:UniversalBankTransactionType" eb:ConsolidatorPayable="false">
+    <eb:BeneficiaryAccount>
+      <eb:BankName>Bank Austria</eb:BankName>
+      <eb:BankCode eb:BankCodeType="AT">12000</eb:BankCode>
+      <eb:BankAccountNr>453453453453453</eb:BankAccountNr>
+      <eb:BankAccountOwner>Musterfirma 1</eb:BankAccountOwner>
+    </eb:BeneficiaryAccount>
+  </eb:PaymentMethod>
+  <eb:PaymentConditions>
+    <eb:DueDate>2010-08-16</eb:DueDate>
+  </eb:PaymentConditions>
+  <eb:PresentationDetails>
+    <eb:URL>www.austriapro.at</eb:URL>
+    <eb:SuppressZero>true</eb:SuppressZero>
+  </eb:PresentationDetails>
+</eb:Invoice>

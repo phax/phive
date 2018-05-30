@@ -25,6 +25,7 @@ import javax.xml.xpath.XPathFactory;
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.execute.ValidationExecutorXSDPartial;
 import com.helger.bdve.execute.XSDPartialContext;
 import com.helger.bdve.executorset.VESID;
@@ -108,7 +109,7 @@ public final class EnergieEFactuurValidation
                                                                              "Energie eFactuur " +
                                                                                                          VID_ENERGIE_EFACTUUR_1_0_0.getVersion (),
                                                                              bNotDeprecated,
-                                                                             EUBL21DocumentType.INVOICE,
+                                                                             ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                              new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.PARTIAL_XSD,
                                                                                                                                        _getCL (),
                                                                                                                                        SEEF_EXT_XSD_1_0_0),
@@ -138,7 +139,7 @@ public final class EnergieEFactuurValidation
                                                                              "Energie eFactuur " +
                                                                                                          VID_ENERGIE_EFACTUUR_1_0_1.getVersion (),
                                                                              bNotDeprecated,
-                                                                             EUBL21DocumentType.INVOICE,
+                                                                             ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                              new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.PARTIAL_XSD,
                                                                                                                                        _getCL (),
                                                                                                                                        SEEF_EXT_XSD_1_0_1),
@@ -168,7 +169,7 @@ public final class EnergieEFactuurValidation
                                                                              "Energie eFactuur " +
                                                                                                          VID_ENERGIE_EFACTUUR_2_0_0.getVersion (),
                                                                              bNotDeprecated,
-                                                                             EUBL21DocumentType.INVOICE,
+                                                                             ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                              new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.PARTIAL_XSD,
                                                                                                                                        _getCL (),
                                                                                                                                        SEEF_EXT_XSD_2_0_0),

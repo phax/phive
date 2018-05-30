@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dsig:Signature Id="HI_signature" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><dsig:SignedInfo><dsig:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><dsig:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><dsig:Reference Id="Reference1" URI="#signed-data-1"><dsig:Transforms><dsig:Transform Algorithm="http://www.w3.org/2002/06/xmldsig-filter2"><xf2:XPath Filter="intersect" xmlns:xf2="http://www.w3.org/2002/06/xmldsig-filter2">id(&apos;signed-data-1&apos;)/node()</xf2:XPath></dsig:Transform></dsig:Transforms><dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><dsig:DigestValue>HacNRpi0wMqQRcU5sxUG6kJLr44=</dsig:DigestValue></dsig:Reference><dsig:Reference Type="http://uri.etsi.org/01903/v1.1.1#SignedProperties" URI="#refetsi"><dsig:Transforms><dsig:Transform Algorithm="http://www.w3.org/2002/06/xmldsig-filter2"><xf2:XPath Filter="intersect" xmlns:etsi="http://uri.etsi.org/01903/v1.1.1#" xmlns:xf2="http://www.w3.org/2002/06/xmldsig-filter2">id(&apos;refetsi&apos;)/etsi:QualifyingProperties/etsi:SignedProperties</xf2:XPath></dsig:Transform></dsig:Transforms><dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><dsig:DigestValue>mXc8d86gJsFMQ/gqoR4CZLBRFrI=</dsig:DigestValue></dsig:Reference></dsig:SignedInfo><dsig:SignatureValue>zM1g8fxTc9FVOfMUVF5L8WKI8iAOKecBl4ptmXGuw3tPBjkrPLpPTZu+qBWhmTqvPD30f+saA7co
+T5pQvKqqKbOV7dAAejRmOMRy1PtxhFJxQ0Vw5A+oSrUgR0VBK5zyUDp2LsUJ9JwM/QJ5sPjJco/l
+3VNMmmGcxgJduyKidX6ED4G4HxbuVzhMX3R/TuEqw258fjdn7ERpmvZhHyhHYZGU7a43wkRCS68E
+HNJrp+Y6+sk8FHx4Eltwt84qxntiMvcK9hXLAXxMO1ho3bd3QdePkPLLaVkAxEDduZs0zQyTsIpH
+rrje2ouVYt+glyvGEKKTqdM/oNwllShnkHa+Iw==</dsig:SignatureValue><dsig:KeyInfo><dsig:X509Data><dsig:X509Certificate>MIIFbjCCBFagAwIBAgIDCaW3MA0GCSqGSIb3DQEBBQUAMIGTMQswCQYDVQQGEwJB
+VDFIMEYGA1UECgw/QS1UcnVzdCBHZXMuIGYuIFNpY2hlcmhlaXRzc3lzdGVtZSBp
+bSBlbGVrdHIuIERhdGVudmVya2VociBHbWJIMRwwGgYDVQQLDBNhLXNpZ24tY29y
+cG9yYXRlLTAzMRwwGgYDVQQDDBNhLXNpZ24tY29ycG9yYXRlLTAzMB4XDTExMDgz
+MDA5MjEyMFoXDTE2MDgzMDA3MjEyMFowgaUxCzAJBgNVBAYTAkFUMSEwHwYDVQQK
+DBhPbmxpbmUgUG9zdCBBdXN0cmlhIEdtYkgxEzARBgNVBAsMCmUtUmVjaG51bmcx
+ITAfBgNVBAMMGE9ubGluZSBQb3N0IEF1c3RyaWEgR21iSDEVMBMGA1UEBRMMODU5
+MDA2MjczNTc2MSQwIgYJKoZIhvcNAQkBDBVzdXBwb3J0QGUtcmVjaG51bmcuYXQw
+ggEgMA0GCSqGSIb3DQEBAQUAA4IBDQAwggEIAoIBAQDjbs6E3VQNq1tjLFOHhIIe
+65fQXgu94ANSGCoyxNA3dUCSqyMFw2epiBBiHJZgUQkVn8OMIdDzApFoxr+jXV9h
+xxSn3ewFiNgAUiQVrvFOtfDNKdCw9ytiKInKxmIDJEp6d909wIDNQhh39SOMJkYE
+brxxIAewGMwJvSl+9FqK3RhGIPwAQ7mLZgTsMYQ+GWB4yk+MipaMaxk78tir1hsG
+2HxATQmP/lldJyvDYUF/BfEJD/uQGNCFsxjJyrCKOuceReSA1VZYkV8gKIymSJw0
+Ntso1jLsfxK9NoTOkZ1bG/pzpu6hCS+4VF5db1bd3cUVna+NOpG6NFAWmegbLpdn
+AgEDo4IBtzCCAbMweAYIKwYBBQUHAQEEbDBqMD8GCCsGAQUFBzAChjNodHRwOi8v
+d3d3LmEtdHJ1c3QuYXQvY2VydHMvYS1zaWduLWNvcnBvcmF0ZS0wMy5jcnQwJwYI
+KwYBBQUHMAGGG2h0dHA6Ly9vY3NwLmEtdHJ1c3QuYXQvb2NzcDCBmAYDVR0fBIGQ
+MIGNMIGKoIGHoIGEhoGBbGRhcDovL2xkYXAuYS10cnVzdC5hdC9vdT1hLXNpZ24t
+Y29ycG9yYXRlLTAzLG89QS1UcnVzdCxjPUFUP2NlcnRpZmljYXRlcmV2b2NhdGlv
+bmxpc3Q/YmFzZT9vYmplY3RjbGFzcz1laWRDZXJ0aWZpY2F0aW9uQXV0aG9yaXR5
+MBMGA1UdIwQMMAqACEI++WGdWuVyMAkGA1UdEwQCMAAwEQYDVR0OBAoECEE1mcRU
+j7T0MA4GA1UdDwEB/wQEAwIFoDBZBgNVHSAEUjBQME4GByooABEBBwIwQzBBBggr
+BgEFBQcCARY1aHR0cDovL3d3dy5hLXRydXN0LmF0L2RvY3MvY3AvYS1zaWduLWNv
+cnBvcmF0ZS1tZWRpdW0wDQYJKoZIhvcNAQEFBQADggEBAEnMG0F9Wqz/C9nYNCKA
+6QX50DFgmVCLHNHqa6pY79+G7lgMWIa4n4Nb1Fz3igXKwNtUTyWm88vE0fAZC6fs
+NF1g6rbfbVAMyO+EKSHMpv662rsMmWRMvjfWQPqfmbVremqSQkFiUhkt5t2JXLPy
+ZG83GxQhds9S4L7tJGB/oMFtGi+OQYJ1ZOvYeKhzpP8aQglZeT0MNPhpqSbOpDbD
+O1M8a0HhnqEh4W7cjU/76yLEnLCzIeWR1dgpGCySacL50KRsVKDbOUeYy6q5SEMC
+x2SPi5p6gjZTbQHv9c3NHaon2LoO77WjZoUglUWNfhBuShNw+H3KyOa12G3qXMWYFJ8=</dsig:X509Certificate></dsig:X509Data></dsig:KeyInfo><dsig:Object Id="signed-data-1"><eb:Invoice eb:DocumentTitle="Beispiel-Rechnung" eb:DocumentType="Invoice" eb:GeneratingSystem="ebInterface 3.0 Word Formular Vorlage Version 2.0.0 RC2 SVN Rev:133" eb:InvoiceCurrency="EUR" eb:Language="ger" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:eb="http://www.ebinterface.at/schema/3p0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ebinterface.at/schema/3p0/ http://www.ebinterface.at/schema/3p0/Invoice.xsd">
+  <eb:InvoiceNumber>23</eb:InvoiceNumber>
+  <eb:InvoiceDate>2010-08-16</eb:InvoiceDate>
+  <eb:Delivery>
+    <eb:Date>2010-08-16</eb:Date>
+  </eb:Delivery>
+  <eb:Biller>
+    <eb:VATIdentificationNumber>30174337</eb:VATIdentificationNumber>
+    <eb:Address>
+      <eb:Name>Musterfirma1</eb:Name>
+      <eb:Street>Haupstraße 1</eb:Street>
+      <eb:Town>Wien</eb:Town>
+      <eb:ZIP>1010</eb:ZIP>
+      <eb:Country>AT </eb:Country>
+      <eb:Email>musterfirma1@aol.de</eb:Email>
+    </eb:Address>
+  </eb:Biller>
+  <eb:InvoiceRecipient>
+    <eb:VATIdentificationNumber>50174555</eb:VATIdentificationNumber>
+    <eb:BillersInvoiceRecipientID>3242</eb:BillersInvoiceRecipientID>
+    <eb:OrderReference>
+      <eb:OrderID>12</eb:OrderID>
+      <eb:ReferenceDate>2010-08-08</eb:ReferenceDate>
+    </eb:OrderReference>
+    <eb:Address>
+      <eb:Name>Mustermann</eb:Name>
+      <eb:Street>Am Hauptplatz 2</eb:Street>
+      <eb:Town>Wien</eb:Town>
+      <eb:ZIP>1020</eb:ZIP>
+      <eb:Country>AT </eb:Country>
+      <eb:Email>mustermann@gmail.com</eb:Email>
+    </eb:Address>
+  </eb:InvoiceRecipient>
+  <eb:Details>
+    <eb:HeaderDescription>Wir erlauben uns wie folgt zu verrechnen.</eb:HeaderDescription>
+    <eb:ItemList>
+      <eb:ListLineItem>
+        <eb:PositionNumber>1</eb:PositionNumber>
+        <eb:Description>Testartikel1</eb:Description>
+        <eb:BillersArticleNumber>1</eb:BillersArticleNumber>
+        <eb:Quantity eb:Unit="1">2.00</eb:Quantity>
+        <eb:UnitPrice>60.00</eb:UnitPrice>
+        <eb:TaxRate>20.00</eb:TaxRate>
+        <eb:DiscountFlag>false</eb:DiscountFlag>
+        <eb:ReductionRate>0.00</eb:ReductionRate>
+        <eb:LineItemAmount>120.00</eb:LineItemAmount>
+      </eb:ListLineItem>
+    </eb:ItemList>
+    <eb:FooterDescription>Wir danken für Ihren Auftrag.</eb:FooterDescription>
+  </eb:Details>
+  <eb:Tax>
+    <eb:VAT>
+      <eb:Item>
+        <eb:TaxedAmount>120.00</eb:TaxedAmount>
+        <eb:TaxRate>20.00</eb:TaxRate>
+        <eb:Amount>24.00</eb:Amount>
+      </eb:Item>
+    </eb:VAT>
+  </eb:Tax>
+  <eb:TotalGrossAmount>144.00</eb:TotalGrossAmount>
+  <eb:PaymentMethod eb:ConsolidatorPayable="false" xsi:type="eb:UniversalBankTransactionType">
+    <eb:BeneficiaryAccount>
+      <eb:BankName>Bank Austria</eb:BankName>
+      <eb:BankCode eb:BankCodeType="AT">12000</eb:BankCode>
+      <eb:BankAccountNr>453453453453453</eb:BankAccountNr>
+      <eb:BankAccountOwner>Musterfirma 1</eb:BankAccountOwner>
+    </eb:BeneficiaryAccount>
+  </eb:PaymentMethod>
+  <eb:PaymentConditions>
+    <eb:DueDate>2010-08-16</eb:DueDate>
+  </eb:PaymentConditions>
+  <eb:PresentationDetails>
+    <eb:URL>www.austriapro.at</eb:URL>
+    <eb:SuppressZero>true</eb:SuppressZero>
+  </eb:PresentationDetails>
+</eb:Invoice></dsig:Object><dsig:Object Id="refetsi"><etsi:QualifyingProperties Target="#HS_signature" xmlns:etsi="http://uri.etsi.org/01903/v1.1.1#"><etsi:SignedProperties><etsi:SignedSignatureProperties><etsi:SigningTime>2012-06-18T20:46:56Z</etsi:SigningTime><etsi:SigningCertificate><etsi:Cert><etsi:CertDigest><etsi:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><etsi:DigestValue>4BqoNhCuJRGIQ5NKnHqGqKH7bgA=</etsi:DigestValue></etsi:CertDigest><etsi:IssuerSerial><dsig:X509IssuerName>CN=a-sign-corporate-03,OU=a-sign-corporate-03,O=A-Trust Ges. f. Sicherheitssysteme im elektr. Datenverkehr GmbH,C=AT</dsig:X509IssuerName><dsig:X509SerialNumber>632247</dsig:X509SerialNumber></etsi:IssuerSerial></etsi:Cert></etsi:SigningCertificate><etsi:SignaturePolicyIdentifier><etsi:SignaturePolicyImplied/></etsi:SignaturePolicyIdentifier></etsi:SignedSignatureProperties></etsi:SignedProperties></etsi:QualifyingProperties></dsig:Object></dsig:Signature>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><eb:Invoice xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:eb="http://www.ebinterface.at/schema/3p0/" eb:DocumentTitle="TNT Standard" eb:DocumentType="Invoice" eb:GeneratingSystem="freefinance.at" eb:InvoiceCurrency="EUR" eb:Language="deu" eb:ManualProcessing="false"><dsig:Signature xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><dsig:SignedInfo><dsig:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><dsig:SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><dsig:Reference URI=""><dsig:Transforms><dsig:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></dsig:Transforms><dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><dsig:DigestValue>e+mz4cIDxpiu7i3nHhng9PZFtcQ=</dsig:DigestValue></dsig:Reference></dsig:SignedInfo><dsig:SignatureValue>4eTa8PalHvDKAW8G/Kv72UkAQ6A40SV9qZXRyFrE3cG+cXF3981eJ4K1MQMjbg5EQUl7RYI0FopK
+nOMNqYdSKU9xWsJFSsGjDYL/fdnwhXFhQ3Q85NeSJJnXfcrqNBTXPZ3bwW2BIwNtcuQZMu4ZkpMT
+I6vXobYEb9codoHrjMeCSGTjVGwxFQvV7Yyq5YomR2YB5KMTAhmtsuDeD1QYIYXQwHCU62Y/4Y8H
++4UFWARK+O7zz4AkHVX2gO/yqNWa</dsig:SignatureValue><dsig:KeyInfo><dsig:X509Data><dsig:X509SubjectName>1.2.840.113549.1.9.1=#1612737570706f7274406d616e7562752e636f6d,CN=manubu gmbh,OU=Document Management,O=manubu gmbh,L=Schwechat,ST=Niederösterreich,C=AT</dsig:X509SubjectName><dsig:X509Certificate>MIIGYDCCBEigAwIBAgICAsAwDQYJKoZIhvcNAQEFBQAwgaQxCzAJBgNVBAYTAkFUMQ8wDQYDVQQH
+EwZWaWVubmExRjBEBgNVBAoTPUFSR0UgREFURU4gLSBBdXN0cmlhbiBTb2NpZXR5IGZvciBEYXRh
+IFByb3RlY3Rpb24gYW5kIFByaXZhY3kxGDAWBgNVBAMTD0EtQ0VSVCBBRFZBTkNFRDEiMCAGCSqG
+SIb3DQEJARYTaW5mb0BnbG9iYWx0cnVzdC5ldTAeFw0xMTAyMTAwMTAwMDBaFw0xMzAyMTAxMzU5
+MDZaMIGqMQswCQYDVQQGEwJBVDEaMBgGA1UECAwRTmllZGVyw7ZzdGVycmVpY2gxEjAQBgNVBAcT
+CVNjaHdlY2hhdDEUMBIGA1UEChMLbWFudWJ1IGdtYmgxHDAaBgNVBAsTE0RvY3VtZW50IE1hbmFn
+ZW1lbnQxFDASBgNVBAMTC21hbnVidSBnbWJoMSEwHwYJKoZIhvcNAQkBFhJzdXBwb3J0QG1hbnVi
+dS5jb20wgd8wDQYJKoZIhvcNAQEBBQADgc0AMIHJAoHBAOtx4q2O0aHq6IcLfTbpWe3Y5tkekrLF
+MbyRFBpKpNNQO2GwUICQOnkLoIURJnJtisA9EqFwL3ASUvmrtPtJ/lojPVB46m1KGDvuzpZXBoHh
+gHnJJ3OHj7xjmKukIcfGNaCKCKgpO5oxgMzlUqaaZ1WaXYEZSufG4cirs9+IlWjTOKzSeS/EJ2Qj
+fekQ6tWalG5SN2mcKqWC5IH44uF4VpPQyHBgSuIMUXTKHf/gvvX+VtmjoxWB7PuQpjrUP09BWwID
+AQABo4IB1jCCAdIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQUAnlEDadYfqXOBaTSWLN9WKQxxxgw
+HwYDVR0jBBgwFoAUOzjiKw/paZFUiW9oL75mXF3njoIwHQYDVR0RBBYwFIESc3VwcG9ydEBtYW51
+YnUuY29tMDkGA1UdEgQyMDCBE2luZm9AZ2xvYmFsdHJ1c3QuZXWGGWh0dHA6Ly93d3cuZ2xvYmFs
+dHJ1c3QuZXUwQAYDVR0fBDkwNzA1oDOgMYYvaHR0cDovL3d3dy5nbG9iYWx0cnVzdC5ldS9zdGF0
+aWMvYWR2YW5jZWQtMy5jcmwwDgYDVR0PAQH/BAQDAgTwMH4GCCsGAQUFBwEBBHIwcDAmBggrBgEF
+BQcwAYYaaHR0cDovL29jc3AuZ2xvYmFsdHJ1c3QuZXUwRgYIKwYBBQUHMAKGOmh0dHA6Ly93d3cu
+Z2xvYmFsdHJ1c3QuZXUvc3RhdGljL2EtY2VydC1hZHZhbmNlZC0zLWRlci5jZXIwVgYDVR0gBE8w
+TTBLBggqKAAYAQEDATA/MD0GCCsGAQUFBwIBFjFodHRwOi8vd3d3Lmdsb2JhbHRydXN0LmV1L2Nl
+cnRpZmljYXRlLXBvbGljeS5odG1sMA0GCSqGSIb3DQEBBQUAA4ICAQBdwDY0c4n3Ue+FtqugJz1e
+yGZ6wr61r6jGpZRp/u9iUTwwRD37EVGvQd9ig1OtFusO3UzL/hq49pBzw5j0p313L5E8XVMS8crw
+jtIiIz5QdxAGjTlCNpUhOgMWROPVCDxVzgFEcNi+cwe06uF1zrga753WwXQe3lp6ZVkJ2oTTyAje
+8poWkLwpnE3Ms2kQNETGo6O4wRdvhLx/nSmhh0zwvRAL9KjNCNAF+81qyafYhddNcpld6hv3Qru+
+aDwN2lmljSVN61vpbVuwDzcc98zTqpS90BssVDNiBvgr+E+ceT+1tbcDHJuUy9BF55FBlQkIMTK6
+yZo23BTm1i6D0oDifMgqfaYQMfIvJxGClTXbTrBxG1vn7gbRSi05nnga1ifftYNGNTVMcVsZxAyh
+EQbvtWpo2e6xSMFKvSY4pm8e4mtAru5iB9AdLFOQddGAAdEH5Baerdh/rgvV4g4vn3EJGnAXCK2S
+5UbqmRo8VS2CInSmS3U7azNKJFqINBtBggxsv70xbqjVkEHfStlLCh7d3bEijnw2OBa5GLT1vKHP
+dNFbOMU1upIZpG9NFc6Mtnf2lcKzjxcApQsH6z4FjonlqdWt3Ez7K8QhnulsIftTXPVSvFMx7hCS
+n50jtQxkNWbhKn0boE3f/i9dl5m+U0+ew7+j/7TcSV+jMTMEauHMww==</dsig:X509Certificate></dsig:X509Data><dsig:KeyValue><dsig:RSAKeyValue><dsig:Modulus>63HirY7Roerohwt9NulZ7djm2R6SssUxvJEUGkqk01A7YbBQgJA6eQughREmcm2KwD0SoXAvcBJS
++au0+0n+WiM9UHjqbUoYO+7OllcGgeGAecknc4ePvGOYq6Qhx8Y1oIoIqCk7mjGAzOVSpppnVZpd
+gRlK58bhyKuz34iVaNM4rNJ5L8QnZCN96RDq1ZqUblI3aZwqpYLkgfji4XhWk9DIcGBK4gxRdMod
+/+C+9f5W2aOjFYHs+5CmOtQ/T0Fb</dsig:Modulus><dsig:Exponent>AQAB</dsig:Exponent></dsig:RSAKeyValue></dsig:KeyValue></dsig:KeyInfo></dsig:Signature>
+    <eb:InvoiceNumber>R 00156</eb:InvoiceNumber>
+    <eb:InvoiceDate>2012-10-30+01:00</eb:InvoiceDate>
+    <eb:Biller>
+        <eb:VATIdentificationNumber>00000000</eb:VATIdentificationNumber>
+        <eb:Address>
+            <eb:Salutation>Firma</eb:Salutation>
+            <eb:Name>Demofirmaasdfasdf</eb:Name>
+            <eb:Street>Demostrasseasdfasdf 25</eb:Street>
+            <eb:Town>Wien</eb:Town>
+            <eb:ZIP>1100</eb:ZIP>
+            <eb:Country>AT</eb:Country>
+            <eb:Email>support@manubu.com</eb:Email>
+            <eb:Contact>asdf vorasdf nachnameasdf</eb:Contact>
+            <eb:AddressExtension>Region: WIEN</eb:AddressExtension>
+        </eb:Address>
+    </eb:Biller>
+    <eb:InvoiceRecipient>
+        <eb:VATIdentificationNumber>00000000</eb:VATIdentificationNumber>
+        <eb:BillersInvoiceRecipientID>C 129</eb:BillersInvoiceRecipientID>
+        <eb:Address>
+            <eb:Name>Musterkunde</eb:Name>
+            <eb:Street>Musterweg 3</eb:Street>
+            <eb:Town>Musterstadt</eb:Town>
+            <eb:ZIP>1111</eb:ZIP>
+            <eb:Country>AT</eb:Country>
+            <eb:Email>e.muster@muster.at</eb:Email>
+            <eb:Contact>Eva Musterkunde</eb:Contact>
+            <eb:AddressExtension>Region: NOE</eb:AddressExtension>
+        </eb:Address>
+    </eb:InvoiceRecipient>
+    <eb:Details>
+        <eb:HeaderDescription>Nachfolgend finden Sie die Detailaufstellung zur Rechnung.</eb:HeaderDescription>
+        <eb:ItemList>
+            <eb:ListLineItem>
+                <eb:PositionNumber>1</eb:PositionNumber>
+                <eb:Description>Fire Hero</eb:Description>
+                <eb:BillersArticleNumber>1247</eb:BillersArticleNumber>
+                <eb:Quantity eb:Unit="KG">3.00</eb:Quantity>
+                <eb:UnitPrice>269.00</eb:UnitPrice>
+                <eb:TaxRate>20.00</eb:TaxRate>
+                <eb:DiscountFlag>true</eb:DiscountFlag>
+                <eb:LineItemAmount>807.00</eb:LineItemAmount>
+            </eb:ListLineItem>
+            <eb:ListLineItem>
+                <eb:PositionNumber>2</eb:PositionNumber>
+                <eb:Description>Versand</eb:Description>
+                <eb:BillersArticleNumber>Versand</eb:BillersArticleNumber>
+                <eb:Quantity eb:Unit="no measurement">1.00</eb:Quantity>
+                <eb:UnitPrice>10.00</eb:UnitPrice>
+                <eb:TaxRate>20.00</eb:TaxRate>
+                <eb:DiscountFlag>true</eb:DiscountFlag>
+                <eb:LineItemAmount>10.00</eb:LineItemAmount>
+            </eb:ListLineItem>
+            <eb:ListLineItem>
+                <eb:PositionNumber>3</eb:PositionNumber>
+                <eb:Description>Produkt 4</eb:Description>
+                <eb:BillersArticleNumber>P4</eb:BillersArticleNumber>
+                <eb:Quantity eb:Unit="PC">13.00</eb:Quantity>
+                <eb:UnitPrice>52.00</eb:UnitPrice>
+                <eb:TaxRate>20.00</eb:TaxRate>
+                <eb:DiscountFlag>true</eb:DiscountFlag>
+                <eb:LineItemAmount>676.00</eb:LineItemAmount>
+            </eb:ListLineItem>
+        </eb:ItemList>
+    </eb:Details>
+    <eb:Tax>
+        <eb:VAT>
+            <eb:Item>
+                <eb:TaxedAmount>1493.00</eb:TaxedAmount>
+                <eb:TaxRate>20.00</eb:TaxRate>
+                <eb:Amount>298.60</eb:Amount>
+            </eb:Item>
+        </eb:VAT>
+    </eb:Tax>
+    <eb:TotalGrossAmount>1791.60</eb:TotalGrossAmount>
+    <eb:PaymentConditions>
+        <eb:DueDate>2012-11-19+01:00</eb:DueDate>
+    </eb:PaymentConditions>
+</eb:Invoice>
