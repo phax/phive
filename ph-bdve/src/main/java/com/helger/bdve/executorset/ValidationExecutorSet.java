@@ -24,6 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.execute.ValidationExecutorXSD;
@@ -119,10 +120,9 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   {
     ValueEnforcer.notNull (aRes, "ValidationResource");
 
-    final ValidationArtefact aVA = new ValidationArtefact (aRes.getValidationType (),
-                                                           aRes.getClassLoader (),
-                                                           aRes.getResource (),
-                                                           aValidationArtefactKey);
+    final IValidationArtefact aVA = new ValidationArtefact (aRes.getValidationType (),
+                                                                    aRes.getClassLoader (),
+                                                                    aRes.getResource ());
 
     switch (aRes.getValidationType ())
     {
@@ -130,7 +130,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
         // Nothing to do
         break;
       case XSD:
-        addExecutor (new ValidationExecutorXSD (aVA));
+        addExecutor (new ValidationExecutorXSD (aVA, aCL -> aValidationArtefactKey.getSchema (aCL)));
         break;
       case PARTIAL_XSD:
         addExecutor (new ValidationExecutorXSDPartial (aVA,
@@ -140,7 +140,9 @@ public class ValidationExecutorSet implements IValidationExecutorSet
       case SCHEMATRON_SCH:
       case SCHEMATRON_XSLT:
       case SCHEMATRON_OIOUBL:
-        addExecutor (new ValidationExecutorSchematron (aVA));
+        addExecutor (new ValidationExecutorSchematron (aVA,
+                                                       aValidationArtefactKey.getPrerequisiteXPath (),
+                                                       aValidationArtefactKey.getNamespaceContext ()));
         break;
       default:
         throw new IllegalArgumentException ("Unsupported validation type " + aRes.getValidationType ());
@@ -235,9 +237,9 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     final ClassLoader aClassLoader = aValidationArtefactKey.getClassLoader ();
     for (final IReadableResource aXSDRes : aValidationArtefactKey.getAllXSDResources ())
       ret.addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                                          aClassLoader,
-                                                                          aXSDRes,
-                                                                          aValidationArtefactKey)));
+                                                                              aClassLoader,
+                                                                              aXSDRes),
+                                                  aCL -> aValidationArtefactKey.getSchema (aCL)));
 
     // Add Schematrons
     for (final TypedValidationResource aRes : aValidationResources)

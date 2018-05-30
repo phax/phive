@@ -53,7 +53,8 @@ public class ValidationResult implements ISuccessIndicator, Serializable
    *        <code>null</code>. If this list contains any entry with a level of
    *        error, it is considered a failure.
    */
-  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IErrorList aErrorList)
+  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                           @Nonnull final IErrorList aErrorList)
   {
     this (aValidationArtefact, aErrorList, ETriState.valueOf (aErrorList.containsNoError ()));
   }

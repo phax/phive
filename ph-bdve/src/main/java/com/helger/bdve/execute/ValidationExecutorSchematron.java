@@ -31,7 +31,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.helger.bdve.artefact.IValidationArtefact;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
@@ -52,6 +51,7 @@ import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.XMLHelper;
+import com.helger.xml.namespace.IIterableNamespaceContext;
 import com.helger.xml.serialize.read.DOMReaderSettings;
 import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
@@ -77,12 +77,18 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
   private boolean m_bCacheSchematron = DEFAULT_CACHE;
+  private final String m_sPrerequisiteXPath;
+  private final IIterableNamespaceContext m_aNamespaceContext;
 
-  public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact)
+  public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
+                                       @Nullable final String sPrerequisiteXPath,
+                                       @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematronBased (),
                           "Artifact is not Schematron");
+    m_sPrerequisiteXPath = sPrerequisiteXPath;
+    m_aNamespaceContext = aNamespaceContext;
   }
 
   public boolean isCacheArtefact ()
@@ -105,7 +111,6 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     ValueEnforcer.notNull (aSource, "Source");
 
     final IValidationArtefact aArtefact = getValidationArtefact ();
-    final ValidationArtefactKey aVAK = aArtefact.getValidationKey ();
 
     // get the Schematron resource to be used for this validation artefact
     final IReadableResource aSCHRes = aArtefact.getRuleResource ();
@@ -122,24 +127,25 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
                                        ex);
     }
 
-    if (aVAK.hasPrerequisiteXPath ())
+    if (StringHelper.hasText (m_sPrerequisiteXPath))
     {
       // Check if the artefact can be applied on the given document by
       // checking the prerequisite XPath
       final XPath aXPathContext = XPathHelper.createNewXPath ();
-      aXPathContext.setNamespaceContext (aVAK.getNamespaceContext ());
+      if (m_aNamespaceContext != null)
+        aXPathContext.setNamespaceContext (m_aNamespaceContext);
 
       try
       {
         final Boolean aResult = XPathExpressionHelper.evalXPathToBoolean (aXPathContext,
-                                                                          aVAK.getPrerequisiteXPath (),
+                                                                          m_sPrerequisiteXPath,
                                                                           XMLHelper.getOwnerDocument (aNode));
         if (aResult != null && !aResult.booleanValue ())
         {
           s_aLogger.info ("Ignoring validation artefact " +
                           aSCHRes.getPath () +
                           " because the prerequisite XPath expression '" +
-                          aVAK.getPrerequisiteXPath () +
+                          m_sPrerequisiteXPath +
                           "' is not fulfilled.");
           return ValidationResult.createIgnoredResult (aArtefact);
         }
@@ -151,7 +157,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
         final String sErrorMsg = "Failed to verify if validation artefact " +
                                  aSCHRes.getPath () +
                                  " matches the prerequisite XPath expression '" +
-                                 aVAK.getPrerequisiteXPath () +
+                                 m_sPrerequisiteXPath +
                                  "' - ignoring validation artefact.";
         s_aLogger.error (sErrorMsg, ex);
         return new ValidationResult (aArtefact,

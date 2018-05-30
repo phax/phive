@@ -22,13 +22,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
 
 /**
- * Base interface for a single validation artefact that uses Schematron for
- * validation.
+ * Base interface for a validation artefact, consisting of a type, a class
+ * loader and a readable resource.
  *
  * @author Philip Helger
  */
@@ -60,11 +59,4 @@ public interface IValidationArtefact extends Serializable
    */
   @Nonnull
   IReadableResource getRuleResource ();
-
-  /**
-   * @return The validation key for this validation artefact. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  ValidationArtefactKey getValidationKey ();
 }

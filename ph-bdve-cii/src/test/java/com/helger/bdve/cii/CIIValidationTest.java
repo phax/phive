@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.bdve.artefact.IValidationArtefact;
-import com.helger.bdve.cii.CIIValidation;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -49,8 +48,7 @@ public final class CIIValidationTest
     for (final IValidationExecutorSet aVES : VES_REGISTRY.getAll ())
       for (final IValidationExecutor aVE : aVES)
       {
-        final IValidationArtefact aVA = aVE.getValidationArtefact ();
-        final IReadableResource aRes = aVA.getRuleResource ();
+        final IReadableResource aRes = aVE.getValidationArtefact ().getRuleResource ();
         assertTrue (aRes.toString (), aRes.exists ());
       }
   }

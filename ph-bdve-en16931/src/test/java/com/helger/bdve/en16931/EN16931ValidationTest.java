@@ -48,8 +48,7 @@ public final class EN16931ValidationTest
     for (final IValidationExecutorSet aVES : VES_REGISTRY.getAll ())
       for (final IValidationExecutor aVE : aVES)
       {
-        final IValidationArtefact aVA = aVE.getValidationArtefact ();
-        final IReadableResource aRes = aVA.getRuleResource ();
+        final IReadableResource aRes = aVE.getValidationArtefact ().getRuleResource ();
         assertTrue (aRes.toString (), aRes.exists ());
       }
   }

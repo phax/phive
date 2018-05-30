@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -41,17 +40,14 @@ public class ValidationArtefact implements IValidationArtefact
   private final EValidationType m_eValidationArtefactType;
   private final WeakReference <ClassLoader> m_aClassLoader;
   private final IReadableResource m_aResource;
-  private final ValidationArtefactKey m_aValidationKey;
 
   public ValidationArtefact (@Nonnull final EValidationType eValidationArtefactType,
                              @Nullable final ClassLoader aClassLoader,
-                             @Nonnull final IReadableResource aResource,
-                             @Nonnull final ValidationArtefactKey aValidationKey)
+                             @Nonnull final IReadableResource aResource)
   {
     m_eValidationArtefactType = ValueEnforcer.notNull (eValidationArtefactType, "ValidationArtefactType");
     m_aClassLoader = new WeakReference <> (aClassLoader);
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
-    m_aValidationKey = ValueEnforcer.notNull (aValidationKey, "ValidationKey");
   }
 
   @Nonnull
@@ -72,12 +68,6 @@ public class ValidationArtefact implements IValidationArtefact
     return m_aResource;
   }
 
-  @Nonnull
-  public ValidationArtefactKey getValidationKey ()
-  {
-    return m_aValidationKey;
-  }
-
   @Override
   public boolean equals (final Object o)
   {
@@ -88,8 +78,7 @@ public class ValidationArtefact implements IValidationArtefact
     final ValidationArtefact rhs = (ValidationArtefact) o;
     return m_eValidationArtefactType.equals (rhs.m_eValidationArtefactType) &&
            EqualsHelper.equals (getClassLoader (), rhs.getClassLoader ()) &&
-           m_aResource.equals (rhs.m_aResource) &&
-           m_aValidationKey.equals (rhs.m_aValidationKey);
+           m_aResource.equals (rhs.m_aResource);
   }
 
   @Override
@@ -98,7 +87,6 @@ public class ValidationArtefact implements IValidationArtefact
     return new HashCodeGenerator (this).append (m_eValidationArtefactType)
                                        .append (getClassLoader ())
                                        .append (m_aResource)
-                                       .append (m_aValidationKey)
                                        .getHashCode ();
   }
 
@@ -108,7 +96,6 @@ public class ValidationArtefact implements IValidationArtefact
     return new ToStringGenerator (this).append ("ValidationArtefactType", m_eValidationArtefactType)
                                        .append ("ClassLoader", getClassLoader ())
                                        .append ("Resource", m_aResource)
-                                       .append ("ValidationKey", m_aValidationKey)
                                        .getToString ();
   }
 }
