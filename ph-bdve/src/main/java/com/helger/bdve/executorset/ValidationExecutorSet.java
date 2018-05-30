@@ -115,36 +115,33 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   }
 
   @Nonnull
-  public ValidationExecutorSet addMatchingExecutor (@Nonnull final IValidationArtefact aRes,
-                                                    @Nonnull final ValidationArtefactKey aValidationArtefactKey)
+  public ValidationExecutorSet addMatchingExecutor (@Nonnull final IValidationArtefact aVA,
+                                                    @Nonnull final ValidationArtefactKey aVAKey)
   {
-    ValueEnforcer.notNull (aRes, "ValidationResource");
+    ValueEnforcer.notNull (aVA, "ValidationArtefact");
+    ValueEnforcer.notNull (aVAKey, "ValidationArtefactKey");
 
-    final IValidationArtefact aVA = new ValidationArtefact (aRes.getValidationArtefactType (),
-                                                            aRes.getClassLoader (),
-                                                            aRes.getRuleResource ());
-
-    switch (aRes.getValidationArtefactType ())
+    switch (aVA.getValidationArtefactType ())
     {
       case XML:
         // Nothing to do
         break;
       case XSD:
-        addExecutor (new ValidationExecutorXSD (aVA, aCL -> aValidationArtefactKey.getSchema (aCL)));
+        addExecutor (new ValidationExecutorXSD (aVA, aCL -> aVAKey.getSchema (aCL)));
         break;
       case PARTIAL_XSD:
-        addExecutor (new ValidationExecutorXSDPartial (aVA, aValidationArtefactKey.getXSDPartialContext ()));
+        addExecutor (new ValidationExecutorXSDPartial (aVA, aVAKey.getXSDPartialContext ()));
         break;
       case SCHEMATRON_PURE:
       case SCHEMATRON_SCH:
       case SCHEMATRON_XSLT:
       case SCHEMATRON_OIOUBL:
         addExecutor (new ValidationExecutorSchematron (aVA,
-                                                       aValidationArtefactKey.getPrerequisiteXPath (),
-                                                       aValidationArtefactKey.getNamespaceContext ()));
+                                                       aVAKey.getPrerequisiteXPath (),
+                                                       aVAKey.getNamespaceContext ()));
         break;
       default:
-        throw new IllegalArgumentException ("Unsupported validation type " + aRes.getValidationArtefactType ());
+        throw new IllegalArgumentException ("Unsupported validation type " + aVA.getValidationArtefactType ());
     }
     return this;
   }
