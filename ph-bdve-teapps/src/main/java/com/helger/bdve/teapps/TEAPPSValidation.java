@@ -22,7 +22,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.jaxb.builder.IJAXBDocumentType;
@@ -60,13 +59,12 @@ public final class TEAPPSValidation
     final boolean bNotDeprecated = false;
 
     // No Schematrons here
+    // XXX invalid
     final IJAXBDocumentType aDocType = new JAXBDocumentType (String.class,
                                                              new CommonsArrayList <> ("/schemas/TEAPPSXMLv272_schema_INVOICES.xsd"),
                                                              null);
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_TEAPPS_272,
                                                                            "TEAPPSXML " + VERSION_272,
-                                                                           new ValidationArtefactKey.Builder ().setDocType (aDocType)
-                                                                                                               .build (),
                                                                            bNotDeprecated,
                                                                            aDocType));
   }

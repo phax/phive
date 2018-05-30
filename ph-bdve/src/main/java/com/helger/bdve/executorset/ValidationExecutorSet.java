@@ -23,13 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
-import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.execute.ValidationExecutorXSD;
-import com.helger.bdve.execute.ValidationExecutorXSDPartial;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -115,36 +111,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     return this;
   }
 
-  @Nonnull
-  public ValidationExecutorSet addMatchingExecutor (@Nonnull final IValidationArtefact aVA,
-                                                    @Nonnull final ValidationArtefactKey aVAKey)
-  {
-    ValueEnforcer.notNull (aVA, "ValidationArtefact");
-    ValueEnforcer.notNull (aVAKey, "ValidationArtefactKey");
-
-    switch (aVA.getValidationArtefactType ())
-    {
-      case XML:
-        // Nothing to do
-        break;
-      case XSD:
-        addExecutor (new ValidationExecutorXSD (aVA, aCL -> aVAKey.getSchema (aCL)));
-        break;
-      case PARTIAL_XSD:
-        addExecutor (new ValidationExecutorXSDPartial (aVA, aVAKey.getXSDPartialContext ()));
-        break;
-      case SCHEMATRON_PURE:
-      case SCHEMATRON_SCH:
-      case SCHEMATRON_XSLT:
-      case SCHEMATRON_OIOUBL:
-        addExecutor (new ValidationExecutorSchematron (aVA, null, aVAKey.getNamespaceContext ()));
-        break;
-      default:
-        throw new IllegalArgumentException ("Unsupported validation type " + aVA.getValidationArtefactType ());
-    }
-    return this;
-  }
-
   public void setValidationExecutorDoCache (final boolean bCache)
   {
     for (final IValidationExecutor aExecutor : m_aList)
@@ -194,50 +160,28 @@ public class ValidationExecutorSet implements IValidationExecutorSet
                             .getToString ();
   }
 
-  /**
-   * Create a new validation executor set (VES). It uses all XML Schema
-   * Definitions (XSDs) defined in the validation artefact key.
-   *
-   * @param aID
-   *        The ID to use. May not be <code>null</code>.
-   * @param sDisplayName
-   *        The name of the VES. May neither be <code>null</code> nor empty.
-   * @param aValidationArtefactKey
-   *        The validation artefact key to use (defining the business
-   *        requirements). May not be <code>null</code>. This key contains the
-   *        references to the XSDs.
-   * @param bIsDeprecated
-   *        <code>true</code> if this VES is considered deprecated,
-   *        <code>false</code> if not.
-   * @param aValidationArtefacts
-   *        The schematron resources to be associated with the VES. May not be
-   *        <code>null</code> but maybe empty (for e.g. XSD only layers).
-   * @return The newly created VES. Never <code>null</code>.
-   */
   @Nonnull
   public static ValidationExecutorSet create (@Nonnull final VESID aID,
                                               @Nonnull @Nonempty final String sDisplayName,
-                                              @Nonnull final ValidationArtefactKey aValidationArtefactKey,
                                               final boolean bIsDeprecated,
                                               @Nonnull final IJAXBDocumentType aDocType,
-                                              @Nonnull final IValidationArtefact... aValidationArtefacts)
+                                              @Nonnull final IValidationExecutor... aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    ValueEnforcer.notNull (aValidationArtefactKey, "ValidationArtefactKey");
-    ValueEnforcer.noNullValue (aValidationArtefacts, "ValidationArtefacts");
+    ValueEnforcer.noNullValue (aValidationExecutors, "ValidationExecutors");
 
     final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, bIsDeprecated);
 
     // Add XSDs at the beginning
-    final ClassLoader aClassLoader = aValidationArtefactKey.getClassLoader ();
-    for (final IReadableResource aXSDRes : aValidationArtefactKey.getAllXSDResources ())
+    final ClassLoader aClassLoader = aDocType.getImplementationClass ().getClassLoader ();
+    for (final IReadableResource aXSDRes : aDocType.getAllXSDResources ())
       ret.addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aClassLoader, aXSDRes),
-                                                  aCL -> aValidationArtefactKey.getSchema (aCL)));
+                                                  aCL -> aDocType.getSchema (aCL)));
 
     // Add Schematrons
-    for (final IValidationArtefact aItem : aValidationArtefacts)
-      ret.addMatchingExecutor (aItem, aValidationArtefactKey);
+    for (final IValidationExecutor aItem : aValidationExecutors)
+      ret.addExecutor (aItem);
 
     return ret;
   }

@@ -21,10 +21,11 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.execute.IValidationExecutor;
+import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.peppol.CPeppolValidationArtefact;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -67,11 +68,11 @@ public final class SimplerInvoicingValidation
   {}
 
   @Nonnull
-  private static ValidationArtefact _createXSLT (@Nonnull final IReadableResource aRes)
+  private static IValidationExecutor _createXSLT (@Nonnull final IReadableResource aRes)
   {
-    return new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                   SimplerInvoicingValidation.class.getClassLoader (),
-                                   aRes);
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, _getCL (), aRes),
+                                             null,
+                                             UBL21NamespaceContext.getInstance ());
   }
 
   /**
@@ -93,26 +94,22 @@ public final class SimplerInvoicingValidation
     // 1.1
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
                                                                            "Simplerinvoicing Invoice 1.1",
-                                                                           CPeppolValidationArtefact.VK_INVOICE_04_T10,
                                                                            bNotDeprecated,
                                                                            EUBL21DocumentType.INVOICE,
                                                                            _createXSLT (INVOICE_SI11)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11_STRICT,
                                                                            "Simplerinvoicing Invoice 1.1 (strict)",
-                                                                           CPeppolValidationArtefact.VK_INVOICE_04_T10,
                                                                            bNotDeprecated,
                                                                            EUBL21DocumentType.INVOICE,
                                                                            _createXSLT (INVOICE_SI11_STRICT)));
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
-                                                                           CPeppolValidationArtefact.VK_INVOICE_04_T10,
                                                                            bNotDeprecated,
                                                                            EUBL21DocumentType.INVOICE,
                                                                            _createXSLT (INVOICE_SI12)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_ORDER_V12,
                                                                            "Simplerinvoicing Order 1.2",
-                                                                           CPeppolValidationArtefact.VK_ORDER_03_T01,
                                                                            bNotDeprecated,
                                                                            EUBL21DocumentType.ORDER,
                                                                            _createXSLT (ORDER_SI12)));

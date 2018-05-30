@@ -52,6 +52,7 @@ import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.IIterableNamespaceContext;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.serialize.read.DOMReaderSettings;
 import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
@@ -88,7 +89,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematronBased (),
                           "Artifact is not Schematron");
     m_sPrerequisiteXPath = sPrerequisiteXPath;
-    m_aNamespaceContext = aNamespaceContext;
+    m_aNamespaceContext = aNamespaceContext == null ? null : new MapBasedNamespaceContext (aNamespaceContext);
   }
 
   public boolean isCacheArtefact ()

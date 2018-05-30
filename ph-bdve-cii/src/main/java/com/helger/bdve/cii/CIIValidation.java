@@ -24,7 +24,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.cii.d16b.ECIID16BDocumentType;
@@ -71,9 +70,6 @@ public final class CIIValidation
       // No Schematrons here
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                              "CII " + sName + " " + VERSION_D16B,
-                                                                             new ValidationArtefactKey.Builder ().setDocType (e)
-                                                                                                                 .setNamespaceContext (CIID16BNamespaceContext.getInstance ())
-                                                                                                                 .build (),
                                                                              bNotDeprecated,
                                                                              e));
     }

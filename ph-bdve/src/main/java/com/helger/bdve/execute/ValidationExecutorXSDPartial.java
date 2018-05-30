@@ -28,7 +28,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXParseException;
 
 import com.helger.bdve.artefact.IValidationArtefact;
-import com.helger.bdve.key.XSDPartialContext;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;

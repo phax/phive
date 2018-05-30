@@ -21,10 +21,10 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
+import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.cii.d16b.CIID16BNamespaceContext;
 import com.helger.cii.d16b.ECIID16BDocumentType;
@@ -32,7 +32,6 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.jaxb.builder.JAXBDocumentType;
 import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
@@ -59,19 +58,6 @@ public final class EN16931Validation
   public static final VESID VID_CII_1 = new VESID ("eu.cen.en16931", "cii", VERSION_100);
   public static final VESID VID_EDIFACT_1 = new VESID ("eu.cen.en16931", "edifact", VERSION_100);
 
-  // Predefined keys for UBL, CII and EDIFACT
-  public static final ValidationArtefactKey VK_INVOICE_CII = new ValidationArtefactKey.Builder ().setDocType (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE)
-                                                                                                 .setNamespaceContext (CIID16BNamespaceContext.getInstance ())
-                                                                                                 .build ();
-  private static final IJAXBDocumentType EDIFACT_DOCTYPE = new JAXBDocumentType (MINVOIC.class,
-                                                                                 new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
-                                                                                 null);
-  public static final ValidationArtefactKey VK_INVOICE_EDIFACT = new ValidationArtefactKey.Builder ().setDocType (EDIFACT_DOCTYPE)
-                                                                                                     .build ();
-  public static final ValidationArtefactKey VK_INVOICE_UBL = new ValidationArtefactKey.Builder ().setDocType (EUBL21DocumentType.INVOICE)
-                                                                                                 .setNamespaceContext (UBL21NamespaceContext.getInstance ())
-                                                                                                 .build ();
-
   @Nonnull
   private static ClassLoader _getCL ()
   {
@@ -94,18 +80,6 @@ public final class EN16931Validation
   private EN16931Validation ()
   {}
 
-  @Nonnull
-  private static ValidationArtefact _createPure (@Nonnull final IReadableResource aRes)
-  {
-    return new ValidationArtefact (EValidationType.SCHEMATRON_PURE, EN16931Validation.class.getClassLoader (), aRes);
-  }
-
-  @Nonnull
-  private static ValidationArtefact _createXSLT (@Nonnull final IReadableResource aRes)
-  {
-    return new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, EN16931Validation.class.getClassLoader (), aRes);
-  }
-
   /**
    * Register all standard EN 16931 validation execution sets to the provided
    * registry.
@@ -124,23 +98,34 @@ public final class EN16931Validation
     final boolean bNotDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_CII_1,
                                                                            "EN 16931 CII " + VID_CII_1.getVersion (),
-                                                                           VK_INVOICE_CII,
                                                                            bNotDeprecated,
                                                                            ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE,
-                                                                           _createXSLT (INVOICE_CII_XSLT)));
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
+                                                                                                                                     _getCL (),
+                                                                                                                                     INVOICE_CII_XSLT),
+                                                                                                             null,
+                                                                                                             CIID16BNamespaceContext.getInstance ())));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT_1,
                                                                            "EN 16931 EDIFACT/ISO 20625 " +
                                                                                           VID_EDIFACT_1.getVersion (),
-                                                                           VK_INVOICE_EDIFACT,
                                                                            bNotDeprecated,
-                                                                           EDIFACT_DOCTYPE,
-                                                                           _createXSLT (INVOICE_EDIFACT_XSLT)));
+                                                                           new JAXBDocumentType (MINVOIC.class,
+                                                                                                 new CommonsArrayList <> ("/schemas/INVOIC_D14B_ISO20625.xsd"),
+                                                                                                 null),
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
+                                                                                                                                     _getCL (),
+                                                                                                                                     INVOICE_EDIFACT_XSLT),
+                                                                                                             null,
+                                                                                                             null)));
     // Pure SCH is quicker than XSLT!
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_1,
                                                                            "EN 16931 UBL " + VID_UBL_1.getVersion (),
-                                                                           VK_INVOICE_UBL,
                                                                            bNotDeprecated,
                                                                            EUBL21DocumentType.INVOICE,
-                                                                           _createPure (INVOICE_UBL_SCH)));
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
+                                                                                                                                     _getCL (),
+                                                                                                                                     INVOICE_UBL_SCH),
+                                                                                                             null,
+                                                                                                             UBL21NamespaceContext.getInstance ())));
   }
 }

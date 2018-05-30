@@ -24,7 +24,6 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.key.ValidationArtefactKey;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.ubl21.EUBL21DocumentType;
@@ -175,9 +174,6 @@ public final class UBLValidation
       // No Schematrons here
       aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                              "UBL " + sName + " " + VERSION_21,
-                                                                             new ValidationArtefactKey.Builder ().setDocType (e)
-                                                                                                                 .setNamespaceContext (UBL21NamespaceContext.getInstance ())
-                                                                                                                 .build (),
                                                                              bNotDeprecated,
                                                                              e));
     }
