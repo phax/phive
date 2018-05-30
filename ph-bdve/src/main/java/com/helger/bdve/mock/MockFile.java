@@ -48,7 +48,7 @@ public class MockFile
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aVESID = ValueEnforcer.notNull (aVESID, "VESID");
-    m_aExpectedErrorIDs = new CommonsHashSet<> (aExpectedErrorIDs);
+    m_aExpectedErrorIDs = new CommonsHashSet <> (aExpectedErrorIDs);
   }
 
   /**

@@ -121,8 +121,8 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ValueEnforcer.notNull (aRes, "ValidationResource");
 
     final IValidationArtefact aVA = new ValidationArtefact (aRes.getValidationType (),
-                                                                    aRes.getClassLoader (),
-                                                                    aRes.getResource ());
+                                                            aRes.getClassLoader (),
+                                                            aRes.getResource ());
 
     switch (aRes.getValidationType ())
     {
@@ -236,9 +236,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     // Add XSDs at the beginning
     final ClassLoader aClassLoader = aValidationArtefactKey.getClassLoader ();
     for (final IReadableResource aXSDRes : aValidationArtefactKey.getAllXSDResources ())
-      ret.addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                                              aClassLoader,
-                                                                              aXSDRes),
+      ret.addExecutor (new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aClassLoader, aXSDRes),
                                                   aCL -> aValidationArtefactKey.getSchema (aCL)));
 
     // Add Schematrons
