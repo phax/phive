@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.executorset.TypedValidationResource;
+import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -110,15 +110,15 @@ public final class EHFValidation
   {}
 
   @Nonnull
-  private static TypedValidationResource _createPure (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createPure (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_PURE, EHFValidation.class.getClassLoader (), aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_PURE, EHFValidation.class.getClassLoader (), aRes);
   }
 
   @Nonnull
-  private static TypedValidationResource _createSCH (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createSCH (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_SCH, EHFValidation.class.getClassLoader (), aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_SCH, EHFValidation.class.getClassLoader (), aRes);
   }
 
   /**
@@ -138,7 +138,7 @@ public final class EHFValidation
     final boolean bNotDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_1_0,
                                                                            "EHF Catalogue " +
-                                                                                                   VID_EHF_CATALOGUE_1_0.getVersion (),
+                                                                                                  VID_EHF_CATALOGUE_1_0.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_CATALOGUE_T19,
                                                                            bNotDeprecated,
                                                                            _createSCH (EHF_COMMON_V1),
@@ -146,7 +146,7 @@ public final class EHFValidation
                                                                            _createSCH (CATALOGUE_V1_NOGOV)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_RESPONSE_1_0,
                                                                            "EHF Catalogue Response " +
-                                                                                                            VID_EHF_CATALOGUE_RESPONSE_1_0.getVersion (),
+                                                                                                           VID_EHF_CATALOGUE_RESPONSE_1_0.getVersion (),
                                                                            CEHFValidationArtefact.VK_EHF_CATALOGUE_RESPONSE_T58,
                                                                            bNotDeprecated,
                                                                            _createSCH (EHF_COMMON_V1),

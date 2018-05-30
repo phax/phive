@@ -64,12 +64,14 @@ public class ValidationArtefactKey implements Serializable
   private final Locale m_aCountry;
   private final ValidationArtefactSectorKey m_aSectorKey;
   private final String m_sPrerequisiteXPath;
+  private final XSDPartialContext m_aXSDPartialContext;
 
   public ValidationArtefactKey (@Nonnull final IJAXBDocumentType aDocType,
                                 @Nullable final IIterableNamespaceContext aNamespaceContext,
                                 @Nullable final String sCountryCode,
                                 @Nullable final ValidationArtefactSectorKey aSectorKey,
-                                @Nullable final String sPrerequisiteXPath)
+                                @Nullable final String sPrerequisiteXPath,
+                                @Nullable final XSDPartialContext aXSDPartialContext)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
 
@@ -85,6 +87,7 @@ public class ValidationArtefactKey implements Serializable
       m_aCountry = null;
     m_aSectorKey = aSectorKey;
     m_sPrerequisiteXPath = sPrerequisiteXPath;
+    m_aXSDPartialContext = aXSDPartialContext;
   }
 
   /**
@@ -195,6 +198,12 @@ public class ValidationArtefactKey implements Serializable
     return m_sPrerequisiteXPath;
   }
 
+  @Nullable
+  public XSDPartialContext getXSDPartialContext ()
+  {
+    return m_aXSDPartialContext;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -218,6 +227,7 @@ public class ValidationArtefactKey implements Serializable
                                        .append (m_aCountry)
                                        .append (m_aSectorKey)
                                        .append (m_sPrerequisiteXPath)
+                                       .append (m_aXSDPartialContext)
                                        .getHashCode ();
   }
 
@@ -229,6 +239,7 @@ public class ValidationArtefactKey implements Serializable
                                        .appendIfNotNull ("Country", m_aCountry)
                                        .appendIfNotNull ("SectorKey", m_aSectorKey)
                                        .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
+                                       .appendIfNotNull ("XSDPartialContext", m_aXSDPartialContext)
                                        .getToString ();
   }
 
@@ -247,6 +258,7 @@ public class ValidationArtefactKey implements Serializable
     private String m_sCountry;
     private ValidationArtefactSectorKey m_aSectorKey;
     private String m_sPrerequisiteXPath;
+    private XSDPartialContext m_aXSDPartialContext;
 
     /**
      * Create an empty Builder.
@@ -262,11 +274,13 @@ public class ValidationArtefactKey implements Serializable
      */
     public Builder (@Nonnull final ValidationArtefactKey aOther)
     {
+      ValueEnforcer.notNull (aOther, "Other");
       m_aDocType = aOther.m_aDocType;
       m_aNamespaceContext = aOther.m_aNamespaceContext;
       m_sCountry = aOther.getCountryCode ();
       m_aSectorKey = aOther.m_aSectorKey;
       m_sPrerequisiteXPath = aOther.m_sPrerequisiteXPath;
+      m_aXSDPartialContext = aOther.m_aXSDPartialContext;
     }
 
     /**
@@ -331,6 +345,21 @@ public class ValidationArtefactKey implements Serializable
     }
 
     /**
+     * Set the optional XSD partial context to be used. Muse be present for
+     * validation type "XSD partial".
+     *
+     * @param aXSDPartialContext
+     *        Partial XSD context.
+     * @return this for chaining
+     */
+    @Nonnull
+    public Builder setXSDPartialContext (@Nullable final XSDPartialContext aXSDPartialContext)
+    {
+      m_aXSDPartialContext = aXSDPartialContext;
+      return this;
+    }
+
+    /**
      * Build the validation artefact key from the specified fields. At least
      * business specification and transaction MUST not be <code>null</code>!
      * This method can be called many times and will return a new object every
@@ -356,7 +385,12 @@ public class ValidationArtefactKey implements Serializable
       // namespace URI
       aNSContext.addMapping ("ubl", sNamespaceURI);
 
-      return new ValidationArtefactKey (m_aDocType, aNSContext, m_sCountry, m_aSectorKey, m_sPrerequisiteXPath);
+      return new ValidationArtefactKey (m_aDocType,
+                                        aNSContext,
+                                        m_sCountry,
+                                        m_aSectorKey,
+                                        m_sPrerequisiteXPath,
+                                        m_aXSDPartialContext);
     }
   }
 }

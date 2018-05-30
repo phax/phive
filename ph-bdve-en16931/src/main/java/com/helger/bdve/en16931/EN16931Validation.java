@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.executorset.TypedValidationResource;
+import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -54,19 +54,15 @@ public final class EN16931Validation
   {}
 
   @Nonnull
-  private static TypedValidationResource _createPure (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createPure (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_PURE,
-                                        EN16931Validation.class.getClassLoader (),
-                                        aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_PURE, EN16931Validation.class.getClassLoader (), aRes);
   }
 
   @Nonnull
-  private static TypedValidationResource _createXSLT (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createXSLT (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_XSLT,
-                                        EN16931Validation.class.getClassLoader (),
-                                        aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, EN16931Validation.class.getClassLoader (), aRes);
   }
 
   /**

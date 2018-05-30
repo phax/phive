@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.executorset.TypedValidationResource;
+import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -163,7 +163,9 @@ public final class PeppolValidation360
                                                                                                      "OPENPEPPOLCORE-UBL-T58.sch",
                                                                                                      _getCL ());
 
-  private static final IReadableResource MLR_RULES = new ClassPathResource (SCH_MLR + SCH_BII_RULES + "BIIRULES-UBL-T71.sch",
+  private static final IReadableResource MLR_RULES = new ClassPathResource (SCH_MLR +
+                                                                            SCH_BII_RULES +
+                                                                            "BIIRULES-UBL-T71.sch",
                                                                             _getCL ());
   private static final IReadableResource MLR_OPENPEPPOL = new ClassPathResource (SCH_MLR +
                                                                                  SCH_OPENPEPPOL +
@@ -207,15 +209,15 @@ public final class PeppolValidation360
   {}
 
   @Nonnull
-  private static TypedValidationResource _createPure (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createPure (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_PURE, _getCL (), aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_PURE, _getCL (), aRes);
   }
 
   @Nonnull
-  private static TypedValidationResource _createXSLT (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createXSLT (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_XSLT, _getCL (), aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, _getCL (), aRes);
   }
 
   public static void init (@Nonnull final ValidationExecutorSetRegistry aRegistry)

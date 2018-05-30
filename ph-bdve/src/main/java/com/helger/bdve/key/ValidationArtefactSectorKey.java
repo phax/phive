@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.MustImplementComparable;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -37,13 +36,8 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-@MustImplementComparable
 @MustImplementEqualsAndHashcode
-public class ValidationArtefactSectorKey implements
-                                         IHasID <String>,
-                                         IHasDisplayName,
-                                         Serializable,
-                                         Comparable <ValidationArtefactSectorKey>
+public class ValidationArtefactSectorKey implements IHasID <String>, IHasDisplayName, Serializable
 {
   private final String m_sID;
   private final String m_sDisplayName;
@@ -66,11 +60,6 @@ public class ValidationArtefactSectorKey implements
   public String getDisplayName ()
   {
     return m_sDisplayName;
-  }
-
-  public int compareTo (@Nonnull final ValidationArtefactSectorKey aOther)
-  {
-    return m_sID.compareTo (aOther.m_sID);
   }
 
   @Override

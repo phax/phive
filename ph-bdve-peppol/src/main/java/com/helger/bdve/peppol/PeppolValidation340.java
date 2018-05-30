@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.executorset.TypedValidationResource;
+import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -202,15 +202,15 @@ public final class PeppolValidation340
   {}
 
   @Nonnull
-  private static TypedValidationResource _createPure (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createPure (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_PURE, _getCL (), aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_PURE, _getCL (), aRes);
   }
 
   @Nonnull
-  private static TypedValidationResource _createSCH (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createSCH (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_SCH, _getCL (), aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_SCH, _getCL (), aRes);
   }
 
   public static void init (@Nonnull final ValidationExecutorSetRegistry aRegistry)

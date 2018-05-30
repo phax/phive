@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.EValidationType;
-import com.helger.bdve.executorset.TypedValidationResource;
+import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
@@ -101,11 +101,9 @@ public final class OIOUBLValidation
   {}
 
   @Nonnull
-  private static TypedValidationResource _createTVR (@Nonnull final IReadableResource aRes)
+  private static ValidationArtefact _createTVR (@Nonnull final IReadableResource aRes)
   {
-    return new TypedValidationResource (EValidationType.SCHEMATRON_OIOUBL,
-                                        OIOUBLValidation.class.getClassLoader (),
-                                        aRes);
+    return new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL, OIOUBLValidation.class.getClassLoader (), aRes);
   }
 
   /**
