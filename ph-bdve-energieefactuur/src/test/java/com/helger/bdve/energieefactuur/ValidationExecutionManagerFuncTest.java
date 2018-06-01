@@ -24,7 +24,6 @@ import java.util.Locale;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 import com.helger.bdve.energieefactuur.mock.CTestFiles;
 import com.helger.bdve.execute.ValidationExecutionManager;
@@ -47,7 +46,7 @@ public final class ValidationExecutionManagerFuncTest
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
   @Test
-  public void testTestFiles () throws SAXException
+  public void testTestFiles ()
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
     EnergieEFactuurValidation.initEnergieEFactuur (aRegistry);

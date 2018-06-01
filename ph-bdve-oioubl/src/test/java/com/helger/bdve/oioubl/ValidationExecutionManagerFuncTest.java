@@ -24,7 +24,6 @@ import java.util.Locale;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xml.sax.SAXException;
 
 import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.executorset.IValidationExecutorSet;
@@ -45,7 +44,7 @@ public final class ValidationExecutionManagerFuncTest
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
   @Test
-  public void testApplyCompleteValidation () throws SAXException
+  public void testApplyCompleteValidation ()
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
     OIOUBLValidation.initOIOUBL (aRegistry);

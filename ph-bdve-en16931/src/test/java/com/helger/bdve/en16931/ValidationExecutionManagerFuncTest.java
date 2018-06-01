@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import com.helger.bdve.en16931.mock.CTestFiles;
 import com.helger.bdve.execute.ValidationExecutionManager;
@@ -62,7 +61,7 @@ public final class ValidationExecutionManagerFuncTest
   private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
   @Test
-  public void testTestFiles () throws SAXException
+  public void testTestFiles ()
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
     EN16931Validation.initEN16931 (aRegistry);
