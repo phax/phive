@@ -18,16 +18,18 @@ package com.helger.bdve.source;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.transform.Source;
 
-import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.serialize.read.DOMReader;
+import com.helger.xml.transform.TransformSourceFactory;
 
 /**
  * Default implementation of {@link IValidationSource}.
@@ -37,13 +39,26 @@ import com.helger.xml.serialize.read.DOMReader;
 public class ValidationSource implements IValidationSource
 {
   private final String m_sSystemID;
-  private final Node m_aNode;
+  private final ISupplier <Node> m_aNodeFactory;
   private final boolean m_bPartialSource;
+  // Status vars
+  private transient Node m_aNode;
 
-  public ValidationSource (@Nullable final String sSystemID, @Nullable final Node aNode, final boolean bPartialSource)
+  public ValidationSource (@Nullable final String sSystemID,
+                           @Nonnull final Node aFixedNode,
+                           final boolean bPartialSource)
   {
+    this (sSystemID, () -> aFixedNode, bPartialSource);
+    m_aNode = aFixedNode;
+  }
+
+  public ValidationSource (@Nullable final String sSystemID,
+                           @Nonnull final ISupplier <Node> aNodeFactory,
+                           final boolean bPartialSource)
+  {
+    ValueEnforcer.notNull (aNodeFactory, "NodeFactory");
     m_sSystemID = sSystemID;
-    m_aNode = aNode;
+    m_aNodeFactory = aNodeFactory;
     m_bPartialSource = bPartialSource;
   }
 
@@ -56,7 +71,13 @@ public class ValidationSource implements IValidationSource
   @Nullable
   public Node getNode ()
   {
-    return m_aNode;
+    Node ret = m_aNode;
+    if (ret == null)
+    {
+      // Invoke only if necessary
+      ret = m_aNode = m_aNodeFactory.get ();
+    }
+    return ret;
   }
 
   public boolean isPartialSource ()
@@ -68,7 +89,7 @@ public class ValidationSource implements IValidationSource
   public String toString ()
   {
     return new ToStringGenerator (this).append ("SystemID", m_sSystemID)
-                                       .append ("Node", m_aNode)
+                                       .append ("NodeFactory", m_aNodeFactory)
                                        .append ("PartialSource", m_bPartialSource)
                                        .getToString ();
   }
@@ -86,7 +107,7 @@ public class ValidationSource implements IValidationSource
   public static ValidationSource create (@Nullable final String sSystemID, @Nonnull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
-    // Use the owner Document
+    // Use the owner Document as fixed node
     return new ValidationSource (sSystemID, XMLHelper.getOwnerDocument (aNode), false);
   }
 
@@ -97,13 +118,28 @@ public class ValidationSource implements IValidationSource
    * @param aResource
    *        The original resource. May not be <code>null</code>.
    * @return The validation source to be used. Never <code>null</code>.
-   * @throws SAXException
-   *         In case XML parsing failed.
    */
   @Nonnull
-  public static ValidationSource createXMLSource (@Nonnull final IReadableResource aResource) throws SAXException
+  public static ValidationSource createXMLSource (@Nonnull final IReadableResource aResource)
   {
-    final Document aXMLDoc = DOMReader.readXMLDOM (aResource);
-    return create (aResource.getPath (), aXMLDoc);
+    return new ValidationSource (aResource.getPath (), () -> {
+      try
+      {
+        // Read on demand only
+        return DOMReader.readXMLDOM (aResource);
+      }
+      catch (final SAXException ex)
+      {
+        return null;
+      }
+    }, false)
+    {
+      @Nonnull
+      public Source getAsTransformSource ()
+      {
+        // Use resource as TransformSource to get error line and column
+        return TransformSourceFactory.create (aResource);
+      }
+    };
   }
 }
