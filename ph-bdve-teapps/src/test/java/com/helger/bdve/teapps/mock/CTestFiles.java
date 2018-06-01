@@ -47,7 +47,7 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { TEAPPSValidation.VID_TEAPPS_272 })
+    for (final VESID aESID : new VESID [] { TEAPPSValidation.VID_TEAPPS_272, TEAPPSValidation.VID_TEAPPS_30 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -63,6 +63,10 @@ public final class CTestFiles
     if (aVESID.equals (TEAPPSValidation.VID_TEAPPS_272))
     {
       return new CommonsArrayList <> (new String [] { "/test-files/2.7.2/empty.xml" }, ClassPathResource::new);
+    }
+    if (aVESID.equals (TEAPPSValidation.VID_TEAPPS_30))
+    {
+      return new CommonsArrayList <> (new String [] { "/test-files/3.0/empty.xml" }, ClassPathResource::new);
     }
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
