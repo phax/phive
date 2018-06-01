@@ -20,7 +20,7 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
-* v5.0.0 - work in progress
+* v5.0.0 - 2018-06-01
   * Added Tieto TEAPPSXML support
   * Added Austrian ebInterface support
   * Simplified internal API backwards incompatible (removed all the bloat overhead where possible)
@@ -84,49 +84,61 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>4.0.5</version>
+  <version>5.0.0</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-ebinterface</artifactId>
+  <version>5.0.0</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-teapps</artifactId>
+  <version>5.0.0</version>
 </dependency>
 ```
 

@@ -1,4 +1,22 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+
+    Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
 <!-- Copyright Tieto Oyj-->
 <!-- TEAPPSXML-description version 3.0 - INVOICES -->
 <!-- In this document first is description of element and after that element name with possible attributes. More instructions and examples in
@@ -816,59 +834,59 @@ More information in TEAPPSXML Implementation Guide-->
             <!-- Customs tariff list number -->
             <CN_NAME/>
             <!-- Number of Boxes/packings-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <PACK_QUANTITY Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             <!-- Gross weight-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <GROSS_WEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             <!-- Net weight-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <NET_WEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             <!-- Measures -->
             <MEASUREMENTS>
               <!-- Length-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <LENGTH Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Width-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <WIDTH Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Height-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <HEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             </MEASUREMENTS>
             <!-- Measures as text string, alternative for MEASUREMENTS -structure -->
             <MEASUREMENT_TEXT/>
             <!-- Volume-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <VOLUME Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
           </PACKING_MARKS>
           <!-- Packing marks altogether -->
           <TOTAL_PACKING_MARKS>
             <!-- Number of Boxes/packings-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <TOTAL_PACK_QUANTITY Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             <!-- Gross weight-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <TOTAL_GROSS_WEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             <!-- Net weight-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <TOTAL_NET_WEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             <!-- Measures -->
             <TOTAL_MEASUREMENTS>
               <!-- Length-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <LENGTH Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Width-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <WIDTH Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Height-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <HEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             </TOTAL_MEASUREMENTS>
             <!-- Measures as text string, alternative for TOTAL_MEASUREMENTS -structure -->
             <TOTAL_MEASUREMENT_TEXT/>
             <!-- Volume-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <TOTAL_VOLUME Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
           </TOTAL_PACKING_MARKS>
           <!-- Credit card invoice information -->
@@ -1007,7 +1025,7 @@ More information in TEAPPSXML Implementation Guide-->
             <!-- Header, INFO_TYPE-attribute includes header code value [BT-21]-->
             <TITLE INFO_TYPE=""/>
             <!-- Contents [BT-22]-->
-            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+            <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
             <CONTENT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
           </HEADER_INFO>
           <!-- Invoice security class-->
@@ -2113,7 +2131,7 @@ More information in TEAPPSXML Implementation Guide -->
                   <!-- Property [BT-161]-->
                   <DESCRIPTION_VALUE/>
                   <!-- Property unit-->
-                  <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+                  <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
                   <DESCRIPTION_UNIT Q_UNIT_UNECE_CODE=""/>
                 </ARTICLE_DESCRIPTION>
               </ARTICLE_DESCRIPTIONS>
@@ -2121,7 +2139,7 @@ More information in TEAPPSXML Implementation Guide -->
             <!-- Measures and dates -->
             <LOCATION_ID>
               <!-- Used quantity, Q_UNIT -quantity unit attribute, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <USED_QUANTITY Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Earlier measurement -->
               <PREVIOUS_METER_READING/>
@@ -2146,7 +2164,7 @@ More information in TEAPPSXML Implementation Guide -->
                 </DATE>
               </LATEST_METER_READING_DATE>
               <!-- Invoiced amount, Q_UNIT -attribute includes unit for amount, SIGN -attribute used for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <CALCULATED_QUANTITY Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Average price -->
               <AVERAGE_PRICE>
@@ -2186,28 +2204,28 @@ More information in TEAPPSXML Implementation Guide -->
             <!-- Quantity -->
             <QUANTITY>
               <!-- Offered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <OFFERED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Ordered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <ORDERED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Confirmed amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <CONFIRMED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Delivered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <DELIVERED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Invoiced amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign [BT-129]-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21 [BT-130]-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21 [BT-130]-->
               <CHARGED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Postdelivered amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <POSTDELIVERED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Amount requested for credit. Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <CREDIT_REQUESTED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Returned amount, Q_UNIT -attribute includes unit, SIGN -attribute for plus/minus sign-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <RETURNED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             </QUANTITY>
             <!-- Invoiced object [BT-128]-->
@@ -2364,30 +2382,30 @@ TEAPPSXML Implementation Guide-->
               <!-- Customs tariff list name -->
               <CN_NAME/>
               <!-- Number of Boxes/packings-->
-              <!-- Attrubute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attrubute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <PACK_QUANTITY Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Gross weight-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <GROSS_WEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Net weight-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <NET_WEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Measurements -->
               <MEASUREMENTS>
                 <!-- Length-->
-                <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+                <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
                 <LENGTH Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
                 <!-- Width-->
-                <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+                <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
                 <WIDTH Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
                 <!-- Height-->
-                <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+                <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
                 <HEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               </MEASUREMENTS>
               <!-- Measures as text string, alternative for MEASUREMENTS -structure -->
               <MEASUREMENT_TEXT/>
               <!-- Volume-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <VOLUME Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
             </PACKING_MARKS>
             <!-- Unit, preferrebly use element's Q_UNIT -attribute -->
@@ -2410,7 +2428,7 @@ TEAPPSXML Implementation Guide-->
             </CURRENCY>
             <!-- Unit price for product, VAT -attribute, mandatory [BT-148]-->
             <!-- PR_QTY-attribute for pricing quantity [BT-149], PR_UNIT -attribute for pricing unit -->
-            <!-- Attribute PR_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21 [BT-150]-->
+            <!-- Attribute PR_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21 [BT-150]-->
             <PRICE_PER_UNIT PR_UNIT="" PR_UNIT_UNECE_CODE="" PR_QTY="">
               <AMOUNT SIGN="" VAT=""/>
             </PRICE_PER_UNIT>
@@ -2548,7 +2566,7 @@ TEAPPSXML Implementation Guide-->
               <!-- CN-name -->
               <CN_NAME/>
               <!-- CN-item weight-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <CN_WEIGHT Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- CN, transportation method, text -->
               <CN_TRANSPORT_TEXT/>
@@ -2729,7 +2747,7 @@ TEAPPSXML Implementation Guide-->
                 </DATE>
               </ARRIVAL_DATE>
               <!-- Arrived amount-->
-              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation N°. 20/N° 21-->
+              <!-- Attribute Q_UNIT_UNECE_CODE - EU Norm: UN/ECE Recommendation Nï¿½. 20/Nï¿½ 21-->
               <ARRIVED Q_UNIT="" Q_UNIT_UNECE_CODE="" SIGN=""/>
               <!-- Receipt identifier -->
               <RECEIPT_ID/>
