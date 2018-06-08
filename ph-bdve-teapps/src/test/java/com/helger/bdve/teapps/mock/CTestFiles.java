@@ -62,11 +62,13 @@ public final class CTestFiles
 
     if (aVESID.equals (TEAPPSValidation.VID_TEAPPS_272))
     {
-      return new CommonsArrayList <> (new String [] { "/test-files/2.7.2/empty.xml" }, ClassPathResource::new);
+      return new CommonsArrayList <> (new String [] { "D.20180608082717.90430823.xml", "empty.xml", },
+                                      x -> new ClassPathResource ("/test-files/2.7.2/" + x));
     }
     if (aVESID.equals (TEAPPSValidation.VID_TEAPPS_30))
     {
-      return new CommonsArrayList <> (new String [] { "/test-files/3.0/empty.xml" }, ClassPathResource::new);
+      return new CommonsArrayList <> (new String [] { "empty.xml" },
+                                      x -> new ClassPathResource ("/test-files/3.0/" + x));
     }
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
