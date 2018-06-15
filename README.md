@@ -20,6 +20,10 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
+* v5.0.1 - 2018-06-15
+  * Fixed marking of OpenPEPPOL 3.5.0 artefatcs as "deprecated"
+  * Added support for PEPPOL Billing BIS 3 document types
+  * Added support for EN 16931 UBL CreditNote validation
 * v5.0.0 - 2018-06-01
   * Added Tieto TEAPPSXML support
   * Added Austrian ebInterface support
