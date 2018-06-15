@@ -49,7 +49,7 @@ public final class CTestFiles
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     for (final VESID aVESID : new VESID [] { EN16931Validation.VID_CII_1,
                                              EN16931Validation.VID_EDIFACT_1,
-                                             EN16931Validation.VID_UBL_1 })
+                                             EN16931Validation.VID_UBL_INVOICE_1 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
 
@@ -93,7 +93,7 @@ public final class CTestFiles
         ret.add (new ClassPathResource ("/test-files/edifact/instance/EDIFACT_EXAMPLE9.xml"));
       }
       else
-        if (aVESID.equals (EN16931Validation.VID_UBL_1))
+        if (aVESID.equals (EN16931Validation.VID_UBL_INVOICE_1))
         {
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example1.xml"));
           ret.add (new ClassPathResource ("/test-files/ubl/examples/ubl-tc434-example2.xml"));

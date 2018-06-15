@@ -55,7 +55,8 @@ public final class EN16931Validation
   }
 
   private static final String VERSION_100 = "1.0.0";
-  public static final VESID VID_UBL_1 = new VESID ("eu.cen.en16931", "ubl", VERSION_100);
+  public static final VESID VID_UBL_INVOICE_1 = new VESID ("eu.cen.en16931", "ubl", VERSION_100);
+  public static final VESID VID_UBL_CREDIT_NOTE_1 = new VESID ("eu.cen.en16931", "ubl-creditnote", VERSION_100);
   public static final VESID VID_CII_1 = new VESID ("eu.cen.en16931", "cii", VERSION_100);
   public static final VESID VID_EDIFACT_1 = new VESID ("eu.cen.en16931", "edifact", VERSION_100);
 
@@ -118,11 +119,23 @@ public final class EN16931Validation
                                                                                                                                      INVOICE_EDIFACT_XSLT),
                                                                                                              null,
                                                                                                              null)));
-    // Pure SCH is quicker than XSLT!
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_1,
-                                                                           "EN 16931 UBL " + VID_UBL_1.getVersion (),
+
+    // Pure is quicker than XSLT
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_INVOICE_1,
+                                                                           "EN 16931 UBL Invoice " +
+                                                                                              VID_UBL_INVOICE_1.getVersion (),
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
+                                                                                                                                     _getCL (),
+                                                                                                                                     INVOICE_UBL_SCH),
+                                                                                                             null,
+                                                                                                             UBL21NamespaceContext.getInstance ())));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_CREDIT_NOTE_1,
+                                                                           "EN 16931 UBL CreditNote " +
+                                                                                                  VID_UBL_CREDIT_NOTE_1.getVersion (),
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
                                                                                                                                      _getCL (),
                                                                                                                                      INVOICE_UBL_SCH),
