@@ -25,6 +25,7 @@ import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
+import com.helger.bdve.execute.ValidationExecutorXSD;
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
@@ -59,6 +60,11 @@ public final class PeppolValidation
   public static final VESID VID_OPENPEPPOL_T14_V2_5_AT = new VESID ("eu.peppol.bis2", "t14", "5", "at");
   public static final VESID VID_OPENPEPPOL_T14_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t14", "7", "at-gov");
 
+  public static final VESID VID_OPENPEPPOL_BIS3_UBL_INVOICE = new VESID ("eu.peppol.bis3.ubl", "invoice", "1");
+  public static final VESID VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE = new VESID ("eu.peppol.bis3.ubl", "creditnote", "1");
+  public static final VESID VID_OPENPEPPOL_BIS3_CII_INVOICE = new VESID ("eu.peppol.bis3.cii", "invoice", "1");
+  public static final VESID VID_OPENPEPPOL_BIS3_CII_CREDIT_NOTE = new VESID ("eu.peppol.bis3.cii", "creditnote", "1");
+
   public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/invoice/ATNAT-UBL-T10.sch",
                                                                                 _getCL ());
   public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/invoice/ATGOV-UBL-T10.sch",
@@ -68,6 +74,11 @@ public final class PeppolValidation
                                                                                     _getCL ());
   public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/creditnote/ATGOV-UBL-T14.sch",
                                                                                     _getCL ());
+
+  public static final IReadableResource BIS3_BILLING_CEN = new ClassPathResource ("/openpeppol/billingbis3/CEN-EN16931-UBL.sch",
+                                                                                  _getCL ());
+  public static final IReadableResource BIS3_BILLING_PEPPOL = new ClassPathResource ("/openpeppol/billingbis3/PEPPOL-EN16931-UBL.sch",
+                                                                                     _getCL ());
 
   public static final String VERSION_TO_USE = PeppolValidation360.VERSION_STR;
 
@@ -133,34 +144,65 @@ public final class PeppolValidation
     final String sPreReqInvoice = "/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'";
     final String sPreReqCreditNote = "/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'";
 
-    final boolean bDeprecated = false;
+    final boolean bNotDeprecated = false;
     final IValidationExecutorSet aVESInvoiceAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoice,
                                                                                                                                VID_OPENPEPPOL_T10_V2_5_AT,
                                                                                                                                "OpenPEPPOL Invoice (Austria)",
-                                                                                                                               bDeprecated,
+                                                                                                                               bNotDeprecated,
                                                                                                                                _createPure (INVOICE_AT_NAT,
                                                                                                                                             sPreReqInvoice,
                                                                                                                                             _createUBLNSContext (EUBL21DocumentType.INVOICE.getNamespaceURI ()))));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoiceAT,
                                                                                   VID_OPENPEPPOL_T10_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Invoice (Austrian Government)",
-                                                                                  bDeprecated,
+                                                                                  bNotDeprecated,
                                                                                   _createPure (INVOICE_AT_GOV,
                                                                                                sPreReqInvoice,
                                                                                                _createUBLNSContext (EUBL21DocumentType.INVOICE.getNamespaceURI ()))));
     final IValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
                                                                                                                                   VID_OPENPEPPOL_T14_V2_5_AT,
                                                                                                                                   "OpenPEPPOL Credit Note (Austria)",
-                                                                                                                                  bDeprecated,
+                                                                                                                                  bNotDeprecated,
                                                                                                                                   _createPure (CREDIT_NOTE_AT_NAT,
                                                                                                                                                sPreReqCreditNote,
                                                                                                                                                _createUBLNSContext (EUBL21DocumentType.CREDIT_NOTE.getNamespaceURI ()))));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNoteAT,
                                                                                   VID_OPENPEPPOL_T14_V2_7_AT_GOV,
                                                                                   "OpenPEPPOL Credit Note (Austrian Government)",
-                                                                                  bDeprecated,
+                                                                                  bNotDeprecated,
                                                                                   _createPure (CREDIT_NOTE_AT_GOV,
                                                                                                sPreReqCreditNote,
                                                                                                _createUBLNSContext (EUBL21DocumentType.CREDIT_NOTE.getNamespaceURI ()))));
+
+    // Billing BIS 3
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_UBL_INVOICE,
+                                                                           "OpenPEPPOL BIS3 Invoice (UBL)",
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
+                                                                                                                                     _getCL (),
+                                                                                                                                     BIS3_BILLING_CEN),
+                                                                                                             null,
+                                                                                                             UBL21NamespaceContext.getInstance ()),
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH,
+                                                                                                                                     _getCL (),
+                                                                                                                                     BIS3_BILLING_PEPPOL),
+                                                                                                             null,
+                                                                                                             UBL21NamespaceContext.getInstance ())));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE,
+                                                                           "OpenPEPPOL BIS3 CreditNote (UBL)",
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE,
+                                                                                                                                     _getCL (),
+                                                                                                                                     BIS3_BILLING_CEN),
+                                                                                                             null,
+                                                                                                             UBL21NamespaceContext.getInstance ()),
+                                                                           new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH,
+                                                                                                                                     _getCL (),
+                                                                                                                                     BIS3_BILLING_PEPPOL),
+                                                                                                             null,
+                                                                                                             UBL21NamespaceContext.getInstance ())));
+
   }
 }
