@@ -244,7 +244,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
             aErrorList.add (SingleError.builderError ()
                                        .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
                                        .setErrorText ("Internal error interpreting Schematron result")
-                                       .setErrorFieldName (XMLWriter.getNodeAsString (aDoc))
+                                       .setErrorFieldName (aDoc != null ? XMLWriter.getNodeAsString (aDoc) : null)
                                        .build ());
           }
           break;
