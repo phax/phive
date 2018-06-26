@@ -20,6 +20,8 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
+* v5.0.2 - work in progress
+  * Added EN 16931 validation artefacts version 1.1.0
 * v5.0.1 - 2018-06-15
   * Fixed marking of OpenPEPPOL 3.5.0 artefatcs as "deprecated"
   * Added support for PEPPOL Billing BIS 3 document types

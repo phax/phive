@@ -95,7 +95,7 @@ public final class ValidationExecutionManagerFuncTest
   @Test
   public void testXPath_BR_S_08 () throws Exception
   {
-    final Document aDoc = DOMReader.readXMLDOM (new FileSystemResource ("src/test/resources/test-files/cii/instance/CII_business_example_02.xml"));
+    final Document aDoc = DOMReader.readXMLDOM (new FileSystemResource ("src/test/resources/test-files/1.0.0/cii/CII_business_example_02.xml"));
     assertNotNull (aDoc);
     assertNotNull (aDoc.getDocumentElement ());
 
@@ -156,7 +156,7 @@ public final class ValidationExecutionManagerFuncTest
   @Test
   public void testXPath_BR_O_08 () throws Exception
   {
-    final Document aDoc = DOMReader.readXMLDOM (new FileSystemResource ("src/test/resources/test-files/cii/instance/CII_example7.xml"));
+    final Document aDoc = DOMReader.readXMLDOM (new FileSystemResource ("src/test/resources/test-files/1.0.0/cii/CII_example7.xml"));
     assertNotNull (aDoc);
     assertNotNull (aDoc.getDocumentElement ());
 
