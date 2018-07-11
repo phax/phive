@@ -60,6 +60,12 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   }
 
   @Nonnull
+  public IFunction <? super ClassLoader, ? extends Schema> getSchemaProvider ()
+  {
+    return m_aSchemaProvider;
+  }
+
+  @Nonnull
   public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
                                            @Nullable final ClassLoader aClassLoader,
                                            @Nullable final Locale aLocale)
@@ -98,6 +104,20 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
 
     // Build result object
     return new ValidationResult (aVA, aErrorList.getAllFailures ());
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    return super.equals (o);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return super.hashCode ();
   }
 
   @Nonnull

@@ -34,11 +34,15 @@ import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.result.ValidationResult;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
@@ -67,7 +71,7 @@ import com.helger.xml.xpath.XPathHelper;
 public class ValidationExecutorSchematron extends AbstractValidationExecutor implements
                                           IValidationExecutor.ICacheSupport
 {
-  private static enum ESchematronOutput
+  private enum ESchematronOutput
   {
     SVRL,
     OIOUBL
@@ -79,7 +83,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
 
   private boolean m_bCacheSchematron = DEFAULT_CACHE;
   private final String m_sPrerequisiteXPath;
-  private final IIterableNamespaceContext m_aNamespaceContext;
+  private final MapBasedNamespaceContext m_aNamespaceContext;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
                                        @Nullable final String sPrerequisiteXPath,
@@ -92,13 +96,26 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     m_aNamespaceContext = aNamespaceContext == null ? null : new MapBasedNamespaceContext (aNamespaceContext);
   }
 
-  public boolean isCacheArtefact ()
+  @Nullable
+  public final String getPrerequisiteXPath ()
+  {
+    return m_sPrerequisiteXPath;
+  }
+
+  @Nullable
+  @ReturnsMutableObject
+  public final MapBasedNamespaceContext getNamespaceContext ()
+  {
+    return m_aNamespaceContext == null ? null : m_aNamespaceContext.getClone ();
+  }
+
+  public final boolean isCacheArtefact ()
   {
     return m_bCacheSchematron;
   }
 
   @Nonnull
-  public ValidationExecutorSchematron setCacheArtefact (final boolean bCacheArtefact)
+  public final ValidationExecutorSchematron setCacheArtefact (final boolean bCacheArtefact)
   {
     m_bCacheSchematron = bCacheArtefact;
     return this;
@@ -306,4 +323,38 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
 
     return new ValidationResult (aArtefact, aErrorList);
   }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (!super.equals (o))
+      return false;
+    final ValidationExecutorSchematron rhs = (ValidationExecutorSchematron) o;
+    return m_bCacheSchematron == rhs.m_bCacheSchematron &&
+           EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath) &&
+           EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return HashCodeGenerator.getDerived (super.hashCode ())
+                            .append (m_bCacheSchematron)
+                            .append (m_sPrerequisiteXPath)
+                            .append (m_aNamespaceContext)
+                            .getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("CacheSchematron", m_bCacheSchematron)
+                            .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
+                            .appendIfNotNull ("NamespaceContext", m_aNamespaceContext)
+                            .getToString ();
+  }
+
 }

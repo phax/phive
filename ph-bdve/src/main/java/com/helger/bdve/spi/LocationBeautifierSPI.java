@@ -57,7 +57,7 @@ public class LocationBeautifierSPI implements ISVRLLocationBeautifierSPI
   @Nonnull
   public static EChange removeAllMappings ()
   {
-    return s_aRWLock.writeLocked ( () -> s_aCtx.clear ());
+    return s_aRWLock.writeLocked (s_aCtx::clear);
   }
 
   @Deprecated

@@ -59,6 +59,12 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
   }
 
   @Nonnull
+  public final XSDPartialContext getContext ()
+  {
+    return m_aContext;
+  }
+
+  @Nonnull
   public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
                                            @Nullable final ClassLoader aClassLoader,
                                            @Nullable final Locale aLocale)
@@ -146,5 +152,19 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
 
     // Build result object
     return new ValidationResult (aVA, aErrorList.getAllFailures ());
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    return super.equals (o);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return super.hashCode ();
   }
 }

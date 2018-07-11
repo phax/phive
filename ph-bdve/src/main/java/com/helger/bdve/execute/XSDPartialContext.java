@@ -16,8 +16,6 @@
  */
 package com.helger.bdve.execute;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -26,7 +24,7 @@ import javax.xml.xpath.XPathExpression;
 import com.helger.commons.ValueEnforcer;
 
 @NotThreadSafe
-public class XSDPartialContext implements Serializable
+public class XSDPartialContext
 {
   private final XPathExpression m_aXE;
   private final Integer m_aMinNodeCount;

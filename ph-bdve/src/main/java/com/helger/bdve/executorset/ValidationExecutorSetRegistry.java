@@ -18,6 +18,7 @@ package com.helger.bdve.executorset;
 
 import java.io.Serializable;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -66,7 +67,7 @@ public class ValidationExecutorSetRegistry implements Serializable
    *        returned.
    */
   @Nonnull
-  public <T extends IValidationExecutorSet> T registerValidationExecutorSet (@Nonnull final T aVES) throws IllegalStateException
+  public <T extends IValidationExecutorSet> T registerValidationExecutorSet (@Nonnull final T aVES)
   {
     ValueEnforcer.notNull (aVES, "VES");
 
@@ -89,7 +90,7 @@ public class ValidationExecutorSetRegistry implements Serializable
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutorSet> getAll ()
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues ());
+    return m_aRWLock.readLocked ((Supplier <ICommonsList <IValidationExecutorSet>>) m_aMap::copyOfValues);
   }
 
   /**

@@ -134,6 +134,7 @@ public class ValidationSource implements IValidationSource
       }
     }, false)
     {
+      @Override
       @Nonnull
       public Source getAsTransformSource ()
       {
