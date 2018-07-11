@@ -42,11 +42,11 @@ import com.helger.ubl21.UBL21NamespaceContext;
 @Immutable
 public final class EHFValidation
 {
-  public static final VESID VID_EHF_CATALOGUE_1_0 = new VESID ("no.ehf", "catalogue", "1.0.10");
+  public static final VESID VID_EHF_CATALOGUE_1_0 = new VESID ("no.ehf", "catalogue", "1.0.11");
   public static final VESID VID_EHF_CATALOGUE_RESPONSE_1_0 = new VESID ("no.ehf", "catalogue-response", "1.0.10");
-  public static final VESID VID_EHF_CREDITNOTE_2_0 = new VESID ("no.ehf", "creditnote", "2.0.12");
+  public static final VESID VID_EHF_CREDITNOTE_2_0 = new VESID ("no.ehf", "creditnote", "2.0.13");
   public static final VESID VID_EHF_DESPATCH_ADVICE_1_0 = new VESID ("no.ehf", "despatch-advice", "1.0.8");
-  public static final VESID VID_EHF_INVOICE_2_0 = new VESID ("no.ehf", "invoice", "2.0.12");
+  public static final VESID VID_EHF_INVOICE_2_0 = new VESID ("no.ehf", "invoice", "2.0.13");
   public static final VESID VID_EHF_ORDER_1_0 = new VESID ("no.ehf", "order", "1.0.9");
   public static final VESID VID_EHF_ORDER_AGREEMENT_1_0 = new VESID ("no.ehf", "order-agreement", "1.0.0");
   public static final VESID VID_EHF_ORDER_RESPONSE_1_0 = new VESID ("no.ehf", "order-response", "1.0.9");

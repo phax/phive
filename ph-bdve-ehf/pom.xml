@@ -98,6 +98,23 @@
           </excludes>
         </configuration>
       </plugin>
+      <!-- Enable if something changed only 
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-sch2xslt-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>${basedir}/src/main/resources/ehf</schematronDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/ehf</xsltDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+       -->
     </plugins>
   </build>
 </project>

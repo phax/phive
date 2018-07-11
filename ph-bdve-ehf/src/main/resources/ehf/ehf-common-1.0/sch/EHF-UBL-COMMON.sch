@@ -78,8 +78,8 @@
     </rule>
     <rule context="cac:*[ends-with(name(), 'TaxCategory')]/cbc:ID">
       <assert id="EHF-COMMON-R020"
-              test="some $code in tokenize('AA E H K R S Z', '\s') satisfies $code = normalize-space(.)"
-              flag="fatal">Tax categories MUST be one of the follwoing codes:  AA E H K R S Z</assert>
+              test="some $code in tokenize('AA E H K R S Z AE G', '\s') satisfies $code = normalize-space(.)"
+              flag="fatal">Tax categories MUST be one of the follwoing codes:  AA E H K R S Z AE G</assert>
     </rule>
     <rule context="cbc:*[ends-with(name(), 'Date')]">
       <assert id="EHF-COMMON-R030"
@@ -90,6 +90,11 @@
        <assert id="EHF-COMMON-R040"
                test="matches(., '^[0-9]+$') and u:gln(.)"
                flag="warning">Invalid GLN number provided.</assert>
+    </rule>
+    <rule context="cbc:Note[2]">
+      <assert id="EHF-COMMON-R050"
+              test="false()"
+              flag="warning">Only one note element is allowed.</assert>
     </rule>
     <rule context="cbc:EmbeddedDocumentBinaryObject[@mimeCode]">
       <assert id="EHF-COMMON-R100"

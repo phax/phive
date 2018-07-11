@@ -100,7 +100,7 @@
       <rule context="cac:CreditNoteLine">
          <let name="sumCharge" value="sum(cac:AllowanceCharge[child::cbc:ChargeIndicator='true']/cbc:Amount)" />
          <let name="sumAllowance" value="sum(cac:AllowanceCharge[child::cbc:ChargeIndicator='false']/cbc:Amount)"/>
-         <let name="baseQuantity" value="xs:decimal(if (cac:Price/cbc:BaseQuantity) then cac:Price/cbc:BaseQuantity else 1)"/>
+         <let name="baseQuantity" value="xs:decimal(if (cac:Price/cbc:BaseQuantity and xs:decimal(cac:Price/cbc:BaseQuantity) != 0) then cac:Price/cbc:BaseQuantity else 1)"/>
          <let name="pricePerUnit" value="xs:decimal(cac:Price/cbc:PriceAmount) div $baseQuantity"/>
          <let name="quantity" value="xs:decimal(cbc:CreditedQuantity)"/>
          <let name="lineExtensionAmount" value="number(cbc:LineExtensionAmount)"/>
@@ -124,7 +124,7 @@
       <rule context="cac:Price/cbc:BaseQuantity">
         <assert id="NONAT-T14-R033"
                 test="xs:decimal(.) &gt; 0"
-                flag="warning">[NONAT-T10-R031]-Base quantity must be a positive value higher than zero.</assert>
+                flag="fatal">[NONAT-T10-R033]-Base quantity must be a positive value higher than zero.</assert>
       </rule>
 
       <rule context="cac:TaxSubtotal">
