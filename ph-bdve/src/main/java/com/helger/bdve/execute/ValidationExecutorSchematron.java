@@ -160,11 +160,12 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
                                                                           XMLHelper.getOwnerDocument (aNode));
         if (aResult != null && !aResult.booleanValue ())
         {
-          s_aLogger.info ("Ignoring validation artefact " +
-                          aSCHRes.getPath () +
-                          " because the prerequisite XPath expression '" +
-                          m_sPrerequisiteXPath +
-                          "' is not fulfilled.");
+          if (s_aLogger.isInfoEnabled ())
+            s_aLogger.info ("Ignoring validation artefact " +
+                            aSCHRes.getPath () +
+                            " because the prerequisite XPath expression '" +
+                            m_sPrerequisiteXPath +
+                            "' is not fulfilled.");
           return ValidationResult.createIgnoredResult (aArtefact);
         }
       }

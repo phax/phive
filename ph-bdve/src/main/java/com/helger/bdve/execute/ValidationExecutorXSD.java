@@ -127,7 +127,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
                                                               aDocType.getImplementationClass ().getClassLoader (),
                                                               aDocType.getAllXSDResources ().getLast ()),
-                                      aCL -> aDocType.getSchema (aCL));
+                                      aDocType::getSchema);
   }
 
   @Nonnull
