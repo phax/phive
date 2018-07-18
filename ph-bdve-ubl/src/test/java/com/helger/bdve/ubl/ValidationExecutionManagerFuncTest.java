@@ -47,7 +47,9 @@ public final class ValidationExecutionManagerFuncTest
   public void testApplyCompleteValidation ()
   {
     final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
+    UBLValidation.initUBL20 (aRegistry);
     UBLValidation.initUBL21 (aRegistry);
+    UBLValidation.initUBL22 (aRegistry);
 
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {

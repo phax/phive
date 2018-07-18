@@ -20,6 +20,9 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
+* v5.0.4 - work in progress
+  * Added support for UBL 2.0 XSD validation
+  * Added support for UBL 2.2 XSD validation
 * v5.0.3 - 2018-07-11
   * Updated EHF rules to 2018-02-20 
 * v5.0.2 - 2018-06-26
