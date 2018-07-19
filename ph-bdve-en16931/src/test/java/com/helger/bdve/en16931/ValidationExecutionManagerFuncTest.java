@@ -58,7 +58,7 @@ import com.helger.xml.xpath.XPathHelper;
  */
 public final class ValidationExecutionManagerFuncTest
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
   @Test
   public void testTestFiles ()
@@ -72,7 +72,7 @@ public final class ValidationExecutionManagerFuncTest
       assertNotNull (aExecutors);
       final ValidationExecutionManager aValidator = aExecutors.createExecutionManager ();
 
-      s_aLogger.info ("Validating " +
+      LOGGER.info ("Validating " +
                       aTestFile.getResource ().getPath () +
                       " against " +
                       aExecutors.getExecutorCount () +

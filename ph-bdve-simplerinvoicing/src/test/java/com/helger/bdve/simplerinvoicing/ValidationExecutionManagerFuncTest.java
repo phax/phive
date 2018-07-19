@@ -41,7 +41,7 @@ import com.helger.bdve.source.ValidationSource;
  */
 public final class ValidationExecutionManagerFuncTest
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutionManagerFuncTest.class);
 
   @Test
   public void testApplyCompleteValidation ()
@@ -55,7 +55,7 @@ public final class ValidationExecutionManagerFuncTest
       assertNotNull (aExecutors);
       final ValidationExecutionManager aValidator = aExecutors.createExecutionManager ();
 
-      s_aLogger.info ("Validating " +
+      LOGGER.info ("Validating " +
                       aTestFile.getResource ().getPath () +
                       " against " +
                       aExecutors.getExecutorCount () +
@@ -67,7 +67,7 @@ public final class ValidationExecutionManagerFuncTest
       final ValidationResultList aErrors = aValidator.executeValidation (aSource, Locale.US);
       if (aTestFile.isGoodCase ())
       {
-        aErrors.getAllErrors ().forEach (x -> s_aLogger.info (x.getErrorLevel () + " " + x.getErrorText (Locale.US)));
+        aErrors.getAllErrors ().forEach (x -> LOGGER.info (x.getErrorLevel () + " " + x.getErrorText (Locale.US)));
         assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
       }
       else

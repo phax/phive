@@ -79,7 +79,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
 
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
   private boolean m_bCacheSchematron = DEFAULT_CACHE;
   private final String m_sPrerequisiteXPath;
@@ -160,8 +160,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
                                                                           XMLHelper.getOwnerDocument (aNode));
         if (aResult != null && !aResult.booleanValue ())
         {
-          if (s_aLogger.isInfoEnabled ())
-            s_aLogger.info ("Ignoring validation artefact " +
+          if (LOGGER.isInfoEnabled ())
+            LOGGER.info ("Ignoring validation artefact " +
                             aSCHRes.getPath () +
                             " because the prerequisite XPath expression '" +
                             m_sPrerequisiteXPath +
@@ -178,7 +178,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
                                  " matches the prerequisite XPath expression '" +
                                  m_sPrerequisiteXPath +
                                  "' - ignoring validation artefact.";
-        s_aLogger.error (sErrorMsg, ex);
+        LOGGER.error (sErrorMsg, ex);
         return new ValidationResult (aArtefact,
                                      new ErrorList (SingleError.builderError ()
                                                                .setErrorText (sErrorMsg)
@@ -238,8 +238,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
       // Main application of Schematron
       final Document aDoc = aSCH.applySchematronValidation (new DOMSource (aNode));
 
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
 
       switch (eOutput)
       {
