@@ -20,7 +20,7 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
-* v5.0.4 - work in progress
+* v5.0.4 - 2018-08-14
   * Added support for UBL 2.0 XSD validation
   * Added support for UBL 2.2 XSD validation
 * v5.0.3 - 2018-07-11
@@ -95,61 +95,61 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.0.3</version>
+  <version>5.0.4</version>
 </dependency>
 ```
 
