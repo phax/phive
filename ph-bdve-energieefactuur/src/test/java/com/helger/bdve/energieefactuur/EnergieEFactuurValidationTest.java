@@ -30,7 +30,7 @@ import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
 
 /**
- * Test class for class {@link EN16931Validation}.
+ * Test class for class {@link EnergieEFactuurValidation}.
  *
  * @author Philip Helger
  */
