@@ -17,11 +17,13 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-oioubl - Validation rules for Danish OIOUBL - since 4.0.3
   * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
   * ph-bdve-teapps - Validation rules for Tieto TEAPPSXML - since 5.0.0
+  * ph-bdve-ublbe - Validation rules for UBL.BE - since 5.0.5
   
 # News and noteworthy
 
 * v5.0.5 - work in progress
     * Requires at least ph-commons 9.1.8
+    * Added support or UBL.BE Document Types
 * v5.0.4 - 2018-08-14
     * Added support for UBL 2.0 XSD validation
     * Added support for UBL 2.2 XSD validation
