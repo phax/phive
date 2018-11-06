@@ -23,7 +23,8 @@ This project is divided into sub-projects for maximum flexibility:
 
 * v5.0.5 - work in progress
     * Requires at least ph-commons 9.1.8
-    * Added support or UBL.BE Document Types
+    * Added support for UBL.BE document types
+    * Added support for OpenPEPPOL 3.7.0.RC1 (Fall 2018) rules (incl. Billing BIS3)
 * v5.0.4 - 2018-08-14
     * Added support for UBL 2.0 XSD validation
     * Added support for UBL 2.2 XSD validation
