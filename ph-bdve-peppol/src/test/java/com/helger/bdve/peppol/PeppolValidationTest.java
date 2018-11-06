@@ -19,6 +19,8 @@ package com.helger.bdve.peppol;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
@@ -36,6 +38,7 @@ import com.helger.schematron.xslt.SchematronResourceXSLT;
  */
 public final class PeppolValidationTest
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (PeppolValidationTest.class);
   private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
