@@ -22,6 +22,7 @@ import javax.annotation.concurrent.Immutable;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
+import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.ublbe.UBLBEValidation;
 import com.helger.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.commons.ValueEnforcer;
@@ -34,9 +35,11 @@ import com.helger.commons.io.resource.IReadableResource;
 @Immutable
 public final class CTestFiles
 {
-  private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
+  public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
+    // Peppol is a prerequisite
+    PeppolValidation.initStandard (VES_REGISTRY);
     UBLBEValidation.initUBLBE (VES_REGISTRY);
   }
 
@@ -48,7 +51,7 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { UBLBEValidation.VID_UBLBE_CREDIT_NOTE, UBLBEValidation.VID_UBLBE_INVOICE })
+    for (final VESID aESID : new VESID [] { UBLBEValidation.VID_EFFF_CREDIT_NOTE, UBLBEValidation.VID_EFFF_INVOICE })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -62,9 +65,9 @@ public final class CTestFiles
     ValueEnforcer.notNull (aVESID, "VESID");
 
     final MultiHashMapArrayListBased <VESID, IReadableResource> aMap = new MultiHashMapArrayListBased <> ();
-    aMap.putSingle (UBLBEValidation.VID_UBLBE_INVOICE,
+    aMap.putSingle (UBLBEValidation.VID_EFFF_INVOICE,
                     new ClassPathResource ("/ublbe/3.0.0/UBLBE_BE0000000196_V01-15000001.xml"));
-    aMap.putSingle (UBLBEValidation.VID_UBLBE_CREDIT_NOTE,
+    aMap.putSingle (UBLBEValidation.VID_EFFF_CREDIT_NOTE,
                     new ClassPathResource ("/ublbe/3.0.0/UBLBE_BE0000000196_V01-15000002.xml"));
 
     final ICommonsList <IReadableResource> ret = aMap.get (aVESID);
