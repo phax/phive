@@ -48,7 +48,7 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { UBLBEValidation.VID_UBLBE_CREDIT_NOTE, UBLBEValidation.VID_UBLBE_INVOICE })
+    for (final VESID aESID : new VESID [] { UBLBEValidation.VID_UBLBE_INVOICE, UBLBEValidation.VID_UBLBE_CREDIT_NOTE })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -62,6 +62,8 @@ public final class CTestFiles
     ValueEnforcer.notNull (aVESID, "VESID");
 
     final MultiHashMapArrayListBased <VESID, IReadableResource> aMap = new MultiHashMapArrayListBased <> ();
+    aMap.putSingle (UBLBEValidation.VID_UBLBE_INVOICE,
+                    new ClassPathResource ("/ublbe/3.0.0/efff_BE0827405743_V01-15000001-1.xml"));
     aMap.putSingle (UBLBEValidation.VID_UBLBE_INVOICE,
                     new ClassPathResource ("/ublbe/3.0.0/UBLBE_BE0000000196_V01-15000001.xml"));
     aMap.putSingle (UBLBEValidation.VID_UBLBE_CREDIT_NOTE,
