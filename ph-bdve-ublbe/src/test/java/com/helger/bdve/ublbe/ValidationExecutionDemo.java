@@ -26,11 +26,10 @@ import org.xml.sax.SAXException;
 
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
-import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
-import com.helger.bdve.ublbe.UBLBEValidation;
+import com.helger.bdve.ublbe.mock.CTestFiles;
 import com.helger.xml.serialize.read.DOMReader;
 
 /**
@@ -40,21 +39,13 @@ import com.helger.xml.serialize.read.DOMReader;
  */
 public final class ValidationExecutionDemo
 {
-  // Do this only once - it contains all the validation executor sets
-  private static final ValidationExecutorSetRegistry REGISTRY = new ValidationExecutorSetRegistry ();
-
-  static
-  {
-    UBLBEValidation.initUBLBE (REGISTRY);
-  }
-
   public void testCode (@Nullable final String sSystemID, @Nonnull final byte [] aXML) throws SAXException
   {
     // Example: validate against orders
-    final VESID aVESID = UBLBEValidation.VID_UBLBE_INVOICE;
+    final VESID aVESID = UBLBEValidation.VID_EFFF_INVOICE;
 
     // Note: Use the currently active version
-    final IValidationExecutorSet aExecutors = REGISTRY.getOfID (aVESID);
+    final IValidationExecutorSet aExecutors = CTestFiles.VES_REGISTRY.getOfID (aVESID);
 
     // Parse the XML document to be validated
     final Document aXMLDoc = DOMReader.readXMLDOM (aXML);

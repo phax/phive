@@ -23,29 +23,30 @@ import com.helger.bdve.EValidationType;
 import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
-import com.helger.bdve.execute.ValidationExecutorXSD;
+import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.peppol.PeppolValidation;
+import com.helger.bdve.peppol.PeppolValidation360;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
- * Generic UBL.BE validation configuration
+ * Generic e-FFF/UBL.BE validation configuration
  *
  * @author Philip Helger
  */
 @Immutable
 public final class UBLBEValidation
 {
-  private static final String GROUPID = "be.ubl";
+  private static final String GROUPID = "be.efff";
   private static final String VERSION = "3.0.0";
-  public static final VESID VID_UBLBE_CREDIT_NOTE = new VESID (GROUPID, "credit-note", VERSION);
-  public static final VESID VID_UBLBE_INVOICE = new VESID (GROUPID, "invoice", VERSION);
+  public static final VESID VID_EFFF_CREDIT_NOTE = new VESID (GROUPID, "credit-note", VERSION);
+  public static final VESID VID_EFFF_INVOICE = new VESID (GROUPID, "invoice", VERSION);
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -68,8 +69,8 @@ public final class UBLBEValidation
   }
 
   /**
-   * Register all standard UBL.BE validation execution sets to the provided
-   * registry.
+   * Register all standard e-FFF/UBL.BE validation execution sets to the
+   * provided registry.
    *
    * @param aRegistry
    *        The registry to add the artefacts. May not be <code>null</code>.
@@ -81,18 +82,23 @@ public final class UBLBEValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
+    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation360.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation360.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    if (aVESInvoice == null || aVESCreditNote == null)
+      throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before UBL.BE artefacts!");
+
     final boolean bNotDeprecated = false;
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBLBE_CREDIT_NOTE,
-                                                                           "UBL.BE Credit Note " +
-                                                                                                  VID_UBLBE_CREDIT_NOTE.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
-                                                                           _createXSLT (UBLBE_EFFF)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBLBE_INVOICE,
-                                                                           "UBL.BE Invoice " +
-                                                                                              VID_UBLBE_INVOICE.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
-                                                                           _createXSLT (UBLBE_EFFF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoice,
+                                                                                  VID_EFFF_INVOICE,
+                                                                                  "e-FFF Invoice " +
+                                                                                                    VID_EFFF_INVOICE.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (UBLBE_EFFF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
+                                                                                  VID_EFFF_CREDIT_NOTE,
+                                                                                  "e-FFF Credit Note " +
+                                                                                                        VID_EFFF_CREDIT_NOTE.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (UBLBE_EFFF)));
   }
 }
