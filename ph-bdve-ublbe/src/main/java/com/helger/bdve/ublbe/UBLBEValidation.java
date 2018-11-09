@@ -85,7 +85,7 @@ public final class UBLBEValidation
     final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation360.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
     final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation360.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
     if (aVESInvoice == null || aVESCreditNote == null)
-      throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before UBL.BE artefacts!");
+      throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before e-FFF artefacts!");
 
     final boolean bNotDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoice,

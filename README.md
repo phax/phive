@@ -17,10 +17,12 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-oioubl - Validation rules for Danish OIOUBL - since 4.0.3
   * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
   * ph-bdve-teapps - Validation rules for Tieto TEAPPSXML - since 5.0.0
-  * ph-bdve-ublbe - Validation rules for UBL.BE - since 5.0.5
+  * ph-bdve-ublbe - Validation rules for e-FFF/UBL.BE - since 5.0.5
   
 # News and noteworthy
 
+* v5.0.6 - 2018-11-09
+    * Fixed an error in the UBL.BE document types. In reality those are e-FFF 3.0 document types. VESID changed therefore.
 * v5.0.5 - 2018-11-07
     * Requires at least ph-commons 9.1.8
     * Added support for UBL.BE document types
@@ -102,67 +104,67 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.0.5</version>
+  <version>5.0.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
-  <artifactId>ph-bdve-ublpe</artifactId>
-  <version>5.0.5</version>
+  <artifactId>ph-bdve-ublbe</artifactId>
+  <version>5.0.6</version>
 </dependency>
 ```
 
