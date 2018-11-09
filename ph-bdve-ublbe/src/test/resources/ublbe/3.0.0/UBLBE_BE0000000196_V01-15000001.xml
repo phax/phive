@@ -7,6 +7,7 @@
  xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
 	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
 	<cbc:CustomizationID>urn:cen.eu:en16931:2017#Conformant#urn:UBL.BE:1.0.0.20180214</cbc:CustomizationID>
+  <cbc:ProfileID>urn:www.cenbii.eu:profile:bii05:ver2.0</cbc:ProfileID>
 	<cbc:ID>V01/15000001</cbc:ID>
 	<cbc:IssueDate>2018-04-09</cbc:IssueDate>
 	<cbc:DueDate>2018-05-09</cbc:DueDate>
@@ -95,7 +96,9 @@
 		<cac:PayeeFinancialAccount>
 			<cbc:ID schemeID="IBAN">BE54000000000097</cbc:ID>
 			<cac:FinancialInstitutionBranch>
-				<cbc:ID schemeID="BIC">BPOTBEB1</cbc:ID>
+        <cac:FinancialInstitution>
+  				<cbc:ID schemeID="BIC">BPOTBEB1</cbc:ID>
+        </cac:FinancialInstitution>  
 			</cac:FinancialInstitutionBranch>
 		</cac:PayeeFinancialAccount>
 	</cac:PaymentMeans>

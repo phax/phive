@@ -38,7 +38,7 @@
 				</cac:Country>
 			</cac:PostalAddress>
 			<cac:PartyTaxScheme>
-				<cbc:CompanyID schemeID="BE:CBE">0827405743</cbc:CompanyID>
+				<cbc:CompanyID schemeID="BE:VAT">BE0827405743</cbc:CompanyID>
 				<cac:TaxScheme>
 					<cbc:ID>VAT</cbc:ID>
 				</cac:TaxScheme>
@@ -75,7 +75,7 @@
 				</cac:Country>
 			</cac:PostalAddress>
 			<cac:PartyTaxScheme>
-				<cbc:CompanyID schemeID="BE:CBE">0899167234</cbc:CompanyID>
+				<cbc:CompanyID schemeID="BE:VAT">BE0899167234</cbc:CompanyID>
 				<cac:TaxScheme>
 					<cbc:ID>VAT</cbc:ID>
 				</cac:TaxScheme>
