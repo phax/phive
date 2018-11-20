@@ -65,9 +65,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
   }
 
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
-                                           @Nullable final ClassLoader aClassLoader,
-                                           @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -117,7 +115,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
 
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
-    final Schema aSchema = XMLSchemaCache.getInstanceOfClassLoader (aClassLoader).getSchema (aVA.getRuleResource ());
+    final Schema aSchema = XMLSchemaCache.getInstance ().getSchema (aVA.getRuleResource ());
     assert aSchema != null;
 
     for (int i = 0; i < aNodeSet.getLength (); ++i)

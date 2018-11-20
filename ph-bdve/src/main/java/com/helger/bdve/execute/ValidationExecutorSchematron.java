@@ -123,7 +123,6 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
 
   @Nonnull
   public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
-                                           @Nullable final ClassLoader aClassLoader,
                                            @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");

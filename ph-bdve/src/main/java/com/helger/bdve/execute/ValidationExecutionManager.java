@@ -229,7 +229,7 @@ public class ValidationExecutionManager implements IHasClassLoader
         }
 
         // Execute validation
-        final ValidationResult aResult = aExecutor.applyValidation (aSource, aValidationCL, aLocale);
+        final ValidationResult aResult = aExecutor.applyValidation (aSource, aLocale);
         assert aResult != null;
         aValidationResults.add (aResult);
 

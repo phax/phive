@@ -92,7 +92,7 @@ public interface IValidationExecutor extends Serializable
   @Nonnull
   default ValidationResult applyValidation (@Nonnull final IValidationSource aSource)
   {
-    return applyValidation (aSource, getValidationArtefact ().getClassLoader (), (Locale) null);
+    return applyValidation (aSource, (Locale) null);
   }
 
   /**
@@ -100,8 +100,6 @@ public interface IValidationExecutor extends Serializable
    *
    * @param aSource
    *        Source to be validated. May not be <code>null</code>.
-   * @param aClassLoader
-   *        The class loader to use. May be <code>null</code>.
    * @param aLocale
    *        The locale to use for error messages if applicable. May be
    *        <code>null</code> in which case the system default locale is used.
@@ -109,6 +107,5 @@ public interface IValidationExecutor extends Serializable
    */
   @Nonnull
   ValidationResult applyValidation (@Nonnull IValidationSource aSource,
-                                    @Nullable ClassLoader aClassLoader,
                                     @Nullable Locale aLocale);
 }

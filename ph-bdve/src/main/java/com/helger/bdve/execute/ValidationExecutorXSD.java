@@ -33,7 +33,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.functional.IFunction;
+import com.helger.commons.functional.ISupplier;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.jaxb.builder.IJAXBDocumentType;
@@ -48,10 +48,10 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  */
 public class ValidationExecutorXSD extends AbstractValidationExecutor
 {
-  private final IFunction <? super ClassLoader, ? extends Schema> m_aSchemaProvider;
+  private final ISupplier <? extends Schema> m_aSchemaProvider;
 
   public ValidationExecutorXSD (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final IFunction <? super ClassLoader, ? extends Schema> aSchemaProvider)
+                                @Nonnull final ISupplier <? extends Schema> aSchemaProvider)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSDBased (), "Artifact is not XSD");
@@ -60,14 +60,13 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   }
 
   @Nonnull
-  public IFunction <? super ClassLoader, ? extends Schema> getSchemaProvider ()
+  public ISupplier <? extends Schema> getSchemaProvider ()
   {
     return m_aSchemaProvider;
   }
 
   @Nonnull
   public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
-                                           @Nullable final ClassLoader aClassLoader,
                                            @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
@@ -75,7 +74,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
 
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
-    final Schema aSchema = m_aSchemaProvider.apply (aClassLoader);
+    final Schema aSchema = m_aSchemaProvider.get ();
     assert aSchema != null;
 
     final ErrorList aErrorList = new ErrorList ();
@@ -135,6 +134,6 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes.getClassLoader (), aXSDRes),
-                                      aCL -> XMLSchemaCache.getInstanceOfClassLoader (aCL).getSchema (aXSDRes));
+                                      () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
   }
 }

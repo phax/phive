@@ -21,6 +21,8 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
+* v5.1.0 - work in progress
+    * Requires ph-commons 9.2.0
 * v5.0.6 - 2018-11-09
     * Fixed an error in the UBL.BE document types. In reality those are e-FFF 3.0 document types. VESID changed therefore.
 * v5.0.5 - 2018-11-07
