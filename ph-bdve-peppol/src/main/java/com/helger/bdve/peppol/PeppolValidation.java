@@ -80,7 +80,7 @@ public final class PeppolValidation
   public static final IReadableResource BIS3_BILLING_PEPPOL = new ClassPathResource ("/openpeppol/billingbis3/PEPPOL-EN16931-UBL.sch",
                                                                                      _getCL ());
 
-  public static final String VERSION_TO_USE = PeppolValidation360.VERSION_STR;
+  public static final String VERSION_TO_USE = PeppolValidation370.VERSION_STR;
 
   private PeppolValidation ()
   {}
@@ -98,7 +98,6 @@ public final class PeppolValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
-    PeppolValidation340.init (aRegistry);
     PeppolValidation350.init (aRegistry);
     PeppolValidation360.init (aRegistry);
     PeppolValidation370.init (aRegistry);
@@ -137,8 +136,8 @@ public final class PeppolValidation
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     // Extending third-party artefacts
-    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation360.VID_OPENPEPPOL_T10_V2.getWithVersion (VERSION_TO_USE));
-    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation360.VID_OPENPEPPOL_T14_V2.getWithVersion (VERSION_TO_USE));
+    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T10_V2.getWithVersion (VERSION_TO_USE));
+    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T14_V2.getWithVersion (VERSION_TO_USE));
     if (aVESInvoice == null || aVESCreditNote == null)
       throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before third-party artefacts!");
 

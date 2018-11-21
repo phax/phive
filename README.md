@@ -23,6 +23,8 @@ This project is divided into sub-projects for maximum flexibility:
 
 * v5.1.0 - work in progress
     * Requires ph-commons 9.2.0
+    * Added support for OpenPEPPOL 3.7.0 (Fall 2018) rules (incl. Billing BIS3)
+    * Removed support for OpenPEPPOL 3.4.0 rules
 * v5.0.6 - 2018-11-09
     * Fixed an error in the UBL.BE document types. In reality those are e-FFF 3.0 document types. VESID changed therefore.
 * v5.0.5 - 2018-11-07
@@ -102,6 +104,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 # Maven usage
 
 Add the following to your `pom.xml` to use this artifact:
+
 ```xml
 <dependency>
   <groupId>com.helger</groupId>
