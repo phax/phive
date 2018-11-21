@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
@@ -47,7 +46,7 @@ public final class ValidationExecutionDemo
     EHFValidation.initEHF (REGISTRY);
   }
 
-  public void testCode (@Nullable final String sSystemID, @Nonnull final byte [] aXML) throws SAXException
+  public void testCode (@Nullable final String sSystemID, @Nonnull final byte [] aXML)
   {
     // Example: validate against orders
     final VESID aVESID = EHFValidation.VID_EHF_INVOICE_2_0;

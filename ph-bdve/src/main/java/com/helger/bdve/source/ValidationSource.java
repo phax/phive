@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
 import javax.xml.transform.Source;
 
 import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.ISupplier;
@@ -122,17 +121,8 @@ public class ValidationSource implements IValidationSource
   @Nonnull
   public static ValidationSource createXMLSource (@Nonnull final IReadableResource aResource)
   {
-    return new ValidationSource (aResource.getPath (), () -> {
-      try
-      {
-        // Read on demand only
-        return DOMReader.readXMLDOM (aResource);
-      }
-      catch (final SAXException ex)
-      {
-        return null;
-      }
-    }, false)
+    // Read on demand only
+    return new ValidationSource (aResource.getPath (), () -> DOMReader.readXMLDOM (aResource), false)
     {
       @Override
       @Nonnull
