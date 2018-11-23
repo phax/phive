@@ -21,7 +21,7 @@ This project is divided into sub-projects for maximum flexibility:
   
 # News and noteworthy
 
-* v5.1.0 - work in progress
+* v5.1.0 - 2018-11-23
     * Requires ph-commons 9.2.0
     * Added support for OpenPEPPOL 3.7.0 (Fall 2018) rules (incl. Billing BIS3)
     * Removed support for OpenPEPPOL 3.4.0 rules
@@ -109,67 +109,67 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.0.6</version>
+  <version>5.1.0</version>
 </dependency>
 ```
 
