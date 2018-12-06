@@ -52,7 +52,11 @@
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
-      <artifactId>ph-bdve-peppol</artifactId>
+      <artifactId>ph-bdve</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-ubl21</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger</groupId>

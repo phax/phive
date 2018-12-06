@@ -23,9 +23,9 @@ import javax.annotation.Nullable;
 
 import org.w3c.dom.Document;
 
+import com.helger.bdve.ehf.mock.CTestFiles;
 import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
-import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
@@ -38,21 +38,13 @@ import com.helger.xml.serialize.read.DOMReader;
  */
 public final class ValidationExecutionDemo
 {
-  // Do this only once - it contains all the validation executor sets
-  private static final ValidationExecutorSetRegistry REGISTRY = new ValidationExecutorSetRegistry ();
-
-  static
-  {
-    EHFValidation.initEHF (REGISTRY);
-  }
-
   public void testCode (@Nullable final String sSystemID, @Nonnull final byte [] aXML)
   {
     // Example: validate against orders
     final VESID aVESID = EHFValidation.VID_EHF_INVOICE_2_0;
 
     // Note: Use the currently active version
-    final IValidationExecutorSet aExecutors = REGISTRY.getOfID (aVESID);
+    final IValidationExecutorSet aExecutors = CTestFiles.VES_REGISTRY.getOfID (aVESID);
 
     // Parse the XML document to be validated
     final Document aXMLDoc = DOMReader.readXMLDOM (aXML);

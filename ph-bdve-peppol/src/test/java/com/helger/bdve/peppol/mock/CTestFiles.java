@@ -34,7 +34,7 @@ import com.helger.peppol.testfiles.official.OfficialTestFiles;
 @Immutable
 public final class CTestFiles
 {
-  private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
+  public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
     PeppolValidation.initStandard (VES_REGISTRY);

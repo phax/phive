@@ -21,10 +21,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.helger.bdve.artefact.IValidationArtefact;
-import com.helger.bdve.ebinterface.EbInterfaceValidation;
+import com.helger.bdve.ebinterface.mock.CTestFiles;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.executorset.IValidationExecutorSet;
-import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.xslt.SchematronResourceSCH;
@@ -37,16 +36,10 @@ import com.helger.schematron.xslt.SchematronResourceXSLT;
  */
 public final class EbInterfaceValidationTest
 {
-  private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
-  static
-  {
-    EbInterfaceValidation.initEbInterface (VES_REGISTRY);
-  }
-
   @Test
   public void testFilesExist ()
   {
-    for (final IValidationExecutorSet aVES : VES_REGISTRY.getAll ())
+    for (final IValidationExecutorSet aVES : CTestFiles.VES_REGISTRY.getAll ())
       for (final IValidationExecutor aVE : aVES)
       {
         final IReadableResource aRes = aVE.getValidationArtefact ().getRuleResource ();
@@ -57,7 +50,7 @@ public final class EbInterfaceValidationTest
   @Test
   public void testSchematronsValid ()
   {
-    for (final IValidationExecutorSet aVES : VES_REGISTRY.getAll ())
+    for (final IValidationExecutorSet aVES : CTestFiles.VES_REGISTRY.getAll ())
       for (final IValidationExecutor aVE : aVES)
       {
         final IValidationArtefact aVA = aVE.getValidationArtefact ();

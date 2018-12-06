@@ -34,10 +34,12 @@ import com.helger.ubl.testfiles.UBLTestFiles;
 @Immutable
 public final class CTestFiles
 {
-  private static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
+  public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
+    UBLValidation.initUBL20 (VES_REGISTRY);
     UBLValidation.initUBL21 (VES_REGISTRY);
+    UBLValidation.initUBL22 (VES_REGISTRY);
   }
 
   private CTestFiles ()
