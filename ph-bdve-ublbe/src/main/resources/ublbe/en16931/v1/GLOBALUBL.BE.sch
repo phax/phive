@@ -8,22 +8,15 @@
 
 	<title>EN16931  model bound to UBL</title>
 
-	<ns prefix="ext"
-       uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"/>
-	<ns prefix="cbc"
-       uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
-	<ns prefix="cac"
-       uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"/>
-	<ns prefix="qdt"
-       uri="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2"/>
-	<ns prefix="udt"
-       uri="urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2"/>
-	<ns prefix="cn"
-       uri="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2"/>
-	<ns prefix="ubl"
-       uri="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"/>
-	<ns prefix="xs" uri="http://www.w3.org/2001/XMLSchema"/>
-  <ns uri="utils" prefix="u"/>
+	<ns prefix="ext" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2"/>
+	<ns prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"/>
+	<ns prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"/>
+	<ns prefix="qdt" uri="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2"/>
+	<ns prefix="udt" uri="urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2"/>
+	<ns prefix="cn"  uri="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2"/>
+	<ns prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"/>
+	<ns prefix="u"	 uri="utils" />
+	<ns prefix="xs"  uri="http://www.w3.org/2001/XMLSchema"/>
 	<phase id="EN16931model_phase">
 		<active pattern="UBL-model"/>
 	</phase>
@@ -330,7 +323,7 @@
                  flag="fatal"
                  id="BR-CO-04">[BR-CO-04]-Each Invoice line (BG-25) shall be categorized with an Invoiced item VAT category code (BT-151).</assert>
 			<assert test="string-length(substring-after(cbc:LineExtensionAmount,'.'))&lt;=2"
-                 flag="fatal"
+                 flag="warning"
                  id="BR-DEC-23">[BR-DEC-23]-The allowed maximum number of decimals for the Invoice line net amount (BT-131) is 2.    </assert>
 		</rule>
 		<rule context="//cac:InvoiceLine/cac:AllowanceCharge[cbc:ChargeIndicator = 'false'] | //cac:CreditNoteLine/cac:AllowanceCharge[cbc:ChargeIndicator = 'false']">
@@ -600,7 +593,7 @@
 		</rule>
 		<rule context="cac:TaxTotal/cac:TaxSubtotal/cac:TaxCategory[normalize-space(cbc:ID) = 'S']">
 			<assert test="every $rate in round(cbc:Percent) satisfies ((exists(//cac:InvoiceLine) and (../cbc:TaxableAmount = (sum(../../../cac:InvoiceLine[normalize-space(cac:Item/cac:ClassifiedTaxCategory/cbc:ID)='S'][cac:Item/cac:ClassifiedTaxCategory/round(cbc:Percent) =$rate]/xs:decimal(cbc:LineExtensionAmount)) + sum(../../../cac:AllowanceCharge[cbc:ChargeIndicator='true'][normalize-space(cac:TaxCategory/cbc:ID)='S'][cac:TaxCategory/round(cbc:Percent) = $rate]/xs:decimal(cbc:Amount)) - sum(../../../cac:AllowanceCharge[cbc:ChargeIndicator='false'][normalize-space(cac:TaxCategory/cbc:ID)='S'][cac:TaxCategory/round(cbc:Percent) = $rate]/xs:decimal(cbc:Amount))))) or (exists(//cac:CreditNoteLine) and (../cbc:TaxableAmount = (sum(../../../cac:CreditNoteLine[normalize-space(cac:Item/cac:ClassifiedTaxCategory/cbc:ID)='S'][cac:Item/cac:ClassifiedTaxCategory/round(cbc:Percent) =$rate]/xs:decimal(cbc:LineExtensionAmount)) + sum(../../../cac:AllowanceCharge[cbc:ChargeIndicator='true'][normalize-space(cac:TaxCategory/cbc:ID)='S'][cac:TaxCategory/round(cbc:Percent) = $rate]/xs:decimal(cbc:Amount)) - sum(../../../cac:AllowanceCharge[cbc:ChargeIndicator='false'][normalize-space(cac:TaxCategory/cbc:ID)='S'][cac:TaxCategory/round(cbc:Percent) = $rate]/xs:decimal(cbc:Amount))))))"
-                 flag="fatal"
+                 flag="warning"
                  id="BR-S-08">[BR-S-08]-For each different value of VAT category rate (BT-119) where the VAT category code (BT-118) is "Standard rated", the VAT category taxable amount (BT-116) in a VATBReakdown (BG-23) shall equal the sum of Invoice line net amounts (BT-131) plus the sum of document level charge amounts (BT-99) minus the sum of document level allowance amounts (BT-92) where the VAT category code (BT-151, BT-102, BT-95) is “Standard rated” and the VAT rate (BT-152, BT-103, BT-96) equals the VAT category rate (BT-119).</assert>
 			<assert test="xs:decimal(../cbc:TaxAmount) = round((xs:decimal(../cbc:TaxableAmount) * (xs:decimal(cbc:Percent) div 100)) * 10 * 10) div 100 "
                  flag="fatal"
@@ -644,7 +637,7 @@
 		</rule>
 		<rule context="//*[ends-with(name(), 'Amount') and not(ends-with(name(),'PriceAmount')) and not(ancestor::cac:Price/cac:AllowanceCharge)]">
 			<assert test="string-length(substring-after(.,'.'))&lt;=2"
-                 flag="fatal"
+                 flag="warning"
                  id="UBL-DT-01">[UBL-DT-01]-Amounts shall be decimal up to two fraction digits</assert>
 		</rule>
 		<rule context="//*[ends-with(name(), 'BinaryObject')]">
@@ -2745,10 +2738,10 @@
                  flag="fatal">[BR-CL-10]-Any identifier identification scheme identifier MUST be coded using one of the ISO 6523 ICD list.</assert>
 		</rule>
 		<!-- 2018-11-13 - Added newest ICD values manually -->
-		<rule context="cac:PartyLegalEntity/cbc:CompanyID[@schemeID]" flag="fatal">
+		<rule context="cac:PartyLegalEntity/cbc:CompanyID[@schemeID]" flag="warning">
 			<assert test="((not(contains(normalize-space(@schemeID), ' ')) and contains(' 0001 0002 0003 0004 0005 0006 0007 0008 0009 0010 0011 0012 0013 0014 0015 0016 0017 0018 0019 0020 0021 0022 0023 0024 0025 0026 0027 0028 0029 0030 0031 0032 0033 0034 0035 0036 0037 0038 0039 0040 0041 0042 0043 0044 0045 0046 0047 0048 0049 0050 0051 0052 0053 0054 0055 0056 0057 0058 0059 0060 0061 0062 0063 0064 0065 0066 0067 0068 0069 0070 0071 0072 0073 0074 0075 0076 0077 0078 0079 0080 0081 0082 0083 0084 0085 0086 0087 0088 0089 0090 0091 0092 0093 0094 0095 0096 0097 0098 0099 0100 0101 0102 0103 0104 0105 0106 0107 0108 0109 0110 0111 0112 0113 0114 0115 0116 0117 0118 0119 0120 0121 0122 0123 0124 0125 0126 0127 0128 0129 0130 0131 0132 0133 0134 0135 0136 0137 0138 0139 0140 0141 0142 0143 0144 0145 0146 0147 0148 0149 0150 0151 0152 0153 0154 0155 0156 0157 0158 0159 0160 0161 0162 0163 0164 0165 0166 0167 0168 0169 0170 0171 0172 0173 0174 0175 0176 0177 0178 0179 0180 0183 0184 0185 0186 0187 0188 0189 0190 0191 0192 0193 0194 0195 0196', concat(' ', normalize-space(@schemeID), ' '))))"
                  id="BR-CL-11"
-                 flag="fatal">[BR-CL-11]-Any registration identifier identification scheme identifier MUST be coded using one of the ISO 6523 ICD list.</assert>
+                 flag="warning">[BR-CL-11]-Any registration identifier identification scheme identifier MUST be coded using one of the ISO 6523 ICD list.</assert>
 		</rule>
 
 		<rule context="cac:CommodityClassification/cbc:ItemClassificationCode[@listID]"
@@ -2898,7 +2891,7 @@
 
 		<!-- Document level -->
 		<rule context="cn:CreditNote | ubl:Invoice">
-			<assert id="PEPPOL-EN16931-R001" test="cbc:ProfileID" flag="fatal">Business process MUST be
+			<assert id="PEPPOL-EN16931-R001" test="cbc:ProfileID" flag="warning">Business process MUST be
         provided.</assert>
 			<assert id="PEPPOL-EN16931-R002" test="count(cbc:Note) &lt;= 1" flag="fatal">No more than one
         note is allowed on document level.</assert>
@@ -2906,7 +2899,7 @@
         flag="fatal">A buyer reference or purchase order reference MUST be provided.</assert>
 			<assert id="PEPPOL-EN16931-R004"
         test="starts-with(normalize-space(cbc:CustomizationID/text()), 'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0')"
-        flag="fatal">Specification identifier MUST have the value
+        flag="warning">Specification identifier MUST have the value
         'urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0'.</assert>
 
 			<assert id="PEPPOL-EN16931-R053" test="count(cac:TaxTotal[cac:TaxSubtotal]) = 1" flag="fatal"
@@ -3460,7 +3453,7 @@
         test="
         some $code in $eaid
         satisfies @schemeID = $code"
-        flag="fatal">Electronic address identifier scheme must be from the codelist "Electronic Address Identifier Scheme"</assert>
+        flag="warning">Electronic address identifier scheme must be from the codelist "Electronic Address Identifier Scheme"</assert>
 		</rule>
 	</pattern>
 
@@ -3476,15 +3469,15 @@
 		<let name="BVERC" value="tokenize('BETE-45;BETE-EX;BETE-FD;BETE-SC;BETE-00/44;BETE-03/SE;BETE-MA;BETE-46/GO;BETE-47/TO;BETE-47/AS;BETE-47/DI;BETE-47/SE;BETE-44;BETE-46/TR;BETE-47/EX;BETE-47/EI;BETE-47/EE;BETE-NS', ';')"/>
 		<let name="BVERCText" value="tokenize('Reverse charge - Contractor;Exempt;Financial discount;Small company;0% Clause 44;Standard exchange;Margin;Intra-community supply - Goods;Intra-community supply - Manufacturing cost;Intra-community supply - Assembly;Intra-community supply - Distance;Intra-community supply - Services;Intra-community supply - Services B2B;Intra-community supply - Triangle a-B-c;Export non E.U.;Indirect export;Export via E.U.;Not subject to VAT', ';')"/>
 
-		<rule context="/">
-			<assert test="(count(//cac:AdditionalDocumentReference) >= 2)"
+		<rule context="/*">
+			<assert test="(count(cac:AdditionalDocumentReference) >= 2)"
 					 flag="fatal"
 					 id="UBL-BE-01">[UBL-BE-01]-At least two AdditionalDocumentReference elements must be present.
-			</assert>
+				</assert>
 		</rule>
 
 		<rule context="//cac:AdditionalDocumentReference">
-			<assert test="(count(//cbc:DocumentType[text() = 'CommercialInvoice']) + count(//cbc:DocumentType[text() = 'CreditNote'])  = 1)"
+			<assert test="(count(//cbc:DocumentDescription[text() = 'CommercialInvoice']) + count(//cbc:DocumentDescription[text() = 'CreditNote'])  = 1)"
 				 flag="fatal"
 				 id="UBL-BE-02">[UBL-BE-02]- cbc:DocumentType : CommercialInvoice or CreditNote must be specified
 			</assert>
@@ -3495,7 +3488,7 @@
 		</rule>
 
 		<rule context="//cac:AdditionalDocumentReference/cbc:ID">
-			<assert test="(count(../cbc:DocumentType) = 1)"
+			<assert test="(count(../cbc:DocumentDescription) = 1)"
 					 flag="fatal"
 					 id="UBL-BE-04">[UBL-BE-04]-cbc:DocumentType must be present
 			</assert>
@@ -3547,7 +3540,7 @@
 			<let name="TaxAmount" value="if (cbc:TaxAmount) then xs:decimal(cbc:TaxAmount) else -1"/>
 			<assert test="$TaxAmount &gt;=0"
 					 flag="fatal"
-					 id="UBL-BE-12">[UBL-BE-12]-cac:InvoiceLine/cac:TaxTotal/cbc:TaxAmount must be present and >= 0 : <value-of select="xs:decimal(cbc:TaxAmount)"/>
+					 id="UBL-BE-13">[UBL-BE-13]-cac:InvoiceLine/cac:TaxTotal/cbc:TaxAmount must be present and >= 0 : <value-of select="xs:decimal(cbc:TaxAmount)"/>
 			</assert>
 		</rule>
 
