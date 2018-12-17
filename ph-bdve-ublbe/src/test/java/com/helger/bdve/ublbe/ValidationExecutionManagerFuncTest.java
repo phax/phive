@@ -27,9 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.executorset.IValidationExecutorSet;
-import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
-import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
@@ -47,14 +45,9 @@ public final class ValidationExecutionManagerFuncTest
   @Test
   public void testApplyCompleteValidation ()
   {
-    final ValidationExecutorSetRegistry aRegistry = new ValidationExecutorSetRegistry ();
-    // Peppol is a prerequisite
-    PeppolValidation.initStandard (aRegistry);
-    UBLBEValidation.initUBLBE (aRegistry);
-
     for (final MockFile aTestFile : CTestFiles.getAllTestFiles ())
     {
-      final IValidationExecutorSet aExecutors = aRegistry.getOfID (aTestFile.getVESID ());
+      final IValidationExecutorSet aExecutors = CTestFiles.VES_REGISTRY.getOfID (aTestFile.getVESID ());
       assertNotNull (aExecutors);
       final ValidationExecutionManager aValidator = aExecutors.createExecutionManager ();
 

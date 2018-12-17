@@ -130,10 +130,11 @@
 		<cbc:LineExtensionAmount currencyID="EUR">392</cbc:LineExtensionAmount>
 		<cac:AllowanceCharge>
 			<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
-			<cbc:AllowanceChargeReasonCode listID="UNCL4465">19</cbc:AllowanceChargeReasonCode>
-			<cbc:AllowanceChargeReason>Trade discount</cbc:AllowanceChargeReason>
-			<cbc:MultiplierFactorNumeric>0.02</cbc:MultiplierFactorNumeric>
+			<cbc:AllowanceChargeReasonCode listID="UNCL5189">95</cbc:AllowanceChargeReasonCode>
+			<cbc:AllowanceChargeReason>Discount</cbc:AllowanceChargeReason>
+			<cbc:MultiplierFactorNumeric>2</cbc:MultiplierFactorNumeric>
 			<cbc:Amount currencyID="EUR">8</cbc:Amount>
+			<cbc:BaseAmount currencyID="EUR">400</cbc:BaseAmount>
 		</cac:AllowanceCharge>
 		<cac:TaxTotal>
 		  <cbc:TaxAmount currencyID="EUR">82.32</cbc:TaxAmount>
