@@ -1,11 +1,8 @@
 # ph-bdve
 
-A generic document validation engine originally developed for PEPPOL but now also supporting EN 16931 documents and SimplerInvoicing documents.
-A running example can be found on [PEPPOL Practical](http://peppol.helger.com/public/menuitem-validation-bis2)
+A generic document validation engine originally developed for PEPPOL but now also supporting other document types.
 
-Licensed under the Apache 2 license.
-
-This project is divided into sub-projects for maximum flexibility:
+This project is divided into sub-projects each keeping tracking of one document type set:
   * ph-bdve - generic "Business Document Validation Engine"
   * ph-bdve-peppol - the PEPPOL specific setup etc
   * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.x support from https://github.com/SimplerInvoicing/validation
@@ -18,9 +15,17 @@ This project is divided into sub-projects for maximum flexibility:
   * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
   * ph-bdve-teapps - Validation rules for Tieto TEAPPSXML - since 5.0.0
   * ph-bdve-ublbe - Validation rules for e-FFF/UBL.BE - since 5.0.5
+
+A running example can be found on [PEPPOL Practical](http://peppol.helger.com/public/menuitem-validation-bis2).
+
+A standalone tool that just performs validation based on this library is the [phoss validator](https://github.com/phax/phoss-validator/).
+
+Licensed under the Apache 2 license.
   
 # News and noteworthy
 
+* v5.1.1 - work in progress
+    * Started adding UBL.BE 1.0.0 Schematrons - not ready yet
 * v5.1.0 - 2018-11-23
     * Requires ph-commons 9.2.0
     * Added support for OpenPEPPOL 3.7.0 (Fall 2018) rules (incl. Billing BIS3)
@@ -98,6 +103,18 @@ This project is divided into sub-projects for maximum flexibility:
     * Requires JDK 8
 
 # Usage notes
+
+Basically this library wraps different XML Schemas and Schematrons and offers the possibility to validate XML documents based on the rules.
+
+## Validation execution set identification
+
+Every set of validation artefacts is uniquely identified based on a structure that is similar to (Maven coordinates)[https://maven.apache.org/pom.html#Maven_Coordinates]. The identifier for a set of validation artefacts is a so called "VESID" ("Validation Execution Set ID"). Each VESID consists of a mandatory group ID, a mandatory artefact ID, a mandatory version number (ideally following the semantic versioning principles) and an optional classifier.
+E.g. the "PEPPOL Invoice Fall release 2018" is identified with the group ID `eu.peppol.bis2`, the artefact ID is `t10` (based on "transaction 10" from CEN BII - historical reasons...), the version number is `3.7.0` (representing "Fall 2018") and no classifier is present.
+Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.simplerinvoicing`, the artifact ID `invoice` and the version number `1.2` (also without a classifier).
+
+Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
+
+## Potential issues
 
 Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle runtime, this can be achieved by passing `-Xss1m` on the command line. This only seems to be a problem when running 32bit Java. With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
