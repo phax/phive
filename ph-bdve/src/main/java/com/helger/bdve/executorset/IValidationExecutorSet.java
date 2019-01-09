@@ -16,6 +16,8 @@
  */
 package com.helger.bdve.executorset;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -32,7 +34,11 @@ import com.helger.commons.name.IHasDisplayName;
  *
  * @author Philip Helger
  */
-public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName, ICommonsIterable <IValidationExecutor>
+public interface IValidationExecutorSet extends
+                                        IHasID <VESID>,
+                                        IHasDisplayName,
+                                        ICommonsIterable <IValidationExecutor>,
+                                        Serializable
 {
   /**
    * @return The number of contained validation executors. Always &ge; 0.
