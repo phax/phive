@@ -34,12 +34,12 @@ Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.si
 
 Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
 
-## Usage in an application
+## How to validate documents
 
-At least the `ph-bdve` project and one of the domain specific projects (like e.g. `ph-bdve-peppol`) is needed in your application.
+At least the `ph-bdve` project and one of the domain specific projects (like e.g. `ph-bdve-peppol`) is needed in your application. See the section on usage in a Maven project below.
 All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
 Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
-Example for registering PEPPOL validation artefacts:
+Example for registering (only) PEPPOL validation artefacts:
 
 ```java
     final ValidationExecutorSetRegistry aVESRegistry = new ValidationExecutorSetRegistry ();
