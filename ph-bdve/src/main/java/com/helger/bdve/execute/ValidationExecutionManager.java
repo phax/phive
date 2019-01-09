@@ -262,4 +262,22 @@ public class ValidationExecutionManager implements IHasClassLoader
     executeValidation (aSource, ret, aLocale);
     return ret;
   }
+
+  /**
+   * Perform a validation with all the contained executors and the system
+   * default locale.
+   *
+   * @param aSource
+   *        The source artefact to be validated. May not be <code>null</code>.
+   *        contained executor a result is added to the result list.
+   * @return The validation result list. Never <code>null</code>. For each
+   *         contained executor a result is added to the result list.
+   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
+   * @since 5.1.1
+   */
+  @Nonnull
+  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
+  {
+    return executeValidation (aSource, (Locale) null);
+  }
 }
