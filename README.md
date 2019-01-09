@@ -21,7 +21,64 @@ A running example can be found on [PEPPOL Practical](http://peppol.helger.com/pu
 A standalone tool that just performs validation based on this library is the [phoss validator](https://github.com/phax/phoss-validator/).
 
 Licensed under the Apache 2 license.
-  
+
+# Usage guide
+
+Basically this library wraps different XML Schemas and Schematrons and offers the possibility to validate XML documents based on the rules.
+
+## Validation executor set identification
+
+Every set of validation artefacts is uniquely identified based on a structure that is similar to (Maven coordinates)[https://maven.apache.org/pom.html#Maven_Coordinates]. The identifier for a set of validation artefacts is a so called "VESID" ("Validation Executor Set ID"). Each VESID consists of a mandatory group ID, a mandatory artefact ID, a mandatory version number (ideally following the semantic versioning principles) and an optional classifier.
+E.g. the "PEPPOL Invoice Fall release 2018" is identified with the group ID `eu.peppol.bis2`, the artefact ID is `t10` (based on "transaction 10" from CEN BII - historical reasons...), the version number is `3.7.0` (representing "Fall 2018") and no classifier is present.
+Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.simplerinvoicing`, the artifact ID `invoice` and the version number `1.2` (also without a classifier).
+
+Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
+
+## Usage in an application
+
+At least the `ph-bdve` project and one of the domain specific projects (like e.g. `ph-bdve-peppol`) is needed in your application.
+All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
+Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
+Example for registering PEPPOL validation artefacts:
+
+```java
+    final ValidationExecutorSetRegistry aVESRegistry = new ValidationExecutorSetRegistry ();
+    PeppolValidation.initStandard (aVESRegistry);
+    PeppolValidation.initThirdParty (aVESRegistry);
+    return aVESRegistry;
+```
+
+The instance of class `ValidationExecutorSetRegistry` can be kept as a singleton - it is thread-safe.
+Therefore the registration process need to be performed only once.
+
+Validating a business document requires a few more steps.
+1. Access to the registry is needed.
+1. A specific `VESID` instance (e.g. `PeppolValidation370.VID_OPENPEPPOL_T10_V2`) - there are constants available for all VES identifiers defined in this project.
+1. The `ValidationExecutionManager` is an in-between class that can be used to customize the execution (e.g. setting a class loader). But it is created very quickly, so there is no harm on creating it on the fly every time.
+1. An instance of class `ValidationSource` to identify the document to be validate. Class `ValidationSource` has factory methods for the default cases (having an `org.w3c.dom.Node` or having an `com.helger.commons.io.resource.IReadableResource`).
+1. The validation results are stored in an instance of class `ValidationResultList`. This class is a list of `ValidationResult` instances - each `ValidationResult` represents the result of a single level of validation.
+1. Your application logic than needs to define what to do with the results. 
+
+
+```java
+    final IValidationExecutorSet aVES = VESRegistry.getOfID (aVESID);
+    if (aVES != null) {
+      final ValidationExecutionManager aVEM = aVES.createExecutionManager ();
+      // What to validate?
+      ValidationSource aValidationSource = ...;
+      final ValidationResultList aValidationResult = aVEM.executeValidation (aValidationSource);
+      if (aValidationResult.containsAtLeastOneError ()) {
+        // errors found ...
+      } else {
+        // no errors (but maybe warnings) found
+      }                                                                       
+    }                                                                             
+```
+
+## Potential issues
+
+Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle runtime, this can be achieved by passing `-Xss1m` on the command line. This only seems to be a problem when running 32bit Java. With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
+
 # News and noteworthy
 
 * v5.1.1 - work in progress
@@ -101,22 +158,6 @@ Licensed under the Apache 2 license.
     * Binds to ph-commons 8.5.x
 * v2.0.0 - 2016-08-22
     * Requires JDK 8
-
-# Usage notes
-
-Basically this library wraps different XML Schemas and Schematrons and offers the possibility to validate XML documents based on the rules.
-
-## Validation execution set identification
-
-Every set of validation artefacts is uniquely identified based on a structure that is similar to (Maven coordinates)[https://maven.apache.org/pom.html#Maven_Coordinates]. The identifier for a set of validation artefacts is a so called "VESID" ("Validation Execution Set ID"). Each VESID consists of a mandatory group ID, a mandatory artefact ID, a mandatory version number (ideally following the semantic versioning principles) and an optional classifier.
-E.g. the "PEPPOL Invoice Fall release 2018" is identified with the group ID `eu.peppol.bis2`, the artefact ID is `t10` (based on "transaction 10" from CEN BII - historical reasons...), the version number is `3.7.0` (representing "Fall 2018") and no classifier is present.
-Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.simplerinvoicing`, the artifact ID `invoice` and the version number `1.2` (also without a classifier).
-
-Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
-
-## Potential issues
-
-Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle runtime, this can be achieved by passing `-Xss1m` on the command line. This only seems to be a problem when running 32bit Java. With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # Maven usage
 

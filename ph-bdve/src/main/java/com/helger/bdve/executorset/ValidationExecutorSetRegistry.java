@@ -37,7 +37,15 @@ import com.helger.commons.string.ToStringGenerator;
 
 /**
  * A registry for {@link IValidationExecutorSet} objects. The default instance
- * can be accessed via {@link #INSTANCE}.
+ * can be accessed via {@link #INSTANCE}. This class is thread-safe and can
+ * therefore be used as a singleton.<br>
+ * Initially all validation artefact providers need to register themselves via
+ * {@link #registerValidationExecutorSet(IValidationExecutorSet)}. This needs to
+ * be done only once upon initialization before usage.<br>
+ * For applying validation of rules onto an XML document,
+ * {@link #getOfID(VESID)} needs to be invoked to find a matching VES
+ * (Validation Executor Set - type `IValidationExecutorSet`). If the returned
+ * value is non-<code>null</code> than some rules are registered.
  *
  * @author Philip Helger
  */
