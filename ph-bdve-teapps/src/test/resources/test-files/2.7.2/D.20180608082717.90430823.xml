@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!--
 
-    Copyright (C) 2014-2018 Philip Helger (www.helger.com)
+    Copyright (C) 2014-2019 Philip Helger (www.helger.com)
     philip[at]helger[dot]com
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -156,7 +156,7 @@
 								<AMOUNT SIGN="+" VAT="EXCLUDED">40.80</AMOUNT>
 							</VAT_AMOUNT>
 						</VAT>
-						<FREE_TEXT>Tilattu määrä: 10.</FREE_TEXT>
+						<FREE_TEXT>Tilattu mï¿½ï¿½rï¿½: 10.</FREE_TEXT>
 					</ROW>
 					<ROW>
 						<ROW_NUMBER>2</ROW_NUMBER>
