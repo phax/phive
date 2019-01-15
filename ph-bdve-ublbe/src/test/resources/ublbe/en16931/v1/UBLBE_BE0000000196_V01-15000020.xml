@@ -31,7 +31,7 @@
 	</cac:AdditionalDocumentReference>
 	<cac:AccountingSupplierParty>
 		<cac:Party>											
-			<cbc:EndpointID schemeID="BE:CBE">0000000294</cbc:EndpointID>										
+			<cbc:EndpointID schemeID="9956">0000000294</cbc:EndpointID>										
 			<cac:PartyName>										
 				<cbc:Name>My Small Supplier</cbc:Name>									
 			</cac:PartyName>										
@@ -44,14 +44,14 @@
 				</cac:Country>									
 			</cac:PostalAddress>										
 			<cac:PartyTaxScheme>										
-				<cbc:CompanyID schemeID="BE:VAT">BE0000000294</cbc:CompanyID>									
+				<cbc:CompanyID>BE0000000294</cbc:CompanyID>									
 				<cac:TaxScheme>									
 					<cbc:ID>VAT</cbc:ID>								
 				</cac:TaxScheme>									
 			</cac:PartyTaxScheme>										
 			<cac:PartyLegalEntity>										
 				<cbc:RegistrationName>My Small Supplier</cbc:RegistrationName>									
-				<cbc:CompanyID schemeID="BE:CBE">0000000196</cbc:CompanyID>									
+				<cbc:CompanyID schemeID="9956">0000000196</cbc:CompanyID>									
 			</cac:PartyLegalEntity>										
 			<cac:Contact>										
 				<cbc:ElectronicMail>john.doole@mysmallsupplier.be</cbc:ElectronicMail>									
@@ -60,7 +60,7 @@
 	</cac:AccountingSupplierParty>
 	<cac:AccountingCustomerParty>
 		<cac:Party>				
-			<cbc:EndpointID schemeID="BE:CBE">0000000295</cbc:EndpointID>			
+			<cbc:EndpointID schemeID="9956">0000000295</cbc:EndpointID>			
 			<cac:PartyName>			
 				<cbc:Name>My Customer Company S.A.</cbc:Name>		
 			</cac:PartyName>			
@@ -73,14 +73,14 @@
 				</cac:Country>		
 			</cac:PostalAddress>			
 			<cac:PartyTaxScheme>			
-				<cbc:CompanyID schemeID="BE:VAT">BE0000000295</cbc:CompanyID>		
+				<cbc:CompanyID>BE0000000295</cbc:CompanyID>		
 				<cac:TaxScheme>		
 					<cbc:ID>VAT</cbc:ID>	
 				</cac:TaxScheme>		
 			</cac:PartyTaxScheme>			
 			<cac:PartyLegalEntity>			
 				<cbc:RegistrationName>My Customer Company</cbc:RegistrationName>		
-				<cbc:CompanyID schemeID="BE:CBE">0000000295</cbc:CompanyID>		
+				<cbc:CompanyID schemeID="9956">0000000295</cbc:CompanyID>		
 			</cac:PartyLegalEntity>			
 			<cac:Contact>			
 				<cbc:ElectronicMail>pete.smith@mycustomercompany.be</cbc:ElectronicMail>		

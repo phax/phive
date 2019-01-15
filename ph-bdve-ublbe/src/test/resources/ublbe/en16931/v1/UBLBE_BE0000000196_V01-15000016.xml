@@ -31,7 +31,7 @@
 	</cac:AdditionalDocumentReference>
 	<cac:AccountingSupplierParty>
 		<cac:Party>				
-			<cbc:EndpointID schemeID="BE:CBE">0000000196</cbc:EndpointID>			
+			<cbc:EndpointID schemeID="9956">0000000196</cbc:EndpointID>			
 			<cac:PartyName>			
 				<cbc:Name>My Supplier Company N.V.</cbc:Name>		
 			</cac:PartyName>			
@@ -44,14 +44,14 @@
 				</cac:Country>		
 			</cac:PostalAddress>			
 			<cac:PartyTaxScheme>			
-				<cbc:CompanyID schemeID="BE:VAT">BE0000000196</cbc:CompanyID>		
+				<cbc:CompanyID>BE0000000196</cbc:CompanyID>		
 				<cac:TaxScheme>		
 					<cbc:ID>VAT</cbc:ID>	
 				</cac:TaxScheme>		
 			</cac:PartyTaxScheme>			
 			<cac:PartyLegalEntity>			
 				<cbc:RegistrationName>My Supplier Company</cbc:RegistrationName>		
-				<cbc:CompanyID schemeID="BE:CBE">0000000196</cbc:CompanyID>		
+				<cbc:CompanyID schemeID="9956">0000000196</cbc:CompanyID>		
 			</cac:PartyLegalEntity>			
 			<cac:Contact>			
 				<cbc:ElectronicMail>john.doole@mysuppliercompany.be</cbc:ElectronicMail>		
@@ -60,7 +60,7 @@
 	</cac:AccountingSupplierParty>
 	<cac:AccountingCustomerParty>
 		<cac:Party>				
-			<cbc:EndpointID schemeID="ZZZ" schemeAgencyName="PP">400001</cbc:EndpointID>			
+			<cbc:EndpointID schemeID="0193">PKE_400001</cbc:EndpointID>			
 			<cac:PartyName>		
 				<cbc:Name>John Versmissen Jr</cbc:Name>	
 			</cac:PartyName>		
@@ -75,11 +75,11 @@
 			<cac:PartyLegalEntity>			
 				<cbc:RegistrationName>John Versmissen Jr</cbc:RegistrationName>		
 			</cac:PartyLegalEntity>			
-				<cac:Contact>		
-					<cbc:Name>John Versmissen Jr</cbc:Name>	
-					<cbc:Telephone>003231234567</cbc:Telephone>	
-					<cbc:ElectronicMail>john.versmissenjr@gmailbe.be</cbc:ElectronicMail>	
-				</cac:Contact>		
+			<cac:Contact>		
+				<cbc:Name>John Versmissen Jr</cbc:Name>	
+				<cbc:Telephone>003231234567</cbc:Telephone>	
+				<cbc:ElectronicMail>john.versmissenjr@gmailbe.be</cbc:ElectronicMail>	
+			</cac:Contact>		
 		</cac:Party>				
 	</cac:AccountingCustomerParty>
 	<cac:PaymentMeans>
