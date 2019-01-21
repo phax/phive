@@ -46,6 +46,8 @@ public final class SimplerInvoicingValidation
   public static final VESID VID_SI_INVOICE_V11_STRICT = VID_SI_INVOICE_V11.getWithClassifier ("strict");
   public static final VESID VID_SI_INVOICE_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
   public static final VESID VID_SI_ORDER_V12 = new VESID ("org.simplerinvoicing", "order", "1.2");
+  public static final VESID VID_SI_INVOICE_V20 = new VESID ("org.simplerinvoicing", "invoice", "2.0", "RC1");
+  public static final VESID VID_SI_CREDIT_NOTE_V20 = new VESID ("org.simplerinvoicing", "creditnote", "2.0", "RC1");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -64,6 +66,10 @@ public final class SimplerInvoicingValidation
                                                                               _getCL ());
   public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO-12.xslt",
                                                                             _getCL ());
+
+  // 2.0
+  public static final IReadableResource INVOICE_SI20 = new ClassPathResource ("/simplerinvoicing/v2.0-rc1/si-ubl-2.0-RC1.xsl",
+                                                                              _getCL ());
 
   private SimplerInvoicingValidation ()
   {}
@@ -103,6 +109,7 @@ public final class SimplerInvoicingValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (INVOICE_SI11_STRICT)));
+
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,
                                                                            "Simplerinvoicing Invoice 1.2",
@@ -114,5 +121,17 @@ public final class SimplerInvoicingValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.ORDER),
                                                                            _createXSLT (ORDER_SI12)));
+
+    // 2.0
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V20,
+                                                                           "Simplerinvoicing Invoice 2.0 RC1",
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
+                                                                           _createXSLT (INVOICE_SI20)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_CREDIT_NOTE_V20,
+                                                                           "Simplerinvoicing CreditNote 2.0 RC1",
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
+                                                                           _createXSLT (INVOICE_SI20)));
   }
 }

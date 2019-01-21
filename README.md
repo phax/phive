@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.2 - work in progress
+    * Added SimplerInvoicing 2.0 RC1 support [#3](https://github.com/phax/ph-bdve/issues/3)
 * v5.1.1 - 2019-01-16
     * Added UBL.BE 1.0.0 Schematrons
 * v5.1.0 - 2018-11-23
