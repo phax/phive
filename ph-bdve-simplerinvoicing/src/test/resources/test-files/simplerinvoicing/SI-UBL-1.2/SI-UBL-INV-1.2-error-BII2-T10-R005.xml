@@ -10,7 +10,6 @@
   <cbc:InvoiceTypeCode listID="UNCL1001" listAgencyID="6">380</cbc:InvoiceTypeCode>
   <cbc:Note>Kleine opmerking</cbc:Note>
   <cbc:TaxPointDate>2016-01-01</cbc:TaxPointDate>
-  <cbc:DocumentCurrencyCode listID="ISO 4217 Alpha" listAgencyID="6"/>
   <cbc:AccountingCost>SI22315</cbc:AccountingCost>
   <cac:InvoicePeriod>
     <cbc:StartDate>2016-01-01</cbc:StartDate>

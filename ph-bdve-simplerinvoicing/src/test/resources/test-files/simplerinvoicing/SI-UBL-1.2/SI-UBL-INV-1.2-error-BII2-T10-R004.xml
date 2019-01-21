@@ -5,7 +5,6 @@
   <cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.2</cbc:CustomizationID>
   <cbc:ProfileID>urn:www.cenbii.eu:profile:bii04:ver2.0</cbc:ProfileID>
   <cbc:ID>4780647806</cbc:ID>
-  <cbc:IssueDate/>
   <cbc:DueDate>2016-02-01</cbc:DueDate>
   <cbc:InvoiceTypeCode listID="UNCL1001" listAgencyID="6">380</cbc:InvoiceTypeCode>
   <cbc:Note>Kleine opmerking</cbc:Note>

@@ -20,7 +20,7 @@
     <cbc:ID>2016-441</cbc:ID>
   </cac:OrderReference>
   <cac:AdditionalDocumentReference>
-    <cbc:ID>Doc2</cbc:ID>
+    <cbc:ID schemeID="foo" schemeAgencyID="bar">Doc2</cbc:ID>
     <cbc:DocumentType>Text</cbc:DocumentType>
     <cac:Attachment>
       <cbc:EmbeddedDocumentBinaryObject mimeCode="text/csv">QWxsLHlvdXIsU2ltcGxlckludm9pY2UsYXJlLGJlbG9uZyx0byx1cwo=</cbc:EmbeddedDocumentBinaryObject>

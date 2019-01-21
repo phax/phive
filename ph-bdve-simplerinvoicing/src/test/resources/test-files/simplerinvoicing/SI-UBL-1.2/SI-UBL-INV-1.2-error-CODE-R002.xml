@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
   <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
@@ -294,13 +295,13 @@
       <cac:CommodityClassification>
         <cbc:ItemClassificationCode listAgencyID="2" listID="CPV">65434568</cbc:ItemClassificationCode>
       </cac:CommodityClassification>
-      <ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+      <cac:ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
         <cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">S</cbc:ID>
         <cbc:Percent>20</cbc:Percent>
-        <TaxScheme>
+        <cac:TaxScheme>
           <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</cbc:ID>
-        </TaxScheme>
-      </ClassifiedTaxCategory>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
       <cac:AdditionalItemProperty>
         <cbc:Name>Color</cbc:Name>
         <cbc:Value>black</cbc:Value>
@@ -350,13 +351,13 @@
       <cac:CommodityClassification>
         <cbc:ItemClassificationCode listAgencyID="2" listID="CPV">65434567</cbc:ItemClassificationCode>
       </cac:CommodityClassification>
-      <ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+      <cac:ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
         <cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">AA</cbc:ID>
         <cbc:Percent>10</cbc:Percent>
-        <TaxScheme>
+        <cac:TaxScheme>
           <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</cbc:ID>
-        </TaxScheme>
-      </ClassifiedTaxCategory>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
     </cac:Item>
     <cac:Price>
       <cbc:PriceAmount currencyID="EUR">3.96</cbc:PriceAmount>
@@ -387,13 +388,13 @@
       <cac:CommodityClassification>
         <cbc:ItemClassificationCode listAgencyID="2" listID="CPV">65434566</cbc:ItemClassificationCode>
       </cac:CommodityClassification>
-      <ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+      <cac:ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
         <cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">AA</cbc:ID>
         <cbc:Percent>10</cbc:Percent>
-        <TaxScheme>
+        <cac:TaxScheme>
           <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</cbc:ID>
-        </TaxScheme>
-      </ClassifiedTaxCategory>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
     </cac:Item>
     <cac:Price>
       <cbc:PriceAmount currencyID="EUR">2.48</cbc:PriceAmount>
@@ -438,13 +439,13 @@
       <cac:CommodityClassification>
         <cbc:ItemClassificationCode listAgencyID="2" listID="CPV">65434565</cbc:ItemClassificationCode>
       </cac:CommodityClassification>
-      <ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+      <cac:ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
         <cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">E</cbc:ID>
         <cbc:Percent>0</cbc:Percent>
-        <TaxScheme>
+        <cac:TaxScheme>
           <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</cbc:ID>
-        </TaxScheme>
-      </ClassifiedTaxCategory>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
     </cac:Item>
     <cac:Price>
       <cbc:PriceAmount currencyID="EUR">25</cbc:PriceAmount>
@@ -476,13 +477,13 @@
       <cac:CommodityClassification>
         <cbc:ItemClassificationCode listAgencyID="2" listID="CPV">65434564</cbc:ItemClassificationCode>
       </cac:CommodityClassification>
-      <ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+      <cac:ClassifiedTaxCategory xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
         <cbc:ID schemeID="UN/ECE 5305" schemeAgencyID="6">S</cbc:ID>
         <cbc:Percent>20</cbc:Percent>
-        <TaxScheme>
+        <cac:TaxScheme>
           <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">VAT</cbc:ID>
-        </TaxScheme>
-      </ClassifiedTaxCategory>
+        </cac:TaxScheme>
+      </cac:ClassifiedTaxCategory>
       <cac:AdditionalItemProperty>
         <cbc:Name>Type</cbc:Name>
         <cbc:Value>Cat5</cbc:Value>

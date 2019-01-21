@@ -49,7 +49,9 @@ public final class CTestFiles
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SI_INVOICE_V11,
                                              SimplerInvoicingValidation.VID_SI_INVOICE_V12,
-                                             SimplerInvoicingValidation.VID_SI_ORDER_V12 })
+                                             SimplerInvoicingValidation.VID_SI_ORDER_V12,
+                                             SimplerInvoicingValidation.VID_SI_INVOICE_V20,
+                                             SimplerInvoicingValidation.VID_SI_CREDIT_NOTE_V20 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
 
@@ -64,6 +66,7 @@ public final class CTestFiles
 
     final String sPath11 = "/test-files/simplerinvoicing/SI-UBL-1.1/";
     final String sPath12 = "/test-files/simplerinvoicing/SI-UBL-1.2/";
+    final String sPath20 = "/test-files/simplerinvoicing/SI-UBL-2.0/";
 
     final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
     if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V11))
@@ -130,7 +133,41 @@ public final class CTestFiles
           ret.add (new ClassPathResource (sPath12 + "SI-UBL-PO-1.2-ok-minimal.xml"));
         }
         else
-          throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+          if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V20))
+          {
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_both_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_customer_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_customer_no_companyid.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_supplier_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-11_ok_negative_payment.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-11_ok_no_payment.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-12_ok.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-1_ok_supplier_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-1_ok_supplier_oin.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-2_ok_supplier_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-31_ok_notsepa.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-3_ok_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-4_ok_customer_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-4_ok_supplier_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok_supplier_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok_taxpart_not_nl.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_384.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_389.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-9_ok.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance_line.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_base.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge_line.xml"));
+          }
+          else
+            if (aVESID.equals (SimplerInvoicingValidation.VID_SI_CREDIT_NOTE_V20))
+            {
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-8_ok_381.xml"));
+            }
+            else
+              throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
     return ret;
   }
 }

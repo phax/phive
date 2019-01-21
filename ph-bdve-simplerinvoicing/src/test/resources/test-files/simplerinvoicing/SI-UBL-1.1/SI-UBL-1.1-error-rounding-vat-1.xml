@@ -83,7 +83,7 @@
   </cac:PaymentMeans>
   <cac:PaymentTerms/>
   <cac:TaxTotal>
-    <!-- rounding difference 
+    <!-- rounding difference
     <cbc:TaxAmount currencyID="EUR">6.3270</cbc:TaxAmount>
   -->
     <cbc:TaxAmount currencyID="EUR">6.3249</cbc:TaxAmount>

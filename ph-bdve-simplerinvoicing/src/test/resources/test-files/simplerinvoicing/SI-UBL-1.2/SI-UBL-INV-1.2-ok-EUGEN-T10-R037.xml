@@ -31,6 +31,14 @@
       <cac:PartyName>
         <cbc:Name>SimplerInvoicing</cbc:Name>
       </cac:PartyName>
+      <cac:PostalAddress>
+        <cbc:StreetName>Main street</cbc:StreetName>
+        <cbc:CityName>Big city</cbc:CityName>
+        <cbc:PostalZone>54321</cbc:PostalZone>
+        <cac:Country>
+          <cbc:IdentificationCode listAgencyID="6" listID="ISO3166-1:Alpha2">NL</cbc:IdentificationCode>
+        </cac:Country>
+      </cac:PostalAddress>
       <cac:PartyTaxScheme>
         <cbc:CompanyID schemeID="NL:VAT" schemeAgencyID="ZZZ">NL123456789B01</cbc:CompanyID>
         <cac:TaxScheme>

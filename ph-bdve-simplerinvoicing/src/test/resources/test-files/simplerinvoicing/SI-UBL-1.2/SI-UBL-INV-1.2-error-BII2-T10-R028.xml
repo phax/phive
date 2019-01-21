@@ -165,7 +165,6 @@
     <cbc:TaxAmount currencyID="EUR">36.12</cbc:TaxAmount>
     <cac:TaxSubtotal>
       <cbc:TaxableAmount currencyID="EUR">198</cbc:TaxableAmount>
-      <cbc:TaxAmount currencyID="EUR">12</cbc:TaxAmount>
       <cac:TaxCategory>
         <cbc:ID schemeID="UNCL5305">S</cbc:ID>
         <cbc:Percent>0.00</cbc:Percent>
