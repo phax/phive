@@ -109,6 +109,7 @@
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>src/main/resources/openpeppol/**</exclude>
+            <exclude>src/main/resources/sg-peppol/**</exclude>
             <exclude>src/main/resources/thirdparty/**</exclude>
             <exclude>src/test/resources/rule-source/**</exclude>
             <exclude>src/test/resources/rule-utils/**</exclude>
