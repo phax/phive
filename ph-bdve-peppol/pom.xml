@@ -116,6 +116,33 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-sch2xslt-maven-plugin</artifactId>
+        <version>5.0.8</version>
+        <executions>
+      <!--  
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>src/main/resources/sg-peppol/Schematron</schematronDirectory>
+              <xsltDirectory>src/main/resources/sg-peppol/xslt</xsltDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>src/main/resources/openpeppol/billingbis3</schematronDirectory>
+              <xsltDirectory>src/main/resources/openpeppol/billingbis3/xslt</xsltDirectory>
+            </configuration>
+          </execution>
+      -->
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>

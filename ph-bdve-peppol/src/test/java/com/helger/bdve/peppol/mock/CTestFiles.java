@@ -28,6 +28,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
 
@@ -55,7 +56,11 @@ public final class CTestFiles
                                             PeppolValidation370.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
                                             PeppolValidation370.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
                                             PeppolValidation370.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation370.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE), })
+                                            PeppolValidation370.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
+                                            PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_INVOICE,
+                                            PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE,
+                                            PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
+                                            PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE, })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -82,6 +87,15 @@ public final class CTestFiles
       return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
     if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
       return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_INVOICE))
+      return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/billingbis3/base-example.xml"),
+                                      new FileSystemResource ("src/test/resources/test-files/billingbis3/base-negative-inv-correction.xml"));
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE))
+      return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/billingbis3/base-creditnote-correction.xml"));
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE))
+      return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/sg-peppol/Singapore invoice valid 1.xml"));
+    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE))
+      return new CommonsArrayList <> ();
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
   }
