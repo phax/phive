@@ -136,9 +136,6 @@
             <arg>-Xph-list-extension</arg>
             <arg>-Xph-csu</arg>
             <arg>-Xph-cloneable2</arg>
-            <!--  
-            <arg>-Xph-ubl-value</arg>
-            -->
           </args>
         </configuration>
         <dependencies>
