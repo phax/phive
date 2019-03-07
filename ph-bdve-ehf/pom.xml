@@ -30,6 +30,7 @@
   <description>Norwegian EHF validation engine</description>
   <url>https://github.com/phax/ph-bdve/ph-bdve-ehf</url>
   <inceptionYear>2018</inceptionYear>
+  
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -37,10 +38,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
+  
   <developers>
     <developer>
       <id>philip</id>
@@ -49,6 +52,7 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
+  
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
@@ -67,11 +71,17 @@
       <artifactId>ph-schematron</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-bdve-peppol</artifactId>
+    </dependency>
+    
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>
@@ -94,11 +104,12 @@
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>src/main/resources/ehf/**</exclude>
+            <exclude>src/main/resources/ehf-xslt/**</exclude>
             <exclude>src/test/resources/ehf/**</exclude>
+            <exclude>docs/*</exclude>
           </excludes>
         </configuration>
       </plugin>
-      <!-- Enable if something changed only 
       <plugin>
         <groupId>com.helger.maven</groupId>
         <artifactId>ph-sch2xslt-maven-plugin</artifactId>
@@ -109,12 +120,11 @@
             </goals>
             <configuration>
               <schematronDirectory>${basedir}/src/main/resources/ehf</schematronDirectory>
-              <xsltDirectory>${basedir}/xslt-ehf</xsltDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/ehf-xslt</xsltDirectory>
             </configuration>
           </execution>
         </executions>
       </plugin>
-       -->
     </plugins>
   </build>
 </project>

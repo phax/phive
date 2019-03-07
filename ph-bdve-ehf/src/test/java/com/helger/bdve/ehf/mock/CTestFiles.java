@@ -23,6 +23,7 @@ import com.helger.bdve.ehf.EHFValidation;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
+import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -36,6 +37,7 @@ public final class CTestFiles
   public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
+    PeppolValidation.initStandard (VES_REGISTRY);
     EHFValidation.initEHF (VES_REGISTRY);
   }
 
@@ -68,58 +70,57 @@ public final class CTestFiles
   public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final VESID aVESID)
   {
     ValueEnforcer.notNull (aVESID, "VESID");
+    final String sPath = "/ehf/";
 
     if (aVESID.equals (EHFValidation.VID_EHF_CATALOGUE_1_0))
     {
-      // final String sPath = "/ehf/ehf-catalogue-1.0/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T19 Example file EHF Catalogue.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_CATALOGUE_RESPONSE_1_0))
     {
-      // final String sPath = "/ehf/ehf-catalogue-response-1.0/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T58 Example file EHF Catalogue Response.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_CREDITNOTE_2_0))
     {
-      final String sPath = "/ehf/ehf-creditnote-2.0/";
-      return new CommonsArrayList <> (new ClassPathResource (sPath + "test/T14-valid-profile-xx.xml"),
-                                      new ClassPathResource (sPath + "test/T14-Valuta-EUR.xml"));
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T14 BII05 gyldig kreditnota.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_DESPATCH_ADVICE_1_0))
     {
-      // final String sPath = "/ehf/ehf-despatch-advice-1.0/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T16 Eksempel1.xml"),
+                                      new ClassPathResource (sPath + "T16 Eksempel2.xml"),
+                                      new ClassPathResource (sPath + "T16 Eksempel3.xml"),
+                                      new ClassPathResource (sPath + "T16 Eksempel4.xml"),
+                                      new ClassPathResource (sPath + "T16 Eksempel5.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_INVOICE_2_0))
     {
-      final String sPath = "/ehf/ehf-invoice-2.0/";
-      return new CommonsArrayList <> (new ClassPathResource (sPath + "test/T10-B2C.xml"),
-                                      new ClassPathResource (sPath + "test/T10-Valuta-EUR.xml"));
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T10 BII05 gyldig faktura.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_ORDER_1_0))
     {
-      // final String sPath = "/ehf/ehf-order-1.0/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T01 Eksempelfil EHF Ordre.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_ORDER_AGREEMENT_1_0))
     {
-      // final String sPath = "/ehf/ehf-order-agreement-1.0/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T110 ehf-oa-case-2.xml"),
+                                      new ClassPathResource (sPath + "T110 ehf-oa-case1.xml"),
+                                      new ClassPathResource (sPath + "T110 ehf-oa-case2-5.xml"),
+                                      new ClassPathResource (sPath + "T110 ehf-oa-full.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_ORDER_RESPONSE_1_0))
     {
-      // final String sPath = "/ehf/ehf-order-response-1.0/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T76 Eksempelfil EHF Ordrebekreftelse.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_PUNCH_OUT_1_0))
     {
-      // final String sPath = "/ehf/ehf-punch-out-1.0/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath + "T77 ehf-po-case1-2.xml"),
+                                      new ClassPathResource (sPath + "T77 ehf-po-case2.xml"),
+                                      new ClassPathResource (sPath + "T77 ehf-po-full.xml"));
     }
     if (aVESID.equals (EHFValidation.VID_EHF_REMINDER_1_1))
     {
-      // final String sPath = "/ehf/ehf-reminder-1.1/";
-      return new CommonsArrayList <> ();
+      return new CommonsArrayList <> (new ClassPathResource (sPath +
+                                                             "T17 biixy gyldig purring med alle elementer.xml"));
     }
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);

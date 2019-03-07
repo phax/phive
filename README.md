@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.3 - work in progress
+    * Updated to latest EHF releases (Invoice and Credit Note 2.0.15 etc.)
 * v5.1.2 - 2019-02-04
     * Added SimplerInvoicing 2.0 RC1 support [#3](https://github.com/phax/ph-bdve/issues/3)
     * Added Singapore (SG) PEPPOL Billing BIS3 support [#4](https://github.com/phax/ph-bdve/issues/4)

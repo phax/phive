@@ -24,9 +24,12 @@ import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.execute.ValidationExecutorXSD;
+import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.peppol.PeppolValidation;
+import com.helger.bdve.peppol.PeppolValidation370;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -42,15 +45,15 @@ import com.helger.ubl21.UBL21NamespaceContext;
 @Immutable
 public final class EHFValidation
 {
-  public static final VESID VID_EHF_CATALOGUE_1_0 = new VESID ("no.ehf", "catalogue", "1.0.11");
-  public static final VESID VID_EHF_CATALOGUE_RESPONSE_1_0 = new VESID ("no.ehf", "catalogue-response", "1.0.10");
-  public static final VESID VID_EHF_CREDITNOTE_2_0 = new VESID ("no.ehf", "creditnote", "2.0.13");
-  public static final VESID VID_EHF_DESPATCH_ADVICE_1_0 = new VESID ("no.ehf", "despatch-advice", "1.0.8");
-  public static final VESID VID_EHF_INVOICE_2_0 = new VESID ("no.ehf", "invoice", "2.0.13");
-  public static final VESID VID_EHF_ORDER_1_0 = new VESID ("no.ehf", "order", "1.0.9");
-  public static final VESID VID_EHF_ORDER_AGREEMENT_1_0 = new VESID ("no.ehf", "order-agreement", "1.0.0");
-  public static final VESID VID_EHF_ORDER_RESPONSE_1_0 = new VESID ("no.ehf", "order-response", "1.0.9");
-  public static final VESID VID_EHF_PUNCH_OUT_1_0 = new VESID ("no.ehf", "punch-out", "1.0.0");
+  public static final VESID VID_EHF_CATALOGUE_1_0 = new VESID ("no.ehf", "catalogue", "1.0.13");
+  public static final VESID VID_EHF_CATALOGUE_RESPONSE_1_0 = new VESID ("no.ehf", "catalogue-response", "1.0.13");
+  public static final VESID VID_EHF_CREDITNOTE_2_0 = new VESID ("no.ehf", "creditnote", "2.0.15");
+  public static final VESID VID_EHF_DESPATCH_ADVICE_1_0 = new VESID ("no.ehf", "despatch-advice", "1.0.10");
+  public static final VESID VID_EHF_INVOICE_2_0 = new VESID ("no.ehf", "invoice", "2.0.15");
+  public static final VESID VID_EHF_ORDER_1_0 = new VESID ("no.ehf", "order", "1.0.11");
+  public static final VESID VID_EHF_ORDER_AGREEMENT_1_0 = new VESID ("no.ehf", "order-agreement", "1.0.2");
+  public static final VESID VID_EHF_ORDER_RESPONSE_1_0 = new VESID ("no.ehf", "order-response", "1.0.11");
+  public static final VESID VID_EHF_PUNCH_OUT_1_0 = new VESID ("no.ehf", "punch-out", "1.0.1");
   public static final VESID VID_EHF_REMINDER_1_1 = new VESID ("no.ehf", "reminder", "1.1.0");
 
   @Nonnull
@@ -59,72 +62,45 @@ public final class EHFValidation
     return EHFValidation.class.getClassLoader ();
   }
 
-  private static final IReadableResource EHF_COMMON_V1 = new ClassPathResource ("/ehf/ehf-common-1.0/sch/EHF-UBL-COMMON.sch",
+  private static final IReadableResource EHF_COMMON_V1 = new ClassPathResource ("/ehf-xslt/EHF-UBL-COMMON.xslt",
                                                                                 _getCL ());
 
-  private static final IReadableResource CATALOGUE_V1_EHFCORE = new ClassPathResource ("/ehf/ehf-catalogue-1.0/sch/EHFCORE-UBL-T19.sch",
-                                                                                       _getCL ());
-  private static final IReadableResource CATALOGUE_V1_NOGOV = new ClassPathResource ("/ehf/ehf-catalogue-1.0/sch/NOGOV-UBL-T19.sch",
-                                                                                     _getCL ());
-
-  private static final IReadableResource CATALOGUE_RESPONSE_V1_EHFCORE = new ClassPathResource ("/ehf/ehf-catalogue-response-1.0/sch/EHFCORE-UBL-T58.sch",
-                                                                                                _getCL ());
-  private static final IReadableResource CATALOGUE_RESPONSE_V1_NOGOV = new ClassPathResource ("/ehf/ehf-catalogue-response-1.0/sch/NOGOV-UBL-T58.sch",
-                                                                                              _getCL ());
-
-  private static final IReadableResource CREDITNOTE_V2_EHFCORE = new ClassPathResource ("/ehf/ehf-creditnote-2.0/sch/EHFCORE-UBL-T14.sch",
-                                                                                        _getCL ());
-  private static final IReadableResource CREDITNOTE_V2_NONAT = new ClassPathResource ("/ehf/ehf-creditnote-2.0/sch/NONAT-UBL-T14.sch",
-                                                                                      _getCL ());
-  private static final IReadableResource CREDITNOTE_V2_NOGOV = new ClassPathResource ("/ehf/ehf-creditnote-2.0/sch/NOGOV-UBL-T14.sch",
-                                                                                      _getCL ());
-
-  private static final IReadableResource DESPATCH_ADVICE_V1_EHFCORE = new ClassPathResource ("/ehf/ehf-despatch-advice-1.0/sch/EHFCORE-UBL-T16.sch",
-                                                                                             _getCL ());
-  private static final IReadableResource DESPATCH_ADVICE_V1_NOGOV = new ClassPathResource ("/ehf/ehf-despatch-advice-1.0/sch/NOGOV-UBL-T16.sch",
-                                                                                           _getCL ());
-
-  private static final IReadableResource INVOICE_V2_EHFCORE = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/EHFCORE-UBL-T10.sch",
-                                                                                     _getCL ());
-  private static final IReadableResource INVOICE_V2_NONAT = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NONAT-UBL-T10.sch",
-                                                                                   _getCL ());
-  private static final IReadableResource INVOICE_V2_NOGOV = new ClassPathResource ("/ehf/ehf-invoice-2.0/sch/NOGOV-UBL-T10.sch",
+  private static final IReadableResource CATALOGUE_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T19.xslt",
                                                                                    _getCL ());
 
-  private static final IReadableResource ORDER_V1_EHFCORE = new ClassPathResource ("/ehf/ehf-order-1.0/sch/EHFCORE-UBL-T01.sch",
-                                                                                   _getCL ());
-  private static final IReadableResource ORDER_V1_NOGOV = new ClassPathResource ("/ehf/ehf-order-1.0/sch/NOGOV-UBL-T01.sch",
-                                                                                 _getCL ());
+  private static final IReadableResource CATALOGUE_RESPONSE_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T58.xslt",
+                                                                                            _getCL ());
 
-  private static final IReadableResource ORDER_AGREEMENT_V1_EHF = new ClassPathResource ("/ehf/ehf-order-agreement-1.0/sch/EHF-UBL-T110.sch",
+  private static final IReadableResource CREDITNOTE_V2_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T14.xslt",
+                                                                                    _getCL ());
+
+  private static final IReadableResource DESPATCH_ADVICE_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T16.xslt",
                                                                                          _getCL ());
 
-  private static final IReadableResource ORDER_RESPONSE_V1_EHFCORE = new ClassPathResource ("/ehf/ehf-order-response-1.0/sch/EHFCORE-UBL-T76.sch",
-                                                                                            _getCL ());
-  private static final IReadableResource ORDER_RESPONSE_V1_NOGOV = new ClassPathResource ("/ehf/ehf-order-response-1.0/sch/NOGOV-UBL-T76.sch",
-                                                                                          _getCL ());
+  private static final IReadableResource INVOICE_V2_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T10.xslt",
+                                                                                 _getCL ());
 
-  private static final IReadableResource PUNCH_OUT_V1_EHF = new ClassPathResource ("/ehf/ehf-punch-out-1.0/sch/EHF-UBL-T77.sch",
+  private static final IReadableResource ORDER_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T01.xslt", _getCL ());
+
+  private static final IReadableResource ORDER_AGREEMENT_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T110.xslt",
+                                                                                         _getCL ());
+
+  private static final IReadableResource ORDER_RESPONSE_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T76.xslt",
+                                                                                        _getCL ());
+
+  private static final IReadableResource PUNCH_OUT_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T77.xslt",
                                                                                    _getCL ());
 
-  private static final IReadableResource REMINDER_V1_NONAT = new ClassPathResource ("/ehf/ehf-reminder-1.1/sch/NONAT-UBL-T17.sch",
-                                                                                    _getCL ());
+  private static final IReadableResource REMINDER_V1_EHF = new ClassPathResource ("/ehf-xslt/EHF-UBL-T17.xslt",
+                                                                                  _getCL ());
 
   private EHFValidation ()
   {}
 
   @Nonnull
-  private static IValidationExecutor _createPure (@Nonnull final IReadableResource aRes)
+  private static IValidationExecutor _createXSLT (@Nonnull final IReadableResource aRes)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, _getCL (), aRes),
-                                             null,
-                                             UBL21NamespaceContext.getInstance ());
-  }
-
-  @Nonnull
-  private static IValidationExecutor _createSCH (@Nonnull final IReadableResource aRes)
-  {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, _getCL (), aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, _getCL (), aRes),
                                              null,
                                              UBL21NamespaceContext.getInstance ());
   }
@@ -143,85 +119,98 @@ public final class EHFValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
+    final IValidationExecutorSet aVESCatalogue = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T19_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESCatalogueResponse = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T58_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESDespatchAdvice = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESOrder = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T01_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESOrderAgreement = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T110_V1.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESOrderResponse = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESPunchOut = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T77_V1.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    if (aVESCatalogue == null ||
+        aVESCatalogueResponse == null ||
+        aVESCreditNote == null ||
+        aVESDespatchAdvice == null ||
+        aVESInvoice == null ||
+        aVESOrder == null ||
+        aVESOrderAgreement == null ||
+        aVESOrderResponse == null ||
+        aVESPunchOut == null)
+      throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before EHF artefacts!");
+
     final boolean bNotDeprecated = false;
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_1_0,
-                                                                           "EHF Catalogue " +
-                                                                                                  VID_EHF_CATALOGUE_1_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (CATALOGUE_V1_EHFCORE),
-                                                                           _createSCH (CATALOGUE_V1_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_RESPONSE_1_0,
-                                                                           "EHF Catalogue Response " +
-                                                                                                           VID_EHF_CATALOGUE_RESPONSE_1_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.APPLICATION_RESPONSE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (CATALOGUE_RESPONSE_V1_EHFCORE),
-                                                                           _createSCH (CATALOGUE_RESPONSE_V1_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CREDITNOTE_2_0,
-                                                                           "EHF Creditnote " +
-                                                                                                   VID_EHF_CREDITNOTE_2_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (CREDITNOTE_V2_EHFCORE),
-                                                                           _createSCH (CREDITNOTE_V2_NONAT),
-                                                                           _createSCH (CREDITNOTE_V2_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_DESPATCH_ADVICE_1_0,
-                                                                           "EHF Catalogue " +
-                                                                                                        VID_EHF_DESPATCH_ADVICE_1_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.DESPATCH_ADVICE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (DESPATCH_ADVICE_V1_EHFCORE),
-                                                                           _createSCH (DESPATCH_ADVICE_V1_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_INVOICE_2_0,
-                                                                           "EHF Invoice " +
-                                                                                                VID_EHF_INVOICE_2_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (INVOICE_V2_EHFCORE),
-                                                                           _createSCH (INVOICE_V2_NONAT),
-                                                                           _createSCH (INVOICE_V2_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_1_0,
-                                                                           "EHF Ordering " +
-                                                                                              VID_EHF_ORDER_1_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (ORDER_V1_EHFCORE),
-                                                                           _createPure (ORDER_V1_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_AGREEMENT_1_0,
-                                                                           "EHF Order Agreement " +
-                                                                                                        VID_EHF_ORDER_AGREEMENT_1_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (ORDER_AGREEMENT_V1_EHF)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_RESPONSE_1_0,
-                                                                           "EHF Order Response " +
-                                                                                                       VID_EHF_ORDER_RESPONSE_1_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (ORDER_RESPONSE_V1_EHFCORE),
-                                                                           _createPure (ORDER_RESPONSE_V1_NOGOV)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_PUNCH_OUT_1_0,
-                                                                           "EHF Punch Out " +
-                                                                                                  VID_EHF_PUNCH_OUT_1_0.getVersion (),
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (PUNCH_OUT_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCatalogue,
+                                                                                  VID_EHF_CATALOGUE_1_0,
+                                                                                  "EHF Catalogue " +
+                                                                                                         VID_EHF_CATALOGUE_1_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (CATALOGUE_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCatalogueResponse,
+                                                                                  VID_EHF_CATALOGUE_RESPONSE_1_0,
+                                                                                  "EHF Catalogue Response " +
+                                                                                                                  VID_EHF_CATALOGUE_RESPONSE_1_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (CATALOGUE_RESPONSE_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
+                                                                                  VID_EHF_CREDITNOTE_2_0,
+                                                                                  "EHF Creditnote " +
+                                                                                                          VID_EHF_CREDITNOTE_2_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (CREDITNOTE_V2_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESDespatchAdvice,
+                                                                                  VID_EHF_DESPATCH_ADVICE_1_0,
+                                                                                  "EHF Despatch Advice " +
+                                                                                                               VID_EHF_DESPATCH_ADVICE_1_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (DESPATCH_ADVICE_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoice,
+                                                                                  VID_EHF_INVOICE_2_0,
+                                                                                  "EHF Invoice " +
+                                                                                                       VID_EHF_INVOICE_2_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (INVOICE_V2_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESOrder,
+                                                                                  VID_EHF_ORDER_1_0,
+                                                                                  "EHF Ordering " +
+                                                                                                     VID_EHF_ORDER_1_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (ORDER_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESOrderAgreement,
+                                                                                  VID_EHF_ORDER_AGREEMENT_1_0,
+                                                                                  "EHF Order Agreement " +
+                                                                                                               VID_EHF_ORDER_AGREEMENT_1_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (ORDER_AGREEMENT_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESOrderResponse,
+                                                                                  VID_EHF_ORDER_RESPONSE_1_0,
+                                                                                  "EHF Order Response " +
+                                                                                                              VID_EHF_ORDER_RESPONSE_1_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (ORDER_RESPONSE_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESPunchOut,
+                                                                                  VID_EHF_PUNCH_OUT_1_0,
+                                                                                  "EHF Punch Out " +
+                                                                                                         VID_EHF_PUNCH_OUT_1_0.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (EHF_COMMON_V1),
+                                                                                  _createXSLT (PUNCH_OUT_V1_EHF)));
+
+    // Reminder is NOT in PEPPOL
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_REMINDER_1_1,
                                                                            "EHF Reminder " +
                                                                                                  VID_EHF_REMINDER_1_1.getVersion (),
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.REMINDER),
-                                                                           _createSCH (EHF_COMMON_V1),
-                                                                           _createPure (REMINDER_V1_NONAT)));
+                                                                           _createXSLT (EHF_COMMON_V1),
+                                                                           _createXSLT (REMINDER_V1_EHF)));
   }
 }

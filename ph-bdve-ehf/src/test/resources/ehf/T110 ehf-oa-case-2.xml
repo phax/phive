@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OrderResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:OrderResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns110:ver1.0:extended:urn:www.peppol.eu:bis:peppol42a:ver1.0:extended:urn:fdc:difi.no:2017:ehf:spec:1.0</cbc:CustomizationID>
+	<cbc:ProfileID>urn:www.cenbii.eu:profile:bii42:ver1.0</cbc:ProfileID>
+	<cbc:ID>id123 tir110-001</cbc:ID>
+	<cbc:IssueDate>2016-08-16</cbc:IssueDate>
+	<cbc:IssueTime>12:00:00</cbc:IssueTime>
+	<cbc:Note>Textual note with the order agreement tir110-043</cbc:Note>
+	<cbc:DocumentCurrencyCode listID="ISO4217">NOK</cbc:DocumentCurrencyCode>
+	<cbc:CustomerReference>Buyer reference id tir110-044</cbc:CustomerReference>
+	<cac:OrderReference>
+		<cbc:ID>Order id tir110-042</cbc:ID>
+	</cac:OrderReference>
+	<cac:AdditionalDocumentReference>
+		<cbc:ID>Document idtir110-045</cbc:ID>
+		<cbc:DocumentType>Document description</cbc:DocumentType>
+		<cac:Attachment>
+			<cbc:EmbeddedDocumentBinaryObject filename="file.pdf" mimeCode="application/pdf">UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi</cbc:EmbeddedDocumentBinaryObject>
+			<cac:ExternalReference>
+				<cbc:URI>https://vefa.difi.no/EHF/2017EHF-OA.pdf</cbc:URI>
+			</cac:ExternalReference>
+		</cac:Attachment>
+	</cac:AdditionalDocumentReference>
+	<cac:Contract>
+		<cbc:ID>contract - vaktmestertjenester AS- 123</cbc:ID>
+		<cbc:ContractType>Rammeavtale 1234</cbc:ContractType>
+	</cac:Contract>
+	<cac:SellerSupplierParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="NO:ORGNR">987654325</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">987654325</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Information services</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:StreetName>Storgata 34</cbc:StreetName>
+				<cbc:AdditionalStreetName>rom 123</cbc:AdditionalStreetName>
+				<cbc:CityName>Storevik</cbc:CityName>
+				<cbc:PostalZone>1234</cbc:PostalZone>
+				<cbc:CountrySubentity>Region A</cbc:CountrySubentity>
+				<cac:Country>
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+			<cac:Contact>
+				<cbc:Name>Ola Nordmann</cbc:Name>
+				<cbc:Telephone>123456</cbc:Telephone>
+				<cbc:Telefax>123456</cbc:Telefax>
+				<cbc:ElectronicMail>mail@jobb.no</cbc:ElectronicMail>
+			</cac:Contact>
+		</cac:Party>
+	</cac:SellerSupplierParty>
+	<cac:BuyerCustomerParty>
+		<cac:Party>
+			<cbc:EndpointID schemeID="NO:ORGNR">123456785</cbc:EndpointID>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">123456785</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>AS Innkjøper</cbc:Name>
+			</cac:PartyName>
+			<cac:PostalAddress>
+				<cbc:StreetName>Hovedgata 23</cbc:StreetName>
+				<cbc:AdditionalStreetName>Bakdøra</cbc:AdditionalStreetName>
+				<cbc:CityName>Lillevik</cbc:CityName>
+				<cbc:PostalZone>8523</cbc:PostalZone>
+				<cbc:CountrySubentity>Region B</cbc:CountrySubentity>
+				<cac:Country>
+					<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+				</cac:Country>
+			</cac:PostalAddress>
+		</cac:Party>
+		<cac:DeliveryContact>
+			<cbc:Name>Kari Navnesen</cbc:Name>
+			<cbc:Telephone>123456</cbc:Telephone>
+			<cbc:Telefax>123456</cbc:Telefax>
+			<cbc:ElectronicMail>kari@innkjoper.no</cbc:ElectronicMail>
+		</cac:DeliveryContact>
+	</cac:BuyerCustomerParty>
+	<cac:OriginatorCustomerParty>
+		<cac:Party>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">987654325</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Information services</cbc:Name>
+			</cac:PartyName>
+		</cac:Party>
+	</cac:OriginatorCustomerParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">987654325</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Information services</cbc:Name>
+			</cac:PartyName>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:Delivery>
+		<cac:PromisedDeliveryPeriod>
+			<cbc:StartDate>2017-10-15</cbc:StartDate>
+			<cbc:StartTime>12:00:00</cbc:StartTime>
+			<cbc:EndDate>2017-10-16</cbc:EndDate>
+			<cbc:EndTime>18:00:00</cbc:EndTime>
+		</cac:PromisedDeliveryPeriod>
+		<cac:DeliveryParty>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="NO:ORGNR">987654325</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Delivery party name</cbc:Name>
+			</cac:PartyName>
+		</cac:DeliveryParty>
+		<cac:DeliveryTerms>
+			<cbc:ID>id</cbc:ID>
+			<cbc:SpecialTerms>special terms</cbc:SpecialTerms>
+			<cac:DeliveryLocation>
+				<cbc:ID>id</cbc:ID>
+				<cac:Address>
+					<cbc:StreetName>Hovedgata 23</cbc:StreetName>
+					<cbc:AdditionalStreetName>Bakdøra</cbc:AdditionalStreetName>
+					<cbc:CityName>Lillevik</cbc:CityName>
+					<cbc:PostalZone>8523</cbc:PostalZone>
+					<cbc:CountrySubentity>Region B</cbc:CountrySubentity>
+					<cac:Country>
+						<cbc:IdentificationCode listID="ISO3166-1:Alpha2">NO</cbc:IdentificationCode>
+					</cac:Country>
+				</cac:Address>
+			</cac:DeliveryLocation>
+		</cac:DeliveryTerms>
+	</cac:Delivery>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="NOK">1500.00</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="NOK">7500.00</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="NOK">1500.00</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cbc:TaxExemptionReason>No reason</cbc:TaxExemptionReason>
+				<cac:TaxScheme>
+					<cbc:ID schemeID="UNCL5305">VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="NOK">6000.00</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="NOK">6000.00</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="NOK">7500.00</cbc:TaxInclusiveAmount>
+		<cbc:AllowanceTotalAmount currencyID="NOK">0.00</cbc:AllowanceTotalAmount>
+		<cbc:ChargeTotalAmount currencyID="NOK">0.00</cbc:ChargeTotalAmount>
+		<cbc:PrepaidAmount currencyID="NOK">0.00</cbc:PrepaidAmount>
+		<cbc:PayableRoundingAmount currencyID="NOK">0.00</cbc:PayableRoundingAmount>
+		<cbc:PayableAmount currencyID="NOK">7500.00</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:OrderLine>
+		<cac:LineItem>
+			<cbc:ID>1</cbc:ID>
+			<cbc:Note>Line note</cbc:Note>
+			<cbc:Quantity unitCode="C62" unitCodeListID="UNECERec20">10</cbc:Quantity>
+			<cbc:LineExtensionAmount currencyID="NOK">6000.00</cbc:LineExtensionAmount>
+			<cbc:TotalTaxAmount currencyID="NOK">1500.00</cbc:TotalTaxAmount>
+			<cac:Delivery>
+				<cbc:Quantity unitCode="C62" unitCodeListID="UNECERec20">1</cbc:Quantity>
+				<cac:PromisedDeliveryPeriod>
+					<cbc:StartDate>2016-08-20</cbc:StartDate>
+					<cbc:StartTime>12:00:00</cbc:StartTime>
+					<cbc:EndDate>2016-08-30</cbc:EndDate>
+					<cbc:EndTime>18:00:00</cbc:EndTime>
+				</cac:PromisedDeliveryPeriod>
+			</cac:Delivery>
+			<cac:Price>
+				<cbc:PriceAmount currencyID="NOK">600</cbc:PriceAmount>
+				<cbc:BaseQuantity unitCode="C62" unitCodeListID="UNECERec20">1</cbc:BaseQuantity>
+			</cac:Price>
+			<cac:Item>
+				<cbc:Description>Description of the item</cbc:Description>
+				<cbc:Name>Item name</cbc:Name>
+				<cac:SellersItemIdentification>
+					<cbc:ID>123</cbc:ID>
+				</cac:SellersItemIdentification>
+				<cac:StandardItemIdentification>
+					<cbc:ID schemeID="GTIN">1234567890124</cbc:ID>
+				</cac:StandardItemIdentification>
+				<cac:ItemSpecificationDocumentReference>
+					<cbc:ID>doc id</cbc:ID>
+					<cbc:DocumentType>Item specs</cbc:DocumentType>
+					<cac:Attachment>
+						<cbc:EmbeddedDocumentBinaryObject mimeCode="application/pdf" filename="specs.pdf">UjBsR09EbGhjZ0dTQUxNQUFBUUNBRU1tQ1p0dU1GUXhEUzhi</cbc:EmbeddedDocumentBinaryObject>
+						<cac:ExternalReference>
+							<cbc:URI>https://vefa.difi.no/EHF/2017EHF-OA.pdf</cbc:URI>
+						</cac:ExternalReference>
+					</cac:Attachment>
+				</cac:ItemSpecificationDocumentReference>
+				<cac:CommodityClassification>
+					<cbc:ItemClassificationCode listID="UNSPSC">3156</cbc:ItemClassificationCode>
+				</cac:CommodityClassification>
+				<cac:TransactionConditions>
+					<cbc:ActionCode>CT</cbc:ActionCode>
+				</cac:TransactionConditions>
+				<cac:ClassifiedTaxCategory>
+					<cbc:ID schemeID="UNCL5305">S</cbc:ID>
+					<cbc:Percent>25</cbc:Percent>
+					<cac:TaxScheme>
+						<cbc:ID>VAT</cbc:ID>
+					</cac:TaxScheme>
+				</cac:ClassifiedTaxCategory>
+				<cac:AdditionalItemProperty>
+					<cbc:Name>Property name</cbc:Name>
+					<cbc:NameCode>NameCode</cbc:NameCode>
+					<cbc:Value>Property value</cbc:Value>
+					<cbc:ValueQuantity unitCode="C62" unitCodeListID="UNECERec20">1</cbc:ValueQuantity>
+				</cac:AdditionalItemProperty>
+				<cac:Certificate>
+					<cbc:ID>EU Ecolabel</cbc:ID>
+					<cbc:CertificateTypeCode>NA</cbc:CertificateTypeCode>
+					<cbc:CertificateType>Environmental</cbc:CertificateType>
+					<cbc:Remarks>Item label value</cbc:Remarks>
+					<cac:IssuerParty>
+						<cac:PartyName>
+							<cbc:Name>NA</cbc:Name>
+						</cac:PartyName>
+					</cac:IssuerParty>
+					<cac:DocumentReference>
+						<cbc:ID>Item label reference</cbc:ID>
+					</cac:DocumentReference>
+				</cac:Certificate>
+			</cac:Item>
+		</cac:LineItem>
+	</cac:OrderLine>
+</OrderResponse>
