@@ -83,6 +83,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v5.1.4 - work in progress
     * EHF validation without "OPENPEPPOL CORE" rules
+    * Fixed an error in the created XSLTs for ATNAT/ATGOV T10 and T14 because of variable order
 * v5.1.3 - 2019-03-08
     * Updated to latest EHF releases (Invoice and Credit Note 2.0.15 etc.)
     * EHF validation now directly depends on the PEPPOL Validation artefacts
