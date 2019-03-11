@@ -19,10 +19,11 @@
   <param name="ATGOV-T10-R016" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount) &lt;= 999999999.99" />
   <param name="ATGOV-T10-R017" value="count(cac:PaymentMeans/cac:PayeeFinancialAccount/cbc:ID) >= 1" />
   <param name="ATGOV-T10-R018" value="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})?$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
+  <!-- longer variable names MUST come first! -->
+  <param name="Invoice_Line" value="/ubl:Invoice/cac:InvoiceLine" />
   <param name="Invoice" value="/ubl:Invoice" />
   <param name="Payment_Means" value="/ubl:Invoice/cac:PaymentMeans" />
   <param name="Supplier" value="/ubl:Invoice/cac:AccountingSupplierParty/cac:Party" />
-  <param name="Invoice_Line" value="/ubl:Invoice/cac:InvoiceLine" />
   <param name="Payment_Terms" value="/ubl:Invoice/cac:PaymentTerms" />
   <param name="Attachments" value="/ubl:Invoice/cac:AdditionalDocumentReference" />
 </pattern>

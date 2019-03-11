@@ -30,6 +30,7 @@
   <description>PEPPOL BIS v2 validation engine</description>
   <url>https://github.com/phax/ph-bdve/ph-bdve-peppol</url>
   <inceptionYear>2014</inceptionYear>
+
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -37,10 +38,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
+
   <developers>
     <developer>
       <id>philip</id>
@@ -49,6 +52,7 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
+
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
@@ -87,6 +91,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -122,8 +127,8 @@
         <artifactId>ph-sch2xslt-maven-plugin</artifactId>
         <version>5.0.8</version>
         <executions>
-      <!--  
           <execution>
+            <id>singapore</id>
             <goals>
               <goal>convert</goal>
             </goals>
@@ -133,6 +138,7 @@
             </configuration>
           </execution>
           <execution>
+            <id>billingbis3</id>
             <goals>
               <goal>convert</goal>
             </goals>
@@ -141,7 +147,28 @@
               <xsltDirectory>src/main/resources/openpeppol/billingbis3/xslt</xsltDirectory>
             </configuration>
           </execution>
-      -->
+          <execution>
+            <id>3rdparty-creditnote</id>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>src/main/resources/thirdparty/creditnote</schematronDirectory>
+              <schematronPattern>*.sch</schematronPattern>
+              <xsltDirectory>src/main/resources/thirdparty/creditnote</xsltDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>3rdparty-invoice</id>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>src/main/resources/thirdparty/invoice</schematronDirectory>
+              <schematronPattern>*.sch</schematronPattern>
+              <xsltDirectory>src/main/resources/thirdparty/invoice</xsltDirectory>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>

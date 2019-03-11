@@ -18,10 +18,11 @@
   <param name="ATGOV-T14-R015" value="(number(cbc:LineExtensionAmount) >= -999999999999.99 and number(cbc:LineExtensionAmount) &lt;= 999999999999.99)" />
   <param name="ATGOV-T14-R016" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount) &lt;= 999999999.99" />
   <param name="ATGOV-T14-R018" value="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})?$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
+  <!-- longer variable names MUST come first! -->
+  <param name="CreditNoteLine" value="/ubl:CreditNote/cac:CreditNoteLine" />
   <param name="CreditNote" value="/ubl:CreditNote" />
   <param name="Payment_Means" value="/ubl:CreditNote/cac:PaymentMeans" />
   <param name="Supplier" value="/ubl:CreditNote/cac:AccountingSupplierParty/cac:Party" />
-  <param name="CreditNoteLine" value="/ubl:CreditNote/cac:CreditNoteLine" />
   <param name="Payment_Terms" value="/ubl:CreditNote/cac:PaymentTerms" />
   <param name="Attachments" value="/ubl:CreditNote/cac:AdditionalDocumentReference" />
 </pattern>
