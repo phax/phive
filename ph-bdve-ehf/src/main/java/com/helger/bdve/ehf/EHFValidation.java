@@ -24,11 +24,9 @@ import com.helger.bdve.artefact.ValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutorSchematron;
 import com.helger.bdve.execute.ValidationExecutorXSD;
-import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.peppol.PeppolValidation370;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
@@ -119,11 +117,6 @@ public final class EHFValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
-    final IValidationExecutorSet aVESOrderAgreement = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T110_V1.getWithVersion (PeppolValidation.VERSION_TO_USE));
-    final IValidationExecutorSet aVESPunchOut = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T77_V1.getWithVersion (PeppolValidation.VERSION_TO_USE));
-    if (aVESOrderAgreement == null || aVESPunchOut == null)
-      throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before EHF artefacts!");
-
     final boolean bNotDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_1_0,
                                                                            "EHF Catalogue " +
@@ -131,7 +124,6 @@ public final class EHFValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE),
                                                                            _createXSLT (PeppolValidation370.CATALOGUE_RULES),
-                                                                           _createXSLT (PeppolValidation370.CATALOGUE_OPENPEPPOL_XSLT),
                                                                            _createXSLT (EHF_COMMON_V1),
                                                                            _createXSLT (CATALOGUE_V1_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CATALOGUE_RESPONSE_1_0,
@@ -140,7 +132,6 @@ public final class EHFValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.APPLICATION_RESPONSE),
                                                                            _createXSLT (PeppolValidation370.CATALOGUE_RESPONSE_RULES),
-                                                                           _createXSLT (PeppolValidation370.CATALOGUE_RESPONSE_OPENPEPPOL),
                                                                            _createXSLT (EHF_COMMON_V1),
                                                                            _createXSLT (CATALOGUE_RESPONSE_V1_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_CREDITNOTE_2_0,
@@ -149,7 +140,6 @@ public final class EHFValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            _createXSLT (PeppolValidation370.CREDIT_NOTE_RULES),
-                                                                           _createXSLT (PeppolValidation370.CREDIT_NOTE_OPENPEPPOL),
                                                                            _createXSLT (EHF_COMMON_V1),
                                                                            _createXSLT (CREDITNOTE_V2_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_DESPATCH_ADVICE_1_0,
@@ -158,7 +148,6 @@ public final class EHFValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.DESPATCH_ADVICE),
                                                                            _createXSLT (PeppolValidation370.DESPATCH_ADVICE_RULES),
-                                                                           _createXSLT (PeppolValidation370.DESPATCH_ADVICE_OPENPEPPOL),
                                                                            _createXSLT (EHF_COMMON_V1),
                                                                            _createXSLT (DESPATCH_ADVICE_V1_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_INVOICE_2_0,
@@ -167,7 +156,6 @@ public final class EHFValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (PeppolValidation370.INVOICE_RULES),
-                                                                           _createXSLT (PeppolValidation370.INVOICE_OPENPEPPOL),
                                                                            _createXSLT (EHF_COMMON_V1),
                                                                            _createXSLT (INVOICE_V2_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_1_0,
@@ -176,32 +164,32 @@ public final class EHFValidation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.ORDER),
                                                                            _createXSLT (PeppolValidation370.ORDER_RULES),
-                                                                           _createXSLT (PeppolValidation370.ORDER_OPENPEPPOL),
                                                                            _createXSLT (EHF_COMMON_V1),
                                                                            _createXSLT (ORDER_V1_EHF)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESOrderAgreement,
-                                                                                  VID_EHF_ORDER_AGREEMENT_1_0,
-                                                                                  "EHF Order Agreement " +
-                                                                                                               VID_EHF_ORDER_AGREEMENT_1_0.getVersion (),
-                                                                                  bNotDeprecated,
-                                                                                  _createXSLT (EHF_COMMON_V1),
-                                                                                  _createXSLT (ORDER_AGREEMENT_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_AGREEMENT_1_0,
+                                                                           "EHF Order Agreement " +
+                                                                                                        VID_EHF_ORDER_AGREEMENT_1_0.getVersion (),
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE),
+                                                                           _createXSLT (PeppolValidation370.ORDER_AGREEMENT_RULES),
+                                                                           _createXSLT (EHF_COMMON_V1),
+                                                                           _createXSLT (ORDER_AGREEMENT_V1_EHF)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_ORDER_RESPONSE_1_0,
                                                                            "EHF Order Response " +
                                                                                                        VID_EHF_ORDER_RESPONSE_1_0.getVersion (),
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE),
                                                                            _createXSLT (PeppolValidation370.ORDER_RESPONSE_RULES),
-                                                                           _createXSLT (PeppolValidation370.ORDER_RESPONSE_OPENPEPPOL),
                                                                            _createXSLT (EHF_COMMON_V1),
                                                                            _createXSLT (ORDER_RESPONSE_V1_EHF)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESPunchOut,
-                                                                                  VID_EHF_PUNCH_OUT_1_0,
-                                                                                  "EHF Punch Out " +
-                                                                                                         VID_EHF_PUNCH_OUT_1_0.getVersion (),
-                                                                                  bNotDeprecated,
-                                                                                  _createXSLT (EHF_COMMON_V1),
-                                                                                  _createXSLT (PUNCH_OUT_V1_EHF)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_PUNCH_OUT_1_0,
+                                                                           "EHF Punch Out " +
+                                                                                                  VID_EHF_PUNCH_OUT_1_0.getVersion (),
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE),
+                                                                           _createXSLT (PeppolValidation370.PUNCH_OUT_RULES),
+                                                                           _createXSLT (EHF_COMMON_V1),
+                                                                           _createXSLT (PUNCH_OUT_V1_EHF)));
 
     // Reminder is NOT in PEPPOL
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EHF_REMINDER_1_1,
