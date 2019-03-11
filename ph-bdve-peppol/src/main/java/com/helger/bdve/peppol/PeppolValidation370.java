@@ -75,100 +75,99 @@ public final class PeppolValidation370
     return PeppolValidation370.class.getClassLoader ();
   }
 
-  private static final IReadableResource ORDER_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T01.xsl",
-                                                                              _getCL ());
-  private static final IReadableResource ORDER_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                   "OPENPEPPOL-UBL-T01.xsl",
-                                                                                   _getCL ());
-  private static final IReadableResource ORDER_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                        "OPENPEPPOLCORE-UBL-T01.xsl",
-                                                                                        _getCL ());
-
-  private static final IReadableResource INVOICE_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T10.xsl",
-                                                                                _getCL ());
-  private static final IReadableResource INVOICE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                     "OPENPEPPOL-UBL-T10.xsl",
-                                                                                     _getCL ());
-  private static final IReadableResource INVOICE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                          "OPENPEPPOLCORE-UBL-T10.xsl",
-                                                                                          _getCL ());
-
-  private static final IReadableResource CREDIT_NOTE_RULES = new ClassPathResource (PREFIX_XSLT +
-                                                                                    "BIIRULES-UBL-T14.xsl",
-                                                                                    _getCL ());
-  private static final IReadableResource CREDIT_NOTE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                         "OPENPEPPOL-UBL-T14.xsl",
-                                                                                         _getCL ());
-  private static final IReadableResource CREDIT_NOTE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                              "OPENPEPPOLCORE-UBL-T14.xsl",
-                                                                                              _getCL ());
-
-  private static final IReadableResource DESPATCH_ADVICE_RULES = new ClassPathResource (PREFIX_XSLT +
-                                                                                        "BIIRULES-UBL-T16.xsl",
-                                                                                        _getCL ());
-  private static final IReadableResource DESPATCH_ADVICE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                             "OPENPEPPOL-UBL-T16.xsl",
-                                                                                             _getCL ());
-  private static final IReadableResource DESPATCH_ADVICE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                                  "OPENPEPPOLCORE-UBL-T16.xsl",
-                                                                                                  _getCL ());
-
-  private static final IReadableResource CATALOGUE_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T19.xsl",
+  public static final IReadableResource ORDER_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T01.xsl",
+                                                                             _getCL ());
+  public static final IReadableResource ORDER_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                  "OPENPEPPOL-UBL-T01.xsl",
                                                                                   _getCL ());
-  private static final IReadableResource CATALOGUE_OPENPEPPOL_XSLT = new ClassPathResource (PREFIX_XSLT +
-                                                                                            "OPENPEPPOL-UBL-T19.xsl",
-                                                                                            _getCL ());
-  private static final IReadableResource CATALOGUE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                            "OPENPEPPOLCORE-UBL-T19.xsl",
-                                                                                            _getCL ());
+  public static final IReadableResource ORDER_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                       "OPENPEPPOLCORE-UBL-T01.xsl",
+                                                                                       _getCL ());
 
-  private static final IReadableResource CATALOGUE_RESPONSE_RULES = new ClassPathResource (PREFIX_XSLT +
-                                                                                           "BIIRULES-UBL-T58.xsl",
-                                                                                           _getCL ());
-  private static final IReadableResource CATALOGUE_RESPONSE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                                "OPENPEPPOL-UBL-T58.xsl",
-                                                                                                _getCL ());
-  private static final IReadableResource CATALOGUE_RESPONSE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                                     "OPENPEPPOLCORE-UBL-T58.xsl",
-                                                                                                     _getCL ());
+  public static final IReadableResource INVOICE_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T10.xsl",
+                                                                               _getCL ());
+  public static final IReadableResource INVOICE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                    "OPENPEPPOL-UBL-T10.xsl",
+                                                                                    _getCL ());
+  public static final IReadableResource INVOICE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                         "OPENPEPPOLCORE-UBL-T10.xsl",
+                                                                                         _getCL ());
 
-  private static final IReadableResource MLR_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T71.xsl",
-                                                                            _getCL ());
-  private static final IReadableResource MLR_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT + "OPENPEPPOL-UBL-T71.xsl",
+  public static final IReadableResource CREDIT_NOTE_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T14.xsl",
+                                                                                   _getCL ());
+  public static final IReadableResource CREDIT_NOTE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                        "OPENPEPPOL-UBL-T14.xsl",
+                                                                                        _getCL ());
+  public static final IReadableResource CREDIT_NOTE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                             "OPENPEPPOLCORE-UBL-T14.xsl",
+                                                                                             _getCL ());
+
+  public static final IReadableResource DESPATCH_ADVICE_RULES = new ClassPathResource (PREFIX_XSLT +
+                                                                                       "BIIRULES-UBL-T16.xsl",
+                                                                                       _getCL ());
+  public static final IReadableResource DESPATCH_ADVICE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                            "OPENPEPPOL-UBL-T16.xsl",
+                                                                                            _getCL ());
+  public static final IReadableResource DESPATCH_ADVICE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                                 "OPENPEPPOLCORE-UBL-T16.xsl",
+                                                                                                 _getCL ());
+
+  public static final IReadableResource CATALOGUE_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T19.xsl",
                                                                                  _getCL ());
-  private static final IReadableResource MLR_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                      "OPENPEPPOLCORE-UBL-T71.xsl",
+  public static final IReadableResource CATALOGUE_OPENPEPPOL_XSLT = new ClassPathResource (PREFIX_XSLT +
+                                                                                           "OPENPEPPOL-UBL-T19.xsl",
+                                                                                           _getCL ());
+  public static final IReadableResource CATALOGUE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                           "OPENPEPPOLCORE-UBL-T19.xsl",
+                                                                                           _getCL ());
+
+  public static final IReadableResource CATALOGUE_RESPONSE_RULES = new ClassPathResource (PREFIX_XSLT +
+                                                                                          "BIIRULES-UBL-T58.xsl",
+                                                                                          _getCL ());
+  public static final IReadableResource CATALOGUE_RESPONSE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                               "OPENPEPPOL-UBL-T58.xsl",
+                                                                                               _getCL ());
+  public static final IReadableResource CATALOGUE_RESPONSE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                                    "OPENPEPPOLCORE-UBL-T58.xsl",
+                                                                                                    _getCL ());
+
+  public static final IReadableResource MLR_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T71.xsl",
+                                                                           _getCL ());
+  public static final IReadableResource MLR_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT + "OPENPEPPOL-UBL-T71.xsl",
+                                                                                _getCL ());
+  public static final IReadableResource MLR_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                     "OPENPEPPOLCORE-UBL-T71.xsl",
+                                                                                     _getCL ());
+
+  public static final IReadableResource ORDER_RESPONSE_RULES = new ClassPathResource (PREFIX_XSLT +
+                                                                                      "BIIRULES-UBL-T76.xsl",
+                                                                                      _getCL ());
+  public static final IReadableResource ORDER_RESPONSE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                           "OPENPEPPOL-UBL-T76.xsl",
+                                                                                           _getCL ());
+  public static final IReadableResource ORDER_RESPONSE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
+                                                                                                "OPENPEPPOLCORE-UBL-T76.xsl",
+                                                                                                _getCL ());
+
+  public static final IReadableResource PUNCH_OUT_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T77.xsl",
+                                                                                 _getCL ());
+  public static final IReadableResource PUNCH_OUT_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                      "OPENPEPPOL-UBL-T77.xsl",
                                                                                       _getCL ());
 
-  private static final IReadableResource ORDER_RESPONSE_RULES = new ClassPathResource (PREFIX_XSLT +
-                                                                                       "BIIRULES-UBL-T76.xsl",
+  public static final IReadableResource ORDER_AGREEMENT_RULES = new ClassPathResource (PREFIX_XSLT +
+                                                                                       "BIIRULES-UBL-T110.xsl",
                                                                                        _getCL ());
-  private static final IReadableResource ORDER_RESPONSE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                            "OPENPEPPOL-UBL-T76.xsl",
+  public static final IReadableResource ORDER_AGREEMENT_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                            "OPENPEPPOL-UBL-T110.xsl",
                                                                                             _getCL ());
-  private static final IReadableResource ORDER_RESPONSE_OPENPEPPOL_CORE = new ClassPathResource (PREFIX_XSLTCORE +
-                                                                                                 "OPENPEPPOLCORE-UBL-T76.xsl",
-                                                                                                 _getCL ());
 
-  private static final IReadableResource PUNCH_OUT_RULES = new ClassPathResource (PREFIX_XSLT + "BIIRULES-UBL-T77.xsl",
-                                                                                  _getCL ());
-  private static final IReadableResource PUNCH_OUT_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                       "OPENPEPPOL-UBL-T77.xsl",
-                                                                                       _getCL ());
-
-  private static final IReadableResource ORDER_AGREEMENT_RULES = new ClassPathResource (PREFIX_XSLT +
-                                                                                        "BIIRULES-UBL-T110.xsl",
-                                                                                        _getCL ());
-  private static final IReadableResource ORDER_AGREEMENT_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                             "OPENPEPPOL-UBL-T110.xsl",
-                                                                                             _getCL ());
-
-  private static final IReadableResource INVOICE_MESSAGE_RESPONSE_RULES = new ClassPathResource (PREFIX_XSLT +
-                                                                                                 "BIIRULES-UBL-T111.xsl",
-                                                                                                 _getCL ());
-  private static final IReadableResource INVOICE_MESSAGE_RESPONSE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
-                                                                                                      "OPENPEPPOL-UBL-T111.xsl",
-                                                                                                      _getCL ());
+  public static final IReadableResource INVOICE_MESSAGE_RESPONSE_RULES = new ClassPathResource (PREFIX_XSLT +
+                                                                                                "BIIRULES-UBL-T111.xsl",
+                                                                                                _getCL ());
+  public static final IReadableResource INVOICE_MESSAGE_RESPONSE_OPENPEPPOL = new ClassPathResource (PREFIX_XSLT +
+                                                                                                     "OPENPEPPOL-UBL-T111.xsl",
+                                                                                                     _getCL ());
 
   private PeppolValidation370 ()
   {}

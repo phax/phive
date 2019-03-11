@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.4 - work in progress
+    * EHF validation without "OPENPEPPOL CORE" rules
 * v5.1.3 - 2019-03-08
     * Updated to latest EHF releases (Invoice and Credit Note 2.0.15 etc.)
     * EHF validation now directly depends on the PEPPOL Validation artefacts
