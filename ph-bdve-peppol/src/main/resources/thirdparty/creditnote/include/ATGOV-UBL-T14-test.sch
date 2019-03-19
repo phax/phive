@@ -8,7 +8,7 @@
   <param name="ATGOV-T14-R004" value="((cbc:Note) and cbc:SettlementDiscountPercent and cac:SettlementPeriod) or not ((cbc:Note))" />
   <param name="ATGOV-T14-R005" value="count(cac:PaymentMeans/cac:PayeeFinancialAccount/cbc:ID) = 1" />
   <param name="ATGOV-T14-R007" value="(cbc:PaymentMeansCode = '30' or cbc:PaymentMeansCode = '31' or cbc:PaymentMeansCode = '42') and  (cac:PayeeFinancialAccount/cbc:ID/@schemeID and cac:PayeeFinancialAccount/cbc:ID/@schemeID = 'IBAN') and  (cac:PayeeFinancialAccount/cac:FinancialInstitutionBranch/cac:FinancialInstitution/cbc:ID/@schemeID and cac:PayeeFinancialAccount/cac:FinancialInstitutionBranch/cac:FinancialInstitution/cbc:ID/@schemeID = 'BIC')" />
-  <param name="ATGOV-T14-R008" value="((string(number(//cac:OrderReference/cbc:ID)) != 'NaN') and (cac:OrderReferenceLine/cbc:LineID)) or not ((string(number(//cac:OrderReference/cbc:ID)) != 'NaN'))" />
+  <param name="ATGOV-T14-R008" value="((string(number(//cac:OrderReference/cbc:ID)) != 'NaN') and (cac:OrderLineReference/cbc:LineID)) or not ((string(number(//cac:OrderReference/cbc:ID)) != 'NaN'))" />
   <param name="ATGOV-T14-R009" value="count(cac:PaymentTerms/cac:SettlementPeriod) &lt;= 2" />
   <param name="ATGOV-T14-R010" value="((cbc:SettlementDiscountPercent) and number(cbc:SettlementDiscountPercent) > 0 and number(cbc:SettlementDiscountPercent) &lt; 100) or not ((cbc:SettlementDiscountPercent))" />
   <param name="ATGOV-T14-R011" value="count(cac:Attachment/cac:ExternalReference) = 0" />

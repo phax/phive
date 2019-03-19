@@ -333,9 +333,9 @@
 
 		<!--ASSERT -->
 <xsl:choose>
-      <xsl:when test="((string(number(//cac:OrderReference/cbc:ID)) != 'NaN') and (cac:OrderReferenceLine/cbc:LineID)) or not ((string(number(//cac:OrderReference/cbc:ID)) != 'NaN'))" />
+      <xsl:when test="((string(number(//cac:OrderReference/cbc:ID)) != 'NaN') and (cac:OrderLineReference/cbc:LineID)) or not ((string(number(//cac:OrderReference/cbc:ID)) != 'NaN'))" />
       <xsl:otherwise>
-        <svrl:failed-assert test="((string(number(//cac:OrderReference/cbc:ID)) != 'NaN') and (cac:OrderReferenceLine/cbc:LineID)) or not ((string(number(//cac:OrderReference/cbc:ID)) != 'NaN'))">
+        <svrl:failed-assert test="((string(number(//cac:OrderReference/cbc:ID)) != 'NaN') and (cac:OrderLineReference/cbc:LineID)) or not ((string(number(//cac:OrderReference/cbc:ID)) != 'NaN'))">
           <xsl:attribute name="id">ATGOV-T14-R008</xsl:attribute>
           <xsl:attribute name="flag">fatal</xsl:attribute>
           <xsl:attribute name="location">
