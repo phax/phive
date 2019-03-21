@@ -81,9 +81,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.1.4 - work in progress
+* v5.1.4 - 2019-03-21
     * EHF validation without "OPENPEPPOL CORE" rules
-    * Fixed an error in the created XSLTs for ATNAT/ATGOV T10 and T14 because of variable order
+    * Fixed an error in the created XSLTs for ATNAT/ATGOV T10 and T14 because of variable order as well as a spelling error
 * v5.1.3 - 2019-03-08
     * Updated to latest EHF releases (Invoice and Credit Note 2.0.15 etc.)
     * EHF validation now directly depends on the PEPPOL Validation artefacts
@@ -176,67 +176,67 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.1.3</version>
+  <version>5.1.4</version>
 </dependency>
 ```
 
