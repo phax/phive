@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.5 - work in progress
+    * Updated OIOUBL validation rules to the latest version
 * v5.1.4 - 2019-03-21
     * EHF validation without "OPENPEPPOL CORE" rules
     * Fixed an error in the created XSLTs for ATNAT/ATGOV T10 and T14 because of variable order as well as a spelling error
