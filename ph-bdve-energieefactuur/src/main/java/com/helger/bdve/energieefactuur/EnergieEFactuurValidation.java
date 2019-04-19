@@ -53,6 +53,7 @@ public final class EnergieEFactuurValidation
   public static final VESID VID_ENERGIE_EFACTUUR_1_0_0 = new VESID (GROUP_ID, "energie-efactuur", "1.0.0");
   public static final VESID VID_ENERGIE_EFACTUUR_1_0_1 = new VESID (GROUP_ID, "energie-efactuur", "1.0.1");
   public static final VESID VID_ENERGIE_EFACTUUR_2_0_0 = new VESID (GROUP_ID, "energie-efactuur", "2.0.0");
+  public static final VESID VID_ENERGIE_EFACTUUR_3_0_0 = new VESID (GROUP_ID, "energie-efactuur", "3.0.0");
 
   /** Namespace URL for Energie e-Factuur 1.0.0 */
   public static final String SEEF_EXT_NS_1_0_0 = "urn:www.energie-efactuur.nl:profile:invoice:ver1.0.0";
@@ -60,6 +61,8 @@ public final class EnergieEFactuurValidation
   public static final String SEEF_EXT_NS_1_0_1 = "urn:www.energie-efactuur.nl:profile:invoice:ver1.0";
   /** Namespace URL for Energie e-Factuur 2.0.0 */
   public static final String SEEF_EXT_NS_2_0_0 = "urn:www.energie-efactuur.nl:profile:invoice:ver2.0";
+  /** Namespace URL for Energie e-Factuur 3.0.0 */
+  public static final String SEEF_EXT_NS_3_0_0 = "urn:www.energie-efactuur.nl:profile:invoice:ver3.0";
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -72,6 +75,8 @@ public final class EnergieEFactuurValidation
   public static final IReadableResource SEEF_EXT_XSD_1_0_1 = new ClassPathResource ("/schemas/energieefactuur/SEeF_UBLExtension_v1.0.1.xsd",
                                                                                     _getCL ());
   public static final IReadableResource SEEF_EXT_XSD_2_0_0 = new ClassPathResource ("/schemas/energieefactuur/SEeF_UBLExtension_v2.0.0.xsd",
+                                                                                    _getCL ());
+  public static final IReadableResource SEEF_EXT_XSD_3_0_0 = new ClassPathResource ("/schemas/energieefactuur/SEeF_UBLExtension_v3.0.0.xsd",
                                                                                     _getCL ());
 
   private EnergieEFactuurValidation ()
@@ -179,6 +184,36 @@ public final class EnergieEFactuurValidation
                                                                              new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
                                                                                                                                        SimplerInvoicingValidation.class.getClassLoader (),
                                                                                                                                        SimplerInvoicingValidation.INVOICE_SI12),
+                                                                                                               null,
+                                                                                                               aCtx)));
+    }
+
+    {
+      // Create XPathExpression for extension validation
+      final XPathFactory aXF = XPathHelper.createXPathFactorySaxonFirst ();
+      final XPath aXP = aXF.newXPath ();
+      final MapBasedNamespaceContext aCtx = UBL21NamespaceContext.getInstance ().getClone ();
+      aCtx.addMapping ("ubl", EUBL21DocumentType.INVOICE.getNamespaceURI ());
+      aCtx.addMapping ("eef", SEEF_EXT_NS_3_0_0);
+      aXP.setNamespaceContext (aCtx);
+      final XPathExpression aXE300 = XPathHelper.createNewXPathExpression (aXP,
+                                                                           "/ubl:Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/eef:SEEFExtensionWrapper");
+
+      // Same Schematrons as SimplerInvoicing - and same classloader!
+      aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_ENERGIE_EFACTUUR_3_0_0,
+                                                                             "Energie eFactuur " +
+                                                                                                         VID_ENERGIE_EFACTUUR_3_0_0.getVersion (),
+                                                                             bNotDeprecated,
+                                                                             ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
+                                                                             new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.PARTIAL_XSD,
+                                                                                                                                       _getCL (),
+                                                                                                                                       SEEF_EXT_XSD_3_0_0),
+                                                                                                               new XSDPartialContext (aXE300,
+                                                                                                                                      Integer.valueOf (1),
+                                                                                                                                      Integer.valueOf (1))),
+                                                                             new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
+                                                                                                                                       SimplerInvoicingValidation.class.getClassLoader (),
+                                                                                                                                       SimplerInvoicingValidation.INVOICE_SI20),
                                                                                                                null,
                                                                                                                aCtx)));
     }

@@ -84,6 +84,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v5.1.5 - work in progress
     * Updated OIOUBL validation rules to the latest version
     * Updated SimplerInvoicing 2.0 RC1 to 2.0 final release
+    * Added support for Dutch Energie eFactuur 3.0.0 (based on SimplerInvoicing 2.0)
 * v5.1.4 - 2019-03-21
     * EHF validation without "OPENPEPPOL CORE" rules
     * Fixed an error in the created XSLTs for ATNAT/ATGOV T10 and T14 because of variable order as well as a spelling error
