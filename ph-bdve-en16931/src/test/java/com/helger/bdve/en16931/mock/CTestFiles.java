@@ -49,9 +49,11 @@ public final class CTestFiles
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     for (final VESID aVESID : new VESID [] { EN16931Validation.VID_CII_100,
                                              EN16931Validation.VID_CII_110,
+                                             EN16931Validation.VID_CII_120,
                                              EN16931Validation.VID_EDIFACT_100,
                                              EN16931Validation.VID_UBL_INVOICE_100,
-                                             EN16931Validation.VID_UBL_INVOICE_110 })
+                                             EN16931Validation.VID_UBL_INVOICE_110,
+                                             EN16931Validation.VID_UBL_INVOICE_120 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
 
@@ -100,37 +102,40 @@ public final class CTestFiles
         ret.add (new ClassPathResource (sPrefix + "CII_example9.xml"));
       }
       else
-        if (aVESID.equals (EN16931Validation.VID_EDIFACT_100))
+        if (aVESID.equals (EN16931Validation.VID_CII_120))
         {
-          final String sPrefix = "/test-files/1.0.0/edifact/";
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE1.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE2.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE3.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE4.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE5.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE6.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE7.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE8.xml"));
-          ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE9.xml"));
+          // CII files fail with pure!
+          final String sPrefix = "/test-files/1.2.0/cii/";
+          ret.add (new ClassPathResource (sPrefix + "CII_business_example_01.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_business_example_02.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example1.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example2.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example3.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example4.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example5.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example6.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example7.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example8.xml"));
+          ret.add (new ClassPathResource (sPrefix + "CII_example9.xml"));
         }
         else
-          if (aVESID.equals (EN16931Validation.VID_UBL_INVOICE_100))
+          if (aVESID.equals (EN16931Validation.VID_EDIFACT_100))
           {
-            final String sPrefix = "/test-files/1.0.0/ubl/";
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example1.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example2.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example3.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example4.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example5.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example6.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example7.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example8.xml"));
-            ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example9.xml"));
+            final String sPrefix = "/test-files/1.0.0/edifact/";
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE1.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE2.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE3.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE4.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE5.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE6.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE7.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE8.xml"));
+            ret.add (new ClassPathResource (sPrefix + "EDIFACT_EXAMPLE9.xml"));
           }
           else
-            if (aVESID.equals (EN16931Validation.VID_UBL_INVOICE_110))
+            if (aVESID.equals (EN16931Validation.VID_UBL_INVOICE_100))
             {
-              final String sPrefix = "/test-files/1.1.0/ubl/";
+              final String sPrefix = "/test-files/1.0.0/ubl/";
               ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example1.xml"));
               ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example2.xml"));
               ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example3.xml"));
@@ -142,7 +147,35 @@ public final class CTestFiles
               ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example9.xml"));
             }
             else
-              throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+              if (aVESID.equals (EN16931Validation.VID_UBL_INVOICE_110))
+              {
+                final String sPrefix = "/test-files/1.1.0/ubl/";
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example1.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example2.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example3.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example4.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example5.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example6.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example7.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example8.xml"));
+                ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example9.xml"));
+              }
+              else
+                if (aVESID.equals (EN16931Validation.VID_UBL_INVOICE_120))
+                {
+                  final String sPrefix = "/test-files/1.2.0/ubl/";
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example1.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example2.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example3.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example4.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example5.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example6.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example7.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example8.xml"));
+                  ret.add (new ClassPathResource (sPrefix + "ubl-tc434-example9.xml"));
+                }
+                else
+                  throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
     return ret;
   }
 }

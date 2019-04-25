@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.6 - work in progress
+    * Added EN 16931 validation artefacts version 1.2.0, deprecated the old 1.1.0 version
 * v5.1.5 - 2019-04-19
     * Updated OIOUBL validation rules to the latest version
     * Updated SimplerInvoicing 2.0 RC1 to 2.0 final release
