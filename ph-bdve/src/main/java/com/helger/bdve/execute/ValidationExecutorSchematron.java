@@ -54,6 +54,7 @@ import com.helger.schematron.svrl.SVRLResourceError.SVRLErrorBuilder;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
+import com.helger.xml.EXMLParserFeature;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.IIterableNamespaceContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
@@ -122,8 +123,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
   }
 
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
-                                           @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -136,7 +136,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     Node aNode = null;
     try
     {
-      aNode = SchematronResourceHelper.getNodeOfSource (aSource.getAsTransformSource (), new DOMReaderSettings ());
+      aNode = SchematronResourceHelper.getNodeOfSource (aSource.getAsTransformSource (),
+                                                        new DOMReaderSettings ().setFeatureValues (EXMLParserFeature.AVOID_XML_ATTACKS));
     }
     catch (final Exception ex)
     {
@@ -161,10 +162,10 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
         {
           if (LOGGER.isInfoEnabled ())
             LOGGER.info ("Ignoring validation artefact " +
-                            aSCHRes.getPath () +
-                            " because the prerequisite XPath expression '" +
-                            m_sPrerequisiteXPath +
-                            "' is not fulfilled.");
+                         aSCHRes.getPath () +
+                         " because the prerequisite XPath expression '" +
+                         m_sPrerequisiteXPath +
+                         "' is not fulfilled.");
           return ValidationResult.createIgnoredResult (aArtefact);
         }
       }
