@@ -112,7 +112,7 @@
       </plugin>
       <plugin>
         <groupId>com.helger.maven</groupId>
-        <artifactId>ph-sch2xslt-maven-plugin</artifactId>
+        <artifactId>ph-schematron-maven-plugin</artifactId>
         <executions>
           <execution>
             <goals>

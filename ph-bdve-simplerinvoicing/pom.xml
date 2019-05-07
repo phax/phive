@@ -98,7 +98,7 @@
       <!-- Enable if something changed only 
       <plugin>
         <groupId>com.helger.maven</groupId>
-        <artifactId>ph-sch2xslt-maven-plugin</artifactId>
+        <artifactId>ph-maven-maven-plugin</artifactId>
         <executions>
           <execution>
             <goals>
