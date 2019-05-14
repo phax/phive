@@ -83,6 +83,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v5.1.7 - 2019-05-14
     * Added EN 16931 validation artefacts version 1.2.1, deprecated the old 1.2.0 version
+    * Internally restructured EHF layout for future extension
 * v5.1.6 - 2019-04-26
     * Added EN 16931 validation artefacts version 1.2.0, deprecated the old 1.1.0 version
 * v5.1.5 - 2019-04-19

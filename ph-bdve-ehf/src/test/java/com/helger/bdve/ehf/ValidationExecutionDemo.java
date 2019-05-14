@@ -41,7 +41,7 @@ public final class ValidationExecutionDemo
   public void testCode (@Nullable final String sSystemID, @Nonnull final byte [] aXML)
   {
     // Example: validate against orders
-    final VESID aVESID = EHFValidation.VID_EHF_INVOICE_2_0;
+    final VESID aVESID = EHFValidation.VID_EHF_INVOICE_2_0_15;
 
     // Note: Use the currently active version
     final IValidationExecutorSet aExecutors = CTestFiles.VES_REGISTRY.getOfID (aVESID);

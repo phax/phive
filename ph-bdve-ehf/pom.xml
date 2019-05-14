@@ -115,12 +115,13 @@
         <artifactId>ph-schematron-maven-plugin</artifactId>
         <executions>
           <execution>
+            <id>2018-11</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>${basedir}/src/main/resources/ehf</schematronDirectory>
-              <xsltDirectory>${basedir}/src/main/resources/ehf-xslt</xsltDirectory>
+              <schematronDirectory>${basedir}/src/main/resources/ehf/2018-11</schematronDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/ehf/2018-11/xslt</xsltDirectory>
             </configuration>
           </execution>
         </executions>
