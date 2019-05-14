@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>ph-bdve-parent-pom</artifactId>
-    <version>5.1.7-SNAPSHOT</version>
+    <version>5.1.7</version>
   </parent>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
   <packaging>bundle</packaging>
