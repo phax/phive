@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>ph-bdve-parent-pom</artifactId>
-    <version>5.1.7</version>
+    <version>5.1.8-SNAPSHOT</version>
   </parent>
   <artifactId>ph-bdve-ehf</artifactId>
   <packaging>bundle</packaging>
