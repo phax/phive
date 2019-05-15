@@ -24,6 +24,7 @@ import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.peppol.PeppolValidation370;
+import com.helger.bdve.peppol.PeppolValidation380;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -50,17 +51,30 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { PeppolValidation370.VID_OPENPEPPOL_T19_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation370.VID_OPENPEPPOL_T58_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation370.VID_OPENPEPPOL_T01_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation370.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation370.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation370.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation370.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE),
-                                            PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_INVOICE,
-                                            PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE,
-                                            PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
-                                            PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE, })
+    for (final VESID aESID : new VESID [] { PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
+                                            PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE,
+
+                                            PeppolValidation370.VID_OPENPEPPOL_T19_V2,
+                                            PeppolValidation370.VID_OPENPEPPOL_T58_V2,
+                                            PeppolValidation370.VID_OPENPEPPOL_T01_V2,
+                                            PeppolValidation370.VID_OPENPEPPOL_T10_V2,
+                                            PeppolValidation370.VID_OPENPEPPOL_T14_V2,
+                                            PeppolValidation370.VID_OPENPEPPOL_T76_V2,
+                                            PeppolValidation370.VID_OPENPEPPOL_T16_V2,
+                                            PeppolValidation370.VID_OPENPEPPOL_BIS3_UBL_INVOICE,
+                                            PeppolValidation370.VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE,
+
+                                            PeppolValidation380.VID_OPENPEPPOL_INVOICE_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_CREDIT_NOTE_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T01_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T16_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T19_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T58_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T71_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T76_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T77_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T110_V3,
+                                            PeppolValidation380.VID_OPENPEPPOL_T111_V3, })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -73,29 +87,80 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T19_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
-      return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
-    if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T58_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
-      return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
-    if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T01_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
-      return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
-    if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
-      return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
-    if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
-      return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
-    if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T76_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
-      return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
-    if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T16_V2.getWithVersion (PeppolValidation.VERSION_TO_USE)))
-      return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
-    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_INVOICE))
-      return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/billingbis3/base-example.xml"),
-                                      new FileSystemResource ("src/test/resources/test-files/billingbis3/base-negative-inv-correction.xml"));
-    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE))
-      return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/billingbis3/base-creditnote-correction.xml"));
+    // Special
     if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE))
       return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/sg-peppol/Singapore invoice valid 1.xml"));
     if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE))
       return new CommonsArrayList <> ();
+
+    // 3.7.0
+    {
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T19_V2))
+        return OfficialTestFiles.getAllTestFilesCatalogue_01_T19 ();
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T58_V2))
+        return OfficialTestFiles.getAllTestFilesCatalogue_01_T58 ();
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T01_V2))
+        return OfficialTestFiles.getAllTestFilesOrder_03_T01 ();
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T10_V2))
+        return OfficialTestFiles.getAllTestFilesInvoice_04_T10 ();
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T14_V2))
+        return OfficialTestFiles.getAllTestFilesBilling_05_T14 ();
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T76_V2))
+        return OfficialTestFiles.getAllTestFilesOrdering_28_T76 ();
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_T16_V2))
+        return OfficialTestFiles.getAllTestFilesDespatchAdvice_30_T16 ();
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_BIS3_UBL_INVOICE))
+        return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/billingbis3/base-example.xml"),
+                                        new FileSystemResource ("src/test/resources/test-files/billingbis3/base-negative-inv-correction.xml"));
+      if (aVESID.equals (PeppolValidation370.VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE))
+        return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/billingbis3/base-creditnote-correction.xml"));
+    }
+
+    // 3.8.0
+    {
+      final String sBase = "src/test/resources/test-files/3.8.0/";
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_INVOICE_V3))
+        return new CommonsArrayList <> ();
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_CREDIT_NOTE_V3))
+        return new CommonsArrayList <> ();
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T01_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "Order_Example.xml"));
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T16_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "DespatchAdvice_Example.xml"));
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T19_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "Catalogue_Example.xml"));
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T58_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "CatalogueResponse_Example.xml"));
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T71_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "MessageLevelResponse_Example.xml"));
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T76_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "OrderResponse_Example.xml"));
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T77_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "PunchOut_Example.xml"));
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T110_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "OrderAgreement_Example.xml"));
+
+      final String sBase2 = sBase + "Invoice reponse use cases/";
+      if (aVESID.equals (PeppolValidation380.VID_OPENPEPPOL_T111_V3))
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "InvoiceResponse_Example.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc001-Invoice in process.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc002a-Additional reference data.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc002b-In process but postponed.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc003-Invoice is accepted.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc004a-Invoice is rejected.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc004b-Rejected requesting reissue.xml"),
+                                        new FileSystemResource (sBase2 +
+                                                                "T111-uc004c-Rejected requesting replacement.xml"),
+                                        new FileSystemResource (sBase2 +
+                                                                "T111-uc005-Invoice is conditionally accepted.xml"),
+                                        new FileSystemResource (sBase2 +
+                                                                "T111-uc006a-Under query missing information.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc006b-Missing PO.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc006c-Wrong detail partial credit.xml"),
+                                        new FileSystemResource (sBase2 + "T111-uc007-Payment has been initiated.xml"),
+                                        new FileSystemResource (sBase2 +
+                                                                "T111-uc008-Invoice is accepted by third party.xml"));
+    }
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
   }

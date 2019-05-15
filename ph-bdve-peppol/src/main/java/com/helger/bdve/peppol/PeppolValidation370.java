@@ -64,6 +64,8 @@ public final class PeppolValidation370
   public static final VESID VID_OPENPEPPOL_T77_V1 = new VESID ("eu.peppol.bis2", "t77", VERSION_STR);
   public static final VESID VID_OPENPEPPOL_T110_V1 = new VESID ("eu.peppol.bis2", "t110", VERSION_STR);
   public static final VESID VID_OPENPEPPOL_T111_V1 = new VESID ("eu.peppol.bis2", "t111", VERSION_STR);
+  public static final VESID VID_OPENPEPPOL_BIS3_UBL_INVOICE = new VESID ("eu.peppol.bis3.ubl", "invoice", "1");
+  public static final VESID VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE = new VESID ("eu.peppol.bis3.ubl", "creditnote", "1");
 
   private static final String PREFIX = "openpeppol/" + VERSION_STR + "/";
   private static final String PREFIX_XSLT = PREFIX + "XSLT/";
@@ -169,6 +171,11 @@ public final class PeppolValidation370
                                                                                                      "OPENPEPPOL-UBL-T111.xsl",
                                                                                                      _getCL ());
 
+  public static final IReadableResource BIS3_BILLING_CEN = new ClassPathResource ("/openpeppol/billingbis3/xslt/CEN-EN16931-UBL.xslt",
+                                                                                  _getCL ());
+  public static final IReadableResource BIS3_BILLING_PEPPOL = new ClassPathResource ("/openpeppol/billingbis3/xslt/PEPPOL-EN16931-UBL.xslt",
+                                                                                     _getCL ());
+
   private PeppolValidation370 ()
   {}
 
@@ -261,5 +268,19 @@ public final class PeppolValidation370
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.APPLICATION_RESPONSE),
                                                                            _createXSLT (INVOICE_MESSAGE_RESPONSE_RULES),
                                                                            _createXSLT (INVOICE_MESSAGE_RESPONSE_OPENPEPPOL)));
+
+    // Billing BIS 3
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_UBL_INVOICE,
+                                                                           "OpenPEPPOL BIS3 Invoice (UBL)",
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
+                                                                           _createXSLT (BIS3_BILLING_CEN),
+                                                                           _createXSLT (BIS3_BILLING_PEPPOL)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE,
+                                                                           "OpenPEPPOL BIS3 CreditNote (UBL)",
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
+                                                                           _createXSLT (BIS3_BILLING_CEN),
+                                                                           _createXSLT (BIS3_BILLING_PEPPOL)));
   }
 }

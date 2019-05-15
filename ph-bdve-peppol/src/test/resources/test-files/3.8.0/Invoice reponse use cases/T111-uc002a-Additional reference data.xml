@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+                Content:
+                This file contains a PEPPOL Invoice Message Response, profile 63.
+				It demonstrates Use Case 2a — Invoice in process with additional reference date.
+				
+				Use case shows an invoice that is in process and states the date when the invoice was received and entered into processing which in this case is shown as a day before the IMR is sent. 
+				The Buyer also communicates that his internal reference number is X001.
+				
+                Errors:
+                None
+                
+                Warnings:
+                None
+				
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<cbc:CustomizationID>urn:fdc:peppol.eu:poacc:trns:invoice_response:3</cbc:CustomizationID>
+	<cbc:ProfileID>urn:fdc:peppol.eu:poacc:bis:invoice_response:3</cbc:ProfileID>
+	<cbc:ID>imrid001</cbc:ID>
+	<cbc:IssueDate>2017-12-02</cbc:IssueDate>
+	<cac:SenderParty>
+		<cbc:EndpointID schemeID="0196">6963495890</cbc:EndpointID>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Buyer organization</cbc:RegistrationName>
+		</cac:PartyLegalEntity>
+	</cac:SenderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="0196">6841569459</cbc:EndpointID>
+		<cac:PartyLegalEntity>
+			<cbc:RegistrationName>Seller company</cbc:RegistrationName>
+		</cac:PartyLegalEntity>
+	</cac:ReceiverParty>
+	<cac:DocumentResponse>
+		<cac:Response>
+			<cbc:ResponseCode listID="UNCL4343OpSubset">IP</cbc:ResponseCode>
+			<cbc:EffectiveDate>2017-12-01</cbc:EffectiveDate>
+			<cac:Status>
+				<cbc:StatusReasonCode listID="OPStatusAction">NOA</cbc:StatusReasonCode>
+				<cac:Condition>
+					<cbc:AttributeID>Buyer process reference</cbc:AttributeID>
+					<cbc:Description>X001</cbc:Description>
+				</cac:Condition>
+			</cac:Status>
+		</cac:Response>
+		<cac:DocumentReference>
+			<cbc:ID>inv021</cbc:ID>
+			<cbc:DocumentTypeCode listID="UNCL1001">380</cbc:DocumentTypeCode>
+		</cac:DocumentReference>
+	</cac:DocumentResponse>
+</ApplicationResponse>
