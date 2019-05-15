@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.8 - 2019-05-15
+    * Added PEPPOL 3.8.0 (Spring 2019 release) validation artefacts (BIS v3 only)
 * v5.1.7 - 2019-05-14
     * Added EN 16931 validation artefacts version 1.2.1, deprecated the old 1.2.0 version
     * Internally restructured EHF layout for future extension
@@ -185,67 +187,67 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.1.7</version>
+  <version>5.1.8</version>
 </dependency>
 ```
 
