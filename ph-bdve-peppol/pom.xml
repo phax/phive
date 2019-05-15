@@ -128,6 +128,16 @@
         <version>5.0.10</version>
         <executions>
           <execution>
+            <id>peppol-380</id>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>src/main/resources/openpeppol/3.8.0</schematronDirectory>
+              <xsltDirectory>src/main/resources/openpeppol/3.8.0/xslt</xsltDirectory>
+            </configuration>
+          </execution>
+          <execution>
             <id>singapore</id>
             <goals>
               <goal>convert</goal>
