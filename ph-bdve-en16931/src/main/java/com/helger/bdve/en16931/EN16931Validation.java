@@ -59,19 +59,31 @@ public final class EN16931Validation
   private static final String VERSION_120 = "1.2.0";
   private static final String VERSION_121 = "1.2.1";
 
+  // CII
+  @Deprecated
   public static final VESID VID_CII_100 = new VESID ("eu.cen.en16931", "cii", VERSION_100);
+  @Deprecated
   public static final VESID VID_CII_110 = new VESID ("eu.cen.en16931", "cii", VERSION_110);
+  @Deprecated
   public static final VESID VID_CII_120 = new VESID ("eu.cen.en16931", "cii", VERSION_120);
   public static final VESID VID_CII_121 = new VESID ("eu.cen.en16931", "cii", VERSION_121);
 
+  // EDIFACT
   public static final VESID VID_EDIFACT_100 = new VESID ("eu.cen.en16931", "edifact", VERSION_100);
 
+  // UBL
+  @Deprecated
   public static final VESID VID_UBL_INVOICE_100 = new VESID ("eu.cen.en16931", "ubl", VERSION_100);
+  @Deprecated
   public static final VESID VID_UBL_INVOICE_110 = new VESID ("eu.cen.en16931", "ubl", VERSION_110);
+  @Deprecated
   public static final VESID VID_UBL_INVOICE_120 = new VESID ("eu.cen.en16931", "ubl", VERSION_120);
   public static final VESID VID_UBL_INVOICE_121 = new VESID ("eu.cen.en16931", "ubl", VERSION_121);
+  @Deprecated
   public static final VESID VID_UBL_CREDIT_NOTE_100 = new VESID ("eu.cen.en16931", "ubl-creditnote", VERSION_100);
+  @Deprecated
   public static final VESID VID_UBL_CREDIT_NOTE_110 = new VESID ("eu.cen.en16931", "ubl-creditnote", VERSION_110);
+  @Deprecated
   public static final VESID VID_UBL_CREDIT_NOTE_120 = new VESID ("eu.cen.en16931", "ubl-creditnote", VERSION_120);
   public static final VESID VID_UBL_CREDIT_NOTE_121 = new VESID ("eu.cen.en16931", "ubl-creditnote", VERSION_121);
 
@@ -81,22 +93,31 @@ public final class EN16931Validation
     return EN16931Validation.class.getClassLoader ();
   }
 
+  // CII
+  @Deprecated
   public static final IReadableResource INVOICE_CII_100_XSLT = new ClassPathResource ("/en16931/1.0.0/cii/xslt/EN16931-CII-validation.xslt",
                                                                                       _getCL ());
+  @Deprecated
   public static final IReadableResource INVOICE_CII_110_XSLT = new ClassPathResource ("/en16931/1.1.0/cii/xslt/EN16931-CII-validation.xslt",
                                                                                       _getCL ());
+  @Deprecated
   public static final IReadableResource INVOICE_CII_120_XSLT = new ClassPathResource ("/en16931/1.2.0/cii/xslt/EN16931-CII-validation.xslt",
                                                                                       _getCL ());
   public static final IReadableResource INVOICE_CII_121_XSLT = new ClassPathResource ("/en16931/1.2.1/cii/xslt/EN16931-CII-validation.xslt",
                                                                                       _getCL ());
 
+  // EDIFACT
   public static final IReadableResource INVOICE_EDIFACT_100_XSLT = new ClassPathResource ("/en16931/1.0.0/edifact/xslt/EN16931-EDIFACT-validation.xslt",
                                                                                           _getCL ());
 
+  // UBL
+  @Deprecated
   public static final IReadableResource INVOICE_UBL_100_XSLT = new ClassPathResource ("/en16931/1.0.0/ubl/xslt/EN16931-UBL-model.xslt",
                                                                                       _getCL ());
+  @Deprecated
   public static final IReadableResource INVOICE_UBL_110_XSLT = new ClassPathResource ("/en16931/1.1.0/ubl/xslt/EN16931-UBL-model.xslt",
                                                                                       _getCL ());
+  @Deprecated
   public static final IReadableResource INVOICE_UBL_120_XSLT = new ClassPathResource ("/en16931/1.2.0/ubl/xslt/EN16931-UBL-validation.xslt",
                                                                                       _getCL ());
   public static final IReadableResource INVOICE_UBL_121_XSLT = new ClassPathResource ("/en16931/1.2.1/ubl/xslt/EN16931-UBL-validation.xslt",
