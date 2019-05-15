@@ -28,7 +28,6 @@ import com.helger.bdve.executorset.IValidationExecutorSet;
 import com.helger.bdve.executorset.VESID;
 import com.helger.bdve.executorset.ValidationExecutorSet;
 import com.helger.bdve.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.peppol.PeppolValidation370;
 import com.helger.bdve.spi.LocationBeautifierSPI;
 import com.helger.commons.ValueEnforcer;
@@ -99,8 +98,8 @@ public final class UBLBEValidation
     // For better error messages
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
-    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T10_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
-    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T14_V2.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T10_V2);
+    final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T14_V2);
     if (aVESInvoice == null || aVESCreditNote == null)
       throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before e-FFF artefacts!");
 

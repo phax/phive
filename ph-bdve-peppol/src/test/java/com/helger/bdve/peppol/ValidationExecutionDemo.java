@@ -44,7 +44,7 @@ public final class ValidationExecutionDemo
     final VESID aVESID = PeppolValidation370.VID_OPENPEPPOL_T01_V2;
 
     // Note: Use the currently active version
-    final IValidationExecutorSet aExecutors = CTestFiles.VES_REGISTRY.getOfID (aVESID.getWithVersion (PeppolValidation.VERSION_TO_USE));
+    final IValidationExecutorSet aExecutors = CTestFiles.VES_REGISTRY.getOfID (aVESID);
 
     // Parse the XML document to be validated
     final Document aXMLDoc = DOMReader.readXMLDOM (aXML);
