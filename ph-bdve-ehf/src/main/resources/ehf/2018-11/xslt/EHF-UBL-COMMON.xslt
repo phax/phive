@@ -176,13 +176,7 @@
       <svrl:ns-prefix-in-attribute-values prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" />
       <svrl:ns-prefix-in-attribute-values prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
       <svrl:ns-prefix-in-attribute-values prefix="u" uri="utils" />
-      <svrl:active-pattern>
-        <xsl:attribute name="document">
-          <xsl:value-of select="document-uri(/)" />
-        </xsl:attribute>
-        <xsl:apply-templates />
-      </svrl:active-pattern>
-      <xsl:apply-templates mode="M6" select="/" />
+      <svrl:ns-prefix-in-attribute-values prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
       <svrl:active-pattern>
         <xsl:attribute name="document">
           <xsl:value-of select="document-uri(/)" />
@@ -190,6 +184,13 @@
         <xsl:apply-templates />
       </svrl:active-pattern>
       <xsl:apply-templates mode="M7" select="/" />
+      <svrl:active-pattern>
+        <xsl:attribute name="document">
+          <xsl:value-of select="document-uri(/)" />
+        </xsl:attribute>
+        <xsl:apply-templates />
+      </svrl:active-pattern>
+      <xsl:apply-templates mode="M8" select="/" />
     </svrl:schematron-output>
   </xsl:template>
 
@@ -200,7 +201,7 @@
 
 
 	<!--RULE -->
-<xsl:template match="cbc:*" mode="M6" priority="1001">
+<xsl:template match="cbc:*" mode="M7" priority="1001">
     <svrl:fired-rule context="cbc:*" />
 
 		<!--ASSERT -->
@@ -232,11 +233,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*" />
+    <xsl:apply-templates mode="M7" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cac:*" mode="M6" priority="1000">
+<xsl:template match="cac:*" mode="M7" priority="1000">
     <svrl:fired-rule context="cac:*" />
 
 		<!--ASSERT -->
@@ -253,18 +254,18 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M6" select="*" />
+    <xsl:apply-templates mode="M7" select="*" />
   </xsl:template>
-  <xsl:template match="text()" mode="M6" priority="-1" />
-  <xsl:template match="@*|node()" mode="M6" priority="-2">
-    <xsl:apply-templates mode="M6" select="*" />
+  <xsl:template match="text()" mode="M7" priority="-1" />
+  <xsl:template match="@*|node()" mode="M7" priority="-2">
+    <xsl:apply-templates mode="M7" select="*" />
   </xsl:template>
 
 <!--PATTERN -->
 
 
 	<!--RULE -->
-<xsl:template match="/*" mode="M7" priority="1010">
+<xsl:template match="/*" mode="M8" priority="1010">
     <svrl:fired-rule context="/*" />
 
 		<!--ASSERT -->
@@ -296,11 +297,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:EndpointID[@schemeID = 'NO:ORGNR']" mode="M7" priority="1009">
+<xsl:template match="cbc:EndpointID[@schemeID = 'NO:ORGNR']" mode="M8" priority="1009">
     <svrl:fired-rule context="cbc:EndpointID[@schemeID = 'NO:ORGNR']" />
 
 		<!--ASSERT -->
@@ -317,11 +318,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:EndpointID" mode="M7" priority="1008">
+<xsl:template match="cbc:EndpointID" mode="M8" priority="1008">
     <svrl:fired-rule context="cbc:EndpointID" />
 
 		<!--ASSERT -->
@@ -338,11 +339,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cac:PartyIdentification/cbc:ID[@schemeID = 'NO:ORGNR']" mode="M7" priority="1007">
+<xsl:template match="cac:PartyIdentification/cbc:ID[@schemeID = 'NO:ORGNR']" mode="M8" priority="1007">
     <svrl:fired-rule context="cac:PartyIdentification/cbc:ID[@schemeID = 'NO:ORGNR']" />
 
 		<!--ASSERT -->
@@ -359,11 +360,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:CompanyID[@schemeID = 'NO:VAT'] | cac:PartyTaxScheme/cbc:CompanyID[not(@schemeID)]" mode="M7" priority="1006">
+<xsl:template match="cbc:CompanyID[@schemeID = 'NO:VAT'] | cac:PartyTaxScheme/cbc:CompanyID[not(@schemeID)]" mode="M8" priority="1006">
     <svrl:fired-rule context="cbc:CompanyID[@schemeID = 'NO:VAT'] | cac:PartyTaxScheme/cbc:CompanyID[not(@schemeID)]" />
 
 		<!--ASSERT -->
@@ -380,11 +381,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:CompanyID[@schemeID = 'NO:ORGNR'] | cac:PartyLegalEntity/cbc:CompanyID[not(@schemeID)]" mode="M7" priority="1005">
+<xsl:template match="cbc:CompanyID[@schemeID = 'NO:ORGNR'] | cac:PartyLegalEntity/cbc:CompanyID[not(@schemeID)]" mode="M8" priority="1005">
     <svrl:fired-rule context="cbc:CompanyID[@schemeID = 'NO:ORGNR'] | cac:PartyLegalEntity/cbc:CompanyID[not(@schemeID)]" />
 
 		<!--ASSERT -->
@@ -401,11 +402,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cac:*[ends-with(name(), 'TaxCategory')]/cbc:ID" mode="M7" priority="1004">
+<xsl:template match="cac:*[ends-with(name(), 'TaxCategory')]/cbc:ID" mode="M8" priority="1004">
     <svrl:fired-rule context="cac:*[ends-with(name(), 'TaxCategory')]/cbc:ID" />
 
 		<!--ASSERT -->
@@ -422,11 +423,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:*[ends-with(name(), 'Date')]" mode="M7" priority="1003">
+<xsl:template match="cbc:*[ends-with(name(), 'Date')]" mode="M8" priority="1003">
     <svrl:fired-rule context="cbc:*[ends-with(name(), 'Date')]" />
 
 		<!--ASSERT -->
@@ -443,11 +444,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:ID[@schemeID = 'GLN']" mode="M7" priority="1002">
+<xsl:template match="cbc:ID[@schemeID = 'GLN']" mode="M8" priority="1002">
     <svrl:fired-rule context="cbc:ID[@schemeID = 'GLN']" />
 
 		<!--ASSERT -->
@@ -464,11 +465,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:Note[2]" mode="M7" priority="1001">
+<xsl:template match="cbc:Note[2]" mode="M8" priority="1001">
     <svrl:fired-rule context="cbc:Note[2]" />
 
 		<!--ASSERT -->
@@ -485,11 +486,11 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 
 	<!--RULE -->
-<xsl:template match="cbc:EmbeddedDocumentBinaryObject[@mimeCode]" mode="M7" priority="1000">
+<xsl:template match="cbc:EmbeddedDocumentBinaryObject[@mimeCode]" mode="M8" priority="1000">
     <svrl:fired-rule context="cbc:EmbeddedDocumentBinaryObject[@mimeCode]" />
 
 		<!--ASSERT -->
@@ -506,10 +507,10 @@
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>
-    <xsl:apply-templates mode="M7" select="*" />
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
-  <xsl:template match="text()" mode="M7" priority="-1" />
-  <xsl:template match="@*|node()" mode="M7" priority="-2">
-    <xsl:apply-templates mode="M7" select="*" />
+  <xsl:template match="text()" mode="M8" priority="-1" />
+  <xsl:template match="@*|node()" mode="M8" priority="-2">
+    <xsl:apply-templates mode="M8" select="*" />
   </xsl:template>
 </xsl:stylesheet>

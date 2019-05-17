@@ -12,6 +12,7 @@
   <ns uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
        prefix="cac"/>
   <ns uri="utils" prefix="u"/>
+  <ns prefix="xs"   uri="http://www.w3.org/2001/XMLSchema"/>
 
   <function xmlns="http://www.w3.org/1999/XSL/Transform"
              name="u:gln"

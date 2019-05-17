@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.9 - work in progress
+    * Fixed an error in `EHF-UBL-COMMON.sch` of November 2018 release
 * v5.1.8 - 2019-05-15
     * Added PEPPOL 3.8.0 (Spring 2019 release) validation artefacts (BIS v3 only)
 * v5.1.7 - 2019-05-14
