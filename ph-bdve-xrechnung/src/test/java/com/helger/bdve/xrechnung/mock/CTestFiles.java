@@ -96,7 +96,7 @@ public final class CTestFiles
                                                 "ubl-tc434-example4.xml",
                                                 "ubl-tc434-example5.xml",
                                                 "ubl-tc434-example6.xml",
-                                                "ubl-tc434-example7.xml",
+                                                // "ubl-tc434-example7.xml",
                                                 "ubl-tc434-example8.xml",
                                                 "ubl-tc434-example9.xml" })
             ret.add (new ClassPathResource (sPrefix + s));

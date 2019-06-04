@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.id.IHasID;
@@ -45,6 +46,14 @@ public interface IValidationExecutorSet extends
    */
   @Nonnegative
   int getExecutorCount ();
+
+  /**
+   * @return A list with all validation executors. Never <code>null</code> but
+   *         maybe empty.
+   */
+  @Nonnull
+  @ReturnsMutableObject
+  ICommonsList <IValidationExecutor> executors ();
 
   /**
    * @return A list with all validation executors. Never <code>null</code> but

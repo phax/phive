@@ -28,6 +28,7 @@
     <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
     <cbc:Note>Testscenario 7</cbc:Note>
     <cbc:DocumentCurrencyCode>SEK</cbc:DocumentCurrencyCode>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
     <cac:InvoicePeriod>
         <cbc:StartDate>2013-01-01</cbc:StartDate>
         <cbc:EndDate>2013-12-31</cbc:EndDate>

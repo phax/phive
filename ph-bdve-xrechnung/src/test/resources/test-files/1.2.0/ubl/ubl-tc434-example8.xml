@@ -34,6 +34,7 @@
         www.enexis.nl</cbc:Note>
     <cbc:TaxPointDate>2013-06-30</cbc:TaxPointDate>
     <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
     <cac:InvoicePeriod>
         <cbc:StartDate>2014-08-01</cbc:StartDate>
         <cbc:EndDate>2014-08-31</cbc:EndDate>
@@ -66,6 +67,8 @@
                 <cbc:CompanyID>17131139</cbc:CompanyID>
             </cac:PartyLegalEntity>
             <cac:Contact>
+                <cbc:Name>nicht vorhanden</cbc:Name>
+                <cbc:Telephone>+49 1234-5678</cbc:Telephone>
                 <cbc:ElectronicMail>klantenservice.zakelijk@enexis.nl</cbc:ElectronicMail>
             </cac:Contact>
         </cac:Party>

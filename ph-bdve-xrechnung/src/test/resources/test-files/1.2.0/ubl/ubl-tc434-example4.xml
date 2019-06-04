@@ -29,7 +29,8 @@
     <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
     <cbc:Note>Ordered through our website</cbc:Note>
     <cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
-   <cac:OrderReference>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
+    <cac:OrderReference>
         <cbc:ID>123</cbc:ID>
     </cac:OrderReference>
     <cac:AccountingSupplierParty>

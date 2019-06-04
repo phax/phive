@@ -28,9 +28,13 @@
     <cbc:DueDate>2013-05-10</cbc:DueDate>
     <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
     <cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
     <cac:AccountingSupplierParty>
         <cac:Party>
             <cac:PostalAddress>
+                <cbc:StreetName>[Seller address line 1]</cbc:StreetName>
+                <cbc:CityName>[Seller city]</cbc:CityName>
+                <cbc:PostalZone>12345</cbc:PostalZone>
                 <cac:Country>
                     <cbc:IdentificationCode>DK</cbc:IdentificationCode>
                 </cac:Country>
@@ -44,11 +48,19 @@
             <cac:PartyLegalEntity>
                 <cbc:RegistrationName>SellerCompany</cbc:RegistrationName>
             </cac:PartyLegalEntity>
+            <cac:Contact>
+              <cbc:Name>nicht vorhanden</cbc:Name>
+              <cbc:Telephone>+49 1234-5678</cbc:Telephone>
+              <cbc:ElectronicMail>seller@email.de</cbc:ElectronicMail>
+            </cac:Contact>
         </cac:Party>
     </cac:AccountingSupplierParty>
     <cac:AccountingCustomerParty>
         <cac:Party>
             <cac:PostalAddress>
+                <cbc:StreetName>[Buyer address line 1]</cbc:StreetName>
+                <cbc:CityName>[Buyer city]</cbc:CityName>
+                <cbc:PostalZone>12345</cbc:PostalZone>
                 <cac:Country>
                     <cbc:IdentificationCode>DK</cbc:IdentificationCode>
                 </cac:Country>
@@ -58,6 +70,12 @@
             </cac:PartyLegalEntity>
         </cac:Party>
    </cac:AccountingCustomerParty>
+      <cac:PaymentMeans>
+        <cbc:PaymentMeansCode>30</cbc:PaymentMeansCode>
+        <cac:PayeeFinancialAccount>
+          <cbc:ID>DE12345678912345678912</cbc:ID>
+        </cac:PayeeFinancialAccount>
+      </cac:PaymentMeans>
     <cac:TaxTotal>
         <cbc:TaxAmount currencyID="DKK">675.00</cbc:TaxAmount>
         <cac:TaxSubtotal>

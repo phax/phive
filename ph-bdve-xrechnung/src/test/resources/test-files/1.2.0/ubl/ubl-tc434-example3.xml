@@ -29,6 +29,7 @@
     <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
     <cbc:Note>Contract was established through our website</cbc:Note>
     <cbc:DocumentCurrencyCode>DKK</cbc:DocumentCurrencyCode>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
     <cac:InvoicePeriod>
         <cbc:StartDate>2013-01-01</cbc:StartDate>
         <cbc:EndDate>2013-04-01</cbc:EndDate>
@@ -60,6 +61,8 @@
                 <cbc:CompanyID>DK16356706</cbc:CompanyID>
             </cac:PartyLegalEntity>
             <cac:Contact>
+                <cbc:Name>nicht vorhanden</cbc:Name>
+                <cbc:Telephone>+49 1234-5678</cbc:Telephone>
                 <cbc:ElectronicMail>antonio@SubscriptionsSeller.dk</cbc:ElectronicMail>
             </cac:Contact>
         </cac:Party>

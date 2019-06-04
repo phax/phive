@@ -29,6 +29,7 @@
     <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
     <cbc:Note>Alle leveringen zijn franco. Alle prijzen zijn incl. BTW. Betalingstermijn: 14 dagen netto. Prijswijzigingen voorbehouden. Op al onze aanbiedingen, leveringen en overeenkomsten zijn van toepassing in de algemene verkoop en leveringsvoorwaarden. Gedeponeerd bij de K.v.K. te Amsterdam 25-04-'85##Delivery terms</cbc:Note>
     <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
     <cac:AccountingSupplierParty>
         <cac:Party>
             <cac:PostalAddress>
@@ -49,6 +50,11 @@
                 <cbc:RegistrationName>De Koksmaat</cbc:RegistrationName>
                 <cbc:CompanyID>57151520</cbc:CompanyID>
             </cac:PartyLegalEntity>
+            <cac:Contact>
+              <cbc:Name>nicht vorhanden</cbc:Name>
+              <cbc:Telephone>+49 1234-5678</cbc:Telephone>
+              <cbc:ElectronicMail>seller@email.de</cbc:ElectronicMail>
+            </cac:Contact>
         </cac:Party>
     </cac:AccountingSupplierParty>
     <cac:AccountingCustomerParty>

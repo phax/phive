@@ -32,6 +32,7 @@
         10 dagen. Gelieve bij navraag en correspondentie uw firma naam en factuurnummer vermelden. 
         </cbc:Note>
     <cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
     <cac:InvoicePeriod>
         <cbc:StartDate>2016-04-01</cbc:StartDate>
         <cbc:EndDate>2016-06-30</cbc:EndDate>
@@ -60,6 +61,7 @@
                 <cbc:CompanyID>32081330 Amersfoort</cbc:CompanyID>
             </cac:PartyLegalEntity>
             <cac:Contact>
+                <cbc:Name>nicht vorhanden</cbc:Name>
                 <cbc:Telephone>033-4549055</cbc:Telephone>
                 <cbc:ElectronicMail>info@bluem.nl</cbc:ElectronicMail>
             </cac:Contact>

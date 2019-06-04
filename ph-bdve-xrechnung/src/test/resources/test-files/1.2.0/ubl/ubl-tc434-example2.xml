@@ -32,6 +32,7 @@
     <cbc:TaxPointDate>2013-06-30</cbc:TaxPointDate>
     <cbc:DocumentCurrencyCode>NOK</cbc:DocumentCurrencyCode>
     <cbc:AccountingCost>Project cost code 123</cbc:AccountingCost>
+    <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
     <cac:InvoicePeriod>
         <cbc:StartDate>2013-06-01</cbc:StartDate>
         <cbc:EndDate>2013-06-30</cbc:EndDate>
