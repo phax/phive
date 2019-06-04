@@ -13,6 +13,7 @@
        prefix="cac"/>
    <ns uri="urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2"
        prefix="ubl"/>
+   <ns prefix="xs"   uri="http://www.w3.org/2001/XMLSchema"/>
 
    <pattern xmlns:ns2="http://www.schematron-quickfix.com/validator/process">
       <rule context="/ubl:Catalogue">
