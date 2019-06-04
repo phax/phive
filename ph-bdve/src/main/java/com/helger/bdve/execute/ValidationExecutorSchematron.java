@@ -245,7 +245,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
       {
         case SVRL:
         {
-          final SchematronOutputType aSVRL = aDoc == null ? null : new SVRLMarshaller ().read (aDoc);
+          final SchematronOutputType aSVRL = aDoc == null ||
+                                             aDoc.getDocumentElement () == null ? null
+                                                                                : new SVRLMarshaller ().read (aDoc);
           if (aSVRL != null)
           {
             // Valid Schematron - interpret result

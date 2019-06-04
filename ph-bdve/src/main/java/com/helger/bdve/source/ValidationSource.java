@@ -111,6 +111,22 @@ public class ValidationSource implements IValidationSource
   }
 
   /**
+   * Create a partial validation source from an existing DOM node.
+   *
+   * @param sSystemID
+   *        System ID to use. May be <code>null</code>.
+   * @param aNode
+   *        The node to use. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static ValidationSource createPartial (@Nullable final String sSystemID, @Nonnull final Node aNode)
+  {
+    ValueEnforcer.notNull (aNode, "Node");
+    return new ValidationSource (sSystemID, aNode, true);
+  }
+
+  /**
    * Assume the provided resource as an XML file, parse it and use the contained
    * DOM Node as the basis for validation.
    *

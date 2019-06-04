@@ -77,7 +77,9 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   /**
    * @return A flattened list of all failures. In this case the association to
    *         the different layers is lost. Never <code>null</code> but maybe
-   *         empty.
+   *         empty. All error levels except
+   *         {@link com.helger.commons.error.level.EErrorLevel#SUCCESS} are
+   *         considered to be a failure!
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -92,6 +94,9 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   /**
    * @return A flattened list of all errors. In this case the association to the
    *         different layers is lost. Never <code>null</code> but maybe empty.
+   *         All error levels &ge; to
+   *         {@link com.helger.commons.error.level.EErrorLevel#ERROR} are
+   *         considered to be an error!
    */
   @Nonnull
   @ReturnsMutableCopy
