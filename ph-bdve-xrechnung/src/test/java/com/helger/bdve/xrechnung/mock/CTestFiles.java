@@ -68,53 +68,47 @@ public final class CTestFiles
     if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_120))
     {
       final String sPrefix = "/test-files/1.2.0/cii/";
-      for (final String s : new String [] { "DE_Validation_DE_R_001_CII.xml",
-                                            "DE_Validation_DE_R_002_CII.xml",
-                                            "DE_Validation_DE_R_003_CII.xml",
-                                            "DE_Validation_DE_R_004_CII.xml",
-                                            "DE_Validation_DE_R_005_CII.xml",
-                                            "DE_Validation_DE_R_006_CII.xml",
-                                            "DE_Validation_DE_R_007_CII.xml",
-                                            "DE_Validation_DE_R_008_CII.xml",
-                                            "DE_Validation_DE_R_009_CII.xml",
-                                            "DE_Validation_DE_R_010_CII.xml",
-                                            "DE_Validation_DE_R_011_CII.xml",
-                                            "DE_Validation_DE_R_013_CII.xml",
-                                            "DE_Validation_DE_R_014_CII.xml",
-                                            "DE_Validation_DE_R_015_CII.xml",
-                                            "DE_Validation_DE_R_016_CII.xml",
-                                            "DE_Validation_DE_R_017_CII.xml",
-                                            "DE_Validation_DE_R_018_CII.xml" })
+      for (final String s : new String [] { "CII_business_example_01.xml",
+                                            "CII_business_example_02.xml",
+                                            "CII_example1.xml",
+                                            "CII_example2.xml",
+                                            "CII_example3.xml",
+                                            "CII_example4.xml",
+                                            "CII_example5.xml",
+                                            "CII_example6.xml",
+                                            // "CII_example7.xml",
+                                            "CII_example8.xml",
+                                            "CII_example9.xml" })
         ret.add (new ClassPathResource (sPrefix + s));
     }
     else
       if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_120))
       {
         // None atm
-        final String sPrefix = "/test-files/1.2.0/ubl/";
       }
       else
         if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120))
         {
           final String sPrefix = "/test-files/1.2.0/ubl/";
-          for (final String s : new String [] { "DE_Validation_DE_R_001_UBL.xml",
-                                                "DE_Validation_DE_R_002_UBL.xml",
-                                                "DE_Validation_DE_R_003_UBL.xml",
-                                                "DE_Validation_DE_R_004_UBL.xml",
-                                                "DE_Validation_DE_R_005_UBL.xml",
-                                                "DE_Validation_DE_R_006_UBL.xml",
-                                                "DE_Validation_DE_R_007_UBL.xml",
-                                                "DE_Validation_DE_R_008_UBL.xml",
-                                                "DE_Validation_DE_R_009_UBL.xml",
-                                                "DE_Validation_DE_R_010_UBL.xml",
-                                                "DE_Validation_DE_R_011_UBL.xml",
-                                                "DE_Validation_DE_R_013_UBL.xml",
-                                                "DE_Validation_DE_R_014_UBL.xml",
-                                                "DE_Validation_DE_R_015_UBL.xml",
-                                                "DE_Validation_DE_R_016_UBL.xml",
-                                                "DE_Validation_DE_R_017_UBL.xml",
-                                                "DE_Validation_DE_R_018_UBL.xml" })
-            ret.add (new ClassPathResource (sPrefix + s));
+          if (false)
+            for (final String s : new String [] { "DE_Validation_DE_R_001_UBL.xml",
+                                                  "DE_Validation_DE_R_002_UBL.xml",
+                                                  "DE_Validation_DE_R_003_UBL.xml",
+                                                  "DE_Validation_DE_R_004_UBL.xml",
+                                                  "DE_Validation_DE_R_005_UBL.xml",
+                                                  "DE_Validation_DE_R_006_UBL.xml",
+                                                  "DE_Validation_DE_R_007_UBL.xml",
+                                                  "DE_Validation_DE_R_008_UBL.xml",
+                                                  "DE_Validation_DE_R_009_UBL.xml",
+                                                  "DE_Validation_DE_R_010_UBL.xml",
+                                                  "DE_Validation_DE_R_011_UBL.xml",
+                                                  "DE_Validation_DE_R_013_UBL.xml",
+                                                  "DE_Validation_DE_R_014_UBL.xml",
+                                                  "DE_Validation_DE_R_015_UBL.xml",
+                                                  "DE_Validation_DE_R_016_UBL.xml",
+                                                  "DE_Validation_DE_R_017_UBL.xml",
+                                                  "DE_Validation_DE_R_018_UBL.xml" })
+              ret.add (new ClassPathResource (sPrefix + s));
         }
         else
           throw new IllegalArgumentException ("Invalid VESID: " + aVESID);

@@ -24,6 +24,8 @@ import java.util.Locale;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import com.helger.bdve.execute.ValidationExecutionManager;
 import com.helger.bdve.executorset.IValidationExecutorSet;
@@ -32,6 +34,9 @@ import com.helger.bdve.result.ValidationResultList;
 import com.helger.bdve.source.IValidationSource;
 import com.helger.bdve.source.ValidationSource;
 import com.helger.bdve.xrechnung.mock.CTestFiles;
+import com.helger.commons.error.list.IErrorList;
+import com.helger.xml.XMLHelper;
+import com.helger.xml.serialize.read.DOMReader;
 
 /**
  * Test class for class {@link ValidationExecutionManager}.
@@ -58,13 +63,67 @@ public final class ValidationExecutionManagerFuncTest
                    " validation layers using " +
                    aTestFile.getVESID ().getAsSingleID ());
 
-      // Read as desired type
-      final IValidationSource aSource = ValidationSource.createXMLSource (aTestFile.getResource ());
-      final ValidationResultList aErrors = aValidator.executeValidation (aSource, Locale.US);
-      if (aTestFile.isGoodCase ())
-        assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
+      final Node aNode = DOMReader.readXMLDOM (aTestFile.getResource ());
+      assertNotNull (aNode);
+
+      final Element eRoot = (Element) aNode.getFirstChild ();
+
+      if ("http://difi.no/xsd/vefa/validator/1.0".equals (eRoot.getNamespaceURI ()))
+      {
+        // Testset
+
+        // assert
+        final Element eAssert = XMLHelper.getFirstChildElementOfName (eRoot, "assert");
+        final String sDescription = XMLHelper.getFirstChildElementOfName (eAssert, "description").getTextContent ();
+        final String sScope = XMLHelper.getFirstChildElementOfName (eAssert, "scope").getTextContent ();
+
+        // tests
+        for (final Element eTest : XMLHelper.getChildElementIterator (eRoot, "test"))
+        {
+          final Element eTestAssert = XMLHelper.getFirstChildElementOfName (eTest, "assert");
+          final Element eSuccess = XMLHelper.getFirstChildElementOfName (eTestAssert, "success");
+          final Element eError = XMLHelper.getFirstChildElementOfName (eTestAssert, "error");
+          final boolean bExpectSuccess;
+          final String sRuleID;
+          if (eSuccess != null)
+          {
+            bExpectSuccess = true;
+            sRuleID = eSuccess.getTextContent ();
+          }
+          else
+          {
+            bExpectSuccess = false;
+            sRuleID = eError.getTextContent ();
+          }
+          assertNotNull (sRuleID);
+
+          Node aPayload = eTestAssert.getNextSibling ();
+          while (aPayload != null && !(aPayload instanceof Element))
+            aPayload = aPayload.getNextSibling ();
+          assertNotNull (aPayload);
+          assertTrue (aPayload instanceof Element);
+
+          final IValidationSource aSource = ValidationSource.createPartial (aTestFile.getResource ().getPath (),
+                                                                            aPayload);
+          final ValidationResultList aErrors = aValidator.executeValidation (aSource, Locale.US);
+          // Flatten result
+          final IErrorList aErrorList = aErrors.getAllErrors ();
+          if (bExpectSuccess)
+            assertTrue (aErrorList.toString (), aErrorList.containsNone (x -> sRuleID.equals (x.getErrorID ())));
+          else
+            assertTrue (aErrorList.toString (), aErrorList.containsAny (x -> sRuleID.equals (x.getErrorID ())));
+        }
+      }
       else
-        assertTrue (aErrors.containsAtLeastOneError ());
+      {
+        // Read as desired type
+        final IValidationSource aSource = ValidationSource.create (aTestFile.getResource ().getPath (), aNode);
+        final ValidationResultList aErrors = aValidator.executeValidation (aSource, Locale.US);
+        if (aTestFile.isGoodCase ())
+          assertTrue (aErrors.getAllErrors ().toString (), aErrors.containsNoError ());
+        else
+          assertTrue (aErrors.containsAtLeastOneError ());
+      }
     }
   }
 }
