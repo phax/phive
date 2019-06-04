@@ -90,25 +90,16 @@ public final class CTestFiles
         if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120))
         {
           final String sPrefix = "/test-files/1.2.0/ubl/";
-          if (false)
-            for (final String s : new String [] { "DE_Validation_DE_R_001_UBL.xml",
-                                                  "DE_Validation_DE_R_002_UBL.xml",
-                                                  "DE_Validation_DE_R_003_UBL.xml",
-                                                  "DE_Validation_DE_R_004_UBL.xml",
-                                                  "DE_Validation_DE_R_005_UBL.xml",
-                                                  "DE_Validation_DE_R_006_UBL.xml",
-                                                  "DE_Validation_DE_R_007_UBL.xml",
-                                                  "DE_Validation_DE_R_008_UBL.xml",
-                                                  "DE_Validation_DE_R_009_UBL.xml",
-                                                  "DE_Validation_DE_R_010_UBL.xml",
-                                                  "DE_Validation_DE_R_011_UBL.xml",
-                                                  "DE_Validation_DE_R_013_UBL.xml",
-                                                  "DE_Validation_DE_R_014_UBL.xml",
-                                                  "DE_Validation_DE_R_015_UBL.xml",
-                                                  "DE_Validation_DE_R_016_UBL.xml",
-                                                  "DE_Validation_DE_R_017_UBL.xml",
-                                                  "DE_Validation_DE_R_018_UBL.xml" })
-              ret.add (new ClassPathResource (sPrefix + s));
+          for (final String s : new String [] { "ubl-tc434-example1.xml",
+                                                "ubl-tc434-example2.xml",
+                                                "ubl-tc434-example3.xml",
+                                                "ubl-tc434-example4.xml",
+                                                "ubl-tc434-example5.xml",
+                                                "ubl-tc434-example6.xml",
+                                                "ubl-tc434-example7.xml",
+                                                "ubl-tc434-example8.xml",
+                                                "ubl-tc434-example9.xml" })
+            ret.add (new ClassPathResource (sPrefix + s));
         }
         else
           throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
