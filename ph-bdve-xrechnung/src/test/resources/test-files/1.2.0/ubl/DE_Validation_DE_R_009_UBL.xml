@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0"
+  configuration="peppolbis-en16931-base-3.0-ubl">
+  <assert>
+    <description>For German suppliers, the element “Buyer post code“ (BT-53) must be provided.</description>
+    <scope>DE-R-009</scope>
+  </assert>  
+  <test>
+    <assert>
+      <success>DE-R-009</success>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+      <cac:AccountingSupplierParty>
+        <cac:Party>          
+          <cac:PostalAddress>           
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>                    
+        </cac:Party>
+      </cac:AccountingSupplierParty>
+      <cac:AccountingCustomerParty>
+        <cac:Party>          
+          <cac:PostalAddress>
+            <cbc:StreetName>[Buyer address line 1]</cbc:StreetName>
+            <cbc:CityName>[Buyer city]</cbc:CityName>
+            <cbc:PostalZone>12345</cbc:PostalZone>
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>          
+        </cac:Party>
+      </cac:AccountingCustomerParty>
+    </Invoice>
+  </test>
+  <test>
+    <assert>
+      <error>DE-R-009</error>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+      <cac:AccountingSupplierParty>
+        <cac:Party>          
+          <cac:PostalAddress>           
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>                    
+        </cac:Party>
+      </cac:AccountingSupplierParty>
+      <cac:AccountingCustomerParty>
+        <cac:Party>          
+          <cac:PostalAddress>
+            <cbc:StreetName>[Buyer address line 1]</cbc:StreetName>
+            <cbc:CityName>[Buyer city]</cbc:CityName>            
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>          
+        </cac:Party>
+      </cac:AccountingCustomerParty>
+    </Invoice>
+  </test>
+</testSet>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0"
+  configuration="peppolbis-en16931-base-3.0-ubl">
+  <assert>
+    <description>For German suppliers, the element “Buyer reference“ (BT-10) must be provided.</description>
+    <scope>DE-R-015</scope>
+  </assert>  
+  <test>
+    <assert>
+      <success>DE-R-015</success>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+      <cbc:BuyerReference>99000000-18188-16</cbc:BuyerReference>
+      <cac:AccountingSupplierParty>
+        <cac:Party>          
+          <cac:PostalAddress>           
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>                    
+        </cac:Party>
+      </cac:AccountingSupplierParty>      
+    </Invoice>
+  </test>
+  <test>
+    <assert>
+      <error>DE-R-015</error>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">      
+      <cac:AccountingSupplierParty>
+        <cac:Party>          
+          <cac:PostalAddress>           
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>                    
+        </cac:Party>
+      </cac:AccountingSupplierParty>      
+    </Invoice>
+  </test>
+</testSet>

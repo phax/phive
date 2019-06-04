@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="peppolbis-en16931-base-3.0-cii">
+  <assert>
+    <description>For German suppliers, information on cash discount for prompt payment (Skonto) or default charges (Verzugszinsen) must be provided within the element “Payment terms” BT-20 in the following way: 
+      First segment “SKONTO” or “VERZUG”, second segment amount of days (“TAGE=N”), third segment percentage (“PROZENT=N”). Percentage must be separated by dot with two decimal places.  In case the base value of the invoiced amount is not provided in BT-115 but as partial amount, the base value must be provided as fourth segment “BASISBETRAG=N” as semantic data type amount. 
+      Each entry must start with a #, the segments must be separated by # and a row must end with a #. A complete statement on cash discount for prompt payment or default charges must end with a XML-conformant line break. 
+      All statements on cash discount for prompt payment or default charges must be given in capital letters. Additional whitespaces (blanks, tabulators or line breaks) are not allowed. Other characters or texts than defined above are not allowed.      
+    </description>
+    <scope>DE-R-018</scope>
+  </assert>
+  <test>
+    <assert>
+      <success>DE-R-018</success>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">      
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>            
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>            
+          </ram:SellerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>
+        <ram:ApplicableHeaderTradeSettlement>
+          <ram:SpecifiedTradePaymentTerms>
+            <ram:Description>#SKONTO#TAGE=7#PROZENT=2.00#
+              #SKONTO#TAGE=14#PROZENT=1.00#
+              #SKONTO#TAGE=30#PROZENT=0.00#</ram:Description>
+          </ram:SpecifiedTradePaymentTerms>
+        </ram:ApplicableHeaderTradeSettlement>
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+  
+  <test>
+    <assert>
+      <error>DE-R-018</error>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>            
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>            
+          </ram:SellerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>
+        <ram:ApplicableHeaderTradeSettlement>
+          <ram:SpecifiedTradePaymentTerms>
+            <ram:Description>#SKNTO#TAGE=7#PROZENT=2.00#
+              #SKONTO#TAGE=14#PROZENT=1.00#
+              #SKONTO#TAGE=30#PROZENT=0.00#</ram:Description>
+          </ram:SpecifiedTradePaymentTerms>
+        </ram:ApplicableHeaderTradeSettlement>
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+</testSet>

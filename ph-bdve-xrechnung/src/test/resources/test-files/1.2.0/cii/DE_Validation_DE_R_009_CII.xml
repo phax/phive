@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="peppolbis-en16931-base-3.0-cii">
+  <assert>
+    <description>For German suppliers, the element “Buyer post code“ (BT-53) must be provided.</description>
+    <scope>DE-R-009</scope>
+  </assert>
+  <test>
+    <assert>
+      <success>DE-R-009</success>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>            
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:SellerTradeParty>
+          <ram:BuyerTradeParty>           
+            <ram:PostalTradeAddress>
+              <ram:PostcodeCode>12345</ram:PostcodeCode>
+              <ram:LineOne>[Buyer address line 1]</ram:LineOne>
+              <ram:CityName>[Buyer city]</ram:CityName>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:BuyerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>   
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+  
+  <test>
+    <assert>
+      <error>DE-R-009</error>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>            
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:SellerTradeParty>
+          <ram:BuyerTradeParty>           
+            <ram:PostalTradeAddress>             
+              <ram:LineOne>[Buyer address line 1]</ram:LineOne>
+              <ram:CityName>[Buyer city]</ram:CityName>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:BuyerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>   
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+</testSet>

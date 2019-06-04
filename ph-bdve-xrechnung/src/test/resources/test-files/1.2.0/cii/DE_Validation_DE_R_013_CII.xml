@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="peppolbis-en16931-base-3.0-cii">
+  <assert>
+    <description>For German suppliers, an invoice must contain information either on „CREDIT TRANSFER“ (BG-17) or „PAYMENT CARD INFORMATION“ (BG-18) or „DIRECT DEBIT“ (BG-19).</description>
+    <scope>DE-R-013</scope>
+  </assert>
+  <test>
+    <assert>
+      <success>DE-R-013</success>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>            
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:SellerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>
+        <ram:ApplicableHeaderTradeSettlement>
+          <ram:TaxCurrencyCode>EUR</ram:TaxCurrencyCode>
+          <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode>
+          <ram:SpecifiedTradeSettlementPaymentMeans>
+            <ram:TypeCode>30</ram:TypeCode>
+            <ram:PayeePartyCreditorFinancialAccount>
+              <ram:IBANID>DE12345678912345678912</ram:IBANID>
+            </ram:PayeePartyCreditorFinancialAccount>
+          </ram:SpecifiedTradeSettlementPaymentMeans>
+        </ram:ApplicableHeaderTradeSettlement>
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+  
+  <test>
+    <assert>
+      <error>DE-R-013</error>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>            
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:SellerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>
+        <ram:ApplicableHeaderTradeSettlement>
+          <ram:TaxCurrencyCode>EUR</ram:TaxCurrencyCode>
+          <ram:InvoiceCurrencyCode>EUR</ram:InvoiceCurrencyCode>
+          <ram:SpecifiedTradeSettlementPaymentMeans>
+            <ram:TypeCode>30</ram:TypeCode>            
+          </ram:SpecifiedTradeSettlementPaymentMeans>
+        </ram:ApplicableHeaderTradeSettlement>
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+</testSet>

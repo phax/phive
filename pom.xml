@@ -203,6 +203,11 @@
         <artifactId>ph-bdve-ublbe</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.helger</groupId>
+        <artifactId>ph-bdve-xrechnung</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -237,5 +242,6 @@
     <module>ph-bdve-ebinterface</module>
     <module>ph-bdve-teapps</module>
     <module>ph-bdve-ublbe</module>
+    <module>ph-bdve-xrechnung</module>
   </modules>
 </project>

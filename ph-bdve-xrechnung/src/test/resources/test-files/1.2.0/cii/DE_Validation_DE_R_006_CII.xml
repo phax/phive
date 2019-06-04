@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0" configuration="peppolbis-en16931-base-3.0-cii">
+  <assert>
+    <description>For German suppliers, the element “Seller contact telephone number“ (BT-42) must be provided.</description>
+    <scope>DE-R-006</scope>
+  </assert>
+  <test>
+    <assert>
+      <success>DE-R-006</success>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>
+            <ram:DefinedTradeContact>
+              <ram:PersonName>nicht vorhanden</ram:PersonName>
+              <ram:TelephoneUniversalCommunication>
+                <ram:CompleteNumber>+49 1234-5678</ram:CompleteNumber>
+              </ram:TelephoneUniversalCommunication>
+              <ram:EmailURIUniversalCommunication>
+                <ram:URIID>seller@email.de</ram:URIID>
+              </ram:EmailURIUniversalCommunication>
+            </ram:DefinedTradeContact>
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:SellerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>   
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+  
+  <test>
+    <assert>
+      <error>DE-R-006</error>
+    </assert>
+    <rsm:CrossIndustryInvoice
+      xmlns:ram="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100"
+      xmlns:rsm="urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <rsm:SupplyChainTradeTransaction>
+        <ram:ApplicableHeaderTradeAgreement>
+          <ram:SellerTradeParty>
+            <ram:DefinedTradeContact>
+              <ram:PersonName>nicht vorhanden</ram:PersonName>           
+              <ram:EmailURIUniversalCommunication>
+                <ram:URIID>seller@email.de</ram:URIID>
+              </ram:EmailURIUniversalCommunication>
+            </ram:DefinedTradeContact>
+            <ram:PostalTradeAddress>
+              <ram:CountryID>DE</ram:CountryID>
+            </ram:PostalTradeAddress>
+          </ram:SellerTradeParty>
+        </ram:ApplicableHeaderTradeAgreement>   
+      </rsm:SupplyChainTradeTransaction>
+    </rsm:CrossIndustryInvoice>
+  </test>
+</testSet>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0"
+  configuration="peppolbis-en16931-base-3.0-ubl">
+  <assert>
+    <description>For German suppliers, the element “Seller contact point“ (BT-41) must be provided. </description>
+    <scope>DE-R-005</scope>
+  </assert>  
+  <test>
+    <assert>
+      <success>DE-R-005</success>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">      
+      <cac:AccountingSupplierParty>
+        <cac:Party>          
+          <cac:PostalAddress>            
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>          
+          <cac:Contact>
+            <cbc:Name>nicht vorhanden</cbc:Name>
+            <cbc:Telephone>+49 1234-5678</cbc:Telephone>
+            <cbc:ElectronicMail>seller@email.de</cbc:ElectronicMail>
+          </cac:Contact>
+        </cac:Party>
+      </cac:AccountingSupplierParty>
+    </Invoice>
+  </test>
+  <test>
+    <assert>
+      <error>DE-R-005</error>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+      <cac:AccountingSupplierParty>
+        <cac:Party>          
+          <cac:PostalAddress>            
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>          
+          <cac:Contact>           
+            <cbc:Telephone>+49 1234-5678</cbc:Telephone>
+            <cbc:ElectronicMail>seller@email.de</cbc:ElectronicMail>
+          </cac:Contact>
+        </cac:Party>
+      </cac:AccountingSupplierParty>
+    </Invoice>
+  </test>
+</testSet>

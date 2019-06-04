@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testSet xmlns="http://difi.no/xsd/vefa/validator/1.0"
+  configuration="peppolbis-en16931-base-3.0-ubl">
+  <assert>
+    <description>For German suppliers, the element “Invoice type code” (BT-3) should only contain
+      the following values from code list UNTDID 1001: 326 (Partial invoice), 380 (Commercial
+      invoice), 384 (Corrected invoice), 389 (Self-billed invoice) or 381 (Credit note).
+    </description>
+    <scope>DE-R-017</scope>
+  </assert>  
+  <test>
+    <assert>
+      <success>DE-R-017</success>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+      <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+      <cac:AccountingSupplierParty>
+        <cac:Party>
+          <cac:PostalAddress>            
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>          
+        </cac:Party>
+      </cac:AccountingSupplierParty>   
+    </Invoice>
+  </test>
+  <test>
+    <assert>
+      <warning>DE-R-017</warning>
+    </assert>
+    <Invoice
+      xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+      xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">      
+      <cbc:InvoiceTypeCode>388</cbc:InvoiceTypeCode>
+      <cac:AccountingSupplierParty>
+        <cac:Party>
+          <cac:PostalAddress>            
+            <cac:Country>
+              <cbc:IdentificationCode>DE</cbc:IdentificationCode>
+            </cac:Country>
+          </cac:PostalAddress>          
+        </cac:Party>
+      </cac:AccountingSupplierParty>   
+    </Invoice>
+  </test>
+</testSet>
