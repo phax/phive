@@ -62,21 +62,21 @@ public interface IValidationSource extends Serializable
   @Nonnull
   default Source getAsTransformSource ()
   {
-    Source ret = null;
     final Node aNode = getNode ();
-    if (aNode != null)
+    if (aNode == null)
+      throw new IllegalStateException ("No input Node is present!");
+
+    Source ret = null;
+    if (isPartialSource ())
+      ret = TransformSourceFactory.create (aNode);
+    else
     {
-      if (isPartialSource ())
-        ret = TransformSourceFactory.create (aNode);
-      else
-      {
-        // Always use the Document node! Otherwise this may lead to weird XSLT
-        // errors
-        ret = TransformSourceFactory.create (XMLHelper.getOwnerDocument (aNode));
-      }
+      // Always use the Document node! Otherwise this may lead to weird XSLT
+      // errors
+      ret = TransformSourceFactory.create (XMLHelper.getOwnerDocument (aNode));
     }
     if (ret == null)
-      throw new IllegalStateException ("No valid input object is present!");
+      throw new IllegalStateException ("No valid input Node is present!");
 
     ret.setSystemId (getSystemID ());
     return ret;
