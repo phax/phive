@@ -26,6 +26,7 @@ import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -77,6 +78,13 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public Iterator <IValidationExecutor> iterator ()
   {
     return m_aList.iterator ();
+  }
+
+  @Nonnull
+  @ReturnsMutableObject
+  public ICommonsList <IValidationExecutor> executors ()
+  {
+    return m_aList;
   }
 
   @Nonnull
