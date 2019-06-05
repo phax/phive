@@ -212,9 +212,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notEmptyNoNullValue (aValidationExecutors, "ValidationExecutors");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (aID,
-                                                                 sDisplayName,
-                                                                 bIsDeprecated || aBaseVES.isDeprecated ());
+    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, bIsDeprecated);
 
     // Copy all existing ones
     for (final IValidationExecutor aVE : aBaseVES)
