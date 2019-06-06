@@ -103,6 +103,7 @@
         <groupId>com.helger.maven</groupId>
         <artifactId>ph-schematron-maven-plugin</artifactId>
         <executions>
+        <!-- 
           <execution>
             <id>cii-120</id>
             <goals>
@@ -136,6 +137,7 @@
               <schematronPattern>*.sch</schematronPattern>
             </configuration>
           </execution>
+         -->
         </executions>
       </plugin>
     </plugins>

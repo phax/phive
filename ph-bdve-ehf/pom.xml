@@ -114,6 +114,7 @@
         <groupId>com.helger.maven</groupId>
         <artifactId>ph-schematron-maven-plugin</artifactId>
         <executions>
+      <!--
           <execution>
             <id>2018-11</id>
             <goals>
@@ -124,6 +125,7 @@
               <xsltDirectory>${basedir}/src/main/resources/ehf/2018-11/xslt</xsltDirectory>
             </configuration>
           </execution>
+      -->
         </executions>
       </plugin>
     </plugins>
