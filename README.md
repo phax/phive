@@ -81,7 +81,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.1.9 - 2019-06-07
+* v5.1.9 - 2019-06-10
     * Fixed an error in `EHF-UBL-COMMON.sch` of November 2018 release
     * Fixed an error in `EHF-UBL-T19.sch` of November 2018 release
     * Added support for XRechnung 1.2.0 format
