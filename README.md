@@ -81,7 +81,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.1.10 - 2019-06-30
+* v5.1.10 - work in progress
     * Added new EHF validation artefacts (incl. Invoice and Credit Note 2.0.16) 
 * v5.1.9 - 2019-06-10
     * Fixed an error in `EHF-UBL-COMMON.sch` of November 2018 release
