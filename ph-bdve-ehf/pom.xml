@@ -126,6 +126,18 @@
             </configuration>
           </execution>
       -->
+      <!--
+          <execution>
+            <id>2010-06</id>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>${basedir}/src/main/resources/ehf/2019-06</schematronDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/ehf/2019-06/xslt</xsltDirectory>
+            </configuration>
+          </execution>
+      -->    
         </executions>
       </plugin>
     </plugins>
