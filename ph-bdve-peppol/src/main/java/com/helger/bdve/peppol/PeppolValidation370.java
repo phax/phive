@@ -193,6 +193,7 @@ public final class PeppolValidation370
 
     final String sVersion = " (" + VERSION_STR + ")";
     final boolean bNotDeprecated = false;
+    final boolean bDeprecated = true;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T01_V2,
                                                                            "OpenPEPPOL Order" + sVersion,
                                                                            bNotDeprecated,
@@ -272,13 +273,13 @@ public final class PeppolValidation370
     // Billing BIS 3
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_UBL_INVOICE,
                                                                            "OpenPEPPOL BIS3 Invoice (UBL)",
-                                                                           bNotDeprecated,
+                                                                           bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (BIS3_BILLING_CEN),
                                                                            _createXSLT (BIS3_BILLING_PEPPOL)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_UBL_CREDIT_NOTE,
                                                                            "OpenPEPPOL BIS3 CreditNote (UBL)",
-                                                                           bNotDeprecated,
+                                                                           bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            _createXSLT (BIS3_BILLING_CEN),
                                                                            _createXSLT (BIS3_BILLING_PEPPOL)));
