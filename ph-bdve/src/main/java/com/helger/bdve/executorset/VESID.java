@@ -29,6 +29,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.CompareHelper;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.hashcode.IHashCodeGenerator;
 import com.helger.commons.regex.RegExHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
@@ -51,6 +52,8 @@ public final class VESID implements Serializable, Comparable <VESID>
   private final String m_sArtifactID;
   private final String m_sVersion;
   private final String m_sClassifier;
+  // status vars
+  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   /**
    * Check if the provided part matches the regular expression
@@ -208,11 +211,14 @@ public final class VESID implements Serializable, Comparable <VESID>
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sGroupID)
-                                       .append (m_sArtifactID)
-                                       .append (m_sVersion)
-                                       .append (m_sClassifier)
-                                       .getHashCode ();
+    int ret = m_nHashCode;
+    if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
+      ret = m_nHashCode = new HashCodeGenerator (this).append (m_sGroupID)
+                                                      .append (m_sArtifactID)
+                                                      .append (m_sVersion)
+                                                      .append (m_sClassifier)
+                                                      .getHashCode ();
+    return ret;
   }
 
   @Override
