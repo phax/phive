@@ -85,6 +85,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Added new EHF validation artefacts (incl. Invoice and Credit Note 2.0.16)
     * Deprecated `eu.peppol.bis3.ubl:invoice:1` in favour of `eu.peppol.bis3:invoice:3.8.0` 
     * Deprecated `eu.peppol.bis3.ubl:creditnote:1` in favour of `eu.peppol.bis3:creditnote:3.8.0` 
+    * Added support for XRechnung 1.2.1 format (deprecated v1.2.0)
 * v5.1.9 - 2019-06-10
     * Fixed an error in `EHF-UBL-COMMON.sch` of November 2018 release
     * Fixed an error in `EHF-UBL-T19.sch` of November 2018 release

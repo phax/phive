@@ -51,7 +51,10 @@ public final class CTestFiles
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     for (final VESID aESID : new VESID [] { XRechnungValidation.VID_XRECHNUNG_CII_120,
                                             XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_120,
-                                            XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120 })
+                                            XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120,
+                                            XRechnungValidation.VID_XRECHNUNG_CII_121,
+                                            XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_121,
+                                            XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_121 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -65,7 +68,8 @@ public final class CTestFiles
     ValueEnforcer.notNull (aVESID, "VESID");
 
     final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-    if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_120))
+    if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_120) ||
+        aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_121))
     {
       final String sPrefix = "/test-files/1.2.0/cii/";
       for (final String s : new String [] { "CII_business_example_01.xml",
@@ -82,12 +86,14 @@ public final class CTestFiles
         ret.add (new ClassPathResource (sPrefix + s));
     }
     else
-      if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_120))
+      if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_120) ||
+          aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_121))
       {
         // None atm
       }
       else
-        if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120))
+        if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120) ||
+            aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_121))
         {
           final String sPrefix = "/test-files/1.2.0/ubl/";
           for (final String s : new String [] { "ubl-tc434-example1.xml",

@@ -52,6 +52,10 @@ public final class XRechnungValidation
   public static final VESID VID_XRECHNUNG_UBL_CREDITNOTE_120 = new VESID (GROUP_ID, "ubl-creditnote", "1.2.0");
   public static final VESID VID_XRECHNUNG_UBL_INVOICE_120 = new VESID (GROUP_ID, "ubl-invoice", "1.2.0");
 
+  public static final VESID VID_XRECHNUNG_CII_121 = new VESID (GROUP_ID, "cii", "1.2.1");
+  public static final VESID VID_XRECHNUNG_UBL_CREDITNOTE_121 = new VESID (GROUP_ID, "ubl-creditnote", "1.2.1");
+  public static final VESID VID_XRECHNUNG_UBL_INVOICE_121 = new VESID (GROUP_ID, "ubl-invoice", "1.2.1");
+
   private XRechnungValidation ()
   {}
 
@@ -75,6 +79,7 @@ public final class XRechnungValidation
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     final boolean bNotDeprecated = false;
+    final boolean bDeprecated = true;
 
     // Extending third-party artefacts
     final IValidationExecutorSet aVESCII = aRegistry.getOfID (EN16931Validation.VID_CII_110);
@@ -84,23 +89,44 @@ public final class XRechnungValidation
       throw new IllegalStateException ("Standard EN16931 artefacts must be registered before XRechnung artefacts!");
 
     // Just new Schematrons on top
+    // v1.2.0
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCII,
                                                                                   VID_XRECHNUNG_CII_120,
                                                                                   "XRechnung CII " +
                                                                                                          VID_XRECHNUNG_CII_120.getVersion (),
-                                                                                  bNotDeprecated,
+                                                                                  bDeprecated,
                                                                                   _createXSLT (new ClassPathResource ("/schematron/1.2.0/XRechnung-CII-validation.xslt"))));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLCreditNote,
                                                                                   VID_XRECHNUNG_UBL_CREDITNOTE_120,
                                                                                   "XRechnung UBL CrediteNote " +
                                                                                                                     VID_XRECHNUNG_UBL_CREDITNOTE_120.getVersion (),
-                                                                                  bNotDeprecated,
+                                                                                  bDeprecated,
                                                                                   _createXSLT (new ClassPathResource ("/schematron/1.2.0/XRechnung-UBL-validation-CreditNote.xslt"))));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLInvoice,
                                                                                   VID_XRECHNUNG_UBL_INVOICE_120,
                                                                                   "XRechnung UBL Invoice " +
                                                                                                                  VID_XRECHNUNG_UBL_INVOICE_120.getVersion (),
-                                                                                  bNotDeprecated,
+                                                                                  bDeprecated,
                                                                                   _createXSLT (new ClassPathResource ("/schematron/1.2.0/XRechnung-UBL-validation-Invoice.xslt"))));
+
+    // v1.2.1
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCII,
+                                                                                  VID_XRECHNUNG_CII_121,
+                                                                                  "XRechnung CII " +
+                                                                                                         VID_XRECHNUNG_CII_121.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (new ClassPathResource ("/schematron/1.2.1/XRechnung-CII-validation.xslt"))));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLCreditNote,
+                                                                                  VID_XRECHNUNG_UBL_CREDITNOTE_121,
+                                                                                  "XRechnung UBL CrediteNote " +
+                                                                                                                    VID_XRECHNUNG_UBL_CREDITNOTE_121.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (new ClassPathResource ("/schematron/1.2.1/XRechnung-UBL-validation-CreditNote.xslt"))));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLInvoice,
+                                                                                  VID_XRECHNUNG_UBL_INVOICE_121,
+                                                                                  "XRechnung UBL Invoice " +
+                                                                                                                 VID_XRECHNUNG_UBL_INVOICE_121.getVersion (),
+                                                                                  bNotDeprecated,
+                                                                                  _createXSLT (new ClassPathResource ("/schematron/1.2.1/XRechnung-UBL-validation-Invoice.xslt"))));
   }
 }

@@ -105,35 +105,35 @@
         <executions>
         <!-- 
           <execution>
-            <id>cii-120</id>
+            <id>cii</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>${basedir}/src/test/resources/schematron-src/1.2.0/cii</schematronDirectory>
-              <xsltDirectory>${basedir}/src/main/resources/schematron/1.2.0</xsltDirectory>
+              <schematronDirectory>${basedir}/src/test/resources/schematron-src/1.2.1/cii</schematronDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/schematron/1.2.1</xsltDirectory>
               <schematronPattern>*.sch</schematronPattern>
             </configuration>
           </execution>
           <execution>
-            <id>ubl-cn-120</id>
+            <id>ubl-cn</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>${basedir}/src/test/resources/schematron-src/1.2.0/ubl-cn</schematronDirectory>
-              <xsltDirectory>${basedir}/src/main/resources/schematron/1.2.0</xsltDirectory>
+              <schematronDirectory>${basedir}/src/test/resources/schematron-src/1.2.1/ubl-cn</schematronDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/schematron/1.2.1</xsltDirectory>
               <schematronPattern>*.sch</schematronPattern>
             </configuration>
           </execution>
           <execution>
-            <id>ubl-inv-120</id>
+            <id>ubl-inv</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>${basedir}/src/test/resources/schematron-src/1.2.0/ubl-inv</schematronDirectory>
-              <xsltDirectory>${basedir}/src/main/resources/schematron/1.2.0</xsltDirectory>
+              <schematronDirectory>${basedir}/src/test/resources/schematron-src/1.2.1/ubl-inv</schematronDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/schematron/1.2.1</xsltDirectory>
               <schematronPattern>*.sch</schematronPattern>
             </configuration>
           </execution>
