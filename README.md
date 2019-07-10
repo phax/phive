@@ -81,7 +81,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.1.10 - work in progress
+* v5.1.10 - 2019-07-10
     * Added new EHF validation artefacts (incl. Invoice and Credit Note 2.0.16)
     * Deprecated `eu.peppol.bis3.ubl:invoice:1` in favour of `eu.peppol.bis3:invoice:3.8.0` 
     * Deprecated `eu.peppol.bis3.ubl:creditnote:1` in favour of `eu.peppol.bis3:creditnote:3.8.0` 
@@ -197,75 +197,87 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-xrechnung</artifactId>
-  <version>5.1.9</version>
+  <version>5.1.10</version>
 </dependency>
 ```
+
+Alternate usage as a Maven BOM:
+
+```xml
+<dependency>
+  <groupId>com.helger</groupId>
+  <artifactId>ph-bdve-parent-pom</artifactId>
+  <version>5.1.10</version>
+  <type>pom</type>
+  <scope>import</scope>
+</dependency>
+`` 
 
 ---
 
