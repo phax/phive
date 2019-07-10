@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2019 Philip Helger (www.helger.com)
+ * Copyright (C) 2019 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +32,7 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
 @Immutable
+@SuppressWarnings ("deprecation")
 public final class CTestFiles
 {
   public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
