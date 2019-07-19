@@ -70,6 +70,7 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
     </dependency>
+    
     <dependency>
       <groupId>org.apache.odftoolkit</groupId>
       <artifactId>simple-odf</artifactId>
@@ -122,19 +123,19 @@
           </excludes>
         </configuration>
       </plugin>
-        <!-- 
       <plugin>
         <groupId>com.helger.maven</groupId>
         <artifactId>ph-schematron-maven-plugin</artifactId>
         <executions>
+          <!-- 
           <execution>
-            <id>peppol-380</id>
+            <id>peppol-381</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/main/resources/openpeppol/3.8.0</schematronDirectory>
-              <xsltDirectory>src/main/resources/openpeppol/3.8.0/xslt</xsltDirectory>
+              <schematronDirectory>src/main/resources/openpeppol/3.8.1</schematronDirectory>
+              <xsltDirectory>src/main/resources/openpeppol/3.8.1/xslt</xsltDirectory>
             </configuration>
           </execution>
           <execution>
@@ -179,9 +180,9 @@
               <xsltDirectory>src/main/resources/thirdparty/invoice</xsltDirectory>
             </configuration>
           </execution>
+          -->
         </executions>
       </plugin>
-          -->
     </plugins>
   </build>
 </project>
