@@ -1,0 +1,12 @@
+Filename and document format:
+
+- Naming convention of files:
+- SI-UBL-2.0[_rule_|-]<ok|warn|error>[_description].xml
+
+rule and description are optional, if rule is defined, it refers to the business rule id of https://www.stpe.nl/media/stpe.nl-gebruiksinstructie-basisfactuur-v1.0.pdf section 8.4
+
+
+ok / warn / error: the expected result from validating it against SI-UBL 2.0 (e.g. CEN PC434 with NL extensions)
+
+description: a short description of the document or the specific error that is tested
+

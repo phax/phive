@@ -98,15 +98,15 @@
       <!-- Enable if something changed only 
       <plugin>
         <groupId>com.helger.maven</groupId>
-        <artifactId>ph-maven-maven-plugin</artifactId>
+        <artifactId>ph-schematron-maven-plugin</artifactId>
         <executions>
           <execution>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>${basedir}/src/main/resources/simplerinvoicing</schematronDirectory>
-              <schematronPattern>SI-UBL-*.SCH</schematronPattern>
+              <schematronDirectory>${basedir}/src/test/resources/simplerinvoicing</schematronDirectory>
+              <schematronPattern>si-ubl-*.sch</schematronPattern>
               <xsltDirectory>${basedir}/src/main/resources/simplerinvoicing</xsltDirectory>
             </configuration>
           </execution>

@@ -19,6 +19,11 @@
   <cac:OrderReference>
     <cbc:ID>2016-441</cbc:ID>
   </cac:OrderReference>
+  <cac:BillingReference>
+    <cac:InvoiceDocumentReference>
+      <cbc:ID>TOSL108</cbc:ID>
+    </cac:InvoiceDocumentReference>
+  </cac:BillingReference>
   <cac:AdditionalDocumentReference>
     <cbc:ID>Doc2</cbc:ID>
     <cbc:DocumentType>Text</cbc:DocumentType>

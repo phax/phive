@@ -8,7 +8,7 @@ Generally, the tests are placed in a directory with the name of the
 SI-UBL version they are meant to test. There are a few tests in the
 general/ directory that are for any version.
 
-The filenames have the form SI-UBL-<version>-<status>-<rule>
+The filenames have the form SI-UBL-\<version\>-\<status\>-\<rule\>
 where:
 * version is the SI-UBL version this test tests
 * status is whether the document should be ok, give a warning, or give

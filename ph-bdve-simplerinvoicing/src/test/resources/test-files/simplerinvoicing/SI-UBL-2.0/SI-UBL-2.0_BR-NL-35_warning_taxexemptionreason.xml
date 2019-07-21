@@ -93,7 +93,7 @@
             <cac:TaxCategory>
                 <cbc:ID>E</cbc:ID>
                 <cbc:Percent>0</cbc:Percent>
-                <cbc:TaxExemptionReasonCode>11111</cbc:TaxExemptionReasonCode>
+                <cbc:TaxExemptionReasonCode>vatex-eu-151-1b</cbc:TaxExemptionReasonCode>
                 <cbc:TaxExemptionReason>Exempt due to government incentive</cbc:TaxExemptionReason>
                 <cac:TaxScheme>
                     <cbc:ID>VAT</cbc:ID>

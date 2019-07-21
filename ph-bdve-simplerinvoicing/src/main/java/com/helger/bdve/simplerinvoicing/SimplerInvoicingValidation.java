@@ -42,8 +42,9 @@ import com.helger.ubl21.UBL21NamespaceContext;
 @Immutable
 public final class SimplerInvoicingValidation
 {
+  @Deprecated
+  public static final VESID VID_SI_INVOICE_V10 = new VESID ("org.simplerinvoicing", "invoice", "1.0");
   public static final VESID VID_SI_INVOICE_V11 = new VESID ("org.simplerinvoicing", "invoice", "1.1");
-  public static final VESID VID_SI_INVOICE_V11_STRICT = VID_SI_INVOICE_V11.getWithClassifier ("strict");
   public static final VESID VID_SI_INVOICE_V12 = new VESID ("org.simplerinvoicing", "invoice", "1.2");
   public static final VESID VID_SI_ORDER_V12 = new VESID ("org.simplerinvoicing", "order", "1.2");
   public static final VESID VID_SI_INVOICE_V20 = new VESID ("org.simplerinvoicing", "invoice", "2.0");
@@ -56,19 +57,21 @@ public final class SimplerInvoicingValidation
   }
 
   // SimplerInvoicing
+  // 1.0
+  @Deprecated
+  public static final IReadableResource INVOICE_SI10 = new ClassPathResource ("/simplerinvoicing/si-ubl-1.0.xslt",
+                                                                              _getCL ());
   // 1.1
-  public static final IReadableResource INVOICE_SI11 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11.xslt",
+  public static final IReadableResource INVOICE_SI11 = new ClassPathResource ("/simplerinvoicing/si-ubl-1.1.xslt",
                                                                               _getCL ());
-  public static final IReadableResource INVOICE_SI11_STRICT = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-11-STRICT.xslt",
-                                                                                     _getCL ());
   // 1.2
-  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-INV-12.xslt",
+  public static final IReadableResource INVOICE_SI12 = new ClassPathResource ("/simplerinvoicing/si-ubl-1.2.xslt",
                                                                               _getCL ());
-  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/SI-UBL-PO-12.xslt",
+  public static final IReadableResource ORDER_SI12 = new ClassPathResource ("/simplerinvoicing/si-ubl-1.2-purchaseorder.xslt",
                                                                             _getCL ());
 
   // 2.0
-  public static final IReadableResource INVOICE_SI20 = new ClassPathResource ("/simplerinvoicing/v2.0/si-ubl-2.0.xsl",
+  public static final IReadableResource INVOICE_SI20 = new ClassPathResource ("/simplerinvoicing/si-ubl-2.0.xslt",
                                                                               _getCL ());
 
   private SimplerInvoicingValidation ()
@@ -97,18 +100,21 @@ public final class SimplerInvoicingValidation
     LocationBeautifierSPI.addMappings (UBL21NamespaceContext.getInstance ());
 
     // SimplerInvoicing is self-contained
+    final boolean bDeprecated = true;
     final boolean bNotDeprecated = false;
+    // 1.1
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V10,
+                                                                           "Simplerinvoicing Invoice 1.0",
+                                                                           bDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
+                                                                           _createXSLT (INVOICE_SI11)));
+
     // 1.1
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,
                                                                            "Simplerinvoicing Invoice 1.1",
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (INVOICE_SI11)));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11_STRICT,
-                                                                           "Simplerinvoicing Invoice 1.1 (strict)",
-                                                                           bNotDeprecated,
-                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
-                                                                           _createXSLT (INVOICE_SI11_STRICT)));
 
     // 1.2
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V12,

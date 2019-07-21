@@ -5,7 +5,6 @@
          xmlns:udt="urn:oasis:names:specification:ubl:schema:xsd:UnqualifiedDataTypes-2"
          xmlns:ccts="urn:un:unece:uncefact:documentation:2"
          xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
-    <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
     <cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:fdc:nen.nl:nlcius:v1.0</cbc:CustomizationID>
     <cbc:ProfileID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</cbc:ProfileID>
     <cbc:ID>12115118</cbc:ID>

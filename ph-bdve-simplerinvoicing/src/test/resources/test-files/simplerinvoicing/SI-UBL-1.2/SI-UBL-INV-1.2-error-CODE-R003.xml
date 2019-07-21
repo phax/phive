@@ -403,7 +403,7 @@
         <cbc:ID schemeID="GTIN">555</cbc:ID>
       </cac:StandardItemIdentification>
       <cac:OriginCountry>
-        <cbc:IdentificationCode listID="3166-1:Alpha2">FOO</cbc:IdentificationCode>
+        <cbc:IdentificationCode listID="ISO3166-1:Alpha2">FOO</cbc:IdentificationCode>
       </cac:OriginCountry>
       <cac:CommodityClassification>
         <cbc:CommodityCode>ddf</cbc:CommodityCode>

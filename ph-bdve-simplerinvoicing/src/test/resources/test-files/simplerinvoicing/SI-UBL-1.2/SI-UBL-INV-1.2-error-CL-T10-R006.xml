@@ -92,7 +92,7 @@
     </cac:DeliveryLocation>
   </cac:Delivery>
   <cac:PaymentMeans>
-    <cbc:PaymentMeansCode listID="UNCL4461">30</cbc:PaymentMeansCode>
+    <cbc:PaymentMeansCode listID="UNCL4461">111</cbc:PaymentMeansCode>
     <cbc:PaymentDueDate>2016-01-01</cbc:PaymentDueDate>
     <cac:PayeeFinancialAccount>
       <cbc:ID schemeID='IBAN'>NL23ABNA0123456789</cbc:ID>

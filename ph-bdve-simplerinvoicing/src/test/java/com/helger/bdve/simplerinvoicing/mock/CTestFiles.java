@@ -155,11 +155,16 @@ public final class CTestFiles
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_384.xml"));
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_389.xml"));
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-9_ok.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_additionaldocumentreference.xml"));
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance.xml"));
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance_line.xml"));
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_base.xml"));
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge.xml"));
             ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge_line.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_full.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_quantities_linevalues_wrong.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_quantities.xml"));
+            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_unitcode.xml"));
           }
           else
             if (aVESID.equals (SimplerInvoicingValidation.VID_SI_CREDIT_NOTE_V20))
