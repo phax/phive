@@ -107,7 +107,7 @@ public final class SimplerInvoicingValidation
                                                                            "Simplerinvoicing Invoice 1.0",
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
-                                                                           _createXSLT (INVOICE_SI11)));
+                                                                           _createXSLT (INVOICE_SI10)));
 
     // 1.1
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_SI_INVOICE_V11,

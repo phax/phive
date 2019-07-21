@@ -83,10 +83,10 @@
   </cac:PaymentMeans>
   <cac:PaymentTerms/>
   <cac:TaxTotal>
-    <cbc:TaxAmount currencyID="EUR">6.3270</cbc:TaxAmount>
+    <cbc:TaxAmount currencyID="EUR">6.33</cbc:TaxAmount>
     <cac:TaxSubtotal>
-      <cbc:TaxableAmount currencyID="EUR">17.7600</cbc:TaxableAmount>
-      <cbc:TaxAmount currencyID="EUR">0.0000</cbc:TaxAmount>
+      <cbc:TaxableAmount currencyID="EUR">17.76</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">0.00</cbc:TaxAmount>
       <cac:TaxCategory>
         <cbc:ID schemeID="UNCL5305" schemeAgencyID="6">E</cbc:ID>
         <cbc:Percent>0</cbc:Percent>
@@ -96,8 +96,8 @@
       </cac:TaxCategory>
     </cac:TaxSubtotal>
     <cac:TaxSubtotal>
-      <cbc:TaxableAmount currencyID="EUR">9.9900</cbc:TaxableAmount>
-      <cbc:TaxAmount currencyID="EUR">0.0000</cbc:TaxAmount>
+      <cbc:TaxableAmount currencyID="EUR">9.99</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">0.00</cbc:TaxAmount>
       <cac:TaxCategory>
         <cbc:ID schemeID="UNCL5305" schemeAgencyID="6">Z</cbc:ID>
         <cbc:Percent>0</cbc:Percent>
@@ -107,8 +107,8 @@
       </cac:TaxCategory>
     </cac:TaxSubtotal>
     <cac:TaxSubtotal>
-      <cbc:TaxableAmount currencyID="EUR">4.4400</cbc:TaxableAmount>
-      <cbc:TaxAmount currencyID="EUR">0.2664</cbc:TaxAmount>
+      <cbc:TaxableAmount currencyID="EUR">4.44</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">0.27</cbc:TaxAmount>
       <cac:TaxCategory>
         <cbc:ID schemeID="UNCL5305" schemeAgencyID="6">S</cbc:ID>
         <cbc:Percent>6</cbc:Percent>
@@ -118,8 +118,8 @@
       </cac:TaxCategory>
     </cac:TaxSubtotal>
     <cac:TaxSubtotal>
-      <cbc:TaxableAmount currencyID="EUR">28.8600</cbc:TaxableAmount>
-      <cbc:TaxAmount currencyID="EUR">6.0606</cbc:TaxAmount>
+      <cbc:TaxableAmount currencyID="EUR">28.86</cbc:TaxableAmount>
+      <cbc:TaxAmount currencyID="EUR">6.06</cbc:TaxAmount>
       <cac:TaxCategory>
         <cbc:ID schemeID="UNCL5305" schemeAgencyID="6">S</cbc:ID>
         <cbc:Percent>21</cbc:Percent>
@@ -130,11 +130,11 @@
     </cac:TaxSubtotal>
   </cac:TaxTotal>
   <cac:LegalMonetaryTotal>
-    <cbc:LineExtensionAmount currencyID="EUR">61.0500</cbc:LineExtensionAmount>
-    <cbc:TaxExclusiveAmount currencyID="EUR">61.0500</cbc:TaxExclusiveAmount>
-    <cbc:TaxInclusiveAmount currencyID="EUR">67.3770</cbc:TaxInclusiveAmount>
-    <cbc:AllowanceTotalAmount currencyID="EUR">0.0000</cbc:AllowanceTotalAmount>
-    <cbc:PayableAmount currencyID="EUR">67.3770</cbc:PayableAmount>
+    <cbc:LineExtensionAmount currencyID="EUR">61.05</cbc:LineExtensionAmount>
+    <cbc:TaxExclusiveAmount currencyID="EUR">61.05</cbc:TaxExclusiveAmount>
+    <cbc:TaxInclusiveAmount currencyID="EUR">67.38</cbc:TaxInclusiveAmount>
+    <cbc:AllowanceTotalAmount currencyID="EUR">0.00</cbc:AllowanceTotalAmount>
+    <cbc:PayableAmount currencyID="EUR">67.38</cbc:PayableAmount>
   </cac:LegalMonetaryTotal>
   <cac:InvoiceLine>
     <cbc:ID>1</cbc:ID>

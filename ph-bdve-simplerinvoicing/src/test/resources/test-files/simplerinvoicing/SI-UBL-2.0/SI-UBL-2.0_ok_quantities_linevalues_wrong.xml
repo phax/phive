@@ -1,5 +1,5 @@
-<!-- this is an example where line-level values are incorrect, making this invalid for PEPPOL but valid for NLCIUS -->
 <?xml version="1.0" encoding="utf-8"?>
+<!-- this is an example where line-level values are incorrect, making this invalid for PEPPOL but valid for NLCIUS -->
 <Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
          xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
          xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDataTypes-2"

@@ -31,6 +31,7 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
 @Immutable
+@SuppressWarnings ("deprecation")
 public final class CTestFiles
 {
   public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
@@ -47,7 +48,8 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SI_INVOICE_V11,
+    for (final VESID aVESID : new VESID [] { SimplerInvoicingValidation.VID_SI_INVOICE_V10,
+                                             SimplerInvoicingValidation.VID_SI_INVOICE_V11,
                                              SimplerInvoicingValidation.VID_SI_INVOICE_V12,
                                              SimplerInvoicingValidation.VID_SI_ORDER_V12,
                                              SimplerInvoicingValidation.VID_SI_INVOICE_V20,
@@ -64,115 +66,124 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
+    final String sPath10 = "/test-files/simplerinvoicing/SI-UBL-1.0/";
     final String sPath11 = "/test-files/simplerinvoicing/SI-UBL-1.1/";
     final String sPath12 = "/test-files/simplerinvoicing/SI-UBL-1.2/";
     final String sPath20 = "/test-files/simplerinvoicing/SI-UBL-2.0/";
 
     final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-    if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V11))
+    if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V10))
     {
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R034.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R035.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R037.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R045.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R046.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R026.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R030.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R035.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R036.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R037.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R038.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-extension.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-multiple-currencies.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-single-currency.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-tax-currency.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-tax-subcategory.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-minimal-corrective.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-minimal.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-reference.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-rounding-vat-1.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-single-item.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-taxes-ae.xml"));
-      ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-taxes.xml"));
+      ret.add (new ClassPathResource (sPath10 + "SI-UBL-1.0-ok-minimal.xml"));
+      ret.add (new ClassPathResource (sPath10 + "SI-UBL-1.0-ok-reference.xml"));
+      ret.add (new ClassPathResource (sPath10 + "SI-UBL-1.0-ok.xml"));
     }
     else
-      if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V12))
+      if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V11))
       {
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R034.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R035.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R037.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R045.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R046.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R026.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R030.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R035.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R036.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R037.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R038.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-extension.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-multiple-currencies.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-single-currency.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-tax-currency.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-tax-subcategory.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-minimal-corrective.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-minimal.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-reference.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-rounding-vat-1.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension-1.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension-2.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension-3.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-single-item.xml"));
-        ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-taxes-ae.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R034.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R035.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R037.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R045.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-BII2-T10-R046.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R026.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R030.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R035.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R036.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R037.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-EUGEN-T10-R038.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-extension.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-multiple-currencies.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-single-currency.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-tax-currency.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full-tax-subcategory.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-full.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-minimal-corrective.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-minimal.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-reference.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-rounding-vat-1.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-single-item.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-taxes-ae.xml"));
+        ret.add (new ClassPathResource (sPath11 + "SI-UBL-1.1-ok-taxes.xml"));
       }
       else
-        if (aVESID.equals (SimplerInvoicingValidation.VID_SI_ORDER_V12))
+        if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V12))
         {
-          ret.add (new ClassPathResource (sPath12 + "SI-UBL-PO-1.2-ok-minimal.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R034.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R035.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R037.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R045.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-BII2-T10-R046.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R026.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R030.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R035.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R036.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R037.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-EUGEN-T10-R038.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-extension.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-multiple-currencies.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-single-currency.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-tax-currency.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full-tax-subcategory.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-full.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-minimal-corrective.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-minimal.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-reference.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-rounding-vat-1.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension-1.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension-2.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension-3.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-si-extension.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-single-item.xml"));
+          ret.add (new ClassPathResource (sPath12 + "SI-UBL-INV-1.2-ok-taxes-ae.xml"));
         }
         else
-          if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V20))
+          if (aVESID.equals (SimplerInvoicingValidation.VID_SI_ORDER_V12))
           {
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_both_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_customer_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_customer_no_companyid.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_supplier_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-11_ok_negative_payment.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-11_ok_no_payment.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-12_ok.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-1_ok_supplier_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-1_ok_supplier_oin.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-2_ok_supplier_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-31_ok_notsepa.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-3_ok_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-4_ok_customer_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-4_ok_supplier_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok_supplier_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok_taxpart_not_nl.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_384.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_389.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-9_ok.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_additionaldocumentreference.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance_line.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_base.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge_line.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_full.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_quantities_linevalues_wrong.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_quantities.xml"));
-            ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_unitcode.xml"));
+            ret.add (new ClassPathResource (sPath12 + "SI-UBL-PO-1.2-ok-minimal.xml"));
           }
           else
-            if (aVESID.equals (SimplerInvoicingValidation.VID_SI_CREDIT_NOTE_V20))
+            if (aVESID.equals (SimplerInvoicingValidation.VID_SI_INVOICE_V20))
             {
-              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-8_ok_381.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_both_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_customer_not_nl.xml"));
+              if (false)
+                ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_customer_no_companyid.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-10_ok_supplier_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-11_ok_negative_payment.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-11_ok_no_payment.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-12_ok.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-1_ok_supplier_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-1_ok_supplier_oin.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-2_ok_supplier_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-31_ok_notsepa.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-3_ok_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-4_ok_customer_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-4_ok_supplier_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok_supplier_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-5_ok_taxpart_not_nl.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_384.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-7_ok_389.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-9_ok.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_additionaldocumentreference.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_allowance_line.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_base.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_charge_line.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_full.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_quantities_linevalues_wrong.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_quantities.xml"));
+              ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_ok_unitcode.xml"));
             }
             else
-              throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+              if (aVESID.equals (SimplerInvoicingValidation.VID_SI_CREDIT_NOTE_V20))
+              {
+                ret.add (new ClassPathResource (sPath20 + "SI-UBL-2.0_BR-NL-8_ok_381.xml"));
+              }
+              else
+                throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
     return ret;
   }
 }

@@ -83,6 +83,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v5.1.11 - work in progress
     * Added OpenPEPPOL 3.8.1 (Spring release 2019 bug fix release) artefacts
+    * Updated SimplerInvoicing artefacts to the latest versions. This lead to "SI 1.1 strict" to be removed.
 * v5.1.10 - 2019-07-10
     * Added new EHF validation artefacts (incl. Invoice and Credit Note 2.0.16)
     * Deprecated `eu.peppol.bis3.ubl:invoice:1` in favour of `eu.peppol.bis3:invoice:3.8.0` 
