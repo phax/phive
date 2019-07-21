@@ -95,11 +95,76 @@
           </excludes>
         </configuration>
       </plugin>
-      <!-- Enable if something changed only 
       <plugin>
         <groupId>com.helger.maven</groupId>
         <artifactId>ph-schematron-maven-plugin</artifactId>
         <executions>
+      <!-- Enable if something changed only 
+          <execution>
+            <goals>
+              <goal>preprocess</goal>
+            </goals>
+            <id>si-1.0</id>
+            <configuration>
+              <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.0.sch</sourceFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.0-preprocessed.sch</targetFile>
+              <keepTitles>true</keepTitles>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>preprocess</goal>
+            </goals>
+            <id>si-1.1</id>
+            <configuration>
+              <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.1.sch</sourceFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.1-preprocessed.sch</targetFile>
+              <keepTitles>true</keepTitles>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>preprocess</goal>
+            </goals>
+            <id>si-1.2</id>
+            <configuration>
+              <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2.sch</sourceFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2-preprocessed.sch</targetFile>
+              <keepTitles>true</keepTitles>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>preprocess</goal>
+            </goals>
+            <id>si-1.2-po</id>
+            <configuration>
+              <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2-purchaseorder.sch</sourceFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2-purchaseorder-preprocessed.sch</targetFile>
+              <keepTitles>true</keepTitles>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>preprocess</goal>
+            </goals>
+            <id>si-2.0</id>
+            <configuration>
+              <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-2.0.sch</sourceFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-2.0-preprocessed.sch</targetFile>
+              <keepTitles>true</keepTitles>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>${basedir}/src/test/resources/simplerinvoicing</schematronDirectory>
+              <schematronPattern>si-ubl-*-preprocessed.sch</schematronPattern>
+              <xsltDirectory>${basedir}/src/test/resources/simplerinvoicing</xsltDirectory>
+            </configuration>
+          </execution>
           <execution>
             <goals>
               <goal>convert</goal>
@@ -110,9 +175,9 @@
               <xsltDirectory>${basedir}/src/main/resources/simplerinvoicing</xsltDirectory>
             </configuration>
           </execution>
+       -->
         </executions>
       </plugin>
-       -->
     </plugins>
   </build>
 </project>
