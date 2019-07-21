@@ -94,7 +94,7 @@
 	<!-- Required by SI v1.1: -->
 	<cbc:UBLVersionID>2.1</cbc:UBLVersionID>
 	<!-- Required by SI v1.1: -->
-	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.1</cbc:CustomizationID>
+	<cbc:CustomizationID>urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0:extended:urn:www.simplerinvoicing.org:si:si-ubl:ver1.2</cbc:CustomizationID>
 	<cbc:ProfileID>urn:www.energie-efactuur.nl:profile:invoice:ver1.0</cbc:ProfileID>
 	<!-- Vanaf hier: kernfactuur elementen -->
 	<cbc:ID>99125432759</cbc:ID>
