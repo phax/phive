@@ -89,14 +89,15 @@ public final class PeppolValidation
    *         Never <code>null</code>.
    * @since 5.1.8
    */
+  @SuppressWarnings ("deprecation")
   @Nonnull
   @Nonempty
   public static final String getVersionToUse ()
   {
     final LocalDate aNow = PDTFactory.getCurrentLocalDate ();
-    if (aNow.isBefore (PeppolValidation380.VALID_PER))
-      return PeppolValidation370.VERSION_STR;
-    return PeppolValidation380.VERSION_STR;
+    if (aNow.isBefore (PeppolValidation381.VALID_PER))
+      return PeppolValidation380.VERSION_STR;
+    return PeppolValidation381.VERSION_STR;
   }
 
   private PeppolValidation ()

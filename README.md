@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.2 - work in progress
+    * Deprecated OpenPEPPOL 3.8.0 artefacts
 * v5.1.11 - 2019-07-21
     * Added OpenPEPPOL 3.8.1 (Spring release 2019 bug fix release) artefacts
     * Updated SimplerInvoicing artefacts to the latest versions. This lead to "SI 1.1 strict" to be removed.
