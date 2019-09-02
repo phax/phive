@@ -69,8 +69,7 @@ public final class CTestFiles
     ValueEnforcer.notNull (aVESID, "VESID");
 
     final ICommonsList <IReadableResource> ret = new CommonsArrayList <> ();
-    if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_120) ||
-        aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_121))
+    if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_120))
     {
       final String sPrefix = "/test-files/1.2.0/cii/";
       for (final String s : new String [] { "CII_business_example_01.xml",
@@ -87,14 +86,12 @@ public final class CTestFiles
         ret.add (new ClassPathResource (sPrefix + s));
     }
     else
-      if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_120) ||
-          aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_121))
+      if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_120))
       {
         // None atm
       }
       else
-        if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120) ||
-            aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_121))
+        if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120))
         {
           final String sPrefix = "/test-files/1.2.0/ubl/";
           for (final String s : new String [] { "ubl-tc434-example1.xml",
@@ -109,7 +106,44 @@ public final class CTestFiles
             ret.add (new ClassPathResource (sPrefix + s));
         }
         else
-          throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+          if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_121))
+          {
+            final String sPrefix = "/test-files/1.2.1/cii/";
+            for (final String s : new String [] { "CII_business_example_01.xml",
+                                                  "CII_business_example_02.xml",
+                                                  "CII_example1.xml",
+                                                  "CII_example2.xml",
+                                                  "CII_example3.xml",
+                                                  "CII_example4.xml",
+                                                  "CII_example5.xml",
+                                                  "CII_example6.xml",
+                                                  // "CII_example7.xml",
+                                                  "CII_example8.xml",
+                                                  "CII_example9.xml" })
+              ret.add (new ClassPathResource (sPrefix + s));
+          }
+          else
+            if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_121))
+            {
+              // None atm
+            }
+            else
+              if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_121))
+              {
+                final String sPrefix = "/test-files/1.2.1/ubl/";
+                for (final String s : new String [] { "ubl-tc434-example1.xml",
+                                                      "ubl-tc434-example2.xml",
+                                                      "ubl-tc434-example3.xml",
+                                                      "ubl-tc434-example4.xml",
+                                                      "ubl-tc434-example5.xml",
+                                                      "ubl-tc434-example6.xml",
+                                                      // "ubl-tc434-example7.xml",
+                                                      "ubl-tc434-example8.xml",
+                                                      "ubl-tc434-example9.xml" })
+                  ret.add (new ClassPathResource (sPrefix + s));
+              }
+              else
+                throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
 
     return ret;
   }
