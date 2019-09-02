@@ -83,6 +83,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v5.1.2 - work in progress
     * Deprecated OpenPEPPOL 3.8.0 artefacts
+    * XRechnung 1.2.1 is now based on EN16931 1.2.1 release
 * v5.1.11 - 2019-07-21
     * Added OpenPEPPOL 3.8.1 (Spring release 2019 bug fix release) artefacts
     * Updated SimplerInvoicing artefacts to the latest versions. This lead to "SI 1.1 strict" to be removed.

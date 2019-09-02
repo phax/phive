@@ -89,10 +89,16 @@ public final class XRechnungValidation
     final IValidationExecutorSet aVESUBLCreditNote110 = aRegistry.getOfID (EN16931Validation.VID_UBL_CREDIT_NOTE_110);
     final IValidationExecutorSet aVESUBLInvoice110 = aRegistry.getOfID (EN16931Validation.VID_UBL_INVOICE_110);
     if (aVESCII110 == null || aVESUBLCreditNote110 == null || aVESUBLInvoice110 == null)
-      throw new IllegalStateException ("Standard EN16931 artefacts must be registered before XRechnung artefacts!");
+      throw new IllegalStateException ("Standard EN16931 artefacts 1.1.0 must be registered before XRechnung artefacts!");
+
+    final IValidationExecutorSet aVESCII121 = aRegistry.getOfID (EN16931Validation.VID_CII_121);
+    final IValidationExecutorSet aVESUBLCreditNote121 = aRegistry.getOfID (EN16931Validation.VID_UBL_CREDIT_NOTE_121);
+    final IValidationExecutorSet aVESUBLInvoice121 = aRegistry.getOfID (EN16931Validation.VID_UBL_INVOICE_121);
+    if (aVESCII121 == null || aVESUBLCreditNote121 == null || aVESUBLInvoice121 == null)
+      throw new IllegalStateException ("Standard EN16931 artefacts 1.2.1 must be registered before XRechnung artefacts!");
 
     // Just new Schematrons on top
-    // v1.2.0
+    // v1.2.0 (based on 1.1.0)
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCII110,
                                                                                   VID_XRECHNUNG_CII_120,
                                                                                   "XRechnung CII " +
@@ -112,20 +118,20 @@ public final class XRechnungValidation
                                                                                   bDeprecated,
                                                                                   _createXSLT (new ClassPathResource ("/schematron/1.2.0/XRechnung-UBL-validation-Invoice.xslt"))));
 
-    // v1.2.1
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCII110,
+    // v1.2.1 (based on 1.2.1)
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCII121,
                                                                                   VID_XRECHNUNG_CII_121,
                                                                                   "XRechnung CII " +
                                                                                                          VID_XRECHNUNG_CII_121.getVersion (),
                                                                                   bNotDeprecated,
                                                                                   _createXSLT (new ClassPathResource ("/schematron/1.2.1/XRechnung-CII-validation.xslt"))));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLCreditNote110,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLCreditNote121,
                                                                                   VID_XRECHNUNG_UBL_CREDITNOTE_121,
                                                                                   "XRechnung UBL CrediteNote " +
                                                                                                                     VID_XRECHNUNG_UBL_CREDITNOTE_121.getVersion (),
                                                                                   bNotDeprecated,
                                                                                   _createXSLT (new ClassPathResource ("/schematron/1.2.1/XRechnung-UBL-validation-CreditNote.xslt"))));
-    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLInvoice110,
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESUBLInvoice121,
                                                                                   VID_XRECHNUNG_UBL_INVOICE_121,
                                                                                   "XRechnung UBL Invoice " +
                                                                                                                  VID_XRECHNUNG_UBL_INVOICE_121.getVersion (),
