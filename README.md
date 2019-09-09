@@ -81,7 +81,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.1.2 - work in progress
+* v5.1.12 - 2019-09-09
     * Deprecated OpenPEPPOL 3.8.0 artefacts
     * XRechnung 1.2.1 is now based on EN16931 1.2.1 release
 * v5.1.11 - 2019-07-21

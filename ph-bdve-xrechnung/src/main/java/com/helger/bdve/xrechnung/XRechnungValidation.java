@@ -33,7 +33,8 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
 /**
- * Generic XRechnung validation configuration
+ * Generic XRechnung validation configuration. It is based on the EN16931
+ * validation artefacts.
  *
  * @author Philip Helger
  */
@@ -71,7 +72,8 @@ public final class XRechnungValidation
 
   /**
    * Register all standard XRechnung validation execution sets to the provided
-   * registry.
+   * registry. Make sure to register the EN16931 artefacts before you register
+   * this one.
    *
    * @param aRegistry
    *        The registry to add the artefacts. May not be <code>null</code>.
