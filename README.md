@@ -83,6 +83,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v5.1.13 - work in progress
     * Added support for EN 16931 1.3.0 format (deprecated version 1.2.3)
+    * Updated Singapore (SG) PEPPOL Billing BIS3 rules to version 2019-06-12
 * v5.1.12 - 2019-09-09
     * Deprecated OpenPEPPOL 3.8.0 artefacts
     * XRechnung 1.2.1 is now based on EN16931 1.2.1 release

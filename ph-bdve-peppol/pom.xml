@@ -138,6 +138,8 @@
               <xsltDirectory>src/main/resources/openpeppol/3.8.1/xslt</xsltDirectory>
             </configuration>
           </execution>
+          -->
+          <!--
           <execution>
             <id>singapore</id>
             <goals>
@@ -148,6 +150,8 @@
               <xsltDirectory>src/main/resources/sg-peppol/xslt</xsltDirectory>
             </configuration>
           </execution>
+          -->
+          <!--
           <execution>
             <id>billingbis3</id>
             <goals>
@@ -158,6 +162,8 @@
               <xsltDirectory>src/main/resources/openpeppol/billingbis3/xslt</xsltDirectory>
             </configuration>
           </execution>
+          -->
+          <!--
           <execution>
             <id>3rdparty-creditnote</id>
             <goals>
@@ -169,6 +175,8 @@
               <xsltDirectory>src/main/resources/thirdparty/creditnote</xsltDirectory>
             </configuration>
           </execution>
+          -->
+          <!--
           <execution>
             <id>3rdparty-invoice</id>
             <goals>

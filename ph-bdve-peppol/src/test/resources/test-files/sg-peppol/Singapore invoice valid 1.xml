@@ -214,7 +214,7 @@ Singapore invoice
 			<cbc:TaxableAmount currencyID="SGD">33915.00</cbc:TaxableAmount> <!-- BT-116 -->
 			<cbc:TaxAmount currencyID="SGD">2374.05</cbc:TaxAmount> <!-- BT-117 -->
 			<cac:TaxCategory>
-				<cbc:ID>S</cbc:ID> <!-- BT-118 -->
+				<cbc:ID>SR</cbc:ID> <!-- BT-118 -->
 				<cbc:Percent>7</cbc:Percent> <!-- BT-119 -->
 				<cac:TaxScheme>
 					<cbc:ID>GST</cbc:ID> <!-- BT-118, qualifier -->
@@ -272,7 +272,7 @@ Singapore invoice
 				<cbc:ItemClassificationCode listID="MP">43211503</cbc:ItemClassificationCode> <!-- BT-158, BT-158-1 -->
 			</cac:CommodityClassification>
 			<cac:ClassifiedTaxCategory>
-				<cbc:ID>S</cbc:ID> <!-- BT-151 -->
+				<cbc:ID>SR</cbc:ID> <!-- BT-151 -->
 				<cbc:Percent>7</cbc:Percent> <!-- BT-152 -->
 				<cac:TaxScheme>
 					<cbc:ID>GST</cbc:ID>
@@ -315,7 +315,7 @@ Singapore invoice
 				<cbc:ItemClassificationCode listID="MP">43211503</cbc:ItemClassificationCode> <!-- BT-158, BT-158-1 -->
 			</cac:CommodityClassification>
 			<cac:ClassifiedTaxCategory>
-				<cbc:ID>S</cbc:ID> <!-- BT-151 -->
+				<cbc:ID>SR</cbc:ID> <!-- BT-151 -->
 				<cbc:Percent>7</cbc:Percent> <!-- BT-152 -->
 				<cac:TaxScheme>
 					<cbc:ID>GST</cbc:ID>
@@ -354,7 +354,7 @@ Singapore invoice
 				<cbc:ItemClassificationCode listID="MP">43211503</cbc:ItemClassificationCode> <!-- BT-158, BT-158-1 -->
 			</cac:CommodityClassification>
 			<cac:ClassifiedTaxCategory>
-				<cbc:ID>S</cbc:ID> <!-- BT-151 -->
+				<cbc:ID>SR</cbc:ID> <!-- BT-151 -->
 				<cbc:Percent>7</cbc:Percent> <!-- BT-152 -->
 				<cac:TaxScheme>
 					<cbc:ID>GST</cbc:ID>
@@ -393,7 +393,7 @@ Singapore invoice
 				<cbc:ItemClassificationCode listID="MP">43211503</cbc:ItemClassificationCode> <!-- BT-158, BT-158-1 -->
 			</cac:CommodityClassification>
 			<cac:ClassifiedTaxCategory>
-				<cbc:ID>S</cbc:ID> <!-- BT-151 -->
+				<cbc:ID>SR</cbc:ID> <!-- BT-151 -->
 				<cbc:Percent>7</cbc:Percent> <!-- BT-152 -->
 				<cac:TaxScheme>
 					<cbc:ID>GST</cbc:ID>
