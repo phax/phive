@@ -54,10 +54,10 @@ public final class PeppolValidationAUNZ
                                                                                                "invoice-self-billing",
                                                                                                "1.0.1");
   public static final VESID VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_101 = new VESID ("eu.peppol.bis3.aunz.ubl",
-                                                                                      "credit-note",
+                                                                                      "creditnote",
                                                                                       "1.0.1");
   public static final VESID VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_SELF_BILLING_101 = new VESID ("eu.peppol.bis3.aunz.ubl",
-                                                                                                   "credit-note-self-billing",
+                                                                                                   "creditnote-self-billing",
                                                                                                    "1.0.1");
 
   public static final IReadableResource BIS3_BILLING_AUNZ_PEPPOL_SELF_BILLING = new ClassPathResource ("/aunz-peppol/xslt/AUNZ-PEPPOL-SB-validation.xslt",
