@@ -128,7 +128,7 @@ public final class PeppolValidationAUNZ
                                                                                                              null,
                                                                                                              aNSCtxInvoice)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_SELF_BILLING_101,
-                                                                           "A-NZ PEPPOL BIS3 CreditNote (UBL)",
+                                                                           "A-NZ PEPPOL BIS3 CreditNote Self-Billing (UBL)",
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
