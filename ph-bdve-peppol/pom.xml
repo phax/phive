@@ -129,6 +129,18 @@
         <executions>
           <!-- 
           <execution>
+            <id>aunz-peppol</id>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>src/main/resources/aunz-peppol/Schematron</schematronDirectory>
+              <xsltDirectory>src/main/resources/aunz-peppol/xslt</xsltDirectory>
+            </configuration>
+          </execution>
+          -->
+          <!-- 
+          <execution>
             <id>peppol-381</id>
             <goals>
               <goal>convert</goal>
@@ -141,25 +153,13 @@
           -->
           <!--
           <execution>
-            <id>singapore</id>
+            <id>sg-peppol</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
               <schematronDirectory>src/main/resources/sg-peppol/Schematron</schematronDirectory>
               <xsltDirectory>src/main/resources/sg-peppol/xslt</xsltDirectory>
-            </configuration>
-          </execution>
-          -->
-          <!--
-          <execution>
-            <id>billingbis3</id>
-            <goals>
-              <goal>convert</goal>
-            </goals>
-            <configuration>
-              <schematronDirectory>src/main/resources/openpeppol/billingbis3</schematronDirectory>
-              <xsltDirectory>src/main/resources/openpeppol/billingbis3/xslt</xsltDirectory>
             </configuration>
           </execution>
           -->

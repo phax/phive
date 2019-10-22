@@ -110,6 +110,7 @@ public final class PeppolValidation
     PeppolValidation370.init (aRegistry);
     PeppolValidation380.init (aRegistry);
     PeppolValidation381.init (aRegistry);
+    PeppolValidationAUNZ.init (aRegistry);
     PeppolValidationSG.init (aRegistry);
   }
 

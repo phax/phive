@@ -34,7 +34,7 @@ import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
- * Generic Peppol validation configuration
+ * Peppol Singapore (SG) validation configuration
  *
  * @author Philip Helger
  */
@@ -68,11 +68,10 @@ public final class PeppolValidationSG
     final MapBasedNamespaceContext aNSCtxCreditNote = PeppolValidation.createUBLNSContext (EUBL21DocumentType.CREDIT_NOTE.getNamespaceURI ());
 
     // For better error messages (merge both)
-    LocationBeautifierSPI.addMappings (aNSCtxCreditNote.getClone ().setMappings (aNSCtxInvoice));
+    LocationBeautifierSPI.addMappings (aNSCtxCreditNote);
 
     final boolean bNotDeprecated = false;
 
-    // Billing BIS 3 Singapore (SG)
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
                                                                            "SG PEPPOL BIS3 Invoice (UBL)",
                                                                            bNotDeprecated,

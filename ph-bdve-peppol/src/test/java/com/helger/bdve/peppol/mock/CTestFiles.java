@@ -25,6 +25,7 @@ import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.peppol.PeppolValidation370;
 import com.helger.bdve.peppol.PeppolValidation381;
+import com.helger.bdve.peppol.PeppolValidationAUNZ;
 import com.helger.bdve.peppol.PeppolValidationSG;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -52,7 +53,12 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
+    for (final VESID aESID : new VESID [] { PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_INVOICE_101,
+                                            PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_101,
+                                            PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_INVOICE_SELF_BILLING_101,
+                                            PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_SELF_BILLING_101,
+
+                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
                                             PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE,
 
                                             PeppolValidation370.VID_OPENPEPPOL_T19_V2,
@@ -88,9 +94,38 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    // Singapore
+    // AUNZ
+    if (aVESID.equals (PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_INVOICE_101))
+    {
+      final String sBase = "src/test/resources/test-files/aunz-peppol/";
+      return new CommonsArrayList <> (new FileSystemResource (sBase + "AU Invoice.xml"),
+                                      new FileSystemResource (sBase + "NZ Allowance On Invoice Line.xml"),
+                                      new FileSystemResource (sBase + "NZ Invoice Level Allowance.xml"),
+                                      new FileSystemResource (sBase + "NZ Invoice Level Charge.xml"),
+                                      new FileSystemResource (sBase + "NZ No Allowances.xml"),
+                                      new FileSystemResource (sBase + "NZ Prepaid Amount.xml"));
+    }
+    if (aVESID.equals (PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_101))
+    {
+      return new CommonsArrayList <> ();
+    }
+    if (aVESID.equals (PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_INVOICE_SELF_BILLING_101))
+    {
+      final String sBase = "src/test/resources/test-files/aunz-peppol/";
+      return new CommonsArrayList <> (new FileSystemResource (sBase + "AU Self Billing.xml"),
+                                      new FileSystemResource (sBase + "NZ Self Billing.xml"));
+    }
+    if (aVESID.equals (PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_SELF_BILLING_101))
+    {
+      return new CommonsArrayList <> ();
+    }
+
+    // SG
     if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE))
-      return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/sg-peppol/Singapore invoice valid 1.xml"));
+    {
+      final String sBase = "src/test/resources/test-files/sg-peppol/";
+      return new CommonsArrayList <> (new FileSystemResource (sBase + "Singapore invoice valid 1.xml"));
+    }
 
     if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE))
       return new CommonsArrayList <> ();
