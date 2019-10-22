@@ -25,6 +25,7 @@ import com.helger.bdve.mock.MockFile;
 import com.helger.bdve.peppol.PeppolValidation;
 import com.helger.bdve.peppol.PeppolValidation370;
 import com.helger.bdve.peppol.PeppolValidation381;
+import com.helger.bdve.peppol.PeppolValidationSG;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -51,8 +52,8 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
-                                            PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE,
+    for (final VESID aESID : new VESID [] { PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
+                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE,
 
                                             PeppolValidation370.VID_OPENPEPPOL_T19_V2,
                                             PeppolValidation370.VID_OPENPEPPOL_T58_V2,
@@ -87,10 +88,11 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    // Special
-    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE))
+    // Singapore
+    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE))
       return new CommonsArrayList <> (new FileSystemResource ("src/test/resources/test-files/sg-peppol/Singapore invoice valid 1.xml"));
-    if (aVESID.equals (PeppolValidation.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE))
+
+    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE))
       return new CommonsArrayList <> ();
 
     // 3.7.0
