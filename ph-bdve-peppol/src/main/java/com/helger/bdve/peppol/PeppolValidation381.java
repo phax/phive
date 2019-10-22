@@ -39,7 +39,7 @@ import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
- * OpenPEPPOL validation artefacts release 3.8.1. Spring 2018 release hotfix.
+ * OpenPEPPOL validation artefacts release 3.8.1. Spring 2019 release hotfix.
  * Valid per August 15th, 2019
  *
  * @author Philip Helger
@@ -142,7 +142,9 @@ public final class PeppolValidation381
                                                                            _createXSLT (INVOICE_CEN),
                                                                            _createXSLT (INVOICE_PEPPOL)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T01_V3,
-                                                                           "OpenPEPPOL Order" + sVersion + sAkaVersionBIS,
+                                                                           "OpenPEPPOL Order" +
+                                                                                                  sVersion +
+                                                                                                  sAkaVersionBIS,
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.ORDER),
                                                                            _createXSLT (ORDER)));

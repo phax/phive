@@ -49,6 +49,7 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
  * @author Philip Helger
  */
 @Immutable
+@SuppressWarnings ("deprecation")
 public final class PeppolValidation
 {
   @Nonnull
@@ -78,15 +79,14 @@ public final class PeppolValidation
    *         Never <code>null</code>.
    * @since 5.1.8
    */
-  @SuppressWarnings ("deprecation")
   @Nonnull
   @Nonempty
   public static final String getVersionToUse ()
   {
     final LocalDate aNow = PDTFactory.getCurrentLocalDate ();
-    if (aNow.isBefore (PeppolValidation381.VALID_PER))
-      return PeppolValidation380.VERSION_STR;
-    return PeppolValidation381.VERSION_STR;
+    if (aNow.isBefore (PeppolValidation390.VALID_PER))
+      return PeppolValidation381.VERSION_STR;
+    return PeppolValidation390.VERSION_STR;
   }
 
   private PeppolValidation ()
@@ -99,7 +99,6 @@ public final class PeppolValidation
    * @param aRegistry
    *        The registry to add the artefacts. May not be <code>null</code>.
    */
-  @SuppressWarnings ("deprecation")
   public static void initStandard (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     // For better error messages
@@ -110,6 +109,7 @@ public final class PeppolValidation
     PeppolValidation370.init (aRegistry);
     PeppolValidation380.init (aRegistry);
     PeppolValidation381.init (aRegistry);
+    PeppolValidation390.init (aRegistry);
     PeppolValidationAUNZ.init (aRegistry);
     PeppolValidationSG.init (aRegistry);
   }

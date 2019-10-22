@@ -142,13 +142,13 @@
           -->
           <!-- 
           <execution>
-            <id>peppol-381</id>
+            <id>peppol-regular</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/main/resources/openpeppol/3.8.1</schematronDirectory>
-              <xsltDirectory>src/main/resources/openpeppol/3.8.1/xslt</xsltDirectory>
+              <schematronDirectory>src/main/resources/openpeppol/3.9.0-rc1</schematronDirectory>
+              <xsltDirectory>src/main/resources/openpeppol/3.9.0-rc1/xslt</xsltDirectory>
             </configuration>
           </execution>
           -->
