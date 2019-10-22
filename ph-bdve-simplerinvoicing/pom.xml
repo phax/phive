@@ -91,6 +91,7 @@
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>src/main/resources/simplerinvoicing/**</exclude>
+            <exclude>src/test/resources/simplerinvoicing/**</exclude>
             <exclude>src/test/resources/test-files/**</exclude>
           </excludes>
         </configuration>
