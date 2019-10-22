@@ -114,6 +114,7 @@
           <excludes>
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
+            <exclude>src/main/resources/aunz-peppol/**</exclude>
             <exclude>src/main/resources/openpeppol/**</exclude>
             <exclude>src/main/resources/sg-peppol/**</exclude>
             <exclude>src/main/resources/thirdparty/**</exclude>
