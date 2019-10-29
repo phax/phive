@@ -47,6 +47,7 @@ public final class PeppolValidationAUNZ
     return PeppolValidationAUNZ.class.getClassLoader ();
   }
 
+  // Version 1.0.1 is the current assumption but may not hold true
   public static final VESID VID_OPENPEPPOL_BIS3_AUNZ_UBL_INVOICE_101 = new VESID ("eu.peppol.bis3.aunz.ubl",
                                                                                   "invoice",
                                                                                   "1.0.1");
