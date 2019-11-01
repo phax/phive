@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>ph-bdve-parent-pom</artifactId>
-    <version>5.1.14-SNAPSHOT</version>
+    <version>5.1.14</version>
   </parent>
   <artifactId>ph-bdve-xrechnung</artifactId>
   <packaging>bundle</packaging>
