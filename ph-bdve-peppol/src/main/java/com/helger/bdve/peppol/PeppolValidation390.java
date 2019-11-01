@@ -48,8 +48,8 @@ import com.helger.ubl21.UBL21NamespaceContext;
 public final class PeppolValidation390
 {
   // Standard resources
-  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 9, 0, "rc1");
-  public static final String VERSION_STR = true ? "3.9.0-rc1" : PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
+  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 9, 0);
+  public static final String VERSION_STR = PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
   public static final LocalDate VALID_PER = PDTFactory.createLocalDate (2019, Month.NOVEMBER, 15);
 
   // Standard

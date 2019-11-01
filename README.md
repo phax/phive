@@ -83,7 +83,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v5.1.14 - work in progress
     * Added support for A-NZ PEPPOL 1.0.1 validations
-    * Added OpenPEPPOL 3.9.0-rc1 (Fall release 2019) artefacts
+    * Added OpenPEPPOL 3.9.0 (Fall release 2019) artefacts
 * v5.1.13 - 2019-10-14
     * Added support for EN 16931 1.3.0 format (deprecated version 1.2.3)
     * Updated Singapore (SG) PEPPOL Billing BIS3 rules to version 2019-06-12

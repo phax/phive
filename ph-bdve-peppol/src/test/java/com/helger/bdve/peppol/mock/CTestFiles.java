@@ -214,11 +214,17 @@ public final class CTestFiles
 
     // 3.9.0
     {
-      final String sBase = "src/test/resources/test-files/3.9.0-rc1/";
+      final String sBase = "src/test/resources/test-files/3.9.0/";
+      // https://github.com/OpenPEPPOL/peppol-bis-invoice-3/tree/master/rules/examples
       if (aVESID.equals (PeppolValidation390.VID_OPENPEPPOL_INVOICE_V3))
-        return new CommonsArrayList <> ();
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "Allowance-example.xml"),
+                                        new FileSystemResource (sBase + "base-example.xml"),
+                                        new FileSystemResource (sBase + "base-negative-inv-correction.xml"),
+                                        new FileSystemResource (sBase + "vat-category-O.xml"),
+                                        new FileSystemResource (sBase + "Vat-category-S.xml"),
+                                        new FileSystemResource (sBase + "vat-category-Z.xml"));
       if (aVESID.equals (PeppolValidation390.VID_OPENPEPPOL_CREDIT_NOTE_V3))
-        return new CommonsArrayList <> ();
+        return new CommonsArrayList <> (new FileSystemResource (sBase + "base-creditnote-correction.xml"));
       if (aVESID.equals (PeppolValidation390.VID_OPENPEPPOL_T01_V3))
         return new CommonsArrayList <> (new FileSystemResource (sBase + "Order_Example.xml"));
       if (aVESID.equals (PeppolValidation390.VID_OPENPEPPOL_T16_V3))
