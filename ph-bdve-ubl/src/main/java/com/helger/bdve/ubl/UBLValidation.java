@@ -33,6 +33,8 @@ import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 import com.helger.ubl22.EUBL22DocumentType;
 import com.helger.ubl22.UBL22NamespaceContext;
+import com.helger.ubl23.EUBL23DocumentType;
+import com.helger.ubl23.UBL23NamespaceContext;
 
 /**
  * Generic UBL validation configuration
@@ -46,7 +48,9 @@ public final class UBLValidation
   public static final String VERSION_20 = "2.0";
   public static final String VERSION_21 = "2.1";
   public static final String VERSION_22 = "2.2";
+  public static final String VERSION_23 = "2.3-csprd01";
 
+  // UBL 2.0
   public static final VESID VID_UBL_20_APPLICATIONRESPONSE = new VESID (GROUP_ID, "applicationresponse", VERSION_20);
   public static final VESID VID_UBL_20_ATTACHEDDOCUMENT = new VESID (GROUP_ID, "attacheddocument", VERSION_20);
   public static final VESID VID_UBL_20_BILLOFLADING = new VESID (GROUP_ID, "billoflading", VERSION_20);
@@ -85,6 +89,7 @@ public final class UBLValidation
   public static final VESID VID_UBL_20_TRANSPORTATIONSTATUS = new VESID (GROUP_ID, "transportationstatus", VERSION_20);
   public static final VESID VID_UBL_20_WAYBILL = new VESID (GROUP_ID, "waybill", VERSION_20);
 
+  // UBL 2.1
   public static final VESID VID_UBL_21_APPLICATIONRESPONSE = new VESID (GROUP_ID, "applicationresponse", VERSION_21);
   public static final VESID VID_UBL_21_ATTACHEDDOCUMENT = new VESID (GROUP_ID, "attacheddocument", VERSION_21);
   public static final VESID VID_UBL_21_AWARDEDNOTIFICATION = new VESID (GROUP_ID, "awardednotification", VERSION_21);
@@ -193,6 +198,7 @@ public final class UBLValidation
   public static final VESID VID_UBL_21_UTILITYSTATEMENT = new VESID (GROUP_ID, "utilitystatement", VERSION_21);
   public static final VESID VID_UBL_21_WAYBILL = new VESID (GROUP_ID, "waybill", VERSION_21);
 
+  // UBL 2.2
   public static final VESID VID_UBL_22_APPLICATIONRESPONSE = new VESID (GROUP_ID, "applicationresponse", VERSION_22);
   public static final VESID VID_UBL_22_ATTACHEDDOCUMENT = new VESID (GROUP_ID, "attacheddocument", VERSION_22);
   public static final VESID VID_UBL_22_AWARDEDNOTIFICATION = new VESID (GROUP_ID, "awardednotification", VERSION_22);
@@ -329,6 +335,152 @@ public final class UBLValidation
   public static final VESID VID_UBL_22_WAYBILL = new VESID (GROUP_ID, "waybill", VERSION_22);
   public static final VESID VID_UBL_22_WEIGHTSTATEMENT = new VESID (GROUP_ID, "weightstatement", VERSION_22);
 
+  // UBL 2.3
+  public static final VESID VID_UBL_23_APPLICATIONRESPONSE = new VESID (GROUP_ID, "applicationresponse", VERSION_23);
+  public static final VESID VID_UBL_23_ATTACHEDDOCUMENT = new VESID (GROUP_ID, "attacheddocument", VERSION_23);
+  public static final VESID VID_UBL_23_AWARDEDNOTIFICATION = new VESID (GROUP_ID, "awardednotification", VERSION_23);
+  public static final VESID VID_UBL_23_BILLOFLADING = new VESID (GROUP_ID, "billoflading", VERSION_23);
+  public static final VESID VID_UBL_23_BUSINESSCARD = new VESID (GROUP_ID, "businesscard", VERSION_23);
+  public static final VESID VID_UBL_23_CALLFORTENDERS = new VESID (GROUP_ID, "callfortenders", VERSION_23);
+  public static final VESID VID_UBL_23_CATALOGUE = new VESID (GROUP_ID, "catalogue", VERSION_23);
+  public static final VESID VID_UBL_23_CATALOGUEDELETION = new VESID (GROUP_ID, "cataloguedeletion", VERSION_23);
+  public static final VESID VID_UBL_23_CATALOGUEITEMSPECIFICATIONUPDATE = new VESID (GROUP_ID,
+                                                                                     "catalogueitemspecificationupdate",
+                                                                                     VERSION_23);
+  public static final VESID VID_UBL_23_CATALOGUEPRICINGUPDATE = new VESID (GROUP_ID,
+                                                                           "cataloguepricingupdate",
+                                                                           VERSION_23);
+  public static final VESID VID_UBL_23_CATALOGUEREQUEST = new VESID (GROUP_ID, "cataloguerequest", VERSION_23);
+  public static final VESID VID_UBL_23_CERTIFICATEOFORIGIN = new VESID (GROUP_ID, "certificateoforigin", VERSION_23);
+  public static final VESID VID_UBL_23_CONTRACTAWARDNOTICE = new VESID (GROUP_ID, "contractawardnotice", VERSION_23);
+  public static final VESID VID_UBL_23_CONTRACTNOTICE = new VESID (GROUP_ID, "contractnotice", VERSION_23);
+  public static final VESID VID_UBL_23_CREDITNOTE = new VESID (GROUP_ID, "creditnote", VERSION_23);
+  public static final VESID VID_UBL_23_DEBITNOTE = new VESID (GROUP_ID, "debitnote", VERSION_23);
+  public static final VESID VID_UBL_23_DESPATCHADVICE = new VESID (GROUP_ID, "despatchadvice", VERSION_23);
+  public static final VESID VID_UBL_23_DIGITALAGREEMENT = new VESID (GROUP_ID, "digitalagreement", VERSION_23);
+  public static final VESID VID_UBL_23_DIGITALCAPABILITY = new VESID (GROUP_ID, "digitalcapability", VERSION_23);
+  public static final VESID VID_UBL_23_DOCUMENTSTATUS = new VESID (GROUP_ID, "documentstatus", VERSION_23);
+  public static final VESID VID_UBL_23_DOCUMENTSTATUSREQUEST = new VESID (GROUP_ID,
+                                                                          "documentstatusrequest",
+                                                                          VERSION_23);
+  public static final VESID VID_UBL_23_ENQUIRY = new VESID (GROUP_ID, "enquiry", VERSION_23);
+  public static final VESID VID_UBL_23_ENQUIRYRESPONSE = new VESID (GROUP_ID, "enquiryresponse", VERSION_23);
+  public static final VESID VID_UBL_23_EXCEPTIONCRITERIA = new VESID (GROUP_ID, "exceptioncriteria", VERSION_23);
+  public static final VESID VID_UBL_23_EXCEPTIONNOTIFICATION = new VESID (GROUP_ID,
+                                                                          "exceptionnotification",
+                                                                          VERSION_23);
+  public static final VESID VID_UBL_23_EXPORTCUSTOMSDECLARATION = new VESID (GROUP_ID,
+                                                                             "exportcustomsdeclaration",
+                                                                             VERSION_23);
+  public static final VESID VID_UBL_23_EXPRESSIONOFINTERESTREQUEST = new VESID (GROUP_ID,
+                                                                                "expressionofinterestrequest",
+                                                                                VERSION_23);
+  public static final VESID VID_UBL_23_EXPRESSIONOFINTERESTRESPONSE = new VESID (GROUP_ID,
+                                                                                 "expressionofinterestresponse",
+                                                                                 VERSION_23);
+  public static final VESID VID_UBL_23_FORECAST = new VESID (GROUP_ID, "forecast", VERSION_23);
+  public static final VESID VID_UBL_23_FORECASTREVISION = new VESID (GROUP_ID, "forecastrevision", VERSION_23);
+  public static final VESID VID_UBL_23_FORWARDINGINSTRUCTIONS = new VESID (GROUP_ID,
+                                                                           "forwardinginstructions",
+                                                                           VERSION_23);
+  public static final VESID VID_UBL_23_FREIGHTINVOICE = new VESID (GROUP_ID, "freightinvoice", VERSION_23);
+  public static final VESID VID_UBL_23_FULFILMENTCANCELLATION = new VESID (GROUP_ID,
+                                                                           "fulfilmentcancellation",
+                                                                           VERSION_23);
+  public static final VESID VID_UBL_23_GOODSCERTIFICATE = new VESID (GROUP_ID, "goodscertificate", VERSION_23);
+  public static final VESID VID_UBL_23_GOODSITEMITINERARY = new VESID (GROUP_ID, "goodsitemitinerary", VERSION_23);
+  public static final VESID VID_UBL_23_GOODSITEMPASSPORT = new VESID (GROUP_ID, "goodsitempassport", VERSION_23);
+  public static final VESID VID_UBL_23_GUARANTEECERTIFICATE = new VESID (GROUP_ID, "guaranteecertificate", VERSION_23);
+  public static final VESID VID_UBL_23_INSTRUCTIONFORRETURNS = new VESID (GROUP_ID,
+                                                                          "instructionforreturns",
+                                                                          VERSION_23);
+  public static final VESID VID_UBL_23_INVENTORYREPORT = new VESID (GROUP_ID, "inventoryreport", VERSION_23);
+  public static final VESID VID_UBL_23_INVOICE = new VESID (GROUP_ID, "invoice", VERSION_23);
+  public static final VESID VID_UBL_23_ITEMINFORMATIONREQUEST = new VESID (GROUP_ID,
+                                                                           "iteminformationrequest",
+                                                                           VERSION_23);
+  public static final VESID VID_UBL_23_ORDER = new VESID (GROUP_ID, "order", VERSION_23);
+  public static final VESID VID_UBL_23_ORDERCANCELLATION = new VESID (GROUP_ID, "ordercancellation", VERSION_23);
+  public static final VESID VID_UBL_23_ORDERCHANGE = new VESID (GROUP_ID, "orderchange", VERSION_23);
+  public static final VESID VID_UBL_23_ORDERRESPONSE = new VESID (GROUP_ID, "orderresponse", VERSION_23);
+  public static final VESID VID_UBL_23_ORDERRESPONSESIMPLE = new VESID (GROUP_ID, "orderresponsesimple", VERSION_23);
+  public static final VESID VID_UBL_23_PACKINGLIST = new VESID (GROUP_ID, "packinglist", VERSION_23);
+  public static final VESID VID_UBL_23_PRIORINFORMATIONNOTICE = new VESID (GROUP_ID,
+                                                                           "priorinformationnotice",
+                                                                           VERSION_23);
+  public static final VESID VID_UBL_23_PRODUCTACTIVITY = new VESID (GROUP_ID, "productactivity", VERSION_23);
+  public static final VESID VID_UBL_23_PROOFOFREEXPORTATION = new VESID (GROUP_ID, "proofofreexportation", VERSION_23);
+  public static final VESID VID_UBL_23_QUALIFICATIONAPPLICATIONREQUEST = new VESID (GROUP_ID,
+                                                                                    "qualificationapplicationrequest",
+                                                                                    VERSION_23);
+  public static final VESID VID_UBL_23_QUALIFICATIONAPPLICATIONRESPONSE = new VESID (GROUP_ID,
+                                                                                     "qualificationapplicationresponse",
+                                                                                     VERSION_23);
+  public static final VESID VID_UBL_23_QUOTATION = new VESID (GROUP_ID, "quotation", VERSION_23);
+  public static final VESID VID_UBL_23_RECEIPTADVICE = new VESID (GROUP_ID, "receiptadvice", VERSION_23);
+  public static final VESID VID_UBL_23_REMINDER = new VESID (GROUP_ID, "reminder", VERSION_23);
+  public static final VESID VID_UBL_23_REMITTANCEADVICE = new VESID (GROUP_ID, "remittanceadvice", VERSION_23);
+  public static final VESID VID_UBL_23_REQUESTFORPROOFOFREEXPORTATION = new VESID (GROUP_ID,
+                                                                                   "requestforproofofreexportation",
+                                                                                   VERSION_23);
+  public static final VESID VID_UBL_23_REQUESTFORQUOTATION = new VESID (GROUP_ID, "requestforquotation", VERSION_23);
+  public static final VESID VID_UBL_23_RETAILEVENT = new VESID (GROUP_ID, "retailevent", VERSION_23);
+  public static final VESID VID_UBL_23_SELFBILLEDCREDITNOTE = new VESID (GROUP_ID, "selfbilledcreditnote", VERSION_23);
+  public static final VESID VID_UBL_23_SELFBILLEDINVOICE = new VESID (GROUP_ID, "selfbilledinvoice", VERSION_23);
+  public static final VESID VID_UBL_23_STATEMENT = new VESID (GROUP_ID, "statement", VERSION_23);
+  public static final VESID VID_UBL_23_STOCKAVAILABILITYREPORT = new VESID (GROUP_ID,
+                                                                            "stockavailabilityreport",
+                                                                            VERSION_23);
+  public static final VESID VID_UBL_23_TENDER = new VESID (GROUP_ID, "tender", VERSION_23);
+  public static final VESID VID_UBL_23_TENDERCONTRACT = new VESID (GROUP_ID, "tendercontract", VERSION_23);
+  public static final VESID VID_UBL_23_TENDERERQUALIFICATION = new VESID (GROUP_ID,
+                                                                          "tendererqualification",
+                                                                          VERSION_23);
+  public static final VESID VID_UBL_23_TENDERERQUALIFICATIONRESPONSE = new VESID (GROUP_ID,
+                                                                                  "tendererqualificationresponse",
+                                                                                  VERSION_23);
+  public static final VESID VID_UBL_23_TENDERRECEIPT = new VESID (GROUP_ID, "tenderreceipt", VERSION_23);
+  public static final VESID VID_UBL_23_TENDERSTATUS = new VESID (GROUP_ID, "tenderstatus", VERSION_23);
+  public static final VESID VID_UBL_23_TENDERSTATUSREQUEST = new VESID (GROUP_ID, "tenderstatusrequest", VERSION_23);
+  public static final VESID VID_UBL_23_TENDERWITHDRAWAL = new VESID (GROUP_ID, "tenderwithdrawal", VERSION_23);
+  public static final VESID VID_UBL_23_TRADEITEMLOCATIONPROFILE = new VESID (GROUP_ID,
+                                                                             "tradeitemlocationprofile",
+                                                                             VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTATIONSTATUS = new VESID (GROUP_ID, "transportationstatus", VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTATIONSTATUSREQUEST = new VESID (GROUP_ID,
+                                                                                "transportationstatusrequest",
+                                                                                VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTEXECUTIONPLAN = new VESID (GROUP_ID,
+                                                                           "transportexecutionplan",
+                                                                           VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTEXECUTIONPLANREQUEST = new VESID (GROUP_ID,
+                                                                                  "transportexecutionplanrequest",
+                                                                                  VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTPROGRESSSTATUS = new VESID (GROUP_ID,
+                                                                            "transportprogressstatus",
+                                                                            VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTPROGRESSSTATUSREQUEST = new VESID (GROUP_ID,
+                                                                                   "transportprogressstatusrequest",
+                                                                                   VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTSERVICEDESCRIPTION = new VESID (GROUP_ID,
+                                                                                "transportservicedescription",
+                                                                                VERSION_23);
+  public static final VESID VID_UBL_23_TRANSPORTSERVICEDESCRIPTIONREQUEST = new VESID (GROUP_ID,
+                                                                                       "transportservicedescriptionrequest",
+                                                                                       VERSION_23);
+  public static final VESID VID_UBL_23_UNAWARDEDNOTIFICATION = new VESID (GROUP_ID,
+                                                                          "unawardednotification",
+                                                                          VERSION_23);
+  public static final VESID VID_UBL_23_UNSUBSCRIBEFROMPROCEDUREREQUEST = new VESID (GROUP_ID,
+                                                                                    "unsubscribefromprocedurerequest",
+                                                                                    VERSION_23);
+  public static final VESID VID_UBL_23_UNSUBSCRIBEFROMPROCEDURERESPONSE = new VESID (GROUP_ID,
+                                                                                     "unsubscribefromprocedureresponse",
+                                                                                     VERSION_23);
+  public static final VESID VID_UBL_23_UTILITYSTATEMENT = new VESID (GROUP_ID, "utilitystatement", VERSION_23);
+  public static final VESID VID_UBL_23_WAYBILL = new VESID (GROUP_ID, "waybill", VERSION_23);
+  public static final VESID VID_UBL_23_WEIGHTSTATEMENT = new VESID (GROUP_ID, "weightstatement", VERSION_23);
+
   private UBLValidation ()
   {}
 
@@ -416,16 +568,44 @@ public final class UBLValidation
     }
   }
 
+  /**
+   * Register all standard UBL 2.3 validation execution sets to the provided
+   * registry.
+   *
+   * @param aRegistry
+   *        The registry to add the artefacts. May not be <code>null</code>.
+   */
+  public static void initUBL23 (@Nonnull final ValidationExecutorSetRegistry aRegistry)
+  {
+    ValueEnforcer.notNull (aRegistry, "Registry");
+
+    // For better error messages
+    LocationBeautifierSPI.addMappings (UBL23NamespaceContext.getInstance ());
+
+    final boolean bNotDeprecated = false;
+    for (final EUBL23DocumentType e : EUBL23DocumentType.values ())
+    {
+      final String sName = e.getLocalName ();
+      final VESID aVESID = new VESID (GROUP_ID, sName.toLowerCase (Locale.US), VERSION_23);
+
+      // No Schematrons here
+      aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
+                                                                             "UBL " + sName + " " + VERSION_23,
+                                                                             bNotDeprecated,
+                                                                             ValidationExecutorXSD.create (e)));
+    }
+  }
+
   // public static void main (final String [] args)
   // {
-  // for (final EUBL22DocumentType e : EUBL22DocumentType.values ())
+  // for (final EUBL23DocumentType e : EUBL23DocumentType.values ())
   // {
   // final String sName = e.getLocalName ();
-  // System.out.println ("public static final VESID VID_UBL_22_" +
+  // System.out.println ("public static final VESID VID_UBL_23_" +
   // sName.toUpperCase (Locale.US) +
   // " = new VESID (GROUP_ID, \"" +
   // sName.toLowerCase (Locale.US) +
-  // "\", VERSION_22);");
+  // "\", VERSION_23);");
   // }
   // }
 }

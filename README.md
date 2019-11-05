@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.15 - work in progress
+    * Added support for UBL 2.3 CSPRD01
 * v5.1.14 - 2019-11-01
     * Added support for A-NZ PEPPOL 1.0.1 validations
     * Added OpenPEPPOL 3.9.0 (Fall release 2019) artefacts

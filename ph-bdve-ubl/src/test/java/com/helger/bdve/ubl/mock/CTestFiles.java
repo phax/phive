@@ -40,6 +40,7 @@ public final class CTestFiles
     UBLValidation.initUBL20 (VES_REGISTRY);
     UBLValidation.initUBL21 (VES_REGISTRY);
     UBLValidation.initUBL22 (VES_REGISTRY);
+    UBLValidation.initUBL23 (VES_REGISTRY);
   }
 
   private CTestFiles ()
@@ -50,7 +51,10 @@ public final class CTestFiles
   public static ICommonsList <MockFile> getAllTestFiles ()
   {
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
-    for (final VESID aESID : new VESID [] { UBLValidation.VID_UBL_21_INVOICE })
+    for (final VESID aESID : new VESID [] { UBLValidation.VID_UBL_20_INVOICE,
+                                            UBLValidation.VID_UBL_21_INVOICE,
+                                            UBLValidation.VID_UBL_22_INVOICE,
+                                            UBLValidation.VID_UBL_23_INVOICE })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -63,10 +67,14 @@ public final class CTestFiles
   {
     ValueEnforcer.notNull (aVESID, "VESID");
 
-    if (aVESID.equals (UBLValidation.VID_UBL_21_INVOICE))
-    {
+    if (aVESID.equals (UBLValidation.VID_UBL_20_INVOICE))
       return new CommonsArrayList <> (UBLTestFiles.INVOICE_FILES, ClassPathResource::new);
-    }
+    if (aVESID.equals (UBLValidation.VID_UBL_21_INVOICE))
+      return new CommonsArrayList <> (UBLTestFiles.INVOICE_FILES, ClassPathResource::new);
+    if (aVESID.equals (UBLValidation.VID_UBL_22_INVOICE))
+      return new CommonsArrayList <> (UBLTestFiles.INVOICE_FILES, ClassPathResource::new);
+    if (aVESID.equals (UBLValidation.VID_UBL_23_INVOICE))
+      return new CommonsArrayList <> (UBLTestFiles.INVOICE_FILES, ClassPathResource::new);
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
   }
