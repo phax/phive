@@ -485,6 +485,22 @@ public final class UBLValidation
   {}
 
   /**
+   * Register all standard UBL validation execution sets to the provided
+   * registry.
+   *
+   * @param aRegistry
+   *        The registry to add the artefacts. May not be <code>null</code>.
+   * @since 5.1.15
+   */
+  public static void initUBLAllVersions (@Nonnull final ValidationExecutorSetRegistry aRegistry)
+  {
+    initUBL20 (aRegistry);
+    initUBL21 (aRegistry);
+    initUBL22 (aRegistry);
+    initUBL23 (aRegistry);
+  }
+
+  /**
    * Register all standard UBL 2.0 validation execution sets to the provided
    * registry.
    *

@@ -37,10 +37,7 @@ public final class CTestFiles
   public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
   static
   {
-    UBLValidation.initUBL20 (VES_REGISTRY);
-    UBLValidation.initUBL21 (VES_REGISTRY);
-    UBLValidation.initUBL22 (VES_REGISTRY);
-    UBLValidation.initUBL23 (VES_REGISTRY);
+    UBLValidation.initUBLAllVersions (VES_REGISTRY);
   }
 
   private CTestFiles ()
