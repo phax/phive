@@ -135,7 +135,7 @@
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/main/resources/aunz-peppol/Schematron</schematronDirectory>
+              <schematronDirectory>src/test/resources/rule-source/aunz-peppol/Schematron</schematronDirectory>
               <xsltDirectory>src/main/resources/aunz-peppol/xslt</xsltDirectory>
             </configuration>
           </execution>
@@ -147,7 +147,7 @@
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/main/resources/openpeppol/3.9.0</schematronDirectory>
+              <schematronDirectory>src/test/resources/rule-source/openpeppol/3.9.0</schematronDirectory>
               <xsltDirectory>src/main/resources/openpeppol/3.9.0/xslt</xsltDirectory>
             </configuration>
           </execution>
@@ -159,34 +159,32 @@
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/main/resources/sg-peppol/Schematron</schematronDirectory>
+              <schematronDirectory>src/test/resources/rule-source/sg-peppol/Schematron</schematronDirectory>
               <xsltDirectory>src/main/resources/sg-peppol/xslt</xsltDirectory>
             </configuration>
           </execution>
           -->
           <!--
           <execution>
-            <id>3rdparty-creditnote</id>
+            <id>at-nat</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/main/resources/thirdparty/creditnote</schematronDirectory>
-              <schematronPattern>*.sch</schematronPattern>
-              <xsltDirectory>src/main/resources/thirdparty/creditnote</xsltDirectory>
+              <schematronDirectory>src/test/resources/rule-source/thirdparty/atnat</schematronDirectory>
+              <xsltDirectory>src/main/resources/thirdparty/atnat</xsltDirectory>
             </configuration>
           </execution>
           -->
           <!--
           <execution>
-            <id>3rdparty-invoice</id>
+            <id>at-gov</id>
             <goals>
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/main/resources/thirdparty/invoice</schematronDirectory>
-              <schematronPattern>*.sch</schematronPattern>
-              <xsltDirectory>src/main/resources/thirdparty/invoice</xsltDirectory>
+              <schematronDirectory>src/test/resources/rule-source/thirdparty/atgov</schematronDirectory>
+              <xsltDirectory>src/main/resources/thirdparty/atgov</xsltDirectory>
             </configuration>
           </execution>
           -->
