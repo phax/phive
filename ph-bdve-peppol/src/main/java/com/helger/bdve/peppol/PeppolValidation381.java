@@ -45,6 +45,7 @@ import com.helger.ubl21.UBL21NamespaceContext;
  * @author Philip Helger
  */
 @Immutable
+@Deprecated
 public final class PeppolValidation381
 {
   // Standard resources

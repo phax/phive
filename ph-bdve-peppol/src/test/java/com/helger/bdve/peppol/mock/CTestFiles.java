@@ -37,6 +37,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.peppol.testfiles.official.OfficialTestFiles;
 
 @Immutable
+@SuppressWarnings ("deprecation")
 public final class CTestFiles
 {
   public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
