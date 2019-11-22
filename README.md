@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.1.16 - work in progress
+    * The Peppol AU-NZ rules were updated. The old version is now the official "1.0.0" whereas the new rules are "1.0.1". Confusing, I know :-|
 * v5.1.15 - 2019-11-15
     * Added support for UBL 2.3 CSPRD01
     * Updated PEPPOL-SG rules to the latest version
