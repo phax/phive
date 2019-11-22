@@ -135,8 +135,8 @@
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>src/test/resources/rule-source/aunz-peppol/Schematron</schematronDirectory>
-              <xsltDirectory>src/main/resources/aunz-peppol/xslt</xsltDirectory>
+              <schematronDirectory>src/test/resources/rule-source/aunz-peppol/1.0.1</schematronDirectory>
+              <xsltDirectory>src/main/resources/aunz-peppol/1.0.1/xslt</xsltDirectory>
             </configuration>
           </execution>
           -->
