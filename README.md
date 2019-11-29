@@ -81,8 +81,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.1.16 - work in progress
+* v5.2.0 - 2019-11-29
     * The Peppol AU-NZ rules were updated. The old version is now the official "1.0.0" whereas the new rules are "1.0.1". Confusing, I know :-|
+    * Updated to ph-schematron 5.4.0 (incompatible change)
 * v5.1.15 - 2019-11-15
     * Added support for UBL 2.3 CSPRD01
     * Updated PEPPOL-SG rules to the latest version
@@ -215,73 +216,73 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-xrechnung</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
 </dependency>
 ```
 
@@ -291,7 +292,7 @@ Alternate usage as a Maven BOM:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-parent-pom</artifactId>
-  <version>5.1.15</version>
+  <version>5.2.0</version>
   <type>pom</type>
   <scope>import</scope>
 </dependency>

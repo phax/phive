@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 
-import org.oclc.purl.dsdl.svrl.SchematronOutputType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -52,6 +51,7 @@ import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
 import com.helger.schematron.svrl.SVRLResourceError.SVRLErrorBuilder;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
+import com.helger.schematron.svrl.jaxb.SchematronOutputType;
 import com.helger.schematron.xslt.SchematronResourceSCH;
 import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.EXMLParserFeature;
