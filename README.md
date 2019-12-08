@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.2.1 - work in progress
+    * Added SimplerInvoicing 2.0.1 and deprecated version 2.0
 * v5.2.0 - 2019-11-29
     * The Peppol AU-NZ rules were updated. The old version is now the official "1.0.0" whereas the new rules are "1.0.1". Confusing, I know :-|
     * Updated to ph-schematron 5.4.0 (incompatible change)

@@ -30,6 +30,7 @@
   <description>SimplerInvoicing validation engine</description>
   <url>https://github.com/phax/ph-bdve/ph-bdve-simplerinvoicing</url>
   <inceptionYear>2014</inceptionYear>
+  
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -37,10 +38,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
+  
   <developers>
     <developer>
       <id>philip</id>
@@ -49,6 +52,7 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
+  
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
@@ -69,6 +73,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>
@@ -108,7 +113,7 @@
             <id>si-1.0</id>
             <configuration>
               <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.0.sch</sourceFile>
-              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.0-preprocessed.sch</targetFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/preprocessed-si-ubl-1.0.sch</targetFile>
               <keepTitles>true</keepTitles>
             </configuration>
           </execution>
@@ -119,7 +124,7 @@
             <id>si-1.1</id>
             <configuration>
               <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.1.sch</sourceFile>
-              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.1-preprocessed.sch</targetFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/preprocessed-si-ubl-1.1.sch</targetFile>
               <keepTitles>true</keepTitles>
             </configuration>
           </execution>
@@ -130,7 +135,7 @@
             <id>si-1.2</id>
             <configuration>
               <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2.sch</sourceFile>
-              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2-preprocessed.sch</targetFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/preprocessed-si-ubl-1.2.sch</targetFile>
               <keepTitles>true</keepTitles>
             </configuration>
           </execution>
@@ -141,7 +146,7 @@
             <id>si-1.2-po</id>
             <configuration>
               <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2-purchaseorder.sch</sourceFile>
-              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-1.2-purchaseorder-preprocessed.sch</targetFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/preprocessed-si-ubl-1.2-purchaseorder.sch</targetFile>
               <keepTitles>true</keepTitles>
             </configuration>
           </execution>
@@ -152,7 +157,18 @@
             <id>si-2.0</id>
             <configuration>
               <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-2.0.sch</sourceFile>
-              <targetFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-2.0-preprocessed.sch</targetFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/preprocessed-si-ubl-2.0.sch</targetFile>
+              <keepTitles>true</keepTitles>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>preprocess</goal>
+            </goals>
+            <id>si-2.0.1</id>
+            <configuration>
+              <sourceFile>${basedir}/src/test/resources/simplerinvoicing/si-ubl-2.0.1.sch</sourceFile>
+              <targetFile>${basedir}/src/test/resources/simplerinvoicing/preprocessed-si-ubl-2.0.1.sch</targetFile>
               <keepTitles>true</keepTitles>
             </configuration>
           </execution>
@@ -160,9 +176,10 @@
             <goals>
               <goal>convert</goal>
             </goals>
+            <id>convert-test</id>
             <configuration>
               <schematronDirectory>${basedir}/src/test/resources/simplerinvoicing</schematronDirectory>
-              <schematronPattern>si-ubl-*-preprocessed.sch</schematronPattern>
+              <schematronPattern>preprocessed-si-ubl-*.sch</schematronPattern>
               <xsltDirectory>${basedir}/src/test/resources/simplerinvoicing</xsltDirectory>
             </configuration>
           </execution>
@@ -170,6 +187,7 @@
             <goals>
               <goal>convert</goal>
             </goals>
+            <id>convert-main</id>
             <configuration>
               <schematronDirectory>${basedir}/src/test/resources/simplerinvoicing</schematronDirectory>
               <schematronPattern>si-ubl-*.sch</schematronPattern>
