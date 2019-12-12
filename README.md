@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.2.2 - 2019-12-12
+    * Added SimplerInvoicing 2.0.2 and deprecated version 2.0.1
 * v5.2.1 - 2019-12-09
     * Added SimplerInvoicing 2.0.1 and deprecated version 2.0
 * v5.2.0 - 2019-11-29
