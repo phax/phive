@@ -65,8 +65,11 @@ public final class CTestFiles
                                             PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_INVOICE_SELF_BILLING_101,
                                             PeppolValidationAUNZ.VID_OPENPEPPOL_BIS3_AUNZ_UBL_CREDIT_NOTE_SELF_BILLING_101,
 
-                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE,
-                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE,
+                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE_100,
+                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE_100,
+
+                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE_102,
+                                            PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE_102,
 
                                             PeppolValidation370.VID_OPENPEPPOL_T19_V2,
                                             PeppolValidation370.VID_OPENPEPPOL_T58_V2,
@@ -166,13 +169,22 @@ public final class CTestFiles
     }
 
     // SG
-    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE))
+    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE_100))
     {
-      final String sBase = "src/test/resources/test-files/sg-peppol/";
+      final String sBase = "src/test/resources/test-files/sg-peppol/1.0.0/";
       return new CommonsArrayList <> (new FileSystemResource (sBase + "Singapore invoice valid 1.xml"));
     }
 
-    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE))
+    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE_100))
+      return new CommonsArrayList <> ();
+
+    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_INVOICE_102))
+    {
+      final String sBase = "src/test/resources/test-files/sg-peppol/1.0.2/";
+      return new CommonsArrayList <> (new FileSystemResource (sBase + "Singapore invoice valid 1.xml"));
+    }
+
+    if (aVESID.equals (PeppolValidationSG.VID_OPENPEPPOL_BIS3_SG_UBL_CREDIT_NOTE_102))
       return new CommonsArrayList <> ();
 
     // 3.7.0
