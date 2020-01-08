@@ -55,7 +55,10 @@ public final class CTestFiles
                                             XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_120,
                                             XRechnungValidation.VID_XRECHNUNG_CII_121,
                                             XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_121,
-                                            XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_121 })
+                                            XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_121,
+                                            XRechnungValidation.VID_XRECHNUNG_CII_122,
+                                            XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_122,
+                                            XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_122 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -143,7 +146,62 @@ public final class CTestFiles
                   ret.add (new ClassPathResource (sPrefix + s));
               }
               else
-                throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
+                if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_CII_122))
+                {
+                  final String sPrefix = "/test-files/1.2.2/cii/";
+                  for (final String s : new String [] { "01.01a-INVOICE_uncefact.xml",
+                                                        "01.02a-INVOICE_uncefact.xml",
+                                                        "01.03a-INVOICE_uncefact.xml",
+                                                        "01.04a-INVOICE_uncefact.xml",
+                                                        "01.05a-INVOICE_uncefact.xml",
+                                                        "01.06a-INVOICE_uncefact.xml",
+                                                        "01.07a-INVOICE_uncefact.xml",
+                                                        "01.08a-INVOICE_uncefact.xml",
+                                                        "01.09a-INVOICE_uncefact.xml",
+                                                        "01.10a-INVOICE_uncefact.xml",
+                                                        "01.11a-INVOICE_uncefact.xml",
+                                                        "01.12a-INVOICE_uncefact.xml",
+                                                        "01.13a-INVOICE_uncefact.xml",
+                                                        "01.14a-INVOICE_uncefact.xml",
+                                                        "01.15a-INVOICE_uncefact.xml",
+                                                        "02.01a-INVOICE_uncefact.xml",
+                                                        "02.02a-INVOICE_uncefact.xml",
+                                                        "03.01a-INVOICE_uncefact.xml",
+                                                        "03.02a-INVOICE_uncefact.xml" })
+                    ret.add (new ClassPathResource (sPrefix + s));
+                }
+                else
+                  if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_CREDITNOTE_122))
+                  {
+                    // None atm
+                  }
+                  else
+                    if (aVESID.equals (XRechnungValidation.VID_XRECHNUNG_UBL_INVOICE_122))
+                    {
+                      final String sPrefix = "/test-files/1.2.2/ubl/";
+                      for (final String s : new String [] { "01.01a-INVOICE_ubl.xml",
+                                                            "01.02a-INVOICE_ubl.xml",
+                                                            "01.03a-INVOICE_ubl.xml",
+                                                            "01.04a-INVOICE_ubl.xml",
+                                                            "01.05a-INVOICE_ubl.xml",
+                                                            "01.06a-INVOICE_ubl.xml",
+                                                            "01.07a-INVOICE_ubl.xml",
+                                                            "01.08a-INVOICE_ubl.xml",
+                                                            "01.09a-INVOICE_ubl.xml",
+                                                            "01.10a-INVOICE_ubl.xml",
+                                                            "01.11a-INVOICE_ubl.xml",
+                                                            "01.12a-INVOICE_ubl.xml",
+                                                            "01.13a-INVOICE_ubl.xml",
+                                                            "01.14a-INVOICE_ubl.xml",
+                                                            "01.15a-INVOICE_ubl.xml",
+                                                            "02.01a-INVOICE_ubl.xml",
+                                                            "02.02a-INVOICE_ubl.xml",
+                                                            "03.01a-INVOICE_ubl.xml",
+                                                            "03.02a-INVOICE_ubl.xml" })
+                        ret.add (new ClassPathResource (sPrefix + s));
+                    }
+                    else
+                      throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
 
     return ret;
   }

@@ -81,6 +81,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.2.4 - work in progress
+    * Added support for XRechnung 1.2.2 format (deprecated version 1.2.1)
 * v5.2.3 - 2019-12-18
     * Added Singapore (SG) PEPPOL Billing BIS3 rules version 1.0.2
 * v5.2.2 - 2019-12-12
