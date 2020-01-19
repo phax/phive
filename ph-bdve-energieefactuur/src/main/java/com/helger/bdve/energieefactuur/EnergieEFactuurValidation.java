@@ -89,6 +89,7 @@ public final class EnergieEFactuurValidation
    * @param aRegistry
    *        The registry to add the artefacts. May not be <code>null</code>.
    */
+  @SuppressWarnings ("deprecation")
   public static void initEnergieEFactuur (@Nonnull final ValidationExecutorSetRegistry aRegistry)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
