@@ -27,9 +27,10 @@
   <artifactId>ph-bdve</artifactId>
   <packaging>bundle</packaging>
   <name>ph-bdve</name>
-  <description>Business Document Validation Engine (BDVE)</description>
+  <description>Business Document Validation Engine (BDVE) API</description>
   <url>https://github.com/phax/ph-bdve/ph-bdve</url>
   <inceptionYear>2016</inceptionYear>
+  
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -37,10 +38,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
+  
   <developers>
     <developer>
       <id>philip</id>
@@ -49,6 +52,7 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
+  
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
@@ -62,17 +66,25 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
     </dependency>
+    
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-json</artifactId>
+      <optional>true</optional>
+    </dependency>
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-ubl21</artifactId>
       <optional>true</optional>
     </dependency>
+    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>
