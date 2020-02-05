@@ -104,7 +104,8 @@
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
             <exclude>src/main/resources/ublbe/**</exclude>
-            <exclude>src/test/resources/ublbe/**</exclude>
+            <exclude>src/test/resources/sch/**</exclude>
+            <exclude>src/test/resources/test-files/**</exclude>
           </excludes>
         </configuration>
       </plugin>
