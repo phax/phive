@@ -109,6 +109,36 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.helger.maven</groupId>
+        <artifactId>ph-schematron-maven-plugin</artifactId>
+        <executions>
+      <!-- Enable if something changed only 
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <id>v1</id>
+            <configuration>
+              <schematronDirectory>${basedir}/src/test/resources/sch/en16931/v1</schematronDirectory>
+              <schematronPattern>*.sch</schematronPattern>
+              <xsltDirectory>${basedir}/src/main/resources/ublbe/en16931/v1</xsltDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <id>v1.1</id>
+            <configuration>
+              <schematronDirectory>${basedir}/src/test/resources/sch/en16931/v1.1</schematronDirectory>
+              <schematronPattern>*.sch</schematronPattern>
+              <xsltDirectory>${basedir}/src/main/resources/ublbe/en16931/v1.1</xsltDirectory>
+            </configuration>
+          </execution>
+       -->
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>

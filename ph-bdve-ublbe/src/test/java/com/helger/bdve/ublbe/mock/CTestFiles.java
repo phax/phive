@@ -33,6 +33,7 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 
 @Immutable
+@SuppressWarnings ("deprecation")
 public final class CTestFiles
 {
   public static final ValidationExecutorSetRegistry VES_REGISTRY = new ValidationExecutorSetRegistry ();
@@ -53,8 +54,10 @@ public final class CTestFiles
     final ICommonsList <MockFile> ret = new CommonsArrayList <> ();
     for (final VESID aESID : new VESID [] { UBLBEValidation.VID_EFFF_INVOICE,
                                             UBLBEValidation.VID_EFFF_CREDIT_NOTE,
-                                            UBLBEValidation.VID_UBL_BE_INVOICE,
-                                            UBLBEValidation.VID_UBL_BE_CREDIT_NOTE })
+                                            UBLBEValidation.VID_UBL_BE_INVOICE_100,
+                                            UBLBEValidation.VID_UBL_BE_CREDIT_NOTE_100,
+                                            UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                                            UBLBEValidation.VID_UBL_BE_CREDIT_NOTE_110 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aESID))
         ret.add (MockFile.createGoodCase (aRes, aESID));
 
@@ -79,66 +82,132 @@ public final class CTestFiles
       aMap.putSingle (UBLBEValidation.VID_EFFF_CREDIT_NOTE,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000002.xml"));
     }
+    // 1.0.0
     {
       final String sPath = sPathPrefix + "en16931/v1/";
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000001.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000003.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000004.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000005.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000006.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000007.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000008.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000009.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000010.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000012.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000013.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000015.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000016.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000017.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000018.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000019.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000020.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000021.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000022.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000023.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000025.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000026.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000027.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000028.xml"));
 
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_CREDIT_NOTE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_CREDIT_NOTE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000002.xml"));
-      aMap.putSingle (UBLBEValidation.VID_UBL_BE_CREDIT_NOTE,
+      aMap.putSingle (UBLBEValidation.VID_UBL_BE_CREDIT_NOTE_100,
                       new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000024.xml"));
+    }
+    // 1.1.0
+    {
+      final String sPath = sPathPrefix + "en16931/v1.1/";
+      if (false)
+      {
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000001.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000003.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000004.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000005.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000006.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000007.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000008.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000009.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000010.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000012.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000013.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000015.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000016.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000017.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000018.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000019.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000020.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000021.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000022.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000023.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000025.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000026.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000027.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_INVOICE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000028.xml"));
+
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_CREDIT_NOTE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000002.xml"));
+        aMap.putSingle (UBLBEValidation.VID_UBL_BE_CREDIT_NOTE_110,
+                        new ClassPathResource (sPath + "UBLBE_BE0000000196_V01-15000024.xml"));
+      }
     }
 
     final ICommonsList <IReadableResource> ret = aMap.get (aVESID);
     if (ret != null)
       return ret;
+
+    // TODO work around
+    if (aVESID.equals (UBLBEValidation.VID_UBL_BE_INVOICE_110) ||
+        aVESID.equals (UBLBEValidation.VID_UBL_BE_CREDIT_NOTE_110))
+      return new CommonsArrayList <> ();
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
   }
