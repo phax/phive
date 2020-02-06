@@ -45,20 +45,19 @@ import com.helger.ubl21.UBL21NamespaceContext;
 public final class UBLBEValidation
 {
   private static final String GROUPID_EFFF = "be.efff";
-  private static final String VERSION_300 = "3.0.0";
-  public static final VESID VID_EFFF_CREDIT_NOTE = new VESID (GROUPID_EFFF, "credit-note", VERSION_300);
-  public static final VESID VID_EFFF_INVOICE = new VESID (GROUPID_EFFF, "invoice", VERSION_300);
+  @Deprecated
+  public static final VESID VID_EFFF_CREDIT_NOTE = new VESID (GROUPID_EFFF, "credit-note", "3.0.0");
+  @Deprecated
+  public static final VESID VID_EFFF_INVOICE = new VESID (GROUPID_EFFF, "invoice", "3.0.0");
 
   private static final String GROUPID_UBL_BE = "be.ubl";
-  private static final String VERSION_100 = "1.0.0";
   @Deprecated
-  public static final VESID VID_UBL_BE_CREDIT_NOTE_100 = new VESID (GROUPID_UBL_BE, "credit-note", VERSION_100);
+  public static final VESID VID_UBL_BE_CREDIT_NOTE_100 = new VESID (GROUPID_UBL_BE, "credit-note", "1.0.0");
   @Deprecated
-  public static final VESID VID_UBL_BE_INVOICE_100 = new VESID (GROUPID_UBL_BE, "invoice", VERSION_100);
+  public static final VESID VID_UBL_BE_INVOICE_100 = new VESID (GROUPID_UBL_BE, "invoice", "1.0.0");
 
-  private static final String VERSION_110 = "1.1.0";
-  public static final VESID VID_UBL_BE_CREDIT_NOTE_110 = new VESID (GROUPID_UBL_BE, "credit-note", VERSION_110);
-  public static final VESID VID_UBL_BE_INVOICE_110 = new VESID (GROUPID_UBL_BE, "invoice", VERSION_110);
+  public static final VESID VID_UBL_BE_CREDIT_NOTE_110 = new VESID (GROUPID_UBL_BE, "credit-note", "1.1.0");
+  public static final VESID VID_UBL_BE_INVOICE_110 = new VESID (GROUPID_UBL_BE, "invoice", "1.1.0");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -109,13 +108,13 @@ public final class UBLBEValidation
                                                                                   VID_EFFF_INVOICE,
                                                                                   "e-FFF Invoice " +
                                                                                                     VID_EFFF_INVOICE.getVersion (),
-                                                                                  bNotDeprecated,
+                                                                                  bDeprecated,
                                                                                   _createXSLT (BE_EFFF_300)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
                                                                                   VID_EFFF_CREDIT_NOTE,
                                                                                   "e-FFF Credit Note " +
                                                                                                         VID_EFFF_CREDIT_NOTE.getVersion (),
-                                                                                  bNotDeprecated,
+                                                                                  bDeprecated,
                                                                                   _createXSLT (BE_EFFF_300)));
 
     // Not derived

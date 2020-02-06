@@ -84,6 +84,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v5.2.5 - work in progress
     * Added a default JSON representation for validation results
     * Added support for UBL.BE 1.1 (version 2019-11)
+    * Deprecated UBL.BE 1.0, e-FFF Invoice and e-FFF Credit Note validations
 * v5.2.4 - 2010-01-13
     * Added support for XRechnung 1.2.2 format (deprecated version 1.2.1)
 * v5.2.3 - 2019-12-18
