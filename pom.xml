@@ -103,6 +103,7 @@
         <artifactId>ph-genericode</artifactId>
         <version>6.1.0</version>
       </dependency>
+      <!-- this is only needed for the test files -->
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>peppol-commons-parent-pom</artifactId>
