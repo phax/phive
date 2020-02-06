@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+ xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+ xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+	<cbc:CustomizationID>urn:cen.eu:en16931:2017#conformant#urn:UBL.BE:1.0.0.20180214</cbc:CustomizationID>
+	<cbc:ProfileID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</cbc:ProfileID>
+	<cbc:ID>V01/15000008</cbc:ID>
+	<cbc:IssueDate>2018-04-13</cbc:IssueDate>
+	<cbc:DueDate>2018-05-13</cbc:DueDate>
+	<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+	<cbc:Note>Testcase 8</cbc:Note>
+	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+	<cac:OrderReference>
+		<cbc:ID>YR127129</cbc:ID>
+	</cac:OrderReference>
+	<cac:AdditionalDocumentReference>
+		<cbc:ID>UBL.BE</cbc:ID>
+		<cbc:DocumentDescription>UBL.BE Compatible software Version 5.21</cbc:DocumentDescription>
+	</cac:AdditionalDocumentReference>
+	<cac:AdditionalDocumentReference>
+		<cbc:ID>V01/15000008</cbc:ID>
+		<cbc:DocumentDescription>CommercialInvoice</cbc:DocumentDescription>
+		<cac:Attachment>
+			<cbc:EmbeddedDocumentBinaryObject filename="15000008.pdf" mimeCode="application/pdf">
+			VGVzdA==
+			</cbc:EmbeddedDocumentBinaryObject>
+		</cac:Attachment>
+	</cac:AdditionalDocumentReference>
+	<cac:AccountingSupplierParty>
+		<cac:Party>				
+			<cbc:EndpointID schemeID="9956">0000000196</cbc:EndpointID>			
+			<cac:PartyName>			
+				<cbc:Name>My Supplier Company N.V.</cbc:Name>		
+			</cac:PartyName>			
+			<cac:PostalAddress>			
+				<cbc:StreetName>De Grote Meir 22</cbc:StreetName>		
+				<cbc:CityName>ANTWERPEN</cbc:CityName>		
+				<cbc:PostalZone>2000</cbc:PostalZone>		
+				<cac:Country>		
+					<cbc:IdentificationCode>BE</cbc:IdentificationCode>	
+				</cac:Country>		
+			</cac:PostalAddress>			
+			<cac:PartyTaxScheme>			
+				<cbc:CompanyID>BE0000000196</cbc:CompanyID>		
+				<cac:TaxScheme>		
+					<cbc:ID>VAT</cbc:ID>	
+				</cac:TaxScheme>		
+			</cac:PartyTaxScheme>			
+			<cac:PartyLegalEntity>			
+				<cbc:RegistrationName>My Supplier Company</cbc:RegistrationName>		
+				<cbc:CompanyID schemeID="9956">0000000196</cbc:CompanyID>		
+			</cac:PartyLegalEntity>			
+			<cac:Contact>			
+				<cbc:ElectronicMail>john.doole@mysuppliercompany.be</cbc:ElectronicMail>		
+			</cac:Contact>			
+		</cac:Party>				
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>				
+			<cbc:EndpointID schemeID="9956">0000000295</cbc:EndpointID>			
+			<cac:PartyName>			
+				<cbc:Name>My Customer Company S.A.</cbc:Name>		
+			</cac:PartyName>			
+			<cac:PostalAddress>			
+				<cbc:StreetName>Boulevard  Sint Michel 53</cbc:StreetName>		
+				<cbc:CityName>BRUXELLES</cbc:CityName>		
+				<cbc:PostalZone>1000</cbc:PostalZone>		
+				<cac:Country>		
+					<cbc:IdentificationCode>BE</cbc:IdentificationCode>	
+				</cac:Country>		
+			</cac:PostalAddress>			
+			<cac:PartyTaxScheme>			
+				<cbc:CompanyID>BE0000000295</cbc:CompanyID>		
+				<cac:TaxScheme>		
+					<cbc:ID>VAT</cbc:ID>	
+				</cac:TaxScheme>		
+			</cac:PartyTaxScheme>			
+			<cac:PartyLegalEntity>			
+				<cbc:RegistrationName>My Customer Company</cbc:RegistrationName>		
+				<cbc:CompanyID schemeID="9956">0000000295</cbc:CompanyID>		
+			</cac:PartyLegalEntity>			
+			<cac:Contact>			
+				<cbc:ElectronicMail>pete.smith@mycustomercompany.be</cbc:ElectronicMail>		
+			</cac:Contact>			
+		</cac:Party>				
+	</cac:AccountingCustomerParty>
+	<cac:PaymentMeans>
+		<cbc:PaymentMeansCode>30</cbc:PaymentMeansCode>
+		<cbc:PaymentID>Invoice 15000008</cbc:PaymentID>
+		<cac:PayeeFinancialAccount>
+			<cbc:ID>BE54000000000097</cbc:ID>
+			<cac:FinancialInstitutionBranch>
+				<cbc:ID>BPOTBEB1</cbc:ID>
+			</cac:FinancialInstitutionBranch>
+		</cac:PayeeFinancialAccount>
+	</cac:PaymentMeans>
+	<cac:PaymentTerms>
+		<cbc:Note>30 days after invoice date</cbc:Note>
+	</cac:PaymentTerms>
+	<cac:TaxTotal>
+		<cbc:TaxAmount currencyID="EUR">0</cbc:TaxAmount>
+		<cac:TaxSubtotal>
+			<cbc:TaxableAmount currencyID="EUR">400</cbc:TaxableAmount>
+			<cbc:TaxAmount currencyID="EUR">0</cbc:TaxAmount>
+			<cac:TaxCategory>
+				<cbc:ID>AE</cbc:ID>
+				<cbc:Name>45</cbc:Name>
+				<cbc:Percent>0</cbc:Percent>
+				<cbc:TaxExemptionReasonCode>BETE-45</cbc:TaxExemptionReasonCode>
+				<cbc:TaxExemptionReason>Reverse charge - Contractor</cbc:TaxExemptionReason>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:TaxCategory>
+		</cac:TaxSubtotal>
+	</cac:TaxTotal>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="EUR">400</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="EUR">400</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="EUR">400</cbc:TaxInclusiveAmount>
+		<cbc:AllowanceTotalAmount currencyID="EUR">0</cbc:AllowanceTotalAmount>
+		<cbc:ChargeTotalAmount currencyID="EUR">0</cbc:ChargeTotalAmount>
+		<cbc:PrepaidAmount currencyID="EUR">0</cbc:PrepaidAmount>
+		<cbc:PayableAmount currencyID="EUR">400</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:InvoicedQuantity unitCode="ZZ">2</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="EUR">400</cbc:LineExtensionAmount>
+		<cac:TaxTotal>
+		  <cbc:TaxAmount currencyID="EUR">0</cbc:TaxAmount>
+		</cac:TaxTotal>
+		<cac:Item>
+			<cbc:Name>Repair works</cbc:Name>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID>AE</cbc:ID>
+				<cbc:Name>45</cbc:Name>
+				<cbc:Percent>0</cbc:Percent>
+				<cbc:TaxExemptionReasonCode>BETE-45</cbc:TaxExemptionReasonCode>
+				<cbc:TaxExemptionReason>Reverse charge - Contractor</cbc:TaxExemptionReason>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="EUR">200</cbc:PriceAmount>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>
