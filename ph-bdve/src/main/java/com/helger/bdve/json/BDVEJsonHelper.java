@@ -84,7 +84,7 @@ public final class BDVEJsonHelper
    *
    * @param aErrorLevel
    *        The error level to convert. May not be <code>null</code>.
-   * @return A non-<code>null</<code> JSON value string.
+   * @return A non-<code>null</code> JSON value string.
    */
   @Nonnull
   @Nonempty
@@ -105,7 +105,7 @@ public final class BDVEJsonHelper
    *
    * @param b
    *        boolean value to get converted.
-   * @return A non-<code>null</<code> JSON value string.
+   * @return A non-<code>null</code> JSON value string.
    * @see #getTriState(ETriState)
    */
   @Nonnull
@@ -122,7 +122,7 @@ public final class BDVEJsonHelper
    *
    * @param eTriState
    *        Tristate value to get converted. May not be <code>null</code>.
-   * @return A non-<code>null</<code> JSON value string.
+   * @return A non-<code>null</code> JSON value string.
    * @see #getTriState(boolean)
    */
   @Nonnull
