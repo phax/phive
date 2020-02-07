@@ -48,7 +48,7 @@ public final class UBLValidation
   public static final String VERSION_20 = "2.0";
   public static final String VERSION_21 = "2.1";
   public static final String VERSION_22 = "2.2";
-  public static final String VERSION_23 = "2.3-csprd01";
+  public static final String VERSION_23 = "2.3-csprd02";
 
   // UBL 2.0
   public static final VESID VID_UBL_20_APPLICATIONRESPONSE = new VESID (GROUP_ID, "applicationresponse", VERSION_20);
@@ -410,6 +410,9 @@ public final class UBLValidation
                                                                            VERSION_23);
   public static final VESID VID_UBL_23_PRODUCTACTIVITY = new VESID (GROUP_ID, "productactivity", VERSION_23);
   public static final VESID VID_UBL_23_PROOFOFREEXPORTATION = new VESID (GROUP_ID, "proofofreexportation", VERSION_23);
+  public static final VESID VID_UBL_23_PROOFOFREEXPORTATIONREQUEST = new VESID (GROUP_ID,
+                                                                                "proofofreexportationrequest",
+                                                                                VERSION_23);
   public static final VESID VID_UBL_23_QUALIFICATIONAPPLICATIONREQUEST = new VESID (GROUP_ID,
                                                                                     "qualificationapplicationrequest",
                                                                                     VERSION_23);
@@ -420,9 +423,6 @@ public final class UBLValidation
   public static final VESID VID_UBL_23_RECEIPTADVICE = new VESID (GROUP_ID, "receiptadvice", VERSION_23);
   public static final VESID VID_UBL_23_REMINDER = new VESID (GROUP_ID, "reminder", VERSION_23);
   public static final VESID VID_UBL_23_REMITTANCEADVICE = new VESID (GROUP_ID, "remittanceadvice", VERSION_23);
-  public static final VESID VID_UBL_23_REQUESTFORPROOFOFREEXPORTATION = new VESID (GROUP_ID,
-                                                                                   "requestforproofofreexportation",
-                                                                                   VERSION_23);
   public static final VESID VID_UBL_23_REQUESTFORQUOTATION = new VESID (GROUP_ID, "requestforquotation", VERSION_23);
   public static final VESID VID_UBL_23_RETAILEVENT = new VESID (GROUP_ID, "retailevent", VERSION_23);
   public static final VESID VID_UBL_23_SELFBILLEDCREDITNOTE = new VESID (GROUP_ID, "selfbilledcreditnote", VERSION_23);
