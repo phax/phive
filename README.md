@@ -4,17 +4,18 @@ A generic document validation engine originally developed for PEPPOL but now als
 
 This project is divided into sub-projects each keeping tracking of one document type set:
   * ph-bdve - generic "Business Document Validation Engine"
-  * ph-bdve-peppol - the PEPPOL specific setup etc
-  * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.x support from https://github.com/SimplerInvoicing/validation
-  * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
-  * ph-bdve-ehf - Validation rules for EHF (Norwegian public procurement) - since 4.0.1
-  * ph-bdve-ubl - Validation rules for pure UBL (without any Schematron) - since 4.0.1
   * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
+  * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
+  * ph-bdve-ehf - Validation rules for EHF (Norwegian public procurement) - since 4.0.1
+  * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
   * ph-bdve-energieefactuur - Validation rules for Dutch Energie eFactuur - since 4.0.2
   * ph-bdve-oioubl - Validation rules for Danish OIOUBL - since 4.0.3
-  * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
+  * ph-bdve-peppol - the Peppol specific setup etc
+  * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.x support from https://github.com/SimplerInvoicing/validation
   * ph-bdve-teapps - Validation rules for Tieto TEAPPSXML - since 5.0.0
+  * ph-bdve-ubl - Validation rules for pure UBL (without any Schematron) - since 4.0.1
   * ph-bdve-ublbe - Validation rules for e-FFF/UBL.BE - since 5.0.5
+  * ph-bdve-xrechnung - Validation rules for German XRechnung - since 5.1.9
 
 A running example can be found on [PEPPOL Practical](http://peppol.helger.com/public/menuitem-validation-bis2).
 
@@ -83,73 +84,73 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-teapps</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-xrechnung</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
 </dependency>
 ```
 
@@ -159,7 +160,7 @@ Alternate usage as a Maven BOM:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-parent-pom</artifactId>
-  <version>5.2.5</version>
+  <version>5.2.6</version>
   <type>pom</type>
   <scope>import</scope>
 </dependency>
@@ -171,7 +172,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.2.6 - work in progress
+* v5.2.6 - 2020-02-10
     * Updated the UBL 2.3 identifiers from "csprd01" to "csprd02"
     * Added Peppol BIS 3 billing Hotfix from 2020-02-10 (BR-S-08 for standard VAT, BR-IG-08 for Canary Islands tax, BR-IP-08 for Ceuta and Melilla tax) as Peppol rules 3.9.1
 * v5.2.5 - 2020-02-06
