@@ -121,7 +121,7 @@
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>${basedir}/src/main/resources/ehf/2018-11</schematronDirectory>
+              <schematronDirectory>${basedir}/src/test/resources/ehf/2018-11/sch</schematronDirectory>
               <xsltDirectory>${basedir}/src/main/resources/ehf/2018-11/xslt</xsltDirectory>
             </configuration>
           </execution>
@@ -133,7 +133,7 @@
               <goal>convert</goal>
             </goals>
             <configuration>
-              <schematronDirectory>${basedir}/src/main/resources/ehf/2019-06</schematronDirectory>
+              <schematronDirectory>${basedir}/src/test/resources/ehf/2019-06/sch</schematronDirectory>
               <xsltDirectory>${basedir}/src/main/resources/ehf/2019-06/xslt</xsltDirectory>
             </configuration>
           </execution>

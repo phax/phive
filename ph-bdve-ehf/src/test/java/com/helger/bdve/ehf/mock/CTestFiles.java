@@ -81,7 +81,7 @@ public final class CTestFiles
   public static ICommonsList <? extends IReadableResource> getAllMatchingTestFiles (@Nonnull final VESID aVESID)
   {
     ValueEnforcer.notNull (aVESID, "VESID");
-    String sPath = "/ehf/2018-11/";
+    String sPath = "/ehf/2018-11/examples/";
 
     if (aVESID.equals (EHFValidation.VID_EHF_CATALOGUE_1_0_13))
     {
@@ -134,7 +134,7 @@ public final class CTestFiles
                                                              "T17 biixy gyldig purring med alle elementer.xml"));
     }
 
-    sPath = "/ehf/2019-06/";
+    sPath = "/ehf/2019-06/examples/";
     if (aVESID.equals (EHFValidation.VID_EHF_CATALOGUE_1_0_14))
     {
       return new CommonsArrayList <> (new ClassPathResource (sPath + "T19 Example file EHF Catalogue.xml"));
