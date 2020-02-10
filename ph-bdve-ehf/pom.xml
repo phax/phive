@@ -128,7 +128,7 @@
       -->
       <!--
           <execution>
-            <id>2010-06</id>
+            <id>2019-06</id>
             <goals>
               <goal>convert</goal>
             </goals>
@@ -138,6 +138,18 @@
             </configuration>
           </execution>
       -->    
+      <!--
+          <execution>
+            <id>2019-12</id>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <configuration>
+              <schematronDirectory>${basedir}/src/test/resources/ehf/2019-12/sch</schematronDirectory>
+              <xsltDirectory>${basedir}/src/main/resources/ehf/2019-12/xslt</xsltDirectory>
+            </configuration>
+          </execution>
+      -->
         </executions>
       </plugin>
     </plugins>

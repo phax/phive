@@ -175,6 +175,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v5.2.6 - 2020-02-10
     * Updated the UBL 2.3 identifiers from "csprd01" to "csprd02"
     * Added Peppol BIS 3 billing Hotfix from 2020-02-10 (BR-S-08 for standard VAT, BR-IG-08 for Canary Islands tax, BR-IP-08 for Ceuta and Melilla tax) as Peppol rules 3.9.1
+    * Updated to the EHF G2 rules from 2019-12
 * v5.2.5 - 2020-02-06
     * Added a default JSON representation for validation results - see class `BDVEJsonHelper`
     * Added support for UBL.BE 1.1 (version 2019-11)
