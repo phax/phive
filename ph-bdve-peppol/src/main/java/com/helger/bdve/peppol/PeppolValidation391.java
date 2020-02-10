@@ -39,19 +39,18 @@ import com.helger.ubl21.EUBL21DocumentType;
 import com.helger.ubl21.UBL21NamespaceContext;
 
 /**
- * OpenPEPPOL validation artefacts release 3.8.1. Spring 2019 release hotfix.
- * Valid per August 15th, 2019
+ * OpenPEPPOL validation artefacts release 3.9.1. Fall 2019 release with hotfix
+ * from 2020-02-10. Valid per February 10th, 2020
  *
  * @author Philip Helger
  */
 @Immutable
-@Deprecated
-public final class PeppolValidation381
+public final class PeppolValidation391
 {
   // Standard resources
-  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 8, 1);
+  public static final Version PEPPOL_VALIDATION_ARTEFACT_VERSION = new Version (3, 9, 1);
   public static final String VERSION_STR = PEPPOL_VALIDATION_ARTEFACT_VERSION.getAsString (true);
-  public static final LocalDate VALID_PER = PDTFactory.createLocalDate (2019, Month.AUGUST, 15);
+  public static final LocalDate VALID_PER = PDTFactory.createLocalDate (2020, Month.FEBRUARY, 10);
 
   // Standard
   public static final VESID VID_OPENPEPPOL_INVOICE_V3 = new VESID ("eu.peppol.bis3", "invoice", VERSION_STR);
@@ -71,7 +70,7 @@ public final class PeppolValidation381
   @Nonnull
   private static ClassLoader _getCL ()
   {
-    return PeppolValidation381.class.getClassLoader ();
+    return PeppolValidation391.class.getClassLoader ();
   }
 
   // Previously T10 and T14
@@ -106,7 +105,7 @@ public final class PeppolValidation381
                                                                                           "PEPPOLBIS-T111.xslt",
                                                                                           _getCL ());
 
-  private PeppolValidation381 ()
+  private PeppolValidation391 ()
   {}
 
   @Nonnull
@@ -122,14 +121,14 @@ public final class PeppolValidation381
     ValueEnforcer.notNull (aRegistry, "Registry");
 
     final String sVersion = " (" + VERSION_STR + ")";
-    final String sAkaVersionBilling = " (aka BIS Billing 3.0.4)";
-    final String sAkaVersionBIS = " (aka BIS 3.0.2)";
-    final boolean bDeprecated = true;
+    final String sAkaVersionBilling = " (aka BIS Billing 3.0.5 + Hotfix)";
+    final String sAkaVersionBIS = " (aka BIS 3.0.3)";
+    final boolean bNotDeprecated = false;
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_INVOICE_V3,
                                                                            "OpenPEPPOL Invoice" +
                                                                                                       sVersion +
                                                                                                       sAkaVersionBilling,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (INVOICE_CEN),
                                                                            _createXSLT (INVOICE_PEPPOL)));
@@ -137,7 +136,7 @@ public final class PeppolValidation381
                                                                            "OpenPEPPOL Credit Note" +
                                                                                                           sVersion +
                                                                                                           sAkaVersionBilling,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            _createXSLT (INVOICE_CEN),
                                                                            _createXSLT (INVOICE_PEPPOL)));
@@ -145,61 +144,61 @@ public final class PeppolValidation381
                                                                            "OpenPEPPOL Order" +
                                                                                                   sVersion +
                                                                                                   sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.ORDER),
                                                                            _createXSLT (ORDER)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T16_V3,
                                                                            "OpenPEPPOL Despatch Advice" +
                                                                                                   sVersion +
                                                                                                   sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.DESPATCH_ADVICE),
                                                                            _createXSLT (DESPATCH_ADVICE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T19_V3,
                                                                            "OpenPEPPOL Catalogue" +
                                                                                                   sVersion +
                                                                                                   sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE),
                                                                            _createXSLT (CATALOGUE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T58_V3,
                                                                            "OpenPEPPOL Catalogue Response" +
                                                                                                   sVersion +
                                                                                                   sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.APPLICATION_RESPONSE),
                                                                            _createXSLT (CATALOGUE_RESPONSE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T71_V3,
                                                                            "OpenPEPPOL MLR" + sVersion + sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.APPLICATION_RESPONSE),
                                                                            _createXSLT (MLR)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T76_V3,
                                                                            "OpenPEPPOL Order Response" +
                                                                                                   sVersion +
                                                                                                   sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE),
                                                                            _createXSLT (ORDER_RESPONSE)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T77_V3,
                                                                            "OpenPEPPOL Punch Out" +
                                                                                                   sVersion +
                                                                                                   sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CATALOGUE),
                                                                            _createXSLT (PUNCH_OUT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T110_V3,
                                                                            "OpenPEPPOL Order Agreement" +
                                                                                                    sVersion +
                                                                                                    sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.ORDER_RESPONSE),
                                                                            _createXSLT (ORDER_AGREEMENT)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_OPENPEPPOL_T111_V3,
                                                                            "OpenPEPPOL Invoice Message Response" +
                                                                                                    sVersion +
                                                                                                    sAkaVersionBIS,
-                                                                           bDeprecated,
+                                                                           bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.APPLICATION_RESPONSE),
                                                                            _createXSLT (INVOICE_MESSAGE_RESPONSE)));
   }
