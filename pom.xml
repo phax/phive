@@ -106,8 +106,16 @@
       <!-- this is only needed for the test files -->
       <dependency>
         <groupId>com.helger</groupId>
+        <artifactId>ph-web-parent-pom</artifactId>
+        <version>9.1.9</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- this is only needed for the test files -->
+      <dependency>
+        <groupId>com.helger</groupId>
         <artifactId>peppol-commons-parent-pom</artifactId>
-        <version>8.0.0</version>
+        <version>8.0.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
