@@ -33,6 +33,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.lang.IHasClassLoader;
+import com.helger.commons.state.EValidity;
 
 /**
  * Execute multiple {@link IValidationExecutor}s at once. It is basically a
@@ -270,5 +271,36 @@ public class ValidationExecutionManager implements IHasClassLoader
   public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
   {
     return executeValidation (aSource, (Locale) null);
+  }
+
+  /**
+   * Perform a fast validation that stops on the first error.
+   *
+   * @param aSource
+   *        The source artefact to be validated. May not be <code>null</code>.
+   * @param aLocale
+   *        Custom locale to use e.g. for error messages. May be
+   *        <code>null</code> to use the system default locale.
+   * @return {@link EValidity#VALID} if the document is valid,
+   *         {@link EValidity#INVALID} if the document is invalid. Never
+   *         <code>null</code>.
+   * @since 5.2.7
+   */
+  @Nonnull
+  public EValidity executeFastValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
+  {
+    ValueEnforcer.notNull (aSource, "Source");
+
+    for (final IValidationExecutor aExecutor : getAllExecutors ())
+    {
+      // Execute validation
+      final ValidationResult aResult = aExecutor.applyValidation (aSource, aLocale);
+      if (aResult.isFailure ())
+      {
+        // Break asap
+        return EValidity.INVALID;
+      }
+    }
+    return EValidity.VALID;
   }
 }
