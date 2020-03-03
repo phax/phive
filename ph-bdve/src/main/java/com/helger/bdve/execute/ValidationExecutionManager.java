@@ -219,15 +219,6 @@ public class ValidationExecutionManager implements IHasClassLoader
       }
       else
       {
-        // Find the matching class loader
-        ClassLoader aValidationCL = aExecutor.getValidationArtefact ().getClassLoader ();
-        if (aValidationCL == null)
-        {
-          // Use the global one as fallback, if none is defined in the
-          // validation artefact
-          aValidationCL = getClassLoader ();
-        }
-
         // Execute validation
         final ValidationResult aResult = aExecutor.applyValidation (aSource, aLocale);
         assert aResult != null;
