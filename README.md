@@ -137,7 +137,7 @@ Add the following to your `pom.xml` to use this artifact:
 
 <dependency>
   <groupId>com.helger</groupId>
-  <artifactId>ph-bdve-teapps</artifactId>
+  <artifactId7>ph-bdve-teapps</artifactId>
   <version>5.2.6</version>
 </dependency>
 
@@ -172,6 +172,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.2.7 - work in progress
+    * Deprecated `eu.cen.en16931:edifact:1.0.0` as it is not maintained
+    * Extended validation API
 * v5.2.6 - 2020-02-10
     * Updated the UBL 2.3 identifiers from "csprd01" to "csprd02"
     * Added Peppol BIS 3 billing Hotfix from 2020-02-10 (BR-S-08 for standard VAT, BR-IG-08 for Canary Islands tax, BR-IP-08 for Ceuta and Melilla tax) as Peppol rules 3.9.1

@@ -75,6 +75,7 @@ public final class EN16931Validation
   public static final VESID VID_CII_130 = new VESID ("eu.cen.en16931", "cii", VERSION_130);
 
   // EDIFACT
+  @Deprecated
   public static final VESID VID_EDIFACT_100 = new VESID ("eu.cen.en16931", "edifact", VERSION_100);
 
   // UBL
@@ -128,6 +129,7 @@ public final class EN16931Validation
                                                                                       _getCL ());
 
   // EDIFACT
+  @Deprecated
   public static final IReadableResource INVOICE_EDIFACT_100_XSLT = new ClassPathResource ("/en16931/1.0.0/edifact/xslt/EN16931-EDIFACT-validation.xslt",
                                                                                           _getCL ());
 
@@ -231,7 +233,7 @@ public final class EN16931Validation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_EDIFACT_100,
                                                                            "EN 16931 EDIFACT/ISO 20625 " +
                                                                                             VID_EDIFACT_100.getVersion (),
-                                                                           bNotDeprecated,
+                                                                           bDeprecated,
                                                                            ValidationExecutorXSD.create (new JAXBDocumentType (MINVOIC.class,
                                                                                                                                new CommonsArrayList <> (new ClassPathResource ("/schemas/INVOIC_D14B_ISO20625.xsd",
                                                                                                                                                                                _getCL ())),
