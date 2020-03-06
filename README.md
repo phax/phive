@@ -175,6 +175,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v5.2.7 - work in progress
     * Deprecated `eu.cen.en16931:edifact:1.0.0` as it is not maintained
     * Extended validation API
+    * Added support for EN 16931 1.3.1 format (deprecated version 1.3.0)
 * v5.2.6 - 2020-02-10
     * Updated the UBL 2.3 identifiers from "csprd01" to "csprd02"
     * Added Peppol BIS 3 billing Hotfix from 2020-02-10 (BR-S-08 for standard VAT, BR-IG-08 for Canary Islands tax, BR-IP-08 for Ceuta and Melilla tax) as Peppol rules 3.9.1
