@@ -99,6 +99,18 @@ public final class BDVEJsonHelper
     return JSON_ERRORLEVEL_SUCCESS;
   }
 
+  @Nullable
+  public static IErrorLevel getAsErrorLevel (@Nullable final String sErrorLevel)
+  {
+    if (JSON_ERRORLEVEL_ERROR.equals (sErrorLevel))
+      return EErrorLevel.ERROR;
+    if (JSON_ERRORLEVEL_WARN.equals (sErrorLevel))
+      return EErrorLevel.WARN;
+    if (JSON_ERRORLEVEL_SUCCESS.equals (sErrorLevel))
+      return EErrorLevel.SUCCESS;
+    return null;
+  }
+
   /**
    * Get the tristate representation of the provided value. Either
    * {@link #JSON_TRISTATE_TRUE} or {@link #JSON_TRISTATE_FALSE}.
@@ -133,6 +145,18 @@ public final class BDVEJsonHelper
     if (eTriState.isUndefined ())
       return JSON_TRISTATE_UNDEFINED;
     return getTriState (eTriState.isTrue ());
+  }
+
+  @Nullable
+  public static ETriState getAsTriState (@Nullable final String sTriState)
+  {
+    if (JSON_TRISTATE_TRUE.equals (sTriState))
+      return ETriState.TRUE;
+    if (JSON_TRISTATE_FALSE.equals (sTriState))
+      return ETriState.FALSE;
+    if (JSON_TRISTATE_UNDEFINED.equals (sTriState))
+      return ETriState.UNDEFINED;
+    return null;
   }
 
   /**

@@ -17,7 +17,7 @@ This project is divided into sub-projects each keeping tracking of one document 
   * ph-bdve-ublbe - Validation rules for e-FFF/UBL.BE - since 5.0.5
   * ph-bdve-xrechnung - Validation rules for German XRechnung - since 5.1.9
 
-A running example can be found on [PEPPOL Practical](http://peppol.helger.com/public/menuitem-validation-bis2).
+A running example can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload).
 
 A standalone tool that just performs validation based on this library is the [phoss validator](https://github.com/phax/phoss-validator/).
 
@@ -84,73 +84,73 @@ Add the following to your `pom.xml` to use this artifact:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId7>ph-bdve-teapps</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-xrechnung</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
 </dependency>
 ```
 
@@ -160,7 +160,7 @@ Alternate usage as a Maven BOM:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-parent-pom</artifactId>
-  <version>5.2.6</version>
+  <version>5.2.7</version>
   <type>pom</type>
   <scope>import</scope>
 </dependency>
@@ -172,8 +172,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.2.7 - work in progress
-    * Deprecated `eu.cen.en16931:edifact:1.0.0` as it is not maintained
+* v5.2.7 - 2020-03-08
+    * Deprecated `eu.cen.en16931:edifact:1.0.0` as it is not maintained anymore
     * Extended validation API
     * Added support for EN 16931 1.3.1 format (deprecated version 1.3.0)
 * v5.2.6 - 2020-02-10
