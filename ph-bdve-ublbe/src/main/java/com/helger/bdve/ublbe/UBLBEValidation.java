@@ -42,6 +42,7 @@ import com.helger.ubl21.UBL21NamespaceContext;
  * @author Philip Helger
  */
 @Immutable
+@SuppressWarnings ("deprecation")
 public final class UBLBEValidation
 {
   @Deprecated
