@@ -172,6 +172,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.2.8 - work in progress
+    * Added support for UBL.BE 1.2 (version 2020-03)
 * v5.2.7 - 2020-03-08
     * Deprecated `eu.cen.en16931:edifact:1.0.0` as it is not maintained anymore
     * Extended validation API

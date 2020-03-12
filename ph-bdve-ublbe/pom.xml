@@ -136,6 +136,17 @@
               <xsltDirectory>${basedir}/src/main/resources/ublbe/en16931/v1.1</xsltDirectory>
             </configuration>
           </execution>
+          <execution>
+            <goals>
+              <goal>convert</goal>
+            </goals>
+            <id>v1.2</id>
+            <configuration>
+              <schematronDirectory>${basedir}/src/test/resources/sch/en16931/v1.2</schematronDirectory>
+              <schematronPattern>*.sch</schematronPattern>
+              <xsltDirectory>${basedir}/src/main/resources/ublbe/en16931/v1.2</xsltDirectory>
+            </configuration>
+          </execution>
        -->
         </executions>
       </plugin>

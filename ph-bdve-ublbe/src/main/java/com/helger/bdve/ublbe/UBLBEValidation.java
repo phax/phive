@@ -44,6 +44,7 @@ import com.helger.ubl21.UBL21NamespaceContext;
 @Immutable
 public final class UBLBEValidation
 {
+  @Deprecated
   private static final String GROUPID_EFFF = "be.efff";
   @Deprecated
   public static final VESID VID_EFFF_CREDIT_NOTE = new VESID (GROUPID_EFFF, "credit-note", "3.0.0");
@@ -56,8 +57,13 @@ public final class UBLBEValidation
   @Deprecated
   public static final VESID VID_UBL_BE_INVOICE_100 = new VESID (GROUPID_UBL_BE, "invoice", "1.0.0");
 
+  @Deprecated
   public static final VESID VID_UBL_BE_CREDIT_NOTE_110 = new VESID (GROUPID_UBL_BE, "credit-note", "1.1.0");
+  @Deprecated
   public static final VESID VID_UBL_BE_INVOICE_110 = new VESID (GROUPID_UBL_BE, "invoice", "1.1.0");
+
+  public static final VESID VID_UBL_BE_CREDIT_NOTE_120 = new VESID (GROUPID_UBL_BE, "credit-note", "1.2.0");
+  public static final VESID VID_UBL_BE_INVOICE_120 = new VESID (GROUPID_UBL_BE, "invoice", "1.2.0");
 
   @Nonnull
   private static ClassLoader _getCL ()
@@ -65,11 +71,16 @@ public final class UBLBEValidation
     return UBLBEValidation.class.getClassLoader ();
   }
 
+  @Deprecated
   private static final IReadableResource BE_EFFF_300 = new ClassPathResource ("/ublbe/3.0.0/EFFF-UBL-T10.xsl",
                                                                               _getCL ());
+  @Deprecated
   private static final IReadableResource UBL_BE_100 = new ClassPathResource ("/ublbe/en16931/v1/GLOBALUBL.BE.xslt",
                                                                              _getCL ());
+  @Deprecated
   private static final IReadableResource UBL_BE_110 = new ClassPathResource ("/ublbe/en16931/v1.1/GLOBALUBL.BE-201911.xslt",
+                                                                             _getCL ());
+  private static final IReadableResource UBL_BE_120 = new ClassPathResource ("/ublbe/en16931/v1.2/GLOBALUBL.BE.xslt",
                                                                              _getCL ());
 
   private UBLBEValidation ()
@@ -100,7 +111,7 @@ public final class UBLBEValidation
     final IValidationExecutorSet aVESInvoice = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T10_V2);
     final IValidationExecutorSet aVESCreditNote = aRegistry.getOfID (PeppolValidation370.VID_OPENPEPPOL_T14_V2);
     if (aVESInvoice == null || aVESCreditNote == null)
-      throw new IllegalStateException ("Standard PEPPOL artefacts must be registered before e-FFF artefacts!");
+      throw new IllegalStateException ("Standard Peppol artefacts must be registered before e-FFF artefacts!");
 
     final boolean bDeprecated = true;
     final boolean bNotDeprecated = false;
@@ -136,14 +147,28 @@ public final class UBLBEValidation
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_BE_INVOICE_110,
                                                                            "UBL.BE Invoice " +
                                                                                                    VID_UBL_BE_INVOICE_110.getVersion (),
-                                                                           bNotDeprecated,
+                                                                           bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            _createXSLT (UBL_BE_110)));
     aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_BE_CREDIT_NOTE_110,
                                                                            "UBL.BE Credit Note " +
                                                                                                        VID_UBL_BE_CREDIT_NOTE_110.getVersion (),
-                                                                           bNotDeprecated,
+                                                                           bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            _createXSLT (UBL_BE_110)));
+
+    // v1.2.0
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_BE_INVOICE_120,
+                                                                           "UBL.BE Invoice " +
+                                                                                                   VID_UBL_BE_INVOICE_120.getVersion (),
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
+                                                                           _createXSLT (UBL_BE_120)));
+    aRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (VID_UBL_BE_CREDIT_NOTE_120,
+                                                                           "UBL.BE Credit Note " +
+                                                                                                       VID_UBL_BE_CREDIT_NOTE_120.getVersion (),
+                                                                           bNotDeprecated,
+                                                                           ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
+                                                                           _createXSLT (UBL_BE_120)));
   }
 }
