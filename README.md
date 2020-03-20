@@ -19,8 +19,6 @@ This project is divided into sub-projects each keeping tracking of one document 
 
 A running example can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload).
 
-A standalone tool that just performs validation based on this library is the [phoss validator](https://github.com/phax/phoss-validator/).
-
 Licensed under the Apache 2 license.
 
 # Usage guide
