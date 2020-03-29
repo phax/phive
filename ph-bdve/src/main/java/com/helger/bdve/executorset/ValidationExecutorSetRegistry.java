@@ -18,7 +18,6 @@ package com.helger.bdve.executorset;
 
 import java.io.Serializable;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -98,7 +97,7 @@ public class ValidationExecutorSetRegistry implements Serializable
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutorSet> getAll ()
   {
-    return m_aRWLock.readLocked ((Supplier <ICommonsList <IValidationExecutorSet>>) m_aMap::copyOfValues);
+    return m_aRWLock.readLockedGet (m_aMap::copyOfValues);
   }
 
   /**
@@ -113,7 +112,7 @@ public class ValidationExecutorSetRegistry implements Serializable
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutorSet> findAll (@Nonnull final Predicate <? super IValidationExecutorSet> aFilter)
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.copyOfValues (aFilter));
+    return m_aRWLock.readLockedGet ( () -> m_aMap.copyOfValues (aFilter));
   }
 
   /**
@@ -127,7 +126,7 @@ public class ValidationExecutorSetRegistry implements Serializable
   @Nullable
   public IValidationExecutorSet findFirst (@Nonnull final Predicate <? super IValidationExecutorSet> aFilter)
   {
-    return m_aRWLock.readLocked ( () -> m_aMap.findFirstValue (e -> aFilter.test (e.getValue ())));
+    return m_aRWLock.readLockedGet ( () -> m_aMap.findFirstValue (e -> aFilter.test (e.getValue ())));
   }
 
   /**
@@ -143,7 +142,7 @@ public class ValidationExecutorSetRegistry implements Serializable
     if (aID == null)
       return null;
 
-    return m_aRWLock.readLocked ( () -> m_aMap.get (aID));
+    return m_aRWLock.readLockedGet ( () -> m_aMap.get (aID));
   }
 
   /**

@@ -170,6 +170,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.2.11 - work in progress
+    * Updated to ph-commons 9.4.0
 * v5.2.10 - 2020-03-20
     * The Peppol AU-NZ rules were updated to v1.0.2. v1.0.1 is now deprecated.
 * v5.2.9 - 2020-03-18

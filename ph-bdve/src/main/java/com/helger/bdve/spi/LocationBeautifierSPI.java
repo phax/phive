@@ -44,20 +44,20 @@ public class LocationBeautifierSPI implements ISVRLLocationBeautifierSPI
   public static void addMapping (@Nonnull final String sPrefix, @Nonnull final String sNamespaceURI)
   {
     // Allow overwrite!
-    s_aRWLock.writeLocked ( () -> s_aCtx.setMapping (sPrefix, sNamespaceURI));
+    s_aRWLock.writeLockedGet ( () -> s_aCtx.setMapping (sPrefix, sNamespaceURI));
   }
 
   public static void addMappings (@Nullable final IIterableNamespaceContext aOther)
   {
     // Allow overwrite!
     if (aOther != null)
-      s_aRWLock.writeLocked ( () -> s_aCtx.setMappings (aOther));
+      s_aRWLock.writeLockedGet ( () -> s_aCtx.setMappings (aOther));
   }
 
   @Nonnull
   public static EChange removeAllMappings ()
   {
-    return s_aRWLock.writeLocked (s_aCtx::clear);
+    return s_aRWLock.writeLockedGet (s_aCtx::clear);
   }
 
   @Deprecated
@@ -68,7 +68,7 @@ public class LocationBeautifierSPI implements ISVRLLocationBeautifierSPI
   @Nullable
   public String getReplacementText (@Nonnull final String sNamespaceURI, @Nonnull final String sLocalName)
   {
-    final String sPrefix = s_aRWLock.readLocked ( () -> s_aCtx.getPrefix (sNamespaceURI));
+    final String sPrefix = s_aRWLock.readLockedGet ( () -> s_aCtx.getPrefix (sNamespaceURI));
     if (sPrefix == null)
       return null;
 
