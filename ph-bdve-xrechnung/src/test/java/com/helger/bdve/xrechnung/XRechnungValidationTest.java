@@ -23,7 +23,6 @@ import org.junit.Test;
 import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.bdve.execute.IValidationExecutor;
 import com.helger.bdve.executorset.IValidationExecutorSet;
-import com.helger.bdve.xrechnung.XRechnungValidation;
 import com.helger.bdve.xrechnung.mock.CTestFiles;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.schematron.pure.SchematronResourcePure;
