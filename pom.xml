@@ -133,26 +133,6 @@
       </dependency>
 
       <dependency>
-        <groupId>org.apache.odftoolkit</groupId>
-        <artifactId>simple-odf</artifactId>
-        <version>0.8.2-incubating</version>
-        <exclusions>
-          <exclusion>
-            <groupId>com.sun</groupId>
-            <artifactId>tools</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-
-      <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-bdve</artifactId>
         <version>${project.version}</version>
