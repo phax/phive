@@ -60,6 +60,17 @@ public final class BDVEJsonHelper
   public static final String JSON_TRISTATE_FALSE = "FALSE";
   public static final String JSON_TRISTATE_UNDEFINED = "UNDEFINED";
 
+  public static final String JSON_CLASS = "class";
+  public static final String JSON_MESSAGE = "message";
+  public static final String JSON_STACK_TRACE = "stackTrace";
+
+  public static final String JSON_ERROR_LEVEL = "errorLevel";
+  public static final String JSON_ERROR_ID = "errorID";
+  public static final String JSON_ERROR_FIELD_NAME = "errorFieldName";
+  public static final String JSON_ERROR_LOCATION = "errorLocation";
+  public static final String JSON_ERROR_TEXT = "errorText";
+  public static final String JSON_EXCEPTION = "exception";
+
   public static final String ARTFACT_TYPE_INPUT_PARAMETER = "input-parameter";
   public static final String ARTIFACT_PATH_NONE = "none";
 
@@ -180,9 +191,9 @@ public final class BDVEJsonHelper
   {
     if (t == null)
       return null;
-    return new JsonObject ().add ("class", t.getClass ().getName ())
-                            .addIfNotNull ("message", t.getMessage ())
-                            .add ("stackTrace", StackTraceHelper.getStackAsString (t));
+    return new JsonObject ().add (JSON_CLASS, t.getClass ().getName ())
+                            .addIfNotNull (JSON_MESSAGE, t.getMessage ())
+                            .add (JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
   }
 
   /**
@@ -227,12 +238,12 @@ public final class BDVEJsonHelper
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
     ValueEnforcer.notNull (sErrorText, "ErrorText");
 
-    return new JsonObject ().add ("errorLevel", getErrorLevel (aErrorLevel))
-                            .addIfNotNull ("errorID", sErrorID)
-                            .addIfNotNull ("errorFieldName", sErrorFieldName)
-                            .addIfNotNull ("errorLocation", sErrorLocation)
-                            .add ("errorText", sErrorText)
-                            .addIfNotNull ("exception", getJsonStackTrace (t));
+    return new JsonObject ().add (JSON_ERROR_LEVEL, getErrorLevel (aErrorLevel))
+                            .addIfNotNull (JSON_ERROR_ID, sErrorID)
+                            .addIfNotNull (JSON_ERROR_FIELD_NAME, sErrorFieldName)
+                            .addIfNotNull (JSON_ERROR_LOCATION, sErrorLocation)
+                            .add (JSON_ERROR_TEXT, sErrorText)
+                            .addIfNotNull (JSON_EXCEPTION, getJsonStackTrace (t));
   }
 
   /**
