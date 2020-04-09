@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--This file is generated automatically! Do NOT edit!-->
-<!--Schematron tests for binding UBL and transaction T10-->
+<!--This file is generated automatically! Do NOT edit!
+Schematron tests for binding UBL and transaction T10-->
 <pattern xmlns="http://purl.oclc.org/dsdl/schematron" is-a="T10" id="UBL-T10">
   <param name="ATGOV-T10-R001" value="(cac:Contact/cbc:ElectronicMail)" />
   <param name="ATGOV-T10-R002" value="count(cac:InvoiceLine) &lt; 999" />
@@ -19,7 +19,6 @@
   <param name="ATGOV-T10-R016" value="number(cac:LegalMonetaryTotal/cbc:PayableAmount) &lt;= 999999999.99" />
   <param name="ATGOV-T10-R017" value="count(cac:PaymentMeans/cac:PayeeFinancialAccount/cbc:ID) >= 1" />
   <param name="ATGOV-T10-R018" value="((cac:Price/cbc:PriceAmount) and matches(cac:Price/cbc:PriceAmount/text(),&quot;^[-+]?[0-9]*(\.[0-9]{0,4})?$&quot;)) or not ((cac:Price/cbc:PriceAmount))" />
-  <!-- longer variable names MUST come first! -->
   <param name="Invoice_Line" value="/ubl:Invoice/cac:InvoiceLine" />
   <param name="Invoice" value="/ubl:Invoice" />
   <param name="Payment_Means" value="/ubl:Invoice/cac:PaymentMeans" />

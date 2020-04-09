@@ -17,6 +17,7 @@
 package com.helger.bdve.peppol.supplementary.createrules.sch;
 
 import java.io.File;
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 
@@ -34,11 +35,13 @@ import com.helger.bdve.peppol.supplementary.createrules.utils.ODFHelper;
 import com.helger.bdve.peppol.supplementary.createrules.utils.Utils;
 import com.helger.collection.multimap.IMultiMapListBased;
 import com.helger.collection.multimap.MultiHashMapArrayListBased;
-import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.collection.multimap.MultiTreeMapArrayListBased;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.commons.compare.IComparator;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
 import com.helger.schematron.CSchematron;
@@ -55,11 +58,9 @@ public final class SchematronCreator
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (SchematronCreator.class);
   private static final String NS_SCHEMATRON = CSchematron.NAMESPACE_SCHEMATRON;
-  private static final String CBC = "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2";
-  private static final String CAC = "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2";
 
   // Map from transaction to Map from context to list of assertions
-  final ICommonsMap <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new CommonsHashMap <> ();
+  final ICommonsMap <String, IMultiMapListBased <String, RuleAssertion>> m_aAbstractRules = new CommonsTreeMap <> ();
 
   private SchematronCreator ()
   {}
@@ -78,7 +79,7 @@ public final class SchematronCreator
       final String sTransaction = ODFHelper.getText (aFirstSheet, 4, nRow);
 
       // Save in nested maps
-      m_aAbstractRules.computeIfAbsent (sTransaction, k -> new MultiHashMapArrayListBased <> ())
+      m_aAbstractRules.computeIfAbsent (sTransaction, k -> new MultiTreeMapArrayListBased <> ())
                       .putSingle (sContext, new RuleAssertion (sRuleID, sMessage, sSeverity));
 
       // Next row
@@ -101,8 +102,9 @@ public final class SchematronCreator
 
       // Create the XML content
       final IMicroDocument aDoc = new MicroDocument ();
-      aDoc.appendComment ("This file is generated automatically! Do NOT edit!\n");
-      aDoc.appendComment ("Abstract Schematron rules for " + sTransaction + "\n");
+      aDoc.appendComment ("This file is generated automatically! Do NOT edit!\n" +
+                          "Abstract Schematron rules for " +
+                          sTransaction);
       final IMicroElement ePattern = aDoc.appendElement (NS_SCHEMATRON, "pattern");
       ePattern.setAttribute ("abstract", "true");
       ePattern.setAttribute ("id", sTransaction);
@@ -118,6 +120,7 @@ public final class SchematronCreator
           final IMicroElement eAssert = eRule.appendElement (NS_SCHEMATRON, "assert");
           eAssert.setAttribute ("flag", aRuleAssertion.getSeverity ());
           eAssert.setAttribute ("test", "$" + sTestID);
+          eAssert.setAttribute ("id", sTestID);
           eAssert.appendText ("[" + sTestID + "]-" + aRuleAssertion.getMessage ());
         }
       }
@@ -149,7 +152,7 @@ public final class SchematronCreator
       final String sPrerequisite = ODFHelper.getText (aSheet, 3, nRow);
 
       if (StringHelper.hasText (sPrerequisite))
-        sTest += " and " + sPrerequisite + " or not (" + sPrerequisite + ")";
+        sTest = "(" + sPrerequisite + " and " + sTest + ") or not (" + sPrerequisite + ")";
       aRules.putSingle (sTransaction, new RuleParam (sRuleID, sTest));
       nRow++;
     }
@@ -203,18 +206,28 @@ public final class SchematronCreator
                    " test(s)");
 
       final IMicroDocument aDoc = new MicroDocument ();
-      aDoc.appendComment ("This file is generated automatically! Do NOT edit!");
-      aDoc.appendComment ("Schematron tests for binding " + sBindingName + " and transaction " + sTransaction);
+      aDoc.appendComment ("This file is generated automatically! Do NOT edit!\n" +
+                          "Schematron tests for binding " +
+                          sBindingName +
+                          " and transaction " +
+                          sTransaction);
       final IMicroElement ePattern = aDoc.appendElement (NS_SCHEMATRON, "pattern");
       // Assign to the global pattern
       ePattern.setAttribute ("is-a", sTransaction);
       ePattern.setAttribute ("id", sBindingName.toUpperCase (Locale.US) + "-" + sTransaction);
-      for (final RuleParam aRuleParam : aRuleEntry.getValue ())
+
+      // Longest name must come first (ensure that in the ODS)
+      final ICommonsList <RuleParam> aRuleParams = aRuleEntry.getValue ();
+      if (false)
+        aRuleParams.getSorted (Comparator.comparing (RuleParam::getRuleID,
+                                                     IComparator.getComparatorStringLongestFirst ()));
+      for (final RuleParam aRuleParam : aRuleParams)
       {
         final IMicroElement eParam = ePattern.appendElement (NS_SCHEMATRON, "param");
         eParam.setAttribute ("name", aRuleParam.getRuleID ());
         eParam.setAttribute ("value", aRuleParam.getTest ());
       }
+
       if (SimpleFileIO.writeFile (aSCHFile, MicroWriter.getNodeAsBytes (aDoc)).isFailure ())
         throw new IllegalStateException ("Failed to write " + aSCHFile);
     }
@@ -244,14 +257,24 @@ public final class SchematronCreator
       final String sBindingUC = sBindingName.toUpperCase (Locale.US);
 
       final ICommonsOrderedMap <String, String> aNsMap = new CommonsLinkedHashMap <> ();
-      aNsMap.put ("cbc", CBC);
-      aNsMap.put ("cac", CAC);
-      if (StringHelper.hasText (sNamespace))
-        aNsMap.put (sBindingPrefix, sNamespace);
+      aNsMap.put ("cac", "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2");
+      aNsMap.put ("cbc", "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2");
+      if (false)
+        aNsMap.put ("cec", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
+      if (false)
+        aNsMap.put ("xs", "http://www.w3.org/2001/XMLSchema");
+      aNsMap.put (sBindingPrefix, sNamespace);
 
       final IMicroDocument aDoc = new MicroDocument ();
-      aDoc.appendComment ("This file is generated automatically! Do NOT edit!");
-      aDoc.appendComment ("Schematron assembly for binding " + sBindingName + " and transaction " + sTransaction);
+      aDoc.appendComment ("This file is generated automatically! Do NOT edit!\n" +
+                          "Schematron assembly for " +
+                          aBusinessRule.getID () +
+                          " using binding " +
+                          sBindingName +
+                          " and transaction " +
+                          sTransaction +
+                          " based on " +
+                          aBusinessRule.getSourceFile ().getName ());
       final IMicroElement eSchema = aDoc.appendElement (NS_SCHEMATRON, "schema");
       eSchema.setAttribute ("queryBinding", "xslt2");
       eSchema.appendElement (NS_SCHEMATRON, "title")

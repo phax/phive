@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--This file is generated automatically! Do NOT edit!-->
-<!--Abstract Schematron rules for T10-->
+<!--This file is generated automatically! Do NOT edit!
+Abstract Schematron rules for T10-->
 <pattern xmlns="http://purl.oclc.org/dsdl/schematron" abstract="true" id="T10">
   <rule context="$Attachments">
     <assert flag="fatal" test="$ATGOV-T10-R011" id="ATGOV-T10-R011">[ATGOV-T10-R011]-Attachments to the invoice must be included into the invoice document and may not be referenced from external sources.</assert>

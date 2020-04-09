@@ -37,7 +37,7 @@ public final class MainCreateValidationRules
   {
     // Base directory for source rules
     final File aRuleSource = new File ("src/test/resources/rule-source/thirdparty");
-    final File aSchematronDir = new File ("src/test/resources/rule-sch/thirdparty");
+    final File aSchematronDir = new File ("src/test/resources/rule-source/thirdparty");
     final File aXSLTDir = new File ("src/main/resources/thirdparty");
 
     // Add all base directories

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--This file is generated automatically! Do NOT edit!-->
-<!--Abstract Schematron rules for T14-->
+<!--This file is generated automatically! Do NOT edit!
+Abstract Schematron rules for T14-->
 <pattern xmlns="http://purl.oclc.org/dsdl/schematron" abstract="true" id="T14">
   <rule context="$AllowanceCharge">
     <assert flag="fatal" test="$ATNAT-T14-R007" id="ATNAT-T14-R007">[ATNAT-T14-R007]-Allowances and charges on header level need a VAT rate.</assert>

@@ -20,8 +20,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.peppol.supplementary.createrules.utils.Utils;
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
 
 @Immutable
 final class RuleParam
@@ -31,10 +31,8 @@ final class RuleParam
 
   public RuleParam (@Nonnull @Nonempty final String sRuleID, @Nonnull @Nonempty final String sTest)
   {
-    if (StringHelper.hasNoText (sRuleID))
-      throw new IllegalArgumentException ("ruleID");
-    if (StringHelper.hasNoText (sTest))
-      throw new IllegalArgumentException ("test");
+    ValueEnforcer.notEmpty (sRuleID, "RuleID");
+    ValueEnforcer.notEmpty (sTest, "Test");
 
     m_sRuleID = Utils.makeID (sRuleID);
     m_sTest = sTest;

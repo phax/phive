@@ -47,9 +47,11 @@ public final class RuleSourceItem implements IHasID <String>
     ValueEnforcer.notNull (aRuleSrcDir, "RuleSrcDir");
     ValueEnforcer.isTrue (aRuleSrcDir.isDirectory (), () -> aRuleSrcDir + " is not a directory!");
     ValueEnforcer.notNull (aOutputSchematronDir, "OutputSchematronDir");
-    ValueEnforcer.isTrue (aOutputSchematronDir.isDirectory (), () -> aOutputSchematronDir + " is not a directory!");
+    // Not existing or a directory
+    ValueEnforcer.isFalse (aOutputSchematronDir.isFile (), () -> aOutputSchematronDir + " is not a directory!");
     ValueEnforcer.notNull (aXSLTOutputDir, "XSLTOutputDir");
-    ValueEnforcer.isTrue (aXSLTOutputDir.isDirectory (), () -> aXSLTOutputDir + " is not a directory!");
+    // Not existing or a directory
+    ValueEnforcer.isFalse (aXSLTOutputDir.isFile (), () -> aXSLTOutputDir + " is not a directory!");
     ValueEnforcer.notEmpty (sID, "ID");
 
     m_aRuleSrcDir = new File (aRuleSrcDir, sID);

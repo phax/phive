@@ -74,7 +74,8 @@ public final class XSLTCreator
           final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
           aNSCtx.addMapping ("xsl", "http://www.w3.org/1999/XSL/Transform");
           aNSCtx.addMapping ("svrl", CSVRL.SVRL_NAMESPACE_URI);
-          final IXMLWriterSettings aXWS = new XMLWriterSettings ().setNamespaceContext (aNSCtx);
+          final IXMLWriterSettings aXWS = new XMLWriterSettings ().setNamespaceContext (aNSCtx)
+                                                                  .setPutNamespaceContextPrefixesInRoot (true);
           if (SimpleFileIO.writeFile (aXSLTFile, XMLWriter.getNodeAsBytes (aXSLTDoc, aXWS)).isFailure ())
             throw new IllegalStateException ("Failed to write " + aXSLTFile);
         }
