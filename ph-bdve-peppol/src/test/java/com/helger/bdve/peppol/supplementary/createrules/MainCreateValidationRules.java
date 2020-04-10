@@ -47,19 +47,19 @@ public final class MainCreateValidationRules
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aSchematronDir,
                                               aXSLTDir,
-                                              "atgov").addBussinessRule ("atgov-T10-BusinessRules-v08.xlsx"));
+                                              "atgov-invoice").addBussinessRule ("atgov-T10-BusinessRules-v08.xlsx"));
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aSchematronDir,
                                               aXSLTDir,
-                                              "atgov").addBussinessRule ("atgov-T14-BusinessRules-v08.xlsx"));
+                                              "atgov-creditnote").addBussinessRule ("atgov-T14-BusinessRules-v08.xlsx"));
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aSchematronDir,
                                               aXSLTDir,
-                                              "atnat").addBussinessRule ("atnat-T10-BusinessRules-v06.xlsx"));
+                                              "atnat-invoice").addBussinessRule ("atnat-T10-BusinessRules-v06.xlsx"));
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aSchematronDir,
                                               aXSLTDir,
-                                              "atnat").addBussinessRule ("atnat-T14-BusinessRules-v06.xlsx"));
+                                              "atnat-invoice").addBussinessRule ("atnat-T14-BusinessRules-v06.xlsx"));
 
     // Create all codelists (GC + CVA)
     // Processing time: quite quick
