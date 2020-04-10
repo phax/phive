@@ -18,6 +18,7 @@ package com.helger.bdve.peppol.supplementary.createrules.sch;
 
 import java.io.File;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ import org.w3c.dom.Document;
 
 import com.helger.bdve.peppol.supplementary.createrules.RuleSourceItem;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.io.resource.FileSystemResource;
@@ -47,15 +49,18 @@ public final class XSLTCreator
   private XSLTCreator ()
   {}
 
-  public static void createXSLTs (final ICommonsList <RuleSourceItem> aRuleSourceItems)
+  public static void createXSLTs (@Nonnull final ICommonsList <RuleSourceItem> aRuleSourceItems,
+                                  @Nonnull final ICommonsOrderedMap <String, String> aDefaultNamespaces)
   {
+
     for (final RuleSourceItem aRuleSourceItem : aRuleSourceItems)
     {
       LOGGER.info ("Creating XSLT files for " + aRuleSourceItem.getID ());
       // Process all business rules
       for (final RuleSourceBusinessRule aBusinessRule : aRuleSourceItem.getAllBusinessRules ())
-        for (final File aSCHFile : aBusinessRule.getAllResultSchematronFiles ())
+        for (final SchematronOutput aSCH : aBusinessRule.getAllResultSchematronFiles ())
         {
+          final File aSCHFile = aSCH.getSchematronFile ();
           LOGGER.info ("  Creating XSLT for " + aSCHFile.getName ());
 
           final SCHTransformerCustomizer aCustomizer = new SCHTransformerCustomizer ().setForceCacheResult (false);
@@ -74,8 +79,12 @@ public final class XSLTCreator
           final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
           aNSCtx.addMapping ("xsl", "http://www.w3.org/1999/XSL/Transform");
           aNSCtx.addMapping ("svrl", CSVRL.SVRL_NAMESPACE_URI);
+          aNSCtx.addMapping (aSCH.getPrefix (), aSCH.getNamespaceURI ());
+          aNSCtx.addMappings (aDefaultNamespaces);
+
           final IXMLWriterSettings aXWS = new XMLWriterSettings ().setNamespaceContext (aNSCtx)
                                                                   .setPutNamespaceContextPrefixesInRoot (true);
+
           if (SimpleFileIO.writeFile (aXSLTFile, XMLWriter.getNodeAsBytes (aXSLTDoc, aXWS)).isFailure ())
             throw new IllegalStateException ("Failed to write " + aXSLTFile);
         }

@@ -36,7 +36,6 @@ import com.helger.bdve.peppol.supplementary.createrules.utils.Utils;
 import com.helger.collection.multimap.IMultiMapListBased;
 import com.helger.collection.multimap.MultiHashMapArrayListBased;
 import com.helger.collection.multimap.MultiTreeMapArrayListBased;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
@@ -233,8 +232,9 @@ public final class SchematronCreator
     }
   }
 
-  private static void _createAssemblyFiles (final RuleSourceBusinessRule aBusinessRule,
-                                            final SpreadsheetDocument aSpreadSheet)
+  private static void _createAssemblyFiles (@Nonnull final RuleSourceBusinessRule aBusinessRule,
+                                            @Nonnull final SpreadsheetDocument aSpreadSheet,
+                                            @Nonnull final ICommonsOrderedMap <String, String> aDefaultNamespaces)
   {
     // Create assembled Schematron
     LOGGER.info ("    Creating assembly Schematron file(s)");
@@ -248,7 +248,9 @@ public final class SchematronCreator
         throw new IllegalStateException ("Profile currently not supported! Found '" + sProfile + "'");
       final String sTransaction = ODFHelper.getText (aLastSheet, 1, nRow);
       final String sBindingName = ODFHelper.getText (aLastSheet, 2, nRow);
-      final String sNamespace = ODFHelper.getText (aLastSheet, 4, nRow);
+      final String sNamespaceURI = ODFHelper.getText (aLastSheet, 4, nRow);
+      if (StringHelper.hasNoText (sNamespaceURI))
+        throw new IllegalStateException ("Missing namespace URI");
 
       final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (sBindingName, sTransaction);
       LOGGER.info ("      Writing " + sBindingName + " Schematron assembly file " + aSCHFile.getName ());
@@ -256,14 +258,8 @@ public final class SchematronCreator
       final String sBindingPrefix = sBindingName.toLowerCase (Locale.US);
       final String sBindingUC = sBindingName.toUpperCase (Locale.US);
 
-      final ICommonsOrderedMap <String, String> aNsMap = new CommonsLinkedHashMap <> ();
-      aNsMap.put ("cac", "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2");
-      aNsMap.put ("cbc", "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2");
-      if (false)
-        aNsMap.put ("cec", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
-      if (false)
-        aNsMap.put ("xs", "http://www.w3.org/2001/XMLSchema");
-      aNsMap.put (sBindingPrefix, sNamespace);
+      final ICommonsOrderedMap <String, String> aNsMap = aDefaultNamespaces.getClone ();
+      aNsMap.put (sBindingPrefix, sNamespaceURI);
 
       final IMicroDocument aDoc = new MicroDocument ();
       aDoc.appendComment ("This file is generated automatically! Do NOT edit!\n" +
@@ -314,13 +310,14 @@ public final class SchematronCreator
         throw new IllegalStateException ("Failed to write " + aSCHFile);
 
       // Remember file for XSLT creation
-      aBusinessRule.addResultSchematronFile (aSCHFile);
+      aBusinessRule.addResultSchematronFile (aSCHFile, sBindingPrefix, sNamespaceURI);
 
       ++nRow;
     }
   }
 
-  public static void createSchematrons (final ICommonsList <RuleSourceItem> aRuleSourceItems) throws Exception
+  public static void createSchematrons (@Nonnull final ICommonsList <RuleSourceItem> aRuleSourceItems,
+                                        @Nonnull final ICommonsOrderedMap <String, String> aDefaultNamespaces) throws Exception
   {
     for (final RuleSourceItem aRuleSourceItem : aRuleSourceItems)
     {
@@ -346,7 +343,7 @@ public final class SchematronCreator
           aSC._extractBindingTests (aBusinessRule, aSheet);
         }
 
-        _createAssemblyFiles (aBusinessRule, aSpreadSheet);
+        _createAssemblyFiles (aBusinessRule, aSpreadSheet, aDefaultNamespaces);
       }
     }
   }

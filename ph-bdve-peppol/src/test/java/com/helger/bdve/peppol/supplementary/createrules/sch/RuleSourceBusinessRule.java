@@ -38,7 +38,7 @@ public final class RuleSourceBusinessRule
   private final File m_aOutputXSLTDirectory;
   private final String m_sID;
   private final String m_sCodeListTransaction;
-  private final ICommonsList <File> m_aResultSCHFiles = new CommonsArrayList <> ();
+  private final ICommonsList <SchematronOutput> m_aResultSCHFiles = new CommonsArrayList <> ();
 
   public RuleSourceBusinessRule (@Nonnull final File aSourceFilename,
                                  @Nonnull final File aOutputSchematronDirectory,
@@ -119,14 +119,16 @@ public final class RuleSourceBusinessRule
     return m_sCodeListTransaction;
   }
 
-  public void addResultSchematronFile (@Nonnull final File aSCHFile)
+  public void addResultSchematronFile (@Nonnull final File aSCHFile,
+                                       @Nonnull @Nonempty final String sBindingPrefix,
+                                       @Nonnull @Nonempty final String sNamespaceURI)
   {
-    m_aResultSCHFiles.add (aSCHFile);
+    m_aResultSCHFiles.add (new SchematronOutput (aSCHFile, sBindingPrefix, sNamespaceURI));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <File> getAllResultSchematronFiles ()
+  public ICommonsList <SchematronOutput> getAllResultSchematronFiles ()
   {
     return m_aResultSCHFiles.getClone ();
   }

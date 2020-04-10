@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--This file is generated automatically! Do NOT edit!
-Schematron assembly for ATNAT using binding UBL and transaction T10 based on atnat-T10-BusinessRules-v05.ods-->
+Schematron assembly for ATNAT using binding UBL and transaction T10 based on atnat-T10-BusinessRules-v06.ods-->
 <schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2">
   <title>ATNAT T10 bound to UBL</title>
   <ns prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />

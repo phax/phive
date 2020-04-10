@@ -26,7 +26,9 @@ import com.helger.bdve.peppol.supplementary.createrules.codelist.RuleSourceCodeL
 import com.helger.bdve.peppol.supplementary.createrules.sch.SchematronCreator;
 import com.helger.bdve.peppol.supplementary.createrules.sch.XSLTCreator;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 
 public final class MainCreateValidationRules
 {
@@ -69,13 +71,21 @@ public final class MainCreateValidationRules
     }
 
     {
+      final ICommonsOrderedMap <String, String> aDefaultNamespaces = new CommonsLinkedHashMap <> ();
+      aDefaultNamespaces.put ("cac", "urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2");
+      aDefaultNamespaces.put ("cbc", "urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2");
+      if (false)
+        aDefaultNamespaces.put ("cec", "urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2");
+      if (false)
+        aDefaultNamespaces.put ("xs", "http://www.w3.org/2001/XMLSchema");
+
       // Create Schematron
       // Processing time: quite OK
-      SchematronCreator.createSchematrons (aRuleSourceItems);
+      SchematronCreator.createSchematrons (aRuleSourceItems, aDefaultNamespaces);
 
       // Now create the validation XSLTs
       // Processing time: terribly slow for biicore
-      XSLTCreator.createXSLTs (aRuleSourceItems);
+      XSLTCreator.createXSLTs (aRuleSourceItems, aDefaultNamespaces);
     }
 
     LOGGER.info ("Finished building validation rules; run 'mvn license:format' on the commandline to add all the file headers!");
