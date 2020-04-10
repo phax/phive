@@ -182,7 +182,7 @@
 
 
 	<!--RULE -->
-<xsl:template match="/ubl:Invoice/cac:AllowanceCharge" mode="M5" priority="1002">
+<xsl:template match="/ubl:Invoice/cac:AllowanceCharge" mode="M5" priority="1003">
     <svrl:fired-rule context="/ubl:Invoice/cac:AllowanceCharge" />
 
 		<!--ASSERT -->
@@ -196,6 +196,27 @@
             <xsl:apply-templates mode="schematron-select-full-path" select="." />
           </xsl:attribute>
           <svrl:text>[ATNAT-T10-R007]-Allowances and charges on header level need a VAT rate.</svrl:text>
+        </svrl:failed-assert>
+      </xsl:otherwise>
+    </xsl:choose>
+    <xsl:apply-templates mode="M5" select="*|comment()|processing-instruction()" />
+  </xsl:template>
+
+	<!--RULE -->
+<xsl:template match="/ubl:Invoice/cac:AdditionalDocumentReference" mode="M5" priority="1002">
+    <svrl:fired-rule context="/ubl:Invoice/cac:AdditionalDocumentReference" />
+
+		<!--ASSERT -->
+<xsl:choose>
+      <xsl:when test="count(cac:Attachment/cac:ExternalReference) = 0" />
+      <xsl:otherwise>
+        <svrl:failed-assert test="count(cac:Attachment/cac:ExternalReference) = 0">
+          <xsl:attribute name="id">ATNAT-T10-R008</xsl:attribute>
+          <xsl:attribute name="flag">fatal</xsl:attribute>
+          <xsl:attribute name="location">
+            <xsl:apply-templates mode="schematron-select-full-path" select="." />
+          </xsl:attribute>
+          <svrl:text>[ATNAT-T10-R008]-Attachments to the invoice must be included into the invoice document and may not be referenced from external sources.</svrl:text>
         </svrl:failed-assert>
       </xsl:otherwise>
     </xsl:choose>

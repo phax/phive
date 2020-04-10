@@ -5,6 +5,9 @@ Abstract Schematron rules for T10-->
   <rule context="$AllowanceCharge">
     <assert flag="fatal" test="$ATNAT-T10-R007" id="ATNAT-T10-R007">[ATNAT-T10-R007]-Allowances and charges on header level need a VAT rate.</assert>
   </rule>
+  <rule context="$Attachments">
+    <assert flag="fatal" test="$ATNAT-T10-R008" id="ATNAT-T10-R008">[ATNAT-T10-R008]-Attachments to the invoice must be included into the invoice document and may not be referenced from external sources.</assert>
+  </rule>
   <rule context="$Invoice">
     <assert flag="fatal" test="$ATNAT-T10-R001" id="ATNAT-T10-R001">[ATNAT-T10-R001]-If the invoice total exceeds € 10.000, the VAT number of the customer MUST be provided, if the supplier has a registered office in Austria.</assert>
     <assert flag="fatal" test="$ATNAT-T10-R003" id="ATNAT-T10-R003">[ATNAT-T10-R003]-The invoice MUST contain either the actual delivery date or the invoicing period.</assert>

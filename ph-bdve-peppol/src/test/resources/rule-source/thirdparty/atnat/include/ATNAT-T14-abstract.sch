@@ -5,6 +5,9 @@ Abstract Schematron rules for T14-->
   <rule context="$AllowanceCharge">
     <assert flag="fatal" test="$ATNAT-T14-R007" id="ATNAT-T14-R007">[ATNAT-T14-R007]-Allowances and charges on header level need a VAT rate.</assert>
   </rule>
+  <rule context="$Attachments">
+    <assert flag="fatal" test="$ATNAT-T14-R008" id="ATNAT-T14-R008">[ATNAT-T14-R008]-Attachments to the invoice must be included into the invoice document and may not be referenced from external sources.</assert>
+  </rule>
   <rule context="$CreditNote">
     <assert flag="fatal" test="$ATNAT-T14-R001" id="ATNAT-T14-R001">[ATNAT-T14-R001]-If the credit note total exceeds € 10.000, the VAT number of the customer MUST be provided, if the supplier has a registered office in Austria.</assert>
     <assert flag="fatal" test="$ATNAT-T14-R003" id="ATNAT-T14-R003">[ATNAT-T14-R003]-The credit note MUST contain either the actual delivery date or the invoice period.</assert>

@@ -43,6 +43,7 @@ import com.helger.commons.compare.IComparator;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.string.StringParser;
 import com.helger.poi.excel.EExcelVersion;
 import com.helger.schematron.CSchematron;
 import com.helger.xml.microdom.IMicroDocument;
@@ -82,10 +83,17 @@ public final class SchematronCreator
       final String sContext = Utils.getString (aExcelRow.getCell (2));
       final String sSeverity = Utils.getString (aExcelRow.getCell (3));
       final String sTransaction = Utils.getString (aExcelRow.getCell (4));
+      final String sObsolete = Utils.getString (aExcelRow.getCell (5));
 
-      // Save in nested maps
-      m_aAbstractRules.computeIfAbsent (sTransaction, k -> new MultiTreeMapArrayListBased <> ())
-                      .putSingle (sContext, new RuleAssertion (sRuleID, sMessage, sSeverity));
+      final boolean bObsolete = StringParser.parseBool (sObsolete, false);
+      if (bObsolete)
+        LOGGER.info ("    Ignoring obsoleted rule '" + sRuleID + "'");
+      else
+      {
+        // Save in nested maps
+        m_aAbstractRules.computeIfAbsent (sTransaction, k -> new MultiTreeMapArrayListBased <> ())
+                        .putSingle (sContext, new RuleAssertion (sRuleID, sMessage, sSeverity));
+      }
     }
 
     if (m_aAbstractRules.isEmpty ())
