@@ -59,7 +59,7 @@ public final class MainCreateValidationRules
     aRuleSourceItems.add (new RuleSourceItem (aRuleSource,
                                               aSchematronDir,
                                               aXSLTDir,
-                                              "atnat-invoice").addBussinessRule ("atnat-T14-BusinessRules-v06.xlsx"));
+                                              "atnat-creditnote").addBussinessRule ("atnat-T14-BusinessRules-v06.xlsx"));
 
     // Create all codelists (GC + CVA)
     // Processing time: quite quick
@@ -84,7 +84,7 @@ public final class MainCreateValidationRules
       SchematronCreator.createSchematrons (aRuleSourceItems, aDefaultNamespaces);
 
       // Now create the validation XSLTs
-      // Processing time: terribly slow for biicore
+      // Processing time: may be terribly slow
       XSLTCreator.createXSLTs (aRuleSourceItems, aDefaultNamespaces);
     }
 

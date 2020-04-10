@@ -35,7 +35,7 @@ public final class RuleSourceItem implements IHasID <String>
   private final File m_aRuleSrcDir;
   private final File m_aOutputSchematronDir;
   private final File m_aOutputXSLTDir;
-  private final String m_sID;
+  private final String m_sIDLC;
   private final ICommonsList <RuleSourceCodeList> m_aCodeLists = new CommonsArrayList <> ();
   private final ICommonsList <RuleSourceBusinessRule> m_aBusinessRules = new CommonsArrayList <> ();
 
@@ -57,7 +57,7 @@ public final class RuleSourceItem implements IHasID <String>
     m_aRuleSrcDir = new File (aRuleSrcDir, sID);
     m_aOutputSchematronDir = new File (aOutputSchematronDir, sID);
     m_aOutputXSLTDir = new File (aXSLTOutputDir, sID);
-    m_sID = sID.toUpperCase (Locale.US);
+    m_sIDLC = sID.toLowerCase (Locale.US);
   }
 
   @Nonnull
@@ -84,7 +84,7 @@ public final class RuleSourceItem implements IHasID <String>
     m_aCodeLists.add (new RuleSourceCodeList (new File (m_aRuleSrcDir, sSourceFilename),
                                               getOutputCodeListDirectory (),
                                               m_aOutputSchematronDir,
-                                              m_sID));
+                                              m_sIDLC));
     return this;
   }
 
@@ -101,7 +101,7 @@ public final class RuleSourceItem implements IHasID <String>
     m_aBusinessRules.add (new RuleSourceBusinessRule (new File (m_aRuleSrcDir, sSourceFilename),
                                                       m_aOutputSchematronDir,
                                                       m_aOutputXSLTDir,
-                                                      m_sID,
+                                                      m_sIDLC,
                                                       sCodeListTransaction));
     return this;
   }
@@ -110,7 +110,7 @@ public final class RuleSourceItem implements IHasID <String>
   @Nonempty
   public String getID ()
   {
-    return m_sID;
+    return m_sIDLC;
   }
 
   @Nonnull

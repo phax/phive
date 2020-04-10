@@ -85,15 +85,14 @@ public final class RuleSourceBusinessRule
   @Nonnull
   public File getSchematronAbstractFile (@Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aOutputSchematronDirectory, "include/" + m_sID + "-" + sTransaction + "-abstract.sch");
+    return new File (m_aOutputSchematronDirectory, "include/" + m_sID + "-abstract.sch");
   }
 
   @Nonnull
   public File getSchematronBindingFile (@Nonnull @Nonempty final String sBindingName,
                                         @Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aOutputSchematronDirectory,
-                     "include/" + m_sID + "-" + sBindingName + "-" + sTransaction + "-test.sch");
+    return new File (m_aOutputSchematronDirectory, "include/" + m_sID + "-" + sBindingName + "-test.sch");
   }
 
   @Nonnull
