@@ -59,19 +59,19 @@ public final class PeppolValidation
   }
 
   // Third-party
-  public static final VESID VID_OPENPEPPOL_T10_V2_5_AT = new VESID ("eu.peppol.bis2", "t10", "5", "at");
-  public static final VESID VID_OPENPEPPOL_T10_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t10", "7", "at-gov");
-  public static final VESID VID_OPENPEPPOL_T14_V2_5_AT = new VESID ("eu.peppol.bis2", "t14", "5", "at");
-  public static final VESID VID_OPENPEPPOL_T14_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t14", "7", "at-gov");
+  public static final VESID VID_OPENPEPPOL_T10_V2_5_AT = new VESID ("eu.peppol.bis2", "t10", "6", "at");
+  public static final VESID VID_OPENPEPPOL_T10_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t10", "8", "at-gov");
+  public static final VESID VID_OPENPEPPOL_T14_V2_5_AT = new VESID ("eu.peppol.bis2", "t14", "6", "at");
+  public static final VESID VID_OPENPEPPOL_T14_V2_7_AT_GOV = new VESID ("eu.peppol.bis2", "t14", "8", "at-gov");
 
-  public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/atnat/ATNAT-UBL-T10.xslt",
+  public static final IReadableResource INVOICE_AT_NAT = new ClassPathResource ("/thirdparty/atnat-invoice/atnat-invoice-ubl.xslt",
                                                                                 _getCL ());
-  public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/atgov/ATGOV-UBL-T10.xslt",
+  public static final IReadableResource INVOICE_AT_GOV = new ClassPathResource ("/thirdparty/atgov-invoice/atgov-invoice-ubl.xslt",
                                                                                 _getCL ());
 
-  public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/atnat/ATNAT-UBL-T14.xslt",
+  public static final IReadableResource CREDIT_NOTE_AT_NAT = new ClassPathResource ("/thirdparty/atnat-creditnote/atnat-creditnote-ubl.xslt",
                                                                                     _getCL ());
-  public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/atgov/ATGOV-UBL-T14.xslt",
+  public static final IReadableResource CREDIT_NOTE_AT_GOV = new ClassPathResource ("/thirdparty/atgov-creditnote/atgov-creditnote-ubl.xslt",
                                                                                     _getCL ());
 
   /**
@@ -156,6 +156,7 @@ public final class PeppolValidation
     final String sPreReqCreditNote = "/ubl:CreditNote/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'";
 
     final boolean bNotDeprecated = false;
+    // Invoice
     final IValidationExecutorSet aVESInvoiceAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESInvoice,
                                                                                                                                VID_OPENPEPPOL_T10_V2_5_AT,
                                                                                                                                "OpenPEPPOL Invoice (Austria)",
@@ -170,6 +171,8 @@ public final class PeppolValidation
                                                                                   _createXSLT (INVOICE_AT_GOV,
                                                                                                sPreReqInvoice,
                                                                                                createUBLNSContext (EUBL21DocumentType.INVOICE.getNamespaceURI ()))));
+
+    // CreditNote
     final IValidationExecutorSet aVESCreditNoteAT = aRegistry.registerValidationExecutorSet (ValidationExecutorSet.createDerived (aVESCreditNote,
                                                                                                                                   VID_OPENPEPPOL_T14_V2_5_AT,
                                                                                                                                   "OpenPEPPOL Credit Note (Austria)",

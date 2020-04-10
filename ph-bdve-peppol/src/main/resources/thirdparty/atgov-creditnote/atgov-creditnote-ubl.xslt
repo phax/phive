@@ -153,7 +153,7 @@
 
 <!--SCHEMA SETUP-->
 <xsl:template match="/">
-    <svrl:schematron-output schemaVersion="" title="ATGOV T14 bound to UBL">
+    <svrl:schematron-output schemaVersion="" title="atgov-creditnote T14 bound to UBL">
       <xsl:comment>
         <xsl:value-of select="$archiveDirParameter" />   
 		 <xsl:value-of select="$archiveNameParameter" />  
@@ -176,7 +176,7 @@
   </xsl:template>
 
 <!--SCHEMATRON PATTERNS-->
-<svrl:text>ATGOV T14 bound to UBL</svrl:text>
+<svrl:text>atgov-creditnote T14 bound to UBL</svrl:text>
 
 <!--PATTERN UBL-T14-->
 

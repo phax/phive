@@ -17,6 +17,7 @@
 package com.helger.bdve.peppol.supplementary.createrules.sch;
 
 import java.io.File;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -92,7 +93,8 @@ public final class RuleSourceBusinessRule
   public File getSchematronBindingFile (@Nonnull @Nonempty final String sBindingName,
                                         @Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aOutputSchematronDirectory, "include/" + m_sID + "-" + sBindingName + "-test.sch");
+    return new File (m_aOutputSchematronDirectory,
+                     "include/" + m_sID + "-" + sBindingName.toLowerCase (Locale.US) + "-test.sch");
   }
 
   @Nonnull
@@ -105,7 +107,7 @@ public final class RuleSourceBusinessRule
   public File getSchematronAssemblyFile (@Nonnull @Nonempty final String sBindingName,
                                          @Nonnull @Nonempty final String sTransaction)
   {
-    return new File (m_aOutputSchematronDirectory, m_sID + "-" + sBindingName + "-" + sTransaction + ".sch");
+    return new File (m_aOutputSchematronDirectory, m_sID + "-" + sBindingName.toLowerCase (Locale.US) + ".sch");
   }
 
   public boolean hasCodeList ()
