@@ -84,14 +84,13 @@ public final class RuleSourceBusinessRule
   }
 
   @Nonnull
-  public File getSchematronAbstractFile (@Nonnull @Nonempty final String sTransaction)
+  public File getSchematronAbstractFile ()
   {
     return new File (m_aOutputSchematronDirectory, "include/" + m_sID + "-abstract.sch");
   }
 
   @Nonnull
-  public File getSchematronBindingFile (@Nonnull @Nonempty final String sBindingName,
-                                        @Nonnull @Nonempty final String sTransaction)
+  public File getSchematronBindingFile (@Nonnull @Nonempty final String sBindingName)
   {
     return new File (m_aOutputSchematronDirectory,
                      "include/" + m_sID + "-" + sBindingName.toLowerCase (Locale.US) + "-test.sch");
@@ -104,8 +103,7 @@ public final class RuleSourceBusinessRule
   }
 
   @Nonnull
-  public File getSchematronAssemblyFile (@Nonnull @Nonempty final String sBindingName,
-                                         @Nonnull @Nonempty final String sTransaction)
+  public File getSchematronAssemblyFile (@Nonnull @Nonempty final String sBindingName)
   {
     return new File (m_aOutputSchematronDirectory, m_sID + "-" + sBindingName.toLowerCase (Locale.US) + ".sch");
   }

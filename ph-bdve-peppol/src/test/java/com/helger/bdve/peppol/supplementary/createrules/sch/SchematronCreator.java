@@ -103,7 +103,7 @@ public final class SchematronCreator
     for (final Map.Entry <String, IMultiMapListBased <String, RuleAssertion>> aRuleEntry : m_aAbstractRules.entrySet ())
     {
       final String sTransaction = aRuleEntry.getKey ();
-      final File aSCHFile = aBusinessRule.getSchematronAbstractFile (sTransaction);
+      final File aSCHFile = aBusinessRule.getSchematronAbstractFile ();
       LOGGER.info ("    Writing abstract Schematron file " +
                    aSCHFile.getName () +
                    " with " +
@@ -214,7 +214,7 @@ public final class SchematronCreator
     for (final Map.Entry <String, ICommonsList <RuleParam>> aRuleEntry : aRules.entrySet ())
     {
       final String sTransaction = aRuleEntry.getKey ();
-      final File aSCHFile = aBusinessRule.getSchematronBindingFile (sBindingName, sTransaction);
+      final File aSCHFile = aBusinessRule.getSchematronBindingFile (sBindingName);
       LOGGER.info ("      Writing " +
                    sBindingName +
                    " Schematron file " +
@@ -280,7 +280,7 @@ public final class SchematronCreator
       if (StringHelper.hasNoText (sNamespaceURI))
         throw new IllegalStateException ("Missing namespace URI");
 
-      final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (sBindingName, sTransaction);
+      final File aSCHFile = aBusinessRule.getSchematronAssemblyFile (sBindingName);
       LOGGER.info ("      Writing " + sBindingName + " Schematron assembly file " + aSCHFile.getName ());
 
       final String sBindingPrefix = sBindingName.toLowerCase (Locale.US);
@@ -322,7 +322,7 @@ public final class SchematronCreator
 
       // Includes
       IMicroElement eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
-      eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronAbstractFile (sTransaction).getName ());
+      eInclude.setAttribute ("href", "include/" + aBusinessRule.getSchematronAbstractFile ().getName ());
       if (aBusinessRule.hasCodeList ())
       {
         eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
@@ -331,7 +331,7 @@ public final class SchematronCreator
       eInclude = eSchema.appendElement (NS_SCHEMATRON, "include");
       eInclude.setAttribute ("href",
                              "include/" +
-                                     aBusinessRule.getSchematronBindingFile (sBindingName, sTransaction).getName ());
+                                     aBusinessRule.getSchematronBindingFile (sBindingName).getName ());
 
       final IXMLWriterSettings aXWS = new XMLWriterSettings ().setNamespaceContext (new MapBasedNamespaceContext (aNsMap));
       if (SimpleFileIO.writeFile (aSCHFile, MicroWriter.getNodeAsBytes (aDoc, aXWS)).isFailure ())
