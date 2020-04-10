@@ -87,9 +87,8 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.odftoolkit</groupId>
-      <artifactId>simple-odf</artifactId>
-      <version>0.9.0-RC1</version>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-poi</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>

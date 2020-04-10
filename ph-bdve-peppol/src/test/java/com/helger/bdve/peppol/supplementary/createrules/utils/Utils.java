@@ -17,9 +17,13 @@
 package com.helger.bdve.peppol.supplementary.createrules.utils;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.apache.poi.ss.usermodel.Cell;
+
 import com.helger.commons.regex.RegExHelper;
+import com.helger.poi.excel.ExcelReadHelper;
 
 @Immutable
 public final class Utils
@@ -31,5 +35,18 @@ public final class Utils
   public static String makeID (@Nonnull final String s)
   {
     return RegExHelper.stringReplacePattern ("\\b[ \\t]+\\b", s, "_");
+  }
+
+  @Nullable
+  public static String getString (@Nullable final Cell aCell)
+  {
+    String ret = ExcelReadHelper.getCellValueString (aCell);
+    if (ret != null)
+    {
+      // Unify line ending to "\n"
+      ret = ret.replace ("\r\n", "\n");
+      ret = ret.replace ("\r", "\n");
+    }
+    return ret;
   }
 }

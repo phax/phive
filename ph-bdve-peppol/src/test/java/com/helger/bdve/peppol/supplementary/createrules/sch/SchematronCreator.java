@@ -25,13 +25,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.odftoolkit.simple.SpreadsheetDocument;
-import org.odftoolkit.simple.table.Table;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.bdve.peppol.supplementary.createrules.RuleSourceItem;
-import com.helger.bdve.peppol.supplementary.createrules.utils.ODFHelper;
 import com.helger.bdve.peppol.supplementary.createrules.utils.Utils;
 import com.helger.collection.multimap.IMultiMapListBased;
 import com.helger.collection.multimap.MultiHashMapArrayListBased;
@@ -41,8 +40,10 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.compare.IComparator;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
+import com.helger.poi.excel.EExcelVersion;
 import com.helger.schematron.CSchematron;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
@@ -64,25 +65,27 @@ public final class SchematronCreator
   private SchematronCreator ()
   {}
 
-  private void _extractAbstractRules (final RuleSourceBusinessRule aBusinessRule,
-                                      @Nonnull final SpreadsheetDocument aSpreadSheet)
+  private void _extractAbstractRules (final RuleSourceBusinessRule aBusinessRule, @Nonnull final Workbook aSpreadSheet)
   {
-    final Table aFirstSheet = aSpreadSheet.getSheetByIndex (0);
-    int nRow = 1;
-    while (!ODFHelper.isEmpty (aFirstSheet, 0, nRow))
+    final Sheet aFirstSheet = aSpreadSheet.getSheetAt (0);
+    // Skip 1 line
+    int nRowIndex = 1;
+    while (true)
     {
-      final String sRuleID = ODFHelper.getText (aFirstSheet, 0, nRow);
-      final String sMessage = ODFHelper.getText (aFirstSheet, 1, nRow);
-      final String sContext = ODFHelper.getText (aFirstSheet, 2, nRow);
-      final String sSeverity = ODFHelper.getText (aFirstSheet, 3, nRow);
-      final String sTransaction = ODFHelper.getText (aFirstSheet, 4, nRow);
+      // Read a single excel row
+      final org.apache.poi.ss.usermodel.Row aExcelRow = aFirstSheet.getRow (nRowIndex++);
+      if (aExcelRow == null)
+        break;
+
+      final String sRuleID = Utils.getString (aExcelRow.getCell (0));
+      final String sMessage = Utils.getString (aExcelRow.getCell (1));
+      final String sContext = Utils.getString (aExcelRow.getCell (2));
+      final String sSeverity = Utils.getString (aExcelRow.getCell (3));
+      final String sTransaction = Utils.getString (aExcelRow.getCell (4));
 
       // Save in nested maps
       m_aAbstractRules.computeIfAbsent (sTransaction, k -> new MultiTreeMapArrayListBased <> ())
                       .putSingle (sContext, new RuleAssertion (sRuleID, sMessage, sSeverity));
-
-      // Next row
-      ++nRow;
     }
 
     if (m_aAbstractRules.isEmpty ())
@@ -131,29 +134,39 @@ public final class SchematronCreator
   private static boolean _containsRuleID (@Nonnull final ICommonsList <RuleParam> aRuleParams,
                                           @Nullable final String sRuleID)
   {
-    for (final RuleParam aRuleParam : aRuleParams)
-      if (aRuleParam.getRuleID ().equals (sRuleID))
-        return true;
-    return false;
+    return aRuleParams.containsAny (x -> x.getRuleID ().equals (sRuleID));
   }
 
-  private void _extractBindingTests (final RuleSourceBusinessRule aBusinessRule, final Table aSheet)
+  private void _extractBindingTests (final RuleSourceBusinessRule aBusinessRule, @Nonnull final Sheet aSheet)
   {
-    final String sBindingName = aSheet.getTableName ();
+    final String sBindingName = aSheet.getSheetName ();
     LOGGER.info ("    Handling sheet for binding '" + sBindingName + "'");
-    int nRow = 1;
     final IMultiMapListBased <String, RuleParam> aRules = new MultiHashMapArrayListBased <> ();
-    while (!ODFHelper.isEmpty (aSheet, 0, nRow))
+
+    // Skip 1 line
+    int nRowIndex = 1;
+    while (true)
     {
-      final String sTransaction = ODFHelper.getText (aSheet, 0, nRow);
-      final String sRuleID = ODFHelper.getText (aSheet, 1, nRow);
-      String sTest = ODFHelper.getText (aSheet, 2, nRow);
-      final String sPrerequisite = ODFHelper.getText (aSheet, 3, nRow);
+      // Read a single excel row
+      final org.apache.poi.ss.usermodel.Row aExcelRow = aSheet.getRow (nRowIndex++);
+      if (aExcelRow == null)
+        break;
+
+      final String sTransaction = Utils.getString (aExcelRow.getCell (0));
+      final String sRuleID = Utils.getString (aExcelRow.getCell (1));
+      String sTest = Utils.getString (aExcelRow.getCell (2));
+      final String sPrerequisite = Utils.getString (aExcelRow.getCell (3));
+
+      if (StringHelper.hasNoText (sRuleID))
+      {
+        // Last line reached
+        break;
+      }
 
       if (StringHelper.hasText (sPrerequisite))
         sTest = "(" + sPrerequisite + " and " + sTest + ") or not (" + sPrerequisite + ")";
+
       aRules.putSingle (sTransaction, new RuleParam (sRuleID, sTest));
-      nRow++;
     }
 
     // Check if all required rules derived from the abstract rules are present
@@ -233,22 +246,29 @@ public final class SchematronCreator
   }
 
   private static void _createAssemblyFiles (@Nonnull final RuleSourceBusinessRule aBusinessRule,
-                                            @Nonnull final SpreadsheetDocument aSpreadSheet,
+                                            @Nonnull final Workbook aSpreadSheet,
                                             @Nonnull final ICommonsOrderedMap <String, String> aDefaultNamespaces)
   {
     // Create assembled Schematron
     LOGGER.info ("    Creating assembly Schematron file(s)");
-    final Table aLastSheet = aSpreadSheet.getSheetByIndex (aSpreadSheet.getSheetCount () - 1);
-    int nRow = 1;
-    // cell 0 (profile) is optional!
-    while (!ODFHelper.isEmpty (aLastSheet, 1, nRow))
+    final Sheet aLastSheet = aSpreadSheet.getSheetAt (aSpreadSheet.getNumberOfSheets () - 1);
+
+    // Skip 1 line
+    int nRowIndex = 1;
+    while (true)
     {
-      final String sProfile = ODFHelper.getText (aLastSheet, 0, nRow);
+      // Read a single excel row
+      final org.apache.poi.ss.usermodel.Row aExcelRow = aLastSheet.getRow (nRowIndex++);
+      if (aExcelRow == null)
+        break;
+
+      // cell 0 (profile) is optional!
+      final String sProfile = Utils.getString (aExcelRow.getCell (0));
       if (StringHelper.hasText (sProfile))
         throw new IllegalStateException ("Profile currently not supported! Found '" + sProfile + "'");
-      final String sTransaction = ODFHelper.getText (aLastSheet, 1, nRow);
-      final String sBindingName = ODFHelper.getText (aLastSheet, 2, nRow);
-      final String sNamespaceURI = ODFHelper.getText (aLastSheet, 4, nRow);
+      final String sTransaction = Utils.getString (aExcelRow.getCell (1));
+      final String sBindingName = Utils.getString (aExcelRow.getCell (2));
+      final String sNamespaceURI = Utils.getString (aExcelRow.getCell (4));
       if (StringHelper.hasNoText (sNamespaceURI))
         throw new IllegalStateException ("Missing namespace URI");
 
@@ -311,8 +331,6 @@ public final class SchematronCreator
 
       // Remember file for XSLT creation
       aBusinessRule.addResultSchematronFile (aSCHFile, sBindingPrefix, sNamespaceURI);
-
-      ++nRow;
     }
   }
 
@@ -328,7 +346,7 @@ public final class SchematronCreator
       {
         // Read ODS file
         LOGGER.info ("  Reading business rule source file " + aBusinessRule.getSourceFile ());
-        final SpreadsheetDocument aSpreadSheet = SpreadsheetDocument.loadDocument (aBusinessRule.getSourceFile ());
+        final Workbook aSpreadSheet = EExcelVersion.XLSX.readWorkbook (FileHelper.getBufferedInputStream (aBusinessRule.getSourceFile ()));
 
         final SchematronCreator aSC = new SchematronCreator ();
 
@@ -337,9 +355,9 @@ public final class SchematronCreator
 
         // Skip the first sheet (abstract rules) and skip the last sheet
         // (transaction information)
-        for (int nSheetIndex = 1; nSheetIndex < aSpreadSheet.getSheetCount () - 1; ++nSheetIndex)
+        for (int nSheetIndex = 1; nSheetIndex < aSpreadSheet.getNumberOfSheets () - 1; ++nSheetIndex)
         {
-          final Table aSheet = aSpreadSheet.getSheetByIndex (nSheetIndex);
+          final Sheet aSheet = aSpreadSheet.getSheetAt (nSheetIndex);
           aSC._extractBindingTests (aBusinessRule, aSheet);
         }
 

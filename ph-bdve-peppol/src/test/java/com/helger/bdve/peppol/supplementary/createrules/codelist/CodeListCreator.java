@@ -31,14 +31,15 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
 
-import org.odftoolkit.simple.SpreadsheetDocument;
-import org.odftoolkit.simple.table.Table;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
-import com.helger.bdve.peppol.supplementary.createrules.utils.ODFHelper;
+import com.helger.bdve.peppol.supplementary.createrules.utils.Utils;
 import com.helger.collection.multimap.MultiTreeMapTreeSetBased;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.string.StringHelper;
@@ -59,6 +60,7 @@ import com.helger.genericode.v10.Row;
 import com.helger.genericode.v10.SimpleCodeList;
 import com.helger.genericode.v10.UseType;
 import com.helger.genericode.v10.Value;
+import com.helger.poi.excel.EExcelVersion;
 import com.helger.schematron.CSchematron;
 import com.helger.xml.XMLFactory;
 import com.helger.xml.microdom.IMicroDocument;
@@ -94,25 +96,30 @@ public final class CodeListCreator
    *         sheet
    */
   @Nonnull
-  private Set <String> _readCVAData (@Nonnull final RuleSourceCodeList aCodeList,
-                                     @Nonnull final SpreadsheetDocument aSpreadSheet)
+  private Set <String> _readCVAData (@Nonnull final RuleSourceCodeList aCodeList, @Nonnull final Workbook aSpreadSheet)
   {
     final Set <String> aAllReferencedCodeListNames = new HashSet <> ();
-    final Table aCVASheet = aSpreadSheet.getSheetByName ("CVA");
+    final Sheet aCVASheet = aSpreadSheet.getSheet ("CVA");
     if (aCVASheet == null)
       throw new IllegalStateException ("No CVA sheet found!");
 
     LOGGER.info ("  Reading CVA data");
-    int nRow = 2;
-    while (!ODFHelper.isEmpty (aCVASheet, 0, nRow))
+    // Skip one row
+    int nRowIndex = 1;
+    while (true)
     {
-      final String sTransaction = ODFHelper.getText (aCVASheet, 0, nRow);
-      final String sID = ODFHelper.getText (aCVASheet, 1, nRow);
-      String sItem = ODFHelper.getText (aCVASheet, 2, nRow);
-      final String sScope = ODFHelper.getText (aCVASheet, 3, nRow);
-      final String sCodeListName = ODFHelper.getText (aCVASheet, 4, nRow);
-      final String sMessage = ODFHelper.getText (aCVASheet, 5, nRow);
-      final String sSeverity = ODFHelper.getText (aCVASheet, 6, nRow);
+      // Read a single excel row
+      final org.apache.poi.ss.usermodel.Row aExcelRow = aCVASheet.getRow (nRowIndex++);
+      if (aExcelRow == null)
+        break;
+
+      final String sTransaction = Utils.getString (aExcelRow.getCell (0));
+      final String sID = Utils.getString (aExcelRow.getCell (1));
+      String sItem = Utils.getString (aExcelRow.getCell (2));
+      final String sScope = Utils.getString (aExcelRow.getCell (3));
+      final String sCodeListName = Utils.getString (aExcelRow.getCell (4));
+      final String sMessage = Utils.getString (aExcelRow.getCell (5));
+      final String sSeverity = Utils.getString (aExcelRow.getCell (6));
 
       if (StringHelper.hasText (sScope))
         sItem = sScope + "//" + sItem;
@@ -129,7 +136,7 @@ public final class CodeListCreator
       // Remember that we require a codelist
       aAllReferencedCodeListNames.add (sCodeListName);
 
-      ++nRow;
+      ++nRowIndex;
     }
 
     // Start creating CVA files (for each transaction)
@@ -186,7 +193,7 @@ public final class CodeListCreator
   private void _createCVAandGC (final RuleSourceCodeList aCodeList) throws Exception
   {
     LOGGER.info ("Reading code list file " + aCodeList.getSourceFile ());
-    final SpreadsheetDocument aSpreadSheet = SpreadsheetDocument.loadDocument (aCodeList.getSourceFile ());
+    final Workbook aSpreadSheet = EExcelVersion.XLSX.readWorkbook (FileHelper.getBufferedInputStream (aCodeList.getSourceFile ()));
 
     // Handle CVA sheets
     final Set <String> aAllReferencedCodeListNames = _readCVAData (aCodeList, aSpreadSheet);
@@ -197,18 +204,22 @@ public final class CodeListCreator
     LOGGER.info ("  Reading codelists");
     for (final String sCodeListName : aAllReferencedCodeListNames)
     {
-      final Table aSheet = aSpreadSheet.getSheetByName (sCodeListName);
+      final Sheet aSheet = aSpreadSheet.getSheet (sCodeListName);
       if (aSheet == null)
         throw new IllegalStateException ("Failed to resolve sheet with name '" + sCodeListName + "'");
 
       final File aGCFile = aCodeList.getGCFile (sCodeListName);
       LOGGER.info ("    Creating " + aGCFile.getName ());
 
+      final org.apache.poi.ss.usermodel.Row aFirstRow = aSheet.getRow (0);
+      if (aFirstRow == null)
+        throw new IllegalStateException ("The sheet with name '" + sCodeListName + "' contains no row");
+
       // Read data
-      final String sShortname = ODFHelper.getText (aSheet, 0, 1);
-      final String sVersion = ODFHelper.getText (aSheet, 1, 1);
-      final String sAgency = ODFHelper.getText (aSheet, 2, 1);
-      final String sLocationURI = ODFHelper.getText (aSheet, 3, 1);
+      final String sShortname = Utils.getString (aFirstRow.getCell (0));
+      final String sVersion = Utils.getString (aFirstRow.getCell (1));
+      final String sAgency = Utils.getString (aFirstRow.getCell (2));
+      final String sLocationURI = Utils.getString (aFirstRow.getCell (3));
 
       // Start creating Genericode
       final CodeListDocument aGC = new CodeListDocument ();
@@ -237,30 +248,34 @@ public final class CodeListCreator
 
       // Add values
       final SimpleCodeList aSimpleCodeList = new SimpleCodeList ();
-      int nRow = 4;
-      while (!ODFHelper.isEmpty (aSheet, 0, nRow))
+      // Skip 4 rows
+      int nRowIndex = 4;
+      while (true)
       {
-        final String sCode = ODFHelper.getText (aSheet, 0, nRow);
-        final String sValue = ODFHelper.getText (aSheet, 1, nRow);
+        // Read a single excel row
+        final org.apache.poi.ss.usermodel.Row aExcelRow = aSheet.getRow (nRowIndex++);
+        if (aExcelRow == null)
+          break;
+
+        final String sCode = Utils.getString (aFirstRow.getCell (0));
+        final String sValue = Utils.getString (aFirstRow.getCell (1));
 
         final Row aRow = new Row ();
         Value aValue = new Value ();
         aValue.setColumnRef (aCodeColumn);
         aValue.setSimpleValue (Genericode10Helper.createSimpleValue (sCode));
-        aRow.getValue ().add (aValue);
+        aRow.addValue (aValue);
 
         aValue = new Value ();
         aValue.setColumnRef (aNameColumn);
         aValue.setSimpleValue (Genericode10Helper.createSimpleValue (sValue));
-        aRow.getValue ().add (aValue);
+        aRow.addValue (aValue);
 
-        aSimpleCodeList.getRow ().add (aRow);
+        aSimpleCodeList.addRow (aRow);
 
         // In code list name, a code is used
         if (m_aAllCodes.putSingle (sCodeListName, sCode).isUnchanged ())
           throw new IllegalStateException ("Found duplicate value '" + sCode + "' in code list " + sCodeListName);
-
-        ++nRow;
       }
       aGC.setSimpleCodeList (aSimpleCodeList);
 
@@ -345,7 +360,7 @@ public final class CodeListCreator
     }
   }
 
-  public void createCodeLists (final RuleSourceCodeList aCodeList) throws Exception
+  public void createCodeLists (@Nonnull final RuleSourceCodeList aCodeList) throws Exception
   {
     // Create .CVA and .GC files
     _createCVAandGC (aCodeList);
