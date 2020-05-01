@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+                Content:
+                This file contains a Full BIS3 PEPPOL UBL MLR.
+
+                Errors:
+                None
+                
+                Warnings:
+                None
+				
+-->
+<ApplicationResponse xmlns="urn:oasis:names:specification:ubl:schema:xsd:ApplicationResponse-2"
+					 xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2"
+					 xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+	<cbc:CustomizationID>urn:fdc:peppol.eu:poacc:trns:mlr:3</cbc:CustomizationID>
+	<cbc:ProfileID>urn:fdc:peppol.eu:poacc:bis:mlr:3</cbc:ProfileID>
+	<cbc:ID>MLR-ID123</cbc:ID>
+	<cbc:IssueDate>2016-08-15</cbc:IssueDate>
+	<cbc:IssueTime>12:00:00</cbc:IssueTime>
+	<cac:SenderParty>
+		<cbc:EndpointID schemeID="0088">7300010000001</cbc:EndpointID>
+	</cac:SenderParty>
+	<cac:ReceiverParty>
+		<cbc:EndpointID schemeID="0088">7315458756328</cbc:EndpointID>
+	</cac:ReceiverParty>
+	<cac:DocumentResponse>
+		<cac:Response>
+			<cbc:ResponseCode>RE</cbc:ResponseCode>
+			<cbc:Description>Rejected due to validation errore</cbc:Description>
+		</cac:Response>
+		<cac:DocumentReference>
+			<cbc:ID>EnvelopeID-12456789</cbc:ID>
+			<cbc:DocumentTypeCode>9</cbc:DocumentTypeCode>
+			<cbc:VersionID>2</cbc:VersionID>
+		</cac:DocumentReference>
+		<cac:LineResponse>
+			<cac:LineReference>
+				<cbc:LineID>/Catalogue/cac:CatalogueLine[3]/cac:Item[1]/cac:ClassifiedTaxCategory[1]/cbc:ID[1]</cbc:LineID>
+			</cac:LineReference>
+			<cac:Response>
+				<cbc:ResponseCode>RE</cbc:ResponseCode>
+				<cbc:Description>Validation gives error [CL-T77-R002]- Tax categories MUST be coded using UN/ECE 5305 code list </cbc:Description>
+				<cac:Status>
+					<cbc:StatusReasonCode>BV</cbc:StatusReasonCode>
+				</cac:Status>
+			</cac:Response>
+		</cac:LineResponse>
+	</cac:DocumentResponse>
+</ApplicationResponse>

@@ -76,79 +76,79 @@ Validating a business document requires a few more steps.
 
 # Maven usage
 
-Add the following to your `pom.xml` to use this artifact:
+Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with the latest version:
 
 ```xml
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-cii</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId7>ph-bdve-teapps</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-xrechnung</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
 </dependency>
 ```
 
@@ -158,7 +158,7 @@ Alternate usage as a Maven BOM:
 <dependency>
   <groupId>com.helger</groupId>
   <artifactId>ph-bdve-parent-pom</artifactId>
-  <version>5.2.10</version>
+  <version>x.y.z</version>
   <type>pom</type>
   <scope>import</scope>
 </dependency>
@@ -173,6 +173,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v5.2.11 - work in progress
     * Updated to ph-commons 9.4.0
     * Added support for ebInterface 6.0
+    * Added support for OpenPeppol validation artifacts, Spring 2020 release 
 * v5.2.10 - 2020-03-20
     * The Peppol AU-NZ rules were updated to v1.0.2. v1.0.1 is now deprecated.
 * v5.2.9 - 2020-03-18
