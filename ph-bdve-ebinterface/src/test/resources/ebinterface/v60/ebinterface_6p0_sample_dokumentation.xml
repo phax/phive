@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns="http://www.ebinterface.at/schema/6p0/" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         GeneratingSystem="ERP System xyz" 
+         DocumentType="Invoice" 
+         InvoiceCurrency="EUR" 
+         DocumentTitle="Eine Rechnung" 
+         Language="de" 
+         xsi:schemaLocation="http://www.ebinterface.at/schema/6p0/ ../Invoice.xsd" 
+         xmlns:n1="http://www.ebinterface.at/schema/6p0/extensions/someextension">
+	<InvoiceNumber>993433000298</InvoiceNumber>
+	<InvoiceDate>2018-01-12</InvoiceDate>
+	<CancelledOriginalDocument>
+		<InvoiceNumber>2018/41/1234</InvoiceNumber>
+		<InvoiceDate>2018-01-13</InvoiceDate>
+		<DocumentType>Invoice</DocumentType>
+		<Comment>Storniert die 2018/41/1234 vom 13.1.2018</Comment>
+	</CancelledOriginalDocument>
+	<RelatedDocument>
+		<InvoiceNumber>2017/233/3893</InvoiceNumber>
+		<InvoiceDate>2017-12-05</InvoiceDate>
+		<DocumentType>Invoice</DocumentType>
+		<Comment>Teilrechnung 1</Comment>
+	</RelatedDocument>
+	<RelatedDocument>
+		<InvoiceNumber>2018/233/3894</InvoiceNumber>
+		<InvoiceDate>2018-01-12</InvoiceDate>
+		<DocumentType>Invoice</DocumentType>
+		<Comment>Teilrechnung 2</Comment>
+	</RelatedDocument>
+	<AdditionalInformation Key="String">String</AdditionalInformation>
+	<CurrencyExchangeInformation>
+		<Currency>HUF</Currency>
+		<ExchangeRate>336.15</ExchangeRate>
+		<ExchangeRateDate>2020-03-09</ExchangeRateDate>
+		<Comment>Angabe in ungarischen Forint.</Comment>
+	</CurrencyExchangeInformation>
+	<Delivery>
+		<DeliveryID>Lieferung 2017/1</DeliveryID>
+		<Date>2017-12-28</Date>
+		<Address>
+			<AddressIdentifier AddressIdentifierType="GLN">9123456789013</AddressIdentifier>
+			<Name>Mustermann GmbH</Name>
+			<Street>Hauptstraße 10</Street>
+			<Town>Graz</Town>
+			<ZIP>8020</ZIP>
+			<Country CountryCode="AT">Österreich</Country>
+		</Address>
+		<Contact>
+			<Name>Hr. Max Mustermann</Name>
+		</Contact>
+		<Description>Lieferung wie Anfang September vereinbart.</Description>
+		<Extension>
+			<Custom ID="ext_id" Name="DeliveryExtensionAutomotive">
+				<n1:DeliveryExtension>456</n1:DeliveryExtension>
+			</Custom>
+		</Extension>
+	</Delivery>
+	<Biller>
+		<VATIdentificationNumber>ATU51507409</VATIdentificationNumber>
+		<FurtherIdentification IdentificationType="DVR">0012345</FurtherIdentification>
+		<OrderReference>
+			<OrderID>OR3456</OrderID>
+			<ReferenceDate>2017-09-20</ReferenceDate>
+			<Description>Eingegangen per Fax.</Description>
+		</OrderReference>
+		<Address>
+			<AddressIdentifier AddressIdentifierType="ProprietaryAddressID">
+             AnyOtherProprietaryID
+        </AddressIdentifier>
+			<Name>Schrauben Willi</Name>
+			<Street>Lassallestraße 5</Street>
+			<Town>Wien</Town>
+			<ZIP>1020</ZIP>
+			<Country CountryCode="AT">Österreich</Country>
+			<Phone>+43 / 1 / 78 56 789</Phone>
+			<Email>schraube@willi.at</Email>
+			<AdditionalInformation>Zentrale Verwaltung Wien</AdditionalInformation>
+		</Address>
+		<Contact>
+			<Salutation>Hr. Ing.</Salutation>
+			<Name>Walter Moser</Name>
+			<Phone>+43 / 1 / 78 56 789 21</Phone>
+			<Email>moser@willi.at</Email>
+		</Contact>
+		<InvoiceRecipientsBillerID>ID4456</InvoiceRecipientsBillerID>
+		<Extension>
+			<Custom ID="ext_id" Name="BillerExtensionAutomotive">
+				<n1:DeliveryExtension>456</n1:DeliveryExtension>
+			</Custom>
+		</Extension>
+	</Biller>
+	<InvoiceRecipient>
+		<VATIdentificationNumber>ATU18708634</VATIdentificationNumber>
+		<FurtherIdentification IdentificationType="DVR">7654543</FurtherIdentification>
+		<OrderReference>
+			<OrderID>ID3456</OrderID>
+			<ReferenceDate>2017-09-20</ReferenceDate>
+			<Description>Bestellung per Fax.</Description>
+		</OrderReference>
+		<Address>
+			<AddressIdentifier AddressIdentifierType="ProprietaryAddressID">35354</AddressIdentifier>
+			<Name>Mustermann GmbH</Name>
+			<Street>Haupstraße 10</Street>
+			<Town>Graz</Town>
+			<ZIP>8010</ZIP>
+			<Country CountryCode="AT">Österreich</Country>
+		</Address>
+		<Contact>
+			<Salutation>Herr</Salutation>
+			<Name>Max Mustermann</Name>
+		</Contact>
+		<BillersInvoiceRecipientID>12345678</BillersInvoiceRecipientID>
+		<AccountingArea>BK372</AccountingArea>
+		<SubOrganizationID>2938</SubOrganizationID>
+		<Extension>
+			<Custom ID="ext_id" Name="InvoiceRecipientExtensionAutomotive">
+				<n1:InvoiceRecipientExtension>456</n1:InvoiceRecipientExtension>
+			</Custom>
+		</Extension>
+	</InvoiceRecipient>
+	<OrderingParty>
+		<VATIdentificationNumber>00000000</VATIdentificationNumber>
+		<OrderReference>
+			<OrderID>558741</OrderID>
+			<ReferenceDate>2011-09-20</ReferenceDate>
+			<Description>Per Fax empfangen.</Description>
+		</OrderReference>
+		<Address>
+			<AddressIdentifier AddressIdentifierType="ProprietaryAddressID">OI393K3</AddressIdentifier>
+			<Name>Der Dritte Mann GmbH</Name>
+			<Street>Lassallestraße 7</Street>
+			<POBox>Wien</POBox>
+			<Town>Wien</Town>
+			<ZIP>1020</ZIP>
+			<Country CountryCode="AT">Österreich</Country>
+		</Address>
+		<Contact>
+			<Name>Max Mustermann</Name>
+		</Contact>
+		<BillersOrderingPartyID>98765432</BillersOrderingPartyID>
+		<Extension>
+			<Custom ID="ext_id" Name="OrderingPartyExtensionAutomotive">
+				<n1:OrderingPartyExtension>456</n1:OrderingPartyExtension>
+			</Custom>
+		</Extension>
+	</OrderingParty>
+	<Details>
+		<HeaderDescription>Wir stellen Ihnen folgende Leistungen in 
+     Rechnung.
+  </HeaderDescription>
+		<ItemList>
+			<HeaderDescription>Aus unserer Schrauben-Abteilung:</HeaderDescription>
+			<ListLineItem>
+				<PositionNumber>1</PositionNumber>
+				<Description>Schraubenzieher</Description>
+				<ArticleNumber ArticleNumberType="BillersArticleNumber">I3939</ArticleNumber>
+				<ArticleNumber ArticleNumberType="InvoiceRecipientsArticleNumber">E3949</ArticleNumber>
+				<ArticleNumber ArticleNumberType="GTIN">00012345678905</ArticleNumber>
+				<Quantity Unit="C62">100.00</Quantity>
+				<UnitPrice>10.20</UnitPrice>
+				<AdditionalInformation Key="35">Gelb</AdditionalInformation>
+				<TaxItem>
+					<TaxableAmount>1020.00</TaxableAmount>
+					<TaxPercent TaxCategoryCode="S">20</TaxPercent>
+					<TaxAmount>204.00</TaxAmount>
+					<Comment>20% Standardsteuersatz</Comment>
+					<Extension>
+						<Custom ID="ext_id" Name="TaxExtensionAutomotive">
+							<n1:TaxExtension>456</n1:TaxExtension>
+						</Custom>
+					</Extension>
+				</TaxItem>
+				<LineItemAmount>1020.00</LineItemAmount>
+			</ListLineItem>
+		</ItemList>
+		<ItemList>
+			<HeaderDescription>Aus unserer Buch-Abteilung:</HeaderDescription>
+			<ListLineItem>
+				<PositionNumber>1</PositionNumber>
+				<Description>Handbuch zur Schraube</Description>
+				<ArticleNumber ArticleNumberType="BillersArticleNumber">K34838</ArticleNumber>
+				<ArticleNumber ArticleNumberType="InvoiceRecipientsArticleNumber">E4938</ArticleNumber>
+				<ArticleNumber ArticleNumberType="GTIN">00012345678897</ArticleNumber>
+				<Quantity Unit="C62">1.00</Quantity>
+				<UnitPrice>5.00</UnitPrice>
+				<TaxItem>
+					<TaxableAmount>5.00</TaxableAmount>
+					<TaxPercent TaxCategoryCode="S">10</TaxPercent>
+					<TaxAmount>0.50</TaxAmount>
+					<Comment>10% - Reduzierter Steuersatz</Comment>
+				</TaxItem>
+				<LineItemAmount>5.00</LineItemAmount>
+			</ListLineItem>
+			<ListLineItem>
+				<PositionNumber>1</PositionNumber>
+				<Description>20% USt Beispiel</Description>
+				<Quantity Unit="C62">1.00</Quantity>
+				<UnitPrice>5.00</UnitPrice>
+				<TaxItem>
+					<TaxableAmount>200</TaxableAmount>
+					<TaxPercent TaxCategoryCode="S">20</TaxPercent>
+					<TaxAmount>40</TaxAmount>
+					<AccountingCurrencyAmount Currency="EUR">40</AccountingCurrencyAmount>
+					<Comment>20% Normalsteuersatz</Comment>
+				</TaxItem>
+				<LineItemAmount>5.00</LineItemAmount>
+			</ListLineItem>
+			<ListLineItem>
+				<PositionNumber>1</PositionNumber>
+				<Description>10% USt Beispiel</Description>
+				<Quantity Unit="C62">1.00</Quantity>
+				<UnitPrice>5.00</UnitPrice>
+				<TaxItem>
+					<TaxableAmount>200</TaxableAmount>
+					<TaxPercent TaxCategoryCode="AA">10</TaxPercent>
+					<TaxAmount>20</TaxAmount>
+					<AccountingCurrencyAmount Currency="EUR">20</AccountingCurrencyAmount>
+					<Comment>10% Normalsteuersatz</Comment>
+				</TaxItem>
+				<LineItemAmount>5.00</LineItemAmount>
+			</ListLineItem>
+			<ListLineItem>
+				<PositionNumber>1</PositionNumber>
+				<Description>Nicht USt-bar</Description>
+				<Quantity Unit="C62">1.00</Quantity>
+				<UnitPrice>5.00</UnitPrice>
+				<TaxItem>
+					<TaxableAmount>4.42</TaxableAmount>
+					<TaxPercent TaxCategoryCode="O">0</TaxPercent>
+					<Comment>City tax</Comment>
+				</TaxItem>
+				<LineItemAmount>5.00</LineItemAmount>
+			</ListLineItem>
+			<ListLineItem>
+				<PositionNumber>1</PositionNumber>
+				<Description>USt-befreit</Description>
+				<Quantity Unit="C62">1.00</Quantity>
+				<UnitPrice>5.00</UnitPrice>
+				<TaxItem>
+					<TaxableAmount>200</TaxableAmount>
+					<TaxPercent TaxCategoryCode="E">0</TaxPercent>
+					<Comment>Kleinunternehmerregelung</Comment>
+				</TaxItem>
+				<LineItemAmount>5.00</LineItemAmount>
+			</ListLineItem>
+		</ItemList>
+		<FooterDescription>Wir danken für Ihren Auftrag</FooterDescription>
+	</Details>
+	<ReductionAndSurchargeDetails>
+		<Reduction>
+			<BaseAmount>1020.00</BaseAmount>
+			<Percentage>1.00</Percentage>
+			<Amount>10.20</Amount>
+			<Comment>Kundenrabatt</Comment>
+			<Classification ClassificationSchema="RTG">Pauschalrabatte</Classification>
+			<TaxItem>
+				<TaxableAmount>0</TaxableAmount>
+				<TaxPercent TaxCategoryCode="S">20</TaxPercent>
+			</TaxItem>
+		</Reduction>
+		<Surcharge>
+			<BaseAmount>1020.00</BaseAmount>
+			<Percentage>0.5</Percentage>
+			<Amount>5.10</Amount>
+			<Extension>
+				<Custom ID="ext_id" Name="SurchargeExtensionAutomotive">
+					<n1:SurchargeExtension>456</n1:SurchargeExtension>
+				</Custom>
+			</Extension>
+			<TaxItem>
+				<TaxableAmount>0</TaxableAmount>
+				<TaxPercent TaxCategoryCode="S">20</TaxPercent>
+			</TaxItem>			
+		</Surcharge>
+		<OtherVATableTax>
+			<TaxableAmount>1020.00</TaxableAmount>
+			<TaxPercent TaxCategoryCode="x">5</TaxPercent>
+			<TaxAmount>51</TaxAmount>
+			<Comment>5% Werbeabgabe</Comment>
+			<TaxID>WA</TaxID>
+		</OtherVATableTax>
+	</ReductionAndSurchargeDetails>
+	<Tax>
+		<TaxItem>
+			<TaxableAmount>2030</TaxableAmount>
+			<TaxPercent TaxCategoryCode="S">20</TaxPercent>
+			<TaxAmount>406</TaxAmount>
+			<AccountingCurrencyAmount Currency="EUR">406</AccountingCurrencyAmount>
+			<Comment>20% Normalsteuersatz</Comment>
+		</TaxItem>
+		<TaxItem>
+			<TaxableAmount>355</TaxableAmount>
+			<TaxPercent TaxCategoryCode="AA">10</TaxPercent>
+			<TaxAmount>35.50</TaxAmount>
+			<AccountingCurrencyAmount Currency="EUR">35.50</AccountingCurrencyAmount>
+			<Comment>10% reduzierter Steuersatz</Comment>
+		</TaxItem>
+		<TaxItem>
+			<TaxableAmount>4.42</TaxableAmount>
+			<TaxPercent TaxCategoryCode="O">0</TaxPercent>
+			<Comment>Abgabe - nicht steuerbar</Comment>
+		</TaxItem>
+		<TaxItem>
+			<TaxableAmount>200</TaxableAmount>
+			<TaxPercent TaxCategoryCode="E">0</TaxPercent>
+			<Comment>USt-befreit gemäß § xxx</Comment>
+		</TaxItem>
+		<OtherTax>
+			<TaxAmount>255</TaxAmount>
+      <Comment>Werbeabgabe</Comment>
+		</OtherTax>
+		<Extension>
+			<Custom ID="ext_id" Name="TaxExtensionAutomotive">
+				<n1:TaxExtension>456</n1:TaxExtension>
+			</Custom>
+		</Extension>
+	</Tax>
+	<TotalGrossAmount>0</TotalGrossAmount>
+	<PrepaidAmount>0</PrepaidAmount>
+	<RoundingAmount>0</RoundingAmount>
+	<PayableAmount>0</PayableAmount>
+	<PaymentMethod>
+		<Comment>Abrechnung im Zuge des Rahmenvertrags.</Comment>
+		<OtherPayment/>
+	</PaymentMethod>
+	<PaymentConditions>
+		<DueDate>1957-08-13</DueDate>
+		<Discount>
+			<PaymentDate>1957-08-13</PaymentDate>
+			<BaseAmount>0</BaseAmount>
+			<Percentage>0</Percentage>
+			<Amount>0</Amount>
+		</Discount>
+		<MinimumPayment>0</MinimumPayment>
+		<Comment>String</Comment>
+		<Extension>
+			<Custom ID="ext_id" Name="PaymentConditionsExtensionAutomotive">
+				<n1:PaymentConditionsExtension>456</n1:PaymentConditionsExtension>
+			</Custom>
+		</Extension>
+	</PaymentConditions>
+	<Comment>String</Comment>
+</Invoice>

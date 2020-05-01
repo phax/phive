@@ -43,6 +43,7 @@ public final class EbInterfaceValidation
   public static final VESID VID_EBI_42 = new VESID (GROUP_ID, "invoice", "4.2");
   public static final VESID VID_EBI_43 = new VESID (GROUP_ID, "invoice", "4.3");
   public static final VESID VID_EBI_50 = new VESID (GROUP_ID, "invoice", "5.0");
+  public static final VESID VID_EBI_60 = new VESID (GROUP_ID, "invoice", "6.0");
 
   private EbInterfaceValidation ()
   {}

@@ -52,7 +52,8 @@ public final class CTestFiles
                                              EbInterfaceValidation.VID_EBI_41,
                                              EbInterfaceValidation.VID_EBI_42,
                                              EbInterfaceValidation.VID_EBI_43,
-                                             EbInterfaceValidation.VID_EBI_50 })
+                                             EbInterfaceValidation.VID_EBI_50,
+                                             EbInterfaceValidation.VID_EBI_60 })
       for (final IReadableResource aRes : getAllMatchingTestFiles (aVESID))
         ret.add (MockFile.createGoodCase (aRes, aVESID));
 
@@ -79,6 +80,8 @@ public final class CTestFiles
       return EEbInterfaceTestFiles.V43.getTestResources ();
     if (aVESID.equals (EbInterfaceValidation.VID_EBI_50))
       return EEbInterfaceTestFiles.V50.getTestResources ();
+    if (aVESID.equals (EbInterfaceValidation.VID_EBI_60))
+      return EEbInterfaceTestFiles.V60.getTestResources ();
 
     throw new IllegalArgumentException ("Invalid VESID: " + aVESID);
   }
