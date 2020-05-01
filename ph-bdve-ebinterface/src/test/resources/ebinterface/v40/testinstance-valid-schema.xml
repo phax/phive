@@ -1,23 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../Invoice.xslt"?>
-<!--
-
-    Copyright (C) 2014-2020 Philip Helger (www.helger.com)
-    philip[at]helger[dot]com
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-            http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
-
--->
 <eb:Invoice xmlns:eb="http://www.ebinterface.at/schema/4p0/" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.ebinterface.at/schema/4p0/ http://www.ebinterface.at/schema/4p0/Invoice.xsd" eb:GeneratingSystem="ebInterface 4.0 Alpha Word PlugIn Vorlage Version 4.0 Alpha SVN Rev:212" eb:DocumentType="Invoice" eb:InvoiceCurrency="EUR" eb:DocumentTitle="DEMO-Rechnung" eb:Language="ger">
   <eb:InvoiceNumber>2011-0001</eb:InvoiceNumber>
   <eb:InvoiceDate>2011-09-12</eb:InvoiceDate>

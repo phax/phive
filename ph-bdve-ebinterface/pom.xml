@@ -27,7 +27,7 @@
   <artifactId>ph-bdve-ebinterface</artifactId>
   <packaging>bundle</packaging>
   <name>ph-bdve-ebinterface</name>
-  <description>Generic Tieto TEAPPS validation engine</description>
+  <description>Generic ebInterface validation engine</description>
   <url>https://github.com/phax/ph-bdve/ph-bdve-ebinterface</url>
   <inceptionYear>2018</inceptionYear>
   <licenses>
@@ -37,10 +37,12 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
+  
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
+  
   <developers>
     <developer>
       <id>philip</id>
@@ -49,6 +51,7 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
+  
   <dependencies>
     <dependency>
       <groupId>com.helger</groupId>
@@ -68,6 +71,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+  
   <build>
     <plugins>
       <plugin>
@@ -89,6 +93,7 @@
           <excludes>
             <exclude>**/LICENSE</exclude>
             <exclude>**/NOTICE</exclude>
+            <exclude>src/test/resources/ebinterface/**</exclude>
           </excludes>
         </configuration>
       </plugin>
