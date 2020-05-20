@@ -36,6 +36,34 @@ public class ValidationArtefact implements IValidationArtefact
   private final EValidationType m_eValidationArtefactType;
   private final IReadableResource m_aResource;
 
+  /**
+   * Constructor.
+   *
+   * @param eValidationArtefactType
+   *        Validation artefact type. May not be <code>null</code>.
+   * @param aClassLoader
+   *        The class loader to be used.
+   * @param aResource
+   *        The resource this reflects. May not be <code>null</code>.
+   * @deprecated Since 5.3.0 in favour of
+   *             {@link #ValidationArtefact(EValidationType, IReadableResource)}
+   */
+  @Deprecated
+  public ValidationArtefact (@Nonnull final EValidationType eValidationArtefactType,
+                             @Nonnull final ClassLoader aClassLoader,
+                             @Nonnull final IReadableResource aResource)
+  {
+    this (eValidationArtefactType, aResource);
+  }
+
+  /**
+   * Constructor.
+   *
+   * @param eValidationArtefactType
+   *        Validation artefact type. May not be <code>null</code>.
+   * @param aResource
+   *        The resource this reflects. May not be <code>null</code>.
+   */
   public ValidationArtefact (@Nonnull final EValidationType eValidationArtefactType, @Nonnull final IReadableResource aResource)
   {
     m_eValidationArtefactType = ValueEnforcer.notNull (eValidationArtefactType, "ValidationArtefactType");
