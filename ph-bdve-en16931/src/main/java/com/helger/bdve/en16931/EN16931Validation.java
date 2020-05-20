@@ -192,7 +192,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_CII_100_XSLT),
                                                                                                              null,
                                                                                                              CIID16BNamespaceContext.getInstance ())));
@@ -201,7 +200,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_CII_110_XSLT),
                                                                                                              null,
                                                                                                              CIID16BNamespaceContext.getInstance ())));
@@ -210,7 +208,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_CII_120_XSLT),
                                                                                                              null,
                                                                                                              CIID16BNamespaceContext.getInstance ())));
@@ -219,7 +216,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_CII_121_XSLT),
                                                                                                              null,
                                                                                                              CIID16BNamespaceContext.getInstance ())));
@@ -228,7 +224,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_CII_123_XSLT),
                                                                                                              null,
                                                                                                              CIID16BNamespaceContext.getInstance ())));
@@ -237,7 +232,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_CII_130_XSLT),
                                                                                                              null,
                                                                                                              CIID16BNamespaceContext.getInstance ())));
@@ -246,7 +240,6 @@ public final class EN16931Validation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (ECIID16BDocumentType.CROSS_INDUSTRY_INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_CII_131_XSLT),
                                                                                                              null,
                                                                                                              CIID16BNamespaceContext.getInstance ())));
@@ -261,7 +254,6 @@ public final class EN16931Validation
                                                                                                                                                                                _getCL ())),
                                                                                                                                null)),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_EDIFACT_100_XSLT),
                                                                                                              null,
                                                                                                              null)));
@@ -273,7 +265,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_100_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -283,7 +274,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_110_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -293,7 +283,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_110_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -303,7 +292,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_110_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -313,7 +301,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_120_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -323,7 +310,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_120_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -333,7 +319,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_121_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -343,7 +328,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_121_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -353,7 +337,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_123_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -363,7 +346,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_123_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -373,7 +355,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_130_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -383,7 +364,6 @@ public final class EN16931Validation
                                                                            bDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_130_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -394,7 +374,6 @@ public final class EN16931Validation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.INVOICE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_131_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));
@@ -404,7 +383,6 @@ public final class EN16931Validation
                                                                            bNotDeprecated,
                                                                            ValidationExecutorXSD.create (EUBL21DocumentType.CREDIT_NOTE),
                                                                            new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT,
-                                                                                                                                     _getCL (),
                                                                                                                                      INVOICE_UBL_131_XSLT),
                                                                                                              null,
                                                                                                              UBL21NamespaceContext.getInstance ())));

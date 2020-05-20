@@ -108,7 +108,6 @@ public final class OIOUBLValidation
   private static IValidationExecutor _createTVR (@Nonnull final IReadableResource aRes)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL,
-                                                                     _getCL (),
                                                                      aRes),
                                              null,
                                              UBL21NamespaceContext.getInstance ());

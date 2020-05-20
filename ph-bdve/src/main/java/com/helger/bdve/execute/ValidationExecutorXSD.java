@@ -124,7 +124,6 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   {
     ValueEnforcer.notNull (aDocType, "DocType");
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                              aDocType.getImplementationClass ().getClassLoader (),
                                                               aDocType.getAllXSDResources ().getLast ()),
                                       aDocType::getSchema);
   }
@@ -133,7 +132,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   public static ValidationExecutorXSD create (@Nonnull final ClassPathResource aXSDRes)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
-    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes.getClassLoader (), aXSDRes),
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes),
                                       () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
   }
 }

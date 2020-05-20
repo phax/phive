@@ -170,7 +170,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.2.11 - work in progress
+* v5.3.0 - work in progress
+    * Removed the class loader member from `IValidationArtifact`
+* v5.2.11 - 2020-05-01
     * Updated to ph-commons 9.4.0
     * Added support for ebInterface 6.0
     * Added support for OpenPeppol validation artifacts, Spring 2020 release 

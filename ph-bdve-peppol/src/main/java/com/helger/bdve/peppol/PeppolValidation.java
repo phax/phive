@@ -125,7 +125,7 @@ public final class PeppolValidation
                                                   @Nullable final String sPrerequisiteXPath,
                                                   @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, _getCL (), aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, aRes),
                                              sPrerequisiteXPath,
                                              aNamespaceContext);
   }

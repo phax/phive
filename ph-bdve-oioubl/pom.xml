@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>ph-bdve-parent-pom</artifactId>
-    <version>5.2.12-SNAPSHOT</version>
+    <version>5.3.0-SNAPSHOT</version>
   </parent>
   <artifactId>ph-bdve-oioubl</artifactId>
   <packaging>bundle</packaging>

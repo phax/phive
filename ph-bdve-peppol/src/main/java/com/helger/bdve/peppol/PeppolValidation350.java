@@ -215,7 +215,7 @@ public final class PeppolValidation350
   @Nonnull
   private static IValidationExecutor _createPure (@Nonnull final IReadableResource aRes)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, _getCL (), aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, aRes),
                                              null,
                                              UBL21NamespaceContext.getInstance ());
   }
@@ -223,7 +223,7 @@ public final class PeppolValidation350
   @Nonnull
   private static IValidationExecutor _createSCH (@Nonnull final IReadableResource aRes)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, _getCL (), aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, aRes),
                                              null,
                                              UBL21NamespaceContext.getInstance ());
   }

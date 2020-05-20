@@ -101,7 +101,7 @@ public final class PeppolValidation3_10_0
   @Nonnull
   private static IValidationExecutor _createXSLT (@Nonnull final IReadableResource aRes)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, _getCL (), aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, aRes),
                                              null,
                                              UBL21NamespaceContext.getInstance ());
   }

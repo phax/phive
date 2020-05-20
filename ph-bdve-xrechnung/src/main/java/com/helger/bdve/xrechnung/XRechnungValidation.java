@@ -73,7 +73,7 @@ public final class XRechnungValidation
   @Nonnull
   private static IValidationExecutor _createXSLT (@Nonnull final IReadableResource aRes)
   {
-    final ValidationArtefact aVA = new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, _getCL (), aRes);
+    final ValidationArtefact aVA = new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, aRes);
     return new ValidationExecutorSchematron (aVA, null, null);
   }
 
