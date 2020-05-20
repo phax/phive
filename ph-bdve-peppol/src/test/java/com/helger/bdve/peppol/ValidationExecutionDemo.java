@@ -41,7 +41,7 @@ public final class ValidationExecutionDemo
   public void testCode (@Nullable final String sSystemID, @Nonnull final byte [] aXML)
   {
     // Example: validate against orders
-    final VESID aVESID = PeppolValidation391.VID_OPENPEPPOL_INVOICE_V3;
+    final VESID aVESID = PeppolValidation3_10_0.VID_OPENPEPPOL_INVOICE_V3;
 
     // Note: Use the currently active version
     final IValidationExecutorSet aExecutors = CTestFiles.VES_REGISTRY.getOfID (aVESID);

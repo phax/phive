@@ -172,6 +172,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v5.3.0 - work in progress
     * Removed the class loader member from `IValidationArtifact`
+    * Deprecated Peppol 3.9.0 and 3.9.1 artefacts - 3.10.0 is the right one
 * v5.2.11 - 2020-05-01
     * Updated to ph-commons 9.4.0
     * Added support for ebInterface 6.0
