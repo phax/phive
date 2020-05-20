@@ -49,7 +49,7 @@ public final class EbInterfaceValidation
   {}
 
   /**
-   * Register all standard TEAPPS validation execution sets to the provided
+   * Register all standard ebInterface validation execution sets to the provided
    * registry.
    *
    * @param aRegistry
