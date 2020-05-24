@@ -327,8 +327,7 @@ public final class BDVEJsonHelper
                                                     @Nullable final String sTest,
                                                     @Nullable final Throwable t)
   {
-    return getJsonError (aErrorLevel, sErrorID, sErrorFieldName, sErrorLocation, sErrorText, t).addIfNotNull ("test",
-                                                                                                              sTest);
+    return getJsonError (aErrorLevel, sErrorID, sErrorFieldName, sErrorLocation, sErrorText, t).addIfNotNull ("test", sTest);
   }
 
   /**
@@ -395,22 +394,17 @@ public final class BDVEJsonHelper
 
     final IJsonArray aResultArray = new JsonArray ();
     {
-      final IJsonObject aError = getJsonError (EErrorLevel.ERROR,
-                                               (String) null,
-                                               (String) null,
-                                               (String) null,
-                                               sErrorMsg,
-                                               (Throwable) null);
+      final IJsonObject aError = getJsonError (EErrorLevel.ERROR, (String) null, (String) null, (String) null, sErrorMsg, (Throwable) null);
       aResultArray.add (new JsonObject ().add ("success", getTriState (false))
                                          .add ("artifactType", ARTFACT_TYPE_INPUT_PARAMETER)
                                          .add ("artifactPath", ARTIFACT_PATH_NONE)
-                                         .add ("items", new JsonArray (aError)));
+                                         .addJson ("items", new JsonArray (aError)));
     }
 
     aResponse.add ("success", false);
     aResponse.add ("interrupted", false);
     aResponse.add ("mostSevereErrorLevel", getErrorLevel (EErrorLevel.ERROR));
-    aResponse.add ("results", aResultArray);
+    aResponse.addJson ("results", aResultArray);
     aResponse.add ("durationMS", nDurationMilliseconds);
   }
 
@@ -470,7 +464,7 @@ public final class BDVEJsonHelper
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
-    aResponse.add ("ves", getJsonVES (aVES));
+    aResponse.addJson ("ves", getJsonVES (aVES));
 
     int nWarnings = 0;
     int nErrors = 0;
@@ -507,21 +501,19 @@ public final class BDVEJsonHelper
         aItemArray.add (getJsonSchematronError (aError.getErrorLevel (),
                                                 aError.getErrorID (),
                                                 aError.getErrorFieldName (),
-                                                aError.hasErrorLocation () ? aError.getErrorLocation ().getAsString ()
-                                                                           : null,
+                                                aError.hasErrorLocation () ? aError.getErrorLocation ().getAsString () : null,
                                                 aError.getErrorText (aDisplayLocale),
-                                                aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest ()
-                                                                                    : null,
+                                                aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest () : null,
                                                 aError.getLinkedException ()));
       }
-      aVRT.add ("items", aItemArray);
+      aVRT.addJson ("items", aItemArray);
       aResultArray.add (aVRT);
     }
     // Success if the worst that happened is a warning
     aResponse.add ("success", aMostSevere.isLE (EErrorLevel.WARN));
     aResponse.add ("interrupted", bValidationInterrupted);
     aResponse.add ("mostSevereErrorLevel", getErrorLevel (aMostSevere));
-    aResponse.add ("results", aResultArray);
+    aResponse.addJson ("results", aResultArray);
     aResponse.add ("durationMS", nDurationMilliseconds);
 
     // Set consumer values
