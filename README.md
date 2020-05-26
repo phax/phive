@@ -174,6 +174,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Updated to ph-commons 9.4.4
     * Removed the class loader member from `IValidationArtifact`
     * Deprecated Peppol 3.9.0 and 3.9.1 artefacts - 3.10.0 is the right one
+    * Added support for EN 16931 1.3.12 format (deprecated version 1.3.1)
 * v5.2.11 - 2020-05-01
     * Updated to ph-commons 9.4.0
     * Added support for ebInterface 6.0
