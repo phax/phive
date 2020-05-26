@@ -164,13 +164,15 @@ Alternate usage as a Maven BOM:
 </dependency>
 ```
 
+Note: prior to v5.3.0 the Maven groupId was `com.helger`.
+
 ## Potential issues
 
 Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle runtime, this can be achieved by passing `-Xss1m` on the command line. This only seems to be a problem when running 32bit Java. With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-* v5.3.0 - work in progress
+* v5.3.0 - 2020-05-26
     * Changed the Maven groupId to `com.helger.bdve`
     * Renamed the submodule `ph-bdve` to `ph-bdve-engine`
     * Updated to ph-commons 9.4.4

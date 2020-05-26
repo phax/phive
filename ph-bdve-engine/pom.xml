@@ -28,7 +28,7 @@
   <packaging>bundle</packaging>
   <name>ph-bdve-engine</name>
   <description>Business Document Validation Engine (BDVE)</description>
-  <url>https://github.com/phax/ph-bdve/ph-bdve</url>
+  <url>https://github.com/phax/ph-bdve/ph-bdve-engine</url>
   <inceptionYear>2016</inceptionYear>
   
   <licenses>
