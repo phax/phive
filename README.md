@@ -3,7 +3,7 @@
 A generic document validation engine originally developed for PEPPOL but now also supporting other document types.
 
 This project is divided into sub-projects each keeping tracking of one document type set:
-  * ph-bdve - generic "Business Document Validation Engine"
+  * ph-bdve-engine - generic "Business Document Validation Engine" (prior to 5.3.0 it was called "ph-bdve" only)
   * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
   * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
   * ph-bdve-ehf - Validation rules for EHF (Norwegian public procurement) - since 4.0.1
@@ -80,73 +80,73 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
 
 ```xml
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-peppol</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-en16931</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-simplerinvoicing</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-ubl</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-cii</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-ehf</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-energieefactuur</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-oioubl</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-ebinterface</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId7>ph-bdve-teapps</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-ublbe</artifactId>
   <version>x.y.z</version>
 </dependency>
 
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-xrechnung</artifactId>
   <version>x.y.z</version>
 </dependency>
@@ -156,7 +156,7 @@ Alternate usage as a Maven BOM:
 
 ```xml
 <dependency>
-  <groupId>com.helger</groupId>
+  <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-parent-pom</artifactId>
   <version>x.y.z</version>
   <type>pom</type>
@@ -171,10 +171,12 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 # News and noteworthy
 
 * v5.3.0 - work in progress
+    * Changed the Maven groupId to `com.helger.bdve`
+    * Renamed the submodule `ph-bdve` to `ph-bdve-engine`
     * Updated to ph-commons 9.4.4
     * Removed the class loader member from `IValidationArtifact`
     * Deprecated Peppol 3.9.0 and 3.9.1 artefacts - 3.10.0 is the right one
-    * Added support for EN 16931 1.3.12 format (deprecated version 1.3.1)
+    * Added support for EN 16931 1.3.2 format (deprecated version 1.3.1)
 * v5.2.11 - 2020-05-01
     * Updated to ph-commons 9.4.0
     * Added support for ebInterface 6.0
