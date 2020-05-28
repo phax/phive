@@ -172,6 +172,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.3.1 - 2020-05-28
+    * Added possibility to stop further validation on failed Schematrons as well
 * v5.3.0 - 2020-05-26
     * Changed the Maven groupId to `com.helger.bdve`
     * Renamed the submodule `ph-bdve` to `ph-bdve-engine`

@@ -225,7 +225,7 @@ public class ValidationExecutionManager implements IHasClassLoader
         assert aResult != null;
         aValidationResults.add (aResult);
 
-        if (aResult.isFailure () && aExecutor.getValidationType ().isStopValidationOnError ())
+        if (aResult.isFailure () && aExecutor.isStopValidationOnError ())
         {
           // Ignore all following executors
           bIgnoreRest = true;
@@ -247,8 +247,7 @@ public class ValidationExecutionManager implements IHasClassLoader
    * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
   @Nonnull
-  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource,
-                                                 @Nullable final Locale aLocale)
+  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
   {
     final ValidationResultList ret = new ValidationResultList ();
     executeValidation (aSource, ret, aLocale);

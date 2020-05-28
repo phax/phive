@@ -46,12 +46,11 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
+public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <ValidationExecutorXSDPartial>
 {
   private final XSDPartialContext m_aContext;
 
-  public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact,
-                                       @Nonnull final XSDPartialContext aContext)
+  public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final XSDPartialContext aContext)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSDBased (), "Artifact is not XSD");
@@ -90,9 +89,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
         // Too little matches found
         aErrorList.add (SingleError.builderFatalError ()
                                    .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
-                                   .setErrorText ("The minimum number of result nodes (" +
-                                                  m_aContext.getMinNodeCount () +
-                                                  ") is not met")
+                                   .setErrorText ("The minimum number of result nodes (" + m_aContext.getMinNodeCount () + ") is not met")
                                    .build ());
       }
     if (m_aContext.hasMaxNodeCount ())
@@ -101,9 +98,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
         // Too little matches found
         aErrorList.add (SingleError.builderFatalError ()
                                    .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
-                                   .setErrorText ("The maximum number of result nodes (" +
-                                                  m_aContext.getMaxNodeCount () +
-                                                  ") is not met")
+                                   .setErrorText ("The maximum number of result nodes (" + m_aContext.getMaxNodeCount () + ") is not met")
                                    .build ());
       }
 
@@ -133,8 +128,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor
         // Happens when non-XML document is trying to be parsed
         if (ex.getCause () instanceof SAXParseException)
         {
-          aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
-                                                                    (SAXParseException) ex.getCause ()));
+          aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
         }
         else
         {

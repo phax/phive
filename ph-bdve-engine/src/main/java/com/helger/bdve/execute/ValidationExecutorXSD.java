@@ -46,7 +46,7 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorXSD extends AbstractValidationExecutor
+public class ValidationExecutorXSD extends AbstractValidationExecutor <ValidationExecutorXSD>
 {
   private final ISupplier <? extends Schema> m_aSchemaProvider;
 
@@ -60,14 +60,13 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   }
 
   @Nonnull
-  public ISupplier <? extends Schema> getSchemaProvider ()
+  public final ISupplier <? extends Schema> getSchemaProvider ()
   {
     return m_aSchemaProvider;
   }
 
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource,
-                                           @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
     final IValidationArtefact aVA = getValidationArtefact ();
@@ -88,8 +87,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
       // Happens when non-XML document is trying to be parsed
       if (ex.getCause () instanceof SAXParseException)
       {
-        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
-                                                                  (SAXParseException) ex.getCause ()));
+        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
       }
       else
       {
@@ -123,8 +121,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor
   public static ValidationExecutorXSD create (@Nonnull final IJAXBDocumentType aDocType)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
-    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                              aDocType.getAllXSDResources ().getLast ()),
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
                                       aDocType::getSchema);
   }
 

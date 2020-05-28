@@ -23,16 +23,24 @@ import com.helger.bdve.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.traits.IGenericImplTrait;
 
 /**
  * Abstract base implementation of {@link IValidationExecutor}.
  *
  * @author Philip Helger
+ * @param <IMPLTYPE>
+ *        Implementation type (Since v5.3.1)
  */
 @Immutable
-public abstract class AbstractValidationExecutor implements IValidationExecutor
+public abstract class AbstractValidationExecutor <IMPLTYPE extends AbstractValidationExecutor <IMPLTYPE>> implements
+                                                 IValidationExecutor,
+                                                 IGenericImplTrait <IMPLTYPE>
 {
+  public static final boolean DEFAULT_STOP_VALIDATION_ON_ERROR = false;
+
   private final IValidationArtefact m_aValidationArtefact;
+  private boolean m_bStopValidationOnError = DEFAULT_STOP_VALIDATION_ON_ERROR;
 
   public AbstractValidationExecutor (@Nonnull final IValidationArtefact aValidationArtefact)
   {
@@ -46,13 +54,26 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
   }
 
   @Override
+  public final boolean isStopValidationOnError ()
+  {
+    return m_bStopValidationOnError;
+  }
+
+  @Nonnull
+  public final IMPLTYPE setStopValidationOnError (final boolean bStopValidationOnError)
+  {
+    m_bStopValidationOnError = bStopValidationOnError;
+    return thisAsT ();
+  }
+
+  @Override
   public boolean equals (final Object o)
   {
     if (o == this)
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AbstractValidationExecutor rhs = (AbstractValidationExecutor) o;
+    final AbstractValidationExecutor <?> rhs = (AbstractValidationExecutor <?>) o;
     return m_aValidationArtefact.equals (rhs.m_aValidationArtefact);
   }
 
@@ -65,6 +86,8 @@ public abstract class AbstractValidationExecutor implements IValidationExecutor
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact).getToString ();
+    return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
+                                       .append ("StopValidationOnError", m_bStopValidationOnError)
+                                       .getToString ();
   }
 }

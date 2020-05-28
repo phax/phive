@@ -83,6 +83,16 @@ public interface IValidationExecutor extends Serializable
   }
 
   /**
+   * @return <code>true</code> if a negative validation stops further
+   *         validations.
+   * @since 5.3.1; previously on validation type level only
+   */
+  default boolean isStopValidationOnError ()
+  {
+    return getValidationType ().isStopValidationOnError ();
+  }
+
+  /**
    * Perform validation. The class loader of the validation artefact is used.
    *
    * @param aSource
@@ -106,6 +116,5 @@ public interface IValidationExecutor extends Serializable
    * @return Never <code>null</code>.
    */
   @Nonnull
-  ValidationResult applyValidation (@Nonnull IValidationSource aSource,
-                                    @Nullable Locale aLocale);
+  ValidationResult applyValidation (@Nonnull IValidationSource aSource, @Nullable Locale aLocale);
 }

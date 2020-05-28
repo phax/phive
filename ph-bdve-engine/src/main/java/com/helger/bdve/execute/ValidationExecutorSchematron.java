@@ -69,7 +69,7 @@ import com.helger.xml.xpath.XPathHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorSchematron extends AbstractValidationExecutor implements
+public class ValidationExecutorSchematron extends AbstractValidationExecutor <ValidationExecutorSchematron> implements
                                           IValidationExecutor.ICacheSupport
 {
   private enum ESchematronOutput
@@ -82,17 +82,16 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
 
   private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
-  private boolean m_bCacheSchematron = DEFAULT_CACHE;
   private final String m_sPrerequisiteXPath;
   private final MapBasedNamespaceContext m_aNamespaceContext;
+  private boolean m_bCacheSchematron = DEFAULT_CACHE;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
                                        @Nullable final String sPrerequisiteXPath,
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematronBased (),
-                          "Artifact is not Schematron");
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematronBased (), "Artifact is not Schematron");
     m_sPrerequisiteXPath = sPrerequisiteXPath;
     m_aNamespaceContext = aNamespaceContext == null ? null : new MapBasedNamespaceContext (aNamespaceContext);
   }
@@ -141,8 +140,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
     }
     catch (final Exception ex)
     {
-      throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.",
-                                       ex);
+      throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.", ex);
     }
 
     if (StringHelper.hasText (m_sPrerequisiteXPath))
@@ -180,10 +178,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
                                  "' - ignoring validation artefact.";
         LOGGER.error (sErrorMsg, ex);
         return new ValidationResult (aArtefact,
-                                     new ErrorList (SingleError.builderError ()
-                                                               .setErrorText (sErrorMsg)
-                                                               .setLinkedException (ex)
-                                                               .build ()));
+                                     new ErrorList (SingleError.builderError ().setErrorText (sErrorMsg).setLinkedException (ex).build ()));
       }
     }
 
@@ -245,9 +240,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
       {
         case SVRL:
         {
-          final SchematronOutputType aSVRL = aDoc == null ||
-                                             aDoc.getDocumentElement () == null ? null
-                                                                                : new SVRLMarshaller ().read (aDoc);
+          final SchematronOutputType aSVRL = aDoc == null || aDoc.getDocumentElement () == null ? null : new SVRLMarshaller ().read (aDoc);
           if (aSVRL != null)
           {
             // Valid Schematron - interpret result
@@ -291,8 +284,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor imp
             {
               // final String sContext = eError.getAttribute ("context");
               final String sPattern = XMLHelper.getFirstChildElementOfName (eError, "Pattern").getTextContent ();
-              final String sDescription = XMLHelper.getFirstChildElementOfName (eError, "Description")
-                                                   .getTextContent ();
+              final String sDescription = XMLHelper.getFirstChildElementOfName (eError, "Description").getTextContent ();
               final String sXPath = XMLHelper.getFirstChildElementOfName (eError, "Xpath").getTextContent ();
               aErrorList.add (new SVRLErrorBuilder (sPattern).setErrorLocation (new SimpleLocation (aSource.getSystemID ()))
                                                              .setErrorText (sDescription)
