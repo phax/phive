@@ -1,7 +1,0 @@
-Svefaktura BIS 5A 2.0:
-  http://www.sfti.se/standarder/peppolbisochsvehandel/svefakturabis5a20.4413.html
-
-Fattura PA:
-  https://www.fatturapa.gov.it/export/fatturazione/en/normativa/f-2.htm?l=en
-  https://www.agenziaentrate.gov.it/wps/content/nsilib/nsi/schede/comunicazioni/fatture+e+corrispettivi/fatture+e+corrispettivi+st/st+invio+di+fatturazione+elettronica
-  https://www.agenziaentrate.gov.it/wps/content/Nsilib/Nsi/Schede/Comunicazioni/Fatture+e+corrispettivi/Fatture+e+corrispettivi+ST/ST_Fatturazione+elettronica+europea/?page=schedecomunicazioni

@@ -1,44 +1,31 @@
-# ph-bdve
+# BDVE
 
-A generic document validation engine originally developed for PEPPOL but now also supporting other document types.
+A generic document validation engine originally developed for Peppol but now also supporting other document types.
 
-This project is divided into sub-projects each keeping tracking of one document type set:
-  * ph-bdve-engine - generic "Business Document Validation Engine" (prior to 5.3.0 it was called "ph-bdve" only)
-  * ph-bdve-cii - Validation rules for pure CII (without any Schematron) - since 4.0.1
-  * ph-bdve-ebinterface - Validation rules for Austrian ebInterface - since 5.0.0
-  * ph-bdve-ehf - Validation rules for EHF (Norwegian public procurement) - since 4.0.1
-  * ph-bdve-en16931 - Validation rules for the EN 16931 (European e-Invoicing norm based on CEN TC 434)
-  * ph-bdve-energieefactuur - Validation rules for Dutch Energie eFactuur - since 4.0.2
-  * ph-bdve-oioubl - Validation rules for Danish OIOUBL - since 4.0.3
-  * ph-bdve-peppol - the Peppol specific setup etc
-  * ph-bdve-simplerinvoicing - Dutch SimplerInvoicing 1.x support from https://github.com/SimplerInvoicing/validation
-  * ph-bdve-teapps - Validation rules for Tieto TEAPPSXML - since 5.0.0
-  * ph-bdve-ubl - Validation rules for pure UBL (without any Schematron) - since 4.0.1
-  * ph-bdve-ublbe - Validation rules for e-FFF/UBL.BE - since 5.0.5
-  * ph-bdve-xrechnung - Validation rules for German XRechnung - since 5.1.9
+This project only contains the validation **engine** - all the preconfigured rules are available at https://github.com/phax/ph-bdve-rules
 
-A running example can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload).
+A live version of this engine can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload).
 
-Licensed under the Apache 2 license.
+This project is licensed under the Apache 2 license.
 
 # Usage guide
 
-Basically this library wraps different XML Schemas and Schematrons and offers the possibility to validate XML documents based on the rules.
+Basically this library wraps different XML Schemas and Schematrons in a certain order and under certain constraints and offers the possibility to validate XML documents based on the rules.
 
 ## Validation executor set identification
 
 Every set of validation artefacts is uniquely identified based on a structure that is similar to [Maven coordinates](https://maven.apache.org/pom.html#Maven_Coordinates). The identifier for a set of validation artefacts is a so called "VESID" ("Validation Executor Set ID"). Each VESID consists of a mandatory group ID, a mandatory artefact ID, a mandatory version number (ideally following the semantic versioning principles) and an optional classifier.
-E.g. the "PEPPOL Invoice Fall release 2018" is identified with the group ID `eu.peppol.bis2`, the artefact ID is `t10` (based on "transaction 10" from CEN BII - historical reasons...), the version number is `3.7.0` (representing "Fall 2018") and no classifier is present.
+E.g. the "Peppol Invoice Fall release 2018" is identified with the group ID `eu.peppol.bis2`, the artefact ID is `t10` (based on "transaction 10" from CEN BII - historical reasons...), the version number is `3.7.0` (representing "Fall 2018") and no classifier is present.
 Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.simplerinvoicing`, the artifact ID `invoice` and the version number `1.2` (also without a classifier).
 
 Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
 
 ## How to validate documents
 
-At least the `ph-bdve` project and one of the domain specific projects (like e.g. `ph-bdve-peppol`) is needed in your application. See the section on usage in a Maven project below.
+At least the `ph-bdve-engine` project and one library with rule sets (like e.g. `ph-bdve-peppol` from https://github.com/phax/ph-bdve-rules) is needed in your application. See the section on usage in a Maven project below.
 All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
 Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
-Example for registering (only) PEPPOL validation artefacts:
+Example for registering (only) Peppol validation artefacts:
 
 ```java
     final ValidationExecutorSetRegistry aVESRegistry = new ValidationExecutorSetRegistry ();
@@ -60,11 +47,13 @@ Validating a business document requires a few more steps.
 
 
 ```java
+    // Resolve the VES ID
     final IValidationExecutorSet aVES = VESRegistry.getOfID (aVESID);
     if (aVES != null) {
       final ValidationExecutionManager aVEM = aVES.createExecutionManager ();
       // What to validate?
       ValidationSource aValidationSource = ...;
+      // Main execution
       final ValidationResultList aValidationResult = aVEM.executeValidation (aValidationSource);
       if (aValidationResult.containsAtLeastOneError ()) {
         // errors found ...
@@ -81,73 +70,7 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
 ```xml
 <dependency>
   <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-peppol</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-en16931</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-simplerinvoicing</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-ubl</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-cii</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-ehf</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-energieefactuur</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-oioubl</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-ebinterface</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId7>ph-bdve-teapps</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-ublbe</artifactId>
-  <version>x.y.z</version>
-</dependency>
-
-<dependency>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-xrechnung</artifactId>
+  <artifactId>ph-bdve-engine</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```
@@ -172,6 +95,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v5.4.0 - work in progress
+    * Separated all the rules into a separate project - https://github.com/phax/ph-bdve-rules - this repository only contains the engine
 * v5.3.1 - 2020-05-28
     * Added possibility to stop further validation on failed Schematrons as well
 * v5.3.0 - 2020-05-26
@@ -208,7 +133,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v5.2.4 - 2020-01-13
     * Added support for XRechnung 1.2.2 format (deprecated version 1.2.1)
 * v5.2.3 - 2019-12-18
-    * Added Singapore (SG) PEPPOL Billing BIS3 rules version 1.0.2
+    * Added Singapore (SG) Peppol Billing BIS3 rules version 1.0.2
 * v5.2.2 - 2019-12-12
     * Added SimplerInvoicing 2.0.2 and deprecated version 2.0.1
 * v5.2.1 - 2019-12-09
@@ -218,14 +143,14 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Updated to ph-schematron 5.4.0 (incompatible change)
 * v5.1.15 - 2019-11-15
     * Added support for UBL 2.3 CSPRD01
-    * Updated PEPPOL-SG rules to the latest version
+    * Updated Peppol-SG rules to the latest version
     * Deprecated OpenPeppol 3.8.1 rules
 * v5.1.14 - 2019-11-01
-    * Added support for A-NZ PEPPOL 1.0.1 validations
+    * Added support for A-NZ Peppol 1.0.1 validations
     * Added OpenPEPPOL 3.9.0 (Fall release 2019) artefacts
 * v5.1.13 - 2019-10-14
     * Added support for EN 16931 1.3.0 format (deprecated version 1.2.3)
-    * Updated Singapore (SG) PEPPOL Billing BIS3 rules to version 2019-06-12
+    * Updated Singapore (SG) Peppol Billing BIS3 rules to version 2019-06-12
 * v5.1.12 - 2019-09-09
     * Deprecated OpenPEPPOL 3.8.0 artefacts
     * XRechnung 1.2.1 is now based on EN16931 1.2.1 release
@@ -243,7 +168,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Fixed an error in `EHF-UBL-T19.sch` of November 2018 release
     * Added support for XRechnung 1.2.0 format
 * v5.1.8 - 2019-05-15
-    * Added PEPPOL 3.8.0 (Spring 2019 release) validation artefacts (BIS v3 only)
+    * Added Peppol 3.8.0 (Spring 2019 release) validation artefacts (BIS v3 only)
 * v5.1.7 - 2019-05-14
     * Added EN 16931 validation artefacts version 1.2.1, deprecated the old 1.2.0 version
     * Internally restructured EHF layout for future extension
@@ -258,10 +183,10 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Fixed an error in the created XSLTs for ATNAT/ATGOV T10 and T14 because of variable order as well as a spelling error
 * v5.1.3 - 2019-03-08
     * Updated to latest EHF releases (Invoice and Credit Note 2.0.15 etc.)
-    * EHF validation now directly depends on the PEPPOL Validation artefacts
+    * EHF validation now directly depends on the Peppol Validation artefacts
 * v5.1.2 - 2019-02-04
     * Added SimplerInvoicing 2.0 RC1 support [#3](https://github.com/phax/ph-bdve/issues/3)
-    * Added Singapore (SG) PEPPOL Billing BIS3 support [#4](https://github.com/phax/ph-bdve/issues/4)
+    * Added Singapore (SG) Peppol Billing BIS3 support [#4](https://github.com/phax/ph-bdve/issues/4)
 * v5.1.1 - 2019-01-16
     * Added UBL.BE 1.0.0 Schematrons
 * v5.1.0 - 2018-11-23
@@ -283,7 +208,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Added EN 16931 validation artefacts version 1.1.0, deprecated the old 1.0.0 version
 * v5.0.1 - 2018-06-15
     * Fixed marking of OpenPEPPOL 3.5.0 artefatcs as "deprecated"
-    * Added support for PEPPOL Billing BIS 3 document types
+    * Added support for Peppol Billing BIS 3 document types
     * Added support for EN 16931 UBL CreditNote validation
 * v5.0.0 - 2018-06-01
     * Added Tieto TEAPPSXML support
@@ -313,7 +238,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v4.0.0 - 2018-01-15
     * Updated to ph-commons 9.0.0
     * Updated to the latest official EN-16931 rules
-    * Updated to the PEPPOL Autumn 2017 release (3.5.0)
+    * Updated to the Peppol Autumn 2017 release (3.5.0)
 * v3.2.0 - 2017-07-27
     * Improved ClassLoader handling, so that each validation artefact has a defined class loader. 
 * v3.1.4 - 2017-07-12
