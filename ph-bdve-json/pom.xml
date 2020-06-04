@@ -24,12 +24,12 @@
     <artifactId>ph-bdve-parent-pom</artifactId>
     <version>6.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-bdve-engine</artifactId>
+  <artifactId>ph-bdve-json</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-bdve-engine</name>
-  <description>Business Document Validation Engine (BDVE)</description>
-  <url>https://github.com/phax/ph-bdve/ph-bdve-engine</url>
-  <inceptionYear>2016</inceptionYear>
+  <name>ph-bdve-json</name>
+  <description>BDVE JSON binding</description>
+  <url>https://github.com/phax/ph-bdve/ph-bdve-json</url>
+  <inceptionYear>2020</inceptionYear>
   
   <licenses>
     <license>
@@ -66,6 +66,14 @@
       <groupId>com.helger</groupId>
       <artifactId>ph-schematron</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.bdve</groupId>
+      <artifactId>ph-bdve-engine</artifactId>
+    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -82,11 +90,9 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.bdve</Automatic-Module-Name>
-            <Export-Package>com.helger.bdve.*</Export-Package>
+            <Automatic-Module-Name>com.helger.bdve.json</Automatic-Module-Name>
+            <Export-Package>com.helger.bdve.json.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.schematron.svrl.ISVRLLocationBeautifierSPI</Provide-Capability>
           </instructions>
         </configuration>
       </plugin>

@@ -14,17 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.json;
+package com.helger.bdve;
+
+import org.junit.Test;
+
+import com.helger.commons.mock.SPITestHelper;
 
 /**
- * This is a work around to read "exceptions" from JSON without actually having
- * the need to create "Exception" objects. It has the fields class name,
- * exception message and stack trace.
- *
+ * Test SPI definitions
+ * 
  * @author Philip Helger
- * @since 5.2.11
  */
-public class ReadStackTrace
+public final class SPITest
 {
-
+  @Test
+  public void testBasic () throws Exception
+  {
+    SPITestHelper.testIfAllSPIImplementationsAreValid ();
+  }
 }

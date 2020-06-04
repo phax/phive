@@ -26,7 +26,7 @@
   </parent>
   <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-parent-pom</artifactId>
-  <version>5.4.0-SNAPSHOT</version>
+  <version>6.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ph-bdve-parent-pom</name>
   <description>Base POM to build the BDVE projects</description>
@@ -84,6 +84,11 @@
         <artifactId>ph-bdve-engine</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.helger.bdve</groupId>
+        <artifactId>ph-bdve-json</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -107,5 +112,6 @@
   
   <modules>
     <module>ph-bdve-engine</module>
+    <module>ph-bdve-json</module>
   </modules>
 </project>

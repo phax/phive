@@ -95,8 +95,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v5.4.0 - work in progress
+* v6.0.0 - work in progress
     * Separated all the rules into a separate project - https://github.com/phax/ph-bdve-rules - this repository only contains the engine
+    * Extracted the JSON binding into a separate submodule "ph-bdve-json" 
 * v5.3.1 - 2020-05-28
     * Added possibility to stop further validation on failed Schematrons as well
 * v5.3.0 - 2020-05-26

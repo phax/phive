@@ -70,6 +70,21 @@ public final class BDVEJsonHelper
   public static final String JSON_ERROR_LOCATION = "errorLocation";
   public static final String JSON_ERROR_TEXT = "errorText";
   public static final String JSON_EXCEPTION = "exception";
+  public static final String JSON_TEST = "test";
+
+  public static final String JSON_VESID = "vesid";
+  public static final String JSON_NAME = "name";
+  public static final String JSON_DEPRECATED = "deprecated";
+
+  private static final String JSON_SUCCESS = "success";
+  private static final String JSON_ARTIFACT_TYPE = "artifactType";
+  private static final String JSON_ARTIFACT_PATH = "artifactPath";
+  private static final String JSON_ITEMS = "items";
+  private static final String JSON_INTERRUPTED = "interrupted";
+  private static final String JSON_MOST_SEVERE_ERROR_LEVEL = "mostSevereErrorLevel";
+  private static final String JSON_RESULTS = "results";
+  private static final String JSON_DURATION_MS = "durationMS";
+  private static final String JSON_VES = "ves";
 
   public static final String ARTFACT_TYPE_INPUT_PARAMETER = "input-parameter";
   public static final String ARTIFACT_PATH_NONE = "none";
@@ -185,6 +200,7 @@ public final class BDVEJsonHelper
    *        The exception to convert to a JSON object. May be <code>null</code>.
    * @return <code>null</code> if the parameter is <code>null</code>, the JSON
    *         object otherwise.
+   * @see BDVEStackTrace for a representation after reading
    */
   @Nullable
   public static IJsonObject getJsonStackTrace (@Nullable final Throwable t)
@@ -327,7 +343,7 @@ public final class BDVEJsonHelper
                                                     @Nullable final String sTest,
                                                     @Nullable final Throwable t)
   {
-    return getJsonError (aErrorLevel, sErrorID, sErrorFieldName, sErrorLocation, sErrorText, t).addIfNotNull ("test", sTest);
+    return getJsonError (aErrorLevel, sErrorID, sErrorFieldName, sErrorLocation, sErrorText, t).addIfNotNull (JSON_TEST, sTest);
   }
 
   /**
@@ -348,9 +364,9 @@ public final class BDVEJsonHelper
   @Nonnull
   public static IJsonObject getJsonVES (@Nonnull final IValidationExecutorSet aVES)
   {
-    return new JsonObject ().add ("vesid", aVES.getID ().getAsSingleID ())
-                            .add ("name", aVES.getDisplayName ())
-                            .add ("deprecated", aVES.isDeprecated ());
+    return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
+                            .add (JSON_NAME, aVES.getDisplayName ())
+                            .add (JSON_DEPRECATED, aVES.isDeprecated ());
   }
 
   /**
@@ -395,17 +411,17 @@ public final class BDVEJsonHelper
     final IJsonArray aResultArray = new JsonArray ();
     {
       final IJsonObject aError = getJsonError (EErrorLevel.ERROR, (String) null, (String) null, (String) null, sErrorMsg, (Throwable) null);
-      aResultArray.add (new JsonObject ().add ("success", getTriState (false))
-                                         .add ("artifactType", ARTFACT_TYPE_INPUT_PARAMETER)
-                                         .add ("artifactPath", ARTIFACT_PATH_NONE)
-                                         .addJson ("items", new JsonArray (aError)));
+      aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getTriState (false))
+                                         .add (JSON_ARTIFACT_TYPE, ARTFACT_TYPE_INPUT_PARAMETER)
+                                         .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
+                                         .addJson (JSON_ITEMS, new JsonArray (aError)));
     }
 
-    aResponse.add ("success", false);
-    aResponse.add ("interrupted", false);
-    aResponse.add ("mostSevereErrorLevel", getErrorLevel (EErrorLevel.ERROR));
-    aResponse.addJson ("results", aResultArray);
-    aResponse.add ("durationMS", nDurationMilliseconds);
+    aResponse.add (JSON_SUCCESS, false);
+    aResponse.add (JSON_INTERRUPTED, false);
+    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getErrorLevel (EErrorLevel.ERROR));
+    aResponse.addJson (JSON_RESULTS, aResultArray);
+    aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
   }
 
   /**
@@ -464,7 +480,7 @@ public final class BDVEJsonHelper
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
-    aResponse.addJson ("ves", getJsonVES (aVES));
+    aResponse.addJson (JSON_VES, getJsonVES (aVES));
 
     int nWarnings = 0;
     int nErrors = 0;
@@ -477,14 +493,14 @@ public final class BDVEJsonHelper
       if (aVR.isIgnored ())
       {
         bValidationInterrupted = true;
-        aVRT.add ("success", getTriState (ETriState.UNDEFINED));
+        aVRT.add (JSON_SUCCESS, getTriState (ETriState.UNDEFINED));
       }
       else
       {
-        aVRT.add ("success", getTriState (aVR.isSuccess ()));
+        aVRT.add (JSON_SUCCESS, getTriState (aVR.isSuccess ()));
       }
-      aVRT.add ("artifactType", aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
-      aVRT.add ("artifactPath", aVR.getValidationArtefact ().getRuleResource ().getPath ());
+      aVRT.add (JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
+      aVRT.add (JSON_ARTIFACT_PATH, aVR.getValidationArtefact ().getRuleResource ().getPath ());
 
       final IJsonArray aItemArray = new JsonArray ();
       for (final IError aError : aVR.getErrorList ())
@@ -506,15 +522,15 @@ public final class BDVEJsonHelper
                                                 aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest () : null,
                                                 aError.getLinkedException ()));
       }
-      aVRT.addJson ("items", aItemArray);
+      aVRT.addJson (JSON_ITEMS, aItemArray);
       aResultArray.add (aVRT);
     }
     // Success if the worst that happened is a warning
-    aResponse.add ("success", aMostSevere.isLE (EErrorLevel.WARN));
-    aResponse.add ("interrupted", bValidationInterrupted);
-    aResponse.add ("mostSevereErrorLevel", getErrorLevel (aMostSevere));
-    aResponse.addJson ("results", aResultArray);
-    aResponse.add ("durationMS", nDurationMilliseconds);
+    aResponse.add (JSON_SUCCESS, aMostSevere.isLE (EErrorLevel.WARN));
+    aResponse.add (JSON_INTERRUPTED, bValidationInterrupted);
+    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getErrorLevel (aMostSevere));
+    aResponse.addJson (JSON_RESULTS, aResultArray);
+    aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
 
     // Set consumer values
     if (aWarningCount != null)
