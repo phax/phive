@@ -1,0 +1,81 @@
+package com.helger.bdve.api.execute;
+
+import java.util.Locale;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.helger.bdve.api.result.ValidationResultList;
+import com.helger.bdve.api.sources.IValidationSource;
+import com.helger.commons.state.EValidity;
+
+public interface IValidationExecutionManager
+{
+  /**
+   * Perform a validation with all the contained executors.
+   *
+   * @param aSource
+   *        The source artefact to be validated. May not be <code>null</code>.
+   * @param aValidationResults
+   *        The result list to be filled. May not be <code>null</code>. Note:
+   *        this list is NOT altered before start. For each contained executor a
+   *        result is added to the result list.
+   * @param aLocale
+   *        Custom locale to use e.g. for error messages. May be
+   *        <code>null</code> to use the system default locale.
+   * @see #executeValidation(IValidationSource, Locale)
+   */
+  void executeValidation (@Nonnull IValidationSource aSource, @Nonnull ValidationResultList aValidationResults, @Nullable Locale aLocale);
+
+  /**
+   * Perform a validation with all the contained executors.
+   *
+   * @param aSource
+   *        The source artefact to be validated. May not be <code>null</code>.
+   * @param aLocale
+   *        Custom locale to use e.g. for error messages. May be
+   *        <code>null</code> to use the system default locale.
+   * @return The validation result list. Never <code>null</code>. For each
+   *         contained executor a result is added to the result list.
+   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
+   */
+  @Nonnull
+  default ValidationResultList executeValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
+  {
+    final ValidationResultList ret = new ValidationResultList ();
+    executeValidation (aSource, ret, aLocale);
+    return ret;
+  }
+
+  /**
+   * Perform a validation with all the contained executors and the system
+   * default locale.
+   *
+   * @param aSource
+   *        The source artefact to be validated. May not be <code>null</code>.
+   *        contained executor a result is added to the result list.
+   * @return The validation result list. Never <code>null</code>. For each
+   *         contained executor a result is added to the result list.
+   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
+   */
+  @Nonnull
+  default ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
+  {
+    return executeValidation (aSource, (Locale) null);
+  }
+
+  /**
+   * Perform a fast validation that stops on the first error.
+   *
+   * @param aSource
+   *        The source artefact to be validated. May not be <code>null</code>.
+   * @param aLocale
+   *        Custom locale to use e.g. for error messages. May be
+   *        <code>null</code> to use the system default locale.
+   * @return {@link EValidity#VALID} if the document is valid,
+   *         {@link EValidity#INVALID} if the document is invalid. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  EValidity executeFastValidation (@Nonnull IValidationSource aSource, @Nullable Locale aLocale);
+}

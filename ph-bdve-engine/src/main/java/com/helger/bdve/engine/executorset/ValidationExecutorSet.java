@@ -25,6 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
 import com.helger.bdve.api.vesid.VESID;
+import com.helger.bdve.engine.execute.ValidationExecutionManager;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -48,9 +49,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
   private final boolean m_bDeprecated;
 
-  public ValidationExecutorSet (@Nonnull final VESID aID,
-                                @Nonnull @Nonempty final String sDisplayName,
-                                final boolean bDeprecated)
+  public ValidationExecutorSet (@Nonnull final VESID aID, @Nonnull @Nonempty final String sDisplayName, final boolean bDeprecated)
   {
     m_aID = ValueEnforcer.notNull (aID, "ID");
     m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -136,6 +135,13 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public EChange removeAllExecutors ()
   {
     return m_aList.removeAll ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ValidationExecutionManager createExecutionManager ()
+  {
+    return new ValidationExecutionManager (m_aList.getClone ());
   }
 
   @Override

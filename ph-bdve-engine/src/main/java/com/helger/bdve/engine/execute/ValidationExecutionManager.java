@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.helger.bdve.api.execute.IValidationExecutionManager;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
 import com.helger.bdve.api.result.ValidationResultList;
@@ -48,7 +49,7 @@ import com.helger.commons.state.EValidity;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ValidationExecutionManager implements IHasClassLoader
+public class ValidationExecutionManager implements IHasClassLoader, IValidationExecutionManager
 {
   private final ICommonsList <IValidationExecutor> m_aExecutors = new CommonsArrayList <> ();
   private WeakReference <ClassLoader> m_aClassLoader = new WeakReference <> (null);
@@ -233,44 +234,6 @@ public class ValidationExecutionManager implements IHasClassLoader
         }
       }
     }
-  }
-
-  /**
-   * Perform a validation with all the contained executors.
-   *
-   * @param aSource
-   *        The source artefact to be validated. May not be <code>null</code>.
-   * @param aLocale
-   *        Custom locale to use e.g. for error messages. May be
-   *        <code>null</code> to use the system default locale.
-   * @return The validation result list. Never <code>null</code>. For each
-   *         contained executor a result is added to the result list.
-   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
-   */
-  @Nonnull
-  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
-  {
-    final ValidationResultList ret = new ValidationResultList ();
-    executeValidation (aSource, ret, aLocale);
-    return ret;
-  }
-
-  /**
-   * Perform a validation with all the contained executors and the system
-   * default locale.
-   *
-   * @param aSource
-   *        The source artefact to be validated. May not be <code>null</code>.
-   *        contained executor a result is added to the result list.
-   * @return The validation result list. Never <code>null</code>. For each
-   *         contained executor a result is added to the result list.
-   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
-   * @since 5.1.1
-   */
-  @Nonnull
-  public ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
-  {
-    return executeValidation (aSource, (Locale) null);
   }
 
   /**

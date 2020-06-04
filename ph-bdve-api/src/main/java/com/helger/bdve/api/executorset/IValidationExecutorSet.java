@@ -21,9 +21,9 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.helger.bdve.api.execute.IValidationExecutionManager;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.vesid.VESID;
-import com.helger.bdve.engine.execute.ValidationExecutionManager;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.ICommonsIterable;
@@ -36,11 +36,7 @@ import com.helger.commons.name.IHasDisplayName;
  *
  * @author Philip Helger
  */
-public interface IValidationExecutorSet extends
-                                        IHasID <VESID>,
-                                        IHasDisplayName,
-                                        ICommonsIterable <IValidationExecutor>,
-                                        Serializable
+public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName, ICommonsIterable <IValidationExecutor>, Serializable
 {
   /**
    * @return The number of contained validation executors. Always &ge; 0.
@@ -65,14 +61,11 @@ public interface IValidationExecutorSet extends
   ICommonsList <IValidationExecutor> getAllExecutors ();
 
   /**
-   * @return A new {@link ValidationExecutionManager} for this validation
+   * @return A new {@link IValidationExecutionManager} for this validation
    *         executor set.
    */
   @Nonnull
-  default ValidationExecutionManager createExecutionManager ()
-  {
-    return new ValidationExecutionManager (this);
-  }
+  IValidationExecutionManager createExecutionManager ();
 
   /**
    * @return <code>true</code> if this document is deprecated (phased-out or end
