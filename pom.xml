@@ -81,6 +81,11 @@
 
       <dependency>
         <groupId>com.helger.bdve</groupId>
+        <artifactId>ph-bdve-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.bdve</groupId>
         <artifactId>ph-bdve-engine</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -111,6 +116,7 @@
   </dependencies>
   
   <modules>
+    <module>ph-bdve-api</module>
     <module>ph-bdve-engine</module>
     <module>ph-bdve-json</module>
   </modules>

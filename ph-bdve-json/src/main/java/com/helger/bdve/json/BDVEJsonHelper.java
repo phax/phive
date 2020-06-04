@@ -24,8 +24,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.executorset.IValidationExecutorSet;
-import com.helger.bdve.result.ValidationResult;
+import com.helger.bdve.api.executorset.IValidationExecutorSet;
+import com.helger.bdve.api.result.ValidationResult;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.error.IError;
