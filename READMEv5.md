@@ -48,8 +48,6 @@ Validating a business document requires a few more steps.
     if (aVES != null) {
       // Code for 5.x:
       // final ValidationExecutionManager aVEM = aVES.createExecutionManager ();
-      // Code for 6.x:
-      final ValidationExecutionManager aVEM = new ValidationExecutionManager (aVES);
       // What to validate?
       ValidationSource aValidationSource = ...;
       // Main execution
