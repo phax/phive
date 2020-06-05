@@ -131,7 +131,7 @@ public class ValidationSourceXML implements IValidationSourceXML
    * @return The validation source to be used. Never <code>null</code>.
    */
   @Nonnull
-  public static ValidationSourceXML createXMLSource (@Nonnull final IReadableResource aResource)
+  public static ValidationSourceXML create (@Nonnull final IReadableResource aResource)
   {
     // Read on demand only
     return new ValidationSourceXML (aResource.getPath (), () -> DOMReader.readXMLDOM (aResource), false)

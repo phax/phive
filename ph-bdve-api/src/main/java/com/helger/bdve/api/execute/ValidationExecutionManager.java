@@ -220,6 +220,30 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
   }
 
   /**
+   * This is a shortcut method to perform the full validation of a VES onto a
+   * specific object to be validated.
+   *
+   * @param aVES
+   *        The VES to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The object to be validated. May not be <code>null</code>.
+   * @param aValidationResults
+   *        The result list to be filled. May not be <code>null</code>. Note:
+   *        this list is NOT altered before start. For each contained executor a
+   *        result is added to the result list.
+   * @param aLocale
+   *        The locale to be used for error messages. May be <code>null</code>.
+   */
+  @Nonnull
+  public static <ST extends IValidationSource> void executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+                                                                       @Nonnull final ST aSource,
+                                                                       @Nonnull final ValidationResultList aValidationResults,
+                                                                       @Nullable final Locale aLocale)
+  {
+    new ValidationExecutionManager <> (aVES).executeValidation (aSource, aValidationResults, aLocale);
+  }
+
+  /**
    * This is a shortcut method to perform the fast validation of a VES onto a
    * specific object to be validated.
    *
