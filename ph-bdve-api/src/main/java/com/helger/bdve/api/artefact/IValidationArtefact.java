@@ -16,8 +16,6 @@
  */
 package com.helger.bdve.api.artefact;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.api.EValidationType;
@@ -31,7 +29,7 @@ import com.helger.commons.io.resource.IReadableResource;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IValidationArtefact extends Serializable
+public interface IValidationArtefact
 {
   /**
    * @return The validation artefact type - XSD or Schematron. May not be

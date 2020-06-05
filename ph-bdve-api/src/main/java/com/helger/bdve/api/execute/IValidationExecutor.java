@@ -16,7 +16,6 @@
  */
 package com.helger.bdve.api.execute;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -36,7 +35,7 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
  *        The validation source type to be used.
  */
 @MustImplementEqualsAndHashcode
-public interface IValidationExecutor <SOURCETYPE extends IValidationSource> extends Serializable
+public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
 {
   /**
    * Nested interface for validation executors that support caching.

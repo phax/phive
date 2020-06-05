@@ -54,10 +54,16 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
 {
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  protected final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> m_aMap = new CommonsHashMap <> ();
 
   public ValidationExecutorSetRegistry ()
   {}
+
+  @Nonnull
+  protected final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> internalMap ()
+  {
+    return m_aMap;
+  }
 
   public void registerValidationExecutorSet (@Nonnull final IValidationExecutorSet <SOURCETYPE> aVES)
   {

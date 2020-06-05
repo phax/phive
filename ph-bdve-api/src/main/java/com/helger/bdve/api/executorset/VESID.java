@@ -16,8 +16,6 @@
  */
 package com.helger.bdve.api.executorset;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.RegEx;
@@ -40,7 +38,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class VESID implements Serializable, Comparable <VESID>
+public final class VESID implements Comparable <VESID>
 {
   /** The regular expression to which each part must conform */
   @RegEx

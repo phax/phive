@@ -56,7 +56,6 @@ public final class VESIDTest
     assertEquals ("ph-bdve", aID1.getArtifactID ());
     assertEquals ("3.0.0-SNAPSHOT", aID1.getVersion ());
     assertNull (aID1.getClassifier ());
-    CommonsTestHelper.testDefaultSerialization (aID1);
     CommonsTestHelper.testEqualsImplementationWithEqualContentObject (aID1, new VESID ("com.helger", "ph-bdve", "3.0.0-SNAPSHOT"));
     CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.holger", "ph-bdve", "3.0.0-SNAPSHOT"));
     CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.helger", "ph-bdvengine", "3.0.0-SNAPSHOT"));

@@ -16,8 +16,6 @@
  */
 package com.helger.bdve.api.result;
 
-import java.io.Serializable;
-
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -36,7 +34,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class ValidationResult implements ISuccessIndicator, Serializable
+public class ValidationResult implements ISuccessIndicator
 {
   private final IValidationArtefact m_aValidationArtefact;
   private final IErrorList m_aErrorList;

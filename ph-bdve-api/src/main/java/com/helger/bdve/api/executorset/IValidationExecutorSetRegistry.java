@@ -16,7 +16,6 @@
  */
 package com.helger.bdve.api.executorset;
 
-import java.io.Serializable;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -34,7 +33,7 @@ import com.helger.commons.collection.impl.ICommonsList;
  * @param <SOURCETYPE>
  *        The validation source type to be used.
  */
-public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource> extends Serializable
+public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource>
 {
   /**
    * Register a validation executor set into this registry.

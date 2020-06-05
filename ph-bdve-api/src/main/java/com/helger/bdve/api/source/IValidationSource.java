@@ -16,16 +16,15 @@
  */
 package com.helger.bdve.api.source;
 
-import java.io.Serializable;
-
 import javax.annotation.Nullable;
 
 /**
- * Abstract validation source interface.
+ * Abstract validation source interface. This represents an object to be
+ * validated.
  *
  * @author Philip Helger
  */
-public interface IValidationSource extends Serializable
+public interface IValidationSource
 {
   /**
    * @return The system ID (e.g. filename) of the source to be validated. May be
@@ -36,7 +35,8 @@ public interface IValidationSource extends Serializable
 
   /**
    * @return <code>true</code> if this source is partial and <code>false</code>
-   *         if the whole Document should be used.
+   *         if the whole Document should be used. If it is partial there must
+   *         be a way to define the necessary part(s) in the implementation.
    */
   boolean isPartialSource ();
 }

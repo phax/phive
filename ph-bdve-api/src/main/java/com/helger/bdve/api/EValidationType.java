@@ -66,7 +66,7 @@ public enum EValidationType implements IHasID <String>, IHasName
   private final String m_sID;
   private final String m_sName;
 
-  private EValidationType (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  EValidationType (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
   {
     m_sID = sID;
     m_sName = sName;
