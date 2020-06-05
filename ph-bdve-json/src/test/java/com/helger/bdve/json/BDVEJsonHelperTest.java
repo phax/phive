@@ -26,9 +26,17 @@ import org.junit.Test;
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
 import com.helger.bdve.api.executorset.VESID;
 import com.helger.bdve.api.executorset.ValidationExecutorSet;
+import com.helger.commons.CGlobal;
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.error.IError;
+import com.helger.commons.error.SingleError;
+import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.text.ConstantHasErrorText;
+import com.helger.commons.location.SimpleLocation;
+import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
+import com.helger.schematron.svrl.SVRLResourceError;
 
 /**
  * Test class for class {@link BDVEJsonHelper}.
@@ -77,5 +85,41 @@ public final class BDVEJsonHelperTest
     // to Json
     final IJsonObject aObj = BDVEJsonHelper.getJsonStackTrace (ex);
     assertNotNull (aObj);
+  }
+
+  @Test
+  public void testError ()
+  {
+    final IError aError = SingleError.builderError ()
+                                     .setErrorID ("id1")
+                                     .setErrorText ("fla")
+                                     .setErrorLocation (new SimpleLocation ("res12", 3, 4))
+                                     .build ();
+    final IJsonObject aJson = BDVEJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    assertNotNull (aJson);
+
+    final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
+    assertNotNull (aError2);
+
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
+  }
+
+  @Test
+  public void testSVRLError ()
+  {
+    final IError aError = new SVRLResourceError (EErrorLevel.ERROR,
+                                                 "id2",
+                                                 "field1",
+                                                 new SimpleLocation ("res12", 3, 4),
+                                                 new ConstantHasErrorText ("bla failed"),
+                                                 null,
+                                                 " my test <>");
+    final IJsonObject aJson = BDVEJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    assertNotNull (aJson);
+
+    final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
+    assertNotNull (aError2);
+
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
   }
 }

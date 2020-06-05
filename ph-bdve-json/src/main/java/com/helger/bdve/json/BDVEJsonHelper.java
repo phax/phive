@@ -26,16 +26,23 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
 import com.helger.bdve.api.result.ValidationResult;
+import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.error.IError;
+import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.level.IErrorLevel;
+import com.helger.commons.error.text.ConstantHasErrorText;
 import com.helger.commons.lang.StackTraceHelper;
+import com.helger.commons.location.ILocation;
+import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.state.ETriState;
+import com.helger.commons.string.StringHelper;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
+import com.helger.json.IJsonValue;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.schematron.svrl.SVRLResourceError;
@@ -63,6 +70,10 @@ public final class BDVEJsonHelper
   public static final String JSON_CLASS = "class";
   public static final String JSON_MESSAGE = "message";
   public static final String JSON_STACK_TRACE = "stackTrace";
+
+  public static final String JSON_RESOURCE_ID = "resource";
+  public static final String JSON_LINE_NUM = "line";
+  public static final String JSON_COLUMN_NUM = "col";
 
   public static final String JSON_ERROR_LEVEL = "errorLevel";
   public static final String JSON_ERROR_ID = "errorID";
@@ -114,7 +125,7 @@ public final class BDVEJsonHelper
    */
   @Nonnull
   @Nonempty
-  public static String getErrorLevel (@Nonnull final IErrorLevel aErrorLevel)
+  public static String getJsonErrorLevel (@Nonnull final IErrorLevel aErrorLevel)
   {
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
 
@@ -144,11 +155,11 @@ public final class BDVEJsonHelper
    * @param b
    *        boolean value to get converted.
    * @return A non-<code>null</code> JSON value string.
-   * @see #getTriState(ETriState)
+   * @see #getJsonTriState(ETriState)
    */
   @Nonnull
   @Nonempty
-  public static String getTriState (final boolean b)
+  public static String getJsonTriState (final boolean b)
   {
     return b ? JSON_TRISTATE_TRUE : JSON_TRISTATE_FALSE;
   }
@@ -161,16 +172,16 @@ public final class BDVEJsonHelper
    * @param eTriState
    *        Tristate value to get converted. May not be <code>null</code>.
    * @return A non-<code>null</code> JSON value string.
-   * @see #getTriState(boolean)
+   * @see #getJsonTriState(boolean)
    */
   @Nonnull
-  public static String getTriState (@Nonnull final ETriState eTriState)
+  public static String getJsonTriState (@Nonnull final ETriState eTriState)
   {
     ValueEnforcer.notNull (eTriState, "TriState");
 
     if (eTriState.isUndefined ())
       return JSON_TRISTATE_UNDEFINED;
-    return getTriState (eTriState.isTrue ());
+    return getJsonTriState (eTriState.isTrue ());
   }
 
   @Nullable
@@ -212,6 +223,33 @@ public final class BDVEJsonHelper
                             .add (JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
   }
 
+  @Nullable
+  public static IJsonObject getJsonErrorLocation (@Nullable final ILocation aLocation)
+  {
+    if (aLocation == null || !aLocation.isAnyInformationPresent ())
+      return null;
+    final IJsonObject ret = new JsonObject ();
+    if (aLocation.hasResourceID ())
+      ret.add (JSON_RESOURCE_ID, aLocation.getResourceID ());
+    if (aLocation.hasLineNumber ())
+      ret.add (JSON_LINE_NUM, aLocation.getLineNumber ());
+    if (aLocation.hasColumnNumber ())
+      ret.add (JSON_COLUMN_NUM, aLocation.getColumnNumber ());
+    return ret;
+  }
+
+  @Nullable
+  public static ILocation getAsErrorLocation (@Nonnull final IJsonObject aObj)
+  {
+    final String sResourceID = aObj.getAsString (JSON_RESOURCE_ID);
+    final int nLineNumber = aObj.getAsInt (JSON_LINE_NUM, -1);
+    final int nColumnNumber = aObj.getAsInt (JSON_COLUMN_NUM, -1);
+    if (StringHelper.hasNoText (sResourceID) && nLineNumber < 0 && nColumnNumber < 0)
+      return null;
+
+    return new SimpleLocation (sResourceID, nLineNumber, nColumnNumber);
+  }
+
   /**
    * Get the JSON representation of an error.<br>
    *
@@ -220,7 +258,8 @@ public final class BDVEJsonHelper
    *   "errorLevel" : string,
    *   "errorID" : string?,
    *   "errorFieldName" : string?,
-   *   "errorLocation" : string?,
+   *   "errorLocation" : object?,
+   *   "test" : string?,
    *   "errorText" : string,
    *   "exception : object?
    * }
@@ -232,14 +271,17 @@ public final class BDVEJsonHelper
    *        The ID of the error. May be <code>null</code>.
    * @param sErrorFieldName
    *        The field name of the error. May be <code>null</code>.
-   * @param sErrorLocation
+   * @param aErrorLocation
    *        The location of the error. May be <code>null</code>.
+   * @param sTest
+   *        The performed test (e.g. for Schematrons). May be <code>null</code>.
    * @param sErrorText
    *        The main error text. May not be <code>null</code>.
    * @param t
    *        The optional stack trace of the error. May be <code>null</code>.
    * @return The JSON object with the error. Never <code>null</code>.
-   * @see #getErrorLevel(IErrorLevel)
+   * @see #getJsonErrorLevel(IErrorLevel)
+   * @see #getJsonErrorLocation(ILocation)
    * @see #getJsonStackTrace(Throwable)
    * @see #getJsonError(IError, Locale)
    */
@@ -247,17 +289,19 @@ public final class BDVEJsonHelper
   public static IJsonObject getJsonError (@Nonnull final IErrorLevel aErrorLevel,
                                           @Nullable final String sErrorID,
                                           @Nullable final String sErrorFieldName,
-                                          @Nullable final String sErrorLocation,
+                                          @Nullable final ILocation aErrorLocation,
+                                          @Nullable final String sTest,
                                           @Nonnull final String sErrorText,
                                           @Nullable final Throwable t)
   {
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
     ValueEnforcer.notNull (sErrorText, "ErrorText");
 
-    return new JsonObject ().add (JSON_ERROR_LEVEL, getErrorLevel (aErrorLevel))
+    return new JsonObject ().add (JSON_ERROR_LEVEL, getJsonErrorLevel (aErrorLevel))
                             .addIfNotNull (JSON_ERROR_ID, sErrorID)
                             .addIfNotNull (JSON_ERROR_FIELD_NAME, sErrorFieldName)
-                            .addIfNotNull (JSON_ERROR_LOCATION, sErrorLocation)
+                            .addIfNotNull (JSON_ERROR_LOCATION, getJsonErrorLocation (aErrorLocation))
+                            .addIfNotNull (JSON_TEST, sTest)
                             .add (JSON_ERROR_TEXT, sErrorText)
                             .addIfNotNull (JSON_EXCEPTION, getJsonStackTrace (t));
   }
@@ -270,7 +314,8 @@ public final class BDVEJsonHelper
    *   "errorLevel" : string,
    *   "errorID" : string?,
    *   "errorFieldName" : string?,
-   *   "errorLocation" : string?,
+   *   "errorLocation" : object?,
+   *   "test" : string?,
    *   "errorText" : string,
    *   "exception : object?
    * }
@@ -282,9 +327,10 @@ public final class BDVEJsonHelper
    *        The display locale to resolve the error text. May not be
    *        <code>null</code>.
    * @return The JSON object with the error. Never <code>null</code>.
-   * @see #getErrorLevel(IErrorLevel)
+   * @see #getJsonErrorLevel(IErrorLevel)
    * @see #getJsonStackTrace(Throwable)
-   * @see #getJsonError(IErrorLevel, String, String, String, String, Throwable)
+   * @see #getJsonError(IErrorLevel, String, String, ILocation, String, String,
+   *      Throwable)
    */
   @Nonnull
   public static IJsonObject getJsonError (@Nonnull final IError aError, @Nonnull final Locale aDisplayLocale)
@@ -295,55 +341,52 @@ public final class BDVEJsonHelper
     return getJsonError (aError.getErrorLevel (),
                          aError.getErrorID (),
                          aError.getErrorFieldName (),
-                         aError.getErrorLocation ().getAsString (),
+                         aError.hasErrorLocation () ? aError.getErrorLocation () : null,
+                         aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest () : null,
                          aError.getErrorText (aDisplayLocale),
                          aError.getLinkedException ());
   }
 
-  /**
-   * Get the JSON representation of a Schematron error.<br>
-   *
-   * <pre>
-   * {
-   *   "errorLevel" : string,
-   *   "errorID" : string?,
-   *   "errorFieldName" : string?,
-   *   "errorLocation" : string?,
-   *   "errorText" : string,
-   *   "exception : object?,
-   *   "test" : string?
-   * }
-   * </pre>
-   *
-   * @param aErrorLevel
-   *        The error level to use. May not be <code>null</code>.
-   * @param sErrorID
-   *        The ID of the error. May be <code>null</code>.
-   * @param sErrorFieldName
-   *        The field name of the error. May be <code>null</code>.
-   * @param sErrorLocation
-   *        The location of the error. May be <code>null</code>.
-   * @param sErrorText
-   *        The main error text. May not be <code>null</code>.
-   * @param sTest
-   *        The Schematron test that was performed. May be <code>null</code>.
-   * @param t
-   *        The optional stack trace of the error. May be <code>null</code>.
-   * @return The JSON object with the error. Never <code>null</code>.
-   * @see #getErrorLevel(IErrorLevel)
-   * @see #getJsonStackTrace(Throwable)
-   * @see #getJsonError(IErrorLevel, String, String, String, String, Throwable)
-   */
   @Nonnull
-  public static IJsonObject getJsonSchematronError (@Nonnull final IErrorLevel aErrorLevel,
-                                                    @Nullable final String sErrorID,
-                                                    @Nullable final String sErrorFieldName,
-                                                    @Nullable final String sErrorLocation,
-                                                    @Nonnull final String sErrorText,
-                                                    @Nullable final String sTest,
-                                                    @Nullable final Throwable t)
+  public static IError getAsIError (@Nonnull final IJsonObject aObj)
   {
-    return getJsonError (aErrorLevel, sErrorID, sErrorFieldName, sErrorLocation, sErrorText, t).addIfNotNull (JSON_TEST, sTest);
+    final IErrorLevel aErrorLevel = getAsErrorLevel (aObj.getAsString (JSON_ERROR_LEVEL));
+    final String sErrorID = aObj.getAsString (JSON_ERROR_ID);
+    final String sErrorFieldName = aObj.getAsString (JSON_ERROR_FIELD_NAME);
+    final IJsonValue aErrorLocationValue = aObj.getAsValue (JSON_ERROR_LOCATION);
+    final ILocation aErrorLocation;
+    if (aErrorLocationValue != null)
+    {
+      // It's a string - old version
+      aErrorLocation = new SimpleLocation (aErrorLocationValue.getAsString ());
+    }
+    else
+    {
+      // Try new structured version
+      aErrorLocation = getAsErrorLocation (aObj.getAsObject (JSON_ERROR_LOCATION));
+    }
+    final String sErrorText = aObj.getAsString (JSON_ERROR_TEXT);
+    final String sTest = aObj.getAsString (JSON_TEST);
+    // TODO The linked exception is lost atm
+    @SuppressWarnings ("unused")
+    final BDVEStackTrace aStackTrace = BDVEStackTrace.createFromJson (aObj.getAsObject (JSON_EXCEPTION));
+    final Throwable aLinkedException = null;
+
+    if (sTest != null)
+      return new SVRLResourceError (aErrorLevel,
+                                    sErrorID,
+                                    sErrorFieldName,
+                                    aErrorLocation,
+                                    new ConstantHasErrorText (sErrorText),
+                                    aLinkedException,
+                                    sTest);
+
+    return new SingleError (aErrorLevel,
+                            sErrorID,
+                            sErrorFieldName,
+                            aErrorLocation,
+                            new ConstantHasErrorText (sErrorText),
+                            aLinkedException);
   }
 
   /**
@@ -382,11 +425,11 @@ public final class BDVEJsonHelper
    *   "interrupted" : boolean,
    *   "mostSevereErrorLevel" : string,
    *   "results" : array {
-   *     "success" : string,  // as defined by {@link #getTriState(ETriState)}
+   *     "success" : string,  // as defined by {@link #getJsonTriState(ETriState)}
    *     "artifactType" : string,
    *     "artifactPath" : string,
    *     "items" : array {
-   *       error structure as in {@link #getJsonError(IErrorLevel, String, String, String, String, Throwable)}
+   *       error structure as in {@link #getJsonError(IError, Locale)}
    *     }
    *   },
    *   "durationMS" : number
@@ -410,8 +453,8 @@ public final class BDVEJsonHelper
 
     final IJsonArray aResultArray = new JsonArray ();
     {
-      final IJsonObject aError = getJsonError (EErrorLevel.ERROR, (String) null, (String) null, (String) null, sErrorMsg, (Throwable) null);
-      aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getTriState (false))
+      final IJsonObject aError = getJsonError (SingleError.builderError ().setErrorText (sErrorMsg).build (), CGlobal.DEFAULT_LOCALE);
+      aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getJsonTriState (false))
                                          .add (JSON_ARTIFACT_TYPE, ARTFACT_TYPE_INPUT_PARAMETER)
                                          .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
                                          .addJson (JSON_ITEMS, new JsonArray (aError)));
@@ -419,7 +462,7 @@ public final class BDVEJsonHelper
 
     aResponse.add (JSON_SUCCESS, false);
     aResponse.add (JSON_INTERRUPTED, false);
-    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getErrorLevel (EErrorLevel.ERROR));
+    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getJsonErrorLevel (EErrorLevel.ERROR));
     aResponse.addJson (JSON_RESULTS, aResultArray);
     aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
   }
@@ -436,11 +479,11 @@ public final class BDVEJsonHelper
     *   "interrupted" : boolean,
     *   "mostSevereErrorLevel" : string,
     *   "results" : array {
-    *     "success" : string,  // as defined by {@link #getTriState(ETriState)}
+    *     "success" : string,  // as defined by {@link #getJsonTriState(ETriState)}
     *     "artifactType" : string,
     *     "artifactPath" : string,
     *     "items" : array {
-    *       error structure as in {@link #getJsonSchematronError(IErrorLevel, String, String, String, String, String, Throwable)}
+    *       error structure as in {@link #getJsonError(IError, Locale)}
     *     }
     *   },
     *   "durationMS" : number
@@ -493,11 +536,11 @@ public final class BDVEJsonHelper
       if (aVR.isIgnored ())
       {
         bValidationInterrupted = true;
-        aVRT.add (JSON_SUCCESS, getTriState (ETriState.UNDEFINED));
+        aVRT.add (JSON_SUCCESS, getJsonTriState (ETriState.UNDEFINED));
       }
       else
       {
-        aVRT.add (JSON_SUCCESS, getTriState (aVR.isSuccess ()));
+        aVRT.add (JSON_SUCCESS, getJsonTriState (aVR.isSuccess ()));
       }
       aVRT.add (JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
       aVRT.add (JSON_ARTIFACT_PATH, aVR.getValidationArtefact ().getRuleResource ().getPath ());
@@ -514,13 +557,7 @@ public final class BDVEJsonHelper
           if (_isConsideredWarning (aError.getErrorLevel ()))
             nWarnings++;
 
-        aItemArray.add (getJsonSchematronError (aError.getErrorLevel (),
-                                                aError.getErrorID (),
-                                                aError.getErrorFieldName (),
-                                                aError.hasErrorLocation () ? aError.getErrorLocation ().getAsString () : null,
-                                                aError.getErrorText (aDisplayLocale),
-                                                aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest () : null,
-                                                aError.getLinkedException ()));
+        aItemArray.add (getJsonError (aError, aDisplayLocale));
       }
       aVRT.addJson (JSON_ITEMS, aItemArray);
       aResultArray.add (aVRT);
@@ -528,7 +565,7 @@ public final class BDVEJsonHelper
     // Success if the worst that happened is a warning
     aResponse.add (JSON_SUCCESS, aMostSevere.isLE (EErrorLevel.WARN));
     aResponse.add (JSON_INTERRUPTED, bValidationInterrupted);
-    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getErrorLevel (aMostSevere));
+    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getJsonErrorLevel (aMostSevere));
     aResponse.addJson (JSON_RESULTS, aResultArray);
     aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
 
