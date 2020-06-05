@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.execute;
+package com.helger.bdve.engine.schematron;
 
 import java.util.Locale;
 
@@ -93,7 +93,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <Va
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematronBased (), "Artifact is not Schematron");
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematron (), "Artifact is not a Schematron");
     m_sPrerequisiteXPath = sPrerequisiteXPath;
     m_aNamespaceContext = aNamespaceContext == null ? null : new MapBasedNamespaceContext (aNamespaceContext);
   }

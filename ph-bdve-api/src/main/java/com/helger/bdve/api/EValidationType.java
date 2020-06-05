@@ -89,17 +89,17 @@ public enum EValidationType implements IHasID <String>, IHasName
     return m_sName;
   }
 
-  public boolean isXMLBased ()
+  public boolean isXML ()
   {
     return this == XML;
   }
 
-  public boolean isXSDBased ()
+  public boolean isXSD ()
   {
     return this == XSD || this == PARTIAL_XSD;
   }
 
-  public boolean isSchematronBased ()
+  public boolean isSchematron ()
   {
     return this == SCHEMATRON_PURE || this == SCHEMATRON_SCH || this == SCHEMATRON_XSLT || this == SCHEMATRON_OIOUBL;
   }
@@ -111,7 +111,7 @@ public enum EValidationType implements IHasID <String>, IHasName
    */
   public boolean isStopValidationOnError ()
   {
-    return isXMLBased () || isXSDBased ();
+    return isXML () || isXSD ();
   }
 
   /**

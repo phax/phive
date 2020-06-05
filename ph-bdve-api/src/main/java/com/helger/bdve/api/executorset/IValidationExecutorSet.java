@@ -18,7 +18,6 @@ package com.helger.bdve.api.executorset;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.api.execute.IValidationExecutor;
@@ -36,12 +35,6 @@ import com.helger.commons.name.IHasDisplayName;
  */
 public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName, ICommonsIterable <IValidationExecutor>, Serializable
 {
-  /**
-   * @return The number of contained validation executors. Always &ge; 0.
-   */
-  @Nonnegative
-  int getExecutorCount ();
-
   /**
    * @return A list with all validation executors. Never <code>null</code> but
    *         maybe empty.

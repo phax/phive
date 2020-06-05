@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.spi;
+package com.helger.bdve.engine.schematron;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

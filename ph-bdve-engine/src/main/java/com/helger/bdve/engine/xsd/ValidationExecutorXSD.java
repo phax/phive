@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.execute;
+package com.helger.bdve.engine.xsd;
 
 import java.util.Locale;
 
@@ -56,7 +56,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <Validatio
                                 @Nonnull final ISupplier <? extends Schema> aSchemaProvider)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSDBased (), "Artifact is not XSD");
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     m_aSchemaProvider = aSchemaProvider;
   }

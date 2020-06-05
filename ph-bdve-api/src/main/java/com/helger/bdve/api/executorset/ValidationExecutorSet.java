@@ -18,7 +18,6 @@ package com.helger.bdve.api.executorset;
 
 import java.util.Iterator;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -54,45 +53,39 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   }
 
   @Nonnull
-  public VESID getID ()
+  public final VESID getID ()
   {
     return m_aID;
   }
 
   @Nonnull
   @Nonempty
-  public String getDisplayName ()
+  public final String getDisplayName ()
   {
     return m_sDisplayName;
   }
 
-  @Nonnegative
-  public int getExecutorCount ()
-  {
-    return m_aList.size ();
-  }
-
   @Nonnull
-  public Iterator <IValidationExecutor> iterator ()
+  public final Iterator <IValidationExecutor> iterator ()
   {
     return m_aList.iterator ();
   }
 
   @Nonnull
   @ReturnsMutableObject
-  public ICommonsList <IValidationExecutor> executors ()
+  public final ICommonsList <IValidationExecutor> executors ()
   {
     return m_aList;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IValidationExecutor> getAllExecutors ()
+  public final ICommonsList <IValidationExecutor> getAllExecutors ()
   {
     return m_aList.getClone ();
   }
 
-  public boolean isDeprecated ()
+  public final boolean isDeprecated ()
   {
     return m_bDeprecated;
   }

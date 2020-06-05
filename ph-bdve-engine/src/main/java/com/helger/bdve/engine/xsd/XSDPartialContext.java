@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.execute;
+package com.helger.bdve.engine.xsd;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
