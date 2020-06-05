@@ -13,7 +13,7 @@ This project has the following sub-modules:
 * **ph-bdve-engine** - the validation engine that assembles all the pieces together and validates documents
 * **ph-bdve-json** - helper classes to convert validation results from and to JSON (since v6.0.0)
 
-Note: please see [this document](blob/master/READMEv5.md) for the v5 documentation 
+Note: please see [this document](READMEv5.md) for the v5 documentation 
 
 # Usage guide
 
