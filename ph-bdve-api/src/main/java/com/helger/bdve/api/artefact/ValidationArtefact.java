@@ -14,13 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.artefact;
+package com.helger.bdve.api.artefact;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.api.EValidationType;
-import com.helger.bdve.api.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
@@ -36,26 +35,6 @@ public class ValidationArtefact implements IValidationArtefact
 {
   private final EValidationType m_eValidationArtefactType;
   private final IReadableResource m_aResource;
-
-  /**
-   * Constructor.
-   *
-   * @param eValidationArtefactType
-   *        Validation artefact type. May not be <code>null</code>.
-   * @param aClassLoader
-   *        The class loader to be used.
-   * @param aResource
-   *        The resource this reflects. May not be <code>null</code>.
-   * @deprecated Since 5.3.0 in favour of
-   *             {@link #ValidationArtefact(EValidationType, IReadableResource)}
-   */
-  @Deprecated
-  public ValidationArtefact (@Nonnull final EValidationType eValidationArtefactType,
-                             @Nonnull final ClassLoader aClassLoader,
-                             @Nonnull final IReadableResource aResource)
-  {
-    this (eValidationArtefactType, aResource);
-  }
 
   /**
    * Constructor.

@@ -21,7 +21,6 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.helger.bdve.api.execute.IValidationExecutionManager;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.vesid.VESID;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -59,13 +58,6 @@ public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName,
   @Nonnull
   @ReturnsMutableCopy
   ICommonsList <IValidationExecutor> getAllExecutors ();
-
-  /**
-   * @return A new {@link IValidationExecutionManager} for this validation
-   *         executor set.
-   */
-  @Nonnull
-  IValidationExecutionManager createExecutionManager ();
 
   /**
    * @return <code>true</code> if this document is deprecated (phased-out or end

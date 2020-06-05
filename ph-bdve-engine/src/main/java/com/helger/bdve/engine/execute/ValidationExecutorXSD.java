@@ -26,10 +26,10 @@ import org.xml.sax.SAXParseException;
 
 import com.helger.bdve.api.EValidationType;
 import com.helger.bdve.api.artefact.IValidationArtefact;
+import com.helger.bdve.api.artefact.ValidationArtefact;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
 import com.helger.bdve.api.sources.IValidationSource;
-import com.helger.bdve.engine.artefact.ValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;

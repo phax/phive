@@ -16,7 +16,6 @@
  */
 package com.helger.bdve.engine.execute;
 
-import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 import javax.annotation.Nonnegative;
@@ -34,25 +33,20 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.lang.IHasClassLoader;
 import com.helger.commons.state.EValidity;
 
 /**
  * Execute multiple {@link IValidationExecutor}s at once. It is basically a
  * chain of validators with different syntaxes (XSD, Schematron) and different
  * rules (rule files). All validation executors are handled in the order they
- * are specified.<br>
- * A special class loader for XML schema resolution can be set via
- * {@link #setClassLoader(ClassLoader)}. This class loader is than globally
- * applied to all executors.
+ * are specified.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ValidationExecutionManager implements IHasClassLoader, IValidationExecutionManager
+public class ValidationExecutionManager implements IValidationExecutionManager
 {
   private final ICommonsList <IValidationExecutor> m_aExecutors = new CommonsArrayList <> ();
-  private WeakReference <ClassLoader> m_aClassLoader = new WeakReference <> (null);
 
   /**
    * Default constructor without executors.
@@ -168,43 +162,6 @@ public class ValidationExecutionManager implements IHasClassLoader, IValidationE
     return m_aExecutors;
   }
 
-  /**
-   * @return The class loader to be used. <code>null</code> by default.
-   */
-  @Nullable
-  public final ClassLoader getClassLoader ()
-  {
-    return m_aClassLoader.get ();
-  }
-
-  /**
-   * Set the class loader to be used for all following executions.
-   *
-   * @param aClassLoader
-   *        The class loader to be used. May be <code>null</code>.
-   * @return this for chaining
-   */
-  @Nonnull
-  public final ValidationExecutionManager setClassLoader (@Nullable final ClassLoader aClassLoader)
-  {
-    m_aClassLoader = new WeakReference <> (aClassLoader);
-    return this;
-  }
-
-  /**
-   * Perform a validation with all the contained executors.
-   *
-   * @param aSource
-   *        The source artefact to be validated. May not be <code>null</code>.
-   * @param aValidationResults
-   *        The result list to be filled. May not be <code>null</code>. Note:
-   *        this list is NOT altered before start. For each contained executor a
-   *        result is added to the result list.
-   * @param aLocale
-   *        Custom locale to use e.g. for error messages. May be
-   *        <code>null</code> to use the system default locale.
-   * @see #executeValidation(IValidationSource, Locale)
-   */
   public void executeValidation (@Nonnull final IValidationSource aSource,
                                  @Nonnull final ValidationResultList aValidationResults,
                                  @Nullable final Locale aLocale)
@@ -236,19 +193,6 @@ public class ValidationExecutionManager implements IHasClassLoader, IValidationE
     }
   }
 
-  /**
-   * Perform a fast validation that stops on the first error.
-   *
-   * @param aSource
-   *        The source artefact to be validated. May not be <code>null</code>.
-   * @param aLocale
-   *        Custom locale to use e.g. for error messages. May be
-   *        <code>null</code> to use the system default locale.
-   * @return {@link EValidity#VALID} if the document is valid,
-   *         {@link EValidity#INVALID} if the document is invalid. Never
-   *         <code>null</code>.
-   * @since 5.2.7
-   */
   @Nonnull
   public EValidity executeFastValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
   {
