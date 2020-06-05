@@ -362,7 +362,7 @@ public final class BDVEJsonHelper
    * @return The created JSON object.
    */
   @Nonnull
-  public static IJsonObject getJsonVES (@Nonnull final IValidationExecutorSet aVES)
+  public static IJsonObject getJsonVES (@Nonnull final IValidationExecutorSet <?> aVES)
   {
     return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
                             .add (JSON_NAME, aVES.getDisplayName ())
@@ -467,7 +467,7 @@ public final class BDVEJsonHelper
    *        <code>null</code> if will contain a &ge; 0 value afterwards.
    */
   public static void applyValidationResultList (@Nonnull final IJsonObject aResponse,
-                                                @Nonnull final IValidationExecutorSet aVES,
+                                                @Nonnull final IValidationExecutorSet <?> aVES,
                                                 @Nonnull final List <? extends ValidationResult> aValidationResultList,
                                                 @Nonnull final Locale aDisplayLocale,
                                                 @Nonnegative final long nDurationMilliseconds,

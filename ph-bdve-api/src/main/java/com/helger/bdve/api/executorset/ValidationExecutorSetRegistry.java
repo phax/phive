@@ -24,6 +24,7 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.bdve.api.execute.IValidationExecutor;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
@@ -34,9 +35,8 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * A registry for {@link IValidationExecutorSet} objects. The default instance
- * can be accessed via {@link #INSTANCE}. This class is thread-safe and can
- * therefore be used as a singleton.<br>
+ * A registry for {@link IValidationExecutorSet} objects. This class is
+ * thread-safe and can therefore be used as a singleton.<br>
  * Initially all validation artefact providers need to register themselves via
  * {@link #registerValidationExecutorSet(IValidationExecutorSet)}. This needs to
  * be done only once upon initialization before usage.<br>
@@ -46,20 +46,20 @@ import com.helger.commons.string.ToStringGenerator;
  * value is non-<code>null</code> than some rules are registered.
  *
  * @author Philip Helger
+ * @param <SOURCETYPE>
+ *        The validation source type to be used.
  */
 @ThreadSafe
-public class ValidationExecutorSetRegistry implements IValidationExecutorSetRegistry
+public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource> implements IValidationExecutorSetRegistry <SOURCETYPE>
 {
-  public static final ValidationExecutorSetRegistry INSTANCE = new ValidationExecutorSetRegistry ();
-
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  protected final ICommonsMap <VESID, IValidationExecutorSet> m_aMap = new CommonsHashMap <> ();
+  protected final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> m_aMap = new CommonsHashMap <> ();
 
   public ValidationExecutorSetRegistry ()
   {}
 
-  public void registerValidationExecutorSet (@Nonnull final IValidationExecutorSet aVES)
+  public void registerValidationExecutorSet (@Nonnull final IValidationExecutorSet <SOURCETYPE> aVES)
   {
     ValueEnforcer.notNull (aVES, "VES");
 
@@ -73,26 +73,26 @@ public class ValidationExecutorSetRegistry implements IValidationExecutorSetRegi
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IValidationExecutorSet> getAll ()
+  public ICommonsList <IValidationExecutorSet <SOURCETYPE>> getAll ()
   {
     return m_aRWLock.readLockedGet (m_aMap::copyOfValues);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IValidationExecutorSet> findAll (@Nonnull final Predicate <? super IValidationExecutorSet> aFilter)
+  public ICommonsList <IValidationExecutorSet <SOURCETYPE>> findAll (@Nonnull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
   {
     return m_aRWLock.readLockedGet ( () -> m_aMap.copyOfValues (aFilter));
   }
 
   @Nullable
-  public IValidationExecutorSet findFirst (@Nonnull final Predicate <? super IValidationExecutorSet> aFilter)
+  public IValidationExecutorSet <SOURCETYPE> findFirst (@Nonnull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
   {
     return m_aRWLock.readLockedGet ( () -> m_aMap.findFirstValue (e -> aFilter.test (e.getValue ())));
   }
 
   @Nullable
-  public IValidationExecutorSet getOfID (@Nullable final VESID aID)
+  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aID)
   {
     if (aID == null)
       return null;
@@ -120,9 +120,9 @@ public class ValidationExecutorSetRegistry implements IValidationExecutorSetRegi
       if (m_aMap.isNotEmpty ())
       {
         ret = EChange.CHANGED;
-        for (final IValidationExecutorSet aVES : m_aMap.values ())
+        for (final IValidationExecutorSet <?> aVES : m_aMap.values ())
           if (aVES instanceof ValidationExecutorSet)
-            ((ValidationExecutorSet) aVES).removeAllExecutors ();
+            ((ValidationExecutorSet <?>) aVES).removeAllExecutors ();
         m_aMap.clear ();
       }
     }

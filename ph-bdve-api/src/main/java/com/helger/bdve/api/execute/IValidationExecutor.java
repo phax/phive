@@ -22,7 +22,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.api.EValidationType;
 import com.helger.bdve.api.artefact.IValidationArtefact;
 import com.helger.bdve.api.result.ValidationResult;
 import com.helger.bdve.api.source.IValidationSource;
@@ -33,9 +32,11 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
  * the rules of a single validation artefact.
  *
  * @author Philip Helger
+ * @param <SOURCETYPE>
+ *        The validation source type to be used.
  */
 @MustImplementEqualsAndHashcode
-public interface IValidationExecutor extends Serializable
+public interface IValidationExecutor <SOURCETYPE extends IValidationSource> extends Serializable
 {
   /**
    * Nested interface for validation executors that support caching.
@@ -73,23 +74,13 @@ public interface IValidationExecutor extends Serializable
   IValidationArtefact getValidationArtefact ();
 
   /**
-   * @return The type of validation performed by this executor. Never
-   *         <code>null</code>.
-   */
-  @Nonnull
-  default EValidationType getValidationType ()
-  {
-    return getValidationArtefact ().getValidationArtefactType ();
-  }
-
-  /**
    * @return <code>true</code> if a negative validation stops further
    *         validations.
    * @since 5.3.1; previously on validation type level only
    */
   default boolean isStopValidationOnError ()
   {
-    return getValidationType ().isStopValidationOnError ();
+    return getValidationArtefact ().getValidationArtefactType ().isStopValidationOnError ();
   }
 
   /**
@@ -100,7 +91,7 @@ public interface IValidationExecutor extends Serializable
    * @return Never <code>null</code>.
    */
   @Nonnull
-  default ValidationResult applyValidation (@Nonnull final IValidationSource aSource)
+  default ValidationResult applyValidation (@Nonnull final SOURCETYPE aSource)
   {
     return applyValidation (aSource, (Locale) null);
   }
@@ -116,5 +107,5 @@ public interface IValidationExecutor extends Serializable
    * @return Never <code>null</code>.
    */
   @Nonnull
-  ValidationResult applyValidation (@Nonnull IValidationSource aSource, @Nullable Locale aLocale);
+  ValidationResult applyValidation (@Nonnull SOURCETYPE aSource, @Nullable Locale aLocale);
 }

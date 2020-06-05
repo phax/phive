@@ -30,8 +30,10 @@ import com.helger.commons.state.EValidity;
  * to be validated (validation source).
  *
  * @author Philip Helger
+ * @param <SOURCETYPE>
+ *        The validation source type to be used.
  */
-public interface IValidationExecutionManager
+public interface IValidationExecutionManager <SOURCETYPE extends IValidationSource>
 {
   /**
    * Perform a validation with all the contained executors and the system
@@ -45,7 +47,7 @@ public interface IValidationExecutionManager
    * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
   @Nonnull
-  default ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
+  default ValidationResultList executeValidation (@Nonnull final SOURCETYPE aSource)
   {
     return executeValidation (aSource, (Locale) null);
   }
@@ -63,7 +65,7 @@ public interface IValidationExecutionManager
    * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
   @Nonnull
-  default ValidationResultList executeValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
+  default ValidationResultList executeValidation (@Nonnull final SOURCETYPE aSource, @Nullable final Locale aLocale)
   {
     final ValidationResultList ret = new ValidationResultList ();
     executeValidation (aSource, ret, aLocale);
@@ -84,7 +86,7 @@ public interface IValidationExecutionManager
    *        <code>null</code> to use the system default locale.
    * @see #executeValidation(IValidationSource, Locale)
    */
-  void executeValidation (@Nonnull IValidationSource aSource, @Nonnull ValidationResultList aValidationResults, @Nullable Locale aLocale);
+  void executeValidation (@Nonnull SOURCETYPE aSource, @Nonnull ValidationResultList aValidationResults, @Nullable Locale aLocale);
 
   /**
    * Perform a fast validation that stops on the first error.
@@ -96,5 +98,5 @@ public interface IValidationExecutionManager
    *         <code>null</code>.
    */
   @Nonnull
-  EValidity executeFastValidation (@Nonnull IValidationSource aSource);
+  EValidity executeFastValidation (@Nonnull SOURCETYPE aSource);
 }

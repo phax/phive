@@ -57,7 +57,7 @@ public final class BDVEJsonHelperTest
     final IJsonObject aObj = new JsonObject ();
     final Locale aDisplayLocale = Locale.US;
     final VESID aVESID = new VESID ("group", "art", "1.0");
-    final IValidationExecutorSet aVES = new ValidationExecutorSet (aVESID, "name", false);
+    final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID, "name", false);
     BDVEJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
     final String sJson = aObj.getAsJsonString ();
     assertEquals ("{\"ves\":{\"vesid\":\"group:art:1.0\",\"name\":\"name\",\"deprecated\":false}," +

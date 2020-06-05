@@ -33,7 +33,7 @@ import com.helger.bdve.api.artefact.IValidationArtefact;
 import com.helger.bdve.api.execute.AbstractValidationExecutor;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
-import com.helger.bdve.api.source.IValidationSource;
+import com.helger.bdve.engine.source.IValidationSourceXML;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.equals.EqualsHelper;
@@ -71,7 +71,7 @@ import com.helger.xml.xpath.XPathHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorSchematron extends AbstractValidationExecutor <ValidationExecutorSchematron> implements
+public class ValidationExecutorSchematron extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorSchematron> implements
                                           IValidationExecutor.ICacheSupport
 {
   private enum ESchematronOutput
@@ -124,7 +124,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <Va
   }
 
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@Nonnull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -188,7 +188,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <Va
     final ErrorList aErrorList = new ErrorList ();
     AbstractSchematronResource aSCH;
     ESchematronOutput eOutput = ESchematronOutput.SVRL;
-    switch (getValidationType ())
+    switch (getValidationArtefact ().getValidationArtefactType ())
     {
       case SCHEMATRON_PURE:
       {
@@ -224,7 +224,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <Va
         break;
       }
       default:
-        throw new IllegalStateException ("Unsupported validation type: " + getValidationType ());
+        throw new IllegalStateException ("Unsupported validation type: " + getValidationArtefact ().getValidationArtefactType ());
     }
     // Don't cache to avoid that errors in the Schematron are hidden on
     // consecutive calls!

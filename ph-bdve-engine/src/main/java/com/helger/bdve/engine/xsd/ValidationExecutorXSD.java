@@ -30,7 +30,7 @@ import com.helger.bdve.api.artefact.ValidationArtefact;
 import com.helger.bdve.api.execute.AbstractValidationExecutor;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
-import com.helger.bdve.api.source.IValidationSource;
+import com.helger.bdve.engine.source.IValidationSourceXML;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -48,7 +48,7 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorXSD extends AbstractValidationExecutor <ValidationExecutorXSD>
+public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSD>
 {
   private final ISupplier <? extends Schema> m_aSchemaProvider;
 
@@ -68,7 +68,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <Validatio
   }
 
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@Nonnull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
     final IValidationArtefact aVA = getValidationArtefact ();

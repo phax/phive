@@ -22,6 +22,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 
@@ -30,8 +31,10 @@ import com.helger.commons.collection.impl.ICommonsList;
  *
  * @author Philip Helger
  * @since 6.0.0
+ * @param <SOURCETYPE>
+ *        The validation source type to be used.
  */
-public interface IValidationExecutorSetRegistry extends Serializable
+public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource> extends Serializable
 {
   /**
    * Register a validation executor set into this registry.
@@ -42,7 +45,7 @@ public interface IValidationExecutorSetRegistry extends Serializable
    *         If another object with the same ID is already registered in this
    *         registry.
    */
-  void registerValidationExecutorSet (@Nonnull IValidationExecutorSet aVES);
+  void registerValidationExecutorSet (@Nonnull IValidationExecutorSet <SOURCETYPE> aVES);
 
   /**
    * @return A list of all contained validation executor sets in this registry.
@@ -50,7 +53,7 @@ public interface IValidationExecutorSetRegistry extends Serializable
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsList <IValidationExecutorSet> getAll ();
+  ICommonsList <IValidationExecutorSet <SOURCETYPE>> getAll ();
 
   /**
    * Find all validation executor sets that match the provided filter.
@@ -62,7 +65,7 @@ public interface IValidationExecutorSetRegistry extends Serializable
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsList <IValidationExecutorSet> findAll (@Nonnull Predicate <? super IValidationExecutorSet> aFilter);
+  ICommonsList <IValidationExecutorSet <SOURCETYPE>> findAll (@Nonnull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
 
   /**
    * Find the first validation executor sets that match the provided filter.
@@ -73,7 +76,7 @@ public interface IValidationExecutorSetRegistry extends Serializable
    * @return <code>null</code> if no match was found.
    */
   @Nullable
-  IValidationExecutorSet findFirst (@Nonnull Predicate <? super IValidationExecutorSet> aFilter);
+  IValidationExecutorSet <SOURCETYPE> findFirst (@Nonnull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
 
   /**
    * Find the validation executor set with the specified ID.
@@ -83,5 +86,5 @@ public interface IValidationExecutorSetRegistry extends Serializable
    * @return <code>null</code> if no such validation executor set is registered.
    */
   @Nullable
-  IValidationExecutorSet getOfID (@Nullable VESID aID);
+  IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable VESID aID);
 }

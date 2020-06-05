@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.bdve.api.execute.IValidationExecutor;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -36,13 +37,15 @@ import com.helger.commons.string.ToStringGenerator;
  * Default implementation of {@link IValidationExecutorSet}.
  *
  * @author Philip Helger
+ * @param <SOURCETYPE>
+ *        The validation source type to be used.
  */
 @NotThreadSafe
-public class ValidationExecutorSet implements IValidationExecutorSet
+public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implements IValidationExecutorSet <SOURCETYPE>
 {
   private final VESID m_aID;
   private final String m_sDisplayName;
-  private final ICommonsList <IValidationExecutor> m_aList = new CommonsArrayList <> ();
+  private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aList = new CommonsArrayList <> ();
   private final boolean m_bDeprecated;
 
   public ValidationExecutorSet (@Nonnull final VESID aID, @Nonnull @Nonempty final String sDisplayName, final boolean bDeprecated)
@@ -66,21 +69,21 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   }
 
   @Nonnull
-  public final Iterator <IValidationExecutor> iterator ()
+  public final Iterator <IValidationExecutor <SOURCETYPE>> iterator ()
   {
     return m_aList.iterator ();
   }
 
   @Nonnull
   @ReturnsMutableObject
-  public final ICommonsList <IValidationExecutor> executors ()
+  public final ICommonsList <IValidationExecutor <SOURCETYPE>> executors ()
   {
     return m_aList;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsList <IValidationExecutor> getAllExecutors ()
+  public final ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ()
   {
     return m_aList.getClone ();
   }
@@ -98,7 +101,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
    * @return this for chaining
    */
   @Nonnull
-  public ValidationExecutorSet addExecutor (@Nonnull final IValidationExecutor aExecutor)
+  public ValidationExecutorSet <SOURCETYPE> addExecutor (@Nonnull final IValidationExecutor <SOURCETYPE> aExecutor)
   {
     ValueEnforcer.notNull (aExecutor, "Executor");
     m_aList.add (aExecutor);
@@ -107,7 +110,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
 
   public void setValidationExecutorDoCache (final boolean bCache)
   {
-    for (final IValidationExecutor aExecutor : m_aList)
+    for (final IValidationExecutor <SOURCETYPE> aExecutor : m_aList)
       if (aExecutor instanceof IValidationExecutor.ICacheSupport)
         ((IValidationExecutor.ICacheSupport) aExecutor).setCacheArtefact (bCache);
   }
@@ -134,7 +137,7 @@ public class ValidationExecutorSet implements IValidationExecutorSet
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final ValidationExecutorSet rhs = (ValidationExecutorSet) o;
+    final ValidationExecutorSet <?> rhs = (ValidationExecutorSet <?>) o;
     return m_aID.equals (rhs.m_aID) && m_sDisplayName.equals (rhs.m_sDisplayName) && m_aList.equals (rhs.m_aList);
   }
 
@@ -155,19 +158,20 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   }
 
   @Nonnull
-  public static ValidationExecutorSet create (@Nonnull final VESID aID,
-                                              @Nonnull @Nonempty final String sDisplayName,
-                                              final boolean bIsDeprecated,
-                                              @Nonnull final IValidationExecutor... aValidationExecutors)
+  @SafeVarargs
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
+                                                                                  @Nonnull @Nonempty final String sDisplayName,
+                                                                                  final boolean bIsDeprecated,
+                                                                                  @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.noNullValue (aValidationExecutors, "ValidationExecutors");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, bIsDeprecated);
+    final ValidationExecutorSet <ST> ret = new ValidationExecutorSet <> (aID, sDisplayName, bIsDeprecated);
 
     // Add Schematrons
-    for (final IValidationExecutor aItem : aValidationExecutors)
+    for (final IValidationExecutor <ST> aItem : aValidationExecutors)
       ret.addExecutor (aItem);
 
     return ret;
@@ -192,25 +196,26 @@ public class ValidationExecutorSet implements IValidationExecutorSet
    * @return The newly created VES. Never <code>null</code>.
    */
   @Nonnull
-  public static ValidationExecutorSet createDerived (@Nonnull final IValidationExecutorSet aBaseVES,
-                                                     @Nonnull final VESID aID,
-                                                     @Nonnull @Nonempty final String sDisplayName,
-                                                     final boolean bIsDeprecated,
-                                                     @Nonnull final IValidationExecutor... aValidationExecutors)
+  @SafeVarargs
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> createDerived (@Nonnull final IValidationExecutorSet <ST> aBaseVES,
+                                                                                         @Nonnull final VESID aID,
+                                                                                         @Nonnull @Nonempty final String sDisplayName,
+                                                                                         final boolean bIsDeprecated,
+                                                                                         @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notEmptyNoNullValue (aValidationExecutors, "ValidationExecutors");
 
-    final ValidationExecutorSet ret = new ValidationExecutorSet (aID, sDisplayName, bIsDeprecated);
+    final ValidationExecutorSet <ST> ret = new ValidationExecutorSet <> (aID, sDisplayName, bIsDeprecated);
 
     // Copy all existing ones
-    for (final IValidationExecutor aVE : aBaseVES)
+    for (final IValidationExecutor <ST> aVE : aBaseVES)
       ret.addExecutor (aVE);
 
     // Add Schematrons
-    for (final IValidationExecutor aVE : aValidationExecutors)
+    for (final IValidationExecutor <ST> aVE : aValidationExecutors)
       ret.addExecutor (aVE);
 
     return ret;

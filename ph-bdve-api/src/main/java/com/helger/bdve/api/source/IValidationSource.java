@@ -18,17 +18,10 @@ package com.helger.bdve.api.source;
 
 import java.io.Serializable;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.xml.transform.Source;
-
-import org.w3c.dom.Node;
-
-import com.helger.xml.XMLHelper;
-import com.helger.xml.transform.TransformSourceFactory;
 
 /**
- * Abstract validation source.
+ * Abstract validation source interface.
  *
  * @author Philip Helger
  */
@@ -42,43 +35,8 @@ public interface IValidationSource extends Serializable
   String getSystemID ();
 
   /**
-   * @return The source node to be validated. May be <code>null</code>.
-   */
-  @Nullable
-  Node getNode ();
-
-  /**
    * @return <code>true</code> if this source is partial and <code>false</code>
    *         if the whole Document should be used.
    */
   boolean isPartialSource ();
-
-  /**
-   * @return This validation source as a `javax.xml.transform.Source`. Never
-   *         <code>null</code>.
-   * @throws IllegalStateException
-   *         If no transform source object can be created.
-   */
-  @Nonnull
-  default Source getAsTransformSource ()
-  {
-    final Node aNode = getNode ();
-    if (aNode == null)
-      throw new IllegalStateException ("No input Node is present!");
-
-    Source ret = null;
-    if (isPartialSource ())
-      ret = TransformSourceFactory.create (aNode);
-    else
-    {
-      // Always use the Document node! Otherwise this may lead to weird XSLT
-      // errors
-      ret = TransformSourceFactory.create (XMLHelper.getOwnerDocument (aNode));
-    }
-    if (ret == null)
-      throw new IllegalStateException ("No valid input Node is present!");
-
-    ret.setSystemId (getSystemID ());
-    return ret;
-  }
 }

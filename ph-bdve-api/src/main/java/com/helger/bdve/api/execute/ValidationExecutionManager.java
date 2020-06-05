@@ -41,11 +41,13 @@ import com.helger.commons.state.EValidity;
  * are specified.
  *
  * @author Philip Helger
+ * @param <SOURCETYPE>
+ *        The validation source type to be used.
  */
 @NotThreadSafe
-public class ValidationExecutionManager implements IValidationExecutionManager
+public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> implements IValidationExecutionManager <SOURCETYPE>
 {
-  private final ICommonsList <IValidationExecutor> m_aExecutors = new CommonsArrayList <> ();
+  private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aExecutors = new CommonsArrayList <> ();
 
   /**
    * Default constructor without executors.
@@ -54,25 +56,13 @@ public class ValidationExecutionManager implements IValidationExecutionManager
   {}
 
   /**
-   * Constructor with an array of executors.
-   *
-   * @param aExecutors
-   *        The executors to be added. May be <code>null</code> but may not
-   *        contain <code>null</code> values.
-   */
-  public ValidationExecutionManager (@Nullable final IValidationExecutor... aExecutors)
-  {
-    addExecutors (aExecutors);
-  }
-
-  /**
    * Constructor with a collection of executors.
    *
    * @param aExecutors
    *        The executors to be added. May be <code>null</code> but may not
    *        contain <code>null</code> values.
    */
-  public ValidationExecutionManager (@Nullable final Iterable <? extends IValidationExecutor> aExecutors)
+  public ValidationExecutionManager (@Nullable final Iterable <? extends IValidationExecutor <SOURCETYPE>> aExecutors)
   {
     addExecutors (aExecutors);
   }
@@ -83,11 +73,10 @@ public class ValidationExecutionManager implements IValidationExecutionManager
    * @param aExecutor
    *        The executor to be added. May not be <code>null</code>.
    * @return this for chaining
-   * @see #addExecutors(IValidationExecutor...)
    * @see #addExecutors(Iterable)
    */
   @Nonnull
-  public final ValidationExecutionManager addExecutor (@Nonnull final IValidationExecutor aExecutor)
+  public final ValidationExecutionManager <SOURCETYPE> addExecutor (@Nonnull final IValidationExecutor <SOURCETYPE> aExecutor)
   {
     ValueEnforcer.notNull (aExecutor, "Executor");
     m_aExecutors.add (aExecutor);
@@ -104,28 +93,10 @@ public class ValidationExecutionManager implements IValidationExecutionManager
    * @see #addExecutor(IValidationExecutor)
    */
   @Nonnull
-  public final ValidationExecutionManager addExecutors (@Nullable final IValidationExecutor... aExecutors)
+  public final ValidationExecutionManager <SOURCETYPE> addExecutors (@Nullable final Iterable <? extends IValidationExecutor <SOURCETYPE>> aExecutors)
   {
     if (aExecutors != null)
-      for (final IValidationExecutor aExecutor : aExecutors)
-        addExecutor (aExecutor);
-    return this;
-  }
-
-  /**
-   * Add 0-n executors at once.
-   *
-   * @param aExecutors
-   *        The executors to be added. May be <code>null</code> but may not
-   *        contain <code>null</code> values.
-   * @return this for chaining
-   * @see #addExecutor(IValidationExecutor)
-   */
-  @Nonnull
-  public final ValidationExecutionManager addExecutors (@Nullable final Iterable <? extends IValidationExecutor> aExecutors)
-  {
-    if (aExecutors != null)
-      for (final IValidationExecutor aExecutor : aExecutors)
+      for (final IValidationExecutor <SOURCETYPE> aExecutor : aExecutors)
         addExecutor (aExecutor);
     return this;
   }
@@ -145,7 +116,7 @@ public class ValidationExecutionManager implements IValidationExecutionManager
    */
   @Nonnull
   @ReturnsMutableCopy
-  public ICommonsList <IValidationExecutor> getAllExecutors ()
+  public ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ()
   {
     return m_aExecutors.getClone ();
   }
@@ -156,12 +127,12 @@ public class ValidationExecutionManager implements IValidationExecutionManager
    *         object is not a clone!
    */
   @Nonnull
-  public ICommonsIterable <IValidationExecutor> getExecutors ()
+  public ICommonsIterable <IValidationExecutor <SOURCETYPE>> getExecutors ()
   {
     return m_aExecutors;
   }
 
-  public void executeValidation (@Nonnull final IValidationSource aSource,
+  public void executeValidation (@Nonnull final SOURCETYPE aSource,
                                  @Nonnull final ValidationResultList aValidationResults,
                                  @Nullable final Locale aLocale)
   {
@@ -169,7 +140,7 @@ public class ValidationExecutionManager implements IValidationExecutionManager
     ValueEnforcer.notNull (aValidationResults, "ValidationResults");
 
     boolean bIgnoreRest = false;
-    for (final IValidationExecutor aExecutor : getAllExecutors ())
+    for (final IValidationExecutor <SOURCETYPE> aExecutor : getAllExecutors ())
     {
       if (bIgnoreRest)
       {
@@ -193,11 +164,11 @@ public class ValidationExecutionManager implements IValidationExecutionManager
   }
 
   @Nonnull
-  public EValidity executeFastValidation (@Nonnull final IValidationSource aSource)
+  public EValidity executeFastValidation (@Nonnull final SOURCETYPE aSource)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
-    for (final IValidationExecutor aExecutor : getAllExecutors ())
+    for (final IValidationExecutor <SOURCETYPE> aExecutor : getAllExecutors ())
     {
       // Execute validation
       // Note: locale doesn't matter because we don't use the texts
@@ -222,10 +193,10 @@ public class ValidationExecutionManager implements IValidationExecutionManager
    * @return The validation result list and never <code>null</code>.
    */
   @Nonnull
-  public static ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet aVES,
-                                                        @Nonnull final IValidationSource aSource)
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+                                                                                       @Nonnull final ST aSource)
   {
-    return new ValidationExecutionManager (aVES).executeValidation (aSource);
+    return new ValidationExecutionManager <> (aVES).executeValidation (aSource);
   }
 
   /**
@@ -241,11 +212,11 @@ public class ValidationExecutionManager implements IValidationExecutionManager
    * @return The validation result list and never <code>null</code>.
    */
   @Nonnull
-  public static ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet aVES,
-                                                        @Nonnull final IValidationSource aSource,
-                                                        @Nullable final Locale aLocale)
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+                                                                                       @Nonnull final ST aSource,
+                                                                                       @Nullable final Locale aLocale)
   {
-    return new ValidationExecutionManager (aVES).executeValidation (aSource, aLocale);
+    return new ValidationExecutionManager <> (aVES).executeValidation (aSource, aLocale);
   }
 
   /**
@@ -259,8 +230,9 @@ public class ValidationExecutionManager implements IValidationExecutionManager
    * @return The validity of the validated object and never <code>null</code>.
    */
   @Nonnull
-  public static EValidity executeFastValidation (@Nonnull final IValidationExecutorSet aVES, @Nonnull final IValidationSource aSource)
+  public static <ST extends IValidationSource> EValidity executeFastValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+                                                                                @Nonnull final ST aSource)
   {
-    return new ValidationExecutionManager (aVES).executeFastValidation (aSource);
+    return new ValidationExecutionManager <> (aVES).executeFastValidation (aSource);
   }
 }

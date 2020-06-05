@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.api.source;
+package com.helger.bdve.engine.source;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,11 +31,11 @@ import com.helger.xml.serialize.read.DOMReader;
 import com.helger.xml.transform.TransformSourceFactory;
 
 /**
- * Default implementation of {@link IValidationSource}.
+ * Default implementation of {@link IValidationSourceXML}.
  *
  * @author Philip Helger
  */
-public class ValidationSource implements IValidationSource
+public class ValidationSourceXML implements IValidationSourceXML
 {
   private final String m_sSystemID;
   private final ISupplier <Node> m_aNodeFactory;
@@ -43,17 +43,13 @@ public class ValidationSource implements IValidationSource
   // Status vars
   private transient Node m_aNode;
 
-  public ValidationSource (@Nullable final String sSystemID,
-                           @Nonnull final Node aFixedNode,
-                           final boolean bPartialSource)
+  public ValidationSourceXML (@Nullable final String sSystemID, @Nonnull final Node aFixedNode, final boolean bPartialSource)
   {
     this (sSystemID, () -> aFixedNode, bPartialSource);
     m_aNode = aFixedNode;
   }
 
-  public ValidationSource (@Nullable final String sSystemID,
-                           @Nonnull final ISupplier <Node> aNodeFactory,
-                           final boolean bPartialSource)
+  public ValidationSourceXML (@Nullable final String sSystemID, @Nonnull final ISupplier <Node> aNodeFactory, final boolean bPartialSource)
   {
     ValueEnforcer.notNull (aNodeFactory, "NodeFactory");
     m_sSystemID = sSystemID;
@@ -103,11 +99,11 @@ public class ValidationSource implements IValidationSource
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static ValidationSource create (@Nullable final String sSystemID, @Nonnull final Node aNode)
+  public static ValidationSourceXML create (@Nullable final String sSystemID, @Nonnull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
     // Use the owner Document as fixed node
-    return new ValidationSource (sSystemID, XMLHelper.getOwnerDocument (aNode), false);
+    return new ValidationSourceXML (sSystemID, XMLHelper.getOwnerDocument (aNode), false);
   }
 
   /**
@@ -120,10 +116,10 @@ public class ValidationSource implements IValidationSource
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static ValidationSource createPartial (@Nullable final String sSystemID, @Nonnull final Node aNode)
+  public static ValidationSourceXML createPartial (@Nullable final String sSystemID, @Nonnull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
-    return new ValidationSource (sSystemID, aNode, true);
+    return new ValidationSourceXML (sSystemID, aNode, true);
   }
 
   /**
@@ -135,10 +131,10 @@ public class ValidationSource implements IValidationSource
    * @return The validation source to be used. Never <code>null</code>.
    */
   @Nonnull
-  public static ValidationSource createXMLSource (@Nonnull final IReadableResource aResource)
+  public static ValidationSourceXML createXMLSource (@Nonnull final IReadableResource aResource)
   {
     // Read on demand only
-    return new ValidationSource (aResource.getPath (), () -> DOMReader.readXMLDOM (aResource), false)
+    return new ValidationSourceXML (aResource.getPath (), () -> DOMReader.readXMLDOM (aResource), false)
     {
       @Override
       @Nonnull

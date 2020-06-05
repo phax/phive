@@ -31,8 +31,8 @@ import com.helger.bdve.api.artefact.IValidationArtefact;
 import com.helger.bdve.api.execute.AbstractValidationExecutor;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
-import com.helger.bdve.api.source.IValidationSource;
-import com.helger.bdve.api.source.ValidationSource;
+import com.helger.bdve.engine.source.IValidationSourceXML;
+import com.helger.bdve.engine.source.ValidationSourceXML;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -48,7 +48,7 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <ValidationExecutorXSDPartial>
+public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSDPartial>
 {
   private final XSDPartialContext m_aContext;
 
@@ -66,7 +66,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <Va
   }
 
   @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@Nonnull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -118,7 +118,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <Va
     for (int i = 0; i < aNodeSet.getLength (); ++i)
     {
       // Build a partial source
-      final IValidationSource aRealSource = new ValidationSource (aSource.getSystemID (), aNodeSet.item (i), true);
+      final IValidationSourceXML aRealSource = new ValidationSourceXML (aSource.getSystemID (), aNodeSet.item (i), true);
 
       try
       {

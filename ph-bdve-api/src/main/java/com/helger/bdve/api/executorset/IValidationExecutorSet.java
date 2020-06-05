@@ -21,6 +21,7 @@ import java.io.Serializable;
 import javax.annotation.Nonnull;
 
 import com.helger.bdve.api.execute.IValidationExecutor;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.ICommonsIterable;
@@ -32,8 +33,14 @@ import com.helger.commons.name.IHasDisplayName;
  * Read-only interface for a named list of {@link IValidationExecutor}.
  *
  * @author Philip Helger
+ * @param <SOURCETYPE>
+ *        The validation source type to be used.
  */
-public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName, ICommonsIterable <IValidationExecutor>, Serializable
+public interface IValidationExecutorSet <SOURCETYPE extends IValidationSource> extends
+                                        IHasID <VESID>,
+                                        IHasDisplayName,
+                                        ICommonsIterable <IValidationExecutor <SOURCETYPE>>,
+                                        Serializable
 {
   /**
    * @return A list with all validation executors. Never <code>null</code> but
@@ -41,7 +48,7 @@ public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName,
    */
   @Nonnull
   @ReturnsMutableObject
-  ICommonsList <IValidationExecutor> executors ();
+  ICommonsList <IValidationExecutor <SOURCETYPE>> executors ();
 
   /**
    * @return A list with all validation executors. Never <code>null</code> but
@@ -49,7 +56,7 @@ public interface IValidationExecutorSet extends IHasID <VESID>, IHasDisplayName,
    */
   @Nonnull
   @ReturnsMutableCopy
-  ICommonsList <IValidationExecutor> getAllExecutors ();
+  ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ();
 
   /**
    * @return <code>true</code> if this document is deprecated (phased-out or end
