@@ -1,3 +1,19 @@
+/**
+ * Copyright (C) 2014-2020 Philip Helger (www.helger.com)
+ * philip[at]helger[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.helger.bdve.api.execute;
 
 import java.util.Locale;
@@ -9,23 +25,30 @@ import com.helger.bdve.api.result.ValidationResultList;
 import com.helger.bdve.api.sources.IValidationSource;
 import com.helger.commons.state.EValidity;
 
+/**
+ * Interface for an execution manager that applies a set of rules onto an object
+ * to be validated (validation source).
+ *
+ * @author Philip Helger
+ */
 public interface IValidationExecutionManager
 {
   /**
-   * Perform a validation with all the contained executors.
+   * Perform a validation with all the contained executors and the system
+   * default locale.
    *
    * @param aSource
    *        The source artefact to be validated. May not be <code>null</code>.
-   * @param aValidationResults
-   *        The result list to be filled. May not be <code>null</code>. Note:
-   *        this list is NOT altered before start. For each contained executor a
-   *        result is added to the result list.
-   * @param aLocale
-   *        Custom locale to use e.g. for error messages. May be
-   *        <code>null</code> to use the system default locale.
-   * @see #executeValidation(IValidationSource, Locale)
+   *        contained executor a result is added to the result list.
+   * @return The validation result list. Never <code>null</code>. For each
+   *         contained executor a result is added to the result list.
+   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
-  void executeValidation (@Nonnull IValidationSource aSource, @Nonnull ValidationResultList aValidationResults, @Nullable Locale aLocale);
+  @Nonnull
+  default ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
+  {
+    return executeValidation (aSource, (Locale) null);
+  }
 
   /**
    * Perform a validation with all the contained executors.
@@ -48,21 +71,20 @@ public interface IValidationExecutionManager
   }
 
   /**
-   * Perform a validation with all the contained executors and the system
-   * default locale.
+   * Perform a validation with all the contained executors.
    *
    * @param aSource
    *        The source artefact to be validated. May not be <code>null</code>.
-   *        contained executor a result is added to the result list.
-   * @return The validation result list. Never <code>null</code>. For each
-   *         contained executor a result is added to the result list.
-   * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
+   * @param aValidationResults
+   *        The result list to be filled. May not be <code>null</code>. Note:
+   *        this list is NOT altered before start. For each contained executor a
+   *        result is added to the result list.
+   * @param aLocale
+   *        Custom locale to use e.g. for error messages. May be
+   *        <code>null</code> to use the system default locale.
+   * @see #executeValidation(IValidationSource, Locale)
    */
-  @Nonnull
-  default ValidationResultList executeValidation (@Nonnull final IValidationSource aSource)
-  {
-    return executeValidation (aSource, (Locale) null);
-  }
+  void executeValidation (@Nonnull IValidationSource aSource, @Nonnull ValidationResultList aValidationResults, @Nullable Locale aLocale);
 
   /**
    * Perform a fast validation that stops on the first error.

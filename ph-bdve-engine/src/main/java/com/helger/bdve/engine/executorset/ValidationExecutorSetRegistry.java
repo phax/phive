@@ -16,7 +16,6 @@
  */
 package com.helger.bdve.engine.executorset;
 
-import java.io.Serializable;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -26,6 +25,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
+import com.helger.bdve.api.executorset.IValidationExecutorSetRegistry;
 import com.helger.bdve.api.vesid.VESID;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -51,7 +51,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @ThreadSafe
-public class ValidationExecutorSetRegistry implements Serializable
+public class ValidationExecutorSetRegistry implements IValidationExecutorSetRegistry
 {
   public static final ValidationExecutorSetRegistry INSTANCE = new ValidationExecutorSetRegistry ();
 
@@ -62,39 +62,18 @@ public class ValidationExecutorSetRegistry implements Serializable
   public ValidationExecutorSetRegistry ()
   {}
 
-  /**
-   * Register a validation executor set into this registry.
-   *
-   * @param aVES
-   *        The object to register. MAy not be <code>null</code>.
-   * @return The passed parameter
-   * @throws IllegalStateException
-   *         If another object with the same ID is already registered in this
-   *         registry.
-   * @param <T>
-   *        The {@link IValidationExecutorSet} implementation that is added and
-   *        returned.
-   */
-  @Nonnull
-  public <T extends IValidationExecutorSet> T registerValidationExecutorSet (@Nonnull final T aVES)
+  public void registerValidationExecutorSet (@Nonnull final IValidationExecutorSet aVES)
   {
     ValueEnforcer.notNull (aVES, "VES");
 
     final VESID aKey = aVES.getID ();
     m_aRWLock.writeLocked ( () -> {
       if (m_aMap.containsKey (aKey))
-        throw new IllegalStateException ("Another validation executor set with the ID '" +
-                                         aKey +
-                                         "' is already registered!");
+        throw new IllegalStateException ("Another validation executor set with the ID '" + aKey + "' is already registered!");
       m_aMap.put (aKey, aVES);
     });
-    return aVES;
   }
 
-  /**
-   * @return A list of all contained validation executor sets in this registry.
-   *         Never <code>null</code> but maybe empty.
-   */
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutorSet> getAll ()
@@ -102,14 +81,6 @@ public class ValidationExecutorSetRegistry implements Serializable
     return m_aRWLock.readLockedGet (m_aMap::copyOfValues);
   }
 
-  /**
-   * Final all validation executor sets that match the provided filter.
-   *
-   * @param aFilter
-   *        The filter to be used. May be <code>null</code> in which case the
-   *        result is the same as {@link #getAll()}.
-   * @return Never <code>null</code> but maybe empty.
-   */
   @Nonnull
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutorSet> findAll (@Nonnull final Predicate <? super IValidationExecutorSet> aFilter)
@@ -117,27 +88,12 @@ public class ValidationExecutorSetRegistry implements Serializable
     return m_aRWLock.readLockedGet ( () -> m_aMap.copyOfValues (aFilter));
   }
 
-  /**
-   * Final all validation executor sets that match the provided filter.
-   *
-   * @param aFilter
-   *        The filter to be used. May be <code>null</code> in which case the
-   *        result is the same as {@link #getAll()}.
-   * @return Never <code>null</code> but maybe empty.
-   */
   @Nullable
   public IValidationExecutorSet findFirst (@Nonnull final Predicate <? super IValidationExecutorSet> aFilter)
   {
     return m_aRWLock.readLockedGet ( () -> m_aMap.findFirstValue (e -> aFilter.test (e.getValue ())));
   }
 
-  /**
-   * Find the validation executor set with the specified ID.
-   *
-   * @param aID
-   *        The ID to search. May be <code>null</code>.
-   * @return <code>null</code> if no such validation executor set is registered.
-   */
   @Nullable
   public IValidationExecutorSet getOfID (@Nullable final VESID aID)
   {
