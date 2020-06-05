@@ -13,6 +13,8 @@ This project has the following sub-modules:
 * **ph-bdve-engine** - the validation engine that assembles all the pieces together and validates documents
 * **ph-bdve-json** - helper classes to convert validation results from and to JSON (since v6.0.0)
 
+Note: please see [this document](blob/master/READMEv5.md) for the v5 documentation 
+
 # Usage guide
 
 Basically this library wraps different XML Schemas and Schematrons in a certain order and under certain constraints and offers the possibility to validate XML documents based on the rules.
@@ -27,13 +29,13 @@ Each VESID can be represented in a single string in the form `groupID:artifiactI
 
 ## How to validate documents
 
-At least the `ph-bdve-engine` project and one library with rule sets (like e.g. `ph-bdve-peppol` from https://github.com/phax/ph-bdve-rules) is needed in your application. See the section on usage in a Maven project below.
+At least the `ph-bdve-engine` project and one library with rule sets (like e.g. `ph-bdve-rules-peppol` from https://github.com/phax/ph-bdve-rules) is needed in your application. See the section on usage in a Maven project below.
 All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
 Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
 Example for registering (only) Peppol validation artefacts:
 
 ```java
-    final ValidationExecutorSetRegistry aVESRegistry = new ValidationExecutorSetRegistry ();
+    final ValidationExecutorSetRegistry <IValidationSourceXML> aVESRegistry = new ValidationExecutorSetRegistry<> ();
     PeppolValidation.initStandard (aVESRegistry);
     PeppolValidation.initThirdParty (aVESRegistry);
     return aVESRegistry;
@@ -44,23 +46,21 @@ Therefore the registration process need to be performed only once.
 
 Validating a business document requires a few more steps.
 1. Access to the registry is needed.
-1. A specific `VESID` instance (e.g. `PeppolValidation370.VID_OPENPEPPOL_T10_V2`) - there are constants available for all VES identifiers defined in this project.
-1. The `ValidationExecutionManager` is an in-between class that can be used to customize the execution (e.g. setting a class loader). But it is created very quickly, so there is no harm on creating it on the fly every time.
-1. An instance of class `ValidationSource` to identify the document to be validate. Class `ValidationSource` has factory methods for the default cases (having an `org.w3c.dom.Node` or having an `com.helger.commons.io.resource.IReadableResource`).
+1. A specific `VESID` instance (e.g. `PeppolValidation3_10_0.VID_OPENPEPPOL_INVOICE_V3`) - there are constants available for all VES identifiers defined in this project.
+1. The `ValidationExecutionManager` is an in-between class that can be used to customize the execution. But it is created very quickly, so there is no harm on creating it on the fly every time.
+1. An instance of class `ValidationSourceXML` to identify the document to be validate. Class `ValidationSourceXML` has factory methods for the default cases (having an `org.w3c.dom.Node` or having an `com.helger.commons.io.resource.IReadableResource`).
 1. The validation results are stored in an instance of class `ValidationResultList`. This class is a list of `ValidationResult` instances - each `ValidationResult` represents the result of a single level of validation.
 1. Your application logic than needs to define what to do with the results. 
 
 
 ```java
     // Resolve the VES ID
-    final IValidationExecutorSet aVES = VESRegistry.getOfID (aVESID);
+    final IValidationExecutorSet<IValidationSourceXML> aVES = aVESRegistry.getOfID (aVESID);
     if (aVES != null) {
-      // Code for 5.x:
-      // final ValidationExecutionManager aVEM = aVES.createExecutionManager ();
       // Code for 6.x:
-      final ValidationExecutionManager aVEM = new ValidationExecutionManager (aVES);
+      final ValidationExecutionManager<IValidationSourceXML> aVEM = new ValidationExecutionManager<> (aVES);
       // What to validate?
-      ValidationSource aValidationSource = ...;
+      IValidationSourceXML aValidationSource = ...;
       // Main execution
       final ValidationResultList aValidationResult = aVEM.executeValidation (aValidationSource);
       if (aValidationResult.containsAtLeastOneError ()) {
@@ -75,7 +75,7 @@ Since v6 you have an easier solution to perform the same:
 
 ```java
     // Resolve the VES ID
-    final IValidationExecutorSet aVES = VESRegistry.getOfID (aVESID);
+    final IValidationExecutorSet<IValidationSourceXML> aVES = aVESRegistry.getOfID (aVESID);
     if (aVES != null) {
       // Shortcut introduced in v6
       final ValidationResultList aValidationResult = ValidationExecutionManager.executeValidation (aVES, aValidationSource);
@@ -97,7 +97,11 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
   <artifactId>ph-bdve-engine</artifactId>
   <version>x.y.z</version>
 </dependency>
+```xml
 
+If you are interested in the JSON binding you may also include this artefact.  
+
+```xml
 <dependency>
   <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-json</artifactId>
@@ -127,7 +131,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v6.0.0 - work in progress
     * Separated all the rules into a separate project - https://github.com/phax/ph-bdve-rules - this repository only contains the engine
-    * Extracted the JSON binding into a separate submodule "ph-bdve-json" 
+    * Extracted the JSON binding into a separate submodule "ph-bdve-json"
+    * Extracted the generic API project into a separate submodule "ph-bdve-api"
+    * Made the validation source type a generics parameter to the executor set etc. So an executor needs to know, whether it can accept XML sources or other kind of source syntaxes.
 * v5.3.1 - 2020-05-28
     * Added possibility to stop further validation on failed Schematrons as well
 * v5.3.0 - 2020-05-26
