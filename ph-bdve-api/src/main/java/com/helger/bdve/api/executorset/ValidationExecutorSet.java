@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.executorset;
+package com.helger.bdve.api.executorset;
 
 import java.util.Iterator;
 
@@ -23,9 +23,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.bdve.api.execute.IValidationExecutor;
-import com.helger.bdve.api.executorset.IValidationExecutorSet;
-import com.helger.bdve.api.vesid.VESID;
-import com.helger.bdve.engine.execute.ValidationExecutionManager;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -135,13 +132,6 @@ public class ValidationExecutorSet implements IValidationExecutorSet
   public EChange removeAllExecutors ()
   {
     return m_aList.removeAll ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public ValidationExecutionManager createExecutionManager ()
-  {
-    return new ValidationExecutionManager (m_aList.getClone ());
   }
 
   @Override

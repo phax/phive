@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.bdve.api.result.ValidationResultList;
-import com.helger.bdve.api.sources.IValidationSource;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.state.EValidity;
 
 /**
@@ -91,13 +91,10 @@ public interface IValidationExecutionManager
    *
    * @param aSource
    *        The source artefact to be validated. May not be <code>null</code>.
-   * @param aLocale
-   *        Custom locale to use e.g. for error messages. May be
-   *        <code>null</code> to use the system default locale.
    * @return {@link EValidity#VALID} if the document is valid,
    *         {@link EValidity#INVALID} if the document is invalid. Never
    *         <code>null</code>.
    */
   @Nonnull
-  EValidity executeFastValidation (@Nonnull IValidationSource aSource, @Nullable Locale aLocale);
+  EValidity executeFastValidation (@Nonnull IValidationSource aSource);
 }

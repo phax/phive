@@ -4,9 +4,14 @@ A generic document validation engine originally developed for Peppol but now als
 
 This project only contains the validation **engine** - all the preconfigured rules are available at https://github.com/phax/ph-bdve-rules
 
+This project is licensed under the Apache 2 license.
+
 A live version of this engine can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload).
 
-This project is licensed under the Apache 2 license.
+This project has the following sub-modules:
+* **ph-bdve-api** - a generic API that is independent of the effective validation logic (since v6.0.0)
+* **ph-bdve-engine** - the validation engine that assembles all the pieces together and validates documents
+* **ph-bdve-json** - helper classes to convert validation results from and to JSON (since v6.0.0)
 
 # Usage guide
 
@@ -50,11 +55,30 @@ Validating a business document requires a few more steps.
     // Resolve the VES ID
     final IValidationExecutorSet aVES = VESRegistry.getOfID (aVESID);
     if (aVES != null) {
-      final ValidationExecutionManager aVEM = aVES.createExecutionManager ();
+      // Code for 5.x:
+      // final ValidationExecutionManager aVEM = aVES.createExecutionManager ();
+      // Code for 6.x:
+      final ValidationExecutionManager aVEM = new ValidationExecutionManager (aVES);
       // What to validate?
       ValidationSource aValidationSource = ...;
       // Main execution
       final ValidationResultList aValidationResult = aVEM.executeValidation (aValidationSource);
+      if (aValidationResult.containsAtLeastOneError ()) {
+        // errors found ...
+      } else {
+        // no errors (but maybe warnings) found
+      }                                                                       
+    }                                                                             
+```
+
+Since v6 you have an easier solution to perform the same:
+
+```java
+    // Resolve the VES ID
+    final IValidationExecutorSet aVES = VESRegistry.getOfID (aVESID);
+    if (aVES != null) {
+      // Shortcut introduced in v6
+      final ValidationResultList aValidationResult = ValidationExecutionManager.executeValidation (aVES, aValidationSource);
       if (aValidationResult.containsAtLeastOneError ()) {
         // errors found ...
       } else {
@@ -71,6 +95,12 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
 <dependency>
   <groupId>com.helger.bdve</groupId>
   <artifactId>ph-bdve-engine</artifactId>
+  <version>x.y.z</version>
+</dependency>
+
+<dependency>
+  <groupId>com.helger.bdve</groupId>
+  <artifactId>ph-bdve-json</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```

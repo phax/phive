@@ -24,8 +24,8 @@ import java.util.Locale;
 import org.junit.Test;
 
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
-import com.helger.bdve.api.vesid.VESID;
-import com.helger.bdve.engine.executorset.ValidationExecutorSet;
+import com.helger.bdve.api.executorset.VESID;
+import com.helger.bdve.api.executorset.ValidationExecutorSet;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;

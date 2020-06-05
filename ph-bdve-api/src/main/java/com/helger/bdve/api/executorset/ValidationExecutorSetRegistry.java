@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.executorset;
+package com.helger.bdve.api.executorset;
 
 import java.util.function.Predicate;
 
@@ -24,9 +24,6 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.bdve.api.execute.IValidationExecutor;
-import com.helger.bdve.api.executorset.IValidationExecutorSet;
-import com.helger.bdve.api.executorset.IValidationExecutorSetRegistry;
-import com.helger.bdve.api.vesid.VESID;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;

@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.bdve.api.EValidationType;
 import com.helger.bdve.api.artefact.IValidationArtefact;
 import com.helger.bdve.api.result.ValidationResult;
-import com.helger.bdve.api.sources.IValidationSource;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 
 /**

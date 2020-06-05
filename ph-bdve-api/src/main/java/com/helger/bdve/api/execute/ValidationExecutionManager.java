@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.execute;
+package com.helger.bdve.api.execute;
 
 import java.util.Locale;
 
@@ -23,11 +23,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.helger.bdve.api.execute.IValidationExecutionManager;
-import com.helger.bdve.api.execute.IValidationExecutor;
+import com.helger.bdve.api.executorset.IValidationExecutorSet;
 import com.helger.bdve.api.result.ValidationResult;
 import com.helger.bdve.api.result.ValidationResultList;
-import com.helger.bdve.api.sources.IValidationSource;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -194,14 +193,15 @@ public class ValidationExecutionManager implements IValidationExecutionManager
   }
 
   @Nonnull
-  public EValidity executeFastValidation (@Nonnull final IValidationSource aSource, @Nullable final Locale aLocale)
+  public EValidity executeFastValidation (@Nonnull final IValidationSource aSource)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
     for (final IValidationExecutor aExecutor : getAllExecutors ())
     {
       // Execute validation
-      final ValidationResult aResult = aExecutor.applyValidation (aSource, aLocale);
+      // Note: locale doesn't matter because we don't use the texts
+      final ValidationResult aResult = aExecutor.applyValidation (aSource, (Locale) null);
       if (aResult.isFailure ())
       {
         // Break asap
@@ -209,5 +209,58 @@ public class ValidationExecutionManager implements IValidationExecutionManager
       }
     }
     return EValidity.VALID;
+  }
+
+  /**
+   * This is a shortcut method to perform the full validation of a VES onto a
+   * specific object to be validated.
+   *
+   * @param aVES
+   *        The VES to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The object to be validated. May not be <code>null</code>.
+   * @return The validation result list and never <code>null</code>.
+   */
+  @Nonnull
+  public static ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet aVES,
+                                                        @Nonnull final IValidationSource aSource)
+  {
+    return new ValidationExecutionManager (aVES).executeValidation (aSource);
+  }
+
+  /**
+   * This is a shortcut method to perform the full validation of a VES onto a
+   * specific object to be validated.
+   *
+   * @param aVES
+   *        The VES to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The object to be validated. May not be <code>null</code>.
+   * @param aLocale
+   *        The locale to be used for error messages. May be <code>null</code>.
+   * @return The validation result list and never <code>null</code>.
+   */
+  @Nonnull
+  public static ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet aVES,
+                                                        @Nonnull final IValidationSource aSource,
+                                                        @Nullable final Locale aLocale)
+  {
+    return new ValidationExecutionManager (aVES).executeValidation (aSource, aLocale);
+  }
+
+  /**
+   * This is a shortcut method to perform the fast validation of a VES onto a
+   * specific object to be validated.
+   *
+   * @param aVES
+   *        The VES to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The object to be validated. May not be <code>null</code>.
+   * @return The validity of the validated object and never <code>null</code>.
+   */
+  @Nonnull
+  public static EValidity executeFastValidation (@Nonnull final IValidationExecutorSet aVES, @Nonnull final IValidationSource aSource)
+  {
+    return new ValidationExecutionManager (aVES).executeFastValidation (aSource);
   }
 }

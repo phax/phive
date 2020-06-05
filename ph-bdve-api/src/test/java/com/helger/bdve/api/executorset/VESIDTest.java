@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.executorset;
+package com.helger.bdve.api.executorset;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -23,7 +23,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.bdve.api.vesid.VESID;
 import com.helger.commons.mock.CommonsTestHelper;
 
 /**
@@ -58,25 +57,12 @@ public final class VESIDTest
     assertEquals ("3.0.0-SNAPSHOT", aID1.getVersion ());
     assertNull (aID1.getClassifier ());
     CommonsTestHelper.testDefaultSerialization (aID1);
-    CommonsTestHelper.testEqualsImplementationWithEqualContentObject (aID1,
-                                                                      new VESID ("com.helger",
-                                                                                 "ph-bdve",
-                                                                                 "3.0.0-SNAPSHOT"));
+    CommonsTestHelper.testEqualsImplementationWithEqualContentObject (aID1, new VESID ("com.helger", "ph-bdve", "3.0.0-SNAPSHOT"));
+    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.holger", "ph-bdve", "3.0.0-SNAPSHOT"));
+    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.helger", "ph-bdvengine", "3.0.0-SNAPSHOT"));
+    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.helger", "ph-bdve", "3.0.0"));
     CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
-                                                                          new VESID ("com.holger",
-                                                                                     "ph-bdve",
-                                                                                     "3.0.0-SNAPSHOT"));
-    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
-                                                                          new VESID ("com.helger",
-                                                                                     "ph-bdvengine",
-                                                                                     "3.0.0-SNAPSHOT"));
-    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
-                                                                          new VESID ("com.helger", "ph-bdve", "3.0.0"));
-    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
-                                                                          new VESID ("com.helger",
-                                                                                     "ph-bdve",
-                                                                                     "3.0.0-SNAPSHOT",
-                                                                                     "src"));
+                                                                          new VESID ("com.helger", "ph-bdve", "3.0.0-SNAPSHOT", "src"));
   }
 
   @Test

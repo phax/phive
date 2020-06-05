@@ -30,9 +30,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.helger.bdve.api.artefact.IValidationArtefact;
+import com.helger.bdve.api.execute.AbstractValidationExecutor;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
-import com.helger.bdve.api.sources.IValidationSource;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.equals.EqualsHelper;

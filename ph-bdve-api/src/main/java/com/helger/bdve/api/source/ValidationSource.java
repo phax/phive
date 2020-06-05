@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.source;
+package com.helger.bdve.api.source;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -22,7 +22,6 @@ import javax.xml.transform.Source;
 
 import org.w3c.dom.Node;
 
-import com.helger.bdve.api.sources.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.io.resource.IReadableResource;
