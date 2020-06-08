@@ -16,6 +16,7 @@
  */
 package com.helger.bdve.json;
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,10 +25,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.bdve.api.EValidationType;
+import com.helger.bdve.api.artefact.ValidationArtefact;
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
 import com.helger.bdve.api.executorset.VESID;
 import com.helger.bdve.api.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.api.result.ValidationResult;
+import com.helger.bdve.api.result.ValidationResultList;
 import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
@@ -36,13 +43,19 @@ import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.level.IErrorLevel;
+import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.text.ConstantHasErrorText;
+import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.resource.FileSystemResource;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.resource.URLResource;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.location.ILocation;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
+import com.helger.json.IJson;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.IJsonValue;
@@ -91,18 +104,21 @@ public final class BDVEJsonHelper
   public static final String JSON_NAME = "name";
   public static final String JSON_DEPRECATED = "deprecated";
 
-  private static final String JSON_SUCCESS = "success";
-  private static final String JSON_ARTIFACT_TYPE = "artifactType";
-  private static final String JSON_ARTIFACT_PATH = "artifactPath";
-  private static final String JSON_ITEMS = "items";
-  private static final String JSON_INTERRUPTED = "interrupted";
-  private static final String JSON_MOST_SEVERE_ERROR_LEVEL = "mostSevereErrorLevel";
-  private static final String JSON_RESULTS = "results";
-  private static final String JSON_DURATION_MS = "durationMS";
-  private static final String JSON_VES = "ves";
+  public static final String JSON_SUCCESS = "success";
+  public static final String JSON_ARTIFACT_TYPE = "artifactType";
+  public static final String JSON_ARTIFACT_PATH_TYPE = "artifactPathType";
+  public static final String JSON_ARTIFACT_PATH = "artifactPath";
+  public static final String JSON_ITEMS = "items";
+  public static final String JSON_INTERRUPTED = "interrupted";
+  public static final String JSON_MOST_SEVERE_ERROR_LEVEL = "mostSevereErrorLevel";
+  public static final String JSON_RESULTS = "results";
+  public static final String JSON_DURATION_MS = "durationMS";
+  public static final String JSON_VES = "ves";
 
   public static final String ARTFACT_TYPE_INPUT_PARAMETER = "input-parameter";
   public static final String ARTIFACT_PATH_NONE = "none";
+
+  private static final Logger LOGGER = LoggerFactory.getLogger (BDVEJsonHelper.class);
 
   private BDVEJsonHelper ()
   {}
@@ -474,6 +490,19 @@ public final class BDVEJsonHelper
     aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
   }
 
+  @Nonnull
+  @Nonempty
+  public static String getArtifactPathType (@Nonnull final IReadableResource aRes)
+  {
+    if (aRes instanceof ClassPathResource)
+      return "classpath";
+    if (aRes instanceof FileSystemResource)
+      return "file";
+    if (aRes instanceof URLResource)
+      return "url";
+    return "unknown";
+  }
+
   /**
    * Apply the results of a full validation onto a JSON object.The layout of the
    * response object is very similar to the one created by
@@ -488,6 +517,7 @@ public final class BDVEJsonHelper
     *   "results" : array {
     *     "success" : string,  // as defined by {@link #getJsonTriState(ETriState)}
     *     "artifactType" : string,
+    *     "artifactPathType" : string?,
     *     "artifactPath" : string,
     *     "items" : array {
     *       error structure as in {@link #getJsonError(IError, Locale)}
@@ -550,6 +580,7 @@ public final class BDVEJsonHelper
         aVRT.add (JSON_SUCCESS, getJsonTriState (aVR.isSuccess ()));
       }
       aVRT.add (JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
+      aVRT.add (JSON_ARTIFACT_PATH_TYPE, getArtifactPathType (aVR.getValidationArtefact ().getRuleResource ()));
       aVRT.add (JSON_ARTIFACT_PATH, aVR.getValidationArtefact ().getRuleResource ().getPath ());
 
       final IJsonArray aItemArray = new JsonArray ();
@@ -603,5 +634,102 @@ public final class BDVEJsonHelper
       }
     }
     return null;
+  }
+
+  @Nullable
+  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType, @Nullable final String sArtefactPath)
+  {
+    if (StringHelper.hasNoText (sArtefactPathType))
+      return null;
+    if (StringHelper.hasNoText (sArtefactPath))
+      return null;
+
+    if ("file".equals (sArtefactPathType))
+      return new FileSystemResource (sArtefactPath);
+
+    if ("url".equals (sArtefactPathType))
+      try
+      {
+        return new URLResource (sArtefactPath);
+      }
+      catch (final MalformedURLException ex)
+      {
+        return null;
+      }
+
+    // Default to class path
+    return new ClassPathResource (sArtefactPath);
+  }
+
+  @Nullable
+  public static ValidationResultList getAsValidationResultList (@Nullable final IJsonObject aJson)
+  {
+    if (aJson == null)
+      return null;
+
+    final IJsonArray aResults = aJson.getAsArray (JSON_RESULTS);
+    if (aResults == null)
+      return null;
+
+    final ValidationResultList ret = new ValidationResultList ();
+    for (final IJson aResult : aResults)
+    {
+      final IJsonObject aResultObj = aResult.getAsObject ();
+      if (aResultObj != null)
+      {
+        final String sSuccess = aResultObj.getAsString (JSON_SUCCESS);
+        final ETriState eSuccess = getAsTriState (sSuccess);
+        if (eSuccess == null)
+        {
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Failed to resolve TriState '" + sSuccess + "'");
+          continue;
+        }
+
+        final String sValidationType = aResultObj.getAsString (JSON_ARTIFACT_TYPE);
+        final EValidationType eValidationType = EValidationType.getFromIDOrNull (sValidationType);
+        if (eValidationType == null)
+        {
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Failed to resolve ValidationType '" + sValidationType + "'");
+          continue;
+        }
+        final String sArtefactPathType = aResultObj.getAsString (JSON_ARTIFACT_PATH_TYPE);
+        final String sArtefactPath = aResultObj.getAsString (JSON_ARTIFACT_PATH);
+        final IReadableResource aRes = getAsValidationResource (sArtefactPathType, sArtefactPath);
+        if (aRes == null)
+        {
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Failed to resolve ValidationArtefact '" + sArtefactPathType + "' with path '" + sArtefactPath + "'");
+          continue;
+        }
+        final ValidationArtefact aVA = new ValidationArtefact (eValidationType, aRes);
+
+        if (eSuccess.isUndefined ())
+        {
+          // Ignored level
+          ret.add (ValidationResult.createIgnoredResult (aVA));
+        }
+        else
+        {
+          // We have results
+          final IJsonArray aItems = aResultObj.getAsArray (JSON_ITEMS);
+          final ErrorList aErrorList = new ErrorList ();
+          for (final IJson aItem : aItems)
+          {
+            final IJsonObject aItemObj = aItem.getAsObject ();
+            if (aItemObj != null)
+            {
+              final IError aError = getAsIError (aItemObj);
+              aErrorList.add (aError);
+            }
+          }
+
+          final ValidationResult aVR = new ValidationResult (aVA, aErrorList);
+          ret.add (aVR);
+        }
+      }
+    }
+    return ret;
   }
 }

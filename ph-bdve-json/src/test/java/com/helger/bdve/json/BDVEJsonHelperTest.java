@@ -110,6 +110,19 @@ public final class BDVEJsonHelperTest
     final IValidationExecutorSet <IValidationSourceXML> aVES2 = BDVEJsonHelper.getAsVES (aRegistry, aObj);
     assertNotNull (aVES2);
     assertSame (aVES, aVES2);
+
+    final ValidationResultList aVRL2 = BDVEJsonHelper.getAsValidationResultList (aObj);
+    assertNotNull (aVRL2);
+    // direct equals doesn't work, because of the restored exception
+    assertEquals (aVRL.size (), aVRL2.size ());
+    assertEquals (1, aVRL.size ());
+    assertEquals (aVRL.get (0).getErrorList ().size (), aVRL2.get (0).getErrorList ().size ());
+
+    // and forth
+    final IJsonObject aObj2 = new JsonObject ();
+    BDVEJsonHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, 123, null, null);
+
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
   }
 
   @Test
