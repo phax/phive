@@ -18,6 +18,7 @@ package com.helger.bdve.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
@@ -114,16 +115,50 @@ public final class BDVEJsonHelperTest
                                                  new ConstantHasErrorText ("bla failed"),
                                                  null,
                                                  " my test <>");
+
+    // To Json
     final IJsonObject aJson = BDVEJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
     assertNotNull (aJson);
 
+    // And back
     final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
     assertNotNull (aError2);
 
+    // And forth
     final IJsonObject aJson2 = BDVEJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
     assertNotNull (aJson2);
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
+  }
+
+  @Test
+  public void testSVRLErrorWithException ()
+  {
+    final IError aError = new SVRLResourceError (EErrorLevel.ERROR,
+                                                 "id2",
+                                                 "field1",
+                                                 new SimpleLocation ("res12", 3, 4),
+                                                 new ConstantHasErrorText ("bla failed"),
+                                                 new IllegalStateException ("Sthg went wrong"),
+                                                 " my test <>");
+
+    // To Json
+    final IJsonObject aJson = BDVEJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    assertNotNull (aJson);
+
+    // And back
+    final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
+    assertNotNull (aError2);
+
+    // And forth
+    final IJsonObject aJson2 = BDVEJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
+    assertNotNull (aJson2);
+
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
+    // The objects differ, because of the different exception types
+    assertTrue (aError2.getLinkedException () instanceof BDVERestoredException);
+    if (false)
+      CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
   }
 }
