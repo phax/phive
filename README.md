@@ -129,11 +129,13 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v6.0.0 - work in progress
+* v6.0.0 - 2020-06-08
     * Separated all the rules into a separate project - https://github.com/phax/ph-bdve-rules - this repository only contains the engine
     * Extracted the JSON binding into a separate submodule "ph-bdve-json"
     * Extracted the generic API project into a separate submodule "ph-bdve-api"
     * Made the validation source type a generics parameter to the executor set etc. So an executor needs to know, whether it can accept XML sources or other kind of source syntaxes.
+    * Extracted `IValidationSourceXML` from `IValidationSource`
+    * Renamed `ValidationSource` from `ValidationSourceXML`
 * v5.3.1 - 2020-05-28
     * Added possibility to stop further validation on failed Schematrons as well
 * v5.3.0 - 2020-05-26
