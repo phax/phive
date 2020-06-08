@@ -34,15 +34,15 @@ import com.helger.json.JsonObject;
  * @author Philip Helger
  * @since 6.0.0
  */
-public class BDVEStackTrace
+public class BDVERestoredException extends Exception
 {
   private final String m_sClassName;
   private final String m_sMessage;
   private final ICommonsList <String> m_aStackTraceLines;
 
-  public BDVEStackTrace (@Nonnull final String sClassName,
-                         @Nullable final String sMessage,
-                         @Nonnull final ICommonsList <String> aStackTraceLines)
+  public BDVERestoredException (@Nonnull final String sClassName,
+                                @Nullable final String sMessage,
+                                @Nonnull final ICommonsList <String> aStackTraceLines)
   {
     ValueEnforcer.notNull (sClassName, "ClassName");
     ValueEnforcer.notNull (aStackTraceLines, "StackTraceLines");
@@ -66,6 +66,7 @@ public class BDVEStackTrace
    *         <code>null</code> if the exception only contained another
    *         exception.
    */
+  @Override
   @Nullable
   public String getMessage ()
   {
@@ -92,7 +93,7 @@ public class BDVEStackTrace
   }
 
   @Nullable
-  public static BDVEStackTrace createFromJson (@Nullable final IJsonObject aObj)
+  public static BDVERestoredException createFromJson (@Nullable final IJsonObject aObj)
   {
     if (aObj == null)
       return null;
@@ -103,6 +104,6 @@ public class BDVEStackTrace
     if (sClassName == null)
       return null;
 
-    return new BDVEStackTrace (sClassName, sMessage, aStackTraceLines);
+    return new BDVERestoredException (sClassName, sMessage, aStackTraceLines);
   }
 }

@@ -78,7 +78,8 @@ public final class BDVEJsonHelper
   public static final String JSON_ERROR_LEVEL = "errorLevel";
   public static final String JSON_ERROR_ID = "errorID";
   public static final String JSON_ERROR_FIELD_NAME = "errorFieldName";
-  public static final String JSON_ERROR_LOCATION = "errorLocation";
+  public static final String JSON_ERROR_LOCATION_OBJ = "errorLocatioObj";
+  public static final String JSON_ERROR_LOCATION_STR = "errorLocation";
   public static final String JSON_ERROR_TEXT = "errorText";
   public static final String JSON_EXCEPTION = "exception";
   public static final String JSON_TEST = "test";
@@ -211,13 +212,15 @@ public final class BDVEJsonHelper
    *        The exception to convert to a JSON object. May be <code>null</code>.
    * @return <code>null</code> if the parameter is <code>null</code>, the JSON
    *         object otherwise.
-   * @see BDVEStackTrace for a representation after reading
+   * @see BDVERestoredException for a representation after reading
    */
   @Nullable
   public static IJsonObject getJsonStackTrace (@Nullable final Throwable t)
   {
     if (t == null)
       return null;
+    if (t instanceof BDVERestoredException)
+      return ((BDVERestoredException) t).getAsJson ();
     return new JsonObject ().add (JSON_CLASS, t.getClass ().getName ())
                             .addIfNotNull (JSON_MESSAGE, t.getMessage ())
                             .add (JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
@@ -239,8 +242,11 @@ public final class BDVEJsonHelper
   }
 
   @Nullable
-  public static ILocation getAsErrorLocation (@Nonnull final IJsonObject aObj)
+  public static ILocation getAsErrorLocation (@Nullable final IJsonObject aObj)
   {
+    if (aObj == null)
+      return null;
+
     final String sResourceID = aObj.getAsString (JSON_RESOURCE_ID);
     final int nLineNumber = aObj.getAsInt (JSON_LINE_NUM, -1);
     final int nColumnNumber = aObj.getAsInt (JSON_COLUMN_NUM, -1);
@@ -300,7 +306,7 @@ public final class BDVEJsonHelper
     return new JsonObject ().add (JSON_ERROR_LEVEL, getJsonErrorLevel (aErrorLevel))
                             .addIfNotNull (JSON_ERROR_ID, sErrorID)
                             .addIfNotNull (JSON_ERROR_FIELD_NAME, sErrorFieldName)
-                            .addIfNotNull (JSON_ERROR_LOCATION, getJsonErrorLocation (aErrorLocation))
+                            .addIfNotNull (JSON_ERROR_LOCATION_OBJ, getJsonErrorLocation (aErrorLocation))
                             .addIfNotNull (JSON_TEST, sTest)
                             .add (JSON_ERROR_TEXT, sErrorText)
                             .addIfNotNull (JSON_EXCEPTION, getJsonStackTrace (t));
@@ -353,24 +359,20 @@ public final class BDVEJsonHelper
     final IErrorLevel aErrorLevel = getAsErrorLevel (aObj.getAsString (JSON_ERROR_LEVEL));
     final String sErrorID = aObj.getAsString (JSON_ERROR_ID);
     final String sErrorFieldName = aObj.getAsString (JSON_ERROR_FIELD_NAME);
-    final IJsonValue aErrorLocationValue = aObj.getAsValue (JSON_ERROR_LOCATION);
-    final ILocation aErrorLocation;
-    if (aErrorLocationValue != null)
+    // Try new structured version
+    ILocation aErrorLocation = getAsErrorLocation (aObj.getAsObject (JSON_ERROR_LOCATION_OBJ));
+    if (aErrorLocation == null)
     {
-      // It's a string - old version
-      aErrorLocation = new SimpleLocation (aErrorLocationValue.getAsString ());
-    }
-    else
-    {
-      // Try new structured version
-      aErrorLocation = getAsErrorLocation (aObj.getAsObject (JSON_ERROR_LOCATION));
+      final IJsonValue aErrorLocationValue = aObj.getAsValue (JSON_ERROR_LOCATION_STR);
+      if (aErrorLocationValue != null)
+      {
+        // It's a string - old version
+        aErrorLocation = new SimpleLocation (aErrorLocationValue.getAsString ());
+      }
     }
     final String sErrorText = aObj.getAsString (JSON_ERROR_TEXT);
     final String sTest = aObj.getAsString (JSON_TEST);
-    // TODO The linked exception is lost atm
-    @SuppressWarnings ("unused")
-    final BDVEStackTrace aStackTrace = BDVEStackTrace.createFromJson (aObj.getAsObject (JSON_EXCEPTION));
-    final Throwable aLinkedException = null;
+    final BDVERestoredException aLinkedException = BDVERestoredException.createFromJson (aObj.getAsObject (JSON_EXCEPTION));
 
     if (sTest != null)
       return new SVRLResourceError (aErrorLevel,

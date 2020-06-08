@@ -27,11 +27,11 @@ import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.json.IJsonObject;
 
 /**
- * Test class for class {@link BDVEStackTrace}.
+ * Test class for class {@link BDVERestoredException}.
  *
  * @author Philip Helger
  */
-public final class BDVEStackTraceTest
+public final class BDVERestoredExceptionTest
 {
   @Test
   public void testBasic ()
@@ -43,7 +43,7 @@ public final class BDVEStackTraceTest
     assertNotNull (aObj);
 
     // from Json
-    final BDVEStackTrace aRSS = BDVEStackTrace.createFromJson (aObj);
+    final BDVERestoredException aRSS = BDVERestoredException.createFromJson (aObj);
     assertNotNull (aRSS);
     assertEquals ("java.lang.IllegalArgumentException", aRSS.getClassName ());
     assertEquals ("bla foo", aRSS.getMessage ());
@@ -67,7 +67,7 @@ public final class BDVEStackTraceTest
     assertNotNull (aObj);
 
     // from Json
-    final BDVEStackTrace aRSS = BDVEStackTrace.createFromJson (aObj);
+    final BDVERestoredException aRSS = BDVERestoredException.createFromJson (aObj);
     assertNotNull (aRSS);
     assertEquals ("java.lang.IllegalArgumentException", aRSS.getClassName ());
     assertNull (aRSS.getMessage ());

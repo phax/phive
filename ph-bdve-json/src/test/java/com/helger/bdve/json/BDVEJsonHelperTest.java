@@ -120,6 +120,10 @@ public final class BDVEJsonHelperTest
     final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
     assertNotNull (aError2);
 
+    final IJsonObject aJson2 = BDVEJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
+    assertNotNull (aJson2);
+
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
+    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
   }
 }
