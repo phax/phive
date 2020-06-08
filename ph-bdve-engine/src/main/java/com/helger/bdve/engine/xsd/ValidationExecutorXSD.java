@@ -36,7 +36,7 @@ import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.functional.ISupplier;
-import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
@@ -128,7 +128,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
   }
 
   @Nonnull
-  public static ValidationExecutorXSD create (@Nonnull final ClassPathResource aXSDRes)
+  public static ValidationExecutorXSD create (@Nonnull final IReadableResource aXSDRes)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes),

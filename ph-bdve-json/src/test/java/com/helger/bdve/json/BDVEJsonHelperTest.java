@@ -18,21 +18,29 @@ package com.helger.bdve.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
 import org.junit.Test;
 
+import com.helger.bdve.api.execute.ValidationExecutionManager;
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
 import com.helger.bdve.api.executorset.VESID;
 import com.helger.bdve.api.executorset.ValidationExecutorSet;
+import com.helger.bdve.api.executorset.ValidationExecutorSetRegistry;
+import com.helger.bdve.api.result.ValidationResultList;
+import com.helger.bdve.engine.source.IValidationSourceXML;
+import com.helger.bdve.engine.source.ValidationSourceXML;
+import com.helger.bdve.engine.xsd.ValidationExecutorXSD;
 import com.helger.commons.CGlobal;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.text.ConstantHasErrorText;
+import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.json.IJsonObject;
@@ -76,6 +84,32 @@ public final class BDVEJsonHelperTest
                   "\"results\":[]," +
                   "\"durationMS\":123}",
                   sJson);
+  }
+
+  @Test
+  public void testValidationResultsBackAndForth ()
+  {
+    // Register
+    final ValidationExecutorSetRegistry <IValidationSourceXML> aRegistry = new ValidationExecutorSetRegistry <> ();
+    final VESID aVESID = new VESID ("group", "art", "1.0");
+    final ValidationExecutorSet <IValidationSourceXML> aVES = new ValidationExecutorSet <> (aVESID, "name", false);
+    aVES.addExecutor (ValidationExecutorXSD.create (new ClassPathResource ("test/schema1.xsd")));
+    aRegistry.registerValidationExecutorSet (aVES);
+
+    // Validate
+    final ValidationResultList aVRL = ValidationExecutionManager.executeValidation (aVES,
+                                                                                    ValidationSourceXML.create (new ClassPathResource ("test/schema1.xml")));
+    assertTrue (aVRL.containsAtLeastOneError ());
+
+    // To JSON
+    final Locale aDisplayLocale = Locale.US;
+    final IJsonObject aObj = new JsonObject ();
+    BDVEJsonHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, 123, null, null);
+
+    // And back
+    final IValidationExecutorSet <IValidationSourceXML> aVES2 = BDVEJsonHelper.getAsVES (aRegistry, aObj);
+    assertNotNull (aVES2);
+    assertSame (aVES, aVES2);
   }
 
   @Test

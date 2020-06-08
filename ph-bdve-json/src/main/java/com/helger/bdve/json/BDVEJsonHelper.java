@@ -25,7 +25,10 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.bdve.api.executorset.IValidationExecutorSet;
+import com.helger.bdve.api.executorset.VESID;
+import com.helger.bdve.api.executorset.ValidationExecutorSetRegistry;
 import com.helger.bdve.api.result.ValidationResult;
+import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -409,6 +412,8 @@ public final class BDVEJsonHelper
   @Nonnull
   public static IJsonObject getJsonVES (@Nonnull final IValidationExecutorSet <?> aVES)
   {
+    ValueEnforcer.notNull (aVES, "VES");
+
     return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
                             .add (JSON_NAME, aVES.getDisplayName ())
                             .add (JSON_DEPRECATED, aVES.isDeprecated ());
@@ -576,5 +581,27 @@ public final class BDVEJsonHelper
       aWarningCount.set (nWarnings);
     if (aErrorCount != null)
       aErrorCount.set (nErrors);
+  }
+
+  @Nullable
+  public static <T extends IValidationSource> IValidationExecutorSet <T> getAsVES (@Nonnull final ValidationExecutorSetRegistry <T> aRegistry,
+                                                                                   @Nullable final IJsonObject aJson)
+  {
+    ValueEnforcer.notNull (aRegistry, "Registry");
+    if (aJson != null)
+    {
+      IJsonObject aObj = aJson.getAsObject (JSON_VES);
+      if (aObj == null)
+        aObj = aJson;
+
+      final String sVESID = aObj.getAsString (JSON_VESID);
+      if (StringHelper.hasText (sVESID))
+      {
+        final VESID aVESID = VESID.parseIDOrNull (sVESID);
+        if (aVESID != null)
+          return aRegistry.getOfID (aVESID);
+      }
+    }
+    return null;
   }
 }
