@@ -110,6 +110,13 @@ public class ValidationResult implements ISuccessIndicator
                                        .getToString ();
   }
 
+  /**
+   * Create an instance for an ignored result.
+   * 
+   * @param aValidationArtefact
+   *        The validation artefact that was ignored.
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static ValidationResult createIgnoredResult (@Nonnull final IValidationArtefact aValidationArtefact)
   {
