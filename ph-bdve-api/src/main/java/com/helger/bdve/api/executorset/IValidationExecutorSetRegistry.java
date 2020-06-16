@@ -59,7 +59,24 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * @since 6.0.1
    */
   @Nonnull
-  EChange unregisterValidationExecutorSet (@Nullable IValidationExecutorSet <SOURCETYPE> aVES);
+  default EChange unregisterValidationExecutorSet (@Nullable final IValidationExecutorSet <SOURCETYPE> aVES)
+  {
+    return aVES == null ? EChange.UNCHANGED : unregisterValidationExecutorSet (aVES.getID ());
+  }
+
+  /**
+   * Unregister a validation executor set from this registry. This basically
+   * removes the VES from the internal map. The removed VES are not modified in
+   * any way and can theoretically be re-registered afterwards.
+   *
+   * @param aVESID
+   *        The VES ID of the object to unregister. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the removal was successful,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @since 6.0.1
+   */
+  @Nonnull
+  EChange unregisterValidationExecutorSet (@Nullable VESID aVESID);
 
   /**
    * @return A list of all contained validation executor sets in this registry.

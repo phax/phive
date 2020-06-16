@@ -86,15 +86,12 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   @Nonnull
-  public EChange unregisterValidationExecutorSet (@Nullable final IValidationExecutorSet <SOURCETYPE> aVES)
+  public EChange unregisterValidationExecutorSet (@Nullable final VESID aVESID)
   {
-    EChange ret = EChange.UNCHANGED;
-    if (aVES != null)
-    {
-      final VESID aKey = aVES.getID ();
-      ret = m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aKey));
-    }
-    return ret;
+    if (aVESID == null)
+      return EChange.UNCHANGED;
+
+    return m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aVESID));
   }
 
   @Nonnull
