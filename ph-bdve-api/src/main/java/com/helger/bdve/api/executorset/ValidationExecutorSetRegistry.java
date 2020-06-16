@@ -23,6 +23,9 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
@@ -54,6 +57,8 @@ import com.helger.commons.string.ToStringGenerator;
 @ThreadSafe
 public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource> implements IValidationExecutorSetRegistry <SOURCETYPE>
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutorSetRegistry.class);
+
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> m_aMap = new CommonsHashMap <> ();
@@ -83,6 +88,15 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                                          "' is already registered!");
       m_aMap.put (aKey, aVES);
     });
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Registered validation executor set '" +
+                    aKey.getAsSingleID () +
+                    "' of type " +
+                    aVES.getClass ().getName () +
+                    " with " +
+                    aVES.getCount () +
+                    " elements");
   }
 
   @Nonnull
@@ -91,7 +105,13 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     if (aVESID == null)
       return EChange.UNCHANGED;
 
-    return m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aVESID));
+    final EChange ret = m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aVESID));
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ((ret.isChanged () ? "Successfully unregistered" : "Failed to unregister") +
+                    " validation executor set '" +
+                    aVESID.getAsSingleID () +
+                    "'");
+    return ret;
   }
 
   @Nonnull
@@ -175,6 +195,9 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     {
       m_aRWLock.writeLock ().unlock ();
     }
+    if (ret.isChanged ())
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Successfully removed all validatione executor sets" + (bCleanVES ? " and cleaned all VES." : "."));
     return ret;
   }
 
