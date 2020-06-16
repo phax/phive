@@ -22,6 +22,8 @@ import javax.annotation.RegEx;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.MustImplementComparable;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.compare.CompareHelper;
@@ -38,6 +40,8 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
+@MustImplementComparable
+@MustImplementEqualsAndHashcode
 public final class VESID implements Comparable <VESID>
 {
   /** The regular expression to which each part must conform */
