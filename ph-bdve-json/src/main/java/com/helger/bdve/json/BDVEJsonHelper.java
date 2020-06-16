@@ -94,7 +94,7 @@ public final class BDVEJsonHelper
   public static final String JSON_ERROR_LEVEL = "errorLevel";
   public static final String JSON_ERROR_ID = "errorID";
   public static final String JSON_ERROR_FIELD_NAME = "errorFieldName";
-  public static final String JSON_ERROR_LOCATION_OBJ = "errorLocatioObj";
+  public static final String JSON_ERROR_LOCATION_OBJ = "errorLocationObj";
   public static final String JSON_ERROR_LOCATION_STR = "errorLocation";
   public static final String JSON_ERROR_TEXT = "errorText";
   public static final String JSON_EXCEPTION = "exception";
