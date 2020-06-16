@@ -129,6 +129,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v6.0.1 - 2020-06-16
+    * Extended `ValidationExecutorSetRegistry` API to allow for unregistration
 * v6.0.0 - 2020-06-08
     * Separated all the rules into a separate project - https://github.com/phax/ph-bdve-rules - this repository only contains the engine
     * Extracted the JSON binding into a separate submodule "ph-bdve-json"

@@ -26,6 +26,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ELockType;
+import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -59,7 +61,11 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   public ValidationExecutorSetRegistry ()
   {}
 
+  /**
+   * @return the internal map. Never <code>null</code>. Must be locked properly.
+   */
   @Nonnull
+  @MustBeLocked (ELockType.DEPENDS)
   protected final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> internalMap ()
   {
     return m_aMap;
@@ -72,9 +78,23 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     final VESID aKey = aVES.getID ();
     m_aRWLock.writeLocked ( () -> {
       if (m_aMap.containsKey (aKey))
-        throw new IllegalStateException ("Another validation executor set with the ID '" + aKey + "' is already registered!");
+        throw new IllegalStateException ("Another validation executor set with the ID '" +
+                                         aKey.getAsSingleID () +
+                                         "' is already registered!");
       m_aMap.put (aKey, aVES);
     });
+  }
+
+  @Nonnull
+  public EChange unregisterValidationExecutorSet (@Nullable final IValidationExecutorSet <SOURCETYPE> aVES)
+  {
+    EChange ret = EChange.UNCHANGED;
+    if (aVES != null)
+    {
+      final VESID aKey = aVES.getID ();
+      ret = m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aKey));
+    }
+    return ret;
   }
 
   @Nonnull
@@ -115,9 +135,30 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
    * invoke {@link ValidationExecutorSet#removeAllExecutors()} if applicable.
    *
    * @return {@link EChange}
+   * @see #removeAll(boolean)
    */
   @Nonnull
   public EChange removeAll ()
+  {
+    return removeAll (true);
+  }
+
+  /**
+   * This is a cleanup method that frees all resources when they are no longer
+   * needed. This removes all registered validators.
+   *
+   * @param bCleanVES
+   *        This may be helpful because some {@link IValidationExecutor}
+   *        implementations contained in the {@link IValidationExecutorSet}
+   *        contained in this registry might have strong references to
+   *        {@link ClassLoader} instances. By passing <code>true</code>,
+   *        {@link ValidationExecutorSet#removeAllExecutors()} is invoked on all
+   *        matching validation executor sets.
+   * @return {@link EChange}
+   * @since 6.0.1
+   */
+  @Nonnull
+  public EChange removeAll (final boolean bCleanVES)
   {
     EChange ret = EChange.UNCHANGED;
     m_aRWLock.writeLock ().lock ();
@@ -126,9 +167,10 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
       if (m_aMap.isNotEmpty ())
       {
         ret = EChange.CHANGED;
-        for (final IValidationExecutorSet <?> aVES : m_aMap.values ())
-          if (aVES instanceof ValidationExecutorSet)
-            ((ValidationExecutorSet <?>) aVES).removeAllExecutors ();
+        if (bCleanVES)
+          for (final IValidationExecutorSet <?> aVES : m_aMap.values ())
+            if (aVES instanceof ValidationExecutorSet)
+              ((ValidationExecutorSet <?>) aVES).removeAllExecutors ();
         m_aMap.clear ();
       }
     }

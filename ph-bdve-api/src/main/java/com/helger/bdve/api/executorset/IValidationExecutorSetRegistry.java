@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.state.EChange;
 
 /**
  * Read-only interface for a registry of {@link IValidationExecutorSet} objects.
@@ -45,6 +46,20 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    *         registry.
    */
   void registerValidationExecutorSet (@Nonnull IValidationExecutorSet <SOURCETYPE> aVES);
+
+  /**
+   * Unregister a validation executor set from this registry. This basically
+   * removes the VES from the internal map. The removed VES are not modified in
+   * any way and can theoretically be re-registered afterwards.
+   *
+   * @param aVES
+   *        The object to unregister. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the removal was successful,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @since 6.0.1
+   */
+  @Nonnull
+  EChange unregisterValidationExecutorSet (@Nullable IValidationExecutorSet <SOURCETYPE> aVES);
 
   /**
    * @return A list of all contained validation executor sets in this registry.
