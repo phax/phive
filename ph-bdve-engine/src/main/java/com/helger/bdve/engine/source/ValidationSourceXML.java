@@ -41,7 +41,7 @@ public class ValidationSourceXML implements IValidationSourceXML
   private final ISupplier <Node> m_aNodeFactory;
   private final boolean m_bPartialSource;
   // Status vars
-  private transient Node m_aNode;
+  private Node m_aNode;
 
   public ValidationSourceXML (@Nullable final String sSystemID, @Nonnull final Node aFixedNode, final boolean bPartialSource)
   {

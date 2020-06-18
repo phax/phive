@@ -27,7 +27,7 @@ import com.helger.xml.XMLHelper;
 import com.helger.xml.transform.TransformSourceFactory;
 
 /**
- * Abstract validation source.
+ * XML validation source.
  *
  * @author Philip Helger
  */
