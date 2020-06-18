@@ -55,7 +55,7 @@ public final class VESID implements Comparable <VESID>
   private final String m_sVersion;
   private final String m_sClassifier;
   // status vars
-  private transient int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
+  private int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
 
   /**
    * Check if the provided part matches the regular expression
