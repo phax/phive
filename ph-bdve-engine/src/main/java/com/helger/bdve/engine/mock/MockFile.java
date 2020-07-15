@@ -42,9 +42,7 @@ public class MockFile
   private final VESID m_aVESID;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
-  public MockFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final VESID aVESID,
-                   @Nullable final Set <String> aExpectedErrorIDs)
+  public MockFile (@Nonnull final IReadableResource aResource, @Nonnull final VESID aVESID, @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aVESID = ValueEnforcer.notNull (aVESID, "VESID");
