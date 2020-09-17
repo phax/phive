@@ -129,6 +129,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v6.0.3 - 2020-09-17
+    * Updated to Jakarta JAXB 2.3.3
 * v6.0.2 - 2020-06-16
     * Fixed a typo in the JSON property `errorLocationObj`
 * v6.0.1 - 2020-06-16
