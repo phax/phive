@@ -49,6 +49,8 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.URLResource;
+import com.helger.commons.io.resource.inmemory.IMemoryReadableResource;
+import com.helger.commons.io.resource.wrapped.IWrappedReadableResource;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.location.ILocation;
 import com.helger.commons.location.SimpleLocation;
@@ -500,6 +502,10 @@ public final class BDVEJsonHelper
       return "file";
     if (aRes instanceof URLResource)
       return "url";
+    if (aRes instanceof IMemoryReadableResource)
+      return "in-memory";
+    if (aRes instanceof IWrappedReadableResource)
+      return "wrapped";
     return "unknown";
   }
 
@@ -581,7 +587,7 @@ public final class BDVEJsonHelper
       }
       aVRT.add (JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
       aVRT.add (JSON_ARTIFACT_PATH_TYPE, getArtifactPathType (aVR.getValidationArtefact ().getRuleResource ()));
-      aVRT.add (JSON_ARTIFACT_PATH, aVR.getValidationArtefact ().getRuleResource ().getPath ());
+      aVRT.add (JSON_ARTIFACT_PATH, aVR.getValidationArtefact ().getRuleResourcePath ());
 
       final IJsonArray aItemArray = new JsonArray ();
       for (final IError aError : aVR.getErrorList ())
