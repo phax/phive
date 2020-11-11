@@ -16,6 +16,7 @@
  */
 package com.helger.bdve.engine.xsd;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -32,6 +33,8 @@ import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
 import com.helger.bdve.engine.source.IValidationSourceXML;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
@@ -119,19 +122,78 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     return super.hashCode ();
   }
 
+  /**
+   * Create a new instance based on the {@link IJAXBDocumentType} description
+   *
+   * @param aDocType
+   *        The document type. May not be <code>null</code>.
+   * @return A new validator that uses the last resource for the filename and
+   *         and the {@link IJAXBDocumentType#getSchema()} method for XML Schema
+   *         resolution.
+   */
   @Nonnull
   public static ValidationExecutorXSD create (@Nonnull final IJAXBDocumentType aDocType)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
+
+    // The last one is the important one for the name
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
                                       aDocType::getSchema);
   }
 
+  /**
+   * Create a new instance based on a single standalone XSD
+   *
+   * @param aXSDRes
+   *        The XSD resource to use. May not be <code>null</code>.
+   * @return A new validator that uses the supplied resource for the filename
+   *         and uses {@link XMLSchemaCache} to resolve the XML Schema object.
+   */
   @Nonnull
   public static ValidationExecutorXSD create (@Nonnull final IReadableResource aXSDRes)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes),
+                                      () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
+  }
+
+  /**
+   * Create a new instance based on one or more XSDs
+   *
+   * @param aXSDRes
+   *        The XSD resources to use. May neither be <code>null</code> nor
+   *        empty.
+   * @return A new validator that uses the last resource for the filename uses
+   *         {@link XMLSchemaCache} to resolve the XML Schema object.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorXSD create (@Nonnull @Nonempty final IReadableResource... aXSDRes)
+  {
+    ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
+
+    // The last one is the important one for the name
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, ArrayHelper.getLast (aXSDRes)),
+                                      () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
+  }
+
+  /**
+   * Create a new instance based on one or more XSDs
+   *
+   * @param aXSDRes
+   *        The XSD resources to use. May neither be <code>null</code> nor
+   *        empty.
+   * @return A new validator that uses the last resource for the filename uses
+   *         {@link XMLSchemaCache} to resolve the XML Schema object.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorXSD create (@Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes)
+  {
+    ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
+
+    // The last one is the important one for the name
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes.get (aXSDRes.size () - 1)),
                                       () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
   }
 }
