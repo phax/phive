@@ -45,4 +45,15 @@ public interface IValidationArtefact
    */
   @Nonnull
   IReadableResource getRuleResource ();
+
+  /**
+   * @return The path of the rule resource to use. Defaults to
+   *         <code>getRuleResource().getPath ()</code>. Never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  default String getRuleResourcePath ()
+  {
+    return getRuleResource ().getPath ();
+  }
 }

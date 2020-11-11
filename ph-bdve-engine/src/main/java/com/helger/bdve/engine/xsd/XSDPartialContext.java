@@ -23,6 +23,12 @@ import javax.xml.xpath.XPathExpression;
 
 import com.helger.commons.ValueEnforcer;
 
+/**
+ * This class defines the constraints validated in the
+ * {@link ValidationExecutorXSDPartial}
+ *
+ * @author Philip Helger
+ */
 @NotThreadSafe
 public class XSDPartialContext
 {
@@ -30,6 +36,19 @@ public class XSDPartialContext
   private final Integer m_aMinNodeCount;
   private final Integer m_aMaxNodeCount;
 
+  /**
+   * Constructor
+   *
+   * @param aXE
+   *        {@link XPathExpression} that must be satisfied. May not be
+   *        <code>null</code>.
+   * @param aMinNodeCount
+   *        Minimum node count that must be present. May be <code>null</code> to
+   *        indicate no minimum node count is necessary.
+   * @param aMaxNodeCount
+   *        Maximum node count that must be present. May be <code>null</code> to
+   *        indicate no maximum node count is necessary.
+   */
   public XSDPartialContext (@Nonnull final XPathExpression aXE,
                             @Nullable final Integer aMinNodeCount,
                             @Nullable final Integer aMaxNodeCount)

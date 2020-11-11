@@ -56,9 +56,15 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
-    m_aContext = ValueEnforcer.notNull (aContext, "Context");
+    ValueEnforcer.notNull (aContext, "Context");
+
+    m_aContext = aContext;
   }
 
+  /**
+   * @return The partial execution context as provided in the constructor. May
+   *         not be <code>null</code>.
+   */
   @Nonnull
   public final XSDPartialContext getContext ()
   {
@@ -90,7 +96,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
       {
         // Too little matches found
         aErrorList.add (SingleError.builderFatalError ()
-                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
+                                   .setErrorLocation (aVA.getRuleResourcePath ())
                                    .setErrorText ("The minimum number of result nodes (" + m_aContext.getMinNodeCount () + ") is not met")
                                    .build ());
       }
@@ -99,7 +105,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
       {
         // Too little matches found
         aErrorList.add (SingleError.builderFatalError ()
-                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
+                                   .setErrorLocation (aVA.getRuleResourcePath ())
                                    .setErrorText ("The maximum number of result nodes (" + m_aContext.getMaxNodeCount () + ") is not met")
                                    .build ());
       }
@@ -135,7 +141,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
         else
         {
           aErrorList.add (SingleError.builderFatalError ()
-                                     .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
+                                     .setErrorLocation (new SimpleLocation (aVA.getRuleResourcePath ()))
                                      .setErrorFieldName ("Context[" + i + "]")
                                      .setErrorText ("The document to be validated is not an XML document")
                                      .setLinkedException (ex)

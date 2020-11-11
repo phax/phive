@@ -97,7 +97,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
       else
       {
         aErrorList.add (SingleError.builderFatalError ()
-                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResource ().getPath ()))
+                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResourcePath ()))
                                    .setErrorText ("The document to be validated is not an XML document")
                                    .setLinkedException (ex)
                                    .build ());

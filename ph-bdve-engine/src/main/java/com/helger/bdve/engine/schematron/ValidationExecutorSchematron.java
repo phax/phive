@@ -162,7 +162,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
         {
           if (LOGGER.isInfoEnabled ())
             LOGGER.info ("Ignoring validation artefact " +
-                         aSCHRes.getPath () +
+                         aArtefact.getRuleResourcePath () +
                          " because the prerequisite XPath expression '" +
                          m_sPrerequisiteXPath +
                          "' is not fulfilled.");
@@ -174,7 +174,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
         // Catch errors in prerequisite XPaths - most likely because of
         // missing namespace prefixes...
         final String sErrorMsg = "Failed to verify if validation artefact " +
-                                 aSCHRes.getPath () +
+                                 aArtefact.getRuleResourcePath () +
                                  " matches the prerequisite XPath expression '" +
                                  m_sPrerequisiteXPath +
                                  "' - ignoring validation artefact.";
@@ -257,7 +257,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
           {
             // Schematron does not create SVRL!
             aErrorList.add (SingleError.builderError ()
-                                       .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                       .setErrorLocation (aArtefact.getRuleResourcePath ())
                                        .setErrorText ("Internal error interpreting Schematron result")
                                        .setErrorFieldName (aDoc != null ? XMLWriter.getNodeAsString (aDoc) : null)
                                        .build ());
@@ -298,7 +298,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
           {
             // Schematron does not create SVRL!
             aErrorList.add (SingleError.builderError ()
-                                       .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                       .setErrorLocation (aArtefact.getRuleResourcePath ())
                                        .setErrorText ("Internal error - no Schematron output created for OIOUBL")
                                        .build ());
           }
@@ -312,7 +312,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
     {
       // Usually an error in the Schematron
       aErrorList.add (SingleError.builderError ()
-                                 .setErrorLocation (new SimpleLocation (aSCHRes.getPath ()))
+                                 .setErrorLocation (aArtefact.getRuleResourcePath ())
                                  .setErrorText (ex.getMessage ())
                                  .setLinkedException (ex)
                                  .build ());
