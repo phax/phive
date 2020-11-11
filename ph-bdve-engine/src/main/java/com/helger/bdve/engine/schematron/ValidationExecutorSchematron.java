@@ -29,7 +29,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import com.helger.bdve.api.EValidationType;
 import com.helger.bdve.api.artefact.IValidationArtefact;
+import com.helger.bdve.api.artefact.ValidationArtefact;
 import com.helger.bdve.api.execute.AbstractValidationExecutor;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
@@ -354,4 +356,112 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
                             .getToString ();
   }
 
+  /**
+   * Create a new instance for a single resource that uses Pure Schematron
+   * validation.
+   *
+   * @param aRes
+   *        The resource pointing to the Schematron rules. May not be
+   *        <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be
+   *        <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorSchematron createPure (@Nonnull final IReadableResource aRes,
+                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, aRes), null, aNamespaceContext);
+  }
+
+  /**
+   * Create a new instance for a single resource that uses the simple Schematron
+   * validation. This is discouraged for speed reasons. It is recommended to
+   * precompile the SCH to XSLT at build time and than use the
+   * {@link #createXSLT(IReadableResource, IIterableNamespaceContext)} instead.
+   *
+   * @param aRes
+   *        The resource pointing to the Schematron rules. May not be
+   *        <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be
+   *        <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorSchematron createSCH (@Nonnull final IReadableResource aRes,
+                                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, aRes), null, aNamespaceContext);
+  }
+
+  /**
+   * Create a new instance for a single resource that uses the precompiled XSLT
+   * Schematron validation.
+   *
+   * @param aRes
+   *        The resource pointing to the XSLT rules. May not be
+   *        <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be
+   *        <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorSchematron createXSLT (@Nonnull final IReadableResource aRes,
+                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return createXSLT (aRes, null, aNamespaceContext);
+  }
+
+  /**
+   * Create a new instance for a single resource that uses the precompiled XSLT
+   * Schematron validation.
+   *
+   * @param aRes
+   *        The resource pointing to the XSLT rules. May not be
+   *        <code>null</code>.
+   * @param sPrerequisiteXPath
+   *        An optional XPath expression that needs to be fulfilled in the
+   *        source document to run this validation rules. This can increase the
+   *        execution speed. May be <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be
+   *        <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorSchematron createXSLT (@Nonnull final IReadableResource aRes,
+                                                         @Nullable final String sPrerequisiteXPath,
+                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, aRes),
+                                             sPrerequisiteXPath,
+                                             aNamespaceContext);
+  }
+
+  /**
+   * Create a new instance for a single resource that uses the special OIOUBL
+   * Schematron validation.
+   *
+   * @param aRes
+   *        The resource pointing to the OIOUBL rules. May not be
+   *        <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be
+   *        <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorSchematron createOIOUBL (@Nonnull final IReadableResource aRes,
+                                                           @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL, aRes), null, aNamespaceContext);
+  }
 }
