@@ -16,6 +16,7 @@
  */
 package com.helger.bdve.engine.xsd;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -93,5 +94,41 @@ public class XSDPartialContext
                                        .append ("MinNodeCount", m_aMinNodeCount)
                                        .append ("MaxNodeCount", m_aMaxNodeCount)
                                        .getToString ();
+  }
+
+  /**
+   * Create a new XSD partial context without a min and max node constraint.
+   *
+   * @param aXE
+   *        {@link XPathExpression} that must be satisfied. May not be
+   *        <code>null</code>.
+   * @return The new XSDPartialContext and never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static XSDPartialContext create (@Nonnull final XPathExpression aXE)
+  {
+    return new XSDPartialContext (aXE, null, null);
+  }
+
+  /**
+   * Create a new XSD partial context with a min and max node constraint.
+   *
+   * @param aXE
+   *        {@link XPathExpression} that must be satisfied. May not be
+   *        <code>null</code>.
+   * @param nMinNodeCount
+   *        Minimum node count that must be present. Should be &gt; 0.
+   * @param nMaxNodeCount
+   *        Maximum node count that must be present. Should be &gt; 0.
+   * @return The new XSDPartialContext and never <code>null</code>.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static XSDPartialContext create (@Nonnull final XPathExpression aXE,
+                                          @Nonnegative final int nMinNodeCount,
+                                          @Nonnegative final int nMaxNodeCount)
+  {
+    return new XSDPartialContext (aXE, Integer.valueOf (nMinNodeCount), Integer.valueOf (nMaxNodeCount));
   }
 }

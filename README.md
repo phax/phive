@@ -129,9 +129,11 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v6.0.4 - work in progress
+* v6.0.4 - 2020-11-11
     * Added new overloads for `ValidationExecutorXSD.create`
     * Added `IValidationArtefact.getRuleResourcePath ()` to customize the file path
+    * Added `ValidationExecutorXSDPartial.create` factory methods
+    * Added `XSDPartialContext.create` factory methods
 * v6.0.3 - 2020-09-17
     * Updated to Jakarta JAXB 2.3.3
 * v6.0.2 - 2020-06-16

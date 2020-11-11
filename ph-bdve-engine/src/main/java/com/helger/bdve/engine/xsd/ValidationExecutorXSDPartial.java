@@ -16,6 +16,7 @@
  */
 package com.helger.bdve.engine.xsd;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -27,18 +28,23 @@ import javax.xml.xpath.XPathExpressionException;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXParseException;
 
+import com.helger.bdve.api.EValidationType;
 import com.helger.bdve.api.artefact.IValidationArtefact;
+import com.helger.bdve.api.artefact.ValidationArtefact;
 import com.helger.bdve.api.execute.AbstractValidationExecutor;
 import com.helger.bdve.api.execute.IValidationExecutor;
 import com.helger.bdve.api.result.ValidationResult;
 import com.helger.bdve.engine.source.IValidationSourceXML;
 import com.helger.bdve.engine.source.ValidationSourceXML;
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.functional.ISupplier;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
@@ -52,24 +58,50 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
 public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSDPartial>
 {
   private final ISupplier <? extends Schema> m_aSchemaProvider;
-  private final XSDPartialContext m_aContext;
+  private final XSDPartialContext m_aPartialContext;
 
-  public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final XSDPartialContext aContext)
+  /**
+   * Constructor
+   *
+   * @param aValidationArtefact
+   *        The validation artefact to use
+   * @param aPartialContext
+   *        The partial context that defines the rules for finding the correct
+   *        nodes to validate. May not be <code>null</code>.
+   * @deprecated Since 6.0.4. Use
+   *             {@link #ValidationExecutorXSDPartial(IValidationArtefact, ISupplier, XSDPartialContext)}
+   *             instead
+   */
+  @Deprecated
+  public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact,
+                                       @Nonnull final XSDPartialContext aPartialContext)
   {
-    this (aValidationArtefact, () -> XMLSchemaCache.getInstance ().getSchema (aValidationArtefact.getRuleResource ()), aContext);
+    this (aValidationArtefact, () -> XMLSchemaCache.getInstance ().getSchema (aValidationArtefact.getRuleResource ()), aPartialContext);
   }
 
+  /**
+   * Constructor
+   *
+   * @param aValidationArtefact
+   *        The validation artefact to use. May not be <code>null</code>.
+   * @param aSchemaProvider
+   *        The XML Schema provider to use. May not be <code>null</code>.
+   * @param aPartialContext
+   *        The partial context that defines the rules for finding the correct
+   *        nodes to validate. May not be <code>null</code>.
+   * @since 6.0.4
+   */
   public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact,
                                        @Nonnull final ISupplier <? extends Schema> aSchemaProvider,
-                                       @Nonnull final XSDPartialContext aContext)
+                                       @Nonnull final XSDPartialContext aPartialContext)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
-    ValueEnforcer.notNull (aContext, "Context");
+    ValueEnforcer.notNull (aPartialContext, "PartialContext");
 
     m_aSchemaProvider = aSchemaProvider;
-    m_aContext = aContext;
+    m_aPartialContext = aPartialContext;
   }
 
   /**
@@ -79,7 +111,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
   @Nonnull
   public final XSDPartialContext getContext ()
   {
-    return m_aContext;
+    return m_aPartialContext;
   }
 
   @Nonnull
@@ -92,7 +124,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
     NodeList aNodeSet;
     try
     {
-      aNodeSet = (NodeList) m_aContext.getXPathExpression ().evaluate (aSource.getNode (), XPathConstants.NODESET);
+      aNodeSet = (NodeList) m_aPartialContext.getXPathExpression ().evaluate (aSource.getNode (), XPathConstants.NODESET);
     }
     catch (final XPathExpressionException ex)
     {
@@ -102,22 +134,26 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
     final ErrorList aErrorList = new ErrorList ();
     final int nMatchingNodes = aNodeSet.getLength ();
 
-    if (m_aContext.hasMinNodeCount ())
-      if (nMatchingNodes < m_aContext.getMinNodeCount ())
+    if (m_aPartialContext.hasMinNodeCount ())
+      if (nMatchingNodes < m_aPartialContext.getMinNodeCount ())
       {
         // Too little matches found
         aErrorList.add (SingleError.builderFatalError ()
                                    .setErrorLocation (aVA.getRuleResourcePath ())
-                                   .setErrorText ("The minimum number of result nodes (" + m_aContext.getMinNodeCount () + ") is not met")
+                                   .setErrorText ("The minimum number of result nodes (" +
+                                                  m_aPartialContext.getMinNodeCount () +
+                                                  ") is not met")
                                    .build ());
       }
-    if (m_aContext.hasMaxNodeCount ())
-      if (nMatchingNodes > m_aContext.getMaxNodeCount ())
+    if (m_aPartialContext.hasMaxNodeCount ())
+      if (nMatchingNodes > m_aPartialContext.getMaxNodeCount ())
       {
         // Too little matches found
         aErrorList.add (SingleError.builderFatalError ()
                                    .setErrorLocation (aVA.getRuleResourcePath ())
-                                   .setErrorText ("The maximum number of result nodes (" + m_aContext.getMaxNodeCount () + ") is not met")
+                                   .setErrorText ("The maximum number of result nodes (" +
+                                                  m_aPartialContext.getMaxNodeCount () +
+                                                  ") is not met")
                                    .build ());
       }
 
@@ -184,7 +220,79 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
   {
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("SchemaProvider", m_aSchemaProvider)
-                            .append ("PartialContext", m_aContext)
+                            .append ("PartialContext", m_aPartialContext)
                             .getToString ();
+  }
+
+  /**
+   * Create a new instance based on the {@link IJAXBDocumentType} description
+   *
+   * @param aDocType
+   *        The document type. May not be <code>null</code>.
+   * @param aPartialContext
+   *        The partial context that defines the rules for finding the correct
+   *        nodes to validate. May not be <code>null</code>.
+   * @return A new validator that uses the last resource for the filename and
+   *         and the {@link IJAXBDocumentType#getSchema()} method for XML Schema
+   *         resolution.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorXSDPartial create (@Nonnull final IJAXBDocumentType aDocType,
+                                                     @Nonnull final XSDPartialContext aPartialContext)
+  {
+    ValueEnforcer.notNull (aDocType, "DocType");
+
+    // The last one is the important one for the name
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
+                                             aDocType::getSchema,
+                                             aPartialContext);
+  }
+
+  /**
+   * Create a new instance based on a single standalone XSD
+   *
+   * @param aXSDRes
+   *        The XSD resource to use. May not be <code>null</code>.
+   * @param aPartialContext
+   *        The partial context that defines the rules for finding the correct
+   *        nodes to validate. May not be <code>null</code>.
+   * @return A new validator that uses the supplied resource for the filename
+   *         and uses {@link XMLSchemaCache} to resolve the XML Schema object.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorXSDPartial create (@Nonnull final IReadableResource aXSDRes,
+                                                     @Nonnull final XSDPartialContext aPartialContext)
+  {
+    ValueEnforcer.notNull (aXSDRes, "XSDRes");
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aXSDRes),
+                                             () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
+                                             aPartialContext);
+  }
+
+  /**
+   * Create a new instance based on one or more XSDs
+   *
+   * @param aXSDRes
+   *        The XSD resources to use. May neither be <code>null</code> nor
+   *        empty.
+   * @param aPartialContext
+   *        The partial context that defines the rules for finding the correct
+   *        nodes to validate. May not be <code>null</code>.
+   * @return A new validator that uses the last resource for the filename uses
+   *         {@link XMLSchemaCache} to resolve the XML Schema object.
+   * @since 6.0.4
+   */
+  @Nonnull
+  public static ValidationExecutorXSDPartial create (@Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes,
+                                                     @Nonnull final XSDPartialContext aPartialContext)
+  {
+    ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
+
+    // The last one is the important one for the name
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aXSDRes.get (aXSDRes.size () - 1)),
+                                             () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
+                                             aPartialContext);
   }
 }
