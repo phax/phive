@@ -41,6 +41,7 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.functional.ISupplier;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
@@ -120,6 +121,12 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
   public int hashCode ()
   {
     return super.hashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("SchemaProvider", m_aSchemaProvider).getToString ();
   }
 
   /**

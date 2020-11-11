@@ -22,6 +22,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.xpath.XPathExpression;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.string.ToStringGenerator;
 
 /**
  * This class defines the constraints validated in the
@@ -83,5 +84,14 @@ public class XSDPartialContext
   public int getMaxNodeCount ()
   {
     return m_aMaxNodeCount.intValue ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("XPathExpression", m_aXE)
+                                       .append ("MinNodeCount", m_aMinNodeCount)
+                                       .append ("MaxNodeCount", m_aMaxNodeCount)
+                                       .getToString ();
   }
 }

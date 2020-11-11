@@ -37,7 +37,8 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.location.SimpleLocation;
+import com.helger.commons.functional.ISupplier;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
@@ -50,14 +51,24 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  */
 public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSDPartial>
 {
+  private final ISupplier <? extends Schema> m_aSchemaProvider;
   private final XSDPartialContext m_aContext;
 
   public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final XSDPartialContext aContext)
   {
+    this (aValidationArtefact, () -> XMLSchemaCache.getInstance ().getSchema (aValidationArtefact.getRuleResource ()), aContext);
+  }
+
+  public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact,
+                                       @Nonnull final ISupplier <? extends Schema> aSchemaProvider,
+                                       @Nonnull final XSDPartialContext aContext)
+  {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
+    ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     ValueEnforcer.notNull (aContext, "Context");
 
+    m_aSchemaProvider = aSchemaProvider;
     m_aContext = aContext;
   }
 
@@ -118,7 +129,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
 
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
-    final Schema aSchema = XMLSchemaCache.getInstance ().getSchema (aVA.getRuleResource ());
+    final Schema aSchema = m_aSchemaProvider.get ();
     assert aSchema != null;
 
     for (int i = 0; i < aNodeSet.getLength (); ++i)
@@ -141,7 +152,7 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
         else
         {
           aErrorList.add (SingleError.builderFatalError ()
-                                     .setErrorLocation (new SimpleLocation (aVA.getRuleResourcePath ()))
+                                     .setErrorLocation (aVA.getRuleResourcePath ())
                                      .setErrorFieldName ("Context[" + i + "]")
                                      .setErrorText ("The document to be validated is not an XML document")
                                      .setLinkedException (ex)
@@ -166,5 +177,14 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
   public int hashCode ()
   {
     return super.hashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("SchemaProvider", m_aSchemaProvider)
+                            .append ("PartialContext", m_aContext)
+                            .getToString ();
   }
 }
