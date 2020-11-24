@@ -134,6 +134,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * The Java package names changed from `com.helger.bdve.*` to `com.helger.phive.*`
     * The class name `BDVEJsonHelper` changed to `PhiveJsonHelper`
     * The class name `BDVERestoredException` changed to `PhiveRestoredException`
+    * Updated to ph-schematron 6.0.0
 * v6.0.4 - 2020-11-11
     * Added new overloads for `ValidationExecutorXSD.create`
     * Added `IValidationArtefact.getRuleResourcePath ()` to customize the file path
