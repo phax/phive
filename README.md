@@ -15,7 +15,7 @@ This project has the following sub-modules:
 * **phive-engine** - the validation engine that assembles all the pieces together and validates documents
 * **phive-json** - helper classes to convert validation results from and to JSON
 
-Note: please see [README v5](READMEv5.md) for the v5 documentation and [README v6](READMEv6.md) for the v6 documentation.
+Note: please see [README v5](docs/READMEv5.md) for the v5 documentation and [README v6](docs/READMEv6.md) for the v6 documentation.
 
 # Usage guide
 
