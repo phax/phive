@@ -22,7 +22,7 @@ import javax.xml.transform.Source;
 
 import org.w3c.dom.Node;
 
-import com.helger.bdve.api.source.IValidationSource;
+import com.helger.phive.api.source.IValidationSource;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.transform.TransformSourceFactory;
 

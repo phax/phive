@@ -18,8 +18,8 @@ package com.helger.bdve.engine.source;
 
 import javax.annotation.Nullable;
 
-import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.io.ByteArrayWrapper;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
  * Binary validation source.

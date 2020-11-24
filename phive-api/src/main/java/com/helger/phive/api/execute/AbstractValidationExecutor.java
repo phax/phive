@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.api.execute;
+package com.helger.phive.api.execute;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.api.artefact.IValidationArtefact;
-import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.traits.IGenericImplTrait;
+import com.helger.phive.api.artefact.IValidationArtefact;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
  * Abstract base implementation of {@link IValidationExecutor}.

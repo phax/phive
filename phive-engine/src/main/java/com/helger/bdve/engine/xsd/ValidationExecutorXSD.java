@@ -25,12 +25,6 @@ import javax.xml.validation.Schema;
 
 import org.xml.sax.SAXParseException;
 
-import com.helger.bdve.api.EValidationType;
-import com.helger.bdve.api.artefact.IValidationArtefact;
-import com.helger.bdve.api.artefact.ValidationArtefact;
-import com.helger.bdve.api.execute.AbstractValidationExecutor;
-import com.helger.bdve.api.execute.IValidationExecutor;
-import com.helger.bdve.api.result.ValidationResult;
 import com.helger.bdve.engine.source.IValidationSourceXML;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -43,6 +37,12 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.jaxb.builder.IJAXBDocumentType;
+import com.helger.phive.api.EValidationType;
+import com.helger.phive.api.artefact.IValidationArtefact;
+import com.helger.phive.api.artefact.ValidationArtefact;
+import com.helger.phive.api.execute.AbstractValidationExecutor;
+import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.result.ValidationResult;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;

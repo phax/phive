@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.api.result;
+package com.helger.phive.api.result;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.helger.bdve.api.artefact.IValidationArtefact;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.phive.api.artefact.IValidationArtefact;
 
 /**
  * This class captures the validation result of a single validation layer. It

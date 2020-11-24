@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.api.execute;
+package com.helger.phive.api.execute;
 
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.bdve.api.artefact.IValidationArtefact;
-import com.helger.bdve.api.result.ValidationResult;
-import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.phive.api.artefact.IValidationArtefact;
+import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
  * Base interface for performing validation of a single XML document based on

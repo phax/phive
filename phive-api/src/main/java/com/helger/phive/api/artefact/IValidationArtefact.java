@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.api.artefact;
+package com.helger.phive.api.artefact;
 
 import javax.annotation.Nonnull;
 
-import com.helger.bdve.api.EValidationType;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.phive.api.EValidationType;
 
 /**
  * Base interface for a validation artefact, consisting of a type and a readable

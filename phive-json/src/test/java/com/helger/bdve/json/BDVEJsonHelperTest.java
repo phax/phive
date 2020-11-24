@@ -25,12 +25,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.bdve.api.execute.ValidationExecutionManager;
-import com.helger.bdve.api.executorset.IValidationExecutorSet;
-import com.helger.bdve.api.executorset.VESID;
-import com.helger.bdve.api.executorset.ValidationExecutorSet;
-import com.helger.bdve.api.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.api.result.ValidationResultList;
 import com.helger.bdve.engine.source.IValidationSourceXML;
 import com.helger.bdve.engine.source.ValidationSourceXML;
 import com.helger.bdve.engine.xsd.ValidationExecutorXSD;
@@ -45,6 +39,12 @@ import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
+import com.helger.phive.api.execute.ValidationExecutionManager;
+import com.helger.phive.api.executorset.IValidationExecutorSet;
+import com.helger.phive.api.executorset.VESID;
+import com.helger.phive.api.executorset.ValidationExecutorSet;
+import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
+import com.helger.phive.api.result.ValidationResultList;
 import com.helger.schematron.svrl.SVRLResourceError;
 
 /**

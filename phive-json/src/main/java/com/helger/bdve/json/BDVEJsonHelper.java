@@ -28,14 +28,6 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.bdve.api.EValidationType;
-import com.helger.bdve.api.artefact.ValidationArtefact;
-import com.helger.bdve.api.executorset.IValidationExecutorSet;
-import com.helger.bdve.api.executorset.VESID;
-import com.helger.bdve.api.executorset.ValidationExecutorSetRegistry;
-import com.helger.bdve.api.result.ValidationResult;
-import com.helger.bdve.api.result.ValidationResultList;
-import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -63,6 +55,14 @@ import com.helger.json.IJsonObject;
 import com.helger.json.IJsonValue;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.phive.api.EValidationType;
+import com.helger.phive.api.artefact.ValidationArtefact;
+import com.helger.phive.api.executorset.IValidationExecutorSet;
+import com.helger.phive.api.executorset.VESID;
+import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
+import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.source.IValidationSource;
 import com.helger.schematron.svrl.SVRLResourceError;
 
 /**

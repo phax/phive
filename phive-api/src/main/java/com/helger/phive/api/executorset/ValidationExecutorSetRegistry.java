@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.api.executorset;
+package com.helger.phive.api.executorset;
 
 import java.util.function.Predicate;
 
@@ -26,8 +26,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.bdve.api.execute.IValidationExecutor;
-import com.helger.bdve.api.source.IValidationSource;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
@@ -38,6 +36,8 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
  * A registry for {@link IValidationExecutorSet} objects. This class is

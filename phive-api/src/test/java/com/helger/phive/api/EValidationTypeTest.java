@@ -14,29 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.api.source;
+package com.helger.phive.api;
 
-import javax.annotation.Nullable;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.helger.commons.string.StringHelper;
 
 /**
- * Abstract validation source interface. This represents an object to be
- * validated.
+ * Test class for class {@link EValidationType}.
  *
  * @author Philip Helger
  */
-public interface IValidationSource
+public final class EValidationTypeTest
 {
-  /**
-   * @return The system ID (e.g. filename) of the source to be validated. May be
-   *         <code>null</code>.
-   */
-  @Nullable
-  String getSystemID ();
-
-  /**
-   * @return <code>true</code> if this source is partial and <code>false</code>
-   *         if the whole Document should be used. If it is partial there must
-   *         be a way to define the necessary part(s) in the implementation.
-   */
-  boolean isPartialSource ();
+  @Test
+  public void testBasic ()
+  {
+    for (final EValidationType e : EValidationType.values ())
+    {
+      assertTrue (StringHelper.hasText (e.getID ()));
+      assertSame (e, EValidationType.getFromIDOrNull (e.getID ()));
+    }
+  }
 }
