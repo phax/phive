@@ -20,16 +20,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.helger.bdve</groupId>
-    <artifactId>ph-bdve-parent-pom</artifactId>
-    <version>6.0.5-SNAPSHOT</version>
+    <groupId>com.helger.phive</groupId>
+    <artifactId>phive-parent-pom</artifactId>
+    <version>7.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ph-bdve-engine</artifactId>
+  <artifactId>phive-json</artifactId>
   <packaging>bundle</packaging>
-  <name>ph-bdve-engine</name>
-  <description>Business Document Validation Engine (BDVE)</description>
-  <url>https://github.com/phax/ph-bdve/ph-bdve-engine</url>
-  <inceptionYear>2016</inceptionYear>
+  <name>phive-json</name>
+  <description>phive - Philip Helger Integrative Validation Engine - JSON binding</description>
+  <url>https://github.com/phax/phive/phive-json</url>
+  <inceptionYear>2020</inceptionYear>
   
   <licenses>
     <license>
@@ -67,8 +67,16 @@
       <artifactId>ph-schematron</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger.bdve</groupId>
-      <artifactId>ph-bdve-api</artifactId>
+      <groupId>com.helger</groupId>
+      <artifactId>ph-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phive</groupId>
+      <artifactId>phive-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phive</groupId>
+      <artifactId>phive-engine</artifactId>
     </dependency>
     
     <dependency>
@@ -86,11 +94,9 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.bdve.engine</Automatic-Module-Name>
-            <Export-Package>com.helger.bdve.engine.*</Export-Package>
+            <Automatic-Module-Name>com.helger.phive.json</Automatic-Module-Name>
+            <Export-Package>com.helger.phive.json.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.schematron.svrl.ISVRLLocationBeautifierSPI</Provide-Capability>
           </instructions>
         </configuration>
       </plugin>
