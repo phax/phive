@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.xsd;
+package com.helger.phive.engine.xsd;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,7 +25,6 @@ import javax.xml.validation.Schema;
 
 import org.xml.sax.SAXParseException;
 
-import com.helger.bdve.engine.source.IValidationSourceXML;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
@@ -43,6 +42,7 @@ import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.engine.source.IValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;

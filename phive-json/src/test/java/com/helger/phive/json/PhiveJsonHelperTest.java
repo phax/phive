@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.json;
+package com.helger.phive.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,9 +25,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.bdve.engine.source.IValidationSourceXML;
-import com.helger.bdve.engine.source.ValidationSourceXML;
-import com.helger.bdve.engine.xsd.ValidationExecutorXSD;
 import com.helger.commons.CGlobal;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.error.IError;
@@ -45,20 +42,23 @@ import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.engine.source.IValidationSourceXML;
+import com.helger.phive.engine.source.ValidationSourceXML;
+import com.helger.phive.engine.xsd.ValidationExecutorXSD;
 import com.helger.schematron.svrl.SVRLResourceError;
 
 /**
- * Test class for class {@link BDVEJsonHelper}.
+ * Test class for class {@link PhiveJsonHelper}.
  *
  * @author Philip Helger
  */
-public final class BDVEJsonHelperTest
+public final class PhiveJsonHelperTest
 {
   @Test
   public void testGlobalError ()
   {
     final IJsonObject aObj = new JsonObject ();
-    BDVEJsonHelper.applyGlobalError (aObj, "My error", 123);
+    PhiveJsonHelper.applyGlobalError (aObj, "My error", 123);
     final String sJson = aObj.getAsJsonString ();
     assertEquals ("{\"success\":false," +
                   "\"interrupted\":false," +
@@ -75,7 +75,7 @@ public final class BDVEJsonHelperTest
     final Locale aDisplayLocale = Locale.US;
     final VESID aVESID = new VESID ("group", "art", "1.0");
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID, "name", false);
-    BDVEJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
+    PhiveJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
     final String sJson = aObj.getAsJsonString ();
     assertEquals ("{\"ves\":{\"vesid\":\"group:art:1.0\",\"name\":\"name\",\"deprecated\":false}," +
                   "\"success\":true," +
@@ -104,14 +104,14 @@ public final class BDVEJsonHelperTest
     // To JSON
     final Locale aDisplayLocale = Locale.US;
     final IJsonObject aObj = new JsonObject ();
-    BDVEJsonHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, 123, null, null);
+    PhiveJsonHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, 123, null, null);
 
     // And back
-    final IValidationExecutorSet <IValidationSourceXML> aVES2 = BDVEJsonHelper.getAsVES (aRegistry, aObj);
+    final IValidationExecutorSet <IValidationSourceXML> aVES2 = PhiveJsonHelper.getAsVES (aRegistry, aObj);
     assertNotNull (aVES2);
     assertSame (aVES, aVES2);
 
-    final ValidationResultList aVRL2 = BDVEJsonHelper.getAsValidationResultList (aObj);
+    final ValidationResultList aVRL2 = PhiveJsonHelper.getAsValidationResultList (aObj);
     assertNotNull (aVRL2);
     // direct equals doesn't work, because of the restored exception
     assertEquals (aVRL.size (), aVRL2.size ());
@@ -120,7 +120,7 @@ public final class BDVEJsonHelperTest
 
     // and forth
     final IJsonObject aObj2 = new JsonObject ();
-    BDVEJsonHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, 123, null, null);
+    PhiveJsonHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, 123, null, null);
 
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
   }
@@ -131,7 +131,7 @@ public final class BDVEJsonHelperTest
     final Exception ex = new IllegalArgumentException ("bla foo");
 
     // to Json
-    final IJsonObject aObj = BDVEJsonHelper.getJsonStackTrace (ex);
+    final IJsonObject aObj = PhiveJsonHelper.getJsonStackTrace (ex);
     assertNotNull (aObj);
   }
 
@@ -143,10 +143,10 @@ public final class BDVEJsonHelperTest
                                      .setErrorText ("fla")
                                      .setErrorLocation (new SimpleLocation ("res12", 3, 4))
                                      .build ();
-    final IJsonObject aJson = BDVEJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
     assertNotNull (aJson);
 
-    final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
+    final IError aError2 = PhiveJsonHelper.getAsIError (aJson);
     assertNotNull (aError2);
 
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
@@ -164,15 +164,15 @@ public final class BDVEJsonHelperTest
                                                  " my test <>");
 
     // To Json
-    final IJsonObject aJson = BDVEJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
     assertNotNull (aJson);
 
     // And back
-    final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
+    final IError aError2 = PhiveJsonHelper.getAsIError (aJson);
     assertNotNull (aError2);
 
     // And forth
-    final IJsonObject aJson2 = BDVEJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
     assertNotNull (aJson2);
 
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
@@ -191,20 +191,20 @@ public final class BDVEJsonHelperTest
                                                  " my test <>");
 
     // To Json
-    final IJsonObject aJson = BDVEJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
     assertNotNull (aJson);
 
     // And back
-    final IError aError2 = BDVEJsonHelper.getAsIError (aJson);
+    final IError aError2 = PhiveJsonHelper.getAsIError (aJson);
     assertNotNull (aError2);
 
     // And forth
-    final IJsonObject aJson2 = BDVEJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
     assertNotNull (aJson2);
 
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
     // The objects differ, because of the different exception types
-    assertTrue (aError2.getLinkedException () instanceof BDVERestoredException);
+    assertTrue (aError2.getLinkedException () instanceof PhiveRestoredException);
     if (false)
       CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
   }

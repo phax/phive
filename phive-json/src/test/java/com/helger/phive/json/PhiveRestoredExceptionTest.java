@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.json;
+package com.helger.phive.json;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -27,11 +27,11 @@ import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.json.IJsonObject;
 
 /**
- * Test class for class {@link BDVERestoredException}.
+ * Test class for class {@link PhiveRestoredException}.
  *
  * @author Philip Helger
  */
-public final class BDVERestoredExceptionTest
+public final class PhiveRestoredExceptionTest
 {
   @Test
   public void testBasic ()
@@ -39,11 +39,11 @@ public final class BDVERestoredExceptionTest
     final Exception ex = new IllegalArgumentException ("bla foo");
 
     // to Json
-    final IJsonObject aObj = BDVEJsonHelper.getJsonStackTrace (ex);
+    final IJsonObject aObj = PhiveJsonHelper.getJsonStackTrace (ex);
     assertNotNull (aObj);
 
     // from Json
-    final BDVERestoredException aRSS = BDVERestoredException.createFromJson (aObj);
+    final PhiveRestoredException aRSS = PhiveRestoredException.createFromJson (aObj);
     assertNotNull (aRSS);
     assertEquals ("java.lang.IllegalArgumentException", aRSS.getClassName ());
     assertEquals ("bla foo", aRSS.getMessage ());
@@ -63,11 +63,11 @@ public final class BDVERestoredExceptionTest
     final Exception ex = new IllegalArgumentException ();
 
     // to Json
-    final IJsonObject aObj = BDVEJsonHelper.getJsonStackTrace (ex);
+    final IJsonObject aObj = PhiveJsonHelper.getJsonStackTrace (ex);
     assertNotNull (aObj);
 
     // from Json
-    final BDVERestoredException aRSS = BDVERestoredException.createFromJson (aObj);
+    final PhiveRestoredException aRSS = PhiveRestoredException.createFromJson (aObj);
     assertNotNull (aRSS);
     assertEquals ("java.lang.IllegalArgumentException", aRSS.getClassName ());
     assertNull (aRSS.getMessage ());

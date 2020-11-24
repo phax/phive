@@ -18,8 +18,8 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns="urn:com.helger/xml/ns/bdve-json/1.0"
-           targetNamespace="urn:com.helger/xml/ns/bdve-json/1.0"
+           xmlns="urn:com.helger/xml/ns/phive-json/1.0"
+           targetNamespace="urn:com.helger/xml/ns/phive-json/1.0"
            elementFormDefault="qualified">
   <xs:complexType name="TypeA">
     <xs:sequence>

@@ -17,6 +17,6 @@
     limitations under the License.
 
 -->
-<Root xmlns="urn:com.helger/xml/ns/bdve-json/1.0">
+<Root xmlns="urn:com.helger/xml/ns/phive-json/1.0">
   <bla />
 </Root>

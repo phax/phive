@@ -14,24 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.engine.source;
+package com.helger.phive.engine;
 
-import javax.annotation.Nullable;
+import org.junit.Test;
 
-import com.helger.commons.io.ByteArrayWrapper;
-import com.helger.phive.api.source.IValidationSource;
+import com.helger.commons.mock.SPITestHelper;
 
 /**
- * Binary validation source.
- *
+ * Test SPI definitions
+ * 
  * @author Philip Helger
- * @since 6.0.3
  */
-public interface IValidationSourceBinary extends IValidationSource
+public final class SPITest
 {
-  /**
-   * @return The bytes to be validated. May be <code>null</code>.
-   */
-  @Nullable
-  ByteArrayWrapper getBytes ();
+  @Test
+  public void testBasic () throws Exception
+  {
+    SPITestHelper.testIfAllSPIImplementationsAreValid ();
+  }
 }

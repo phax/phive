@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.json;
+package com.helger.phive.json;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,13 +34,13 @@ import com.helger.json.JsonObject;
  * @author Philip Helger
  * @since 6.0.0
  */
-public class BDVERestoredException extends Exception
+public class PhiveRestoredException extends Exception
 {
   private final String m_sClassName;
   private final String m_sMessage;
   private final ICommonsList <String> m_aStackTraceLines;
 
-  public BDVERestoredException (@Nonnull final String sClassName,
+  public PhiveRestoredException (@Nonnull final String sClassName,
                                 @Nullable final String sMessage,
                                 @Nonnull final ICommonsList <String> aStackTraceLines)
   {
@@ -87,23 +87,23 @@ public class BDVERestoredException extends Exception
   @Nullable
   public IJsonObject getAsJson ()
   {
-    return new JsonObject ().add (BDVEJsonHelper.JSON_CLASS, m_sClassName)
-                            .addIfNotNull (BDVEJsonHelper.JSON_MESSAGE, m_sMessage)
-                            .add (BDVEJsonHelper.JSON_STACK_TRACE, StringHelper.getImploded ('\n', m_aStackTraceLines));
+    return new JsonObject ().add (PhiveJsonHelper.JSON_CLASS, m_sClassName)
+                            .addIfNotNull (PhiveJsonHelper.JSON_MESSAGE, m_sMessage)
+                            .add (PhiveJsonHelper.JSON_STACK_TRACE, StringHelper.getImploded ('\n', m_aStackTraceLines));
   }
 
   @Nullable
-  public static BDVERestoredException createFromJson (@Nullable final IJsonObject aObj)
+  public static PhiveRestoredException createFromJson (@Nullable final IJsonObject aObj)
   {
     if (aObj == null)
       return null;
 
-    final String sClassName = aObj.getAsString (BDVEJsonHelper.JSON_CLASS);
-    final String sMessage = aObj.getAsString (BDVEJsonHelper.JSON_MESSAGE);
-    final ICommonsList <String> aStackTraceLines = StringHelper.getExploded ('\n', aObj.getAsString (BDVEJsonHelper.JSON_STACK_TRACE));
+    final String sClassName = aObj.getAsString (PhiveJsonHelper.JSON_CLASS);
+    final String sMessage = aObj.getAsString (PhiveJsonHelper.JSON_MESSAGE);
+    final ICommonsList <String> aStackTraceLines = StringHelper.getExploded ('\n', aObj.getAsString (PhiveJsonHelper.JSON_STACK_TRACE));
     if (sClassName == null)
       return null;
 
-    return new BDVERestoredException (sClassName, sMessage, aStackTraceLines);
+    return new PhiveRestoredException (sClassName, sMessage, aStackTraceLines);
   }
 }

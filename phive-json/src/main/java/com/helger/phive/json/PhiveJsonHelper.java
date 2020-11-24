@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.bdve.json;
+package com.helger.phive.json;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -66,7 +66,7 @@ import com.helger.phive.api.source.IValidationSource;
 import com.helger.schematron.svrl.SVRLResourceError;
 
 /**
- * A utility class to create a common JSON representation of a BDVE result. Use
+ * A utility class to create a common JSON representation of a PHIVE result. Use
  * {@link #applyGlobalError(IJsonObject, String, long)} or
  * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, List, Locale, long, MutableInt, MutableInt)}
  * to add the result to an arbitrary {@link IJsonObject}.
@@ -75,7 +75,7 @@ import com.helger.schematron.svrl.SVRLResourceError;
  * @since 5.2.5
  */
 @Immutable
-public final class BDVEJsonHelper
+public final class PhiveJsonHelper
 {
   public static final String JSON_ERRORLEVEL_SUCCESS = "SUCCESS";
   public static final String JSON_ERRORLEVEL_WARN = "WARN";
@@ -120,9 +120,9 @@ public final class BDVEJsonHelper
   public static final String ARTFACT_TYPE_INPUT_PARAMETER = "input-parameter";
   public static final String ARTIFACT_PATH_NONE = "none";
 
-  private static final Logger LOGGER = LoggerFactory.getLogger (BDVEJsonHelper.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhiveJsonHelper.class);
 
-  private BDVEJsonHelper ()
+  private PhiveJsonHelper ()
   {}
 
   private static boolean _isConsideredError (@Nonnull final IErrorLevel aErrorLevel)
@@ -233,15 +233,15 @@ public final class BDVEJsonHelper
    *        The exception to convert to a JSON object. May be <code>null</code>.
    * @return <code>null</code> if the parameter is <code>null</code>, the JSON
    *         object otherwise.
-   * @see BDVERestoredException for a representation after reading
+   * @see PhiveRestoredException for a representation after reading
    */
   @Nullable
   public static IJsonObject getJsonStackTrace (@Nullable final Throwable t)
   {
     if (t == null)
       return null;
-    if (t instanceof BDVERestoredException)
-      return ((BDVERestoredException) t).getAsJson ();
+    if (t instanceof PhiveRestoredException)
+      return ((PhiveRestoredException) t).getAsJson ();
     return new JsonObject ().add (JSON_CLASS, t.getClass ().getName ())
                             .addIfNotNull (JSON_MESSAGE, t.getMessage ())
                             .add (JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
@@ -393,7 +393,7 @@ public final class BDVEJsonHelper
     }
     final String sErrorText = aObj.getAsString (JSON_ERROR_TEXT);
     final String sTest = aObj.getAsString (JSON_TEST);
-    final BDVERestoredException aLinkedException = BDVERestoredException.createFromJson (aObj.getAsObject (JSON_EXCEPTION));
+    final PhiveRestoredException aLinkedException = PhiveRestoredException.createFromJson (aObj.getAsObject (JSON_EXCEPTION));
 
     if (sTest != null)
       return new SVRLResourceError (aErrorLevel,
