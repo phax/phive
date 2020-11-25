@@ -55,6 +55,8 @@ public enum EValidationType implements IHasID <String>, IHasName
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
    * plugin)
+   *
+   * @since 7.0.0
    */
   SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", "Schematron (SchXslt XSLT2)"),
   /**
