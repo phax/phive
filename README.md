@@ -2,7 +2,7 @@
 
 A generic document validation engine originally developed for Peppol but now also supporting many other document types.
 
-The original name was "ph-bdve" but because it was so difficult to pronounce, it was decided to change the name to "phive" which is an abbreviation of "Philip Helger Integrative Validation Engine" and is pronounced exactly like the digit 5.
+The original name was "ph-bdve" but because it was so difficult to pronounce, it was decided to change the name to "phive" which is an abbreviation of "Philip Helger Integrative Validation Engine" and is pronounced exactly like the digit 5. The old name of the repository was "ph-bdve".
 
 This project only contains the validation **engine** - all the preconfigured rules are available at https://github.com/phax/ph-bdve-rules
 
