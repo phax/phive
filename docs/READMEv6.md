@@ -1,8 +1,6 @@
-# PHIVE - Integrative Validation Engine
+# BDVE v6.x
 
-A generic document validation engine originally developed for Peppol but now also supporting many other document types.
-
-The original name was "ph-bdve" but because it was so difficult to pronounce, it was decided to change the name to "phive" which is an abbreviation of "Philip Helger Integrative Validation Engine" and is pronounced exactly like the digit 5.
+A generic document validation engine originally developed for Peppol but now also supporting other document types.
 
 This project only contains the validation **engine** - all the preconfigured rules are available at https://github.com/phax/ph-bdve-rules
 
@@ -11,11 +9,11 @@ This project is licensed under the Apache 2 license.
 A live version of this engine can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload) and at [ecosio](https://ecosio.com/en/peppol-and-xml-document-validator/).
 
 This project has the following sub-modules:
-* **phive-api** - a generic API that is independent of the effective validation logic
-* **phive-engine** - the validation engine that assembles all the pieces together and validates documents
-* **phive-json** - helper classes to convert validation results from and to JSON
+* **ph-bdve-api** - a generic API that is independent of the effective validation logic (since v6.0.0)
+* **ph-bdve-engine** - the validation engine that assembles all the pieces together and validates documents
+* **ph-bdve-json** - helper classes to convert validation results from and to JSON (since v6.0.0)
 
-Note: please see [README v5](docs/READMEv5.md) for the v5 documentation and [README v6](docs/READMEv6.md) for the v6 documentation.
+Note: please see [this document](READMEv5.md) for the v5 documentation 
 
 # Usage guide
 
@@ -31,7 +29,7 @@ Each VESID can be represented in a single string in the form `groupID:artifiactI
 
 ## How to validate documents
 
-At least the `phive-engine` project and one library with rule sets (like e.g. `ph-bdve-rules-peppol` from https://github.com/phax/ph-bdve-rules) is needed in your application. See the section on usage in a Maven project below.
+At least the `ph-bdve-engine` project and one library with rule sets (like e.g. `ph-bdve-rules-peppol` from https://github.com/phax/ph-bdve-rules) is needed in your application. See the section on usage in a Maven project below.
 All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
 Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
 Example for registering (only) Peppol validation artefacts:
@@ -95,8 +93,8 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
 
 ```xml
 <dependency>
-  <groupId>com.helger.phive</groupId>
-  <artifactId>phive-engine</artifactId>
+  <groupId>com.helger.bdve</groupId>
+  <artifactId>ph-bdve-engine</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```xml
@@ -105,8 +103,8 @@ If you are interested in the JSON binding you may also include this artefact.
 
 ```xml
 <dependency>
-  <groupId>com.helger.phive</groupId>
-  <artifactId>phive-json</artifactId>
+  <groupId>com.helger.bdve</groupId>
+  <artifactId>ph-bdve-json</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```
@@ -115,13 +113,15 @@ Alternate usage as a Maven BOM:
 
 ```xml
 <dependency>
-  <groupId>com.helger.phive</groupId>
-  <artifactId>phive-parent-pom</artifactId>
+  <groupId>com.helger.bdve</groupId>
+  <artifactId>ph-bdve-parent-pom</artifactId>
   <version>x.y.z</version>
   <type>pom</type>
   <scope>import</scope>
 </dependency>
 ```
+
+Note: prior to v5.3.0 the Maven groupId was `com.helger`.
 
 ## Potential issues
 
@@ -129,12 +129,6 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v7.0.0 - work in progress
-    * The Maven group ID changed from `com.helger.bdve` to `com.helger.phive`
-    * The Java package names changed from `com.helger.bdve.*` to `com.helger.phive.*`
-    * The class name `BDVEJsonHelper` changed to `PhiveJsonHelper`
-    * The class name `BDVERestoredException` changed to `PhiveRestoredException`
-    * Updated to ph-schematron 6.0.0
 * v6.0.4 - 2020-11-11
     * Added new overloads for `ValidationExecutorXSD.create`
     * Added `IValidationArtefact.getRuleResourcePath ()` to customize the file path

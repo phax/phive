@@ -24,13 +24,13 @@
     <artifactId>parent-pom</artifactId>
     <version>1.11.2</version>
   </parent>
-  <groupId>com.helger.bdve</groupId>
-  <artifactId>ph-bdve-parent-pom</artifactId>
-  <version>6.0.5-SNAPSHOT</version>
+  <groupId>com.helger.phive</groupId>
+  <artifactId>phive-parent-pom</artifactId>
+  <version>7.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>ph-bdve-parent-pom</name>
-  <description>Base POM to build the BDVE projects</description>
-  <url>https://github.com/phax/ph-bdve</url>
+  <name>phive-parent-pom</name>
+  <description>Base POM to build phive - the Philip Helger Integrative Validation Engine</description>
+  <url>https://github.com/phax/phive</url>
   <inceptionYear>2014</inceptionYear>
  
   <licenses>
@@ -42,9 +42,9 @@
   </licenses>
   
   <scm>
-    <connection>scm:git:git@github.com:phax/ph-bdve.git</connection>
-    <developerConnection>scm:git:git@github.com:phax/ph-bdve.git</developerConnection>
-    <url>http://github.com/phax/ph-bdve</url>
+    <connection>scm:git:git@github.com:phax/phive.git</connection>
+    <developerConnection>scm:git:git@github.com:phax/phive.git</developerConnection>
+    <url>http://github.com/phax/phive</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -72,26 +72,26 @@
         <scope>import</scope>
       </dependency>
       <dependency>
-        <groupId>com.helger</groupId>
+        <groupId>com.helger.schematron</groupId>
         <artifactId>ph-schematron-parent-pom</artifactId>
-        <version>5.6.4</version>
+        <version>6.0.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
 
       <dependency>
-        <groupId>com.helger.bdve</groupId>
-        <artifactId>ph-bdve-api</artifactId>
+        <groupId>com.helger.phive</groupId>
+        <artifactId>phive-api</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger.bdve</groupId>
-        <artifactId>ph-bdve-engine</artifactId>
+        <groupId>com.helger.phive</groupId>
+        <artifactId>phive-engine</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.helger.bdve</groupId>
-        <artifactId>ph-bdve-json</artifactId>
+        <groupId>com.helger.phive</groupId>
+        <artifactId>phive-json</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
@@ -116,9 +116,9 @@
   </dependencies>
   
   <modules>
-    <module>ph-bdve-api</module>
-    <module>ph-bdve-engine</module>
-    <module>ph-bdve-json</module>
+    <module>phive-api</module>
+    <module>phive-engine</module>
+    <module>phive-json</module>
   </modules>
   
   <build>
