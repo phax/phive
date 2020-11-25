@@ -135,6 +135,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * The class name `BDVEJsonHelper` changed to `PhiveJsonHelper`
     * The class name `BDVERestoredException` changed to `PhiveRestoredException`
     * Updated to ph-schematron 6.0.0
+    * Added support for using "SchXslt" as a Schematron engine
 * v6.0.4 - 2020-11-11
     * Added new overloads for `ValidationExecutorXSD.create`
     * Added `IValidationArtefact.getRuleResourcePath ()` to customize the file path

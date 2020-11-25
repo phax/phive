@@ -56,6 +56,11 @@ public enum EValidationType implements IHasID <String>, IHasName
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
    * plugin)
    */
+  SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", "Schematron (SchXslt XSLT2)"),
+  /**
+   * Schematron validation with a pre-build XSLT file (e.g. from the Maven
+   * plugin)
+   */
   SCHEMATRON_XSLT ("schematron-xslt", "Schematron (XSLT)"),
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
@@ -101,7 +106,11 @@ public enum EValidationType implements IHasID <String>, IHasName
 
   public boolean isSchematron ()
   {
-    return this == SCHEMATRON_PURE || this == SCHEMATRON_SCH || this == SCHEMATRON_XSLT || this == SCHEMATRON_OIOUBL;
+    return this == SCHEMATRON_PURE ||
+           this == SCHEMATRON_SCH ||
+           this == SCHEMATRON_SCHXSLT ||
+           this == SCHEMATRON_XSLT ||
+           this == SCHEMATRON_OIOUBL;
   }
 
   /**

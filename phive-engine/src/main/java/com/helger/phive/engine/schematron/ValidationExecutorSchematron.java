@@ -51,6 +51,7 @@ import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
 import com.helger.schematron.sch.SchematronResourceSCH;
+import com.helger.schematron.schxslt.xslt2.SchematronResourceSchXslt_XSLT2;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
@@ -188,7 +189,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
 
     // No prerequisite or prerequisite matched
     final ErrorList aErrorList = new ErrorList ();
-    AbstractSchematronResource aSCH;
+    final AbstractSchematronResource aSCH;
     ESchematronOutput eOutput = ESchematronOutput.SVRL;
     switch (getValidationArtefact ().getValidationArtefactType ())
     {
@@ -210,6 +211,15 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
         aSCH = aSCHSCH;
         break;
       }
+      case SCHEMATRON_SCHXSLT:
+      {
+        final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
+        aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+        if (aLocale != null && StringHelper.hasText (aLocale.getLanguage ()))
+          aSCHSCH.setLanguageCode (aLocale.getLanguage ());
+        aSCH = aSCHSCH;
+        break;
+      }
       case SCHEMATRON_XSLT:
       {
         final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
@@ -222,6 +232,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
         final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
         aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
         aSCH = aSCHXSLT;
+        // Special output layout
         eOutput = ESchematronOutput.OIOUBL;
         break;
       }
