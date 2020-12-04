@@ -63,6 +63,15 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
     return m_bStopValidationOnError;
   }
 
+  /**
+   * Set the "stop on validation" flag for this executor. If the flag is set, no
+   * further validation will be performed.
+   *
+   * @param bStopValidationOnError
+   *        <code>true</code> to stop validation on error, <code>false</code> to
+   *        continue anyway.
+   * @return this for chaining
+   */
   @Nonnull
   public final IMPLTYPE setStopValidationOnError (final boolean bStopValidationOnError)
   {
