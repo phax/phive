@@ -17,6 +17,7 @@
 package com.helger.phive.engine.schematron;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,9 +31,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
+import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
@@ -90,6 +97,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
   private final String m_sPrerequisiteXPath;
   private final MapBasedNamespaceContext m_aNamespaceContext;
   private boolean m_bCacheSchematron = DEFAULT_CACHE;
+  private ICommonsMap <String, IErrorLevel> m_aCustomErrorLevels;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
                                        @Nullable final String sPrerequisiteXPath,
@@ -123,6 +131,30 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
   public final ValidationExecutorSchematron setCacheArtefact (final boolean bCacheArtefact)
   {
     m_bCacheSchematron = bCacheArtefact;
+    return this;
+  }
+
+  @Nonnull
+  public final ValidationExecutorSchematron addCustomErrorLevel (@Nonnull @Nonempty final String sErrorID,
+                                                                 @Nonnull final EErrorLevel eErrorLevel)
+  {
+    ValueEnforcer.notEmpty (sErrorID, "ErrorID");
+    ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
+    if (m_aCustomErrorLevels == null)
+      m_aCustomErrorLevels = new CommonsHashMap <> ();
+    m_aCustomErrorLevels.put (sErrorID, eErrorLevel);
+    return this;
+  }
+
+  @Nonnull
+  public final ValidationExecutorSchematron addCustomErrorLevels (@Nullable final Map <String, ? extends IErrorLevel> aCustomErrorLevels)
+  {
+    if (aCustomErrorLevels != null && !aCustomErrorLevels.isEmpty ())
+    {
+      if (m_aCustomErrorLevels == null)
+        m_aCustomErrorLevels = new CommonsHashMap <> ();
+      m_aCustomErrorLevels.putAll (aCustomErrorLevels);
+    }
     return this;
   }
 
@@ -329,6 +361,38 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
                                  .setErrorText (ex.getMessage ())
                                  .setLinkedException (ex)
                                  .build ());
+    }
+
+    // Apply custom levels
+    if (m_aCustomErrorLevels != null && aErrorList.isNotEmpty ())
+    {
+      final ErrorList aOldErrorList = aErrorList.getClone ();
+      aErrorList.clear ();
+
+      for (final IError aCurError : aOldErrorList)
+      {
+        final String sErrorID = aCurError.getErrorID ();
+        final IErrorLevel aCustomLevel = m_aCustomErrorLevels.get (sErrorID);
+        if (aCustomLevel != null)
+        {
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Changing error level of '" +
+                          sErrorID +
+                          "' from " +
+                          aCurError.getErrorLevel ().getNumericLevel () +
+                          " to " +
+                          aCustomLevel +
+                          " (" +
+                          aCustomLevel.getNumericLevel () +
+                          ")");
+          aErrorList.add (SingleError.builder (aCurError).setErrorLevel (aCustomLevel).build ());
+        }
+        else
+        {
+          // No change
+          aErrorList.add (aCurError);
+        }
+      }
     }
 
     return new ValidationResult (aArtefact, aErrorList);
