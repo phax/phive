@@ -301,6 +301,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
           else
           {
             // Schematron does not create SVRL!
+            LOGGER.warn ("Failed to read the result as SVRL:" +
+                         (aDoc != null ? "\n" + XMLWriter.getNodeAsString (aDoc) : " no XML Document created"));
             aErrorList.add (SingleError.builderError ()
                                        .setErrorLocation (aArtefact.getRuleResourcePath ())
                                        .setErrorText ("Internal error interpreting Schematron result")
@@ -342,6 +344,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
           else
           {
             // Schematron does not create SVRL!
+            LOGGER.warn ("Failed to read the result as OIOUBL result:" +
+                         (aDoc != null ? "\n" + XMLWriter.getNodeAsString (aDoc) : " no XML Document created"));
             aErrorList.add (SingleError.builderError ()
                                        .setErrorLocation (aArtefact.getRuleResourcePath ())
                                        .setErrorText ("Internal error - no Schematron output created for OIOUBL")
