@@ -131,6 +131,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 * v7.0.1 - 2020-12-04
     * Updated to ph-schematron 6.0.1
+    * The failed assertion ID is now part of the created errors (if present)
     * Add the possibility to change the error levels of occurred Schematron errors
 * v7.0.0 - 2020-11-25
     * The Maven group ID changed from `com.helger.bdve` to `com.helger.phive`
