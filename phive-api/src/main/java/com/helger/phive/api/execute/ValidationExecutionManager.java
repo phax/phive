@@ -23,6 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
@@ -47,6 +50,8 @@ import com.helger.phive.api.source.IValidationSource;
 @NotThreadSafe
 public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> implements IValidationExecutionManager <SOURCETYPE>
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutionManager.class);
+
   private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aExecutors = new CommonsArrayList <> ();
 
   /**
@@ -138,6 +143,9 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
   {
     ValueEnforcer.notNull (aSource, "Source");
     ValueEnforcer.notNull (aValidationResults, "ValidationResults");
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Executing validation on source " + aSource + (aLocale == null ? "" : " and locale " + aLocale));
 
     boolean bIgnoreRest = false;
     for (final IValidationExecutor <SOURCETYPE> aExecutor : getAllExecutors ())
