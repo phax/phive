@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.phive.api.EValidationType;
+import com.helger.phive.api.IValidationType;
 
 /**
  * Base interface for a validation artefact, consisting of a type and a readable
@@ -36,7 +36,7 @@ public interface IValidationArtefact
    *         <code>null</code>.
    */
   @Nonnull
-  EValidationType getValidationArtefactType ();
+  IValidationType getValidationArtefactType ();
 
   /**
    * @return The resource that contains the rules depending on the type (like

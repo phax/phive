@@ -20,9 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
-import com.helger.commons.name.IHasName;
 
 /**
  * Enum with the validation artefact type. Depending on this type, different
@@ -30,7 +28,7 @@ import com.helger.commons.name.IHasName;
  *
  * @author Philip Helger
  */
-public enum EValidationType implements IHasID <String>, IHasName
+public enum EValidationType implements IValidationType
 {
   /** Validate XML syntax by parsing without assigned XSDs */
   XML ("xml", "XML Syntax"),
@@ -86,9 +84,6 @@ public enum EValidationType implements IHasID <String>, IHasName
     return m_sID;
   }
 
-  /**
-   * This locale independent name of the validation artefact.
-   */
   @Nonnull
   @Nonempty
   public String getName ()
@@ -115,20 +110,11 @@ public enum EValidationType implements IHasID <String>, IHasName
            this == SCHEMATRON_OIOUBL;
   }
 
-  /**
-   * @return <code>true</code> to stop validation if an error occurs when using
-   *         this validation type. This is helpful to avoid running Schematron
-   *         validations when the XML/XSD validations already failed.
-   */
   public boolean isStopValidationOnError ()
   {
     return isXML () || isXSD ();
   }
 
-  /**
-   * @return <code>true</code> if the application of this validation type
-   *         requires additional context parameters.
-   */
   public boolean isContextRequired ()
   {
     return this == PARTIAL_XSD;

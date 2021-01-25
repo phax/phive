@@ -129,6 +129,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v7.1.0 - work in progress
+    * Extracted the interface `IValidationType` from `EValidationType` and using it where applicable
 * v7.0.1 - 2020-12-04
     * Updated to ph-schematron 6.0.1
     * The failed assertion ID is now part of the created errors (if present)

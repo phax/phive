@@ -23,7 +23,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.phive.api.EValidationType;
+import com.helger.phive.api.IValidationType;
 
 /**
  * Stand-alone implementation of {@link IValidationArtefact}
@@ -33,7 +33,7 @@ import com.helger.phive.api.EValidationType;
 @Immutable
 public class ValidationArtefact implements IValidationArtefact
 {
-  private final EValidationType m_eValidationArtefactType;
+  private final IValidationType m_aValidationArtefactType;
   private final IReadableResource m_aResource;
 
   /**
@@ -44,16 +44,16 @@ public class ValidationArtefact implements IValidationArtefact
    * @param aResource
    *        The resource this reflects. May not be <code>null</code>.
    */
-  public ValidationArtefact (@Nonnull final EValidationType eValidationArtefactType, @Nonnull final IReadableResource aResource)
+  public ValidationArtefact (@Nonnull final IValidationType eValidationArtefactType, @Nonnull final IReadableResource aResource)
   {
-    m_eValidationArtefactType = ValueEnforcer.notNull (eValidationArtefactType, "ValidationArtefactType");
+    m_aValidationArtefactType = ValueEnforcer.notNull (eValidationArtefactType, "ValidationArtefactType");
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
   }
 
   @Nonnull
-  public EValidationType getValidationArtefactType ()
+  public IValidationType getValidationArtefactType ()
   {
-    return m_eValidationArtefactType;
+    return m_aValidationArtefactType;
   }
 
   @Nonnull
@@ -70,19 +70,19 @@ public class ValidationArtefact implements IValidationArtefact
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ValidationArtefact rhs = (ValidationArtefact) o;
-    return m_eValidationArtefactType.equals (rhs.m_eValidationArtefactType) && m_aResource.equals (rhs.m_aResource);
+    return m_aValidationArtefactType.equals (rhs.m_aValidationArtefactType) && m_aResource.equals (rhs.m_aResource);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eValidationArtefactType).append (m_aResource).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aValidationArtefactType).append (m_aResource).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ValidationArtefactType", m_eValidationArtefactType)
+    return new ToStringGenerator (this).append ("ValidationArtefactType", m_aValidationArtefactType)
                                        .append ("Resource", m_aResource)
                                        .getToString ();
   }

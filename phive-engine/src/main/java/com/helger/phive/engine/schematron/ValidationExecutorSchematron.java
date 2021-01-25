@@ -47,6 +47,7 @@ import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.phive.api.EValidationType;
+import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
@@ -223,54 +224,53 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
     final ErrorList aErrorList = new ErrorList ();
     final AbstractSchematronResource aSCH;
     ESchematronOutput eOutput = ESchematronOutput.SVRL;
-    switch (getValidationArtefact ().getValidationArtefactType ())
+    final IValidationType aVT = getValidationArtefact ().getValidationArtefactType ();
+    if (aVT == EValidationType.SCHEMATRON_PURE)
     {
-      case SCHEMATRON_PURE:
-      {
-        final SchematronResourcePure aPureSCH = new SchematronResourcePure (aSCHRes);
-        aPureSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
-        // Don't cache to avoid that errors in the Schematron are hidden on
-        // consecutive calls!
-        aSCH = aPureSCH;
-        break;
-      }
-      case SCHEMATRON_SCH:
+      final SchematronResourcePure aPureSCH = new SchematronResourcePure (aSCHRes);
+      aPureSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
+      // Don't cache to avoid that errors in the Schematron are hidden on
+      // consecutive calls!
+      aSCH = aPureSCH;
+    }
+    else
+      if (aVT == EValidationType.SCHEMATRON_SCH)
       {
         final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
         aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
         if (aLocale != null && StringHelper.hasText (aLocale.getLanguage ()))
           aSCHSCH.setLanguageCode (aLocale.getLanguage ());
         aSCH = aSCHSCH;
-        break;
       }
-      case SCHEMATRON_SCHXSLT:
-      {
-        final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
-        aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-        if (aLocale != null && StringHelper.hasText (aLocale.getLanguage ()))
-          aSCHSCH.setLanguageCode (aLocale.getLanguage ());
-        aSCH = aSCHSCH;
-        break;
-      }
-      case SCHEMATRON_XSLT:
-      {
-        final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
-        aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-        aSCH = aSCHXSLT;
-        break;
-      }
-      case SCHEMATRON_OIOUBL:
-      {
-        final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
-        aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-        aSCH = aSCHXSLT;
-        // Special output layout
-        eOutput = ESchematronOutput.OIOUBL;
-        break;
-      }
-      default:
-        throw new IllegalStateException ("Unsupported validation type: " + getValidationArtefact ().getValidationArtefactType ());
-    }
+      else
+        if (aVT == EValidationType.SCHEMATRON_SCHXSLT)
+        {
+          final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
+          aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+          if (aLocale != null && StringHelper.hasText (aLocale.getLanguage ()))
+            aSCHSCH.setLanguageCode (aLocale.getLanguage ());
+          aSCH = aSCHSCH;
+        }
+        else
+          if (aVT == EValidationType.SCHEMATRON_XSLT)
+          {
+            final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
+            aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+            aSCH = aSCHXSLT;
+          }
+          else
+            if (aVT == EValidationType.SCHEMATRON_OIOUBL)
+            {
+              final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
+              aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+              aSCH = aSCHXSLT;
+              // Special output layout
+              eOutput = ESchematronOutput.OIOUBL;
+            }
+            else
+              throw new IllegalStateException ("Unsupported Schematron validation type: " +
+                                               getValidationArtefact ().getValidationArtefactType ());
+
     // Don't cache to avoid that errors in the Schematron are hidden on
     // consecutive calls!
     aSCH.setUseCache (m_bCacheSchematron);

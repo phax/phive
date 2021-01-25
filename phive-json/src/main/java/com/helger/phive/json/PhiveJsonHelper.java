@@ -19,6 +19,7 @@ package com.helger.phive.json;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -56,6 +57,7 @@ import com.helger.json.IJsonValue;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.phive.api.EValidationType;
+import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.VESID;
@@ -670,6 +672,15 @@ public final class PhiveJsonHelper
   @Nullable
   public static ValidationResultList getAsValidationResultList (@Nullable final IJsonObject aJson)
   {
+    // By default we're only resolving in the enum
+    return getAsValidationResultList (aJson, EValidationType::getFromIDOrNull);
+  }
+
+  @Nullable
+  public static ValidationResultList getAsValidationResultList (@Nullable final IJsonObject aJson,
+                                                                @Nonnull final Function <String, IValidationType> aValidationTypeResolver)
+  {
+    ValueEnforcer.notNull (aValidationTypeResolver, "ValidationTypeResolver");
     if (aJson == null)
       return null;
 
@@ -693,8 +704,8 @@ public final class PhiveJsonHelper
         }
 
         final String sValidationType = aResultObj.getAsString (JSON_ARTIFACT_TYPE);
-        final EValidationType eValidationType = EValidationType.getFromIDOrNull (sValidationType);
-        if (eValidationType == null)
+        final IValidationType aValidationType = aValidationTypeResolver.apply (sValidationType);
+        if (aValidationType == null)
         {
           if (LOGGER.isDebugEnabled ())
             LOGGER.debug ("Failed to resolve ValidationType '" + sValidationType + "'");
@@ -709,7 +720,7 @@ public final class PhiveJsonHelper
             LOGGER.debug ("Failed to resolve ValidationArtefact '" + sArtefactPathType + "' with path '" + sArtefactPath + "'");
           continue;
         }
-        final ValidationArtefact aVA = new ValidationArtefact (eValidationType, aRes);
+        final ValidationArtefact aVA = new ValidationArtefact (aValidationType, aRes);
 
         if (eSuccess.isUndefined ())
         {
