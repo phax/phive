@@ -17,6 +17,7 @@
 package com.helger.phive.api;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -29,6 +30,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  * @since 7.1.0
  */
+@Immutable
 public class ValidationType implements IValidationType
 {
   private final String m_sID;

@@ -91,6 +91,10 @@ public enum EValidationType implements IValidationType
     return m_sName;
   }
 
+  /**
+   * @return <code>true</code> if this is an XML validation. For XSD and
+   *         Schematron this will return <code>false</code>.
+   */
   public boolean isXML ()
   {
     return this == XML;

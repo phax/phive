@@ -31,15 +31,6 @@ import com.helger.commons.name.IHasName;
 public interface IValidationType extends IHasID <String>, IHasName
 {
   /**
-   * @return <code>true</code> if this is an XML validation. For XSD and
-   *         Schematron this will return <code>false</code>.
-   */
-  default boolean isXML ()
-  {
-    return false;
-  }
-
-  /**
    * @return <code>true</code> if this is an XML Schema validation.
    */
   default boolean isXSD ()
