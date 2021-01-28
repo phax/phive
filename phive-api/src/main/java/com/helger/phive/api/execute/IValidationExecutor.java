@@ -45,6 +45,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
    */
   public interface ICacheSupport
   {
+    /** By default caching should be enabled. */
     boolean DEFAULT_CACHE = true;
 
     /**
@@ -63,6 +64,13 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
      */
     @Nonnull
     ICacheSupport setCacheArtefact (boolean bCacheArtefact);
+
+    /**
+     * If caching of this artefact is enabled, ensure it is in the cache.
+     *
+     * @since 7.1.1
+     */
+    void ensureItemIsInCache ();
   }
 
   /**

@@ -129,6 +129,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v7.1.1 - work in progress
+    * Extended the internal API to ensure validation artifacts are in cache
 * v7.1.0 - 2020-01-26
     * Extracted the interface `IValidationType` from `EValidationType` and using it where applicable
 * v7.0.1 - 2020-12-04
