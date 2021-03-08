@@ -129,9 +129,11 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v7.1.1 - 2020-01-28
+* v7.1.2 - work in progress
+    * Added new class `ValidationSourceBinary`
+* v7.1.1 - 2021-01-28
     * Extended the internal API to ensure validation artifacts are in cache
-* v7.1.0 - 2020-01-26
+* v7.1.0 - 2021-01-26
     * Extracted the interface `IValidationType` from `EValidationType` and using it where applicable
 * v7.0.1 - 2020-12-04
     * Updated to ph-schematron 6.0.1
