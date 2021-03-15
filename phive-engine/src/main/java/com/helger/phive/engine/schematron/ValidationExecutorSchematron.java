@@ -250,6 +250,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
 
     if (StringHelper.hasText (m_sPrerequisiteXPath))
     {
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Using Schematron prerequisite path '" + m_sPrerequisiteXPath + "'");
+
       // Check if the artefact can be applied on the given document by
       // checking the prerequisite XPath
       final XPath aXPathContext = XPathHelper.createNewXPath ();
@@ -500,7 +503,27 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
 
   /**
    * Create a new instance for a single resource that uses the precompiled XSLT
-   * Schematron validation.
+   * SchXslt Schematron validation.
+   *
+   * @param aRes
+   *        The resource pointing to the Schematron rules. May not be
+   *        <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be
+   *        <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 7.1.2
+   */
+  @Nonnull
+  public static ValidationExecutorSchematron createSchXslt (@Nonnull final IReadableResource aRes,
+                                                            @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT, aRes), null, aNamespaceContext);
+  }
+
+  /**
+   * Create a new instance for a single resource that uses the precompiled XSLT
+   * ISO Schematron validation.
    *
    * @param aRes
    *        The resource pointing to the XSLT rules. May not be
