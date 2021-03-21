@@ -25,7 +25,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
@@ -139,11 +138,11 @@ public final class PhiveJsonHelperTest
   public void testError ()
   {
     final IError aError = SingleError.builderError ()
-                                     .setErrorID ("id1")
-                                     .setErrorText ("fla")
-                                     .setErrorLocation (new SimpleLocation ("res12", 3, 4))
+                                     .errorID ("id1")
+                                     .errorText ("fla")
+                                     .errorLocation (new SimpleLocation ("res12", 3, 4))
                                      .build ();
-    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, Locale.US);
     assertNotNull (aJson);
 
     final IError aError2 = PhiveJsonHelper.getAsIError (aJson);
@@ -164,7 +163,7 @@ public final class PhiveJsonHelperTest
                                                  " my test <>");
 
     // To Json
-    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, Locale.US);
     assertNotNull (aJson);
 
     // And back
@@ -172,7 +171,7 @@ public final class PhiveJsonHelperTest
     assertNotNull (aError2);
 
     // And forth
-    final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, Locale.US);
     assertNotNull (aJson2);
 
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
@@ -191,7 +190,7 @@ public final class PhiveJsonHelperTest
                                                  " my test <>");
 
     // To Json
-    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson = PhiveJsonHelper.getJsonError (aError, Locale.US);
     assertNotNull (aJson);
 
     // And back
@@ -199,7 +198,7 @@ public final class PhiveJsonHelperTest
     assertNotNull (aError2);
 
     // And forth
-    final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, CGlobal.DEFAULT_LOCALE);
+    final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, Locale.US);
     assertNotNull (aJson2);
 
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);

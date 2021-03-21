@@ -18,6 +18,7 @@ package com.helger.phive.engine.xsd;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,7 +32,6 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.ToStringGenerator;
@@ -54,10 +54,10 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  */
 public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSD>
 {
-  private final ISupplier <? extends Schema> m_aSchemaProvider;
+  private final Supplier <? extends Schema> m_aSchemaProvider;
 
   public ValidationExecutorXSD (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final ISupplier <? extends Schema> aSchemaProvider)
+                                @Nonnull final Supplier <? extends Schema> aSchemaProvider)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
@@ -66,7 +66,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
   }
 
   @Nonnull
-  public final ISupplier <? extends Schema> getSchemaProvider ()
+  public final Supplier <? extends Schema> getSchemaProvider ()
   {
     return m_aSchemaProvider;
   }
@@ -93,14 +93,15 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
       // Happens when non-XML document is trying to be parsed
       if (ex.getCause () instanceof SAXParseException)
       {
-        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
+        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
+                                                                  (SAXParseException) ex.getCause ()));
       }
       else
       {
         aErrorList.add (SingleError.builderFatalError ()
-                                   .setErrorLocation (new SimpleLocation (aVA.getRuleResourcePath ()))
-                                   .setErrorText ("The document to be validated is not an XML document")
-                                   .setLinkedException (ex)
+                                   .errorLocation (new SimpleLocation (aVA.getRuleResourcePath ()))
+                                   .errorText ("The document to be validated is not an XML document")
+                                   .linkedException (ex)
                                    .build ());
       }
     }
@@ -144,7 +145,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     ValueEnforcer.notNull (aDocType, "DocType");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
+                                                              aDocType.getAllXSDResources ().getLast ()),
                                       aDocType::getSchema);
   }
 

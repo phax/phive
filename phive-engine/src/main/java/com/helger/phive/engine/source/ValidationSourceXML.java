@@ -16,6 +16,8 @@
  */
 package com.helger.phive.engine.source;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.transform.Source;
@@ -23,7 +25,6 @@ import javax.xml.transform.Source;
 import org.w3c.dom.Node;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.functional.ISupplier;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.xml.XMLHelper;
@@ -38,18 +39,22 @@ import com.helger.xml.transform.TransformSourceFactory;
 public class ValidationSourceXML implements IValidationSourceXML
 {
   private final String m_sSystemID;
-  private final ISupplier <Node> m_aNodeFactory;
+  private final Supplier <Node> m_aNodeFactory;
   private final boolean m_bPartialSource;
   // Status vars
   private Node m_aNode;
 
-  public ValidationSourceXML (@Nullable final String sSystemID, @Nonnull final Node aFixedNode, final boolean bPartialSource)
+  public ValidationSourceXML (@Nullable final String sSystemID,
+                              @Nonnull final Node aFixedNode,
+                              final boolean bPartialSource)
   {
     this (sSystemID, () -> aFixedNode, bPartialSource);
     m_aNode = aFixedNode;
   }
 
-  public ValidationSourceXML (@Nullable final String sSystemID, @Nonnull final ISupplier <Node> aNodeFactory, final boolean bPartialSource)
+  public ValidationSourceXML (@Nullable final String sSystemID,
+                              @Nonnull final Supplier <Node> aNodeFactory,
+                              final boolean bPartialSource)
   {
     ValueEnforcer.notNull (aNodeFactory, "NodeFactory");
     m_sSystemID = sSystemID;

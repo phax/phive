@@ -29,7 +29,6 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.CGlobal;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.error.IError;
@@ -480,7 +479,7 @@ public final class PhiveJsonHelper
 
     final IJsonArray aResultArray = new JsonArray ();
     {
-      final IJsonObject aError = getJsonError (SingleError.builderError ().setErrorText (sErrorMsg).build (), CGlobal.DEFAULT_LOCALE);
+      final IJsonObject aError = getJsonError (SingleError.builderError ().errorText (sErrorMsg).build (), Locale.US);
       aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getJsonTriState (false))
                                          .add (JSON_ARTIFACT_TYPE, ARTFACT_TYPE_INPUT_PARAMETER)
                                          .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
@@ -645,7 +644,8 @@ public final class PhiveJsonHelper
   }
 
   @Nullable
-  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType, @Nullable final String sArtefactPath)
+  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType,
+                                                           @Nullable final String sArtefactPath)
   {
     if (StringHelper.hasNoText (sArtefactPathType))
       return null;
@@ -717,7 +717,11 @@ public final class PhiveJsonHelper
         if (aRes == null)
         {
           if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Failed to resolve ValidationArtefact '" + sArtefactPathType + "' with path '" + sArtefactPath + "'");
+            LOGGER.debug ("Failed to resolve ValidationArtefact '" +
+                          sArtefactPathType +
+                          "' with path '" +
+                          sArtefactPath +
+                          "'");
           continue;
         }
         final ValidationArtefact aVA = new ValidationArtefact (aValidationType, aRes);

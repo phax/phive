@@ -84,7 +84,9 @@ import com.helger.xml.xpath.XPathHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorSchematron extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorSchematron> implements
+public class ValidationExecutorSchematron extends
+                                          AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorSchematron>
+                                          implements
                                           IValidationExecutor.ICacheSupport
 {
   private enum ESchematronOutput
@@ -107,7 +109,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematron (), "Artifact is not a Schematron");
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematron (),
+                          "Artifact is not a Schematron");
     m_sPrerequisiteXPath = sPrerequisiteXPath;
     m_aNamespaceContext = aNamespaceContext == null ? null : new MapBasedNamespaceContext (aNamespaceContext);
   }
@@ -144,7 +147,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
       final AbstractSchematronResource aRes = _createSchematronResource (null, new ErrorList (), x -> {});
       aRes.setUseCache (true);
       aRes.isValidSchematron ();
-      LOGGER.debug ("ValidationExecutorSchematron " + getValidationArtefact ().getRuleResourcePath () + " is now in the cache");
+      LOGGER.debug ("ValidationExecutorSchematron " +
+                    getValidationArtefact ().getRuleResourcePath () +
+                    " is now in the cache");
     }
   }
 
@@ -245,7 +250,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
     }
     catch (final Exception ex)
     {
-      throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.", ex);
+      throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.",
+                                       ex);
     }
 
     if (StringHelper.hasText (m_sPrerequisiteXPath))
@@ -286,7 +292,10 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
                                  "' - ignoring validation artefact.";
         LOGGER.error (sErrorMsg, ex);
         return new ValidationResult (aArtefact,
-                                     new ErrorList (SingleError.builderError ().setErrorText (sErrorMsg).setLinkedException (ex).build ()));
+                                     new ErrorList (SingleError.builderError ()
+                                                               .errorText (sErrorMsg)
+                                                               .linkedException (ex)
+                                                               .build ()));
       }
     }
 
@@ -311,7 +320,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
       {
         case SVRL:
         {
-          final SchematronOutputType aSVRL = aDoc == null || aDoc.getDocumentElement () == null ? null : new SVRLMarshaller ().read (aDoc);
+          final SchematronOutputType aSVRL = aDoc == null ||
+                                             aDoc.getDocumentElement () == null ? null
+                                                                                : new SVRLMarshaller ().read (aDoc);
           if (aSVRL != null)
           {
             // Valid Schematron - interpret result
@@ -328,9 +339,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
             LOGGER.warn ("Failed to read the result as SVRL:" +
                          (aDoc != null ? "\n" + XMLWriter.getNodeAsString (aDoc) : " no XML Document created"));
             aErrorList.add (SingleError.builderError ()
-                                       .setErrorLocation (aArtefact.getRuleResourcePath ())
-                                       .setErrorText ("Internal error interpreting Schematron result")
-                                       .setErrorFieldName (aDoc != null ? XMLWriter.getNodeAsString (aDoc) : null)
+                                       .errorLocation (aArtefact.getRuleResourcePath ())
+                                       .errorText ("Internal error interpreting Schematron result")
+                                       .errorFieldName (aDoc != null ? XMLWriter.getNodeAsString (aDoc) : null)
                                        .build ());
           }
           break;
@@ -357,11 +368,12 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
             {
               // final String sContext = eError.getAttribute ("context");
               final String sPattern = XMLHelper.getFirstChildElementOfName (eError, "Pattern").getTextContent ();
-              final String sDescription = XMLHelper.getFirstChildElementOfName (eError, "Description").getTextContent ();
+              final String sDescription = XMLHelper.getFirstChildElementOfName (eError, "Description")
+                                                   .getTextContent ();
               final String sXPath = XMLHelper.getFirstChildElementOfName (eError, "Xpath").getTextContent ();
-              aErrorList.add (new SVRLErrorBuilder (sPattern).setErrorLocation (new SimpleLocation (aSource.getSystemID ()))
-                                                             .setErrorText (sDescription)
-                                                             .setErrorFieldName (sXPath)
+              aErrorList.add (new SVRLErrorBuilder (sPattern).errorLocation (new SimpleLocation (aSource.getSystemID ()))
+                                                             .errorText (sDescription)
+                                                             .errorFieldName (sXPath)
                                                              .build ());
             }
           }
@@ -371,8 +383,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
             LOGGER.warn ("Failed to read the result as OIOUBL result:" +
                          (aDoc != null ? "\n" + XMLWriter.getNodeAsString (aDoc) : " no XML Document created"));
             aErrorList.add (SingleError.builderError ()
-                                       .setErrorLocation (aArtefact.getRuleResourcePath ())
-                                       .setErrorText ("Internal error - no Schematron output created for OIOUBL")
+                                       .errorLocation (aArtefact.getRuleResourcePath ())
+                                       .errorText ("Internal error - no Schematron output created for OIOUBL")
                                        .build ());
           }
           break;
@@ -385,9 +397,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
     {
       // Usually an error in the Schematron
       aErrorList.add (SingleError.builderError ()
-                                 .setErrorLocation (aArtefact.getRuleResourcePath ())
-                                 .setErrorText (ex.getMessage ())
-                                 .setLinkedException (ex)
+                                 .errorLocation (aArtefact.getRuleResourcePath ())
+                                 .errorText (ex.getMessage ())
+                                 .linkedException (ex)
                                  .build ());
     }
 
@@ -413,7 +425,7 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
                           " (" +
                           aCustomLevel.getNumericLevel () +
                           ")");
-          aErrorList.add (SingleError.builder (aCurError).setErrorLevel (aCustomLevel).build ());
+          aErrorList.add (SingleError.builder (aCurError).errorLevel (aCustomLevel).build ());
         }
         else
         {
@@ -476,7 +488,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
   public static ValidationExecutorSchematron createPure (@Nonnull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, aRes), null, aNamespaceContext);
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, aRes),
+                                             null,
+                                             aNamespaceContext);
   }
 
   /**
@@ -498,7 +512,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
   public static ValidationExecutorSchematron createSCH (@Nonnull final IReadableResource aRes,
                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, aRes), null, aNamespaceContext);
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, aRes),
+                                             null,
+                                             aNamespaceContext);
   }
 
   /**
@@ -518,7 +534,9 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
   public static ValidationExecutorSchematron createSchXslt (@Nonnull final IReadableResource aRes,
                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT, aRes), null, aNamespaceContext);
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT, aRes),
+                                             null,
+                                             aNamespaceContext);
   }
 
   /**
@@ -585,6 +603,8 @@ public class ValidationExecutorSchematron extends AbstractValidationExecutor <IV
   public static ValidationExecutorSchematron createOIOUBL (@Nonnull final IReadableResource aRes,
                                                            @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL, aRes), null, aNamespaceContext);
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL, aRes),
+                                             null,
+                                             aNamespaceContext);
   }
 }
