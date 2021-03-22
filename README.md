@@ -129,7 +129,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v7.1.2 - work in progress
+* v7.2.0 - 2021-03-22
     * Updated to ph-commons 10
     * Added new class `ValidationSourceBinary`
 * v7.1.1 - 2021-01-28
