@@ -1,5 +1,9 @@
 # PHIVE - Integrative Validation Engine
 
+[![Build Status](https://travis-ci.com/phax/phive.svg?branch=master)](https://travis-ci.com/phax/phive)
+[![javadoc](https://javadoc.io/badge2/com.helger.phive/phive-parent-pom/javadoc.svg)](https://javadoc.io/doc/com.helger.phive/phive-parent-pom)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom) 
+
 A generic document validation engine originally developed for Peppol but now also supporting many other document types.
 
 The original name was "ph-bdve" but because it was so difficult to pronounce, it was decided to change the name to "phive" which is an abbreviation of "Philip Helger Integrative Validation Engine" and is pronounced exactly like the digit 5. The old name of the repository was "ph-bdve".
