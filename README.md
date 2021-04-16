@@ -4,7 +4,7 @@ A generic document validation engine originally developed for Peppol but now als
 
 The original name was "ph-bdve" but because it was so difficult to pronounce, it was decided to change the name to "phive" which is an abbreviation of "Philip Helger Integrative Validation Engine" and is pronounced exactly like the digit 5. The old name of the repository was "ph-bdve".
 
-This project only contains the validation **engine** - all the preconfigured rules are available at https://github.com/phax/ph-bdve-rules
+This project only contains the validation **engine** - all the preconfigured rules are available at https://github.com/phax/phive-rules
 
 This project is licensed under the Apache 2 license.
 
@@ -31,7 +31,7 @@ Each VESID can be represented in a single string in the form `groupID:artifiactI
 
 ## How to validate documents
 
-At least the `phive-engine` project and one library with rule sets (like e.g. `ph-bdve-rules-peppol` from https://github.com/phax/ph-bdve-rules) is needed in your application. See the section on usage in a Maven project below.
+At least the `phive-engine` project and one library with rule sets (like e.g. `phive-rules-peppol` from https://github.com/phax/phive-rules) is needed in your application. See the section on usage in a Maven project below.
 All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
 Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
 Example for registering (only) Peppol validation artefacts:
