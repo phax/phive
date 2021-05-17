@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns="urn:com:helger:phive:vom:v1.0" 
+           targetNamespace="urn:com:helger:phive:vom:v1.0"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           version="1.0">
+  <xs:complexType name="VOMCoordinatesType">
+    <xs:annotation>
+      <xs:documentation>The complex type defines the layout and the constraints of a single pair of coordinates</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="groupId" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The group ID is something like a company or project ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="artifactId" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The artifact specifies something relative to a group. It must be unique within a group.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="version" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The version number of an artifact within a group. This MUST follow the semantic versioning principle.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="classifier" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>An optional classifier that might be used to add special, implementation specific meaning.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="VOMXSDType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="builtIn" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Reference to a built-in XML Schema artefact to be used for validation. The exact available IDs available are implementation dependent.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="resource" type="VOMCoordinatesType">
+          <xs:annotation>
+            <xs:documentation>Reference to XML Schema resource in the local repository</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="VOMEdifactType">
+    <xs:sequence>
+      <xs:element name="directory" type="xs:NCName">
+        <xs:annotation>
+          <xs:documentation>The Edifact directory to be used. This value should be treated case insensitive.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="message" type="xs:NCName">
+        <xs:annotation>
+          <xs:documentation>The Edifact message type (as in INVOIC) to be validated against.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <xs:complexType name="VOMNamespaceMappingType">
+    <xs:sequence>
+      <xs:element name="prefix" type="xs:NCName" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The XML namespace prefix to be used. If this element is omitted, than the empty namespace prefix will be used</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="namespace" type="xs:anyURI">
+        <xs:annotation>
+          <xs:documentation>The XML namespace URI to be mapped.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="VOMNamespacesType">
+    <xs:sequence>
+      <xs:choice minOccurs="0">
+        <xs:element name="builtIn" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Contains a reference to a predefined namespace map. All mappings of the referenced namespace map are copied into this new map. The exact available list of IDs is implementation dependent</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="basedOn" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Contains a reference to an ID of a namespace map defined in this file. All mappings of the referenced namespace map are copied into this new map.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="id" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>An optional ID for this namespace map, so it can be referenced from within this file.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="mapping" type="VOMNamespaceMappingType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A single mapping from prefix to namespace URL. The order is important, and later definitions overwrite previous definitions.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:simpleType name="VOMErrorLevel">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="info">
+        <xs:annotation>
+          <xs:documentation>Error level 'information' meaning no error anymore</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="warn">
+        <xs:annotation>
+          <xs:documentation>Error level 'warning' meaning a non-serious thing and validation may continue</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="error">
+        <xs:annotation>
+          <xs:documentation>Error level 'error' meaning a serious problem occurred and validation is considered failed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:complexType name="VOMCustomError">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The Schematron ID of the Schematron failed-assert or successful-report to change.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="level" type="VOMErrorLevel">
+        <xs:annotation>
+          <xs:documentation>The Schematron ID of the Schematron failed-assert or successful-report to change.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="description" type="xs:normalizedString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>An optional human readable description of why this is necessary.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="VOMCustomErrors">
+    <xs:sequence>
+      <xs:element name="customError" type="VOMCustomError" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Contains a single custom error declaration.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="VOMSchematronType">
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="builtIn" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Reference to a built-in Schematron artefact to be used for validation. The exact available IDs available are implementation dependent.</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="resource" type="VOMCoordinatesType">
+          <xs:annotation>
+            <xs:documentation>Reference to Schematron resource in the local repository</xs:documentation>
+          </xs:annotation>
+        </xs:element>
+      </xs:choice>
+      <xs:element name="prerequisite" type="xs:normalizedString" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Contains an optional XPath expression that is evaluated as a prerequisite. Only if this evaluation leads to 'true' than the Schematron is applied. If multipe prerequisites are provided, all of them are evaluated and must each return 'true'.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="namespaces" type="VOMNamespacesType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains a map from namespace prefix to namespace URI to be used with this Schematron resource</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="customErrors" type="VOMCustomErrors" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Contains custom error code mappings. This is used to change the error level of an applied validation.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+ 
+  <xs:complexType name="VOMValidationType">
+    <xs:annotation>
+      <xs:documentation>This type contains all the validation rules. The order of the elements is important.</xs:documentation>
+    </xs:annotation>
+    <!-- Order doesn't matter, but at least one thing must be present. -->
+    <xs:choice minOccurs="1" maxOccurs="unbounded">
+      <xs:element name="xsd" type="VOMXSDType">
+        <xs:annotation>
+          <xs:documentation>This contains the XML Schema declarations</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="edifact" type="VOMEdifactType">
+        <xs:annotation>
+          <xs:documentation>This contains the Edifact declarations</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="schematron" type="VOMSchematronType">
+        <xs:annotation>
+          <xs:documentation>This contains the Schematron declarations</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+            
+  <xs:complexType name="VOMType">
+    <xs:sequence>
+      <xs:element name="id" type="VOMCoordinatesType">
+        <xs:annotation>
+          <xs:documentation>The structured VESID of the VOM</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The display name of this VOM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="validation" type="VOMValidationType">
+        <xs:annotation>
+          <xs:documentation>The display name of this VOM.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="vom" type="VOMType">
+    <xs:annotation>
+      <xs:documentation>The root element of the Validation Object Model</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+</xs:schema>

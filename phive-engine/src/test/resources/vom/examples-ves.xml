@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vom xmlns="urn:com:helger:phive:vom:v1.0">
+  <id>
+    <groupId>un.unece.uncefact</groupId>
+    <artifactId>CrossIndustryInvoice</artifactId>
+    <version>D16B</version>
+  </id>
+  <name>CII CrossIndustryInvoice D16B</name>
+  
+  <validation>
+    <xsd>
+      <builtIn>ubl21-invoice</builtIn>
+    </xsd>
+
+    <schematron>
+      <builtIn>cius-pt-200</builtIn>
+      <namespaces>
+        <builtIn>ubl21</builtIn>
+      </namespaces>
+    </schematron>
+
+    <schematron>
+      <builtIn>atnat-invoice-6</builtIn>
+      <prerequisite>/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'</prerequisite>
+      <namespaces>
+        <builtIn>ubl21</builtIn>
+        <mapping>
+          <prefix>ubl</prefix>
+          <namespace>urn:oasis:names:specification:ubl:schema:xsd:Invoice-2</namespace>
+        </mapping>
+      </namespaces>
+    </schematron>
+    
+    <schematron>
+      <builtIn>xrechnung-ublinv-200</builtIn>
+      <namespaces>
+        <builtIn>ubl21</builtIn>
+      </namespaces>
+      <customErrors>
+        <customError>
+          <id>BR-CL-01</id>
+          <level>info</level>
+        </customError>
+        <customError>
+          <id>BR-CL-23</id>
+          <level>warn</level>
+        </customError>
+        <customError>
+          <id>BR-CL-21</id>
+          <level>warn</level>
+        </customError>
+        <customError>
+          <id>BR-CL-24</id>
+          <level>info</level>
+        </customError>
+      </customErrors>
+    </schematron>
+    
+  </validation>
+</vom>

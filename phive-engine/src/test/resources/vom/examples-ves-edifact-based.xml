@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vom xmlns="urn:com:helger:phive:vom:v1.0">
+  <id>
+    <groupId>com.ecosio.edifact</groupId>
+    <artifactId>migros-desadv-d01b</artifactId>
+    <version>1.4.0</version>
+  </id>
+  <name>ecosio Migros binding für DESADV D01B</name>
+  
+  <validation>
+    <edifact>
+      <directory>d01b</directory>
+      <message>DESADV</message>
+    </edifact>
+
+    <schematron>
+      <resource>
+        <groupId>com.ecosio</groupId>
+        <artifactId>migros-special</artifactId>
+        <version>1.5.876</version>
+        <classifier>edifact2xml-ecosiov1</classifier>
+      </resource>
+    </schematron>
+  </validation>
+</vom>
