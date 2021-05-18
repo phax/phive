@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.schematron.svrl.ISVRLLocationBeautifierSPI;
-import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * This is a {@link MapBasedNamespaceContext} implementation of the
