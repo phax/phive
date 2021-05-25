@@ -34,9 +34,9 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
 @ThreadSafe
 public final class SchematronNamespaceBeautifier
 {
-  private static final SimpleReadWriteLock s_aRWLock = new SimpleReadWriteLock ();
-  @GuardedBy ("s_aRWLock")
-  private static final MapBasedNamespaceContext s_aCtx = new MapBasedNamespaceContext ();
+  private static final SimpleReadWriteLock RW_LOCK = new SimpleReadWriteLock ();
+  @GuardedBy ("RW_LOCK")
+  private static final MapBasedNamespaceContext NS_CTX = new MapBasedNamespaceContext ();
 
   private SchematronNamespaceBeautifier ()
   {}
@@ -44,25 +44,25 @@ public final class SchematronNamespaceBeautifier
   public static void addMapping (@Nonnull final String sPrefix, @Nonnull final String sNamespaceURI)
   {
     // Allow overwrite!
-    s_aRWLock.writeLockedGet ( () -> s_aCtx.setMapping (sPrefix, sNamespaceURI));
+    RW_LOCK.writeLocked ( () -> NS_CTX.setMapping (sPrefix, sNamespaceURI));
   }
 
   public static void addMappings (@Nullable final IIterableNamespaceContext aOther)
   {
     // Allow overwrite!
     if (aOther != null)
-      s_aRWLock.writeLockedGet ( () -> s_aCtx.setMappings (aOther));
+      RW_LOCK.writeLockedGet ( () -> NS_CTX.setMappings (aOther));
   }
 
   @Nonnull
   public static EChange removeAllMappings ()
   {
-    return s_aRWLock.writeLockedGet (s_aCtx::clear);
+    return RW_LOCK.writeLockedGet (NS_CTX::clear);
   }
 
   @Nullable
   public static String getMapping (@Nullable final String sNamespaceURI)
   {
-    return s_aRWLock.readLockedGet ( () -> s_aCtx.getPrefix (sNamespaceURI));
+    return RW_LOCK.readLockedGet ( () -> NS_CTX.getPrefix (sNamespaceURI));
   }
 }
