@@ -29,7 +29,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
 
 Author: Philip Helger
 History:
-* v1.0, 2021-05-17
+* v1.0, 2021-05-31
     Original version
  
     </xs:documentation>
@@ -63,6 +63,24 @@ History:
     </xs:sequence>
   </xs:complexType>
   
+  <xs:complexType name="VOMOptionType">
+    <xs:annotation>
+      <xs:documentation>A generic key-value pair to represent options, evaluated by the execution engine.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Name of an option. Must be unique for each validation context.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="value" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>Value of the of the option</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
   <xs:complexType name="VOMXSDType">
     <xs:sequence>
       <xs:choice>
@@ -77,9 +95,14 @@ History:
           </xs:annotation>
         </xs:element>
       </xs:choice>
+      <xs:element name="option" type="VOMOptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A set of key-value pairs to customize Edifact validation. Each key must be unique per instance of this type.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
-  
+ 
   <xs:complexType name="VOMEdifactType">
     <xs:sequence>
       <xs:element name="directory" type="xs:NCName">
@@ -90,6 +113,11 @@ History:
       <xs:element name="message" type="xs:NCName">
         <xs:annotation>
           <xs:documentation>The Edifact message type (as in INVOIC) to be validated against.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="option" type="VOMOptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A set of key-value pairs to customize Edifact validation. Each key must be unique per instance of this type.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>
@@ -203,7 +231,7 @@ History:
       </xs:choice>
       <xs:element name="prerequisite" type="xs:normalizedString" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
-          <xs:documentation>Contains an optional XPath expression that is evaluated as a prerequisite. Only if this evaluation leads to 'true' than the Schematron is applied. If multipe prerequisites are provided, all of them are evaluated and must each return 'true'.</xs:documentation>
+          <xs:documentation>Contains an optional XPath expression that is evaluated as a prerequisite. Only if this evaluation leads to 'true' than the Schematron is applied. If multiple prerequisites are provided, all of them are evaluated and must each return 'true'.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="namespaces" type="VOMNamespacesType" minOccurs="0">
@@ -216,6 +244,11 @@ History:
           <xs:documentation>Contains custom error code mappings. This is used to change the error level of an applied validation.</xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:element name="option" type="VOMOptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>A set of key-value pairs to customize Edifact validation. Each key must be unique per instance of this type.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
  
@@ -223,24 +256,26 @@ History:
     <xs:annotation>
       <xs:documentation>This type contains all the validation rules. The order of the elements is important.</xs:documentation>
     </xs:annotation>
-    <!-- Order doesn't matter, but at least one thing must be present at least once. -->
-    <xs:choice minOccurs="1" maxOccurs="unbounded">
-      <xs:element name="xsd" type="VOMXSDType">
+    <!-- Order doesn't really matter, but the created code is nice, if the order is fix.
+         At least one thing must be present at least once. -->
+    <xs:sequence>
+      <xs:element name="xsd" type="VOMXSDType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>This contains the XML Schema declarations</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="edifact" type="VOMEdifactType">
+      <!-- TODO XSD partial -->
+      <xs:element name="edifact" type="VOMEdifactType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>This contains the Edifact declarations. The support for Edifact is optional</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="schematron" type="VOMSchematronType">
+      <xs:element name="schematron" type="VOMSchematronType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>This contains the Schematron declarations</xs:documentation>
         </xs:annotation>
       </xs:element>
-    </xs:choice>
+    </xs:sequence>
   </xs:complexType>
             
   <xs:complexType name="VOMType">
