@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
@@ -18,10 +19,18 @@ import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
+import com.helger.phive.engine.schematron.ValidationExecutorSchematron;
 import com.helger.phive.engine.source.IValidationSourceXML;
+import com.helger.phive.engine.vom.v10.VOMCoordinatesType;
+import com.helger.phive.engine.vom.v10.VOMCustomError;
+import com.helger.phive.engine.vom.v10.VOMErrorLevel;
+import com.helger.phive.engine.vom.v10.VOMNamespaceMappingType;
+import com.helger.phive.engine.vom.v10.VOMNamespacesType;
+import com.helger.phive.engine.vom.v10.VOMSchematronType;
 import com.helger.phive.engine.vom.v10.VOMType;
 import com.helger.phive.engine.vom.v10.VOMXSDType;
 import com.helger.phive.engine.xsd.ValidationExecutorXSD;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * A converter from the XML based VOM to the executable
@@ -92,31 +101,149 @@ public class VOM1Converter
   }
 
   @Nonnull
+  private static VESID _createVESID (@Nonnull final VOMCoordinatesType a)
+  {
+    return new VESID (a.getGroupId (), a.getArtifactId (), a.getVersion (), a.getClassifier ());
+  }
+
+  @Nonnull
   private ValidationExecutorXSD _createExecutorXSD (@Nonnull final VOMXSDType aXsd)
   {
+    final ValidationExecutorXSD ret;
     final String sBuiltIn = aXsd.getBuiltIn ();
     if (StringHelper.hasText (sBuiltIn))
     {
       LOGGER.info ("Trying to resolve built-in XSD artifact '" + sBuiltIn + "'");
       final Schema aSchema = m_aXmlSchemaResolver.getXmlSchemaOfID (sBuiltIn);
       if (aSchema == null)
-        throw new IllegalStateException ("Failed to resolve XML Schema '" + sBuiltIn + "'");
-      return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                                new ReadableResourceByteArray ("built-in-" + sBuiltIn,
-                                                                                               ArrayHelper.EMPTY_BYTE_ARRAY)),
-                                        () -> aSchema);
+        throw new IllegalStateException ("Failed to resolve built-in XSD artifact '" + sBuiltIn + "'");
+      ret = new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
+                                                               new ReadableResourceByteArray ("built-in-" + sBuiltIn,
+                                                                                              ArrayHelper.EMPTY_BYTE_ARRAY)),
+                                       () -> aSchema);
+    }
+    else
+    {
+      // External resource
+      final VESID aVESID = _createVESID (aXsd.getResource ());
+      LOGGER.info ("Trying to resolve XSD artifact with ID '" + aVESID.getAsSingleID () + "'");
+      final IReadableResource aRes = m_aArtifactResolver.getArtifactOfID (aVESID);
+      if (aRes == null)
+        throw new IllegalStateException ("Failed to resolve XSD artifact with ID '" + aVESID.getAsSingleID () + "'");
+
+      ret = ValidationExecutorXSD.create (aRes);
+    }
+    if (aXsd.hasOptionEntries ())
+      LOGGER.warn ("Ignoring all XSD options");
+    return ret;
+  }
+
+  @Nonnull
+  public static EErrorLevel getAsErrorLevel (@Nonnull final VOMErrorLevel level)
+  {
+    switch (level)
+    {
+      case INFO:
+        return EErrorLevel.INFO;
+      case WARN:
+        return EErrorLevel.WARN;
+      case ERROR:
+        return EErrorLevel.ERROR;
+      default:
+        throw new IllegalStateException ("Unsupported error level in VOM: " + level);
+    }
+  }
+
+  @Nonnull
+  private ValidationExecutorSchematron _createExecutorSchematron (@Nonnull final VOMSchematronType aSchematron)
+  {
+    IReadableResource aRes;
+    {
+      final String sBuiltIn = aSchematron.getBuiltIn ();
+      if (StringHelper.hasText (sBuiltIn))
+      {
+        LOGGER.info ("Trying to resolve built-in Schematron artifact '" + sBuiltIn + "'");
+        aRes = m_aResourceResolver.getResourceOfID (sBuiltIn);
+        if (aRes == null)
+          throw new IllegalStateException ("Failed to resolve built-in Schematron artifact '" + sBuiltIn + "'");
+      }
+      else
+      {
+        // External resource
+        final VESID aVESID = _createVESID (aSchematron.getResource ());
+        LOGGER.info ("Trying to resolve Schematron artifact with ID '" + aVESID.getAsSingleID () + "'");
+        aRes = m_aArtifactResolver.getArtifactOfID (aVESID);
+        if (aRes == null)
+          throw new IllegalStateException ("Failed to resolve Schematron artifact with ID '" + aVESID.getAsSingleID () + "'");
+      }
     }
 
-    final VESID aVESID = new VESID (aXsd.getResource ().getGroupId (),
-                                    aXsd.getResource ().getArtifactId (),
-                                    aXsd.getResource ().getVersion (),
-                                    aXsd.getResource ().getClassifier ());
-    LOGGER.info ("Trying to resolve XSD artifact '" + aVESID.getAsSingleID () + "'");
-    final IReadableResource aRes = m_aArtifactResolver.getArtifactOfID (aVESID);
-    if (aRes == null)
-      throw new IllegalStateException ("Failed to resolve artifact with ID '" + aVESID.getAsSingleID () + "'");
+    final EValidationType eValidationType;
+    if (StringHelper.hasNoText (aSchematron.getType ()))
+      eValidationType = EValidationType.SCHEMATRON_SCH;
+    else
+      switch (aSchematron.getType ())
+      {
+        case "pure":
+          eValidationType = EValidationType.SCHEMATRON_PURE;
+          break;
+        case "sch":
+          eValidationType = EValidationType.SCHEMATRON_SCH;
+          break;
+        case "xslt":
+          eValidationType = EValidationType.SCHEMATRON_XSLT;
+          break;
+        case "schxslt":
+          eValidationType = EValidationType.SCHEMATRON_SCHXSLT;
+          break;
+        case "oioubl":
+          eValidationType = EValidationType.SCHEMATRON_OIOUBL;
+          break;
+        default:
+          throw new IllegalStateException ("The Schematron type '" + aSchematron.getType () + "' is unsupported.");
+      }
 
-    return ValidationExecutorXSD.create (aRes);
+    if (aSchematron.getPrerequisiteCount () > 1)
+      throw new IllegalStateException ("Currently only 1 prerequsite path is supported");
+
+    final MapBasedNamespaceContext aNamespaceContext = new MapBasedNamespaceContext ();
+    final VOMNamespacesType aNamespaces = aSchematron.getNamespaces ();
+    if (aNamespaces != null)
+    {
+      final String sBuiltIn = aNamespaces.getBuiltIn ();
+      if (sBuiltIn != null)
+      {
+        // Built-in
+        LOGGER.info ("Trying to resolve built-in namespace context '" + sBuiltIn + "'");
+        final MapBasedNamespaceContext ret = m_aNamespaceContextResolver.getNamespaceContextOfID (sBuiltIn);
+        if (ret == null)
+          throw new IllegalStateException ("Failed to resolve built-in namespace context with ID '" + sBuiltIn + "'");
+        aNamespaceContext.addMappings (ret);
+      }
+      else
+      {
+        // Start empty
+      }
+
+      for (final VOMNamespaceMappingType aMapping : aNamespaces.getMapping ())
+      {
+        // Default to the default namespace prefix
+        final String sPrefix = StringHelper.getNotNull (aMapping.getPrefix (), "");
+        aNamespaceContext.setMapping (sPrefix, aMapping.getNamespace ());
+      }
+    }
+
+    final ValidationExecutorSchematron ret = new ValidationExecutorSchematron (new ValidationArtefact (eValidationType, aRes),
+                                                                               aSchematron.hasPrerequisiteEntries () ? aSchematron.getPrerequisiteAtIndex (0)
+                                                                                                                     : null,
+                                                                               aNamespaceContext.hasAnyMapping () ? aNamespaceContext
+                                                                                                                  : null);
+
+    // Custom errors afterwards (optional)
+    for (final VOMCustomError aCE : aSchematron.getCustomError ())
+      ret.addCustomErrorLevel (aCE.getId (), getAsErrorLevel (aCE.getLevel ()));
+
+    return ret;
   }
 
   @Nullable
@@ -133,20 +260,22 @@ public class VOM1Converter
                               m_aResourceResolver,
                               m_aComplianceSettings,
                               aErrorList);
-      if (aErrorList.isNotEmpty ())
+      if (aErrorList.containsAtLeastOneError ())
         return null;
     }
 
     // Create stub
-    final ValidationExecutorSet <IValidationSourceXML> ret = new ValidationExecutorSet <> (new VESID (aVOM.getId ().getGroupId (),
-                                                                                                      aVOM.getId ().getArtifactId (),
-                                                                                                      aVOM.getId ().getVersion (),
-                                                                                                      aVOM.getId ().getClassifier ()),
+    final ValidationExecutorSet <IValidationSourceXML> ret = new ValidationExecutorSet <> (_createVESID (aVOM.getId ()),
                                                                                            aVOM.getName (),
                                                                                            false);
 
+    // Add all XSDs
     for (final VOMXSDType aXsd : aVOM.getValidation ().getXsd ())
       ret.addExecutor (_createExecutorXSD (aXsd));
+
+    // Add all XSDs
+    for (final VOMSchematronType aSchematron : aVOM.getValidation ().getSchematron ())
+      ret.addExecutor (_createExecutorSchematron (aSchematron));
 
     if (m_aComplianceSettings.isAllowEdifact () && aVOM.getValidation ().hasEdifactEntries ())
       throw new IllegalStateException ("Edifact is allowed, Edifact entries are provided, but this method can only handle XML validations");

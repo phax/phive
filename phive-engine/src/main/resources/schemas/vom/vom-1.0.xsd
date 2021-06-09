@@ -219,6 +219,11 @@ History:
           </xs:annotation>
         </xs:element>
       </xs:choice>
+      <xs:element name="type" type="xs:normalizedString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Defines the exact representation of the Schematron. Each implementation must at least support 'sch' for plain Schematron and 'xslt' for prebuild XSLT representations. The support for other types is optional. The default type is 'sch'.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="prerequisite" type="xs:normalizedString" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Contains an optional XPath expression that is evaluated as a prerequisite. Only if this evaluation leads to 'true' than the Schematron is applied. If multiple prerequisites are provided, all of them are evaluated and must each return 'true'.</xs:documentation>
