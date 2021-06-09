@@ -276,6 +276,8 @@ public final class VOMValidator
 
       // TODO prerequisite
       validateNamespaces (sXPath + "/namespaces", aSchematron.getNamespaces (), aNamespaceContextResolver, aErrorList);
+
+      // Custom errors
       if (aSchematron.hasCustomErrorEntries ())
       {
         int nIndex = 1;
