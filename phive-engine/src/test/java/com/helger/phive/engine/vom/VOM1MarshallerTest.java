@@ -18,9 +18,11 @@ package com.helger.phive.engine.vom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Locale;
 
 import javax.xml.validation.Schema;
 
@@ -29,7 +31,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.error.IError;
 import com.helger.commons.error.list.ErrorList;
+import com.helger.commons.io.file.FileSystemIterator;
+import com.helger.commons.io.file.IFileFilter;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
 import com.helger.phive.engine.vom.v10.VOMType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
@@ -51,17 +56,17 @@ public final class VOM1MarshallerTest
   }
 
   @Test
-  public void testReadExamples ()
+  public void testReadGoodExamples ()
   {
     final VOM1Marshaller m = new VOM1Marshaller ();
-    for (final String s : new String [] { "examples-ves.xml", "examples-ves-edifact-based.xml", "examples-ves-xrechnung-200-ublinv.xml" })
+    for (final File f : new FileSystemIterator (new File ("src/test/resources/vom/good")).withFilter (IFileFilter.filenameEndsWith (".xml")))
     {
-      LOGGER.info ("Reading " + s);
-      final VOMType aVOM = m.read (new File ("src/test/resources/vom/" + s));
+      LOGGER.info ("Reading " + f.getName ());
+      final VOMType aVOM = m.read (f);
       assertNotNull (aVOM);
 
       final Schema aFakeSchema = XMLSchemaCache.getInstance ()
-                                     .getSchema (new ReadableResourceByteArray ("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:1\" targetNamespace=\"urn:a\" version=\"1.0\"><xs:element name=\"a\" type=\"xs:string\" /></xs:schema>".getBytes ()));
+                                               .getSchema (new ReadableResourceByteArray ("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:1\" targetNamespace=\"urn:a\" version=\"1.0\"><xs:element name=\"a\" type=\"xs:string\" /></xs:schema>".getBytes ()));
 
       final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ().addMapping ("ubl21-invoice", aFakeSchema);
       final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ().addMapping ("ubl21",
@@ -84,6 +89,43 @@ public final class VOM1MarshallerTest
                                                           aResourceResolver,
                                                           aSettings);
       assertEquals (aErrorList.toString (), 0, aErrorList.getErrorCount ());
+    }
+  }
+
+  @Test
+  public void testReadBadXSDExamples ()
+  {
+    final VOM1Marshaller m = new VOM1Marshaller ();
+    for (final File f : new FileSystemIterator (new File ("src/test/resources/vom/bad-xsd")).withFilter (IFileFilter.filenameEndsWith (".xml")))
+    {
+      LOGGER.info ("Reading " + f.getName ());
+      final VOMType aVOM = m.read (f);
+      assertNull (aVOM);
+    }
+  }
+
+  @Test
+  public void testReadBadExamples ()
+  {
+    final VOM1Marshaller m = new VOM1Marshaller ();
+    for (final File f : new FileSystemIterator (new File ("src/test/resources/vom/bad")).withFilter (IFileFilter.filenameEndsWith (".xml")))
+    {
+      LOGGER.info ("Reading " + f.getName ());
+      final VOMType aVOM = m.read (f);
+      assertNotNull (aVOM);
+
+      final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ();
+      final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ();
+      final IVOMResourceResolver aResourceResolver = new MapBasedVOMResourceResolver ();
+      final VOMValidationSettings aSettings = new VOMValidationSettings (true);
+      final ErrorList aErrorList = VOMValidator.validate (aVOM,
+                                                          aXmlSchemaResolver,
+                                                          aNamespaceContextResolver,
+                                                          aResourceResolver,
+                                                          aSettings);
+      for (final IError e : aErrorList)
+        LOGGER.info ("  " + e.getAsString (Locale.ROOT));
+      assertTrue (aErrorList.getErrorCount () > 0);
     }
   }
 }
