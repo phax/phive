@@ -49,13 +49,12 @@ import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
 
 /**
- * Implementation of {@link IValidationExecutor} for XML Schema validation of
- * parts of a source document.
+ * Implementation of {@link AbstractValidationExecutor} for XML Schema
+ * validation of parts of a source document.
  *
  * @author Philip Helger
  */
-public class ValidationExecutorXSDPartial extends
-                                          AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSDPartial>
+public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSDPartial>
 {
   private final Supplier <? extends Schema> m_aSchemaProvider;
   private final XSDPartialContext m_aPartialContext;
@@ -105,8 +104,7 @@ public class ValidationExecutorXSDPartial extends
     NodeList aNodeSet;
     try
     {
-      aNodeSet = (NodeList) m_aPartialContext.getXPathExpression ()
-                                             .evaluate (aSource.getNode (), XPathConstants.NODESET);
+      aNodeSet = (NodeList) m_aPartialContext.getXPathExpression ().evaluate (aSource.getNode (), XPathConstants.NODESET);
     }
     catch (final XPathExpressionException ex)
     {
@@ -153,9 +151,7 @@ public class ValidationExecutorXSDPartial extends
     for (int i = 0; i < aNodeSet.getLength (); ++i)
     {
       // Build a partial source
-      final IValidationSourceXML aRealSource = new ValidationSourceXML (aSource.getSystemID (),
-                                                                        aNodeSet.item (i),
-                                                                        true);
+      final IValidationSourceXML aRealSource = new ValidationSourceXML (aSource.getSystemID (), aNodeSet.item (i), true);
 
       try
       {
@@ -167,8 +163,7 @@ public class ValidationExecutorXSDPartial extends
         // Happens when non-XML document is trying to be parsed
         if (ex.getCause () instanceof SAXParseException)
         {
-          aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
-                                                                    (SAXParseException) ex.getCause ()));
+          aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
         }
         else
         {
@@ -229,8 +224,7 @@ public class ValidationExecutorXSDPartial extends
     ValueEnforcer.notNull (aDocType, "DocType");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD,
-                                                                     aDocType.getAllXSDResources ().getLast ()),
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
                                              aDocType::getSchema,
                                              aPartialContext);
   }
@@ -277,8 +271,7 @@ public class ValidationExecutorXSDPartial extends
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD,
-                                                                     aXSDRes.get (aXSDRes.size () - 1)),
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aXSDRes.get (aXSDRes.size () - 1)),
                                              () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
                                              aPartialContext);
   }

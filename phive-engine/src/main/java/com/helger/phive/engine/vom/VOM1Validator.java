@@ -49,7 +49,7 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * Validator for VOM v1 data model. See
- * {@link #validate(VOMType, IVOMXmlSchemaResolver, IVOMNamespaceContextResolver, IVOMResourceResolver, VOMValidationSettings)}
+ * {@link #validate(VOMType, IVOMXmlSchemaResolver, IVOMNamespaceContextResolver, IVOMResourceResolver, VOM1ComplianceSettings)}
  * as the simplest entry point.
  *
  * @author Philip Helger

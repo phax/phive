@@ -47,7 +47,8 @@ import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
 
 /**
- * Implementation of {@link IValidationExecutor} for XML Schema validation.
+ * Implementation of {@link AbstractValidationExecutor} for XML Schema
+ * validation.
  *
  * @author Philip Helger
  */
@@ -92,8 +93,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
       // Happens when non-XML document is trying to be parsed
       if (ex.getCause () instanceof SAXParseException)
       {
-        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
-                                                                  (SAXParseException) ex.getCause ()));
+        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
       }
       else
       {
@@ -144,8 +144,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     ValueEnforcer.notNull (aDocType, "DocType");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                              aDocType.getAllXSDResources ().getLast ()),
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
                                       aDocType::getSchema);
   }
 

@@ -24,7 +24,7 @@ import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.schematron.svrl.ISVRLLocationBeautifierSPI;
 
 /**
- * This is a {@link MapBasedNamespaceContext} implementation of the
+ * This is a {@link SchematronNamespaceBeautifier} implementation of the
  * {@link ISVRLLocationBeautifierSPI} implementation.
  *
  * @author Philip Helger
