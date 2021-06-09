@@ -36,6 +36,7 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.file.IFileFilter;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
+import com.helger.phive.engine.vom.VOM1ComplianceSettings.IEdifactValidationExecutorProviderXML;
 import com.helger.phive.engine.vom.v10.VOMType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.schema.XMLSchemaCache;
@@ -82,12 +83,16 @@ public final class VOM1MarshallerTest
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
                                                                                        .addMapping ("en16931-ublinv-132",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY));
-      final VOM1ComplianceSettings aSettings = new VOM1ComplianceSettings (true);
+      final IEdifactValidationExecutorProviderXML aEdifactProvider = (sDirectory, sMessage, aOptions) -> null;
+      final VOM1ComplianceSettings aSettings = VOM1ComplianceSettings.builder ()
+                                                                     .allowEdifact (true)
+                                                                     .edifactValidationExecutorProviderXML (aEdifactProvider)
+                                                                     .build ();
       final ErrorList aErrorList = VOM1Validator.validate (aVOM,
-                                                          aXmlSchemaResolver,
-                                                          aNamespaceContextResolver,
-                                                          aResourceResolver,
-                                                          aSettings);
+                                                           aXmlSchemaResolver,
+                                                           aNamespaceContextResolver,
+                                                           aResourceResolver,
+                                                           aSettings);
       assertEquals (aErrorList.toString (), 0, aErrorList.getErrorCount ());
     }
   }
@@ -117,12 +122,16 @@ public final class VOM1MarshallerTest
       final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ();
       final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ();
       final IVOMResourceResolver aResourceResolver = new MapBasedVOMResourceResolver ();
-      final VOM1ComplianceSettings aSettings = new VOM1ComplianceSettings (true);
+      final IEdifactValidationExecutorProviderXML aEdifactProvider = (sDirectory, sMessage, aOptions) -> null;
+      final VOM1ComplianceSettings aSettings = VOM1ComplianceSettings.builder ()
+                                                                     .allowEdifact (true)
+                                                                     .edifactValidationExecutorProviderXML (aEdifactProvider)
+                                                                     .build ();
       final ErrorList aErrorList = VOM1Validator.validate (aVOM,
-                                                          aXmlSchemaResolver,
-                                                          aNamespaceContextResolver,
-                                                          aResourceResolver,
-                                                          aSettings);
+                                                           aXmlSchemaResolver,
+                                                           aNamespaceContextResolver,
+                                                           aResourceResolver,
+                                                           aSettings);
       for (final IError e : aErrorList)
         LOGGER.info ("  " + e.getAsString (Locale.ROOT));
       assertTrue (aErrorList.getErrorCount () > 0);

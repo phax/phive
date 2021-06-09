@@ -19,6 +19,7 @@ package com.helger.phive.engine.vom;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.validation.Schema;
 
@@ -30,10 +31,13 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.file.IFileFilter;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.engine.source.IValidationSourceXML;
+import com.helger.phive.engine.vom.VOM1ComplianceSettings.IEdifactValidationExecutorProviderXML;
 import com.helger.phive.engine.vom.v10.VOMType;
+import com.helger.phive.engine.xsd.ValidationExecutorXSD;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.schema.XMLSchemaCache;
 
@@ -56,8 +60,8 @@ public final class VOM1ConverterTest
       final VOMType aVOM = m.read (f);
       assertNotNull (aVOM);
 
-      final Schema aFakeSchema = XMLSchemaCache.getInstance ()
-                                               .getSchema (new ReadableResourceByteArray ("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:1\" targetNamespace=\"urn:a\" version=\"1.0\"><xs:element name=\"a\" type=\"xs:string\" /></xs:schema>".getBytes ()));
+      final IReadableResource aFakeXSD = new ReadableResourceByteArray ("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:1\" targetNamespace=\"urn:a\" version=\"1.0\"><xs:element name=\"a\" type=\"xs:string\" /></xs:schema>".getBytes (StandardCharsets.ISO_8859_1));
+      final Schema aFakeSchema = XMLSchemaCache.getInstance ().getSchema (aFakeXSD);
 
       final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ().addMapping ("ubl21-invoice", aFakeSchema);
       final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ().addMapping ("ubl21",
@@ -73,21 +77,32 @@ public final class VOM1ConverterTest
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
                                                                                        .addMapping ("en16931-ublinv-132",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY));
-      final IVOMArtifactResolver aAR = aVESID -> null;
-      final VOM1ComplianceSettings aSettings = new VOM1ComplianceSettings (true);
+      final IVOMArtifactResolver aAR = aVESID -> {
+        switch (aVESID.getAsSingleID ())
+        {
+          case "com.helger:test-special:1.5.678":
+            return new ReadableResourceByteArray ("crap".getBytes (StandardCharsets.ISO_8859_1));
+        }
+        return null;
+      };
+      final IEdifactValidationExecutorProviderXML aEdifactProvider = (sDirectory, sMessage, aOptions) -> {
+        if (sDirectory.equals ("d01b") && sMessage.equals ("DESADV"))
+          return ValidationExecutorXSD.create (aFakeXSD);
+        return null;
+      };
+      final VOM1ComplianceSettings aSettings = VOM1ComplianceSettings.builder ()
+                                                                     .allowEdifact (true)
+                                                                     .edifactValidationExecutorProviderXML (aEdifactProvider)
+                                                                     .build ();
       final ErrorList aErrorList = new ErrorList ();
       final VOM1Converter aConverter1 = new VOM1Converter ().xmlSchemaResolver (aXmlSchemaResolver)
                                                             .namespaceContextResolver (aNamespaceContextResolver)
                                                             .resourceResolver (aResourceResolver)
                                                             .complianceSettings (aSettings)
-                                                            .artifactResolver (aAR);
-      if (aVOM.getValidation ().hasEdifactEntries ())
-      {}
-      else
-      {
-        final ValidationExecutorSet <IValidationSourceXML> aVES = aConverter1.convertToVES_XML (aVOM, aErrorList);
-        assertNotNull (aErrorList.toString (), aVES);
-      }
+                                                            .artifactResolver (aAR)
+                                                            .validationEnabled (true);
+      final ValidationExecutorSet <IValidationSourceXML> aVES = aConverter1.convertToVES_XML (aVOM, aErrorList);
+      assertNotNull (aErrorList.toString (), aVES);
     }
   }
 }

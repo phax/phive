@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.collection.attr.StringMap;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
@@ -17,15 +18,19 @@ import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
 import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
+import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.engine.schematron.ValidationExecutorSchematron;
 import com.helger.phive.engine.source.IValidationSourceXML;
+import com.helger.phive.engine.vom.VOM1ComplianceSettings.IEdifactValidationExecutorProviderXML;
 import com.helger.phive.engine.vom.v10.VOMCoordinatesType;
 import com.helger.phive.engine.vom.v10.VOMCustomError;
+import com.helger.phive.engine.vom.v10.VOMEdifactType;
 import com.helger.phive.engine.vom.v10.VOMErrorLevel;
 import com.helger.phive.engine.vom.v10.VOMNamespaceMappingType;
 import com.helger.phive.engine.vom.v10.VOMNamespacesType;
+import com.helger.phive.engine.vom.v10.VOMOptionType;
 import com.helger.phive.engine.vom.v10.VOMSchematronType;
 import com.helger.phive.engine.vom.v10.VOMType;
 import com.helger.phive.engine.vom.v10.VOMXSDType;
@@ -48,7 +53,7 @@ public class VOM1Converter
   private IVOMResourceResolver m_aResourceResolver = x -> null;
   private IVOMArtifactResolver m_aArtifactResolver = x -> null;
   private boolean m_bPerformValidation = true;
-  private VOM1ComplianceSettings m_aComplianceSettings = new VOM1ComplianceSettings (false);
+  private VOM1ComplianceSettings m_aComplianceSettings = VOM1ComplianceSettings.builder ().allowEdifact (false).build ();
 
   public VOM1Converter ()
   {}
@@ -107,6 +112,26 @@ public class VOM1Converter
   }
 
   @Nonnull
+  private IValidationExecutor <IValidationSourceXML> _createExecutorEdifact (@Nonnull final VOMEdifactType aEdifact)
+  {
+    final IEdifactValidationExecutorProviderXML aProvider = m_aComplianceSettings.getEdifactValidationExecutorProviderXML ();
+    final StringMap aOptions = new StringMap ();
+    for (final VOMOptionType aOption : aEdifact.getOption ())
+      aOptions.put (aOption.getName (), aOption.getValue ());
+    LOGGER.info ("Trying to resolve Edifact artifact '" + aEdifact.getDirectory () + '/' + aEdifact.getMessage () + "'");
+    final IValidationExecutor <IValidationSourceXML> aVES = aProvider.createValidationExecutor (aEdifact.getDirectory (),
+                                                                                                aEdifact.getMessage (),
+                                                                                                aOptions);
+    if (aVES == null)
+      throw new IllegalStateException ("Failed to resolve Edifact artifact '" +
+                                       aEdifact.getDirectory () +
+                                       '/' +
+                                       aEdifact.getMessage () +
+                                       "'");
+    return aVES;
+  }
+
+  @Nonnull
   private ValidationExecutorXSD _createExecutorXSD (@Nonnull final VOMXSDType aXsd)
   {
     final ValidationExecutorXSD ret;
@@ -157,7 +182,7 @@ public class VOM1Converter
   @Nonnull
   private ValidationExecutorSchematron _createExecutorSchematron (@Nonnull final VOMSchematronType aSchematron)
   {
-    IReadableResource aRes;
+    final IReadableResource aRes;
     {
       final String sBuiltIn = aSchematron.getBuiltIn ();
       if (StringHelper.hasText (sBuiltIn))
@@ -243,6 +268,9 @@ public class VOM1Converter
     for (final VOMCustomError aCE : aSchematron.getCustomError ())
       ret.addCustomErrorLevel (aCE.getId (), getAsErrorLevel (aCE.getLevel ()));
 
+    if (aSchematron.hasOptionEntries ())
+      LOGGER.warn ("Ignoring all Schematron options");
+
     return ret;
   }
 
@@ -269,16 +297,25 @@ public class VOM1Converter
                                                                                            aVOM.getName (),
                                                                                            false);
 
-    // Add all XSDs
-    for (final VOMXSDType aXsd : aVOM.getValidation ().getXsd ())
-      ret.addExecutor (_createExecutorXSD (aXsd));
+    if (m_aComplianceSettings.isAllowEdifact () && aVOM.getValidation ().hasEdifactEntries ())
+    {
+      if (aVOM.getValidation ().hasXsdEntries ())
+        throw new IllegalStateException ("If Edifact is enabled and present, than no XSD can be present!");
+
+      // Add all Edifacts
+      for (final VOMEdifactType aEdifact : aVOM.getValidation ().getEdifact ())
+        ret.addExecutor (_createExecutorEdifact (aEdifact));
+    }
+    else
+    {
+      // Add all XSDs
+      for (final VOMXSDType aXsd : aVOM.getValidation ().getXsd ())
+        ret.addExecutor (_createExecutorXSD (aXsd));
+    }
 
     // Add all XSDs
     for (final VOMSchematronType aSchematron : aVOM.getValidation ().getSchematron ())
       ret.addExecutor (_createExecutorSchematron (aSchematron));
-
-    if (m_aComplianceSettings.isAllowEdifact () && aVOM.getValidation ().hasEdifactEntries ())
-      throw new IllegalStateException ("Edifact is allowed, Edifact entries are provided, but this method can only handle XML validations");
 
     return ret;
   }
