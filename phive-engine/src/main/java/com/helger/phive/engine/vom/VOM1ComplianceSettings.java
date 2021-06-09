@@ -21,13 +21,18 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.builder.IBuilder;
 
+/**
+ * Specific compliance settings applicable for VOM v1.
+ *
+ * @author Philip Helger
+ */
 @NotThreadSafe
-public class VOMValidationSettings
+public class VOM1ComplianceSettings
 {
   public static final boolean DEFAULT_ALLOW_EDIFACT = false;
   private final boolean m_bAllowEdifact;
 
-  public VOMValidationSettings (final boolean bAllowEdifact)
+  public VOM1ComplianceSettings (final boolean bAllowEdifact)
   {
     m_bAllowEdifact = bAllowEdifact;
   }
@@ -43,7 +48,7 @@ public class VOMValidationSettings
     return new Builder ();
   }
 
-  public static class Builder implements IBuilder <VOMValidationSettings>
+  public static class Builder implements IBuilder <VOM1ComplianceSettings>
   {
     private boolean m_bAllowEdifact = DEFAULT_ALLOW_EDIFACT;
 
@@ -58,9 +63,9 @@ public class VOMValidationSettings
     }
 
     @Nonnull
-    public VOMValidationSettings build ()
+    public VOM1ComplianceSettings build ()
     {
-      return new VOMValidationSettings (m_bAllowEdifact);
+      return new VOM1ComplianceSettings (m_bAllowEdifact);
     }
   }
 }

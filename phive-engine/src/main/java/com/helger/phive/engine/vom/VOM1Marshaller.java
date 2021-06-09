@@ -26,11 +26,14 @@ import com.helger.phive.engine.vom.v10.VOMType;
  * A marshaller to read Validation Object Model v1 declarations.
  *
  * @author Philip Helger
+ * @since 7.2.1
  */
 public class VOM1Marshaller extends GenericJAXBMarshaller <VOMType>
 {
-  public static final ClassPathResource XSD = new ClassPathResource ("schemas/vom/vom-1.0.xsd",
-                                                                     VOM1Marshaller.class.getClassLoader ());
+  /**
+   * The XML Schema path to validate against.
+   */
+  public static final ClassPathResource XSD = new ClassPathResource ("schemas/vom/vom-1.0.xsd", VOM1Marshaller.class.getClassLoader ());
 
   public VOM1Marshaller ()
   {

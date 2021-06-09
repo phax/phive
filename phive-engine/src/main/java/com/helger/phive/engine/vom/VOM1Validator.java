@@ -23,6 +23,9 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.xml.validation.Schema;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
@@ -44,8 +47,16 @@ import com.helger.phive.engine.vom.v10.VOMValidationType;
 import com.helger.phive.engine.vom.v10.VOMXSDType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
+/**
+ * Validator for VOM v1 data model. See
+ * {@link #validate(VOMType, IVOMXmlSchemaResolver, IVOMNamespaceContextResolver, IVOMResourceResolver, VOMValidationSettings)}
+ * as the simplest entry point.
+ *
+ * @author Philip Helger
+ * @since 7.2.1
+ */
 @Immutable
-public final class VOMValidator
+public final class VOM1Validator
 {
   public enum EVOMErrorCode
   {
@@ -82,7 +93,9 @@ public final class VOMValidator
     }
   }
 
-  private VOMValidator ()
+  private static final Logger LOGGER = LoggerFactory.getLogger (VOM1Validator.class);
+
+  private VOM1Validator ()
   {}
 
   @Nonnull
@@ -332,7 +345,7 @@ public final class VOMValidator
                                          @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
                                          @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
                                          @Nonnull final IVOMResourceResolver aResourceResolver,
-                                         @Nonnull final VOMValidationSettings aSettings,
+                                         @Nonnull final VOM1ComplianceSettings aSettings,
                                          @Nonnull final ErrorList aErrorList)
   {
     if (aValidation == null)
@@ -390,7 +403,7 @@ public final class VOMValidator
                                @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
                                @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
                                @Nonnull final IVOMResourceResolver aResourceResolver,
-                               @Nonnull final VOMValidationSettings aSettings,
+                               @Nonnull final VOM1ComplianceSettings aSettings,
                                @Nonnull final ErrorList aErrorList)
   {
     ValueEnforcer.notNull (aVOM, "VOM");
@@ -399,6 +412,10 @@ public final class VOMValidator
     ValueEnforcer.notNull (aResourceResolver, "ResourceResolver");
     ValueEnforcer.notNull (aSettings, "Settings");
     ValueEnforcer.notNull (aErrorList, "ErrorList");
+
+    final int nOrigErrors = aErrorList.getCount ();
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Now validating VOM1 model");
 
     final String sXPath = "/ves";
     validateCoordinates (sXPath + "/id", aVOM.getId (), aErrorList);
@@ -411,6 +428,10 @@ public final class VOMValidator
                         aResourceResolver,
                         aSettings,
                         aErrorList);
+
+    final int nDelta = aErrorList.getCount () - nOrigErrors;
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Finished validating VOM1 model. " + nDelta + " warnings/errors were found");
   }
 
   @Nonnull
@@ -418,7 +439,7 @@ public final class VOMValidator
                                     @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
                                     @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
                                     @Nonnull final IVOMResourceResolver aResourceResolver,
-                                    @Nonnull final VOMValidationSettings aSettings)
+                                    @Nonnull final VOM1ComplianceSettings aSettings)
   {
     final ErrorList aErrorList = new ErrorList ();
     validate (aVOM, aXmlSchemaResolver, aNamespaceContextResolver, aResourceResolver, aSettings, aErrorList);

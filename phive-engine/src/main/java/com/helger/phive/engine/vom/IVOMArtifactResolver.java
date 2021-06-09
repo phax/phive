@@ -19,21 +19,22 @@ package com.helger.phive.engine.vom;
 import javax.annotation.Nullable;
 
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.phive.api.executorset.VESID;
 
 /**
  * Resolver for VOM resources that are referenced from the VOM.
  *
  * @author Philip Helger
  */
-public interface IVOMResourceResolver
+public interface IVOMArtifactResolver
 {
   /**
-   * Find the resource with the provided ID.
+   * Find the artifact with the provided ID.
    *
-   * @param sID
-   *        The resource ID to search. May be <code>null</code>.
+   * @param aVESID
+   *        The VESID to search. May be <code>null</code>.
    * @return The found resource or <code>null</code>.
    */
   @Nullable
-  IReadableResource getResourceOfID (@Nullable String sID);
+  IReadableResource getArtifactOfID (@Nullable VESID aVESID);
 }

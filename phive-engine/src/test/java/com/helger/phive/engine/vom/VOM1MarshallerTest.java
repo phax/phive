@@ -82,8 +82,8 @@ public final class VOM1MarshallerTest
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
                                                                                        .addMapping ("en16931-ublinv-132",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY));
-      final VOMValidationSettings aSettings = new VOMValidationSettings (true);
-      final ErrorList aErrorList = VOMValidator.validate (aVOM,
+      final VOM1ComplianceSettings aSettings = new VOM1ComplianceSettings (true);
+      final ErrorList aErrorList = VOM1Validator.validate (aVOM,
                                                           aXmlSchemaResolver,
                                                           aNamespaceContextResolver,
                                                           aResourceResolver,
@@ -117,8 +117,8 @@ public final class VOM1MarshallerTest
       final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ();
       final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ();
       final IVOMResourceResolver aResourceResolver = new MapBasedVOMResourceResolver ();
-      final VOMValidationSettings aSettings = new VOMValidationSettings (true);
-      final ErrorList aErrorList = VOMValidator.validate (aVOM,
+      final VOM1ComplianceSettings aSettings = new VOM1ComplianceSettings (true);
+      final ErrorList aErrorList = VOM1Validator.validate (aVOM,
                                                           aXmlSchemaResolver,
                                                           aNamespaceContextResolver,
                                                           aResourceResolver,
