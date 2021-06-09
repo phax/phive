@@ -35,24 +35,22 @@
       <namespaces>
         <builtIn>ubl21</builtIn>
       </namespaces>
-      <customErrors>
-        <customError>
-          <id>BR-CL-01</id>
-          <level>info</level>
-        </customError>
-        <customError>
-          <id>BR-CL-23</id>
-          <level>warn</level>
-        </customError>
-        <customError>
-          <id>BR-CL-21</id>
-          <level>warn</level>
-        </customError>
-        <customError>
-          <id>BR-CL-24</id>
-          <level>info</level>
-        </customError>
-      </customErrors>
+      <customError>
+        <id>BR-CL-01</id>
+        <level>info</level>
+      </customError>
+      <customError>
+        <id>BR-CL-23</id>
+        <level>warn</level>
+      </customError>
+      <customError>
+        <id>BR-CL-21</id>
+        <level>warn</level>
+      </customError>
+      <customError>
+        <id>BR-CL-24</id>
+        <level>info</level>
+      </customError>
     </schematron>
     
     <schematron>

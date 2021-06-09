@@ -130,7 +130,7 @@ History:
           <xs:documentation>The XML namespace prefix to be used. If this element is omitted, than the empty namespace prefix will be used</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="namespace" type="xs:anyURI">
+      <xs:element name="namespace" type="xs:string">
         <xs:annotation>
           <xs:documentation>The XML namespace URI to be mapped.</xs:documentation>
         </xs:annotation>
@@ -146,17 +146,7 @@ History:
             <xs:documentation>Contains a reference to a predefined namespace map. All mappings of the referenced namespace map are copied into this new map. The exact available list of IDs is implementation dependent</xs:documentation>
           </xs:annotation>
         </xs:element>
-        <xs:element name="basedOn" type="xs:string">
-          <xs:annotation>
-            <xs:documentation>Contains a reference to an ID of a namespace map defined in this file. All mappings of the referenced namespace map are copied into this new map.</xs:documentation>
-          </xs:annotation>
-        </xs:element>
       </xs:choice>
-      <xs:element name="id" type="xs:string" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>An optional ID for this namespace map, so it can be referenced from within this file.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element name="mapping" type="VOMNamespaceMappingType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>A single mapping from prefix to namespace URL. The order is important, and later definitions overwrite previous definitions.</xs:documentation>
@@ -239,7 +229,7 @@ History:
           <xs:documentation>Contains a map from namespace prefix to namespace URI to be used with this Schematron resource</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="customErrors" type="VOMCustomErrors" minOccurs="0">
+      <xs:element name="customError" type="VOMCustomError" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>Contains custom error code mappings. This is used to change the error level of an applied validation.</xs:documentation>
         </xs:annotation>

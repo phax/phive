@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import javax.xml.validation.Schema;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.impl.CommonsHashSet;
@@ -16,12 +17,16 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.util.TextHelper;
 import com.helger.phive.engine.vom.v10.VOMCoordinatesType;
+import com.helger.phive.engine.vom.v10.VOMCustomError;
 import com.helger.phive.engine.vom.v10.VOMEdifactType;
+import com.helger.phive.engine.vom.v10.VOMNamespaceMappingType;
+import com.helger.phive.engine.vom.v10.VOMNamespacesType;
 import com.helger.phive.engine.vom.v10.VOMOptionType;
 import com.helger.phive.engine.vom.v10.VOMSchematronType;
 import com.helger.phive.engine.vom.v10.VOMType;
 import com.helger.phive.engine.vom.v10.VOMValidationType;
 import com.helger.phive.engine.vom.v10.VOMXSDType;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 @Immutable
 public final class VOMValidator
@@ -31,7 +36,13 @@ public final class VOMValidator
     REQUIRED ("The element must be provided."),
     REQUIRED_NOT_EMPTY ("The element must be provided and not empty."),
     NO_VALIDATION_RULES ("No validation rules are contained."),
+    BUILTIN_XML_SCHEMA_NOT_FOUND ("The built-in XML Schema ''{0}'' could not be found."),
     BUILTIN_RESOURCE_NOT_FOUND ("The built-in resource ''{0}'' could not be found."),
+    BUILTIN_NAMESPACE_CONTEXT_NOT_FOUND ("The built-in namespace context ''{0}'' could not be found."),
+    NAMESPACE_PREFIX_ALREADY_MAPPED ("The namespace prefix ''{0}'' is already mapped. Overiding it with ''{1}''."),
+    NAMESPACE_CONTEXT_EMPTY ("The resulting namespace context will be empty and have no effect."),
+    CUSTOM_ERROR_ALREADY_MAPPED ("The custom error ID ''{0}'' is already mapped. It will be overwritten."),
+    CUSTOM_ERRORS_EMPTY ("The resulting custom error map will be empty and have no effect."),
     OPTION_NAME_NOT_UNIQUE ("The option name ''{0}'' is not unique in the scope of ''{1}''."),
     EDIFACT_NOT_ALLOWED ("The usage of Edifact validation artefacts is not allowed in the configuration.");
 
@@ -68,6 +79,18 @@ public final class VOMValidator
   private static IError _createError (@Nonnull final EVOMErrorCode e, @Nonnull final String sXPath)
   {
     return _createError (e.getErrorMessage (), sXPath);
+  }
+
+  @Nonnull
+  private static IError _createWarn (@Nonnull final String sWarnText, @Nonnull final String sXPath)
+  {
+    return SingleError.builderWarn ().errorLocation (sXPath).errorText (sWarnText).build ();
+  }
+
+  @Nonnull
+  private static IError _createWarn (@Nonnull final EVOMErrorCode e, @Nonnull final String sXPath)
+  {
+    return _createWarn (e.getErrorMessage (), sXPath);
   }
 
   public static void validateCoordinates (@Nonnull final String sXPath,
@@ -123,7 +146,7 @@ public final class VOMValidator
 
   public static void validateXSD (@Nonnull final String sXPath,
                                   @Nullable final VOMXSDType aXSD,
-                                  @Nonnull final IVOMResourceResolver aResourceResolver,
+                                  @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
                                   @Nonnull final ErrorList aErrorList)
   {
     if (aXSD == null)
@@ -135,9 +158,9 @@ public final class VOMValidator
       final String sBuiltIn = aXSD.getBuiltIn ();
       if (sBuiltIn != null)
       {
-        final IReadableResource aRes = aResourceResolver.getResourceOfID (sBuiltIn);
+        final Schema aRes = aXmlSchemaResolver.getXmlSchemaOfID (sBuiltIn);
         if (aRes == null)
-          aErrorList.add (_createError (EVOMErrorCode.BUILTIN_RESOURCE_NOT_FOUND.getErrorMessage (sBuiltIn), sXPath + "/builtin"));
+          aErrorList.add (_createError (EVOMErrorCode.BUILTIN_XML_SCHEMA_NOT_FOUND.getErrorMessage (sBuiltIn), sXPath + "/builtin"));
       }
       else
       {
@@ -166,6 +189,66 @@ public final class VOMValidator
     }
   }
 
+  public static void validateNamespaces (@Nonnull final String sXPath,
+                                         @Nullable final VOMNamespacesType aNamespaces,
+                                         @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
+                                         @Nonnull final ErrorList aErrorList)
+  {
+    // Is optional
+    if (aNamespaces != null)
+    {
+      final String sBuiltIn = aNamespaces.getBuiltIn ();
+      final MapBasedNamespaceContext aNsCtx;
+      if (sBuiltIn != null)
+      {
+        // Built-in
+        final MapBasedNamespaceContext ret = aNamespaceContextResolver.getNamespaceContextOfID (sBuiltIn);
+        if (ret == null)
+        {
+          aErrorList.add (_createError (EVOMErrorCode.BUILTIN_NAMESPACE_CONTEXT_NOT_FOUND.getErrorMessage (sBuiltIn), sXPath + "/builtin"));
+          // Avoid NPE later on
+          aNsCtx = new MapBasedNamespaceContext ();
+        }
+        else
+          aNsCtx = ret.getClone ();
+      }
+      else
+      {
+        // Start empty
+        aNsCtx = new MapBasedNamespaceContext ();
+      }
+
+      int nIndex = 1;
+      int nErrors = 0;
+      for (final VOMNamespaceMappingType aMapping : aNamespaces.getMapping ())
+      {
+        final String sLocalXPath = sXPath + "/mapping[" + nIndex + ']';
+
+        // Default to the default namespace prefix
+        final String sPrefix = StringHelper.getNotNull (aMapping.getPrefix (), "");
+        final String sNamespaceURI = aMapping.getNamespace ();
+
+        if (StringHelper.hasNoText (sNamespaceURI))
+        {
+          aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sLocalXPath + "/namespace"));
+          nErrors++;
+        }
+        else
+        {
+          if (aNsCtx.isPrefixMapped (sPrefix))
+            aErrorList.add (_createWarn (EVOMErrorCode.NAMESPACE_PREFIX_ALREADY_MAPPED.getErrorMessage (sPrefix, sNamespaceURI),
+                                         sLocalXPath + "/prefix"));
+          aNsCtx.setMapping (sPrefix, sNamespaceURI);
+        }
+
+        ++nIndex;
+      }
+
+      if (!aNsCtx.hasAnyMapping () && nErrors == 0)
+        aErrorList.add (_createWarn (EVOMErrorCode.NAMESPACE_CONTEXT_EMPTY, sXPath));
+    }
+  }
+
   public static void validateSchematron (@Nonnull final String sXPath,
                                          @Nullable final VOMSchematronType aSchematron,
                                          @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
@@ -190,7 +273,38 @@ public final class VOMValidator
         // Resource
         validateCoordinates (sXPath + "/resource", aSchematron.getResource (), aErrorList);
       }
-      // TODO
+
+      // TODO prerequisite
+      validateNamespaces (sXPath + "/namespaces", aSchematron.getNamespaces (), aNamespaceContextResolver, aErrorList);
+      if (aSchematron.hasCustomErrorEntries ())
+      {
+        int nIndex = 1;
+        int nErrors = 0;
+        final ICommonsSet <String> aIDs = new CommonsHashSet <> ();
+        for (final VOMCustomError aCustomError : aSchematron.getCustomError ())
+        {
+          final String sLocalXPath = sXPath + "/customError[" + nIndex + ']';
+
+          final String sID = aCustomError.getId ();
+          if (StringHelper.hasNoText (sID))
+          {
+            aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sLocalXPath + "/id"));
+            ++nErrors;
+          }
+          else
+          {
+            if (aIDs.contains (sID))
+              aErrorList.add (_createWarn (EVOMErrorCode.CUSTOM_ERROR_ALREADY_MAPPED.getErrorMessage (sID), sLocalXPath + "/id"));
+            aIDs.add (sID);
+          }
+
+          ++nIndex;
+        }
+
+        if (aIDs.isEmpty () && nErrors == 0)
+          aErrorList.add (_createWarn (EVOMErrorCode.CUSTOM_ERRORS_EMPTY, sXPath));
+      }
+
       validateOptions (sXPath, "/option", aSchematron.getOption (), aErrorList);
     }
   }
@@ -219,7 +333,7 @@ public final class VOMValidator
         int nIndex = 1;
         for (final VOMXSDType aXSD : aValidation.getXsd ())
         {
-          validateXSD (sXPath + "/xsd[" + nIndex + "]", aXSD, aResourceResolver, aErrorList);
+          validateXSD (sXPath + "/xsd[" + nIndex + "]", aXSD, aXmlSchemaResolver, aErrorList);
           ++nIndex;
         }
 
