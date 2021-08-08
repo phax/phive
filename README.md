@@ -133,7 +133,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v7.2.1 - 201-06-09
+* v7.2.1 - 2021-06-09
     * Started introduction of the new VOM - Validation Object Model - an XML based approach for validation configuration
 * v7.2.0 - 2021-03-22
     * Updated to ph-commons 10
