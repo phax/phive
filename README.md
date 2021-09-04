@@ -43,11 +43,10 @@ Example for registering (only) Peppol validation artefacts:
 ```java
     final ValidationExecutorSetRegistry <IValidationSourceXML> aVESRegistry = new ValidationExecutorSetRegistry<> ();
     PeppolValidation.initStandard (aVESRegistry);
-    PeppolValidation.initThirdParty (aVESRegistry);
     return aVESRegistry;
 ```
 
-The instance of class `ValidationExecutorSetRegistry` can be kept as a singleton - it is thread-safe.
+The instance of class `ValidationExecutorSetRegistry` can be kept as a (static) singleton - it is thread-safe.
 Therefore the registration process need to be performed only once.
 
 Validating a business document requires a few more steps.
