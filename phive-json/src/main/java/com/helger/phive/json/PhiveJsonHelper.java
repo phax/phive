@@ -538,7 +538,7 @@ public final class PhiveJsonHelper
    *        The response JSON object to add to. May not be <code>null</code>.
    * @param aVES
    *        The Validation executor set that was used to perform validation. May
-   *        not be <code>null</code>.
+   *        be <code>null</code>.
    * @param aValidationResultList
    *        The validation result list containing the validation results per
    *        layer. May not be <code>null</code>.
@@ -554,7 +554,7 @@ public final class PhiveJsonHelper
    *        <code>null</code> if will contain a &ge; 0 value afterwards.
    */
   public static void applyValidationResultList (@Nonnull final IJsonObject aResponse,
-                                                @Nonnull final IValidationExecutorSet <?> aVES,
+                                                @Nullable final IValidationExecutorSet <?> aVES,
                                                 @Nonnull final List <? extends ValidationResult> aValidationResultList,
                                                 @Nonnull final Locale aDisplayLocale,
                                                 @Nonnegative final long nDurationMilliseconds,
@@ -562,12 +562,12 @@ public final class PhiveJsonHelper
                                                 @Nullable final MutableInt aErrorCount)
   {
     ValueEnforcer.notNull (aResponse, "Response");
-    ValueEnforcer.notNull (aVES, "VES");
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
-    aResponse.addJson (JSON_VES, getJsonVES (aVES));
+    if (aVES != null)
+      aResponse.addJson (JSON_VES, getJsonVES (aVES));
 
     int nWarnings = 0;
     int nErrors = 0;
@@ -644,8 +644,7 @@ public final class PhiveJsonHelper
   }
 
   @Nullable
-  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType,
-                                                           @Nullable final String sArtefactPath)
+  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType, @Nullable final String sArtefactPath)
   {
     if (StringHelper.hasNoText (sArtefactPathType))
       return null;
@@ -717,11 +716,7 @@ public final class PhiveJsonHelper
         if (aRes == null)
         {
           if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Failed to resolve ValidationArtefact '" +
-                          sArtefactPathType +
-                          "' with path '" +
-                          sArtefactPath +
-                          "'");
+            LOGGER.debug ("Failed to resolve ValidationArtefact '" + sArtefactPathType + "' with path '" + sArtefactPath + "'");
           continue;
         }
         final ValidationArtefact aVA = new ValidationArtefact (aValidationType, aRes);
