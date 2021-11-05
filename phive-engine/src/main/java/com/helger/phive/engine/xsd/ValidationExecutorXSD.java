@@ -63,6 +63,10 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     m_aSchemaProvider = aSchemaProvider;
+
+    // By default, if an error occurs in an XSD, we don't continue with further
+    // validation layers
+    setStopValidationOnError (true);
   }
 
   @Nonnull
