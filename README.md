@@ -132,6 +132,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v7.2.2 - 2021-11-05
+    * Stopping further validations, if an error occurs on XSD level
 * v7.2.1 - 2021-06-09
     * Started introduction of the new VOM - Validation Object Model - an XML based approach for validation configuration
 * v7.2.0 - 2021-03-22
