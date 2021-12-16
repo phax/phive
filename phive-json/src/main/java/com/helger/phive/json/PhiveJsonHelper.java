@@ -675,6 +675,17 @@ public final class PhiveJsonHelper
     return getAsValidationResultList (aJson, EValidationType::getFromIDOrNull);
   }
 
+  /**
+   * Try to parse a JSON structure and convert it back to a
+   * {@link ValidationResultList}.
+   *
+   * @param aJson
+   *        The JSON to be read. May be <code>null</code>.
+   * @param aValidationTypeResolver
+   *        The validation type resolver to be used. May not be
+   *        <code>null</code>.
+   * @return <code>null</code> in case reverse operation fails.
+   */
   @Nullable
   public static ValidationResultList getAsValidationResultList (@Nullable final IJsonObject aJson,
                                                                 @Nonnull final Function <String, IValidationType> aValidationTypeResolver)
