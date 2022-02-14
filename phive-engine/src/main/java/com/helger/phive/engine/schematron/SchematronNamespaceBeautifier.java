@@ -51,7 +51,7 @@ public final class SchematronNamespaceBeautifier
   {
     // Allow overwrite!
     if (aOther != null)
-      RW_LOCK.writeLockedGet ( () -> NS_CTX.setMappings (aOther));
+      RW_LOCK.writeLocked ( () -> NS_CTX.setMappings (aOther));
   }
 
   @Nonnull
