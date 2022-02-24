@@ -118,7 +118,13 @@ public final class PhiveJsonHelper
   public static final String JSON_DURATION_MS = "durationMS";
   public static final String JSON_VES = "ves";
 
-  public static final String ARTFACT_TYPE_INPUT_PARAMETER = "input-parameter";
+  public static final String ARTIFACT_TYPE_INPUT_PARAMETER = "input-parameter";
+  /**
+   * @deprecated Use {@link #ARTIFACT_TYPE_INPUT_PARAMETER} instead. Deprecated
+   *             in 7.2.3.
+   */
+  @Deprecated
+  public static final String ARTFACT_TYPE_INPUT_PARAMETER = ARTIFACT_TYPE_INPUT_PARAMETER;
   public static final String ARTIFACT_PATH_NONE = "none";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (PhiveJsonHelper.class);
@@ -126,12 +132,12 @@ public final class PhiveJsonHelper
   private PhiveJsonHelper ()
   {}
 
-  private static boolean _isConsideredError (@Nonnull final IErrorLevel aErrorLevel)
+  public static boolean isConsideredError (@Nonnull final IErrorLevel aErrorLevel)
   {
     return aErrorLevel.isGE (EErrorLevel.ERROR);
   }
 
-  private static boolean _isConsideredWarning (@Nonnull final IErrorLevel aErrorLevel)
+  public static boolean isConsideredWarning (@Nonnull final IErrorLevel aErrorLevel)
   {
     return aErrorLevel.isGE (EErrorLevel.WARN);
   }
@@ -152,9 +158,9 @@ public final class PhiveJsonHelper
   {
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
 
-    if (_isConsideredError (aErrorLevel))
+    if (isConsideredError (aErrorLevel))
       return JSON_ERRORLEVEL_ERROR;
-    if (_isConsideredWarning (aErrorLevel))
+    if (isConsideredWarning (aErrorLevel))
       return JSON_ERRORLEVEL_WARN;
     return JSON_ERRORLEVEL_SUCCESS;
   }
@@ -207,6 +213,15 @@ public final class PhiveJsonHelper
     return getJsonTriState (eTriState.isTrue ());
   }
 
+  /**
+   * Convert the provided value into a tristate value. Must be one of
+   * {@link #JSON_TRISTATE_TRUE}, {@link #JSON_TRISTATE_FALSE} or
+   * {@link #JSON_TRISTATE_UNDEFINED}.
+   *
+   * @param sTriState
+   *        Source value. May be <code>null</code>.
+   * @return <code>null</code> if the provided value is unknown.
+   */
   @Nullable
   public static ETriState getAsTriState (@Nullable final String sTriState)
   {
@@ -325,13 +340,14 @@ public final class PhiveJsonHelper
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
     ValueEnforcer.notNull (sErrorText, "ErrorText");
 
-    return new JsonObject ().add (JSON_ERROR_LEVEL, getJsonErrorLevel (aErrorLevel))
-                            .addIfNotNull (JSON_ERROR_ID, sErrorID)
-                            .addIfNotNull (JSON_ERROR_FIELD_NAME, sErrorFieldName)
-                            .addIfNotNull (JSON_ERROR_LOCATION_OBJ, getJsonErrorLocation (aErrorLocation))
-                            .addIfNotNull (JSON_TEST, sTest)
-                            .add (JSON_ERROR_TEXT, sErrorText)
-                            .addIfNotNull (JSON_EXCEPTION, getJsonStackTrace (t));
+    return new JsonErrorBuilder ().errorLevel (aErrorLevel)
+                                  .errorID (sErrorID)
+                                  .errorFieldName (sErrorFieldName)
+                                  .errorLocation (aErrorLocation)
+                                  .test (sTest)
+                                  .errorText (sErrorText)
+                                  .exception (t)
+                                  .build ();
   }
 
   /**
@@ -363,16 +379,45 @@ public final class PhiveJsonHelper
   @Nonnull
   public static IJsonObject getJsonError (@Nonnull final IError aError, @Nonnull final Locale aDisplayLocale)
   {
+    return jsonErrorBuilder (aError, aDisplayLocale).build ();
+  }
+
+  /**
+   * Create an empty builder
+   *
+   * @return Never <code>null</code>.
+   * @since 7.2.3
+   */
+  @Nonnull
+  public static JsonErrorBuilder jsonErrorBuilder ()
+  {
+    return new JsonErrorBuilder ();
+  }
+
+  /**
+   * Create a builder that is pre-filled with the error details.
+   *
+   * @param aError
+   *        The structured error. May not be <code>null</code>.
+   * @param aDisplayLocale
+   *        The display locale to resolve the error text. May not be
+   *        <code>null</code>.
+   * @return Never <code>null</code>.
+   * @since 7.2.3
+   */
+  @Nonnull
+  public static JsonErrorBuilder jsonErrorBuilder (@Nonnull final IError aError, @Nonnull final Locale aDisplayLocale)
+  {
     ValueEnforcer.notNull (aError, "Error");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
-    return getJsonError (aError.getErrorLevel (),
-                         aError.getErrorID (),
-                         aError.getErrorFieldName (),
-                         aError.hasErrorLocation () ? aError.getErrorLocation () : null,
-                         aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest () : null,
-                         aError.getErrorText (aDisplayLocale),
-                         aError.getLinkedException ());
+    return new JsonErrorBuilder ().errorLevel (aError.getErrorLevel ())
+                                  .errorID (aError.getErrorID ())
+                                  .errorFieldName (aError.getErrorFieldName ())
+                                  .errorLocation (aError.hasErrorLocation () ? aError.getErrorLocation () : null)
+                                  .test (aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest () : null)
+                                  .errorText (aError.getErrorText (aDisplayLocale))
+                                  .exception (aError.getLinkedException ());
   }
 
   @Nonnull
@@ -479,11 +524,13 @@ public final class PhiveJsonHelper
 
     final IJsonArray aResultArray = new JsonArray ();
     {
-      final IJsonObject aError = getJsonError (SingleError.builderError ().errorText (sErrorMsg).build (), Locale.US);
       aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getJsonTriState (false))
-                                         .add (JSON_ARTIFACT_TYPE, ARTFACT_TYPE_INPUT_PARAMETER)
+                                         .add (JSON_ARTIFACT_TYPE, ARTIFACT_TYPE_INPUT_PARAMETER)
                                          .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
-                                         .addJson (JSON_ITEMS, new JsonArray (aError)));
+                                         .addJson (JSON_ITEMS,
+                                                   new JsonArray (jsonErrorBuilder ().errorLevel (EErrorLevel.ERROR)
+                                                                                     .errorText (sErrorMsg)
+                                                                                     .build ())));
     }
 
     aResponse.add (JSON_SUCCESS, false);
@@ -561,64 +608,10 @@ public final class PhiveJsonHelper
                                                 @Nullable final MutableInt aWarningCount,
                                                 @Nullable final MutableInt aErrorCount)
   {
-    ValueEnforcer.notNull (aResponse, "Response");
-    ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
-    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
-    ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
-
-    if (aVES != null)
-      aResponse.addJson (JSON_VES, getJsonVES (aVES));
-
-    int nWarnings = 0;
-    int nErrors = 0;
-    boolean bValidationInterrupted = false;
-    IErrorLevel aMostSevere = EErrorLevel.LOWEST;
-    final IJsonArray aResultArray = new JsonArray ();
-    for (final ValidationResult aVR : aValidationResultList)
-    {
-      final IJsonObject aVRT = new JsonObject ();
-      if (aVR.isIgnored ())
-      {
-        bValidationInterrupted = true;
-        aVRT.add (JSON_SUCCESS, getJsonTriState (ETriState.UNDEFINED));
-      }
-      else
-      {
-        aVRT.add (JSON_SUCCESS, getJsonTriState (aVR.isSuccess ()));
-      }
-      aVRT.add (JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
-      aVRT.add (JSON_ARTIFACT_PATH_TYPE, getArtifactPathType (aVR.getValidationArtefact ().getRuleResource ()));
-      aVRT.add (JSON_ARTIFACT_PATH, aVR.getValidationArtefact ().getRuleResourcePath ());
-
-      final IJsonArray aItemArray = new JsonArray ();
-      for (final IError aError : aVR.getErrorList ())
-      {
-        if (aError.getErrorLevel ().isGT (aMostSevere))
-          aMostSevere = aError.getErrorLevel ();
-
-        if (_isConsideredError (aError.getErrorLevel ()))
-          nErrors++;
-        else
-          if (_isConsideredWarning (aError.getErrorLevel ()))
-            nWarnings++;
-
-        aItemArray.add (getJsonError (aError, aDisplayLocale));
-      }
-      aVRT.addJson (JSON_ITEMS, aItemArray);
-      aResultArray.add (aVRT);
-    }
-    // Success if the worst that happened is a warning
-    aResponse.add (JSON_SUCCESS, aMostSevere.isLE (EErrorLevel.WARN));
-    aResponse.add (JSON_INTERRUPTED, bValidationInterrupted);
-    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getJsonErrorLevel (aMostSevere));
-    aResponse.addJson (JSON_RESULTS, aResultArray);
-    aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
-
-    // Set consumer values
-    if (aWarningCount != null)
-      aWarningCount.set (nWarnings);
-    if (aErrorCount != null)
-      aErrorCount.set (nErrors);
+    new JsonValidationResultListHelper ().ves (aVES)
+                                         .warningCount (aWarningCount)
+                                         .errorCount (aErrorCount)
+                                         .applyTo (aResponse, aValidationResultList, aDisplayLocale, nDurationMilliseconds);
   }
 
   @Nullable

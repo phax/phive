@@ -131,6 +131,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v7.2.3 - 2022-02-24
+    * Increased the flexibility of the Json output providers
 * v7.2.2 - 2021-11-05
     * Stopping further validations, if an error occurs on XSD level
 * v7.2.1 - 2021-06-09
