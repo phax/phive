@@ -23,7 +23,7 @@
     <artifactId>test-desadv-d01b</artifactId>
     <version>1.4.0</version>
   </id>
-  <name>Test binding für DESADV D01B</name>
+  <name>Test binding for DESADV D01B</name>
   
   <validation>
     <edifact>
