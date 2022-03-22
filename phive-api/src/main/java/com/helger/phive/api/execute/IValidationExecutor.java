@@ -38,7 +38,9 @@ import com.helger.phive.api.source.IValidationSource;
 public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
 {
   /**
-   * Nested interface for validation executors that support caching.
+   * Nested interface for validation executors that support caching. Each
+   * implementation of IValidationExecutor is free to also implement this
+   * interface.
    *
    * @author Philip Helger
    * @since 3.1.1
