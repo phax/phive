@@ -101,7 +101,7 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
   <artifactId>phive-engine</artifactId>
   <version>x.y.z</version>
 </dependency>
-```xml
+```
 
 If you are interested in the JSON binding you may also include this artefact.  
 
