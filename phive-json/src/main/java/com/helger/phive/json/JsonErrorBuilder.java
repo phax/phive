@@ -16,12 +16,15 @@
  */
 package com.helger.phive.json;
 
+import java.time.LocalDateTime;
 import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.builder.IBuilder;
+import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.location.ILocation;
@@ -37,6 +40,7 @@ import com.helger.json.JsonObject;
  */
 public class JsonErrorBuilder implements IBuilder <IJsonObject>
 {
+  private LocalDateTime m_aErrorDateTime;
   private IErrorLevel m_aErrorLevel;
   private Function <IErrorLevel, String> m_aErrorLevelToJson = PhiveJsonHelper::getJsonErrorLevel;
   private String m_sErrorID;
@@ -50,6 +54,19 @@ public class JsonErrorBuilder implements IBuilder <IJsonObject>
 
   public JsonErrorBuilder ()
   {}
+
+  @Nonnull
+  public JsonErrorBuilder errorDateTimeNow ()
+  {
+    return errorDateTime (PDTFactory.getCurrentLocalDateTime ());
+  }
+
+  @Nonnull
+  public JsonErrorBuilder errorDateTime (@Nullable final LocalDateTime a)
+  {
+    m_aErrorDateTime = a;
+    return this;
+  }
 
   @Nonnull
   public JsonErrorBuilder errorLevel (@Nullable final IErrorLevel a)
@@ -125,6 +142,8 @@ public class JsonErrorBuilder implements IBuilder <IJsonObject>
   public IJsonObject build ()
   {
     final JsonObject ret = new JsonObject ();
+    if (m_aErrorDateTime != null)
+      ret.add (PhiveJsonHelper.JSON_ERROR_DATETIME, PDTWebDateHelper.getAsStringXSD (m_aErrorDateTime));
     if (m_aErrorLevel != null && m_aErrorLevelToJson != null)
       ret.addIfNotNull (PhiveJsonHelper.JSON_ERROR_LEVEL, m_aErrorLevelToJson.apply (m_aErrorLevel));
     if (m_sErrorID != null)

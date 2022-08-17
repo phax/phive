@@ -17,6 +17,7 @@
 package com.helger.phive.json;
 
 import java.net.MalformedURLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -94,6 +96,7 @@ public final class PhiveJsonHelper
   public static final String JSON_LINE_NUM = "line";
   public static final String JSON_COLUMN_NUM = "col";
 
+  public static final String JSON_ERROR_DATETIME = "errorDateTime";
   public static final String JSON_ERROR_LEVEL = "errorLevel";
   public static final String JSON_ERROR_ID = "errorID";
   public static final String JSON_ERROR_FIELD_NAME = "errorFieldName";
@@ -411,11 +414,13 @@ public final class PhiveJsonHelper
     ValueEnforcer.notNull (aError, "Error");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
-    return new JsonErrorBuilder ().errorLevel (aError.getErrorLevel ())
+    return new JsonErrorBuilder ().errorDateTime (aError.getErrorDateTime ())
+                                  .errorLevel (aError.getErrorLevel ())
                                   .errorID (aError.getErrorID ())
                                   .errorFieldName (aError.getErrorFieldName ())
                                   .errorLocation (aError.hasErrorLocation () ? aError.getErrorLocation () : null)
-                                  .test (aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest () : null)
+                                  .test (aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest ()
+                                                                             : null)
                                   .errorText (aError.getErrorText (aDisplayLocale))
                                   .exception (aError.getLinkedException ());
   }
@@ -423,6 +428,7 @@ public final class PhiveJsonHelper
   @Nonnull
   public static IError getAsIError (@Nonnull final IJsonObject aObj)
   {
+    final LocalDateTime aErrorDT = PDTWebDateHelper.getLocalDateTimeFromXSD (aObj.getAsString (JSON_ERROR_DATETIME));
     final IErrorLevel aErrorLevel = getAsErrorLevel (aObj.getAsString (JSON_ERROR_LEVEL));
     final String sErrorID = aObj.getAsString (JSON_ERROR_ID);
     final String sErrorFieldName = aObj.getAsString (JSON_ERROR_FIELD_NAME);
@@ -442,7 +448,8 @@ public final class PhiveJsonHelper
     final PhiveRestoredException aLinkedException = PhiveRestoredException.createFromJson (aObj.getAsObject (JSON_EXCEPTION));
 
     if (sTest != null)
-      return new SVRLResourceError (aErrorLevel,
+      return new SVRLResourceError (aErrorDT,
+                                    aErrorLevel,
                                     sErrorID,
                                     sErrorFieldName,
                                     aErrorLocation,
@@ -450,7 +457,8 @@ public final class PhiveJsonHelper
                                     aLinkedException,
                                     sTest);
 
-    return new SingleError (aErrorLevel,
+    return new SingleError (aErrorDT,
+                            aErrorLevel,
                             sErrorID,
                             sErrorFieldName,
                             aErrorLocation,
@@ -611,7 +619,10 @@ public final class PhiveJsonHelper
     new JsonValidationResultListHelper ().ves (aVES)
                                          .warningCount (aWarningCount)
                                          .errorCount (aErrorCount)
-                                         .applyTo (aResponse, aValidationResultList, aDisplayLocale, nDurationMilliseconds);
+                                         .applyTo (aResponse,
+                                                   aValidationResultList,
+                                                   aDisplayLocale,
+                                                   nDurationMilliseconds);
   }
 
   @Nullable
@@ -637,7 +648,8 @@ public final class PhiveJsonHelper
   }
 
   @Nullable
-  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType, @Nullable final String sArtefactPath)
+  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType,
+                                                           @Nullable final String sArtefactPath)
   {
     if (StringHelper.hasNoText (sArtefactPathType))
       return null;
@@ -720,7 +732,11 @@ public final class PhiveJsonHelper
         if (aRes == null)
         {
           if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Failed to resolve ValidationArtefact '" + sArtefactPathType + "' with path '" + sArtefactPath + "'");
+            LOGGER.debug ("Failed to resolve ValidationArtefact '" +
+                          sArtefactPathType +
+                          "' with path '" +
+                          sArtefactPath +
+                          "'");
           continue;
         }
         final ValidationArtefact aVA = new ValidationArtefact (aValidationType, aRes);

@@ -131,6 +131,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v7.2.4 - 2022-08-17
+    * Updated to ph-commons 10.1.7
+    * Added support for the error date time serialization to JSON and back
 * v7.2.3 - 2022-02-24
     * Increased the flexibility of the Json output providers
 * v7.2.2 - 2021-11-05

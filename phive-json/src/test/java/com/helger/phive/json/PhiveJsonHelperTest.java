@@ -21,11 +21,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 import org.junit.Test;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -154,7 +156,9 @@ public final class PhiveJsonHelperTest
   @Test
   public void testSVRLError ()
   {
-    final IError aError = new SVRLResourceError (EErrorLevel.ERROR,
+    final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTimeMillisOnly ();
+    final IError aError = new SVRLResourceError (aNow,
+                                                 EErrorLevel.ERROR,
                                                  "id2",
                                                  "field1",
                                                  new SimpleLocation ("res12", 3, 4),
@@ -181,7 +185,9 @@ public final class PhiveJsonHelperTest
   @Test
   public void testSVRLErrorWithException ()
   {
-    final IError aError = new SVRLResourceError (EErrorLevel.ERROR,
+    final LocalDateTime aNow = PDTFactory.getCurrentLocalDateTimeMillisOnly ();
+    final IError aError = new SVRLResourceError (aNow,
+                                                 EErrorLevel.ERROR,
                                                  "id2",
                                                  "field1",
                                                  new SimpleLocation ("res12", 3, 4),
