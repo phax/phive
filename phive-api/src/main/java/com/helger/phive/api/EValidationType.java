@@ -44,7 +44,7 @@ public enum EValidationType implements IValidationType
    * Pure Java implementation of Schematron - can only handle XPath 2 (was
    * originally called SCHEMATRON)
    */
-  SCHEMATRON_PURE ("schematron-pure", "Schematron (XPath)"),
+  SCHEMATRON_PURE ("schematron-pure", "Schematron (pure; XPath-only)"),
   /**
    * Schematron implementation that must convert the SCH to XSLT before
    * validation
