@@ -131,6 +131,10 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v8.0.0 - 2023-02-19
+    * Using Java 11 as the baseline
+    * Updated to ph-commons 11
+    * Updated to JAXB 4.0
 * v7.2.4 - 2022-08-17
     * Updated to ph-commons 10.1.7
     * Added support for the error date time serialization to JSON and back

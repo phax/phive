@@ -122,12 +122,6 @@ public final class PhiveJsonHelper
   public static final String JSON_VES = "ves";
 
   public static final String ARTIFACT_TYPE_INPUT_PARAMETER = "input-parameter";
-  /**
-   * @deprecated Use {@link #ARTIFACT_TYPE_INPUT_PARAMETER} instead. Deprecated
-   *             in 7.2.3.
-   */
-  @Deprecated
-  public static final String ARTFACT_TYPE_INPUT_PARAMETER = ARTIFACT_TYPE_INPUT_PARAMETER;
   public static final String ARTIFACT_PATH_NONE = "none";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (PhiveJsonHelper.class);

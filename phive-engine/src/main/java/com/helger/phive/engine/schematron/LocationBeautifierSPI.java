@@ -32,7 +32,7 @@ import com.helger.schematron.svrl.ISVRLLocationBeautifierSPI;
 @IsSPIImplementation
 public class LocationBeautifierSPI implements ISVRLLocationBeautifierSPI
 {
-  @Deprecated
+  @Deprecated (forRemoval = false)
   @UsedViaReflection
   public LocationBeautifierSPI ()
   {}

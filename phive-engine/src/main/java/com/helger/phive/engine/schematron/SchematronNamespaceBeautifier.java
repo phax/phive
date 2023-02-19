@@ -22,7 +22,6 @@ import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.state.EChange;
 import com.helger.xml.namespace.IIterableNamespaceContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
@@ -55,9 +54,9 @@ public final class SchematronNamespaceBeautifier
   }
 
   @Nonnull
-  public static EChange removeAllMappings ()
+  public static void removeAllMappings ()
   {
-    return RW_LOCK.writeLockedGet (NS_CTX::clear);
+    RW_LOCK.writeLocked (NS_CTX::clear);
   }
 
   @Nullable
