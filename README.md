@@ -131,6 +131,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v8.0.1 - 2023-03-17
+    * Added support for resolving the pseudo version `latest` in `ValidationExecutorSetRegistry`
 * v8.0.0 - 2023-02-19
     * Using Java 11 as the baseline
     * Updated to ph-commons 11

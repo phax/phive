@@ -16,6 +16,7 @@
  */
 package com.helger.phive.api.executorset;
 
+import java.util.Set;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -36,6 +37,22 @@ import com.helger.phive.api.source.IValidationSource;
  */
 public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource>
 {
+  /**
+   * @return <code>true</code> if the resolution of pseudo versions (like e.g.
+   *         "latest") should be performed or not. By default this is enabled.
+   * @since 8.0.1
+   */
+  boolean isResolvePseudoVersions ();
+
+  /**
+   * Enable or disable the resolving of pseudo versions.
+   *
+   * @param b
+   *        <code>true</code> to enable it, <code>false</code> to disable it.
+   * @since 8.0.1
+   */
+  void setResolvePseudoVersions (boolean b);
+
   /**
    * Register a validation executor set into this registry.
    *
@@ -108,6 +125,25 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    */
   @Nullable
   IValidationExecutorSet <SOURCETYPE> findFirst (@Nonnull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
+
+  /**
+   * Get the validation executor set with the latest (highest) version number.
+   *
+   * @param sGroupID
+   *        VES Group ID to use. May be <code>null</code>.
+   * @param sArtifactID
+   *        VES Artefact ID to use. May be <code>null</code>.
+   * @param aVersionsToIgnore
+   *        An optional set of Version numbers not to consider. This may be used
+   *        to exclude certain versions from being returned. May be
+   *        <code>null</code>.
+   * @return <code>null</code> if no matching version was found.
+   * @since 8.0.1
+   */
+  @Nullable
+  IValidationExecutorSet <SOURCETYPE> getLatestVersion (@Nullable String sGroupID,
+                                                        @Nullable String sArtifactID,
+                                                        @Nullable Set <String> aVersionsToIgnore);
 
   /**
    * Find the validation executor set with the specified ID.
