@@ -132,7 +132,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 # News and noteworthy
 
 * v8.0.1 - 2023-03-17
-    * Added support for resolving the pseudo version `latest` in `ValidationExecutorSetRegistry`
+    * Added support for resolving the pseudo version `latest` in `ValidationExecutorSetRegistry`. See [issue #16](https://github.com/phax/phive/issues/16) - thx @adammscisz
 * v8.0.0 - 2023-02-19
     * Using Java 11 as the baseline
     * Updated to ph-commons 11
@@ -199,7 +199,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 * v5.2.10 - 2020-03-20
     * The Peppol AU-NZ rules were updated to v1.0.2. v1.0.1 is now deprecated.
 * v5.2.9 - 2020-03-18
-    * Fixed usage of wrong Peppol AU-NZ Schematrons for v1.0.1 (See [issue #12](https://github.com/phax/ph-bdve/issues/12))
+    * Fixed usage of wrong Peppol AU-NZ Schematrons for v1.0.1. See [issue #12](https://github.com/phax/phive/issues/12)
 * v5.2.8 - 2020-03-12
     * Added support for UBL.BE 1.2 (version 2020-03)
     * Deprecated OpenPeppol 3.7.0 rules (for BIS v2)
@@ -271,8 +271,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Updated to latest EHF releases (Invoice and Credit Note 2.0.15 etc.)
     * EHF validation now directly depends on the Peppol Validation artefacts
 * v5.1.2 - 2019-02-04
-    * Added SimplerInvoicing 2.0 RC1 support [#3](https://github.com/phax/ph-bdve/issues/3)
-    * Added Singapore (SG) Peppol Billing BIS3 support [#4](https://github.com/phax/ph-bdve/issues/4)
+    * Added SimplerInvoicing 2.0 RC1 support [#3](https://github.com/phax/phive/issues/3)
+    * Added Singapore (SG) Peppol Billing BIS3 support [#4](https://github.com/phax/phive/issues/4)
 * v5.1.1 - 2019-01-16
     * Added UBL.BE 1.0.0 Schematrons
 * v5.1.0 - 2018-11-23
