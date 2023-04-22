@@ -44,6 +44,9 @@ import com.helger.commons.string.ToStringGenerator;
 @MustImplementEqualsAndHashcode
 public final class VESID implements Comparable <VESID>
 {
+  /** Name of the pseudo version that indicates to use the latest version */
+  public static final String PSEUDO_VERSION_LATEST = "latest";
+
   /** The regular expression to which each part must conform */
   @RegEx
   public static final String REGEX_PART = "[a-zA-Z0-9_\\-\\.]+";
@@ -160,6 +163,12 @@ public final class VESID implements Comparable <VESID>
     if (EqualsHelper.equals (m_sVersion, sNewVersion))
       return this;
     return new VESID (m_sGroupID, m_sArtifactID, sNewVersion, m_sClassifier);
+  }
+
+  @Nonnull
+  public VESID getWithVersionLatest ()
+  {
+    return getWithVersion (PSEUDO_VERSION_LATEST);
   }
 
   @Nonnull

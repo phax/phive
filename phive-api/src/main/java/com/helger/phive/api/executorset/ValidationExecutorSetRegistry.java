@@ -64,7 +64,8 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                                            IValidationExecutorSetRegistry <SOURCETYPE>
 {
   /** Name of the pseudo version that indicates to use the latest version */
-  public static final String PSEUDO_VERSION_LATEST = "latest";
+  @Deprecated (since = "8.0.2", forRemoval = true)
+  public static final String PSEUDO_VERSION_LATEST = VESID.PSEUDO_VERSION_LATEST;
 
   public static final boolean DEFAULT_RESOLVE_PSEUDO_VERSIONS = true;
 
@@ -186,7 +187,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
         final IValidationExecutorSet <SOURCETYPE> ret = aMatching.getLastValue ();
         if (LOGGER.isDebugEnabled ())
           LOGGER.debug ("Resolved pseudo version '" +
-                        PSEUDO_VERSION_LATEST +
+                        VESID.PSEUDO_VERSION_LATEST +
                         "' of '" +
                         sGroupID +
                         VESID.ID_SEPARATOR +
@@ -211,7 +212,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     if (ret == null)
     {
       // No exact match - check pseudo version
-      if (PSEUDO_VERSION_LATEST.equals (aID.getVersion ()))
+      if (VESID.PSEUDO_VERSION_LATEST.equals (aID.getVersion ()))
       {
         if (isResolvePseudoVersions ())
         {
