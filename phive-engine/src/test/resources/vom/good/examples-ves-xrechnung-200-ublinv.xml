@@ -30,6 +30,7 @@
       <builtIn>ubl21-invoice</builtIn>
     </xsd>
 
+    <!-- add stop on error -->
     <schematron>
       <builtIn>en16931-ublinv-132</builtIn>
       <namespaces>
