@@ -227,7 +227,6 @@ public class ValidationExecutorSchematron extends
       // consecutive calls!
       return aPureSCH;
     }
-
     if (aVT == EValidationType.SCHEMATRON_SCH)
     {
       final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
@@ -236,7 +235,6 @@ public class ValidationExecutorSchematron extends
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
       return aSCHSCH;
     }
-
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT)
     {
       final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
@@ -245,14 +243,12 @@ public class ValidationExecutorSchematron extends
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
       return aSCHSCH;
     }
-
     if (aVT == EValidationType.SCHEMATRON_XSLT)
     {
       final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
       aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
       return aSCHXSLT;
     }
-
     if (aVT == EValidationType.SCHEMATRON_OIOUBL)
     {
       final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
@@ -261,7 +257,6 @@ public class ValidationExecutorSchematron extends
       aSpecialOutputHdl.accept (ESchematronOutput.OIOUBL);
       return aSCHXSLT;
     }
-
     throw new IllegalStateException ("Unsupported Schematron validation type: " + aVT);
   }
 
@@ -283,7 +278,6 @@ public class ValidationExecutorSchematron extends
       throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.",
                                        ex);
     }
-
     if (StringHelper.hasText (m_sPrerequisiteXPath))
     {
       if (LOGGER.isDebugEnabled ())
@@ -294,7 +288,6 @@ public class ValidationExecutorSchematron extends
       final XPath aXPathContext = XPathHelper.createNewXPath ();
       if (m_aNamespaceContext != null)
         aXPathContext.setNamespaceContext (m_aNamespaceContext);
-
       try
       {
         final Boolean aResult = XPathExpressionHelper.evalXPathToBoolean (aXPathContext,
@@ -302,12 +295,11 @@ public class ValidationExecutorSchematron extends
                                                                           XMLHelper.getOwnerDocument (aNode));
         if (aResult != null && !aResult.booleanValue ())
         {
-          if (LOGGER.isInfoEnabled ())
-            LOGGER.info ("Ignoring validation artefact " +
-                         aArtefact.getRuleResourcePath () +
-                         " because the prerequisite XPath expression '" +
-                         m_sPrerequisiteXPath +
-                         "' is not fulfilled.");
+          LOGGER.info ("Ignoring validation artefact " +
+                       aArtefact.getRuleResourcePath () +
+                       " because the prerequisite XPath expression '" +
+                       m_sPrerequisiteXPath +
+                       "' is not fulfilled.");
           return ValidationResult.createIgnoredResult (aArtefact);
         }
       }
@@ -328,7 +320,6 @@ public class ValidationExecutorSchematron extends
                                                                .build ()));
       }
     }
-
     // No prerequisite or prerequisite matched
     final ErrorList aErrorList = new ErrorList ();
     final Wrapper <ESchematronOutput> aOutput = new Wrapper <> (ESchematronOutput.SVRL);
@@ -337,7 +328,6 @@ public class ValidationExecutorSchematron extends
     // Don't cache to avoid that errors in the Schematron are hidden on
     // consecutive calls!
     aSCH.setUseCache (m_bCacheSchematron);
-
     try
     {
       // Main application of Schematron
@@ -345,14 +335,12 @@ public class ValidationExecutorSchematron extends
 
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
-
       switch (aOutput.get ())
       {
         case SVRL:
         {
-          final SchematronOutputType aSVRL = aDoc == null ||
-                                             aDoc.getDocumentElement () == null ? null
-                                                                                : new SVRLMarshaller ().read (aDoc);
+          final SchematronOutputType aSVRL = aDoc == null || aDoc.getDocumentElement () == null ? null
+                                                                                                : new SVRLMarshaller ().read (aDoc);
           if (aSVRL != null)
           {
             // Valid Schematron - interpret result
@@ -432,13 +420,11 @@ public class ValidationExecutorSchematron extends
                                  .linkedException (ex)
                                  .build ());
     }
-
     // Apply custom levels
     if (m_aCustomErrorLevels != null && aErrorList.isNotEmpty ())
     {
       final ErrorList aOldErrorList = aErrorList.getClone ();
       aErrorList.clear ();
-
       for (final IError aCurError : aOldErrorList)
       {
         final String sErrorID = aCurError.getErrorID ();
@@ -464,7 +450,6 @@ public class ValidationExecutorSchematron extends
         }
       }
     }
-
     return new ValidationResult (aArtefact, aErrorList);
   }
 
