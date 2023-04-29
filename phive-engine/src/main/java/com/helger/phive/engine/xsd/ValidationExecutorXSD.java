@@ -97,7 +97,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
       // Happens when non-XML document is trying to be parsed
       if (ex.getCause () instanceof SAXParseException)
       {
-        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
+        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
+                                                                  (SAXParseException) ex.getCause ()));
       }
       else
       {
@@ -108,7 +109,6 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
                                    .build ());
       }
     }
-
     // Build result object
     return new ValidationResult (aVA, aErrorList.getAllFailures ());
   }
@@ -143,12 +143,14 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    *         resolution.
    */
   @Nonnull
+  @Deprecated (forRemoval = true, since = "8.0.2")
   public static ValidationExecutorXSD create (@Nonnull final IJAXBDocumentType aDocType)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
+    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
+                                                              aDocType.getAllXSDResources ().getLast ()),
                                       aDocType::getSchema);
   }
 

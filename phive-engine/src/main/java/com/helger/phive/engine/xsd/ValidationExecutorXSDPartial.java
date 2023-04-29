@@ -54,7 +54,8 @@ import com.helger.xml.schema.XMLSchemaValidationHelper;
  *
  * @author Philip Helger
  */
-public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSDPartial>
+public class ValidationExecutorXSDPartial extends
+                                          AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorXSDPartial>
 {
   private final Supplier <? extends Schema> m_aSchemaProvider;
   private final XSDPartialContext m_aPartialContext;
@@ -104,13 +105,13 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
     NodeList aNodeSet;
     try
     {
-      aNodeSet = (NodeList) m_aPartialContext.getXPathExpression ().evaluate (aSource.getNode (), XPathConstants.NODESET);
+      aNodeSet = (NodeList) m_aPartialContext.getXPathExpression ()
+                                             .evaluate (aSource.getNode (), XPathConstants.NODESET);
     }
     catch (final XPathExpressionException ex)
     {
       throw new IllegalStateException (ex);
     }
-
     final ErrorList aErrorList = new ErrorList ();
     final int nMatchingNodes = aNodeSet.getLength ();
 
@@ -142,7 +143,6 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
       // No match found - nothing to do
       return new ValidationResult (aVA, aErrorList);
     }
-
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
     final Schema aSchema = m_aSchemaProvider.get ();
@@ -151,7 +151,9 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
     for (int i = 0; i < aNodeSet.getLength (); ++i)
     {
       // Build a partial source
-      final IValidationSourceXML aRealSource = new ValidationSourceXML (aSource.getSystemID (), aNodeSet.item (i), true);
+      final IValidationSourceXML aRealSource = new ValidationSourceXML (aSource.getSystemID (),
+                                                                        aNodeSet.item (i),
+                                                                        true);
 
       try
       {
@@ -163,7 +165,8 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
         // Happens when non-XML document is trying to be parsed
         if (ex.getCause () instanceof SAXParseException)
         {
-          aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, (SAXParseException) ex.getCause ()));
+          aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
+                                                                    (SAXParseException) ex.getCause ()));
         }
         else
         {
@@ -176,7 +179,6 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
         }
       }
     }
-
     // Build result object
     return new ValidationResult (aVA, aErrorList.getAllFailures ());
   }
@@ -218,13 +220,15 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
    * @since 6.0.4
    */
   @Nonnull
+  @Deprecated (forRemoval = true, since = "8.0.2")
   public static ValidationExecutorXSDPartial create (@Nonnull final IJAXBDocumentType aDocType,
                                                      @Nonnull final XSDPartialContext aPartialContext)
   {
     ValueEnforcer.notNull (aDocType, "DocType");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aDocType.getAllXSDResources ().getLast ()),
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD,
+                                                                     aDocType.getAllXSDResources ().getLast ()),
                                              aDocType::getSchema,
                                              aPartialContext);
   }
@@ -271,7 +275,8 @@ public class ValidationExecutorXSDPartial extends AbstractValidationExecutor <IV
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aXSDRes.get (aXSDRes.size () - 1)),
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD,
+                                                                     aXSDRes.get (aXSDRes.size () - 1)),
                                              () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
                                              aPartialContext);
   }
