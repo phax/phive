@@ -41,8 +41,8 @@ public class PhiveRestoredException extends Exception
   private final ICommonsList <String> m_aStackTraceLines;
 
   public PhiveRestoredException (@Nonnull final String sClassName,
-                                @Nullable final String sMessage,
-                                @Nonnull final ICommonsList <String> aStackTraceLines)
+                                 @Nullable final String sMessage,
+                                 @Nonnull final ICommonsList <String> aStackTraceLines)
   {
     ValueEnforcer.notNull (sClassName, "ClassName");
     ValueEnforcer.notNull (aStackTraceLines, "StackTraceLines");
@@ -89,7 +89,8 @@ public class PhiveRestoredException extends Exception
   {
     return new JsonObject ().add (PhiveJsonHelper.JSON_CLASS, m_sClassName)
                             .addIfNotNull (PhiveJsonHelper.JSON_MESSAGE, m_sMessage)
-                            .add (PhiveJsonHelper.JSON_STACK_TRACE, StringHelper.getImploded ('\n', m_aStackTraceLines));
+                            .add (PhiveJsonHelper.JSON_STACK_TRACE,
+                                  StringHelper.getImploded ('\n', m_aStackTraceLines));
   }
 
   @Nullable
@@ -100,7 +101,8 @@ public class PhiveRestoredException extends Exception
 
     final String sClassName = aObj.getAsString (PhiveJsonHelper.JSON_CLASS);
     final String sMessage = aObj.getAsString (PhiveJsonHelper.JSON_MESSAGE);
-    final ICommonsList <String> aStackTraceLines = StringHelper.getExploded ('\n', aObj.getAsString (PhiveJsonHelper.JSON_STACK_TRACE));
+    final ICommonsList <String> aStackTraceLines = StringHelper.getExploded ('\n',
+                                                                             aObj.getAsString (PhiveJsonHelper.JSON_STACK_TRACE));
     if (sClassName == null)
       return null;
 
