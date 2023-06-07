@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import javax.xml.validation.Schema;
 
 /**
- * Resolver for VOM XML schemas that are referenced from the VOM.
+ * Resolver for VES XML schemas that are referenced from the VES.
  *
  * @author Philip Helger
  */

@@ -26,7 +26,7 @@ import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.engine.source.IValidationSourceXML;
 
 /**
- * Specific compliance settings applicable for VOM v1.
+ * Specific compliance settings applicable for VES v1.
  *
  * @author Philip Helger
  */

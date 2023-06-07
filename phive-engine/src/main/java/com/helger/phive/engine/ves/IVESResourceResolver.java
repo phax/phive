@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.io.resource.IReadableResource;
 
 /**
- * Resolver for VOM resources that are referenced from the VOM.
+ * Resolver for VES resources that are referenced from the VES.
  *
  * @author Philip Helger
  */

@@ -59,8 +59,8 @@ public final class VES1ConverterTest
                                                                                                            .filenameEndsWith (".xml")))
     {
       LOGGER.info ("Reading " + f.getName ());
-      final VESType aVOM = m.read (f);
-      assertNotNull (aVOM);
+      final VESType aVESDefinition = m.read (f);
+      assertNotNull (aVESDefinition);
 
       final IReadableResource aFakeXSD = new ReadableResourceByteArray ("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:1\" targetNamespace=\"urn:a\" version=\"1.0\"><xs:element name=\"a\" type=\"xs:string\" /></xs:schema>".getBytes (StandardCharsets.ISO_8859_1));
       final Schema aFakeSchema = XMLSchemaCache.getInstance ().getSchema (aFakeXSD);
@@ -104,8 +104,8 @@ public final class VES1ConverterTest
                                                             .complianceSettings (aSettings)
                                                             .artifactResolver (aAR)
                                                             .validationEnabled (true);
-      final ValidationExecutorSet <IValidationSourceXML> aVES = aConverter1.convertToVES_XML (aVOM, aErrorList);
-      assertNotNull (aErrorList.toString (), aVES);
+      final ValidationExecutorSet <IValidationSourceXML> aResolvedVES = aConverter1.convertToVES_XML (aVESDefinition, aErrorList);
+      assertNotNull (aErrorList.toString (), aResolvedVES);
     }
   }
 }
