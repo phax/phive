@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (C) 2014-2023 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<ves xmlns="urn:com:helger:phive:ves:v1.0-new">
+  <groupId>de.kosit</groupId>
+  <artifactId>xrechnung23</artifactId>
+  <version>1.8.1</version>
+  <type>schematron</type>
+  
+  <name>KoSIT XRechnung 2.3.x ruleset 1.8.1</name>
+  
+  <requires stopOnError="false">
+    <groupId>eu.cen.en16931</groupId>
+    <artifactId>ubl-invoice</artifactId>
+    <version>1.3.10</version>
+    <type>schematron</type>
+    
+    <output>
+      <customError>
+        <id>BR-CL-21</id>
+        <level>warn</level>
+      </customError>
+      <customError>
+        <id>BR-CL-23</id>
+        <level>warn</level>
+      </customError>
+    </output>
+  </requires>
+
+  <schematron>
+    <resource>
+      <groupId>de.kosit</groupId>
+      <artifactId>xrechnung-ubl</artifactId>
+      <version>1.8.1</version>
+      <classifier>xslt</classifier>
+    </resource>
+    
+    <engine>iso-schematron</engine>
+  </schematron>
+</ves>

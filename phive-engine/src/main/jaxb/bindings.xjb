@@ -33,4 +33,9 @@
       <package name="com.helger.phive.engine.ves.v10" />
     </schemaBindings>
   </bindings>
+  <bindings schemaLocation="../resources/schemas/ves/ves-1.0-new-approach.xsd">
+    <schemaBindings>
+      <package name="com.helger.phive.engine.ves.v10_new" />
+    </schemaBindings>
+  </bindings>
 </bindings>

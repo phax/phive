@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (C) 2014-2023 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<ves xmlns="urn:com:helger:phive:ves:v1.0-new">
+  <groupId>eu.cen.en16931</groupId>
+  <artifactId>ubl-creditnote</artifactId>
+  <version>1.3.10</version>
+  <type>schematron</type>
+  
+  <name>EN16931 UBL CreditNote</name>
+  <released>2023-04-11</released>
+   
+  <!-- 0..1 requires possible
+   -->
+  <requires stopOnError="true">
+    <groupId>org.oasis-open.ubl</groupId>
+    <artifactId>creditnote</artifactId>
+    <version>2.1</version>
+    <type>xsd</type>
+    
+    <namespaces>
+      <!-- redefined only this prefix -->
+      <namespace prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" overwrite="true" />
+    </namespaces>
+  </requires>
+  
+  <schematron>
+    <!-- Same SCH as for Invoice -->
+    <resource>
+      <groupId>eu.cen.en16931</groupId>
+      <artifactId>ubl</artifactId>
+      <version>1.3.10</version>
+      <classifier>xslt</classifier>
+    </resource>
+    <engine>iso-schematron</engine>
+  </schematron>
+</ves>

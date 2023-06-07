@@ -14,19 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves;
+package com.helger.phive.engine.ves.old;
 
 import javax.annotation.Nullable;
 
-import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.commons.io.resource.IReadableResource;
 
 /**
- * Generic interface to resolve namespace mappings via ID.
+ * Resolver for VES resources that are referenced from the VES.
  *
  * @author Philip Helger
  */
-public interface IVESNamespaceContextResolver
+public interface IVESResourceResolver
 {
+  /**
+   * Find the resource with the provided ID.
+   *
+   * @param sID
+   *        The resource ID to search. May be <code>null</code>.
+   * @return The found resource or <code>null</code>.
+   */
   @Nullable
-  MapBasedNamespaceContext getNamespaceContextOfID (@Nullable String sID);
+  IReadableResource getResourceOfID (@Nullable String sID);
 }

@@ -14,25 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves;
+package com.helger.phive.engine.ves.old;
 
 import javax.annotation.Nullable;
-import javax.xml.validation.Schema;
+
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.phive.api.executorset.VESID;
 
 /**
- * Resolver for VES XML schemas that are referenced from the VES.
+ * Resolver for VES resources that are referenced from the VES.
  *
  * @author Philip Helger
  */
-public interface IVESXmlSchemaResolver
+public interface IVESArtifactResolver
 {
   /**
-   * Find the XML schema with the provided ID.
+   * Find the artifact with the provided ID.
    *
-   * @param sID
-   *        The XML schema ID to search. May be <code>null</code>.
-   * @return The found XML schema or <code>null</code>.
+   * @param aVESID
+   *        The VESID to search. May be <code>null</code>.
+   * @return The found resource or <code>null</code>.
    */
   @Nullable
-  Schema getXmlSchemaOfID (@Nullable String sID);
+  IReadableResource getArtifactOfID (@Nullable VESID aVESID);
 }

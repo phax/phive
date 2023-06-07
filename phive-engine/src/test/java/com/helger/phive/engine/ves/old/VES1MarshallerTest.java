@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves;
+package com.helger.phive.engine.ves.old;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -36,7 +36,16 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.file.IFileFilter;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
-import com.helger.phive.engine.ves.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
+import com.helger.phive.engine.ves.old.IVESNamespaceContextResolver;
+import com.helger.phive.engine.ves.old.IVESResourceResolver;
+import com.helger.phive.engine.ves.old.IVESXmlSchemaResolver;
+import com.helger.phive.engine.ves.old.MapBasedVESNamespaceContextResolver;
+import com.helger.phive.engine.ves.old.MapBasedVESResourceResolver;
+import com.helger.phive.engine.ves.old.MapBasedVESXmlSchemaResolver;
+import com.helger.phive.engine.ves.old.VES1ComplianceSettings;
+import com.helger.phive.engine.ves.old.VES1Marshaller;
+import com.helger.phive.engine.ves.old.VES1Validator;
+import com.helger.phive.engine.ves.old.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
 import com.helger.phive.engine.ves.v10.VESType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.schema.XMLSchemaCache;

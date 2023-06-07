@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (C) 2014-2023 Philip Helger (www.helger.com)
+    philip[at]helger[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<ves xmlns="urn:com:helger:phive:ves:v1.0-new">
+  <groupId>org.oasis-open.ubl</groupId>
+  <artifactId>invoice</artifactId>
+  <version>2.1</version>
+  <type>xsd</type>
+  
+  <name>OASIS UBL 2.1 Invoice</name>
+  
+  <xsd>
+    <resource>
+      <groupId>org.oasis-open</groupId>
+      <artifactId>ubl</artifactId>
+      <version>2.1</version>
+      <classifier>zip</classifier>
+    </resource>
+    <!-- when resource is ZIP, main is needed -->
+    <main>xsdrt/maindoc/UBL-Invoice-2.1.xsd</main>
+    <catalog>
+      <!-- ... -->
+    </catalog>
+    <namespaces>
+      <namespace prefix="" uri="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" />
+      <namespace prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance" />
+      <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+      <namespace prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
+      <namespace prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" />
+      <namespace prefix="cec" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" />
+      <namespace prefix="ds" uri="http://www.w3.org/2000/09/xmldsig#" />
+    </namespaces>
+  </xsd>
+</ves>
