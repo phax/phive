@@ -35,39 +35,42 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.engine.source.IValidationSourceXML;
-import com.helger.phive.engine.ves.VOM1ComplianceSettings.IEdifactValidationExecutorProviderXML;
-import com.helger.phive.engine.ves.v10.VOMType;
+import com.helger.phive.engine.ves.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
+import com.helger.phive.engine.ves.v10.VESType;
 import com.helger.phive.engine.xsd.ValidationExecutorXSD;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.schema.XMLSchemaCache;
 
 /**
- * Test class for class {@link VOM1Marshaller}.
+ * Test class for class {@link VES1Marshaller}.
  *
  * @author Philip Helger
  */
-public final class VOM1ConverterTest
+public final class VES1ConverterTest
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (VOM1ConverterTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (VES1ConverterTest.class);
+  private static final String TEST_BASE_PATH = "src/test/resources/ves/";
 
   @Test
   public void testReadGoodExamples ()
   {
-    final VOM1Marshaller m = new VOM1Marshaller ();
-    for (final File f : new FileSystemIterator (new File ("src/test/resources/vom/good")).withFilter (IFileFilter.filenameEndsWith (".xml")))
+    final VES1Marshaller m = new VES1Marshaller ();
+    for (final File f : new FileSystemIterator (new File (TEST_BASE_PATH + "good")).withFilter (IFileFilter
+                                                                                                           .filenameEndsWith (".xml")))
     {
       LOGGER.info ("Reading " + f.getName ());
-      final VOMType aVOM = m.read (f);
+      final VESType aVOM = m.read (f);
       assertNotNull (aVOM);
 
       final IReadableResource aFakeXSD = new ReadableResourceByteArray ("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:1\" targetNamespace=\"urn:a\" version=\"1.0\"><xs:element name=\"a\" type=\"xs:string\" /></xs:schema>".getBytes (StandardCharsets.ISO_8859_1));
       final Schema aFakeSchema = XMLSchemaCache.getInstance ().getSchema (aFakeXSD);
 
-      final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ().addMapping ("ubl21-invoice", aFakeSchema);
-      final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ().addMapping ("ubl21",
+      final IVESXmlSchemaResolver aXmlSchemaResolver = new MapBasedVESXmlSchemaResolver ().addMapping ("ubl21-invoice",
+                                                                                                       aFakeSchema);
+      final IVESNamespaceContextResolver aNamespaceContextResolver = new MapBasedVESNamespaceContextResolver ().addMapping ("ubl21",
                                                                                                                             new MapBasedNamespaceContext ().addMapping ("a",
                                                                                                                                                                         "urn:a"));
-      final IVOMResourceResolver aResourceResolver = new MapBasedVOMResourceResolver ().addMapping ("cius-pt-200",
+      final IVESResourceResolver aResourceResolver = new MapBasedVESResourceResolver ().addMapping ("cius-pt-200",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
                                                                                        .addMapping ("cius-pt-201",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
@@ -77,7 +80,7 @@ public final class VOM1ConverterTest
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
                                                                                        .addMapping ("en16931-ublinv-132",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY));
-      final IVOMArtifactResolver aAR = aVESID -> {
+      final IVESArtifactResolver aAR = aVESID -> {
         switch (aVESID.getAsSingleID ())
         {
           case "com.helger:test-special:1.5.678":
@@ -90,12 +93,12 @@ public final class VOM1ConverterTest
           return ValidationExecutorXSD.create (aFakeXSD);
         return null;
       };
-      final VOM1ComplianceSettings aSettings = VOM1ComplianceSettings.builder ()
+      final VES1ComplianceSettings aSettings = VES1ComplianceSettings.builder ()
                                                                      .allowEdifact (true)
                                                                      .edifactValidationExecutorProviderXML (aEdifactProvider)
                                                                      .build ();
       final ErrorList aErrorList = new ErrorList ();
-      final VOM1Converter aConverter1 = new VOM1Converter ().xmlSchemaResolver (aXmlSchemaResolver)
+      final VES1Converter aConverter1 = new VES1Converter ().xmlSchemaResolver (aXmlSchemaResolver)
                                                             .namespaceContextResolver (aNamespaceContextResolver)
                                                             .resourceResolver (aResourceResolver)
                                                             .complianceSettings (aSettings)

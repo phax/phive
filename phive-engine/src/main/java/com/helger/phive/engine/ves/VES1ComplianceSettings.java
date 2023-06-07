@@ -31,7 +31,7 @@ import com.helger.phive.engine.source.IValidationSourceXML;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class VOM1ComplianceSettings
+public class VES1ComplianceSettings
 {
   /**
    * Callback interface to create the necessary validation executor. This is NOT
@@ -51,7 +51,7 @@ public class VOM1ComplianceSettings
   private final boolean m_bAllowEdifact;
   private final IEdifactValidationExecutorProviderXML m_aEdifactValidationExecutorProviderXML;
 
-  public VOM1ComplianceSettings (final boolean bAllowEdifact,
+  public VES1ComplianceSettings (final boolean bAllowEdifact,
                                  @Nullable final IEdifactValidationExecutorProviderXML aEdifactValidationExecutorProviderXML)
   {
     m_bAllowEdifact = bAllowEdifact;
@@ -75,7 +75,7 @@ public class VOM1ComplianceSettings
     return new Builder ();
   }
 
-  public static class Builder implements IBuilder <VOM1ComplianceSettings>
+  public static class Builder implements IBuilder <VES1ComplianceSettings>
   {
     private boolean m_bAllowEdifact = DEFAULT_ALLOW_EDIFACT;
     private IEdifactValidationExecutorProviderXML m_aEdifactValidationExecutorProviderXML;
@@ -98,9 +98,9 @@ public class VOM1ComplianceSettings
     }
 
     @Nonnull
-    public VOM1ComplianceSettings build ()
+    public VES1ComplianceSettings build ()
     {
-      return new VOM1ComplianceSettings (m_bAllowEdifact, m_aEdifactValidationExecutorProviderXML);
+      return new VES1ComplianceSettings (m_bAllowEdifact, m_aEdifactValidationExecutorProviderXML);
     }
   }
 }

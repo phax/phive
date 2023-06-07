@@ -17,22 +17,40 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:vom:v1.0">
+<ves xmlns="urn:com:helger:phive:ves:v1.0">
   <id>
-    <groupId>de.xrechnung</groupId>
-    <artifactId>ubl-invoice</artifactId>
-    <version>2.0.0</version>
+    <groupId>un.unece.uncefact</groupId>
+    <artifactId>CrossIndustryInvoice</artifactId>
+    <version>D16B</version>
   </id>
-  <name>XRechnung UBL Invoice 2.0.0</name>
+  <name>CII CrossIndustryInvoice D16B</name>
   
   <validation>
     <xsd>
       <builtIn>ubl21-invoice</builtIn>
     </xsd>
 
-    <!-- add stop on error -->
     <schematron>
-      <builtIn>en16931-ublinv-132</builtIn>
+      <builtIn>cius-pt-200</builtIn>
+      <namespaces>
+        <builtIn>ubl21</builtIn>
+      </namespaces>
+    </schematron>
+
+    <schematron>
+      <builtIn>atnat-invoice-6</builtIn>
+      <prerequisite>/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'</prerequisite>
+      <namespaces>
+        <builtIn>ubl21</builtIn>
+        <mapping>
+          <prefix>ubl</prefix>
+          <namespace>urn:oasis:names:specification:ubl:schema:xsd:Invoice-2</namespace>
+        </mapping>
+      </namespaces>
+    </schematron>
+    
+    <schematron>
+      <builtIn>xrechnung-ublinv-200</builtIn>
       <namespaces>
         <builtIn>ubl21</builtIn>
       </namespaces>
@@ -53,13 +71,13 @@
         <level>info</level>
       </customError>
     </schematron>
-    
+
     <schematron>
-      <builtIn>xrechnung-ublinv-200</builtIn>
+      <builtIn>cius-pt-201</builtIn>
       <namespaces>
-        <builtIn>ubl21</builtIn>
+        <!-- empty mapping is allowed -->
       </namespaces>
     </schematron>
-    
+
   </validation>
 </ves>

@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:vom:v1.0">
+<ves xmlns="urn:com:helger:phive:ves:v1.0">
   <id>
     <groupId>un.unece.uncefact</groupId>
     <artifactId>CrossIndustryInvoice</artifactId>
@@ -27,7 +27,6 @@
   
   <validation>
     <xsd>
-      <builtIn>ubl21-invoice</builtIn>
     </xsd>
 
     <schematron>

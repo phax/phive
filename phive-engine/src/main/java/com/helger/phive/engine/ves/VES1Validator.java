@@ -35,30 +35,30 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.phive.engine.ves.v10.VOMCoordinatesType;
-import com.helger.phive.engine.ves.v10.VOMCustomError;
-import com.helger.phive.engine.ves.v10.VOMEdifactType;
-import com.helger.phive.engine.ves.v10.VOMNamespaceMappingType;
-import com.helger.phive.engine.ves.v10.VOMNamespacesType;
-import com.helger.phive.engine.ves.v10.VOMOptionType;
-import com.helger.phive.engine.ves.v10.VOMSchematronType;
-import com.helger.phive.engine.ves.v10.VOMType;
-import com.helger.phive.engine.ves.v10.VOMValidationType;
-import com.helger.phive.engine.ves.v10.VOMXSDType;
+import com.helger.phive.engine.ves.v10.VESCoordinatesType;
+import com.helger.phive.engine.ves.v10.VESCustomError;
+import com.helger.phive.engine.ves.v10.VESEdifactType;
+import com.helger.phive.engine.ves.v10.VESNamespaceMappingType;
+import com.helger.phive.engine.ves.v10.VESNamespacesType;
+import com.helger.phive.engine.ves.v10.VESOptionType;
+import com.helger.phive.engine.ves.v10.VESSchematronType;
+import com.helger.phive.engine.ves.v10.VESType;
+import com.helger.phive.engine.ves.v10.VESValidationType;
+import com.helger.phive.engine.ves.v10.VESXSDType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
- * Validator for VOM v1 data model. See
- * {@link #validate(VOMType, IVOMXmlSchemaResolver, IVOMNamespaceContextResolver, IVOMResourceResolver, VOM1ComplianceSettings)}
+ * Validator for VES v1 data model. See
+ * {@link #validate(VESType, IVESXmlSchemaResolver, IVESNamespaceContextResolver, IVESResourceResolver, VES1ComplianceSettings)}
  * as the simplest entry point.
  *
  * @author Philip Helger
  * @since 7.2.1
  */
 @Immutable
-public final class VOM1Validator
+public final class VES1Validator
 {
-  public enum EVOMErrorCode
+  public enum EVESErrorCode
   {
     REQUIRED ("The element must be provided."),
     REQUIRED_NOT_EMPTY ("The element must be provided and not empty."),
@@ -75,7 +75,7 @@ public final class VOM1Validator
 
     private final String m_sMsg;
 
-    EVOMErrorCode (@Nonnull final String sMsg)
+    EVESErrorCode (@Nonnull final String sMsg)
     {
       m_sMsg = sMsg;
     }
@@ -93,9 +93,9 @@ public final class VOM1Validator
     }
   }
 
-  private static final Logger LOGGER = LoggerFactory.getLogger (VOM1Validator.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (VES1Validator.class);
 
-  private VOM1Validator ()
+  private VES1Validator ()
   {}
 
   @Nonnull
@@ -105,7 +105,7 @@ public final class VOM1Validator
   }
 
   @Nonnull
-  private static IError _createError (@Nonnull final EVOMErrorCode e, @Nonnull final String sXPath)
+  private static IError _createError (@Nonnull final EVESErrorCode e, @Nonnull final String sXPath)
   {
     return _createError (e.getErrorMessage (), sXPath);
   }
@@ -117,56 +117,57 @@ public final class VOM1Validator
   }
 
   @Nonnull
-  private static IError _createWarn (@Nonnull final EVOMErrorCode e, @Nonnull final String sXPath)
+  private static IError _createWarn (@Nonnull final EVESErrorCode e, @Nonnull final String sXPath)
   {
     return _createWarn (e.getErrorMessage (), sXPath);
   }
 
   public static void validateCoordinates (@Nonnull final String sXPath,
-                                          @Nullable final VOMCoordinatesType aCoords,
+                                          @Nullable final VESCoordinatesType aCoords,
                                           @Nonnull final ErrorList aErrorList)
   {
     if (aCoords == null)
     {
-      aErrorList.add (_createError (EVOMErrorCode.REQUIRED, sXPath));
+      aErrorList.add (_createError (EVESErrorCode.REQUIRED, sXPath));
     }
     else
     {
       // Coordinates element is present
       if (StringHelper.hasNoText (aCoords.getGroupId ()))
-        aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/groupId"));
+        aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/groupId"));
       if (StringHelper.hasNoText (aCoords.getArtifactId ()))
-        aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/artifactId"));
+        aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/artifactId"));
       if (StringHelper.hasNoText (aCoords.getVersion ()))
-        aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/version"));
+        aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/version"));
       // classifier is optional
     }
   }
 
   public static void validateOptions (@Nonnull final String sXPath,
                                       @Nonnull final String sLocalXPath,
-                                      @Nullable final List <VOMOptionType> aOptions,
+                                      @Nullable final List <VESOptionType> aOptions,
                                       @Nonnull final ErrorList aErrorList)
   {
     if (aOptions != null)
     {
       int nIndex = 1;
       final ICommonsSet <String> aNames = new CommonsHashSet <> ();
-      for (final VOMOptionType aOption : aOptions)
+      for (final VESOptionType aOption : aOptions)
       {
         // Name must be neither null nor empty
         final String sName = aOption.getName ();
         if (StringHelper.hasNoText (sName))
-          aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sXPath + sLocalXPath + '[' + nIndex + "]/name"));
+          aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY,
+                                        sXPath + sLocalXPath + '[' + nIndex + "]/name"));
         else
           if (!aNames.add (sName))
-            aErrorList.add (_createError (EVOMErrorCode.OPTION_NAME_NOT_UNIQUE.getErrorMessage (sName, sXPath),
+            aErrorList.add (_createError (EVESErrorCode.OPTION_NAME_NOT_UNIQUE.getErrorMessage (sName, sXPath),
                                           sXPath + '[' + nIndex + "]/name"));
 
         // Value may be empty
         final String sValue = aOption.getValue ();
         if (sValue == null)
-          aErrorList.add (_createError (EVOMErrorCode.REQUIRED, sXPath + sLocalXPath + '[' + nIndex + "]/value"));
+          aErrorList.add (_createError (EVESErrorCode.REQUIRED, sXPath + sLocalXPath + '[' + nIndex + "]/value"));
 
         nIndex++;
       }
@@ -174,13 +175,13 @@ public final class VOM1Validator
   }
 
   public static void validateXSD (@Nonnull final String sXPath,
-                                  @Nullable final VOMXSDType aXSD,
-                                  @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
+                                  @Nullable final VESXSDType aXSD,
+                                  @Nonnull final IVESXmlSchemaResolver aXmlSchemaResolver,
                                   @Nonnull final ErrorList aErrorList)
   {
     if (aXSD == null)
     {
-      aErrorList.add (_createError (EVOMErrorCode.REQUIRED, sXPath));
+      aErrorList.add (_createError (EVESErrorCode.REQUIRED, sXPath));
     }
     else
     {
@@ -189,7 +190,8 @@ public final class VOM1Validator
       {
         final Schema aRes = aXmlSchemaResolver.getXmlSchemaOfID (sBuiltIn);
         if (aRes == null)
-          aErrorList.add (_createError (EVOMErrorCode.BUILTIN_XML_SCHEMA_NOT_FOUND.getErrorMessage (sBuiltIn), sXPath + "/builtin"));
+          aErrorList.add (_createError (EVESErrorCode.BUILTIN_XML_SCHEMA_NOT_FOUND.getErrorMessage (sBuiltIn),
+                                        sXPath + "/builtin"));
       }
       else
       {
@@ -201,26 +203,26 @@ public final class VOM1Validator
   }
 
   public static void validateEdifact (@Nonnull final String sXPath,
-                                      @Nullable final VOMEdifactType aEdifact,
+                                      @Nullable final VESEdifactType aEdifact,
                                       @Nonnull final ErrorList aErrorList)
   {
     if (aEdifact == null)
     {
-      aErrorList.add (_createError (EVOMErrorCode.REQUIRED, sXPath));
+      aErrorList.add (_createError (EVESErrorCode.REQUIRED, sXPath));
     }
     else
     {
       if (StringHelper.hasNoText (aEdifact.getDirectory ()))
-        aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/directory"));
+        aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/directory"));
       if (StringHelper.hasNoText (aEdifact.getMessage ()))
-        aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/message"));
+        aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/message"));
       validateOptions (sXPath, "/option", aEdifact.getOption (), aErrorList);
     }
   }
 
   public static void validateNamespaces (@Nonnull final String sXPath,
-                                         @Nullable final VOMNamespacesType aNamespaces,
-                                         @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
+                                         @Nullable final VESNamespacesType aNamespaces,
+                                         @Nonnull final IVESNamespaceContextResolver aNamespaceContextResolver,
                                          @Nonnull final ErrorList aErrorList)
   {
     // Is optional
@@ -234,7 +236,8 @@ public final class VOM1Validator
         final MapBasedNamespaceContext ret = aNamespaceContextResolver.getNamespaceContextOfID (sBuiltIn);
         if (ret == null)
         {
-          aErrorList.add (_createError (EVOMErrorCode.BUILTIN_NAMESPACE_CONTEXT_NOT_FOUND.getErrorMessage (sBuiltIn), sXPath + "/builtin"));
+          aErrorList.add (_createError (EVESErrorCode.BUILTIN_NAMESPACE_CONTEXT_NOT_FOUND.getErrorMessage (sBuiltIn),
+                                        sXPath + "/builtin"));
           // Avoid NPE later on
           aNsCtx = new MapBasedNamespaceContext ();
         }
@@ -249,7 +252,7 @@ public final class VOM1Validator
 
       int nIndex = 1;
       int nErrors = 0;
-      for (final VOMNamespaceMappingType aMapping : aNamespaces.getMapping ())
+      for (final VESNamespaceMappingType aMapping : aNamespaces.getMapping ())
       {
         final String sLocalXPath = sXPath + "/mapping[" + nIndex + ']';
 
@@ -259,13 +262,14 @@ public final class VOM1Validator
 
         if (StringHelper.hasNoText (sNamespaceURI))
         {
-          aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sLocalXPath + "/namespace"));
+          aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sLocalXPath + "/namespace"));
           nErrors++;
         }
         else
         {
           if (aNsCtx.isPrefixMapped (sPrefix))
-            aErrorList.add (_createWarn (EVOMErrorCode.NAMESPACE_PREFIX_ALREADY_MAPPED.getErrorMessage (sPrefix, sNamespaceURI),
+            aErrorList.add (_createWarn (EVESErrorCode.NAMESPACE_PREFIX_ALREADY_MAPPED.getErrorMessage (sPrefix,
+                                                                                                        sNamespaceURI),
                                          sLocalXPath + "/prefix"));
           aNsCtx.setMapping (sPrefix, sNamespaceURI);
         }
@@ -274,19 +278,19 @@ public final class VOM1Validator
       }
 
       if (!aNsCtx.hasAnyMapping () && nErrors == 0)
-        aErrorList.add (_createWarn (EVOMErrorCode.NAMESPACE_CONTEXT_EMPTY, sXPath));
+        aErrorList.add (_createWarn (EVESErrorCode.NAMESPACE_CONTEXT_EMPTY, sXPath));
     }
   }
 
   public static void validateSchematron (@Nonnull final String sXPath,
-                                         @Nullable final VOMSchematronType aSchematron,
-                                         @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
-                                         @Nonnull final IVOMResourceResolver aResourceResolver,
+                                         @Nullable final VESSchematronType aSchematron,
+                                         @Nonnull final IVESNamespaceContextResolver aNamespaceContextResolver,
+                                         @Nonnull final IVESResourceResolver aResourceResolver,
                                          @Nonnull final ErrorList aErrorList)
   {
     if (aSchematron == null)
     {
-      aErrorList.add (_createError (EVOMErrorCode.REQUIRED, sXPath));
+      aErrorList.add (_createError (EVESErrorCode.REQUIRED, sXPath));
     }
     else
     {
@@ -295,7 +299,8 @@ public final class VOM1Validator
       {
         final IReadableResource aRes = aResourceResolver.getResourceOfID (sBuiltIn);
         if (aRes == null)
-          aErrorList.add (_createError (EVOMErrorCode.BUILTIN_RESOURCE_NOT_FOUND.getErrorMessage (sBuiltIn), sXPath + "/builtin"));
+          aErrorList.add (_createError (EVESErrorCode.BUILTIN_RESOURCE_NOT_FOUND.getErrorMessage (sBuiltIn),
+                                        sXPath + "/builtin"));
       }
       else
       {
@@ -312,20 +317,21 @@ public final class VOM1Validator
         int nIndex = 1;
         int nErrors = 0;
         final ICommonsSet <String> aIDs = new CommonsHashSet <> ();
-        for (final VOMCustomError aCustomError : aSchematron.getCustomError ())
+        for (final VESCustomError aCustomError : aSchematron.getCustomError ())
         {
           final String sLocalXPath = sXPath + "/customError[" + nIndex + ']';
 
           final String sID = aCustomError.getId ();
           if (StringHelper.hasNoText (sID))
           {
-            aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sLocalXPath + "/id"));
+            aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sLocalXPath + "/id"));
             ++nErrors;
           }
           else
           {
             if (aIDs.contains (sID))
-              aErrorList.add (_createWarn (EVOMErrorCode.CUSTOM_ERROR_ALREADY_MAPPED.getErrorMessage (sID), sLocalXPath + "/id"));
+              aErrorList.add (_createWarn (EVESErrorCode.CUSTOM_ERROR_ALREADY_MAPPED.getErrorMessage (sID),
+                                           sLocalXPath + "/id"));
             aIDs.add (sID);
           }
 
@@ -333,7 +339,7 @@ public final class VOM1Validator
         }
 
         if (aIDs.isEmpty () && nErrors == 0)
-          aErrorList.add (_createWarn (EVOMErrorCode.CUSTOM_ERRORS_EMPTY, sXPath));
+          aErrorList.add (_createWarn (EVESErrorCode.CUSTOM_ERRORS_EMPTY, sXPath));
       }
 
       validateOptions (sXPath, "/option", aSchematron.getOption (), aErrorList);
@@ -341,28 +347,28 @@ public final class VOM1Validator
   }
 
   public static void validateValidation (@Nonnull final String sXPath,
-                                         @Nullable final VOMValidationType aValidation,
-                                         @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
-                                         @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
-                                         @Nonnull final IVOMResourceResolver aResourceResolver,
-                                         @Nonnull final VOM1ComplianceSettings aSettings,
+                                         @Nullable final VESValidationType aValidation,
+                                         @Nonnull final IVESXmlSchemaResolver aXmlSchemaResolver,
+                                         @Nonnull final IVESNamespaceContextResolver aNamespaceContextResolver,
+                                         @Nonnull final IVESResourceResolver aResourceResolver,
+                                         @Nonnull final VES1ComplianceSettings aSettings,
                                          @Nonnull final ErrorList aErrorList)
   {
     if (aValidation == null)
     {
-      aErrorList.add (_createError (EVOMErrorCode.REQUIRED, sXPath));
+      aErrorList.add (_createError (EVESErrorCode.REQUIRED, sXPath));
     }
     else
     {
       // validation element is present
       if (aValidation.getXsdCount () + aValidation.getEdifactCount () + aValidation.getSchematronCount () == 0)
-        aErrorList.add (_createError (EVOMErrorCode.NO_VALIDATION_RULES, sXPath));
+        aErrorList.add (_createError (EVESErrorCode.NO_VALIDATION_RULES, sXPath));
       else
       {
         // XSD
         // XML uses 1-based indices
         int nIndex = 1;
-        for (final VOMXSDType aXSD : aValidation.getXsd ())
+        for (final VESXSDType aXSD : aValidation.getXsd ())
         {
           validateXSD (sXPath + "/xsd[" + nIndex + "]", aXSD, aXmlSchemaResolver, aErrorList);
           ++nIndex;
@@ -372,7 +378,7 @@ public final class VOM1Validator
         if (aSettings.isAllowEdifact ())
         {
           nIndex = 1;
-          for (final VOMEdifactType aEdifact : aValidation.getEdifact ())
+          for (final VESEdifactType aEdifact : aValidation.getEdifact ())
           {
             validateEdifact (sXPath + "/edifact[" + nIndex + "]", aEdifact, aErrorList);
             ++nIndex;
@@ -381,12 +387,12 @@ public final class VOM1Validator
         else
         {
           if (!aValidation.getEdifact ().isEmpty ())
-            aErrorList.add (_createError (EVOMErrorCode.EDIFACT_NOT_ALLOWED, sXPath));
+            aErrorList.add (_createError (EVESErrorCode.EDIFACT_NOT_ALLOWED, sXPath));
         }
 
         // Schematron
         nIndex = 1;
-        for (final VOMSchematronType aSchematron : aValidation.getSchematron ())
+        for (final VESSchematronType aSchematron : aValidation.getSchematron ())
         {
           validateSchematron (sXPath + "/schematron[" + nIndex + "]",
                               aSchematron,
@@ -399,14 +405,14 @@ public final class VOM1Validator
     }
   }
 
-  public static void validate (@Nonnull final VOMType aVOM,
-                               @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
-                               @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
-                               @Nonnull final IVOMResourceResolver aResourceResolver,
-                               @Nonnull final VOM1ComplianceSettings aSettings,
+  public static void validate (@Nonnull final VESType aVES,
+                               @Nonnull final IVESXmlSchemaResolver aXmlSchemaResolver,
+                               @Nonnull final IVESNamespaceContextResolver aNamespaceContextResolver,
+                               @Nonnull final IVESResourceResolver aResourceResolver,
+                               @Nonnull final VES1ComplianceSettings aSettings,
                                @Nonnull final ErrorList aErrorList)
   {
-    ValueEnforcer.notNull (aVOM, "VOM");
+    ValueEnforcer.notNull (aVES, "VES");
     ValueEnforcer.notNull (aXmlSchemaResolver, "XmlSchemaResolver");
     ValueEnforcer.notNull (aNamespaceContextResolver, "NamespaceContextResolver");
     ValueEnforcer.notNull (aResourceResolver, "ResourceResolver");
@@ -415,14 +421,14 @@ public final class VOM1Validator
 
     final int nOrigErrors = aErrorList.getCount ();
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Now validating VOM1 model");
+      LOGGER.debug ("Now validating VES1 model");
 
     final String sXPath = "/ves";
-    validateCoordinates (sXPath + "/id", aVOM.getId (), aErrorList);
-    if (StringHelper.hasNoText (aVOM.getName ()))
-      aErrorList.add (_createError (EVOMErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/name"));
+    validateCoordinates (sXPath + "/id", aVES.getId (), aErrorList);
+    if (StringHelper.hasNoText (aVES.getName ()))
+      aErrorList.add (_createError (EVESErrorCode.REQUIRED_NOT_EMPTY, sXPath + "/name"));
     validateValidation (sXPath + "/validation",
-                        aVOM.getValidation (),
+                        aVES.getValidation (),
                         aXmlSchemaResolver,
                         aNamespaceContextResolver,
                         aResourceResolver,
@@ -431,18 +437,18 @@ public final class VOM1Validator
 
     final int nDelta = aErrorList.getCount () - nOrigErrors;
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Finished validating VOM1 model. " + nDelta + " warnings/errors were found");
+      LOGGER.debug ("Finished validating VES1 model. " + nDelta + " warnings/errors were found");
   }
 
   @Nonnull
-  public static ErrorList validate (@Nonnull final VOMType aVOM,
-                                    @Nonnull final IVOMXmlSchemaResolver aXmlSchemaResolver,
-                                    @Nonnull final IVOMNamespaceContextResolver aNamespaceContextResolver,
-                                    @Nonnull final IVOMResourceResolver aResourceResolver,
-                                    @Nonnull final VOM1ComplianceSettings aSettings)
+  public static ErrorList validate (@Nonnull final VESType aVES,
+                                    @Nonnull final IVESXmlSchemaResolver aXmlSchemaResolver,
+                                    @Nonnull final IVESNamespaceContextResolver aNamespaceContextResolver,
+                                    @Nonnull final IVESResourceResolver aResourceResolver,
+                                    @Nonnull final VES1ComplianceSettings aSettings)
   {
     final ErrorList aErrorList = new ErrorList ();
-    validate (aVOM, aXmlSchemaResolver, aNamespaceContextResolver, aResourceResolver, aSettings, aErrorList);
+    validate (aVES, aXmlSchemaResolver, aNamespaceContextResolver, aResourceResolver, aSettings, aErrorList);
     return aErrorList;
   }
 }

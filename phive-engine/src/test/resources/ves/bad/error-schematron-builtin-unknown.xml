@@ -17,26 +17,17 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:vom:v1.0">
+<ves xmlns="urn:com:helger:phive:ves:v1.0">
   <id>
-    <groupId>com.helger.edifact</groupId>
-    <artifactId>test-desadv-d01b</artifactId>
-    <version>1.4.0</version>
+    <groupId>un.unece.uncefact</groupId>
+    <artifactId>CrossIndustryInvoice</artifactId>
+    <version>D16B</version>
   </id>
-  <name>Test binding for DESADV D01B</name>
+  <name>CII CrossIndustryInvoice D16B</name>
   
   <validation>
-    <edifact>
-      <directory>d01b</directory>
-      <message>DESADV</message>
-    </edifact>
-
     <schematron>
-      <resource>
-        <groupId>com.helger</groupId>
-        <artifactId>test-special</artifactId>
-        <version>1.5.678</version>
-      </resource>
+      <builtIn>cius-pt-200</builtIn>
     </schematron>
   </validation>
 </ves>

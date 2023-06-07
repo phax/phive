@@ -28,26 +28,26 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
- * A simple implementation of {@link IVOMResourceResolver} based on an in-memory
- * map.
+ * A simple implementation of {@link IVESNamespaceContextResolver} based on an
+ * in-memory map.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MapBasedVOMResourceResolver implements IVOMResourceResolver, ICloneable <MapBasedVOMResourceResolver>
+public class MapBasedVESNamespaceContextResolver implements IVESNamespaceContextResolver, ICloneable <MapBasedVESNamespaceContextResolver>
 {
-  private final ICommonsMap <String, IReadableResource> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, MapBasedNamespaceContext> m_aMap = new CommonsHashMap <> ();
 
   /**
    * Default constructor without any mapping.
    */
-  public MapBasedVOMResourceResolver ()
+  public MapBasedVESNamespaceContextResolver ()
   {}
 
   /**
@@ -56,45 +56,49 @@ public class MapBasedVOMResourceResolver implements IVOMResourceResolver, IClone
    * @param aMap
    *        The map to be used as the basis. May be <code>null</code>.
    */
-  public MapBasedVOMResourceResolver (@Nullable final Map <String, ? extends IReadableResource> aMap)
+  public MapBasedVESNamespaceContextResolver (@Nullable final Map <String, ? extends MapBasedNamespaceContext> aMap)
   {
     if (aMap != null)
       m_aMap.putAll (aMap);
   }
 
   @Nullable
-  public IReadableResource getResourceOfID (@Nullable final String sID)
+  public MapBasedNamespaceContext getNamespaceContextOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
     return m_aMap.get (sID);
   }
 
-  private void _addMapping (@Nonnull @Nonempty final String sID, @Nonnull final IReadableResource aRes, final boolean bAllowOverride)
+  private void _addMapping (@Nonnull @Nonempty final String sID,
+                            @Nonnull final MapBasedNamespaceContext aNSCtx,
+                            final boolean bAllowOverride)
   {
     ValueEnforcer.notEmpty (sID, "ID");
-    ValueEnforcer.notNull (aRes, "Resource");
+    ValueEnforcer.notNull (aNSCtx, "NSCtx");
     if (bAllowOverride)
-      m_aMap.put (sID, aRes);
+      m_aMap.put (sID, aNSCtx);
     else
     {
       if (m_aMap.containsKey (sID))
         throw new IllegalStateException ("Another mapping for ID '" + sID + "' is already present");
-      m_aMap.put (sID, aRes);
+      m_aMap.put (sID, aNSCtx);
     }
   }
 
   @Nonnull
-  public final MapBasedVOMResourceResolver addMapping (@Nonnull @Nonempty final String sID, @Nonnull final IReadableResource aRes)
+  public final MapBasedVESNamespaceContextResolver addMapping (@Nonnull @Nonempty final String sID,
+                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
   {
-    _addMapping (sID, aRes, false);
+    _addMapping (sID, aNSCtx, false);
     return this;
   }
 
   @Nonnull
-  public final MapBasedVOMResourceResolver setMapping (@Nonnull @Nonempty final String sID, @Nonnull final IReadableResource aRes)
+  public final MapBasedVESNamespaceContextResolver setMapping (@Nonnull @Nonempty final String sID,
+                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
   {
-    _addMapping (sID, aRes, true);
+    _addMapping (sID, aNSCtx, true);
     return this;
   }
 
@@ -104,7 +108,7 @@ public class MapBasedVOMResourceResolver implements IVOMResourceResolver, IClone
    */
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsMap <String, IReadableResource> getAllMappings ()
+  public final ICommonsMap <String, MapBasedNamespaceContext> getAllMappings ()
   {
     return m_aMap.getClone ();
   }
@@ -116,7 +120,7 @@ public class MapBasedVOMResourceResolver implements IVOMResourceResolver, IClone
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final MapBasedVOMResourceResolver rhs = (MapBasedVOMResourceResolver) o;
+    final MapBasedVESNamespaceContextResolver rhs = (MapBasedVESNamespaceContextResolver) o;
     return m_aMap.equals (rhs.m_aMap);
   }
 
@@ -128,9 +132,9 @@ public class MapBasedVOMResourceResolver implements IVOMResourceResolver, IClone
 
   @Nonnull
   @ReturnsMutableCopy
-  public MapBasedVOMResourceResolver getClone ()
+  public MapBasedVESNamespaceContextResolver getClone ()
   {
-    return new MapBasedVOMResourceResolver (m_aMap);
+    return new MapBasedVESNamespaceContextResolver (m_aMap);
   }
 
   @Override

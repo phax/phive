@@ -16,27 +16,24 @@
  */
 package com.helger.phive.engine.ves;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.jaxb.GenericJAXBMarshaller;
-import com.helger.phive.engine.ves.v10.ObjectFactory;
-import com.helger.phive.engine.ves.v10.VOMType;
+import javax.annotation.Nullable;
+
+import com.helger.commons.io.resource.IReadableResource;
 
 /**
- * A marshaller to read Validation Object Model v1 declarations.
+ * Resolver for VOM resources that are referenced from the VOM.
  *
  * @author Philip Helger
- * @since 7.2.1
  */
-public class VOM1Marshaller extends GenericJAXBMarshaller <VOMType>
+public interface IVESResourceResolver
 {
   /**
-   * The XML Schema path to validate against.
+   * Find the resource with the provided ID.
+   *
+   * @param sID
+   *        The resource ID to search. May be <code>null</code>.
+   * @return The found resource or <code>null</code>.
    */
-  public static final ClassPathResource XSD = new ClassPathResource ("schemas/vom/vom-1.0.xsd", VOM1Marshaller.class.getClassLoader ());
-
-  public VOM1Marshaller ()
-  {
-    super (VOMType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createVes);
-  }
+  @Nullable
+  IReadableResource getResourceOfID (@Nullable String sID);
 }

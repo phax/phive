@@ -24,7 +24,7 @@ import javax.xml.validation.Schema;
  *
  * @author Philip Helger
  */
-public interface IVOMXmlSchemaResolver
+public interface IVESXmlSchemaResolver
 {
   /**
    * Find the XML schema with the provided ID.

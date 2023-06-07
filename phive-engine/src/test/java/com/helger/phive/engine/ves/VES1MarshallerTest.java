@@ -36,44 +36,47 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.file.FileSystemIterator;
 import com.helger.commons.io.file.IFileFilter;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
-import com.helger.phive.engine.ves.VOM1ComplianceSettings.IEdifactValidationExecutorProviderXML;
-import com.helger.phive.engine.ves.v10.VOMType;
+import com.helger.phive.engine.ves.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
+import com.helger.phive.engine.ves.v10.VESType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.schema.XMLSchemaCache;
 
 /**
- * Test class for class {@link VOM1Marshaller}.
+ * Test class for class {@link VES1Marshaller}.
  *
  * @author Philip Helger
  */
-public final class VOM1MarshallerTest
+public final class VES1MarshallerTest
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (VOM1MarshallerTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (VES1MarshallerTest.class);
+  private static final String TEST_BASE_PATH = "src/test/resources/ves/";
 
   @Test
   public void testBasic ()
   {
-    assertTrue (VOM1Marshaller.XSD.exists ());
+    assertTrue (VES1Marshaller.XSD.exists ());
   }
 
   @Test
   public void testReadGoodExamples ()
   {
-    final VOM1Marshaller m = new VOM1Marshaller ();
-    for (final File f : new FileSystemIterator (new File ("src/test/resources/vom/good")).withFilter (IFileFilter.filenameEndsWith (".xml")))
+    final VES1Marshaller m = new VES1Marshaller ();
+    for (final File f : new FileSystemIterator (new File (TEST_BASE_PATH + "good")).withFilter (IFileFilter
+                                                                                                           .filenameEndsWith (".xml")))
     {
       LOGGER.info ("Reading " + f.getName ());
-      final VOMType aVOM = m.read (f);
-      assertNotNull (aVOM);
+      final VESType aVES = m.read (f);
+      assertNotNull (aVES);
 
       final Schema aFakeSchema = XMLSchemaCache.getInstance ()
                                                .getSchema (new ReadableResourceByteArray ("<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" xmlns=\"urn:1\" targetNamespace=\"urn:a\" version=\"1.0\"><xs:element name=\"a\" type=\"xs:string\" /></xs:schema>".getBytes ()));
 
-      final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ().addMapping ("ubl21-invoice", aFakeSchema);
-      final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ().addMapping ("ubl21",
+      final IVESXmlSchemaResolver aXmlSchemaResolver = new MapBasedVESXmlSchemaResolver ().addMapping ("ubl21-invoice",
+                                                                                                       aFakeSchema);
+      final IVESNamespaceContextResolver aNamespaceContextResolver = new MapBasedVESNamespaceContextResolver ().addMapping ("ubl21",
                                                                                                                             new MapBasedNamespaceContext ().addMapping ("a",
                                                                                                                                                                         "urn:a"));
-      final IVOMResourceResolver aResourceResolver = new MapBasedVOMResourceResolver ().addMapping ("cius-pt-200",
+      final IVESResourceResolver aResourceResolver = new MapBasedVESResourceResolver ().addMapping ("cius-pt-200",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
                                                                                        .addMapping ("cius-pt-201",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY))
@@ -84,11 +87,11 @@ public final class VOM1MarshallerTest
                                                                                        .addMapping ("en16931-ublinv-132",
                                                                                                     new ReadableResourceByteArray (ArrayHelper.EMPTY_BYTE_ARRAY));
       final IEdifactValidationExecutorProviderXML aEdifactProvider = (sDirectory, sMessage, aOptions) -> null;
-      final VOM1ComplianceSettings aSettings = VOM1ComplianceSettings.builder ()
+      final VES1ComplianceSettings aSettings = VES1ComplianceSettings.builder ()
                                                                      .allowEdifact (true)
                                                                      .edifactValidationExecutorProviderXML (aEdifactProvider)
                                                                      .build ();
-      final ErrorList aErrorList = VOM1Validator.validate (aVOM,
+      final ErrorList aErrorList = VES1Validator.validate (aVES,
                                                            aXmlSchemaResolver,
                                                            aNamespaceContextResolver,
                                                            aResourceResolver,
@@ -100,34 +103,36 @@ public final class VOM1MarshallerTest
   @Test
   public void testReadBadXSDExamples ()
   {
-    final VOM1Marshaller m = new VOM1Marshaller ();
-    for (final File f : new FileSystemIterator (new File ("src/test/resources/vom/bad-xsd")).withFilter (IFileFilter.filenameEndsWith (".xml")))
+    final VES1Marshaller m = new VES1Marshaller ();
+    for (final File f : new FileSystemIterator (new File (TEST_BASE_PATH + "bad-xsd")).withFilter (IFileFilter
+                                                                                                              .filenameEndsWith (".xml")))
     {
       LOGGER.info ("Reading " + f.getName ());
-      final VOMType aVOM = m.read (f);
-      assertNull (aVOM);
+      final VESType aVES = m.read (f);
+      assertNull (aVES);
     }
   }
 
   @Test
   public void testReadBadExamples ()
   {
-    final VOM1Marshaller m = new VOM1Marshaller ();
-    for (final File f : new FileSystemIterator (new File ("src/test/resources/vom/bad")).withFilter (IFileFilter.filenameEndsWith (".xml")))
+    final VES1Marshaller m = new VES1Marshaller ();
+    for (final File f : new FileSystemIterator (new File (TEST_BASE_PATH + "bad")).withFilter (IFileFilter
+                                                                                                          .filenameEndsWith (".xml")))
     {
       LOGGER.info ("Reading " + f.getName ());
-      final VOMType aVOM = m.read (f);
-      assertNotNull (aVOM);
+      final VESType aVES = m.read (f);
+      assertNotNull (aVES);
 
-      final IVOMXmlSchemaResolver aXmlSchemaResolver = new MapBasedVOMXmlSchemaResolver ();
-      final IVOMNamespaceContextResolver aNamespaceContextResolver = new MapBasedVOMNamespaceContextResolver ();
-      final IVOMResourceResolver aResourceResolver = new MapBasedVOMResourceResolver ();
+      final IVESXmlSchemaResolver aXmlSchemaResolver = new MapBasedVESXmlSchemaResolver ();
+      final IVESNamespaceContextResolver aNamespaceContextResolver = new MapBasedVESNamespaceContextResolver ();
+      final IVESResourceResolver aResourceResolver = new MapBasedVESResourceResolver ();
       final IEdifactValidationExecutorProviderXML aEdifactProvider = (sDirectory, sMessage, aOptions) -> null;
-      final VOM1ComplianceSettings aSettings = VOM1ComplianceSettings.builder ()
+      final VES1ComplianceSettings aSettings = VES1ComplianceSettings.builder ()
                                                                      .allowEdifact (true)
                                                                      .edifactValidationExecutorProviderXML (aEdifactProvider)
                                                                      .build ();
-      final ErrorList aErrorList = VOM1Validator.validate (aVOM,
+      final ErrorList aErrorList = VES1Validator.validate (aVES,
                                                            aXmlSchemaResolver,
                                                            aNamespaceContextResolver,
                                                            aResourceResolver,

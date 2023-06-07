@@ -34,20 +34,20 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * A simple implementation of {@link IVOMXmlSchemaResolver} based on an
+ * A simple implementation of {@link IVESXmlSchemaResolver} based on an
  * in-memory map.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MapBasedVOMXmlSchemaResolver implements IVOMXmlSchemaResolver, ICloneable <MapBasedVOMXmlSchemaResolver>
+public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, ICloneable <MapBasedVESXmlSchemaResolver>
 {
   private final ICommonsMap <String, Schema> m_aMap = new CommonsHashMap <> ();
 
   /**
    * Default constructor without any mapping.
    */
-  public MapBasedVOMXmlSchemaResolver ()
+  public MapBasedVESXmlSchemaResolver ()
   {}
 
   /**
@@ -56,7 +56,7 @@ public class MapBasedVOMXmlSchemaResolver implements IVOMXmlSchemaResolver, IClo
    * @param aMap
    *        The map to be used as the basis. May be <code>null</code>.
    */
-  public MapBasedVOMXmlSchemaResolver (@Nullable final Map <String, ? extends Schema> aMap)
+  public MapBasedVESXmlSchemaResolver (@Nullable final Map <String, ? extends Schema> aMap)
   {
     if (aMap != null)
       m_aMap.putAll (aMap);
@@ -85,14 +85,14 @@ public class MapBasedVOMXmlSchemaResolver implements IVOMXmlSchemaResolver, IClo
   }
 
   @Nonnull
-  public final MapBasedVOMXmlSchemaResolver addMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
+  public final MapBasedVESXmlSchemaResolver addMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
   {
     _addMapping (sID, aRes, false);
     return this;
   }
 
   @Nonnull
-  public final MapBasedVOMXmlSchemaResolver setMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
+  public final MapBasedVESXmlSchemaResolver setMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
   {
     _addMapping (sID, aRes, true);
     return this;
@@ -116,7 +116,7 @@ public class MapBasedVOMXmlSchemaResolver implements IVOMXmlSchemaResolver, IClo
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final MapBasedVOMXmlSchemaResolver rhs = (MapBasedVOMXmlSchemaResolver) o;
+    final MapBasedVESXmlSchemaResolver rhs = (MapBasedVESXmlSchemaResolver) o;
     return m_aMap.equals (rhs.m_aMap);
   }
 
@@ -128,9 +128,9 @@ public class MapBasedVOMXmlSchemaResolver implements IVOMXmlSchemaResolver, IClo
 
   @Nonnull
   @ReturnsMutableCopy
-  public MapBasedVOMXmlSchemaResolver getClone ()
+  public MapBasedVESXmlSchemaResolver getClone ()
   {
-    return new MapBasedVOMXmlSchemaResolver (m_aMap);
+    return new MapBasedVESXmlSchemaResolver (m_aMap);
   }
 
   @Override
