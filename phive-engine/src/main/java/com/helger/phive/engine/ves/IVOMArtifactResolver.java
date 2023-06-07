@@ -14,19 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.vom;
+package com.helger.phive.engine.ves;
 
 import javax.annotation.Nullable;
 
-import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.phive.api.executorset.VESID;
 
 /**
- * Generic interface to resolve namespace mappings via ID.
+ * Resolver for VOM resources that are referenced from the VOM.
  *
  * @author Philip Helger
  */
-public interface IVOMNamespaceContextResolver
+public interface IVOMArtifactResolver
 {
+  /**
+   * Find the artifact with the provided ID.
+   *
+   * @param aVESID
+   *        The VESID to search. May be <code>null</code>.
+   * @return The found resource or <code>null</code>.
+   */
   @Nullable
-  MapBasedNamespaceContext getNamespaceContextOfID (@Nullable String sID);
+  IReadableResource getArtifactOfID (@Nullable VESID aVESID);
 }

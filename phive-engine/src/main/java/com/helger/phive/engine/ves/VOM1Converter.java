@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.vom;
+package com.helger.phive.engine.ves;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,17 +39,17 @@ import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.engine.schematron.ValidationExecutorSchematron;
 import com.helger.phive.engine.source.IValidationSourceXML;
-import com.helger.phive.engine.vom.VOM1ComplianceSettings.IEdifactValidationExecutorProviderXML;
-import com.helger.phive.engine.vom.v10.VOMCoordinatesType;
-import com.helger.phive.engine.vom.v10.VOMCustomError;
-import com.helger.phive.engine.vom.v10.VOMEdifactType;
-import com.helger.phive.engine.vom.v10.VOMErrorLevel;
-import com.helger.phive.engine.vom.v10.VOMNamespaceMappingType;
-import com.helger.phive.engine.vom.v10.VOMNamespacesType;
-import com.helger.phive.engine.vom.v10.VOMOptionType;
-import com.helger.phive.engine.vom.v10.VOMSchematronType;
-import com.helger.phive.engine.vom.v10.VOMType;
-import com.helger.phive.engine.vom.v10.VOMXSDType;
+import com.helger.phive.engine.ves.VOM1ComplianceSettings.IEdifactValidationExecutorProviderXML;
+import com.helger.phive.engine.ves.v10.VOMCoordinatesType;
+import com.helger.phive.engine.ves.v10.VOMCustomError;
+import com.helger.phive.engine.ves.v10.VOMEdifactType;
+import com.helger.phive.engine.ves.v10.VOMErrorLevel;
+import com.helger.phive.engine.ves.v10.VOMNamespaceMappingType;
+import com.helger.phive.engine.ves.v10.VOMNamespacesType;
+import com.helger.phive.engine.ves.v10.VOMOptionType;
+import com.helger.phive.engine.ves.v10.VOMSchematronType;
+import com.helger.phive.engine.ves.v10.VOMType;
+import com.helger.phive.engine.ves.v10.VOMXSDType;
 import com.helger.phive.engine.xsd.ValidationExecutorXSD;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 

@@ -28,9 +28,9 @@
     <xjc:javaType name="com.helger.commons.datetime.XMLOffsetDate"     xmlType="xsd:date"     adapter="com.helger.jaxb.adapter.AdapterXMLOffsetDate" />
     <xjc:javaType name="com.helger.commons.datetime.XMLOffsetTime"     xmlType="xsd:time"     adapter="com.helger.jaxb.adapter.AdapterXMLOffsetTime" />
   </globalBindings>
-  <bindings schemaLocation="../resources/schemas/vom/vom-1.0.xsd">
+  <bindings schemaLocation="../resources/schemas/ves/ves-1.0.xsd">
     <schemaBindings>
-      <package name="com.helger.phive.engine.vom.v10" />
+      <package name="com.helger.phive.engine.ves.v10" />
     </schemaBindings>
   </bindings>
 </bindings>

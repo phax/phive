@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.vom;
+package com.helger.phive.engine.ves;
 
 import java.util.List;
 
@@ -35,16 +35,16 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.text.util.TextHelper;
-import com.helger.phive.engine.vom.v10.VOMCoordinatesType;
-import com.helger.phive.engine.vom.v10.VOMCustomError;
-import com.helger.phive.engine.vom.v10.VOMEdifactType;
-import com.helger.phive.engine.vom.v10.VOMNamespaceMappingType;
-import com.helger.phive.engine.vom.v10.VOMNamespacesType;
-import com.helger.phive.engine.vom.v10.VOMOptionType;
-import com.helger.phive.engine.vom.v10.VOMSchematronType;
-import com.helger.phive.engine.vom.v10.VOMType;
-import com.helger.phive.engine.vom.v10.VOMValidationType;
-import com.helger.phive.engine.vom.v10.VOMXSDType;
+import com.helger.phive.engine.ves.v10.VOMCoordinatesType;
+import com.helger.phive.engine.ves.v10.VOMCustomError;
+import com.helger.phive.engine.ves.v10.VOMEdifactType;
+import com.helger.phive.engine.ves.v10.VOMNamespaceMappingType;
+import com.helger.phive.engine.ves.v10.VOMNamespacesType;
+import com.helger.phive.engine.ves.v10.VOMOptionType;
+import com.helger.phive.engine.ves.v10.VOMSchematronType;
+import com.helger.phive.engine.ves.v10.VOMType;
+import com.helger.phive.engine.ves.v10.VOMValidationType;
+import com.helger.phive.engine.ves.v10.VOMXSDType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**

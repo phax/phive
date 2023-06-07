@@ -116,9 +116,9 @@
             <goals>
               <goal>generate</goal>
             </goals>
-            <id>vom</id>
+            <id>ves</id>
             <configuration>
-              <schemaDirectory>${basedir}/src/main/resources/schemas/vom</schemaDirectory>
+              <schemaDirectory>${basedir}/src/main/resources/schemas/ves</schemaDirectory>
               <bindingIncludes>
                 <bindingInclude>bindings.xjb</bindingInclude>
               </bindingIncludes>

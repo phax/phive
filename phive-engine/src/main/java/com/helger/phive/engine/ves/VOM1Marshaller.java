@@ -14,13 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.vom;
+package com.helger.phive.engine.ves;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.jaxb.GenericJAXBMarshaller;
-import com.helger.phive.engine.vom.v10.ObjectFactory;
-import com.helger.phive.engine.vom.v10.VOMType;
+import com.helger.phive.engine.ves.v10.ObjectFactory;
+import com.helger.phive.engine.ves.v10.VOMType;
 
 /**
  * A marshaller to read Validation Object Model v1 declarations.

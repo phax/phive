@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.vom;
+package com.helger.phive.engine.ves;
 
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.validation.Schema;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -31,23 +32,22 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
- * A simple implementation of {@link IVOMNamespaceContextResolver} based on an
+ * A simple implementation of {@link IVOMXmlSchemaResolver} based on an
  * in-memory map.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MapBasedVOMNamespaceContextResolver implements IVOMNamespaceContextResolver, ICloneable <MapBasedVOMNamespaceContextResolver>
+public class MapBasedVOMXmlSchemaResolver implements IVOMXmlSchemaResolver, ICloneable <MapBasedVOMXmlSchemaResolver>
 {
-  private final ICommonsMap <String, MapBasedNamespaceContext> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, Schema> m_aMap = new CommonsHashMap <> ();
 
   /**
    * Default constructor without any mapping.
    */
-  public MapBasedVOMNamespaceContextResolver ()
+  public MapBasedVOMXmlSchemaResolver ()
   {}
 
   /**
@@ -56,49 +56,45 @@ public class MapBasedVOMNamespaceContextResolver implements IVOMNamespaceContext
    * @param aMap
    *        The map to be used as the basis. May be <code>null</code>.
    */
-  public MapBasedVOMNamespaceContextResolver (@Nullable final Map <String, ? extends MapBasedNamespaceContext> aMap)
+  public MapBasedVOMXmlSchemaResolver (@Nullable final Map <String, ? extends Schema> aMap)
   {
     if (aMap != null)
       m_aMap.putAll (aMap);
   }
 
   @Nullable
-  public MapBasedNamespaceContext getNamespaceContextOfID (@Nullable final String sID)
+  public Schema getXmlSchemaOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
     return m_aMap.get (sID);
   }
 
-  private void _addMapping (@Nonnull @Nonempty final String sID,
-                            @Nonnull final MapBasedNamespaceContext aNSCtx,
-                            final boolean bAllowOverride)
+  private void _addMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes, final boolean bAllowOverride)
   {
     ValueEnforcer.notEmpty (sID, "ID");
-    ValueEnforcer.notNull (aNSCtx, "NSCtx");
+    ValueEnforcer.notNull (aRes, "Schema");
     if (bAllowOverride)
-      m_aMap.put (sID, aNSCtx);
+      m_aMap.put (sID, aRes);
     else
     {
       if (m_aMap.containsKey (sID))
         throw new IllegalStateException ("Another mapping for ID '" + sID + "' is already present");
-      m_aMap.put (sID, aNSCtx);
+      m_aMap.put (sID, aRes);
     }
   }
 
   @Nonnull
-  public final MapBasedVOMNamespaceContextResolver addMapping (@Nonnull @Nonempty final String sID,
-                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
+  public final MapBasedVOMXmlSchemaResolver addMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
   {
-    _addMapping (sID, aNSCtx, false);
+    _addMapping (sID, aRes, false);
     return this;
   }
 
   @Nonnull
-  public final MapBasedVOMNamespaceContextResolver setMapping (@Nonnull @Nonempty final String sID,
-                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
+  public final MapBasedVOMXmlSchemaResolver setMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
   {
-    _addMapping (sID, aNSCtx, true);
+    _addMapping (sID, aRes, true);
     return this;
   }
 
@@ -108,7 +104,7 @@ public class MapBasedVOMNamespaceContextResolver implements IVOMNamespaceContext
    */
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsMap <String, MapBasedNamespaceContext> getAllMappings ()
+  public final ICommonsMap <String, Schema> getAllMappings ()
   {
     return m_aMap.getClone ();
   }
@@ -120,7 +116,7 @@ public class MapBasedVOMNamespaceContextResolver implements IVOMNamespaceContext
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final MapBasedVOMNamespaceContextResolver rhs = (MapBasedVOMNamespaceContextResolver) o;
+    final MapBasedVOMXmlSchemaResolver rhs = (MapBasedVOMXmlSchemaResolver) o;
     return m_aMap.equals (rhs.m_aMap);
   }
 
@@ -132,9 +128,9 @@ public class MapBasedVOMNamespaceContextResolver implements IVOMNamespaceContext
 
   @Nonnull
   @ReturnsMutableCopy
-  public MapBasedVOMNamespaceContextResolver getClone ()
+  public MapBasedVOMXmlSchemaResolver getClone ()
   {
-    return new MapBasedVOMNamespaceContextResolver (m_aMap);
+    return new MapBasedVOMXmlSchemaResolver (m_aMap);
   }
 
   @Override
