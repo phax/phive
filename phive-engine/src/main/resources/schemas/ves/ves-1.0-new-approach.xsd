@@ -23,22 +23,137 @@
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="1.0">
+
   <xs:annotation>
     <xs:documentation>
-This XML Schema is used describe "Validation Execution Sets" as used by the phive-validation library.
- 
+      This XML Schema is used describe "Validation Execution Sets" as used by the phive-validation library.
     </xs:documentation>
-  </xs:annotation>         
-            
-  <xs:complexType name="VESType">
+  </xs:annotation>
+
+  <xs:element name="artifactId">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="invoice"/>
+        <xs:enumeration value="ubl"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="catalog" type="xs:string"/>
+
+  <xs:element name="classifier">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="zip"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="groupId">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="org.oasis-open"/>
+        <xs:enumeration value="org.oasis-open.ubl"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="main">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="xsdrt/maindoc/UBL-Invoice-2.1.xsd"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="name">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="OASIS UBL 2.1 Invoice"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="namespace">
+    <xs:complexType>
+      <xs:attribute name="prefix" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+            <xs:enumeration value="cac"/>
+            <xs:enumeration value="cbc"/>
+            <xs:enumeration value="cec"/>
+            <xs:enumeration value="ds"/>
+            <xs:enumeration value="xs"/>
+            <xs:enumeration value="xsi"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="uri" use="required" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="namespaces">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="namespace" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="resource">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="groupId"/>
+        <xs:element ref="artifactId"/>
+        <xs:element ref="version"/>
+        <xs:element ref="classifier"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="type">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="xsd"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <xs:element name="version">
+    <xs:simpleType>
+      <xs:restriction base="xs:decimal">
+        <xs:enumeration value="2.1"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  
+  <xs:complexType name="XsdType">
     <xs:sequence>
-      <!-- TODO -->
+      <xs:element ref="resource"/>
+      <xs:element ref="main"/>
+      <xs:element ref="catalog"/>
+      <xs:element ref="namespaces"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="ves" type="VESType">
+  <xs:complexType name="VesType">
+    <xs:sequence>
+      <xs:sequence>
+        <xs:element ref="groupId"/>
+        <xs:element ref="artifactId"/>
+        <xs:element ref="version"/>
+        <xs:element ref="type"/>
+        <xs:element ref="name"/>
+        <xs:element name="xsd" type="XsdType"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="ves" type="VesType">
     <xs:annotation>
       <xs:documentation>The root element of the Validation Execution Set definition</xs:documentation>
     </xs:annotation>
   </xs:element>
+
 </xs:schema>
