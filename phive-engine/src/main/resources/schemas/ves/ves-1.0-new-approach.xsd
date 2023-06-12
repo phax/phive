@@ -26,127 +26,135 @@
 
   <xs:annotation>
     <xs:documentation>
-      This XML Schema is used describe "Validation Execution Sets" as used by the phive-validation library.
+This XML Schema is used describe "Validation Execution Sets" as used by the phive-validation library.
     </xs:documentation>
   </xs:annotation>
 
-  <xs:element name="artifactId">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="invoice"/>
-        <xs:enumeration value="ubl"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
+  <xs:group name="CoordinateGroup">
+    <xs:annotation>
+      <xs:documentation>The complex type defines the layout and the constraints of a single pair of coordinates</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="groupId" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The group ID is something like a company or project ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="artifactId" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The artifact specifies something relative to a group. It must be unique within a group.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="version" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The version number of an artifact within a group. This MUST follow the semantic versioning principle.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
 
-  <xs:element name="catalog" type="xs:string"/>
+  <xs:complexType name="NamespaceType">
+    <xs:attribute name="prefix" use="required" type="xs:string"/>
+    <xs:attribute name="uri" use="required" type="xs:anyURI"/>
+    <xs:attribute name="overwrite" type="xs:string"/>
+  </xs:complexType>
 
-  <xs:element name="classifier">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="zip"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
+  <xs:complexType name="NamespacesType">
+    <xs:sequence>
+      <xs:element name="namespace" type="NamespaceType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
-  <xs:element name="groupId">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="org.oasis-open"/>
-        <xs:enumeration value="org.oasis-open.ubl"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
+  <xs:complexType name="ResourceType">
+    <xs:sequence>
+      <xs:group ref="CoordinateGroup"/>
+      <xs:element name="classifier" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
 
-  <xs:element name="main">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="xsdrt/maindoc/UBL-Invoice-2.1.xsd"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
+  <xs:complexType name="CustomErrorType">
+    <xs:sequence>
+      <xs:element name="id" type="xs:string"/>
+      <xs:element name="level" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
 
-  <xs:element name="name">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="OASIS UBL 2.1 Invoice"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
+  <xs:complexType name="OutputType">
+    <xs:sequence>
+      <xs:element name="customError" type="CustomErrorType" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
-  <xs:element name="namespace">
-    <xs:complexType>
-      <xs:attribute name="prefix" use="required">
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value=""/>
-            <xs:enumeration value="cac"/>
-            <xs:enumeration value="cbc"/>
-            <xs:enumeration value="cec"/>
-            <xs:enumeration value="ds"/>
-            <xs:enumeration value="xs"/>
-            <xs:enumeration value="xsi"/>
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:attribute>
-      <xs:attribute name="uri" use="required" type="xs:anyURI"/>
-    </xs:complexType>
-  </xs:element>
+  <xs:complexType name="RequiresType">
+    <xs:sequence>
+      <xs:group ref="CoordinateGroup"/>
+      <xs:element name="type" type="xs:string"/>
+      <xs:element name="namespaces" type="NamespacesType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="output" type="OutputType" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute name="stopOnError" type="xs:string"/>
+  </xs:complexType>
 
-  <xs:element name="namespaces">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="namespace" maxOccurs="unbounded"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="resource">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="groupId"/>
-        <xs:element ref="artifactId"/>
-        <xs:element ref="version"/>
-        <xs:element ref="classifier"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:element name="type">
-    <xs:simpleType>
-      <xs:restriction base="xs:string">
-        <xs:enumeration value="xsd"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
-
-  <xs:element name="version">
-    <xs:simpleType>
-      <xs:restriction base="xs:decimal">
-        <xs:enumeration value="2.1"/>
-      </xs:restriction>
-    </xs:simpleType>
-  </xs:element>
-  
   <xs:complexType name="XsdType">
     <xs:sequence>
-      <xs:element ref="resource"/>
-      <xs:element ref="main"/>
-      <xs:element ref="catalog"/>
-      <xs:element ref="namespaces"/>
+      <xs:element name="resource" type="ResourceType"/>
+      <xs:element name="main" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="catalog" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="namespaces" type="NamespacesType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="SchematronType">
+    <xs:sequence>
+      <xs:element name="resource" type="ResourceType"/>
+      <xs:element name="engine" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="InputType">
+    <xs:sequence>
+      <xs:element name="option" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="xs:string"/>
+          <xs:attribute name="value" type="xs:string"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EdifactType">
+    <xs:sequence>
+      <xs:element name="directory" type="xs:string"/>
+      <xs:element name="message" type="xs:string"/>
+      <xs:element name="input" type="InputType"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="VesType">
     <xs:sequence>
-      <xs:sequence>
-        <xs:element ref="groupId"/>
-        <xs:element ref="artifactId"/>
-        <xs:element ref="version"/>
-        <xs:element ref="type"/>
-        <xs:element ref="name"/>
+      <xs:group ref="CoordinateGroup">
+        <xs:annotation>
+          <xs:documentation>The structured VESID of the VES</xs:documentation>
+        </xs:annotation>
+      </xs:group>
+      <xs:element name="type" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Defines the type of validation. ATM: xsd, schematron, edifact</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="name" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>The display name of this VES.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="released" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="validFrom" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="requires" type="RequiresType" minOccurs="0" maxOccurs="1"/>
+      <xs:choice>
         <xs:element name="xsd" type="XsdType"/>
-      </xs:sequence>
+        <xs:element name="schematron" type="SchematronType"/>
+        <xs:element name="edifact" type="EdifactType"/>
+      </xs:choice>
     </xs:sequence>
   </xs:complexType>
 
@@ -155,5 +163,4 @@
       <xs:documentation>The root element of the Validation Execution Set definition</xs:documentation>
     </xs:annotation>
   </xs:element>
-
 </xs:schema>
