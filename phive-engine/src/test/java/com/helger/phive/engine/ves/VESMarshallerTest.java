@@ -40,13 +40,13 @@ public final class VESMarshallerTest
   private static final String TEST_BASE_PATH = "src/test/resources/ves/";
 
   @Test
-  public void testBasicVes2 ()
+  public void testBasic ()
   {
     assertTrue (VESMarshaller.XSD.exists ());
   }
 
   @Test
-  public void testReadVes2Examples ()
+  public void testReadGoodExamples ()
   {
     final VESMarshaller m = new VESMarshaller();
     for (final File f : new FileSystemIterator (new File (TEST_BASE_PATH + "new-approach")).withFilter (IFileFilter

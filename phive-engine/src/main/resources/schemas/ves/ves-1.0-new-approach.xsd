@@ -45,10 +45,15 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
           <xs:documentation>The artifact specifies something relative to a group. It must be unique within a group.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="version" type="xs:string">
+      <xs:element name="version">
         <xs:annotation>
           <xs:documentation>The version number of an artifact within a group. This MUST follow the semantic versioning principle.</xs:documentation>
         </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:pattern value="(\d+)(\.\d+)(\.\d+)?"/>
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:group>
