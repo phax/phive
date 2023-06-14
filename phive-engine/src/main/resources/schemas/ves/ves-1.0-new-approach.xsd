@@ -32,7 +32,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
 
   <xs:group name="CoordinateGroup">
     <xs:annotation>
-      <xs:documentation>The complex type defines the layout and the constraints of a single pair of coordinates</xs:documentation>
+      <xs:documentation>This group defines the layout and the constraints of coordinates</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:element name="groupId" type="xs:string">
@@ -68,7 +68,11 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
   <xs:complexType name="ResourceType">
     <xs:sequence>
       <xs:group ref="CoordinateGroup"/>
-      <xs:element name="classifier" type="xs:string"/>
+      <xs:element name="classifier" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>An optional classifier that might be used to add special, implementation specific meaning.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 

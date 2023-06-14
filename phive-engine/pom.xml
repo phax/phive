@@ -78,6 +78,10 @@
       <groupId>com.helger.phive</groupId>
       <artifactId>phive-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-jaxb-adapter</artifactId>
+    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
