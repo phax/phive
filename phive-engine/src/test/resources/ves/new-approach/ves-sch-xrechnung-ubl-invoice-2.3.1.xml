@@ -21,7 +21,6 @@
   <groupId>de.kosit</groupId>
   <artifactId>xrechnung23</artifactId>
   <version>1.8.1</version>
-  <type>schematron</type>
   
   <name>KoSIT XRechnung 2.3.x ruleset 1.8.1</name>
   
@@ -29,7 +28,6 @@
     <groupId>eu.cen.en16931</groupId>
     <artifactId>ubl-invoice</artifactId>
     <version>1.3.10</version>
-    <type>schematron</type>
     
     <output>
       <customError>

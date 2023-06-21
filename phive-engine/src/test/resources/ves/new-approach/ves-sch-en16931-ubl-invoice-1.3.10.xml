@@ -21,7 +21,6 @@
   <groupId>eu.cen.en16931</groupId>
   <artifactId>ubl-invoice</artifactId>
   <version>1.3.10</version>
-  <type>schematron</type>
   
   <name>EN16931 UBL Invoice</name>
   <released>2023-04-11</released>
@@ -32,7 +31,6 @@
     <groupId>org.oasis-open.ubl</groupId>
     <artifactId>invoice</artifactId>
     <version>2.1</version>
-    <type>xsd</type>
     
     <namespaces>
       <!-- redefined only this prefix -->

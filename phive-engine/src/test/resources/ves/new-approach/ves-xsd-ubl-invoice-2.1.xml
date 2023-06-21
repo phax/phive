@@ -21,7 +21,6 @@
   <groupId>org.oasis-open.ubl</groupId>
   <artifactId>invoice</artifactId>
   <version>2.1</version>
-  <type>xsd</type>
   
   <name>OASIS UBL 2.1 Invoice</name>
   
