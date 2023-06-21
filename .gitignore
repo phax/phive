@@ -19,3 +19,4 @@ target/
 .classpath 
 ~*.xlsx
 zz
+/.idea/

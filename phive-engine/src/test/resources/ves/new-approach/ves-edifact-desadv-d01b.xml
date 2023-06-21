@@ -21,14 +21,15 @@
   <groupId>com.helger.edifact</groupId>
   <artifactId>test-desadv-d01b</artifactId>
   <version>1.4.0</version>
-  <type>edifact</type>
   
   <name>Test binding for DESADV D01B</name>
   
   <edifact>
     <!-- No resource necessary -->
-    <directory>d01b</directory>
+    <directory>D01B</directory>
     <message>DESADV</message>
+    <subset>EANCOM</subset>
+    <subset>CUSTOMER</subset>
     <input>
       <option name="warnOnUNTMismatch" value="true" />
     </input>

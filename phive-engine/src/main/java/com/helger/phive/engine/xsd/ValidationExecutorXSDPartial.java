@@ -36,7 +36,6 @@ import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -204,33 +203,6 @@ public class ValidationExecutorXSDPartial extends
                             .append ("SchemaProvider", m_aSchemaProvider)
                             .append ("PartialContext", m_aPartialContext)
                             .getToString ();
-  }
-
-  /**
-   * Create a new instance based on the {@link IJAXBDocumentType} description
-   *
-   * @param aDocType
-   *        The document type. May not be <code>null</code>.
-   * @param aPartialContext
-   *        The partial context that defines the rules for finding the correct
-   *        nodes to validate. May not be <code>null</code>.
-   * @return A new validator that uses the last resource for the filename and
-   *         and the {@link IJAXBDocumentType#getSchema()} method for XML Schema
-   *         resolution.
-   * @since 6.0.4
-   */
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "8.0.2")
-  public static ValidationExecutorXSDPartial create (@Nonnull final IJAXBDocumentType aDocType,
-                                                     @Nonnull final XSDPartialContext aPartialContext)
-  {
-    ValueEnforcer.notNull (aDocType, "DocType");
-
-    // The last one is the important one for the name
-    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD,
-                                                                     aDocType.getAllXSDResources ().getLast ()),
-                                             aDocType::getSchema,
-                                             aPartialContext);
   }
 
   /**
