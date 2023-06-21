@@ -23,7 +23,7 @@ import com.helger.phive.engine.ves.v10_new.ObjectFactory;
 import com.helger.phive.engine.ves.v10_new.VesType;
 
 /**
- * A marshaller to read Validation E Model v1 declarations.
+ * A marshaller to read Validation Model v1 declarations.
  *
  * @author Philip Helger
  */
@@ -35,8 +35,8 @@ public class VESMarshaller extends GenericJAXBMarshaller <VesType>
   public static final ClassPathResource XSD = new ClassPathResource ("schemas/ves/ves-1.0-new-approach.xsd",
                                                                      VESMarshaller.class.getClassLoader ());
 
-  public VESMarshaller()
+  public VESMarshaller ()
   {
-    super (VesType.class, new CommonsArrayList <> (XSD), new ObjectFactory()::createVes);
+    super (VesType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createVes);
   }
 }

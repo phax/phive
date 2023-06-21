@@ -27,6 +27,8 @@
   <xs:annotation>
     <xs:documentation>
 This XML Schema is used describe "Validation Execution Sets" as used by the phive-validation library.
+
+Version: 2023-06-21
     </xs:documentation>
   </xs:annotation>
 

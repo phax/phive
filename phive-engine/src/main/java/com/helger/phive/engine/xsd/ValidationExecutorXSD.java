@@ -35,7 +35,6 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.jaxb.builder.IJAXBDocumentType;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -131,27 +130,6 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("SchemaProvider", m_aSchemaProvider).getToString ();
-  }
-
-  /**
-   * Create a new instance based on the {@link IJAXBDocumentType} description
-   *
-   * @param aDocType
-   *        The document type. May not be <code>null</code>.
-   * @return A new validator that uses the last resource for the filename and
-   *         and the {@link IJAXBDocumentType#getSchema()} method for XML Schema
-   *         resolution.
-   */
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "8.0.2")
-  public static ValidationExecutorXSD create (@Nonnull final IJAXBDocumentType aDocType)
-  {
-    ValueEnforcer.notNull (aDocType, "DocType");
-
-    // The last one is the important one for the name
-    return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD,
-                                                              aDocType.getAllXSDResources ().getLast ()),
-                                      aDocType::getSchema);
   }
 
   /**
