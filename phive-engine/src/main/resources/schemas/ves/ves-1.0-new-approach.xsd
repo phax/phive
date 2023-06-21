@@ -30,7 +30,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
     </xs:documentation>
   </xs:annotation>
 
-  <xs:group name="CoordinateGroup">
+  <xs:group name="VesCoordinateGroup">
     <xs:annotation>
       <xs:documentation>This group defines the layout and the constraints of coordinates</xs:documentation>
     </xs:annotation>
@@ -45,34 +45,60 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
           <xs:documentation>The artifact specifies something relative to a group. It must be unique within a group.</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="version">
+      <xs:element name="version" type="xs:string">
         <xs:annotation>
           <xs:documentation>The version number of an artifact within a group. This MUST follow the semantic versioning principle.</xs:documentation>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:pattern value="(\d+)(\.\d+)(\.\d+)?"/>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
     </xs:sequence>
   </xs:group>
+  
+  <xs:simpleType name="VesValidationArtefactTypeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="xsd"/>
+      <xs:enumeration value="schematron"/>
+      <xs:enumeration value="edifact"/>
+    </xs:restriction>
+  </xs:simpleType>
 
-  <xs:complexType name="NamespaceType">
-    <xs:attribute name="prefix" use="required" type="xs:string"/>
-    <xs:attribute name="uri" use="required" type="xs:anyURI"/>
-    <xs:attribute name="overwrite" type="xs:string"/>
+  <xs:complexType name="VesNamespaceType">
+    <xs:attribute name="prefix"    type="xs:token" use="required">
+      <xs:annotation>
+        <xs:documentation>The namespace prefix to define</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="uri"       type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>The namespace URI bound to the prefix</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="overwrite" type="xs:boolean" default="false">
+      <xs:annotation>
+        <xs:documentation>
+          Must be true if this namespace definition overwrites a previously defined one
+          (MUST be either by prefix or by URI but NEVER both)
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
   </xs:complexType>
 
-  <xs:complexType name="NamespacesType">
+  <xs:complexType name="VesNamespaceListType">
     <xs:sequence>
-      <xs:element name="namespace" type="NamespaceType" maxOccurs="unbounded"/>
+      <xs:element name="namespace" type="VesNamespaceType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>At least one namespace declaration must be present.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="ResourceType">
+  <xs:complexType name="VesResourceType">
     <xs:sequence>
-      <xs:group ref="CoordinateGroup"/>
+      <xs:group ref="VesCoordinateGroup">
+        <xs:annotation>
+          <xs:documentation>group, artifact, version</xs:documentation>
+        </xs:annotation>
+      </xs:group>
       <xs:element name="classifier" type="xs:string">
         <xs:annotation>
           <xs:documentation>An optional classifier that might be used to add special, implementation specific meaning.</xs:documentation>
@@ -81,46 +107,192 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="CustomErrorType">
+  <xs:simpleType name="VesErrorLevelType">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="info">
+        <xs:annotation>
+          <xs:documentation>Error level 'information' meaning no error anymore</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="warn">
+        <xs:annotation>
+          <xs:documentation>Error level 'warning' meaning a non-serious thing and validation may continue</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="error">
+        <xs:annotation>
+          <xs:documentation>Error level 'error' meaning a serious problem occurred and validation is considered failed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="VesCustomErrorType">
     <xs:sequence>
-      <xs:element name="id" type="xs:string"/>
-      <xs:element name="level" type="xs:string"/>
+      <xs:element name="id"    type="xs:string">
+        <xs:annotation>
+          <xs:documentation>ID of the error who's error level is to be modified</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="level" type="VesErrorLevelType">
+        <xs:annotation>
+          <xs:documentation>The adopted error level to assign to all found issues with the provided ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="OutputType">
+  <xs:complexType name="VesOutputType">
     <xs:sequence>
-      <xs:element name="customError" type="CustomErrorType" maxOccurs="unbounded"/>
+      <xs:element name="customError" type="VesCustomErrorType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>This element allows to overwrite the error level of certain errors (make them more severe or less severe)</xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="RequiresType">
+  <xs:complexType name="VesRequiresType">
     <xs:sequence>
-      <xs:group ref="CoordinateGroup"/>
-      <xs:element name="type" type="xs:string"/>
-      <xs:element name="namespaces" type="NamespacesType" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="output" type="OutputType" minOccurs="0" maxOccurs="1"/>
+      <!-- Required references -->
+      <xs:group ref="VesCoordinateGroup"/>
+      <xs:element name="type" type="VesValidationArtefactTypeType"/>
+      
+      <!-- Customization parameter -->
+      <xs:element name="namespaces" type="VesNamespaceListType" minOccurs="0"/>
+      <xs:element name="output" type="VesOutputType" minOccurs="0"/>
     </xs:sequence>
-    <xs:attribute name="stopOnError" type="xs:string"/>
+    <xs:attribute name="stopOnError" type="xs:boolean" default="true">
+      <xs:annotation>
+        <xs:documentation>
+          If this attribute is true, the execution of the validation must stop here, 
+          and the rules provided in this VES should not be executed at all.
+        </xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  
+  <xs:complexType name="VesCatalogItemPublicType">
+    <xs:sequence>
+      <xs:element name="resource" type="VesResourceType">
+        <xs:annotation>
+          <xs:documentation>The target resource to redirect to.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="uri" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>The namespace URI to rewrite</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  
+  <xs:complexType name="VesCatalogItemSystemType">
+    <xs:sequence>
+      <xs:element name="resource" type="VesResourceType">
+        <xs:annotation>
+          <xs:documentation>The target resource to redirect to.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:string" use="required">
+      <xs:annotation>
+        <xs:documentation>The system ID to rewrite</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  
+  <xs:complexType name="VesCatalogType">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="public" type="VesCatalogItemPublicType">
+        <xs:annotation>
+          <xs:documentation>Contains a single catalog item to rewrite includes by namespace URI</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="system" type="VesCatalogItemSystemType">
+        <xs:annotation>
+          <xs:documentation>Contains a single catalog item to rewrite includes by system ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:choice>
+  </xs:complexType>
+  
+  <xs:complexType name="VesXsdPreconditionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="type" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>
+              Defines the type of the precondition used.
+              
+              At least the value 'xpath' must be supported, to interpret the precondition as an XPath expression evaluating to a boolean.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
   </xs:complexType>
 
-  <xs:complexType name="XsdType">
+  <xs:complexType name="VesXsdType">
+    <xs:annotation>
+      <xs:documentation>
+        Defines all the fields and constrains to deal with XML Schema validation artefacts.
+      </xs:documentation>
+    </xs:annotation>
     <xs:sequence>
-      <xs:element name="resource" type="ResourceType"/>
-      <xs:element name="main" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="catalog" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="namespaces" type="NamespacesType"/>
+      <xs:element name="resource" type="VesResourceType">
+        <xs:annotation>
+          <xs:documentation>
+            Coordinates of the artefacts that contain the main XML Schema definitions.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="main" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            In case the referenced resource is a container (like zip), than this element
+            defines the "root" XML schema that must include all the other required
+            XML schemas with relative paths! 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="catalog" type="VesCatalogType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Contains optional catalog entries required for resolution of referenced XML schemas during runtime execution
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="namespaces" type="VesNamespaceListType">
+        <xs:annotation>
+          <xs:documentation>
+            All the namespaces referenced by the XML schema and the proposed prefixes.
+            Note: XML Schemas without namespace URI are NOT supported.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="precondition" type="VesXsdPreconditionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Optional precondition that MUST be fulfilled to execute this validation artefact on an XML instance 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="SchematronType">
+  <xs:complexType name="VesSchematronType">
     <xs:sequence>
-      <xs:element name="resource" type="ResourceType"/>
+      <xs:element name="resource" type="VesResourceType"/>
       <xs:element name="engine" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="InputType">
+  <xs:complexType name="VesInputType">
     <xs:sequence>
       <xs:element name="option" maxOccurs="unbounded">
         <xs:complexType>
@@ -131,45 +303,72 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="EdifactType">
+  <xs:complexType name="VesEdifactType">
     <xs:sequence>
       <xs:element name="directory" type="xs:string"/>
       <xs:element name="message" type="xs:string"/>
-      <xs:element name="input" type="InputType"/>
+      <xs:element name="input" type="VesInputType"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="VesType">
     <xs:sequence>
-      <xs:group ref="CoordinateGroup">
+      <xs:group ref="VesCoordinateGroup">
         <xs:annotation>
           <xs:documentation>The structured VESID of the VES</xs:documentation>
         </xs:annotation>
       </xs:group>
-      <xs:element name="type" minOccurs="0">
+      <xs:element name="type" type="VesValidationArtefactTypeType" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Defines the type of validation</xs:documentation>
         </xs:annotation>
-        <xs:simpleType>
-          <xs:restriction base="xs:string">
-            <xs:enumeration value="xsd"/>
-            <xs:enumeration value="schematron"/>
-            <xs:enumeration value="edifact"/>
-          </xs:restriction>
-        </xs:simpleType>
       </xs:element>
       <xs:element name="name" type="xs:string">
         <xs:annotation>
           <xs:documentation>The display name of this VES</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="released" type="xs:string" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="validFrom" type="xs:dateTime" minOccurs="0" maxOccurs="1"/>
-      <xs:element name="requires" type="RequiresType" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="released" type="xs:date" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Optional date when the validation artefact was published or released</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="validFrom" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The optional point in time, when the validation artefact becomes mandatory.
+            This element SHOULD contain timezone information. 
+            If this element is missing, it means the validation artefact is valid "since forever".
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="validTo" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The optional point in time, until when the validation artefact may be used.
+            This element SHOULD contain timezone information. 
+            If this element is missing, it means the validation artefact is valid "until eternity".
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="requires" type="VesRequiresType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>An optional reference to an existing validation artefact that must be executed prior to this validation artefact.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
       <xs:choice>
-        <xs:element name="xsd" type="XsdType"/>
-        <xs:element name="schematron" type="SchematronType"/>
-        <xs:element name="edifact" type="EdifactType"/>
+        <xs:annotation>
+          <xs:documentation>
+            The supported list of validation artefact types is hard coded, as the requirements are very specific.
+            Newly added validation languages require an update to this XML Schema.
+          </xs:documentation>
+        </xs:annotation>
+        <!-- matches the ValidationArtefactTypeType -->
+        <xs:element name="xsd" type="VesXsdType" />
+        <xs:element name="schematron" type="VesSchematronType"/>
+        <xs:element name="edifact" type="VesEdifactType"/>
       </xs:choice>
     </xs:sequence>
   </xs:complexType>
