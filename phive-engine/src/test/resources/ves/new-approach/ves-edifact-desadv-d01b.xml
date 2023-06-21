@@ -27,8 +27,10 @@
   
   <edifact>
     <!-- No resource necessary -->
-    <directory>d01b</directory>
+    <directory>D01B</directory>
     <message>DESADV</message>
+    <subset>EANCOM</subset>
+    <subset>CUSTOMER</subset>
     <input>
       <option name="warnOnUNTMismatch" value="true" />
     </input>

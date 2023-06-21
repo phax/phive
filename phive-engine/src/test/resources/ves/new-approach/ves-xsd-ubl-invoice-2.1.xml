@@ -67,6 +67,8 @@ REWRITE_SYSTEM "StandardBusinessDocumentHeader.xsd" "maven:com.helger:ph-sbdh:ja
       <namespace prefix="cec" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" />
       <namespace prefix="ds" uri="http://www.w3.org/2000/09/xmldsig#" />
     </namespaces>
-    <prerequisite type="xpath">count(/Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/ds:Signature)</prerequisite>
+    <!-- 
+    <precondition type="xpath">count(/Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/ds:Signature)</precondition>
+     -->
   </xsd>
 </ves>

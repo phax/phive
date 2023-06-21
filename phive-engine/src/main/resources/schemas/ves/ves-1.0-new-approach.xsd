@@ -172,7 +172,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
     </xs:attribute>
   </xs:complexType>
   
-  <xs:complexType name="VesCatalogItemPublicType">
+  <xs:complexType name="VesXsdCatalogItemPublicType">
     <xs:sequence>
       <xs:element name="resource" type="VesResourceType">
         <xs:annotation>
@@ -187,7 +187,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
     </xs:attribute>
   </xs:complexType>
   
-  <xs:complexType name="VesCatalogItemSystemType">
+  <xs:complexType name="VesXsdCatalogItemSystemType">
     <xs:sequence>
       <xs:element name="resource" type="VesResourceType">
         <xs:annotation>
@@ -202,14 +202,14 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
     </xs:attribute>
   </xs:complexType>
   
-  <xs:complexType name="VesCatalogType">
+  <xs:complexType name="VesXsdCatalogType">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="public" type="VesCatalogItemPublicType">
+      <xs:element name="public" type="VesXsdCatalogItemPublicType">
         <xs:annotation>
           <xs:documentation>Contains a single catalog item to rewrite includes by namespace URI</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="system" type="VesCatalogItemSystemType">
+      <xs:element name="system" type="VesXsdCatalogItemSystemType">
         <xs:annotation>
           <xs:documentation>Contains a single catalog item to rewrite includes by system ID</xs:documentation>
         </xs:annotation>
@@ -217,7 +217,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
     </xs:choice>
   </xs:complexType>
   
-  <xs:complexType name="VesXsdPreconditionType">
+  <xs:complexType name="VesXmlPreconditionType">
     <xs:simpleContent>
       <xs:extension base="xs:string">
         <xs:attribute name="type" type="xs:string" use="required">
@@ -244,6 +244,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
         <xs:annotation>
           <xs:documentation>
             Coordinates of the artefacts that contain the main XML Schema definitions.
+            Allowed classifiers are: xsd, zip
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -258,7 +259,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
         </xs:annotation>
       </xs:element>
       
-      <xs:element name="catalog" type="VesCatalogType" minOccurs="0">
+      <xs:element name="catalog" type="VesXsdCatalogType" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             Contains optional catalog entries required for resolution of referenced XML schemas during runtime execution
@@ -275,7 +276,7 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
         </xs:annotation>
       </xs:element>
       
-      <xs:element name="precondition" type="VesXsdPreconditionType" minOccurs="0">
+      <xs:element name="precondition" type="VesXmlPreconditionType" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
             Optional precondition that MUST be fulfilled to execute this validation artefact on an XML instance 
@@ -284,30 +285,102 @@ This XML Schema is used describe "Validation Execution Sets" as used by the phiv
       </xs:element>
     </xs:sequence>
   </xs:complexType>
-
-  <xs:complexType name="VesSchematronType">
+  
+  <xs:complexType name="VesOptionType">
     <xs:sequence>
-      <xs:element name="resource" type="VesResourceType"/>
-      <xs:element name="engine" type="xs:string"/>
+      <!-- empty by purpose -->
     </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required"/>
+    <xs:attribute name="value" type="xs:string" use="required"/>
   </xs:complexType>
-
+  
   <xs:complexType name="VesInputType">
     <xs:sequence>
-      <xs:element name="option" maxOccurs="unbounded">
-        <xs:complexType>
-          <xs:attribute name="name" type="xs:string"/>
-          <xs:attribute name="value" type="xs:string"/>
-        </xs:complexType>
+      <xs:element name="option" type="VesOptionType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Represents a single key-value-pair input parameter for Schematron/XSLT</xs:documentation>
+        </xs:annotation>
       </xs:element>
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="VesSchematronType">
+    <xs:sequence>
+     <xs:element name="resource" type="VesResourceType">
+        <xs:annotation>
+          <xs:documentation>
+            Coordinates of the artefacts that contain the main Schematron definitions.
+            Allowed classifiers are: sch, xslt
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="engine" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            The Schematron engine to be used for executing validations of this type.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="precondition" type="VesXmlPreconditionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Optional precondition that MUST be fulfilled to execute this validation artefact on an XML instance 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="input" type="VesInputType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Optional input parameters for executing the Schematron validation 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="output" type="VesOutputType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Optional output customization settings 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:simpleType name="VesEdifactDirectoryType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="D\d\d[ABC]" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:complexType name="VesEdifactType">
     <xs:sequence>
-      <xs:element name="directory" type="xs:string"/>
-      <xs:element name="message" type="xs:string"/>
-      <xs:element name="input" type="VesInputType"/>
+      <xs:element name="directory" type="VesEdifactDirectoryType">
+        <xs:annotation>
+          <xs:documentation>The EDIFACT Directory version to use</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="message" type="xs:token">
+        <xs:annotation>
+          <xs:documentation>The EDIFACT message type, like 'DESADV'</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="subset" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Subsets to use. Order of elements must be from "broadest" to "most specific".</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="input" type="VesInputType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Optional input parameters for executing the Schematron validation 
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 

@@ -49,9 +49,7 @@
     </resource>
     <engine>iso-schematron</engine>
     <!-- 
-    <prerequisite>
-      <xpathTrue>/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'</xpathTrue>
-    </prerequisite>
+    <precondition type="xpath">/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'</precondition>
     -->
     <!-- 
     <input>
