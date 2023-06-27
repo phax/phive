@@ -82,6 +82,15 @@
       <groupId>com.helger.commons</groupId>
       <artifactId>ph-jaxb-adapter</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-security</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.web</groupId>
+      <artifactId>ph-httpclient</artifactId>
+      <version>9.7.2</version>
+    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>
