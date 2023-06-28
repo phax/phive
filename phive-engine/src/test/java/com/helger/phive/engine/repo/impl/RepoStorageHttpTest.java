@@ -10,71 +10,34 @@ import com.helger.httpclient.HttpClientSettings;
 import com.helger.phive.engine.repo.EHashState;
 import com.helger.phive.engine.repo.RepoStorageItem;
 import com.helger.phive.engine.repo.RepoStorageKey;
+import com.helger.phive.engine.repo.util.JettyHelper;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.annotation.Nonnull;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
-public final class RepoStorageHttpTest {
-  private Server server;
+public final class RepoStorageHttpTest
+{
+  private final JettyHelper aJettyHelper = new JettyHelper();
 
   @Before
   public void startJetty() throws Exception
   {
-    server = new Server(80);
-
-    AbstractHandler handler = new AbstractHandler() {
-      @Override
-      public void handle(String target, Request baseRequest,
-                         HttpServletRequest request, HttpServletResponse response)
-          throws IOException
-      {
-        if(target.equals("/com/ecosio/test/http.txt"))
-        {
-          response.setContentType("text/html;charset=utf-8");
-          response.setStatus(HttpServletResponse.SC_OK);
-          baseRequest.setHandled(true);
-          response.getWriter().print("bla");
-        }
-        else
-        {
-          response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-          baseRequest.setHandled(true);
-          response.getWriter().print("");
-        }
-      }
-
-    };
-    server.setHandler(handler);
-    server.start();
+    aJettyHelper.startJetty();
   }
 
   @After
-  public void stopJetty()
+  public void stopJetty() throws Exception
   {
-    try
-    {
-      server.stop();
-    }
-    catch (Exception e)
-    {
-      e.printStackTrace();
-    }
+    aJettyHelper.stopJetty();
   }
 
   @Nonnull
