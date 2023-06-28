@@ -16,12 +16,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JettyHelper
 {
+  private Server server;
 
-  private final Server server = init ();
-
-  private Server init ()
+  private void initServer (String resourceBase)
   {
-    Server svr = new Server(80);
+    server = new Server(80);
 
     AbstractHandler post_handler = new AbstractHandler() {
       @Override
@@ -30,7 +29,7 @@ public class JettyHelper
           throws IOException {
         if (request.getMethod().equals("PUT"))
         {
-          String fileName = "test-repo" + target;
+          String fileName = resourceBase + target;
           try (FileOutputStream outputStream = new FileOutputStream(fileName, false)) {
             int read;
             byte[] bytes = new byte[8192];
@@ -46,14 +45,22 @@ public class JettyHelper
     };
 
     ResourceHandler resource_handler = new ResourceHandler();
-    resource_handler.setResourceBase("test-repo");
+    resource_handler.setResourceBase(resourceBase);
 
     HandlerList handlers = new HandlerList();
     handlers.setHandlers(new Handler[]{post_handler, resource_handler, new DefaultHandler()});
 
-    svr.setHandler(handlers);
+    server.setHandler(handlers);
+  }
 
-    return svr;
+  public JettyHelper ()
+  {
+    this("test-repo");
+  }
+
+  public JettyHelper (String resourceBase)
+  {
+    initServer(resourceBase);
   }
 
   public void startJetty () throws Exception

@@ -48,7 +48,7 @@ public final class RepoStorageHttpWithPutTest
   private static RepoStorageHttpWithPut _createRepo ()
   {
     HttpClientManager aHttpClientManager = HttpClientManager.create(new HttpClientSettings());
-    return new RepoStorageHttpWithPut(aHttpClientManager, "http://");
+    return new RepoStorageHttpWithPut(aHttpClientManager, "http://localhost/");
   }
 
   @Test
@@ -56,7 +56,7 @@ public final class RepoStorageHttpWithPutTest
   {
     final RepoStorageHttpWithPut aRepo = _createRepo ();
 
-    RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("localhost/com/ecosio/test/http.txt"));
+    RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/http.txt"));
     assertNotNull (aItem);
     assertEquals ("bla", aItem.getDataAsString (StandardCharsets.UTF_8));
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
@@ -66,15 +66,13 @@ public final class RepoStorageHttpWithPutTest
   public void testWrite() {
     final RepoStorageHttpWithPut aRepo = _createRepo();
 
-    final RepoStorageKey aKey = RepoStorageKey.of("localhost/com/ecosio/written/http_write.txt");
+    final RepoStorageKey aKey = RepoStorageKey.of("com/ecosio/written/http_write.txt");
     // Ensure not existing
     assertNull(aRepo.read(aKey));
 
     try {
       // Write
-      final ESuccess
-          eSuccess =
-          aRepo.write(aKey, RepoStorageItem.of("bla".getBytes(StandardCharsets.ISO_8859_1)));
+      final ESuccess eSuccess = aRepo.write(aKey, RepoStorageItem.of("bla".getBytes(StandardCharsets.ISO_8859_1)));
       assertTrue(eSuccess.isSuccess());
 
       // Read again

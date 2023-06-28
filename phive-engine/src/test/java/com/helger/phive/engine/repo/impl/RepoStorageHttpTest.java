@@ -44,7 +44,7 @@ public final class RepoStorageHttpTest
   private static RepoStorageHttp _createRepo ()
   {
     HttpClientManager aHttpClientManager = HttpClientManager.create(new HttpClientSettings());
-    return new RepoStorageHttp(aHttpClientManager, "http://");
+    return new RepoStorageHttp(aHttpClientManager, "http://localhost/");
   }
 
   @Test
@@ -52,7 +52,7 @@ public final class RepoStorageHttpTest
   {
     final RepoStorageHttp aRepo = _createRepo ();
 
-    RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("localhost/com/ecosio/test/http.txt"));
+    RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/http.txt"));
     assertNotNull (aItem);
     assertEquals ("bla", aItem.getDataAsString (StandardCharsets.UTF_8));
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
