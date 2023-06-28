@@ -25,7 +25,7 @@ public final class MainRepoStorageChainTest
 {
   public static void main (final String [] args)
   {
-    final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/test/s3-only.txt");
+    final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/test/http-only.txt");
     final RepoStorageInMemory aInMemory = new RepoStorageInMemory ();
     final MockRepoStorageLocalFileSystem aLocal = new MockRepoStorageLocalFileSystem ();
     final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocal),
@@ -36,15 +36,15 @@ public final class MainRepoStorageChainTest
 
     try
     {
-      // Read from chain, ending up with the item from S3
+      // Read from chain, ending up with the item from HTTP
       RepoStorageItem aItem = aChain.read (aKey);
       assertNotNull (aItem);
-      assertEquals ("This file is on S3 native", aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
 
       // Now it should be present locally only
       aItem = aLocal.read (aKey);
-      assertEquals ("This file is on S3 native", aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally
