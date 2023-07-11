@@ -75,6 +75,11 @@ public class RepoStorageChain
     return m_aWritableStorages.getClone ();
   }
 
+  /**
+   * @return <code>true</code> of remote content that was read, should be
+   *         written to a persistent local repository for faster access next
+   *         time.
+   */
   public boolean isCacheRemoteContent ()
   {
     return m_bCacheRemoteContent;
