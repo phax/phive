@@ -5,22 +5,23 @@
  */
 package com.helger.phive.engine.repo.impl;
 
-import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.EHashState;
-import com.helger.phive.engine.repo.RepoStorageItem;
-import com.helger.phive.engine.repo.RepoStorageKey;
-
-import org.junit.Test;
-
-import java.nio.charset.StandardCharsets;
-
-import javax.annotation.Nonnull;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+
+import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ThreadLocalRandom;
+
+import javax.annotation.Nonnull;
+
+import org.junit.Test;
+
+import com.helger.commons.state.ESuccess;
+import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.RepoStorageItem;
+import com.helger.phive.engine.repo.RepoStorageKey;
 
 /**
  * Test class for class {@link RepoStorageLocalFileSystem}.
@@ -63,16 +64,19 @@ public final class RepoStorageLocalFileSystemTest
     // Ensure not existing
     assertNull (aRepo.read (aKey));
 
+    final String sUploadedPayload = "bla-" + ThreadLocalRandom.current ().nextInt ();
+
     try
     {
       // Write
-      final ESuccess eSuccess = aRepo.write (aKey, RepoStorageItem.of ("bla".getBytes (StandardCharsets.ISO_8859_1)));
+      final ESuccess eSuccess = aRepo.write (aKey,
+                                             RepoStorageItem.of (sUploadedPayload.getBytes (StandardCharsets.UTF_8)));
       assertTrue (eSuccess.isSuccess ());
 
       // Read again
       final RepoStorageItem aItem = aRepo.read (aKey);
       assertNotNull (aItem);
-      assertEquals ("bla", aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals (sUploadedPayload, aItem.getDataAsString (StandardCharsets.UTF_8));
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally

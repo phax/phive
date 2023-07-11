@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.http.EHttpMethod;
+import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.state.EEnabled;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JettyHelper
 {
+  public static final File DEFAULT_TEST_BASE_DIR = new File ("src/test/resources/test-http");
   private static final Logger LOGGER = LoggerFactory.getLogger (JettyHelper.class);
 
   private final Server m_aServer;
@@ -45,14 +47,24 @@ public class JettyHelper
         if (request.getMethod ().equals (EHttpMethod.PUT.getName ()))
         {
           final File targetFile = new File (resourceBase, target);
+          LOGGER.info ("Jetty PUTtin '" + targetFile.getAbsolutePath () + "'");
+
+          FileHelper.ensureParentDirectoryIsPresent (targetFile);
           try (FileOutputStream outputStream = new FileOutputStream (targetFile, false))
           {
+            int nBytesWritten = 0;
             int nBytesRead;
             final byte [] aBuffer = new byte [8192];
             while ((nBytesRead = baseRequest.getInputStream ().read (aBuffer)) != -1)
             {
               outputStream.write (aBuffer, 0, nBytesRead);
+              nBytesWritten += nBytesRead;
             }
+            LOGGER.info ("Jetty successfully PUT " +
+                         nBytesWritten +
+                         " bytes to file '" +
+                         targetFile.getAbsolutePath () +
+                         "'");
           }
 
           response.setStatus (HttpServletResponse.SC_OK);
@@ -86,6 +98,6 @@ public class JettyHelper
   @Nonnull
   public static JettyHelper createDefaultTestInstance (@Nonnull final EEnabled ePutEnabled)
   {
-    return new JettyHelper (new File ("src/test/resources/test-http"), ePutEnabled.isEnabled ());
+    return new JettyHelper (DEFAULT_TEST_BASE_DIR, ePutEnabled.isEnabled ());
   }
 }

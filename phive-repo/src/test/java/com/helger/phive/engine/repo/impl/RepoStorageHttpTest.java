@@ -14,8 +14,8 @@ import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.helger.commons.state.EEnabled;
@@ -27,22 +27,22 @@ import com.helger.phive.engine.repo.util.JettyHelper;
 
 public final class RepoStorageHttpTest
 {
-  private final JettyHelper aJettyHelper = JettyHelper.createDefaultTestInstance (EEnabled.DISABLED);
+  private static final JettyHelper JETTY_HELPER = JettyHelper.createDefaultTestInstance (EEnabled.ENABLED);
 
-  @Before
-  public void startJetty () throws Exception
+  @BeforeClass
+  public static void beforeClass () throws Exception
   {
-    aJettyHelper.startJetty ();
+    JETTY_HELPER.startJetty ();
   }
 
-  @After
-  public void stopJetty () throws Exception
+  @AfterClass
+  public static void afterClass () throws Exception
   {
-    aJettyHelper.stopJetty ();
+    JETTY_HELPER.stopJetty ();
   }
 
   @Nonnull
-  private static RepoStorageHttp _createRepo ()
+  private static RepoStorageHttp _createRepoReadOnly ()
   {
     return new RepoStorageHttp (new HttpClientManager (), "http://localhost/");
   }
@@ -50,14 +50,14 @@ public final class RepoStorageHttpTest
   @Test
   public void testRead ()
   {
-    final RepoStorageHttp aRepo = _createRepo ();
+    final RepoStorageHttp aRepo = _createRepoReadOnly ();
 
     // Existing only in "local fs" repo
     RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/http.txt"));
     assertNull (aItem);
 
     // This one exists
-    aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/http-only/http.txt"));
+    aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/http-only/http-only.txt"));
     assertNotNull (aItem);
     assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());

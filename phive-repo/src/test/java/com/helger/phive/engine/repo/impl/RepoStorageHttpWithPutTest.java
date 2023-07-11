@@ -13,13 +13,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnull;
 
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.state.EEnabled;
 import com.helger.commons.state.ESuccess;
 import com.helger.httpclient.HttpClientManager;
@@ -30,18 +32,18 @@ import com.helger.phive.engine.repo.util.JettyHelper;
 
 public final class RepoStorageHttpWithPutTest
 {
-  private final JettyHelper m_aJettyHelper = JettyHelper.createDefaultTestInstance (EEnabled.ENABLED);
+  private static final JettyHelper JETTY_HELPER = JettyHelper.createDefaultTestInstance (EEnabled.ENABLED);
 
-  @Before
-  public void startJetty () throws Exception
+  @BeforeClass
+  public static void beforeClass () throws Exception
   {
-    m_aJettyHelper.startJetty ();
+    JETTY_HELPER.startJetty ();
   }
 
-  @After
-  public void stopJetty () throws Exception
+  @AfterClass
+  public static void afterClass () throws Exception
   {
-    m_aJettyHelper.stopJetty ();
+    JETTY_HELPER.stopJetty ();
   }
 
   @Nonnull
@@ -55,10 +57,14 @@ public final class RepoStorageHttpWithPutTest
   {
     final RepoStorageHttpWithPut aRepo = _createRepo ();
 
-    final RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/http.txt"));
+    RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/http-only/http-only.txt"));
     assertNotNull (aItem);
-    assertEquals ("bla", aItem.getDataAsString (StandardCharsets.UTF_8));
+    assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
+
+    // Ensure the one written below, is not existing
+    aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/written/http-write.txt"));
+    assertNull (aItem);
   }
 
   @Test
@@ -66,29 +72,34 @@ public final class RepoStorageHttpWithPutTest
   {
     final RepoStorageHttpWithPut aRepo = _createRepo ();
 
-    final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/written/http_write.txt");
+    final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/written/http-write.txt");
+
     // Ensure not existing
     assertNull (aRepo.read (aKey));
+
+    final String sUploadedPayload = "bla-" + ThreadLocalRandom.current ().nextInt ();
 
     try
     {
       // Write
-      final ESuccess eSuccess = aRepo.write (aKey, RepoStorageItem.of ("bla".getBytes (StandardCharsets.ISO_8859_1)));
+      final ESuccess eSuccess = aRepo.write (aKey,
+                                             RepoStorageItem.of (sUploadedPayload.getBytes (StandardCharsets.UTF_8)));
       assertTrue (eSuccess.isSuccess ());
 
       // Read again
       final RepoStorageItem aItem = aRepo.read (aKey);
       assertNotNull (aItem);
-      assertEquals ("bla", aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals (sUploadedPayload, aItem.getDataAsString (StandardCharsets.UTF_8));
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally
     {
       // Cleanup
-      final File file1 = new File ("test-repo/com/ecosio/written/http_write.txt");
-      file1.delete ();
-      final File file2 = new File ("test-repo/com/ecosio/written/http_write.txt.sha256");
-      file2.delete ();
+      final File file1 = new File (JettyHelper.DEFAULT_TEST_BASE_DIR, "com/ecosio/written/http-write.txt");
+      FileOperationManager.INSTANCE.deleteFile (file1);
+
+      final File file2 = new File (JettyHelper.DEFAULT_TEST_BASE_DIR, "com/ecosio/written/http-write.txt.sha256");
+      FileOperationManager.INSTANCE.deleteFile (file2);
     }
   }
 }
