@@ -45,7 +45,7 @@ public final class RepoStorageChainTest
 
     final RepoStorageInMemory aInMemory = new RepoStorageInMemory ();
     final RepoStorageLocalFileSystem aLocal = new MockRepoStorageLocalFileSystem ();
-    final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (), "http://localhost/");
+    final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (), "http://localhost/", false);
     final RepoStorageChain aChain = RepoStorageChain.of (aInMemory, aLocal, aHttp).setCacheRemoteContent (false);
 
     // Ensure it does not exist locally
