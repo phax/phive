@@ -13,6 +13,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 
+import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.core5.http.ContentType;
@@ -27,6 +28,8 @@ import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.state.ESuccess;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerByteArray;
+import com.helger.phive.engine.repo.ERepoDeletable;
+import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.IRepoStorage;
 import com.helger.phive.engine.repo.RepoStorageKey;
 import com.helger.phive.engine.repo.RepoStorageType;
@@ -43,18 +46,17 @@ public class RepoStorageHttp extends AbstractRepoStorage <RepoStorageHttp>
 
   protected final HttpClientManager m_aHttpClient;
   protected final String m_sURLPrefix;
-  private final boolean m_bWritable;
 
   public RepoStorageHttp (@Nonnull @WillNotClose final HttpClientManager aHttpClient,
                           @Nonnull @Nonempty final String sURLPrefix,
-                          final boolean bWritable)
+                          @Nonnull final ERepoWritable eWriteEnabled,
+                          @Nonnull final ERepoDeletable eDeleteEnabled)
   {
-    super (RepoStorageType.HTTP);
+    super (RepoStorageType.HTTP, eWriteEnabled, eDeleteEnabled);
     ValueEnforcer.notNull (aHttpClient, "HttpClient");
     ValueEnforcer.notEmpty (sURLPrefix, "URLPrefix");
     m_aHttpClient = aHttpClient;
     m_sURLPrefix = sURLPrefix;
-    m_bWritable = bWritable;
   }
 
   @Override
@@ -65,10 +67,11 @@ public class RepoStorageHttp extends AbstractRepoStorage <RepoStorageHttp>
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Reading from HTTP '" + sURL + "'");
 
-    final HttpGet aGet = new HttpGet (sURL);
     try
     {
+      final HttpGet aGet = new HttpGet (sURL);
       final byte [] aResponse = m_aHttpClient.execute (aGet, new ResponseHandlerByteArray ());
+
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Found on HTTP '" + sURL + "'");
       return new NonBlockingByteArrayInputStream (aResponse);
@@ -82,34 +85,23 @@ public class RepoStorageHttp extends AbstractRepoStorage <RepoStorageHttp>
   }
 
   @Override
-  public boolean canWrite ()
-  {
-    return m_bWritable;
-  }
-
-  @Override
   @Nonnull
-  protected ESuccess putObject (@Nonnull final RepoStorageKey aKey, @Nonnull final byte [] aPayload)
+  protected ESuccess writeObject (@Nonnull final RepoStorageKey aKey, @Nonnull final byte [] aPayload)
   {
-    if (!m_bWritable)
-    {
-      LOGGER.error ("Trying putObject on a read-only RepoStorage HTTP");
-      throw new UnsupportedOperationException ("putObject is not enabled");
-    }
-
     final String sURL = FilenameHelper.getCleanConcatenatedUrlPath (m_sURLPrefix, aKey.getPath ());
     if (LOGGER.isInfoEnabled ())
       LOGGER.info ("Writing to HTTP '" + sURL + "'");
 
     try
     {
-      final HttpPut aPost = new HttpPut (sURL);
-      aPost.setEntity (new ByteArrayEntity (aPayload, ContentType.APPLICATION_OCTET_STREAM));
-      final byte [] aResponse = m_aHttpClient.execute (aPost, new ResponseHandlerByteArray ());
-      // Ignore the response
+      final HttpPut aPut = new HttpPut (sURL);
+      aPut.setEntity (new ByteArrayEntity (aPayload, ContentType.APPLICATION_OCTET_STREAM));
+
+      final byte [] aResponse = m_aHttpClient.execute (aPut, new ResponseHandlerByteArray ());
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("HTTP Post result: " +
+        LOGGER.debug ("HTTP PUT result: " +
                       (aResponse == null ? null : new String (aResponse, StandardCharsets.UTF_8)));
+      // Ignore the response
     }
     catch (final IOException ex)
     {
@@ -120,6 +112,35 @@ public class RepoStorageHttp extends AbstractRepoStorage <RepoStorageHttp>
 
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Successfully wrote to HTTP '" + sURL + "'");
+    return ESuccess.SUCCESS;
+  }
+
+  @Override
+  @Nonnull
+  protected ESuccess deleteObject (@Nonnull final RepoStorageKey aKey)
+  {
+    final String sURL = FilenameHelper.getCleanConcatenatedUrlPath (m_sURLPrefix, aKey.getPath ());
+    if (LOGGER.isInfoEnabled ())
+      LOGGER.info ("Deleting from HTTP '" + sURL + "'");
+
+    try
+    {
+      final HttpDelete aDelete = new HttpDelete (sURL);
+      final byte [] aResponse = m_aHttpClient.execute (aDelete, new ResponseHandlerByteArray ());
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("HTTP DELETE result: " +
+                      (aResponse == null ? null : new String (aResponse, StandardCharsets.UTF_8)));
+      // Ignore the response
+    }
+    catch (final IOException ex)
+    {
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Failed to delete from HTTP '" + sURL + "': " + ex.getMessage ());
+      return ESuccess.FAILURE;
+    }
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Successfully deleted from HTTP '" + sURL + "'");
     return ESuccess.SUCCESS;
   }
 }

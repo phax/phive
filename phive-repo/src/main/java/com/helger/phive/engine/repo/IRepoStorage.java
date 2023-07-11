@@ -61,4 +61,21 @@ public interface IRepoStorage
    */
   @Nonnull
   ESuccess write (@Nonnull RepoStorageKey aKey, @Nonnull RepoStorageItem aItem);
+
+  /**
+   * @return <code>true</code> if this storage can also delete objects.
+   */
+  boolean canDelete ();
+
+  /**
+   * Delete the provided item from the repository. This can only be called if
+   * {@link #canDelete()} returned <code>true</code>.
+   *
+   * @param aKey
+   *        The key to delete. May not be <code>null</code>.
+   * @return {@link ESuccess#SUCCESS} if deletion was successful,
+   *         {@link ESuccess#FAILURE} if not.
+   */
+  @Nonnull
+  ESuccess delete (@Nonnull RepoStorageKey aKey);
 }

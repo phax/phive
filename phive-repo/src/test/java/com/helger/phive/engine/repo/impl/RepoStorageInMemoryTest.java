@@ -25,7 +25,7 @@ public final class RepoStorageInMemoryTest
   @Test
   public void testWrite ()
   {
-    final RepoStorageInMemory aRepo = new RepoStorageInMemory ();
+    final RepoStorageInMemory aRepo = RepoStorageInMemory.createDefault ();
 
     final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/written/inmemory");
     // Ensure not existing

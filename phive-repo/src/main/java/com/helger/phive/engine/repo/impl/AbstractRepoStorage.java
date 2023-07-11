@@ -21,6 +21,8 @@ import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.ERepoDeletable;
+import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.IRepoStorage;
 import com.helger.phive.engine.repo.RepoStorageItem;
 import com.helger.phive.engine.repo.RepoStorageKey;
@@ -40,11 +42,19 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
   private boolean m_bVerifyHash = DEFAULT_VERIFY_HASH_VALUE;
   // Currently constant
   private final EMessageDigestAlgorithm m_eMDAlgo = DEFAULT_MD_ALGORITHM;
+  private final ERepoWritable m_eWriteEnabled;
+  private final ERepoDeletable m_eDeleteEnabled;
 
-  protected AbstractRepoStorage (@Nonnull final RepoStorageType aType)
+  protected AbstractRepoStorage (@Nonnull final RepoStorageType aType,
+                                 @Nonnull final ERepoWritable eWriteEnabled,
+                                 @Nonnull final ERepoDeletable eDeleteEnabled)
   {
     ValueEnforcer.notNull (aType, "Type");
+    ValueEnforcer.notNull (eWriteEnabled, "WriteEnabled");
+    ValueEnforcer.notNull (eDeleteEnabled, "DeleteEnabled");
     m_aType = aType;
+    m_eWriteEnabled = eWriteEnabled;
+    m_eDeleteEnabled = eDeleteEnabled;
   }
 
   @Nonnull
@@ -156,8 +166,13 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
     return null;
   }
 
+  public final boolean canWrite ()
+  {
+    return m_eWriteEnabled.isWriteEnabled ();
+  }
+
   @Nonnull
-  protected abstract ESuccess putObject (@Nonnull final RepoStorageKey aKey, @Nonnull final byte [] aPayload);
+  protected abstract ESuccess writeObject (@Nonnull final RepoStorageKey aKey, @Nonnull final byte [] aPayload);
 
   @Nonnull
   public final ESuccess write (@Nonnull final RepoStorageKey aKey, @Nonnull final RepoStorageItem aItem)
@@ -165,15 +180,51 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
     ValueEnforcer.notNull (aKey, "Key");
     ValueEnforcer.notNull (aItem, "Item");
 
+    if (!canWrite ())
+    {
+      LOGGER.error ("Trying to write on a RepoStorage with write disabled");
+      throw new UnsupportedOperationException ("write is not enabled");
+    }
+
     // Create the message digest up front
     final byte [] aDigest = MessageDigestValue.create (aItem.data ().bytes (), m_eMDAlgo).bytes ();
 
     // Store the main data
-    if (putObject (aKey, aItem.data ().bytes ()).isFailure ())
+    if (writeObject (aKey, aItem.data ().bytes ()).isFailure ())
       return ESuccess.FAILURE;
 
     // Store the HASH value
-    if (putObject (aKey.getKeyHashSha256 (), aDigest).isFailure ())
+    if (writeObject (aKey.getKeyHashSha256 (), aDigest).isFailure ())
+      return ESuccess.FAILURE;
+
+    return ESuccess.SUCCESS;
+  }
+
+  public final boolean canDelete ()
+  {
+    return m_eDeleteEnabled.isDeleteEnabled ();
+  }
+
+  @Nonnull
+  protected abstract ESuccess deleteObject (@Nonnull final RepoStorageKey aKey);
+
+  @Nonnull
+  public final ESuccess delete (@Nonnull final RepoStorageKey aKey)
+  {
+    ValueEnforcer.notNull (aKey, "Key");
+
+    if (!canDelete ())
+    {
+      LOGGER.error ("Trying to delete on a RepoStorage with delete disabled");
+      throw new UnsupportedOperationException ("delete is not enabled");
+    }
+
+    // Delete the main data
+    if (deleteObject (aKey).isFailure ())
+      return ESuccess.FAILURE;
+
+    // Delete the HASH value
+    if (deleteObject (aKey.getKeyHashSha256 ()).isFailure ())
       return ESuccess.FAILURE;
 
     return ESuccess.SUCCESS;

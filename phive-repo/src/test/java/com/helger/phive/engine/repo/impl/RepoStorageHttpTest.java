@@ -22,17 +22,19 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.state.EEnabled;
 import com.helger.commons.state.ESuccess;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.ERepoDeletable;
+import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.RepoStorageItem;
 import com.helger.phive.engine.repo.RepoStorageKey;
-import com.helger.phive.engine.repo.util.JettyHelper;
+import com.helger.phive.engine.repo.util.LocalJettyRunner;
 
 public final class RepoStorageHttpTest
 {
-  private static final JettyHelper JETTY_HELPER = JettyHelper.createDefaultTestInstance (EEnabled.ENABLED);
+  private static final LocalJettyRunner JETTY_HELPER = LocalJettyRunner.createDefaultTestInstance (ERepoWritable.WITH_WRITE,
+                                                                                                   ERepoDeletable.WITH_DELETE);
 
   @BeforeClass
   public static void beforeClass () throws Exception
@@ -49,7 +51,10 @@ public final class RepoStorageHttpTest
   @Nonnull
   private static RepoStorageHttp _createRepoReadOnly ()
   {
-    return new RepoStorageHttp (new HttpClientManager (), "http://localhost/", false);
+    return new RepoStorageHttp (new HttpClientManager (),
+                                "http://localhost/",
+                                ERepoWritable.WITHOUT_WRITE,
+                                ERepoDeletable.WITHOUT_DELETE);
   }
 
   @Test
@@ -72,7 +77,10 @@ public final class RepoStorageHttpTest
   @Nonnull
   private static RepoStorageHttp _createRepoWritable ()
   {
-    return new RepoStorageHttp (new HttpClientManager (), "http://localhost/", true);
+    return new RepoStorageHttp (new HttpClientManager (),
+                                "http://localhost/",
+                                ERepoWritable.WITH_WRITE,
+                                ERepoDeletable.WITH_DELETE);
   }
 
   @Test
@@ -119,10 +127,10 @@ public final class RepoStorageHttpTest
     finally
     {
       // Cleanup
-      final File file1 = new File (JettyHelper.DEFAULT_TEST_BASE_DIR, "com/ecosio/written/http-write.txt");
+      final File file1 = new File (LocalJettyRunner.DEFAULT_TEST_BASE_DIR, "com/ecosio/written/http-write.txt");
       FileOperationManager.INSTANCE.deleteFile (file1);
 
-      final File file2 = new File (JettyHelper.DEFAULT_TEST_BASE_DIR, "com/ecosio/written/http-write.txt.sha256");
+      final File file2 = new File (LocalJettyRunner.DEFAULT_TEST_BASE_DIR, "com/ecosio/written/http-write.txt.sha256");
       FileOperationManager.INSTANCE.deleteFile (file2);
     }
   }

@@ -17,17 +17,17 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.state.EEnabled;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.phive.engine.repo.impl.MockRepoStorageLocalFileSystem;
 import com.helger.phive.engine.repo.impl.RepoStorageHttp;
 import com.helger.phive.engine.repo.impl.RepoStorageInMemory;
 import com.helger.phive.engine.repo.impl.RepoStorageLocalFileSystem;
-import com.helger.phive.engine.repo.util.JettyHelper;
+import com.helger.phive.engine.repo.util.LocalJettyRunner;
 
 public final class RepoStorageChainTest
 {
-  private static final JettyHelper JETTY_HELPER = JettyHelper.createDefaultTestInstance (EEnabled.ENABLED);
+  private static final LocalJettyRunner JETTY_HELPER = LocalJettyRunner.createDefaultTestInstance (ERepoWritable.WITH_WRITE,
+                                                                                                   ERepoDeletable.WITH_DELETE);
 
   @BeforeClass
   public static void beforeClass () throws Exception
@@ -46,18 +46,24 @@ public final class RepoStorageChainTest
   {
     final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/http-only/http-only.txt");
 
-    final RepoStorageInMemory aInMemory = new RepoStorageInMemory ();
-    final RepoStorageLocalFileSystem aLocal = new MockRepoStorageLocalFileSystem ();
-    final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (), "http://localhost/", false);
-    final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocal, aHttp),
-                                                         new CommonsArrayList <> (aInMemory, aLocal));
+    final RepoStorageInMemory aInMemory = RepoStorageInMemory.createDefault (ERepoWritable.WITH_WRITE,
+                                                                             ERepoDeletable.WITHOUT_DELETE);
+    final RepoStorageLocalFileSystem aLocalFS = new MockRepoStorageLocalFileSystem (ERepoWritable.WITH_WRITE,
+                                                                                    ERepoDeletable.WITH_DELETE);
+    final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (),
+                                                       "http://localhost/",
+                                                       ERepoWritable.WITHOUT_WRITE,
+                                                       ERepoDeletable.WITHOUT_DELETE);
+
+    final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocalFS, aHttp),
+                                                         new CommonsArrayList <> (aInMemory, aLocalFS));
     assertTrue (aChain.isCacheRemoteContent ());
     assertEquals (3, aChain.internalGetStorages ().size ());
     assertEquals (2, aChain.internalGetWritableStorages ().size ());
 
     // Ensure it does not exist locally
     assertNull (aInMemory.read (aKey));
-    assertNull (aLocal.read (aKey));
+    assertNull (aLocalFS.read (aKey));
 
     try
     {
@@ -74,7 +80,7 @@ public final class RepoStorageChainTest
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
 
       // Now it should be present locally as well
-      aItem = aLocal.read (aKey);
+      aItem = aLocalFS.read (aKey);
       assertNotNull (aItem);
       assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
@@ -82,8 +88,8 @@ public final class RepoStorageChainTest
     finally
     {
       // Delete local files again
-      aLocal.delete (aKey);
-      aLocal.delete (aKey.getKeyHashSha256 ());
+      aLocalFS.delete (aKey);
+      aLocalFS.delete (aKey.getKeyHashSha256 ());
     }
   }
 
@@ -92,11 +98,16 @@ public final class RepoStorageChainTest
   {
     final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/http-only/http-only.txt");
 
-    final RepoStorageInMemory aInMemory = new RepoStorageInMemory ();
-    final RepoStorageLocalFileSystem aLocal = new MockRepoStorageLocalFileSystem ();
-    final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (), "http://localhost/", false);
-    final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocal, aHttp),
-                                                         new CommonsArrayList <> (aInMemory, aLocal))
+    final RepoStorageInMemory aInMemory = RepoStorageInMemory.createDefault (ERepoWritable.WITH_WRITE,
+                                                                             ERepoDeletable.WITHOUT_DELETE);
+    final RepoStorageLocalFileSystem aLocalFS = new MockRepoStorageLocalFileSystem (ERepoWritable.WITH_WRITE,
+                                                                                    ERepoDeletable.WITH_DELETE);
+    final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (),
+                                                       "http://localhost/",
+                                                       ERepoWritable.WITHOUT_WRITE,
+                                                       ERepoDeletable.WITHOUT_DELETE);
+    final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocalFS, aHttp),
+                                                         new CommonsArrayList <> (aInMemory, aLocalFS))
                                                     .setCacheRemoteContent (false);
     assertFalse (aChain.isCacheRemoteContent ());
     assertEquals (3, aChain.internalGetStorages ().size ());
@@ -104,7 +115,7 @@ public final class RepoStorageChainTest
 
     // Ensure it does not exist locally
     assertNull (aInMemory.read (aKey));
-    assertNull (aLocal.read (aKey));
+    assertNull (aLocalFS.read (aKey));
 
     // Read from chain, ending up with the item from HTTP
     RepoStorageItem aItem = aChain.read (aKey);
@@ -117,7 +128,7 @@ public final class RepoStorageChainTest
     assertNull (aItem);
 
     // Now it should be present locally as well
-    aItem = aLocal.read (aKey);
+    aItem = aLocalFS.read (aKey);
     assertNull (aItem);
   }
 }

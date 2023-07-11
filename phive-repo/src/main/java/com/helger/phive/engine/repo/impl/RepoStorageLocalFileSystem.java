@@ -19,6 +19,8 @@ import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.state.ESuccess;
+import com.helger.phive.engine.repo.ERepoDeletable;
+import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.IRepoStorage;
 import com.helger.phive.engine.repo.RepoStorageKey;
 import com.helger.phive.engine.repo.RepoStorageType;
@@ -34,9 +36,11 @@ public class RepoStorageLocalFileSystem extends AbstractRepoStorage <RepoStorage
 
   private final File m_aBaseDir;
 
-  public RepoStorageLocalFileSystem (@Nonnull final File aBaseDir)
+  public RepoStorageLocalFileSystem (@Nonnull final File aBaseDir,
+                                     @Nonnull final ERepoWritable eWriteEnabled,
+                                     @Nonnull final ERepoDeletable eDeleteEnabled)
   {
-    super (RepoStorageType.LOCAL_FILE_SYSTEM);
+    super (RepoStorageType.LOCAL_FILE_SYSTEM, eWriteEnabled, eDeleteEnabled);
     ValueEnforcer.notNull (aBaseDir, "BaseDir");
     ValueEnforcer.isFalse (aBaseDir.isFile (), "Base Directory may not be an existing file");
     FileOperationManager.INSTANCE.createDirRecursiveIfNotExisting (aBaseDir.getAbsoluteFile ());
@@ -81,14 +85,9 @@ public class RepoStorageLocalFileSystem extends AbstractRepoStorage <RepoStorage
     return ret;
   }
 
-  public boolean canWrite ()
-  {
-    return true;
-  }
-
   @Override
   @Nonnull
-  protected ESuccess putObject (@Nonnull final RepoStorageKey aKey, @Nonnull final byte [] aPayload)
+  protected ESuccess writeObject (@Nonnull final RepoStorageKey aKey, @Nonnull final byte [] aPayload)
   {
     final File fTarget = getRelativeFile (aKey);
     if (LOGGER.isDebugEnabled ())
@@ -106,10 +105,10 @@ public class RepoStorageLocalFileSystem extends AbstractRepoStorage <RepoStorage
     return ESuccess.SUCCESS;
   }
 
+  @Override
   @Nonnull
-  public ESuccess delete (@Nonnull final RepoStorageKey aKey)
+  protected ESuccess deleteObject (@Nonnull final RepoStorageKey aKey)
   {
-    ValueEnforcer.notNull (aKey, "Key");
     final File fTarget = getRelativeFile (aKey);
     LOGGER.info ("Deleting from local file system '" + fTarget.getAbsolutePath () + "'");
 

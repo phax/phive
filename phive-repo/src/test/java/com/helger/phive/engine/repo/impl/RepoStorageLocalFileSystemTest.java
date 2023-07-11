@@ -19,6 +19,8 @@ import org.junit.Test;
 
 import com.helger.commons.state.ESuccess;
 import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.ERepoDeletable;
+import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.RepoStorageItem;
 import com.helger.phive.engine.repo.RepoStorageKey;
 
@@ -32,7 +34,7 @@ public final class RepoStorageLocalFileSystemTest
   @Nonnull
   private static RepoStorageLocalFileSystem _createRepo ()
   {
-    return new MockRepoStorageLocalFileSystem ();
+    return new MockRepoStorageLocalFileSystem (ERepoWritable.WITH_WRITE, ERepoDeletable.WITH_DELETE);
   }
 
   @Test
