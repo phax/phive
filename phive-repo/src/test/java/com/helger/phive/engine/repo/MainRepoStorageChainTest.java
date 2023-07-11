@@ -16,6 +16,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.helger.commons.state.EEnabled;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.phive.engine.repo.impl.MockRepoStorageLocalFileSystem;
 import com.helger.phive.engine.repo.impl.RepoStorageHttp;
@@ -24,7 +25,7 @@ import com.helger.phive.engine.repo.util.JettyHelper;
 
 public final class MainRepoStorageChainTest
 {
-  private final JettyHelper aJettyHelper = new JettyHelper ("test-http");
+  private final JettyHelper aJettyHelper = JettyHelper.createDefaultTestInstance (EEnabled.DISABLED);
 
   @Before
   public void startJetty () throws Exception

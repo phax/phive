@@ -5,23 +5,23 @@
  */
 package com.helger.phive.engine.repo.impl;
 
-import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.EHashState;
-import com.helger.phive.engine.repo.RepoStorageItem;
-import com.helger.phive.engine.repo.RepoStorageKey;
-
-import org.junit.Test;
-
-import java.nio.charset.StandardCharsets;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-public final class RepoStorageInMemoryTest {
+import java.nio.charset.StandardCharsets;
 
+import org.junit.Test;
+
+import com.helger.commons.state.ESuccess;
+import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.RepoStorageItem;
+import com.helger.phive.engine.repo.RepoStorageKey;
+
+public final class RepoStorageInMemoryTest
+{
   @Test
   public void testWrite ()
   {

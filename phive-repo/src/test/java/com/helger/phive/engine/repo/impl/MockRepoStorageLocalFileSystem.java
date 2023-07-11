@@ -9,7 +9,7 @@ import java.io.File;
 
 public final class MockRepoStorageLocalFileSystem extends RepoStorageLocalFileSystem
 {
-  public static final File TEST_REPO_DIR = new File ("test-repo");
+  public static final File TEST_REPO_DIR = new File ("src/test/resources/test-repo");
 
   public MockRepoStorageLocalFileSystem ()
   {
