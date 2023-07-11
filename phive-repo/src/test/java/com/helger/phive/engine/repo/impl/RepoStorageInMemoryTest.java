@@ -11,7 +11,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Test;
@@ -37,14 +36,13 @@ public final class RepoStorageInMemoryTest
     try
     {
       // Write
-      final ESuccess eSuccess = aRepo.write (aKey,
-                                             RepoStorageItem.of (sUploadedPayload.getBytes (StandardCharsets.UTF_8)));
+      final ESuccess eSuccess = aRepo.write (aKey, RepoStorageItem.ofUtf8 (sUploadedPayload));
       assertTrue (eSuccess.isSuccess ());
 
       // Read again
       final RepoStorageItem aItem = aRepo.read (aKey);
       assertNotNull (aItem);
-      assertEquals (sUploadedPayload, aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals (sUploadedPayload, aItem.getDataAsUtf8String ());
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally

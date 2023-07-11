@@ -5,21 +5,6 @@
  */
 package com.helger.phive.engine.repo.impl;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
-import com.helger.commons.state.ESuccess;
-import com.helger.httpclient.HttpClientManager;
-import com.helger.httpclient.response.ResponseHandlerByteArray;
-import com.helger.phive.engine.repo.RepoStorageType;
-import com.helger.phive.engine.repo.IRepoStorage;
-import com.helger.phive.engine.repo.RepoStorageKey;
-
-import org.apache.hc.client5.http.classic.methods.HttpGet;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -27,13 +12,28 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.io.file.FilenameHelper;
+import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
+import com.helger.commons.state.ESuccess;
+import com.helger.httpclient.HttpClientManager;
+import com.helger.httpclient.response.ResponseHandlerByteArray;
+import com.helger.phive.engine.repo.IRepoStorage;
+import com.helger.phive.engine.repo.RepoStorageKey;
+import com.helger.phive.engine.repo.RepoStorageType;
+
 /**
  * Base implementation of {@link IRepoStorage} for arbitrary HTTP connections.
  * Read-only.
  *
  * @author Philip Helger
  */
-public class RepoStorageHttp extends AbstractRepoStorage
+public class RepoStorageHttp extends AbstractRepoStorage <RepoStorageHttp>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageHttp.class);
 
@@ -61,7 +61,7 @@ public class RepoStorageHttp extends AbstractRepoStorage
     final HttpGet aGet = new HttpGet (sURL);
     try
     {
-      final byte [] aResponse = m_aHttpClient.execute (aGet, new ResponseHandlerByteArray());
+      final byte [] aResponse = m_aHttpClient.execute (aGet, new ResponseHandlerByteArray ());
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Found on HTTP '" + sURL + "'");
       return new NonBlockingByteArrayInputStream (aResponse);

@@ -10,10 +10,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
-import java.nio.charset.StandardCharsets;
-
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.helger.commons.state.EEnabled;
@@ -21,34 +19,37 @@ import com.helger.httpclient.HttpClientManager;
 import com.helger.phive.engine.repo.impl.MockRepoStorageLocalFileSystem;
 import com.helger.phive.engine.repo.impl.RepoStorageHttp;
 import com.helger.phive.engine.repo.impl.RepoStorageInMemory;
+import com.helger.phive.engine.repo.impl.RepoStorageLocalFileSystem;
 import com.helger.phive.engine.repo.util.JettyHelper;
 
-public final class MainRepoStorageChainTest
+public final class RepoStorageChainTest
 {
-  private final JettyHelper aJettyHelper = JettyHelper.createDefaultTestInstance (EEnabled.DISABLED);
+  private static final JettyHelper JETTY_HELPER = JettyHelper.createDefaultTestInstance (EEnabled.ENABLED);
 
-  @Before
-  public void startJetty () throws Exception
+  @BeforeClass
+  public static void beforeClass () throws Exception
   {
-    aJettyHelper.startJetty ();
+    JETTY_HELPER.startJetty ();
   }
 
-  @After
-  public void stopJetty () throws Exception
+  @AfterClass
+  public static void afterClass () throws Exception
   {
-    aJettyHelper.stopJetty ();
+    JETTY_HELPER.stopJetty ();
   }
 
   @Test
   public void testChain ()
   {
     final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/http-only/http-only.txt");
+
     final RepoStorageInMemory aInMemory = new RepoStorageInMemory ();
-    final MockRepoStorageLocalFileSystem aLocal = new MockRepoStorageLocalFileSystem ();
+    final RepoStorageLocalFileSystem aLocal = new MockRepoStorageLocalFileSystem ();
     final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (), "http://localhost/");
-    final RepoStorageChain aChain = RepoStorageChain.of (aInMemory, aLocal, aHttp);
+    final RepoStorageChain aChain = RepoStorageChain.of (aInMemory, aLocal, aHttp).setCacheRemoteContent (false);
 
     // Ensure it does not exist locally
+    assertNull (aInMemory.read (aKey));
     assertNull (aLocal.read (aKey));
 
     try
@@ -56,12 +57,12 @@ public final class MainRepoStorageChainTest
       // Read from chain, ending up with the item from HTTP
       RepoStorageItem aItem = aChain.read (aKey);
       assertNotNull (aItem);
-      assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
       assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
 
       // Now it should be present locally only
       aItem = aLocal.read (aKey);
-      assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally

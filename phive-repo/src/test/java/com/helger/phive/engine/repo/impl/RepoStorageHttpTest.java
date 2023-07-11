@@ -10,8 +10,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
-import java.nio.charset.StandardCharsets;
-
 import javax.annotation.Nonnull;
 
 import org.junit.AfterClass;
@@ -59,7 +57,7 @@ public final class RepoStorageHttpTest
     // This one exists
     aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/http-only/http-only.txt"));
     assertNotNull (aItem);
-    assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
+    assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
   }
 }

@@ -29,9 +29,12 @@ import com.helger.commons.collection.impl.ICommonsList;
 @NotThreadSafe
 public class RepoStorageChain
 {
+  public static final boolean DEFAULT_CACHE_REMOTE_CONTENT = true;
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageChain.class);
+
   private final ICommonsList <IRepoStorage> m_aStorages;
   private final ICommonsList <IRepoStorage> m_aWritableStorages;
+  private boolean m_bCacheRemoteContent = DEFAULT_CACHE_REMOTE_CONTENT;
 
   /**
    * Constructor. The order of storages is maintained.
@@ -72,6 +75,18 @@ public class RepoStorageChain
     return m_aWritableStorages.getClone ();
   }
 
+  public boolean isCacheRemoteContent ()
+  {
+    return m_bCacheRemoteContent;
+  }
+
+  @Nonnull
+  public RepoStorageChain setCacheRemoteContent (final boolean bCacheRemoteContent)
+  {
+    m_bCacheRemoteContent = bCacheRemoteContent;
+    return this;
+  }
+
   /**
    * Read the provided key from any of the provided repository storages.
    *
@@ -91,6 +106,7 @@ public class RepoStorageChain
 
     for (final IRepoStorage aStorage : m_aStorages)
     {
+      // Try to read item
       final RepoStorageItem aItem = aStorage.read (aKey);
       if (aItem != null)
       {
@@ -105,7 +121,7 @@ public class RepoStorageChain
         else
           LOGGER.info (sMsg);
 
-        if (aStorage.getRepoType ().isRemote ())
+        if (aStorage.getRepoType ().isRemote () && m_bCacheRemoteContent)
         {
           // Item was read from remote
           if (m_aWritableStorages.isNotEmpty ())

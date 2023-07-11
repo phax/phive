@@ -12,7 +12,6 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnull;
@@ -59,7 +58,7 @@ public final class RepoStorageHttpWithPutTest
 
     RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/http-only/http-only.txt"));
     assertNotNull (aItem);
-    assertEquals ("This file is on HTTP native", aItem.getDataAsString (StandardCharsets.UTF_8));
+    assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
 
     // Ensure the one written below, is not existing
@@ -82,14 +81,13 @@ public final class RepoStorageHttpWithPutTest
     try
     {
       // Write
-      final ESuccess eSuccess = aRepo.write (aKey,
-                                             RepoStorageItem.of (sUploadedPayload.getBytes (StandardCharsets.UTF_8)));
+      final ESuccess eSuccess = aRepo.write (aKey, RepoStorageItem.ofUtf8 (sUploadedPayload));
       assertTrue (eSuccess.isSuccess ());
 
       // Read again
       final RepoStorageItem aItem = aRepo.read (aKey);
       assertNotNull (aItem);
-      assertEquals (sUploadedPayload, aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals (sUploadedPayload, aItem.getDataAsUtf8String ());
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally

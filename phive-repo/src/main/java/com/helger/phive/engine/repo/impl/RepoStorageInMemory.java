@@ -26,7 +26,7 @@ import com.helger.phive.engine.repo.RepoStorageKey;
 import com.helger.phive.engine.repo.RepoStorageType;
 
 @ThreadSafe
-public class RepoStorageInMemory extends AbstractRepoStorage
+public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemory>
 {
   public static final class MaxSizeMap extends CommonsLinkedHashMap <String, byte []>
   {

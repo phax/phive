@@ -5,36 +5,36 @@
  */
 package com.helger.phive.engine.repo.impl;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.io.file.FileHelper;
-import com.helger.commons.io.file.FileOperationManager;
-import com.helger.commons.io.file.SimpleFileIO;
-import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.RepoStorageType;
-import com.helger.phive.engine.repo.RepoStorageKey;
-import com.helger.phive.engine.repo.IRepoStorage;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.File;
 import java.io.InputStream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.io.file.FileHelper;
+import com.helger.commons.io.file.FileOperationManager;
+import com.helger.commons.io.file.SimpleFileIO;
+import com.helger.commons.state.ESuccess;
+import com.helger.phive.engine.repo.IRepoStorage;
+import com.helger.phive.engine.repo.RepoStorageKey;
+import com.helger.phive.engine.repo.RepoStorageType;
+
 /**
  * Base implementation of {@link IRepoStorage} for Amazon AWS S3.
  *
  * @author Philip Helger
  */
-public class RepoStorageLocalFileSystem extends AbstractRepoStorage
+public class RepoStorageLocalFileSystem extends AbstractRepoStorage <RepoStorageLocalFileSystem>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageLocalFileSystem.class);
 
   private final File m_aBaseDir;
 
-  public RepoStorageLocalFileSystem(@Nonnull final File aBaseDir)
+  public RepoStorageLocalFileSystem (@Nonnull final File aBaseDir)
   {
     super (RepoStorageType.LOCAL_FILE_SYSTEM);
     ValueEnforcer.notNull (aBaseDir, "BaseDir");

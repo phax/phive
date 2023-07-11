@@ -11,7 +11,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.annotation.Nonnull;
@@ -43,12 +42,12 @@ public final class RepoStorageLocalFileSystemTest
 
     RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/a.txt"));
     assertNotNull (aItem);
-    assertEquals ("A", aItem.getDataAsString (StandardCharsets.UTF_8));
+    assertEquals ("A", aItem.getDataAsUtf8String ());
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
 
     aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/b.txt"));
     assertNotNull (aItem);
-    assertEquals ("B", aItem.getDataAsString (StandardCharsets.UTF_8));
+    assertEquals ("B", aItem.getDataAsUtf8String ());
     assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
 
     aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/c.txt"));
@@ -69,14 +68,13 @@ public final class RepoStorageLocalFileSystemTest
     try
     {
       // Write
-      final ESuccess eSuccess = aRepo.write (aKey,
-                                             RepoStorageItem.of (sUploadedPayload.getBytes (StandardCharsets.UTF_8)));
+      final ESuccess eSuccess = aRepo.write (aKey, RepoStorageItem.ofUtf8 (sUploadedPayload));
       assertTrue (eSuccess.isSuccess ());
 
       // Read again
       final RepoStorageItem aItem = aRepo.read (aKey);
       assertNotNull (aItem);
-      assertEquals (sUploadedPayload, aItem.getDataAsString (StandardCharsets.UTF_8));
+      assertEquals (sUploadedPayload, aItem.getDataAsUtf8String ());
       assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally

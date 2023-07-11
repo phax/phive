@@ -19,6 +19,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.phive.engine.repo.EHashState;
 import com.helger.phive.engine.repo.IRepoStorage;
 import com.helger.phive.engine.repo.RepoStorageItem;
@@ -28,7 +29,9 @@ import com.helger.phive.engine.repo.util.MessageDigestInputStream;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 
-public abstract class AbstractRepoStorage implements IRepoStorage
+public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage <IMPLTYPE>> implements
+                                          IRepoStorage,
+                                          IGenericImplTrait <IMPLTYPE>
 {
   public static final boolean DEFAULT_VERIFY_HASH_VALUE = true;
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractRepoStorage.class);
@@ -38,7 +41,7 @@ public abstract class AbstractRepoStorage implements IRepoStorage
   // Currently constant
   private final EMessageDigestAlgorithm m_eMDAlgo = DEFAULT_MD_ALGORITHM;
 
-  public AbstractRepoStorage (@Nonnull final RepoStorageType aType)
+  protected AbstractRepoStorage (@Nonnull final RepoStorageType aType)
   {
     ValueEnforcer.notNull (aType, "Type");
     m_aType = aType;
@@ -55,10 +58,12 @@ public abstract class AbstractRepoStorage implements IRepoStorage
     return m_bVerifyHash;
   }
 
-  public final void setVerifyHash (final boolean b)
+  @Nonnull
+  public final IMPLTYPE setVerifyHash (final boolean b)
   {
     m_bVerifyHash = b;
     LOGGER.info ("RepoStorage " + m_aType.getID () + ": hash verification is now: " + (b ? "enabled" : "disabled"));
+    return thisAsT ();
   }
 
   /**

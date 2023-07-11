@@ -47,4 +47,22 @@ public final class MessageDigestInputStreamTest
       assertEquals (1, bytesRead);
     }
   }
+
+  @Test
+  public void testCharset ()
+  {
+    final String s = "ÿ";
+
+    byte [] b = s.getBytes (StandardCharsets.ISO_8859_1);
+    assertEquals (1, b.length);
+    assertEquals (0xff, b[0] & 0xff);
+
+    b = s.getBytes (StandardCharsets.UTF_8);
+    assertEquals (2, b.length);
+    assertEquals (0xc3, b[0] & 0xff);
+    assertEquals (0xbf, b[1] & 0xff);
+
+    assertEquals (s, new String (new byte [] { (byte) 0xff }, StandardCharsets.ISO_8859_1));
+    assertEquals (s, new String (new byte [] { (byte) 0xc3, (byte) 0xbf }, StandardCharsets.UTF_8));
+  }
 }

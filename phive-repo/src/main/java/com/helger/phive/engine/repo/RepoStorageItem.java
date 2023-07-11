@@ -5,17 +5,17 @@
  */
 package com.helger.phive.engine.repo;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.io.ByteArrayWrapper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
-
-import java.nio.charset.Charset;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * This is an abstract representation of a file retrieved from a repository. It
@@ -33,7 +33,7 @@ public final class RepoStorageItem
   private final ByteArrayWrapper m_aData;
   private final EHashState m_eHashState;
 
-  private RepoStorageItem(@Nonnull final ByteArrayWrapper aData, @Nonnull final EHashState eHashState)
+  private RepoStorageItem (@Nonnull final ByteArrayWrapper aData, @Nonnull final EHashState eHashState)
   {
     m_aData = aData;
     m_eHashState = eHashState;
@@ -50,6 +50,12 @@ public final class RepoStorageItem
   public String getDataAsString (@Nonnull final Charset aCharset)
   {
     return new String (m_aData.bytes (), aCharset);
+  }
+
+  @Nonnull
+  public String getDataAsUtf8String ()
+  {
+    return getDataAsString (StandardCharsets.UTF_8);
   }
 
   @Nonnull
@@ -74,11 +80,12 @@ public final class RepoStorageItem
    *        The hashing state. May not be <code>null</code>.
    * @return A new item and never <code>null</code>.
    */
-  @Nullable
-  public static RepoStorageItem of (@Nullable final byte [] aData, @Nonnull final EHashState eHashState)
+  @Nonnull
+  public static RepoStorageItem of (@Nonnull final byte [] aData, @Nonnull final EHashState eHashState)
   {
     ValueEnforcer.notNull (aData, "Data");
     ValueEnforcer.notNull (eHashState, "HashState");
+
     return new RepoStorageItem (new ByteArrayWrapper (aData, false), eHashState);
   }
 
@@ -90,9 +97,24 @@ public final class RepoStorageItem
    *        The data to be wrapped.
    * @return A new item and never <code>null</code>.
    */
-  @Nullable
-  public static RepoStorageItem of (@Nullable final byte [] aData)
+  @Nonnull
+  public static RepoStorageItem of (@Nonnull final byte [] aData)
   {
     return of (aData, EHashState.NOT_VERIFIED);
+  }
+
+  /**
+   * Create a new item, based on the UTF-8 bytes of the provided string
+   *
+   * @param s
+   *        The UTF-8 bytes to store.
+   * @return A new item and never <code>null</code>.
+   */
+  @Nonnull
+  public static RepoStorageItem ofUtf8 (@Nonnull final String s)
+  {
+    ValueEnforcer.notNull (s, "String");
+
+    return of (s.getBytes (StandardCharsets.UTF_8));
   }
 }
