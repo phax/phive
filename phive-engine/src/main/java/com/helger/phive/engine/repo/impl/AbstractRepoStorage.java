@@ -20,30 +20,34 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.phive.engine.repo.EHashState;
-import com.helger.phive.engine.repo.RepoStorageType;
 import com.helger.phive.engine.repo.IRepoStorage;
 import com.helger.phive.engine.repo.RepoStorageItem;
 import com.helger.phive.engine.repo.RepoStorageKey;
+import com.helger.phive.engine.repo.RepoStorageType;
 import com.helger.phive.engine.repo.util.MessageDigestInputStream;
+import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 
 public abstract class AbstractRepoStorage implements IRepoStorage
 {
+  public static final boolean DEFAULT_VERIFY_HASH_VALUE = true;
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractRepoStorage.class);
 
-  private final RepoStorageType m_eType;
-  private boolean m_bVerifyHash = true;
+  private final RepoStorageType m_aType;
+  private boolean m_bVerifyHash = DEFAULT_VERIFY_HASH_VALUE;
+  // Currently constant
+  private final EMessageDigestAlgorithm m_eMDAlgo = DEFAULT_MD_ALGORITHM;
 
-  public AbstractRepoStorage (@Nonnull final RepoStorageType eType)
+  public AbstractRepoStorage (@Nonnull final RepoStorageType aType)
   {
-    ValueEnforcer.notNull (eType, "Type");
-    m_eType = eType;
+    ValueEnforcer.notNull (aType, "Type");
+    m_aType = aType;
   }
 
   @Nonnull
   public final RepoStorageType getRepoType ()
   {
-    return m_eType;
+    return m_aType;
   }
 
   public final boolean isVerifyHash ()
@@ -54,8 +58,17 @@ public abstract class AbstractRepoStorage implements IRepoStorage
   public final void setVerifyHash (final boolean b)
   {
     m_bVerifyHash = b;
+    LOGGER.info ("RepoStorage " + m_aType.getID () + ": hash verification is now: " + (b ? "enabled" : "disabled"));
   }
 
+  /**
+   * Get the input stream (locally or remote) to the provided key. Any failure
+   * to open, should be logged inside.
+   *
+   * @param aKey
+   *        The key to open. May not be <code>null</code>.
+   * @return <code>null</code> in case open fails (why so ever)
+   */
   @Nullable
   protected abstract InputStream getInputStream (@Nonnull final RepoStorageKey aKey);
 
@@ -78,7 +91,7 @@ public abstract class AbstractRepoStorage implements IRepoStorage
         }
 
         // The message digest to be calculated while reading
-        final MessageDigest aMD = DEFAULT_MD_ALGORITHM.createMessageDigest ();
+        final MessageDigest aMD = m_eMDAlgo.createMessageDigest ();
         try (final InputStream aIS = getInputStream (aKey))
         {
           if (aIS != null)
@@ -148,7 +161,7 @@ public abstract class AbstractRepoStorage implements IRepoStorage
     ValueEnforcer.notNull (aItem, "Item");
 
     // Create the message digest up front
-    final byte [] aDigest = MessageDigestValue.create (aItem.data ().bytes (), DEFAULT_MD_ALGORITHM).bytes ();
+    final byte [] aDigest = MessageDigestValue.create (aItem.data ().bytes (), m_eMDAlgo).bytes ();
 
     // Store the main data
     if (putObject (aKey, aItem.data ().bytes ()).isFailure ())

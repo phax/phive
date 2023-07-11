@@ -5,18 +5,6 @@
  */
 package com.helger.phive.engine.repo.impl;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
-import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.RepoStorageType;
-import com.helger.phive.engine.repo.RepoStorageKey;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.InputStream;
 
 import javax.annotation.Nonnegative;
@@ -24,6 +12,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
+import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
+import com.helger.commons.state.ESuccess;
+import com.helger.phive.engine.repo.RepoStorageKey;
+import com.helger.phive.engine.repo.RepoStorageType;
 
 @ThreadSafe
 public class RepoStorageInMemory extends AbstractRepoStorage
@@ -44,18 +44,19 @@ public class RepoStorageInMemory extends AbstractRepoStorage
     }
   }
 
+  public static final int DEFAULT_MAX_SIZE = 1_000;
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageInMemory.class);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
   private final ICommonsOrderedMap <String, byte []> m_aCache;
 
-  public RepoStorageInMemory()
+  public RepoStorageInMemory ()
   {
-    this (1_000);
+    this (DEFAULT_MAX_SIZE);
   }
 
-  public RepoStorageInMemory(@Nonnegative final int nMaxSize)
+  public RepoStorageInMemory (@Nonnegative final int nMaxSize)
   {
     super (RepoStorageType.IN_MEMORY);
     ValueEnforcer.isGT0 (nMaxSize, "Max size must be > 0");

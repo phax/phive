@@ -66,6 +66,7 @@
     <jaxb-plugin.group>com.helger.maven</jaxb-plugin.group>
     <jaxb-plugin.artifact>jaxb40-maven-plugin</jaxb-plugin.artifact>
     <jaxb-plugin.version>0.16.1</jaxb-plugin.version>
+    <jetty.version>11.0.15</jetty.version>
     <ph-jaxb-plugin.version>4.0.2</ph-jaxb-plugin.version>
   </properties>
   
@@ -75,6 +76,13 @@
         <groupId>com.helger.commons</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
         <version>11.0.6</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.web</groupId>
+        <artifactId>ph-web-parent-pom</artifactId>
+        <version>10.1.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

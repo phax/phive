@@ -89,7 +89,6 @@
     <dependency>
       <groupId>com.helger.web</groupId>
       <artifactId>ph-httpclient</artifactId>
-      <version>9.7.2</version>
     </dependency>
     
     <dependency>
@@ -100,7 +99,7 @@
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
-      <version>11.0.15</version>
+      <version>${jetty.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
