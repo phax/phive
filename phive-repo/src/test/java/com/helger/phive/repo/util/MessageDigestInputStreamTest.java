@@ -29,8 +29,6 @@ import javax.annotation.Nonnull;
 
 import org.junit.Test;
 
-import com.helger.phive.repo.util.MessageDigestInputStream;
-
 public final class MessageDigestInputStreamTest
 {
   @Nonnull

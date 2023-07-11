@@ -29,12 +29,6 @@ import org.junit.Test;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.httpclient.HttpClientManager;
-import com.helger.phive.repo.ERepoDeletable;
-import com.helger.phive.repo.ERepoHashState;
-import com.helger.phive.repo.ERepoWritable;
-import com.helger.phive.repo.RepoStorageChain;
-import com.helger.phive.repo.RepoStorageItem;
-import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.impl.MockRepoStorageLocalFileSystem;
 import com.helger.phive.repo.impl.RepoStorageHttp;
 import com.helger.phive.repo.impl.RepoStorageInMemory;

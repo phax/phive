@@ -22,7 +22,6 @@ import javax.annotation.Nonnull;
 
 import com.helger.phive.repo.ERepoDeletable;
 import com.helger.phive.repo.ERepoWritable;
-import com.helger.phive.repo.impl.RepoStorageLocalFileSystem;
 
 public final class MockRepoStorageLocalFileSystem extends RepoStorageLocalFileSystem
 {

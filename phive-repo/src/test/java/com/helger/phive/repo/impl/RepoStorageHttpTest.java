@@ -40,7 +40,6 @@ import com.helger.phive.repo.ERepoHashState;
 import com.helger.phive.repo.ERepoWritable;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
-import com.helger.phive.repo.impl.RepoStorageHttp;
 import com.helger.phive.repo.util.LocalJettyRunner;
 
 public final class RepoStorageHttpTest
