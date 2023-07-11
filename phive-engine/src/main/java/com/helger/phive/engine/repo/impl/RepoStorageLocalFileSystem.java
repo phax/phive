@@ -10,7 +10,7 @@ import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.ERepoStorageType;
+import com.helger.phive.engine.repo.RepoStorageType;
 import com.helger.phive.engine.repo.RepoStorageKey;
 import com.helger.phive.engine.repo.IRepoStorage;
 
@@ -36,7 +36,7 @@ public class RepoStorageLocalFileSystem extends AbstractRepoStorage
 
   public RepoStorageLocalFileSystem(@Nonnull final File aBaseDir)
   {
-    super (ERepoStorageType.LOCAL_FILE_SYSTEM);
+    super (RepoStorageType.LOCAL_FILE_SYSTEM);
     ValueEnforcer.notNull (aBaseDir, "BaseDir");
     ValueEnforcer.isFalse (aBaseDir.isFile (), "Base Directory may not be an existing file");
     FileOperationManager.INSTANCE.createDirRecursiveIfNotExisting (aBaseDir.getAbsoluteFile ());

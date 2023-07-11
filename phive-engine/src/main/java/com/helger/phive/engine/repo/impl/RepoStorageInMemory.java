@@ -11,7 +11,7 @@ import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.ERepoStorageType;
+import com.helger.phive.engine.repo.RepoStorageType;
 import com.helger.phive.engine.repo.RepoStorageKey;
 
 import org.slf4j.Logger;
@@ -57,7 +57,7 @@ public class RepoStorageInMemory extends AbstractRepoStorage
 
   public RepoStorageInMemory(@Nonnegative final int nMaxSize)
   {
-    super (ERepoStorageType.IN_MEMORY);
+    super (RepoStorageType.IN_MEMORY);
     ValueEnforcer.isGT0 (nMaxSize, "Max size must be > 0");
     m_aCache = new MaxSizeMap (nMaxSize);
   }

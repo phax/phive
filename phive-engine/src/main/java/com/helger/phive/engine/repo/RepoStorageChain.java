@@ -5,20 +5,20 @@
  */
 package com.helger.phive.engine.repo;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 
 /**
  * A chain of {@link IRepoStorage} objects for reading from multiple sources,
@@ -45,8 +45,8 @@ public class RepoStorageChain
    *        eventually received artefact from a remote storage is not saved
    *        locally.
    */
-  public RepoStorageChain(@Nonnull final List <? extends IRepoStorage> aStorages,
-                          @Nullable final List <? extends IRepoStorage> aWritableStorages)
+  public RepoStorageChain (@Nonnull final List <? extends IRepoStorage> aStorages,
+                           @Nullable final List <? extends IRepoStorage> aWritableStorages)
   {
     ValueEnforcer.notEmptyNoNullValue (aStorages, "Storages");
     if (aWritableStorages != null)
@@ -84,7 +84,10 @@ public class RepoStorageChain
   {
     ValueEnforcer.notNull (aKey, "Key");
 
-    LOGGER.info ("Trying to read '" + aKey.getPath () + "' from " + m_aStorages.getAllMapped (x -> x.getRepoType ().name ()));
+    LOGGER.info ("Trying to read '" +
+                 aKey.getPath () +
+                 "' from " +
+                 m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
 
     for (final IRepoStorage aStorage : m_aStorages)
     {
@@ -94,9 +97,9 @@ public class RepoStorageChain
         final String sMsg = "Successfully read '" +
                             aKey.getPath () +
                             "' from " +
-                            aStorage.getRepoType ().name () +
+                            aStorage.getRepoType ().getID () +
                             " with hash state " +
-                            aItem.getHashState ().name ();
+                            aItem.getHashState ().getDisplayName ();
         if (aItem.getHashState () != EHashState.VERIFIED_MATCHING)
           LOGGER.warn (sMsg);
         else
@@ -108,7 +111,10 @@ public class RepoStorageChain
           if (m_aWritableStorages.isNotEmpty ())
           {
             // Store locally
-            LOGGER.info ("Storing '" + aKey.getPath () + "' to " + m_aWritableStorages.getAllMapped (x -> x.getRepoType ().name ()));
+            LOGGER.info ("Storing '" +
+                         aKey.getPath () +
+                         "' to " +
+                         m_aWritableStorages.getAllMapped (x -> x.getRepoType ().getID ()));
             for (final IRepoStorage aWritableStorage : m_aWritableStorages)
               aWritableStorage.write (aKey, aItem);
           }
@@ -123,9 +129,12 @@ public class RepoStorageChain
   @ReturnsMutableObject
   public static RepoStorageChain of (@Nonnull @Nonempty final IRepoStorage... aStorages)
   {
-    final ICommonsList <IRepoStorage> aList = new CommonsArrayList <> (aStorages);
-    final IRepoStorage aFirstWritablePersistentStorage = aList.findFirst (x -> x.getRepoType ().isPersistent () && x.canWrite ());
-    return of (aList, aFirstWritablePersistentStorage == null ? null : new CommonsArrayList <> (aFirstWritablePersistentStorage));
+    ValueEnforcer.notNullNoNullValue (aStorages, "Storages");
+
+    final ICommonsList <IRepoStorage> aAll = new CommonsArrayList <> (aStorages);
+    final ICommonsList <IRepoStorage> aWritableOnes = aAll.getAll (x -> x.getRepoType ().isPersistent () &&
+                                                                        x.canWrite ());
+    return of (aAll, aWritableOnes);
   }
 
   @Nonnull
@@ -133,6 +142,8 @@ public class RepoStorageChain
   public static RepoStorageChain of (@Nonnull @Nonempty final ICommonsList <? extends IRepoStorage> aStorages,
                                      @Nullable final ICommonsList <? extends IRepoStorage> aWritableStorages)
   {
+    ValueEnforcer.notNullNoNullValue (aStorages, "Storages");
+
     return new RepoStorageChain (aStorages, aWritableStorages);
   }
 }

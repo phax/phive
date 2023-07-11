@@ -5,11 +5,11 @@
  */
 package com.helger.phive.engine.repo;
 
-import com.helger.commons.state.ESuccess;
-import com.helger.security.messagedigest.EMessageDigestAlgorithm;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.helger.commons.state.ESuccess;
+import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 
 /**
  * Defines an abstract way to read and write repository items, identified by
@@ -26,11 +26,12 @@ public interface IRepoStorage
    *         <code>null</code>.
    */
   @Nonnull
-  ERepoStorageType getRepoType ();
+  RepoStorageType getRepoType ();
 
-  default boolean exists(@Nonnull RepoStorageKey aKey)
+  default boolean exists (@Nonnull final RepoStorageKey aKey)
   {
-    return read (aKey) != null; //read != null inefficient!!
+    // read != null inefficient!!
+    return read (aKey) != null;
   }
 
   /**

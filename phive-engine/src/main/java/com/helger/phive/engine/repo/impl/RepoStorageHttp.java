@@ -12,7 +12,7 @@ import com.helger.commons.io.stream.NonBlockingByteArrayInputStream;
 import com.helger.commons.state.ESuccess;
 import com.helger.httpclient.HttpClientManager;
 import com.helger.httpclient.response.ResponseHandlerByteArray;
-import com.helger.phive.engine.repo.ERepoStorageType;
+import com.helger.phive.engine.repo.RepoStorageType;
 import com.helger.phive.engine.repo.IRepoStorage;
 import com.helger.phive.engine.repo.RepoStorageKey;
 
@@ -43,7 +43,7 @@ public class RepoStorageHttp extends AbstractRepoStorage
   public RepoStorageHttp (@Nonnull @WillNotClose final HttpClientManager aHttpClient,
                           @Nonnull @Nonempty final String sURLPrefix)
   {
-    super (ERepoStorageType.HTTP);
+    super (RepoStorageType.HTTP);
     ValueEnforcer.notNull (aHttpClient, "HttpClient");
     ValueEnforcer.notEmpty (sURLPrefix, "URLPrefix");
     m_aHttpClient = aHttpClient;

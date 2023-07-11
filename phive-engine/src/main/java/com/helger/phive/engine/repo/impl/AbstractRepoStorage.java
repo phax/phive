@@ -5,21 +5,6 @@
  */
 package com.helger.phive.engine.repo.impl;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.EHashState;
-import com.helger.phive.engine.repo.ERepoStorageType;
-import com.helger.phive.engine.repo.IRepoStorage;
-import com.helger.phive.engine.repo.RepoStorageItem;
-import com.helger.phive.engine.repo.RepoStorageKey;
-import com.helger.phive.engine.repo.util.MessageDigestInputStream;
-import com.helger.security.messagedigest.MessageDigestValue;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -27,21 +12,36 @@ import java.security.MessageDigest;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.ArrayHelper;
+import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.state.ESuccess;
+import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.RepoStorageType;
+import com.helger.phive.engine.repo.IRepoStorage;
+import com.helger.phive.engine.repo.RepoStorageItem;
+import com.helger.phive.engine.repo.RepoStorageKey;
+import com.helger.phive.engine.repo.util.MessageDigestInputStream;
+import com.helger.security.messagedigest.MessageDigestValue;
+
 public abstract class AbstractRepoStorage implements IRepoStorage
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractRepoStorage.class);
 
-  private final ERepoStorageType m_eType;
+  private final RepoStorageType m_eType;
   private boolean m_bVerifyHash = true;
 
-  public AbstractRepoStorage(@Nonnull final ERepoStorageType eType)
+  public AbstractRepoStorage (@Nonnull final RepoStorageType eType)
   {
     ValueEnforcer.notNull (eType, "Type");
     m_eType = eType;
   }
 
   @Nonnull
-  public final ERepoStorageType getRepoType ()
+  public final RepoStorageType getRepoType ()
   {
     return m_eType;
   }
@@ -149,6 +149,7 @@ public abstract class AbstractRepoStorage implements IRepoStorage
 
     // Create the message digest up front
     final byte [] aDigest = MessageDigestValue.create (aItem.data ().bytes (), DEFAULT_MD_ALGORITHM).bytes ();
+
     // Store the main data
     if (putObject (aKey, aItem.data ().bytes ()).isFailure ())
       return ESuccess.FAILURE;
