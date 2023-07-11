@@ -28,11 +28,14 @@ public interface IRepoStorage
   @Nonnull
   RepoStorageType getRepoType ();
 
-  default boolean exists (@Nonnull final RepoStorageKey aKey)
-  {
-    // read != null inefficient!!
-    return read (aKey) != null;
-  }
+  /**
+   * Test if the provided repo storage element is present or not.
+   *
+   * @param aKey
+   *        The key to check for existence. May not be <code>null</code>.
+   * @return <code>true</code> if it exists, <code>false</code> if not.
+   */
+  boolean exists (@Nonnull RepoStorageKey aKey);
 
   /**
    * Read the item identified with the provided key.

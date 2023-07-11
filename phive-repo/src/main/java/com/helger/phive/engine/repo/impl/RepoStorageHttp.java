@@ -59,6 +59,14 @@ public class RepoStorageHttp extends AbstractRepoStorage <RepoStorageHttp>
     m_sURLPrefix = sURLPrefix;
   }
 
+  public boolean exists (@Nonnull final RepoStorageKey aKey)
+  {
+    ValueEnforcer.notNull (aKey, "Key");
+
+    // Not ideal, but what shall we do :)
+    return read (aKey) != null;
+  }
+
   @Override
   @Nullable
   protected InputStream getInputStream (@Nonnull final RepoStorageKey aKey)

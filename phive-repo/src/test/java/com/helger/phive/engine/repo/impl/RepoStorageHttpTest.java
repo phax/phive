@@ -24,7 +24,7 @@ import org.junit.Test;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.state.ESuccess;
 import com.helger.httpclient.HttpClientManager;
-import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.ERepoHashState;
 import com.helger.phive.engine.repo.ERepoDeletable;
 import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.RepoStorageItem;
@@ -71,7 +71,7 @@ public final class RepoStorageHttpTest
     aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/http-only/http-only.txt"));
     assertNotNull (aItem);
     assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
-    assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
+    assertSame (ERepoHashState.NOT_VERIFIED, aItem.getHashState ());
   }
 
   @Nonnull
@@ -92,7 +92,7 @@ public final class RepoStorageHttpTest
     RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/http-only/http-only.txt"));
     assertNotNull (aItem);
     assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
-    assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
+    assertSame (ERepoHashState.NOT_VERIFIED, aItem.getHashState ());
 
     // Ensure the one written below, is not existing
     aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/written/http-write.txt"));
@@ -122,7 +122,7 @@ public final class RepoStorageHttpTest
       final RepoStorageItem aItem = aRepo.read (aKey);
       assertNotNull (aItem);
       assertEquals (sUploadedPayload, aItem.getDataAsUtf8String ());
-      assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
+      assertSame (ERepoHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally
     {

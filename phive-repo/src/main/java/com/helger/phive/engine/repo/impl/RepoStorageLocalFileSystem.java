@@ -63,6 +63,25 @@ public class RepoStorageLocalFileSystem extends AbstractRepoStorage <RepoStorage
     return new File (m_aBaseDir, aKey.getPath ());
   }
 
+  public boolean exists (@Nonnull final RepoStorageKey aKey)
+  {
+    ValueEnforcer.notNull (aKey, "Key");
+
+    final File fSrc = getRelativeFile (aKey);
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Checking for existance in local file system '" + fSrc.getAbsolutePath () + "'");
+
+    final boolean bExists = FileHelper.existsFile (fSrc);
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Local file system object '" +
+                    fSrc.getAbsolutePath () +
+                    "' " +
+                    (bExists ? "exists" : "does not exist"));
+
+    return bExists;
+  }
+
   @Override
   @Nullable
   protected InputStream getInputStream (@Nonnull final RepoStorageKey aKey)

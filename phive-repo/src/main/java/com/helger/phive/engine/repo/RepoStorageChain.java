@@ -121,7 +121,7 @@ public class RepoStorageChain
                             aStorage.getRepoType ().getID () +
                             " with hash state " +
                             aItem.getHashState ().getDisplayName ();
-        if (aItem.getHashState () != EHashState.VERIFIED_MATCHING)
+        if (aItem.getHashState () != ERepoHashState.VERIFIED_MATCHING)
           LOGGER.warn (sMsg);
         else
           LOGGER.info (sMsg);

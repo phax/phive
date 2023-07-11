@@ -31,9 +31,9 @@ public final class RepoStorageItem
   public static final ObjectType OT_REPO_STORAGE_ITEM = new ObjectType ("repo.storage.item");
 
   private final ByteArrayWrapper m_aData;
-  private final EHashState m_eHashState;
+  private final ERepoHashState m_eHashState;
 
-  private RepoStorageItem (@Nonnull final ByteArrayWrapper aData, @Nonnull final EHashState eHashState)
+  private RepoStorageItem (@Nonnull final ByteArrayWrapper aData, @Nonnull final ERepoHashState eHashState)
   {
     m_aData = aData;
     m_eHashState = eHashState;
@@ -59,7 +59,7 @@ public final class RepoStorageItem
   }
 
   @Nonnull
-  public EHashState getHashState ()
+  public ERepoHashState getHashState ()
   {
     return m_eHashState;
   }
@@ -81,7 +81,7 @@ public final class RepoStorageItem
    * @return A new item and never <code>null</code>.
    */
   @Nonnull
-  public static RepoStorageItem of (@Nonnull final byte [] aData, @Nonnull final EHashState eHashState)
+  public static RepoStorageItem of (@Nonnull final byte [] aData, @Nonnull final ERepoHashState eHashState)
   {
     ValueEnforcer.notNull (aData, "Data");
     ValueEnforcer.notNull (eHashState, "HashState");
@@ -100,7 +100,7 @@ public final class RepoStorageItem
   @Nonnull
   public static RepoStorageItem of (@Nonnull final byte [] aData)
   {
-    return of (aData, EHashState.NOT_VERIFIED);
+    return of (aData, ERepoHashState.NOT_VERIFIED);
   }
 
   /**

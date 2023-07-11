@@ -71,19 +71,19 @@ public final class RepoStorageChainTest
       RepoStorageItem aItem = aChain.read (aKey);
       assertNotNull (aItem);
       assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
-      assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
+      assertSame (ERepoHashState.NOT_VERIFIED, aItem.getHashState ());
 
       // Now it should be present in memory as well
       aItem = aInMemory.read (aKey);
       assertNotNull (aItem);
       assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
-      assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
+      assertSame (ERepoHashState.VERIFIED_MATCHING, aItem.getHashState ());
 
       // Now it should be present locally as well
       aItem = aLocalFS.read (aKey);
       assertNotNull (aItem);
       assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
-      assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
+      assertSame (ERepoHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally
     {
@@ -121,7 +121,7 @@ public final class RepoStorageChainTest
     RepoStorageItem aItem = aChain.read (aKey);
     assertNotNull (aItem);
     assertEquals ("This file is on HTTP native", aItem.getDataAsUtf8String ());
-    assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
+    assertSame (ERepoHashState.NOT_VERIFIED, aItem.getHashState ());
 
     // Now it should be present in memory as well
     aItem = aInMemory.read (aKey);

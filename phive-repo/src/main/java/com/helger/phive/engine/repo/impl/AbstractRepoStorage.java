@@ -20,7 +20,7 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.traits.IGenericImplTrait;
-import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.ERepoHashState;
 import com.helger.phive.engine.repo.ERepoDeletable;
 import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.IRepoStorage;
@@ -114,11 +114,11 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
             {
               final byte [] aData = StreamHelper.getAllBytes (aMDIS);
 
-              final EHashState eHashState;
+              final ERepoHashState eHashState;
               if (aExpectedDigest == null)
               {
                 // Error in reading
-                eHashState = EHashState.NOT_VERIFIED;
+                eHashState = ERepoHashState.NOT_VERIFIED;
               }
               else
               {
@@ -127,14 +127,14 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
                 if (ArrayHelper.isArrayEquals (aExpectedDigest, aDigest))
                 {
                   // Digest match
-                  eHashState = EHashState.VERIFIED_MATCHING;
+                  eHashState = ERepoHashState.VERIFIED_MATCHING;
                   if (LOGGER.isDebugEnabled ())
                     LOGGER.debug ("Hash values are identical for '" + aKey.getPath () + "'");
                 }
                 else
                 {
                   // Digest mismatch
-                  eHashState = EHashState.VERIFIED_NON_MATCHING;
+                  eHashState = ERepoHashState.VERIFIED_NON_MATCHING;
                   if (LOGGER.isDebugEnabled ())
                     LOGGER.debug ("Hash value mismatch for '" + aKey.getPath () + "'");
                 }
@@ -153,7 +153,7 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
           if (aIS != null)
           {
             final byte [] aData = StreamHelper.getAllBytes (aIS);
-            return RepoStorageItem.of (aData, EHashState.NOT_VERIFIED);
+            return RepoStorageItem.of (aData, ERepoHashState.NOT_VERIFIED);
           }
         }
       }

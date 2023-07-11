@@ -18,7 +18,7 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.EHashState;
+import com.helger.phive.engine.repo.ERepoHashState;
 import com.helger.phive.engine.repo.ERepoDeletable;
 import com.helger.phive.engine.repo.ERepoWritable;
 import com.helger.phive.engine.repo.RepoStorageItem;
@@ -45,12 +45,12 @@ public final class RepoStorageLocalFileSystemTest
     RepoStorageItem aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/a.txt"));
     assertNotNull (aItem);
     assertEquals ("A", aItem.getDataAsUtf8String ());
-    assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
+    assertSame (ERepoHashState.NOT_VERIFIED, aItem.getHashState ());
 
     aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/b.txt"));
     assertNotNull (aItem);
     assertEquals ("B", aItem.getDataAsUtf8String ());
-    assertSame (EHashState.NOT_VERIFIED, aItem.getHashState ());
+    assertSame (ERepoHashState.NOT_VERIFIED, aItem.getHashState ());
 
     aItem = aRepo.read (RepoStorageKey.of ("com/ecosio/test/c.txt"));
     assertNull (aItem);
@@ -77,7 +77,7 @@ public final class RepoStorageLocalFileSystemTest
       final RepoStorageItem aItem = aRepo.read (aKey);
       assertNotNull (aItem);
       assertEquals (sUploadedPayload, aItem.getDataAsUtf8String ());
-      assertSame (EHashState.VERIFIED_MATCHING, aItem.getHashState ());
+      assertSame (ERepoHashState.VERIFIED_MATCHING, aItem.getHashState ());
     }
     finally
     {

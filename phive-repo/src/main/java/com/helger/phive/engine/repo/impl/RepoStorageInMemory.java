@@ -68,6 +68,22 @@ public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemor
     m_bAllowOverwrite = bAllowOverwrite;
   }
 
+  public boolean exists (@Nonnull final RepoStorageKey aKey)
+  {
+    ValueEnforcer.notNull (aKey, "Key");
+
+    final String sRealKey = aKey.getPath ();
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Checking for existance in-memory '" + sRealKey + "'");
+
+    final boolean bExists = m_aRWLock.readLockedBoolean ( () -> m_aCache.containsKey (sRealKey));
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("In-memory object '" + sRealKey + "' " + (bExists ? "exists" : "does not exist"));
+
+    return bExists;
+  }
+
   @Override
   @Nullable
   protected InputStream getInputStream (@Nonnull final RepoStorageKey aKey)
@@ -85,7 +101,7 @@ public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemor
     }
 
     if (LOGGER.isDebugEnabled ())
-      LOGGER.debug ("Found in-memory '" + sRealKey + "'");
+      LOGGER.debug ("Found in-memory '" + sRealKey + "' with " + aData.length + " bytes");
     return new NonBlockingByteArrayInputStream (aData);
   }
 
@@ -179,13 +195,14 @@ public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemor
   protected ESuccess deleteObject (@Nonnull final RepoStorageKey aKey)
   {
     final String sRealKey = aKey.getPath ();
-    LOGGER.info ("Deleting from in-memory '" + sRealKey + "'");
+
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Deleting from in-memory '" + sRealKey + "'");
 
     final boolean bDeleted = m_aRWLock.writeLockedBoolean ( () -> m_aCache.remove (sRealKey) != null);
-    if (bDeleted)
+    if (!bDeleted)
     {
-      if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Failed to delete in-memory object '" + sRealKey + "'");
+      LOGGER.warn ("Failed to delete in-memory object '" + sRealKey + "'");
       return ESuccess.FAILURE;
     }
 
