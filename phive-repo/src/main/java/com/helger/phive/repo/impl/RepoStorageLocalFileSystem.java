@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-package com.helger.phive.engine.repo.impl;
+package com.helger.phive.repo.impl;
 
 import java.io.File;
 import java.io.InputStream;
@@ -19,11 +19,11 @@ import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.SimpleFileIO;
 import com.helger.commons.state.ESuccess;
-import com.helger.phive.engine.repo.ERepoDeletable;
-import com.helger.phive.engine.repo.ERepoWritable;
-import com.helger.phive.engine.repo.IRepoStorage;
-import com.helger.phive.engine.repo.RepoStorageKey;
-import com.helger.phive.engine.repo.RepoStorageType;
+import com.helger.phive.repo.ERepoDeletable;
+import com.helger.phive.repo.ERepoWritable;
+import com.helger.phive.repo.IRepoStorage;
+import com.helger.phive.repo.RepoStorageKey;
+import com.helger.phive.repo.RepoStorageType;
 
 /**
  * Base implementation of {@link IRepoStorage} for Amazon AWS S3.

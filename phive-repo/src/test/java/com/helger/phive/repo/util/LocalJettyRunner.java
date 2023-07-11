@@ -1,4 +1,4 @@
-package com.helger.phive.engine.repo.util;
+package com.helger.phive.repo.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,8 +22,8 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.http.EHttpMethod;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileOperationManager;
-import com.helger.phive.engine.repo.ERepoDeletable;
-import com.helger.phive.engine.repo.ERepoWritable;
+import com.helger.phive.repo.ERepoDeletable;
+import com.helger.phive.repo.ERepoWritable;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

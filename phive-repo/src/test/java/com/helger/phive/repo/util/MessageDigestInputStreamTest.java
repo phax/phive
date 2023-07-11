@@ -3,9 +3,9 @@
  *
  * All rights reserved.
  */
-package com.helger.phive.engine.repo.util;
+package com.helger.phive.repo.util;
 
-import static com.helger.phive.engine.repo.IRepoStorage.DEFAULT_MD_ALGORITHM;
+import static com.helger.phive.repo.IRepoStorage.DEFAULT_MD_ALGORITHM;
 import static org.junit.Assert.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -17,6 +17,8 @@ import java.security.MessageDigest;
 import javax.annotation.Nonnull;
 
 import org.junit.Test;
+
+import com.helger.phive.repo.util.MessageDigestInputStream;
 
 public final class MessageDigestInputStreamTest
 {

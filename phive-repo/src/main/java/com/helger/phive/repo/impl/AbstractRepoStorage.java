@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-package com.helger.phive.engine.repo.impl;
+package com.helger.phive.repo.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,14 +20,14 @@ import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.traits.IGenericImplTrait;
-import com.helger.phive.engine.repo.ERepoHashState;
-import com.helger.phive.engine.repo.ERepoDeletable;
-import com.helger.phive.engine.repo.ERepoWritable;
-import com.helger.phive.engine.repo.IRepoStorage;
-import com.helger.phive.engine.repo.RepoStorageItem;
-import com.helger.phive.engine.repo.RepoStorageKey;
-import com.helger.phive.engine.repo.RepoStorageType;
-import com.helger.phive.engine.repo.util.MessageDigestInputStream;
+import com.helger.phive.repo.ERepoDeletable;
+import com.helger.phive.repo.ERepoHashState;
+import com.helger.phive.repo.ERepoWritable;
+import com.helger.phive.repo.IRepoStorage;
+import com.helger.phive.repo.RepoStorageItem;
+import com.helger.phive.repo.RepoStorageKey;
+import com.helger.phive.repo.RepoStorageType;
+import com.helger.phive.repo.util.MessageDigestInputStream;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 import com.helger.security.messagedigest.MessageDigestValue;
 

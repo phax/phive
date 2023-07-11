@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-package com.helger.phive.engine.repo;
+package com.helger.phive.repo;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;

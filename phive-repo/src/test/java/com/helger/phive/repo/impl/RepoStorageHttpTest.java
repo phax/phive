@@ -3,7 +3,7 @@
  *
  * All rights reserved.
  */
-package com.helger.phive.engine.repo.impl;
+package com.helger.phive.repo.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -24,12 +24,13 @@ import org.junit.Test;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.state.ESuccess;
 import com.helger.httpclient.HttpClientManager;
-import com.helger.phive.engine.repo.ERepoHashState;
-import com.helger.phive.engine.repo.ERepoDeletable;
-import com.helger.phive.engine.repo.ERepoWritable;
-import com.helger.phive.engine.repo.RepoStorageItem;
-import com.helger.phive.engine.repo.RepoStorageKey;
-import com.helger.phive.engine.repo.util.LocalJettyRunner;
+import com.helger.phive.repo.ERepoDeletable;
+import com.helger.phive.repo.ERepoHashState;
+import com.helger.phive.repo.ERepoWritable;
+import com.helger.phive.repo.RepoStorageItem;
+import com.helger.phive.repo.RepoStorageKey;
+import com.helger.phive.repo.impl.RepoStorageHttp;
+import com.helger.phive.repo.util.LocalJettyRunner;
 
 public final class RepoStorageHttpTest
 {
