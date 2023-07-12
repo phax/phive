@@ -63,7 +63,7 @@ public final class RepoStorageHttpTest
   private static RepoStorageHttp _createRepoReadOnly ()
   {
     return new RepoStorageHttp (new HttpClientManager (),
-                                "http://localhost/",
+                                LocalJettyRunner.ACCESS_URL_DEFAULT,
                                 ERepoWritable.WITHOUT_WRITE,
                                 ERepoDeletable.WITHOUT_DELETE);
   }
@@ -89,7 +89,7 @@ public final class RepoStorageHttpTest
   private static RepoStorageHttp _createRepoWritable ()
   {
     return new RepoStorageHttp (new HttpClientManager (),
-                                "http://localhost/",
+                                LocalJettyRunner.ACCESS_URL_DEFAULT,
                                 ERepoWritable.WITH_WRITE,
                                 ERepoDeletable.WITH_DELETE);
   }

@@ -62,7 +62,7 @@ public final class RepoStorageChainTest
     final RepoStorageLocalFileSystem aLocalFS = new MockRepoStorageLocalFileSystem (ERepoWritable.WITH_WRITE,
                                                                                     ERepoDeletable.WITH_DELETE);
     final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (),
-                                                       "http://localhost/",
+                                                       LocalJettyRunner.ACCESS_URL_DEFAULT,
                                                        ERepoWritable.WITHOUT_WRITE,
                                                        ERepoDeletable.WITHOUT_DELETE);
 
@@ -114,7 +114,7 @@ public final class RepoStorageChainTest
     final RepoStorageLocalFileSystem aLocalFS = new MockRepoStorageLocalFileSystem (ERepoWritable.WITH_WRITE,
                                                                                     ERepoDeletable.WITH_DELETE);
     final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (),
-                                                       "http://localhost/",
+                                                       LocalJettyRunner.ACCESS_URL_DEFAULT,
                                                        ERepoWritable.WITHOUT_WRITE,
                                                        ERepoDeletable.WITHOUT_DELETE);
     final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocalFS, aHttp),

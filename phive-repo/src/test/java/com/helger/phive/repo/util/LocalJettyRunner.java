@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import org.eclipse.jetty.server.Handler;
@@ -46,17 +47,21 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class LocalJettyRunner
 {
+  public static final int DEFAULT_PORT = 8282;
   public static final File DEFAULT_TEST_BASE_DIR = new File ("src/test/resources/test-http");
+  public static final String ACCESS_URL_DEFAULT = "http://localhost:" + DEFAULT_PORT + "/";
+
   private static final Logger LOGGER = LoggerFactory.getLogger (LocalJettyRunner.class);
 
   private final Server m_aServer;
 
-  public LocalJettyRunner (@Nonnull final File resourceBase,
+  public LocalJettyRunner (@Nonnegative final int nPort,
+                           @Nonnull final File resourceBase,
                            @Nonnull final ERepoWritable eWriteEnabled,
                            @Nonnull final ERepoDeletable eDeleteEnabled)
   {
     LOGGER.info ("Starting Jetty with resource base dir '" + resourceBase.getAbsolutePath () + "'");
-    m_aServer = new Server (80);
+    m_aServer = new Server (nPort);
 
     final AbstractHandler putHandler = new AbstractHandler ()
     {
@@ -143,6 +148,6 @@ public class LocalJettyRunner
   public static LocalJettyRunner createDefaultTestInstance (@Nonnull final ERepoWritable eWriteEnabled,
                                                             @Nonnull final ERepoDeletable eDeleteEnabled)
   {
-    return new LocalJettyRunner (DEFAULT_TEST_BASE_DIR, eWriteEnabled, eDeleteEnabled);
+    return new LocalJettyRunner (DEFAULT_PORT, DEFAULT_TEST_BASE_DIR, eWriteEnabled, eDeleteEnabled);
   }
 }
