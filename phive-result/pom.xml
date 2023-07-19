@@ -24,11 +24,11 @@
     <artifactId>phive-parent-pom</artifactId>
     <version>9.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>phive-json</artifactId>
+  <artifactId>phive-result</artifactId>
   <packaging>bundle</packaging>
-  <name>phive-json</name>
-  <description>phive - Philip Helger Integrative Validation Engine - JSON binding</description>
-  <url>https://github.com/phax/phive/phive-json</url>
+  <name>phive-result</name>
+  <description>phive - Philip Helger Integrative Validation Engine - Validation Result support (incl. JSON binding)</description>
+  <url>https://github.com/phax/phive/phive-result</url>
   <inceptionYear>2020</inceptionYear>
   
   <licenses>
