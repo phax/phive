@@ -31,8 +31,7 @@
       <version>1.0</version>
     </resource>
     <namespaces>
-      <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
-      <namespace prefix="ds" uri="http://www.w3.org/2000/09/xmldsig#" />
+      <namespace prefix="foo" uri="urn:a" />
     </namespaces>
   </xsd>
 </ves>
