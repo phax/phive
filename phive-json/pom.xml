@@ -72,7 +72,7 @@
     </dependency>
     <dependency>
       <groupId>com.helger.phive</groupId>
-      <artifactId>phive-engine</artifactId>
+      <artifactId>phive-xml</artifactId>
     </dependency>
     
     <dependency>

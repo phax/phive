@@ -24,11 +24,11 @@
     <artifactId>phive-parent-pom</artifactId>
     <version>8.1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>phive-engine</artifactId>
+  <artifactId>phive-xml</artifactId>
   <packaging>bundle</packaging>
-  <name>phive-engine</name>
-  <description>phive - Philip Helger Integrative Validation Engine - Engine</description>
-  <url>https://github.com/phax/phive/phive-engine</url>
+  <name>phive-xml</name>
+  <description>phive - Philip Helger Integrative Validation Engine - XML validation</description>
+  <url>https://github.com/phax/phive/phive-xml</url>
   <inceptionYear>2016</inceptionYear>
   
   <licenses>
