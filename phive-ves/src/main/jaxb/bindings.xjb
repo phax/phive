@@ -30,12 +30,12 @@
   </globalBindings>
   <bindings schemaLocation="../resources/schemas/ves/ves-1.0.xsd">
     <schemaBindings>
-      <package name="com.helger.phive.engine.ves.v10" />
+      <package name="com.helger.phive.ves.v10" />
     </schemaBindings>
   </bindings>
-  <bindings schemaLocation="../resources/schemas/ves/ves-1.0-new-approach.xsd">
+  <bindings schemaLocation="../resources/schemas/ves/ves-2.0.xsd">
     <schemaBindings>
-      <package name="com.helger.phive.engine.ves.v10_new" />
+      <package name="com.helger.phive.ves.v20" />
     </schemaBindings>
   </bindings>
 </bindings>

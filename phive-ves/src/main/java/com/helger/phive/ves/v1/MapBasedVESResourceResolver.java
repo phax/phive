@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves.old;
+package com.helger.phive.ves.v1;
 
 import java.util.Map;
 
@@ -40,6 +40,7 @@ import com.helger.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @NotThreadSafe
+@Deprecated (forRemoval = true, since = "9.0.0")
 public class MapBasedVESResourceResolver implements IVESResourceResolver, ICloneable <MapBasedVESResourceResolver>
 {
   private final ICommonsMap <String, IReadableResource> m_aMap = new CommonsHashMap <> ();
@@ -70,7 +71,9 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
     return m_aMap.get (sID);
   }
 
-  private void _addMapping (@Nonnull @Nonempty final String sID, @Nonnull final IReadableResource aRes, final boolean bAllowOverride)
+  private void _addMapping (@Nonnull @Nonempty final String sID,
+                            @Nonnull final IReadableResource aRes,
+                            final boolean bAllowOverride)
   {
     ValueEnforcer.notEmpty (sID, "ID");
     ValueEnforcer.notNull (aRes, "Resource");
@@ -85,14 +88,16 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
   }
 
   @Nonnull
-  public final MapBasedVESResourceResolver addMapping (@Nonnull @Nonempty final String sID, @Nonnull final IReadableResource aRes)
+  public final MapBasedVESResourceResolver addMapping (@Nonnull @Nonempty final String sID,
+                                                       @Nonnull final IReadableResource aRes)
   {
     _addMapping (sID, aRes, false);
     return this;
   }
 
   @Nonnull
-  public final MapBasedVESResourceResolver setMapping (@Nonnull @Nonempty final String sID, @Nonnull final IReadableResource aRes)
+  public final MapBasedVESResourceResolver setMapping (@Nonnull @Nonempty final String sID,
+                                                       @Nonnull final IReadableResource aRes)
   {
     _addMapping (sID, aRes, true);
     return this;

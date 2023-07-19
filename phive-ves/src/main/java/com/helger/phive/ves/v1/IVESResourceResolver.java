@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves.old;
+package com.helger.phive.ves.v1;
 
 import javax.annotation.Nullable;
 
@@ -25,6 +25,7 @@ import com.helger.commons.io.resource.IReadableResource;
  *
  * @author Philip Helger
  */
+@Deprecated (forRemoval = true, since = "9.0.0")
 public interface IVESResourceResolver
 {
   /**

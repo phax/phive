@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves;
+package com.helger.phive.ves.v2;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -27,15 +27,15 @@ import com.helger.phive.engine.ves.v10_new.VesType;
  *
  * @author Philip Helger
  */
-public class VESMarshaller extends GenericJAXBMarshaller <VesType>
+public class VES2Marshaller extends GenericJAXBMarshaller <VesType>
 {
   /**
    * The XML Schema path to validate against.
    */
-  public static final ClassPathResource XSD = new ClassPathResource ("schemas/ves/ves-1.0-new-approach.xsd",
-                                                                     VESMarshaller.class.getClassLoader ());
+  public static final ClassPathResource XSD = new ClassPathResource ("schemas/ves/ves-2.0.xsd",
+                                                                     VES2Marshaller.class.getClassLoader ());
 
-  public VESMarshaller ()
+  public VES2Marshaller ()
   {
     super (VesType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createVes);
   }

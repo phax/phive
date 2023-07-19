@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves.old;
+package com.helger.phive.ves.v1;
 
 import java.util.List;
 
@@ -56,6 +56,7 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
  * @since 7.2.1
  */
 @Immutable
+@Deprecated (forRemoval = true, since = "9.0.0")
 public final class VES1Validator
 {
   public enum EVESErrorCode

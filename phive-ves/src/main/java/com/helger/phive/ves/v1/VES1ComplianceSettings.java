@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves.old;
+package com.helger.phive.ves.v1;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,6 +31,7 @@ import com.helger.phive.engine.source.IValidationSourceXML;
  * @author Philip Helger
  */
 @NotThreadSafe
+@Deprecated (forRemoval = true, since = "9.0.0")
 public class VES1ComplianceSettings
 {
   /**

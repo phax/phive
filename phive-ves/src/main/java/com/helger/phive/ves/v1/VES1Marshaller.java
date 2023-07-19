@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves.old;
+package com.helger.phive.ves.v1;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
@@ -28,6 +28,7 @@ import com.helger.phive.engine.ves.v10.VESType;
  * @author Philip Helger
  * @since 7.2.1
  */
+@Deprecated (forRemoval = true, since = "9.0.0")
 public class VES1Marshaller extends GenericJAXBMarshaller <VESType>
 {
   /**

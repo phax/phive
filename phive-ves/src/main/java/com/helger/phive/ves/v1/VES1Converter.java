@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.ves.old;
+package com.helger.phive.ves.v1;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +39,6 @@ import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.engine.schematron.ValidationExecutorSchematron;
 import com.helger.phive.engine.source.IValidationSourceXML;
-import com.helger.phive.engine.ves.old.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
 import com.helger.phive.engine.ves.v10.VESCoordinatesType;
 import com.helger.phive.engine.ves.v10.VESCustomError;
 import com.helger.phive.engine.ves.v10.VESEdifactType;
@@ -51,6 +50,7 @@ import com.helger.phive.engine.ves.v10.VESSchematronType;
 import com.helger.phive.engine.ves.v10.VESType;
 import com.helger.phive.engine.ves.v10.VESXSDType;
 import com.helger.phive.engine.xsd.ValidationExecutorXSD;
+import com.helger.phive.ves.v1.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
@@ -60,6 +60,7 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
  * @author Philip Helger
  */
 @NotThreadSafe
+@Deprecated (forRemoval = true, since = "9.0.0")
 public class VES1Converter
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (VES1Converter.class);
