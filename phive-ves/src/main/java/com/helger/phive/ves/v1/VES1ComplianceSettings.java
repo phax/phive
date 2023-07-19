@@ -23,7 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.builder.IBuilder;
 import com.helger.commons.collection.attr.IStringMap;
 import com.helger.phive.api.execute.IValidationExecutor;
-import com.helger.phive.engine.source.IValidationSourceXML;
+import com.helger.phive.xml.source.IValidationSourceXML;
 
 /**
  * Specific compliance settings applicable for VES v1.

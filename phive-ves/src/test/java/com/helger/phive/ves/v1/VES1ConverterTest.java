@@ -34,10 +34,10 @@ import com.helger.commons.io.file.IFileFilter;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
-import com.helger.phive.engine.source.IValidationSourceXML;
 import com.helger.phive.engine.ves.v10.VESType;
-import com.helger.phive.engine.xsd.ValidationExecutorXSD;
 import com.helger.phive.ves.v1.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
+import com.helger.phive.xml.source.IValidationSourceXML;
+import com.helger.phive.xml.xsd.ValidationExecutorXSD;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.schema.XMLSchemaCache;
 

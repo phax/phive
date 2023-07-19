@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.schematron;
+package com.helger.phive.xml.schematron;
 
 import java.util.Locale;
 import java.util.Map;
@@ -55,7 +55,7 @@ import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
-import com.helger.phive.engine.source.IValidationSourceXML;
+import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
 import com.helger.schematron.pure.SchematronResourcePure;

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.engine.xsd;
+package com.helger.phive.xml.xsd;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,7 +40,7 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
-import com.helger.phive.engine.source.IValidationSourceXML;
+import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
