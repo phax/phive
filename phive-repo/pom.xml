@@ -62,6 +62,10 @@
       <groupId>com.helger.web</groupId>
       <artifactId>ph-httpclient</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger.phive</groupId>
+      <artifactId>phive-api</artifactId>
+    </dependency>
     
     <dependency>
       <groupId>com.sun.xml.bind</groupId>

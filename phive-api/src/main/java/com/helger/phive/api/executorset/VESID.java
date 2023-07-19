@@ -50,6 +50,7 @@ public final class VESID implements Comparable <VESID>
   /** The regular expression to which each part must conform */
   @RegEx
   public static final String REGEX_PART = "[a-zA-Z0-9_\\-\\.]+";
+
   /** The separator char between ID elements */
   public static final char ID_SEPARATOR = ':';
 

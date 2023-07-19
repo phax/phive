@@ -16,14 +16,15 @@
  */
 package com.helger.phive.repo;
 
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+import com.helger.phive.api.executorset.VESID;
 
 /**
  * A key that identifies a single item to be exchanged. It is an abstract
@@ -36,7 +37,7 @@ public final class RepoStorageKey
 {
   private final String m_sPath;
 
-  protected RepoStorageKey(@Nonnull @Nonempty final String sPath)
+  protected RepoStorageKey (@Nonnull @Nonempty final String sPath)
   {
     ValueEnforcer.notEmpty (sPath, "Path");
     ValueEnforcer.isFalse (sPath.startsWith ("/"), "Path should not start with a Slash");
@@ -85,5 +86,29 @@ public final class RepoStorageKey
   public static RepoStorageKey of (@Nonnull @Nonempty final String sPath)
   {
     return new RepoStorageKey (sPath);
+  }
+
+  @Nonnull
+  public static RepoStorageKey of (@Nonnull final VESID aVESID, @Nonnull @Nonempty final String sFileExt)
+  {
+    ValueEnforcer.notNull (aVESID, "VESID");
+    ValueEnforcer.notEmpty (sFileExt, "FileExt");
+    ValueEnforcer.isTrue ( () -> sFileExt.startsWith ("."), "FileExt must start with a dot");
+
+    final String sGroupID = aVESID.getGroupID ();
+    final String sArtifactID = aVESID.getArtifactID ();
+    final String sVersion = aVESID.getVersion ();
+    final String sClassifier = aVESID.hasClassifier () ? "-" + aVESID.getClassifier () : "";
+    return new RepoStorageKey (sGroupID.replace ('.', '/') +
+                               "/" +
+                               sArtifactID +
+                               "/" +
+                               sVersion +
+                               "/" +
+                               sArtifactID +
+                               "-" +
+                               sVersion +
+                               sClassifier +
+                               sFileExt);
   }
 }
