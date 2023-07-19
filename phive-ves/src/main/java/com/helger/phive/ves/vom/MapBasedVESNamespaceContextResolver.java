@@ -14,14 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.v1;
+package com.helger.phive.ves.vom;
 
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.xml.validation.Schema;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -32,23 +31,26 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
- * A simple implementation of {@link IVESXmlSchemaResolver} based on an
+ * A simple implementation of {@link IVESNamespaceContextResolver} based on an
  * in-memory map.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
 @Deprecated (forRemoval = true, since = "9.0.0")
-public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, ICloneable <MapBasedVESXmlSchemaResolver>
+public class MapBasedVESNamespaceContextResolver implements
+                                                 IVESNamespaceContextResolver,
+                                                 ICloneable <MapBasedVESNamespaceContextResolver>
 {
-  private final ICommonsMap <String, Schema> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, MapBasedNamespaceContext> m_aMap = new CommonsHashMap <> ();
 
   /**
    * Default constructor without any mapping.
    */
-  public MapBasedVESXmlSchemaResolver ()
+  public MapBasedVESNamespaceContextResolver ()
   {}
 
   /**
@@ -57,14 +59,14 @@ public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, IClo
    * @param aMap
    *        The map to be used as the basis. May be <code>null</code>.
    */
-  public MapBasedVESXmlSchemaResolver (@Nullable final Map <String, ? extends Schema> aMap)
+  public MapBasedVESNamespaceContextResolver (@Nullable final Map <String, ? extends MapBasedNamespaceContext> aMap)
   {
     if (aMap != null)
       m_aMap.putAll (aMap);
   }
 
   @Nullable
-  public Schema getXmlSchemaOfID (@Nullable final String sID)
+  public MapBasedNamespaceContext getNamespaceContextOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
@@ -72,32 +74,34 @@ public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, IClo
   }
 
   private void _addMapping (@Nonnull @Nonempty final String sID,
-                            @Nonnull final Schema aRes,
+                            @Nonnull final MapBasedNamespaceContext aNSCtx,
                             final boolean bAllowOverride)
   {
     ValueEnforcer.notEmpty (sID, "ID");
-    ValueEnforcer.notNull (aRes, "Schema");
+    ValueEnforcer.notNull (aNSCtx, "NSCtx");
     if (bAllowOverride)
-      m_aMap.put (sID, aRes);
+      m_aMap.put (sID, aNSCtx);
     else
     {
       if (m_aMap.containsKey (sID))
         throw new IllegalStateException ("Another mapping for ID '" + sID + "' is already present");
-      m_aMap.put (sID, aRes);
+      m_aMap.put (sID, aNSCtx);
     }
   }
 
   @Nonnull
-  public final MapBasedVESXmlSchemaResolver addMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
+  public final MapBasedVESNamespaceContextResolver addMapping (@Nonnull @Nonempty final String sID,
+                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
   {
-    _addMapping (sID, aRes, false);
+    _addMapping (sID, aNSCtx, false);
     return this;
   }
 
   @Nonnull
-  public final MapBasedVESXmlSchemaResolver setMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
+  public final MapBasedVESNamespaceContextResolver setMapping (@Nonnull @Nonempty final String sID,
+                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
   {
-    _addMapping (sID, aRes, true);
+    _addMapping (sID, aNSCtx, true);
     return this;
   }
 
@@ -107,7 +111,7 @@ public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, IClo
    */
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsMap <String, Schema> getAllMappings ()
+  public final ICommonsMap <String, MapBasedNamespaceContext> getAllMappings ()
   {
     return m_aMap.getClone ();
   }
@@ -119,7 +123,7 @@ public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, IClo
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final MapBasedVESXmlSchemaResolver rhs = (MapBasedVESXmlSchemaResolver) o;
+    final MapBasedVESNamespaceContextResolver rhs = (MapBasedVESNamespaceContextResolver) o;
     return m_aMap.equals (rhs.m_aMap);
   }
 
@@ -131,9 +135,9 @@ public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, IClo
 
   @Nonnull
   @ReturnsMutableCopy
-  public MapBasedVESXmlSchemaResolver getClone ()
+  public MapBasedVESNamespaceContextResolver getClone ()
   {
-    return new MapBasedVESXmlSchemaResolver (m_aMap);
+    return new MapBasedVESNamespaceContextResolver (m_aMap);
   }
 
   @Override

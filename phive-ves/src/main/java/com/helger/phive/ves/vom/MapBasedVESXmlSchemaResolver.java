@@ -14,13 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.v1;
+package com.helger.phive.ves.vom;
 
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.validation.Schema;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -28,27 +29,26 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * A simple implementation of {@link IVESResourceResolver} based on an in-memory
- * map.
+ * A simple implementation of {@link IVESXmlSchemaResolver} based on an
+ * in-memory map.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
 @Deprecated (forRemoval = true, since = "9.0.0")
-public class MapBasedVESResourceResolver implements IVESResourceResolver, ICloneable <MapBasedVESResourceResolver>
+public class MapBasedVESXmlSchemaResolver implements IVESXmlSchemaResolver, ICloneable <MapBasedVESXmlSchemaResolver>
 {
-  private final ICommonsMap <String, IReadableResource> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, Schema> m_aMap = new CommonsHashMap <> ();
 
   /**
    * Default constructor without any mapping.
    */
-  public MapBasedVESResourceResolver ()
+  public MapBasedVESXmlSchemaResolver ()
   {}
 
   /**
@@ -57,14 +57,14 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
    * @param aMap
    *        The map to be used as the basis. May be <code>null</code>.
    */
-  public MapBasedVESResourceResolver (@Nullable final Map <String, ? extends IReadableResource> aMap)
+  public MapBasedVESXmlSchemaResolver (@Nullable final Map <String, ? extends Schema> aMap)
   {
     if (aMap != null)
       m_aMap.putAll (aMap);
   }
 
   @Nullable
-  public IReadableResource getResourceOfID (@Nullable final String sID)
+  public Schema getXmlSchemaOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
@@ -72,11 +72,11 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
   }
 
   private void _addMapping (@Nonnull @Nonempty final String sID,
-                            @Nonnull final IReadableResource aRes,
+                            @Nonnull final Schema aRes,
                             final boolean bAllowOverride)
   {
     ValueEnforcer.notEmpty (sID, "ID");
-    ValueEnforcer.notNull (aRes, "Resource");
+    ValueEnforcer.notNull (aRes, "Schema");
     if (bAllowOverride)
       m_aMap.put (sID, aRes);
     else
@@ -88,16 +88,14 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
   }
 
   @Nonnull
-  public final MapBasedVESResourceResolver addMapping (@Nonnull @Nonempty final String sID,
-                                                       @Nonnull final IReadableResource aRes)
+  public final MapBasedVESXmlSchemaResolver addMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
   {
     _addMapping (sID, aRes, false);
     return this;
   }
 
   @Nonnull
-  public final MapBasedVESResourceResolver setMapping (@Nonnull @Nonempty final String sID,
-                                                       @Nonnull final IReadableResource aRes)
+  public final MapBasedVESXmlSchemaResolver setMapping (@Nonnull @Nonempty final String sID, @Nonnull final Schema aRes)
   {
     _addMapping (sID, aRes, true);
     return this;
@@ -109,7 +107,7 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
    */
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsMap <String, IReadableResource> getAllMappings ()
+  public final ICommonsMap <String, Schema> getAllMappings ()
   {
     return m_aMap.getClone ();
   }
@@ -121,7 +119,7 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final MapBasedVESResourceResolver rhs = (MapBasedVESResourceResolver) o;
+    final MapBasedVESXmlSchemaResolver rhs = (MapBasedVESXmlSchemaResolver) o;
     return m_aMap.equals (rhs.m_aMap);
   }
 
@@ -133,9 +131,9 @@ public class MapBasedVESResourceResolver implements IVESResourceResolver, IClone
 
   @Nonnull
   @ReturnsMutableCopy
-  public MapBasedVESResourceResolver getClone ()
+  public MapBasedVESXmlSchemaResolver getClone ()
   {
-    return new MapBasedVESResourceResolver (m_aMap);
+    return new MapBasedVESXmlSchemaResolver (m_aMap);
   }
 
   @Override

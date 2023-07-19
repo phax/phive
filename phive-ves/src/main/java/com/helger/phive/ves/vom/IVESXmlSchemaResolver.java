@@ -14,20 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.v1;
+package com.helger.phive.ves.vom;
 
 import javax.annotation.Nullable;
-
-import com.helger.xml.namespace.MapBasedNamespaceContext;
+import javax.xml.validation.Schema;
 
 /**
- * Generic interface to resolve namespace mappings via ID.
+ * Resolver for VES XML schemas that are referenced from the VES.
  *
  * @author Philip Helger
  */
 @Deprecated (forRemoval = true, since = "9.0.0")
-public interface IVESNamespaceContextResolver
+public interface IVESXmlSchemaResolver
 {
+  /**
+   * Find the XML schema with the provided ID.
+   *
+   * @param sID
+   *        The XML schema ID to search. May be <code>null</code>.
+   * @return The found XML schema or <code>null</code>.
+   */
   @Nullable
-  MapBasedNamespaceContext getNamespaceContextOfID (@Nullable String sID);
+  Schema getXmlSchemaOfID (@Nullable String sID);
 }

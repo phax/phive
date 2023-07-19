@@ -19,17 +19,15 @@ package com.helger.phive.ves.v1;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.jaxb.GenericJAXBMarshaller;
-import com.helger.phive.engine.ves.v10.ObjectFactory;
-import com.helger.phive.engine.ves.v10.VESType;
+import com.helger.phive.ves.v10.ObjectFactory;
+import com.helger.phive.ves.v10.VesType;
 
 /**
- * A marshaller to read Validation Object Model v1 declarations.
+ * A marshaller to read Validation Model v1 declarations.
  *
  * @author Philip Helger
- * @since 7.2.1
  */
-@Deprecated (forRemoval = true, since = "9.0.0")
-public class VES1Marshaller extends GenericJAXBMarshaller <VESType>
+public class VES1Marshaller extends GenericJAXBMarshaller <VesType>
 {
   /**
    * The XML Schema path to validate against.
@@ -39,6 +37,6 @@ public class VES1Marshaller extends GenericJAXBMarshaller <VESType>
 
   public VES1Marshaller ()
   {
-    super (VESType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createVes);
+    super (VesType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createVes);
   }
 }

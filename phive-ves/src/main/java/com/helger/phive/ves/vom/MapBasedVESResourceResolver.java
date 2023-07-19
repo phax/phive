@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.v1;
+package com.helger.phive.ves.vom;
 
 import java.util.Map;
 
@@ -28,29 +28,27 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.hashcode.HashCodeGenerator;
+import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.lang.ICloneable;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
- * A simple implementation of {@link IVESNamespaceContextResolver} based on an
- * in-memory map.
+ * A simple implementation of {@link IVESResourceResolver} based on an in-memory
+ * map.
  *
  * @author Philip Helger
  */
 @NotThreadSafe
 @Deprecated (forRemoval = true, since = "9.0.0")
-public class MapBasedVESNamespaceContextResolver implements
-                                                 IVESNamespaceContextResolver,
-                                                 ICloneable <MapBasedVESNamespaceContextResolver>
+public class MapBasedVESResourceResolver implements IVESResourceResolver, ICloneable <MapBasedVESResourceResolver>
 {
-  private final ICommonsMap <String, MapBasedNamespaceContext> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <String, IReadableResource> m_aMap = new CommonsHashMap <> ();
 
   /**
    * Default constructor without any mapping.
    */
-  public MapBasedVESNamespaceContextResolver ()
+  public MapBasedVESResourceResolver ()
   {}
 
   /**
@@ -59,14 +57,14 @@ public class MapBasedVESNamespaceContextResolver implements
    * @param aMap
    *        The map to be used as the basis. May be <code>null</code>.
    */
-  public MapBasedVESNamespaceContextResolver (@Nullable final Map <String, ? extends MapBasedNamespaceContext> aMap)
+  public MapBasedVESResourceResolver (@Nullable final Map <String, ? extends IReadableResource> aMap)
   {
     if (aMap != null)
       m_aMap.putAll (aMap);
   }
 
   @Nullable
-  public MapBasedNamespaceContext getNamespaceContextOfID (@Nullable final String sID)
+  public IReadableResource getResourceOfID (@Nullable final String sID)
   {
     if (StringHelper.hasNoText (sID))
       return null;
@@ -74,34 +72,34 @@ public class MapBasedVESNamespaceContextResolver implements
   }
 
   private void _addMapping (@Nonnull @Nonempty final String sID,
-                            @Nonnull final MapBasedNamespaceContext aNSCtx,
+                            @Nonnull final IReadableResource aRes,
                             final boolean bAllowOverride)
   {
     ValueEnforcer.notEmpty (sID, "ID");
-    ValueEnforcer.notNull (aNSCtx, "NSCtx");
+    ValueEnforcer.notNull (aRes, "Resource");
     if (bAllowOverride)
-      m_aMap.put (sID, aNSCtx);
+      m_aMap.put (sID, aRes);
     else
     {
       if (m_aMap.containsKey (sID))
         throw new IllegalStateException ("Another mapping for ID '" + sID + "' is already present");
-      m_aMap.put (sID, aNSCtx);
+      m_aMap.put (sID, aRes);
     }
   }
 
   @Nonnull
-  public final MapBasedVESNamespaceContextResolver addMapping (@Nonnull @Nonempty final String sID,
-                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
+  public final MapBasedVESResourceResolver addMapping (@Nonnull @Nonempty final String sID,
+                                                       @Nonnull final IReadableResource aRes)
   {
-    _addMapping (sID, aNSCtx, false);
+    _addMapping (sID, aRes, false);
     return this;
   }
 
   @Nonnull
-  public final MapBasedVESNamespaceContextResolver setMapping (@Nonnull @Nonempty final String sID,
-                                                               @Nonnull final MapBasedNamespaceContext aNSCtx)
+  public final MapBasedVESResourceResolver setMapping (@Nonnull @Nonempty final String sID,
+                                                       @Nonnull final IReadableResource aRes)
   {
-    _addMapping (sID, aNSCtx, true);
+    _addMapping (sID, aRes, true);
     return this;
   }
 
@@ -111,7 +109,7 @@ public class MapBasedVESNamespaceContextResolver implements
    */
   @Nonnull
   @ReturnsMutableCopy
-  public final ICommonsMap <String, MapBasedNamespaceContext> getAllMappings ()
+  public final ICommonsMap <String, IReadableResource> getAllMappings ()
   {
     return m_aMap.getClone ();
   }
@@ -123,7 +121,7 @@ public class MapBasedVESNamespaceContextResolver implements
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final MapBasedVESNamespaceContextResolver rhs = (MapBasedVESNamespaceContextResolver) o;
+    final MapBasedVESResourceResolver rhs = (MapBasedVESResourceResolver) o;
     return m_aMap.equals (rhs.m_aMap);
   }
 
@@ -135,9 +133,9 @@ public class MapBasedVESNamespaceContextResolver implements
 
   @Nonnull
   @ReturnsMutableCopy
-  public MapBasedVESNamespaceContextResolver getClone ()
+  public MapBasedVESResourceResolver getClone ()
   {
-    return new MapBasedVESNamespaceContextResolver (m_aMap);
+    return new MapBasedVESResourceResolver (m_aMap);
   }
 
   @Override

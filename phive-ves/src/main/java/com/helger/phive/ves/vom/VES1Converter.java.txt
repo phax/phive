@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.v1;
+package com.helger.phive.ves.vom;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -47,7 +47,7 @@ import com.helger.phive.engine.ves.v10.VESOptionType;
 import com.helger.phive.engine.ves.v10.VESSchematronType;
 import com.helger.phive.engine.ves.v10.VESType;
 import com.helger.phive.engine.ves.v10.VESXSDType;
-import com.helger.phive.ves.v1.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
+import com.helger.phive.ves.vom.VES1ComplianceSettings.IEdifactValidationExecutorProviderXML;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.xsd.ValidationExecutorXSD;
