@@ -119,6 +119,11 @@
         <artifactId>phive-result</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.helger.phive</groupId>
+        <artifactId>phive-ves-engine</artifactId>
+        <version>${project.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -146,6 +151,7 @@
     <module>phive-ves-model</module>
     <module>phive-repo</module>
     <module>phive-result</module>
+    <module>phive-ves-engine</module>
   </modules>
   
   <build>

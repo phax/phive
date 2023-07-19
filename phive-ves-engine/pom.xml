@@ -24,11 +24,11 @@
     <artifactId>phive-parent-pom</artifactId>
     <version>9.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>phive-ves-model</artifactId>
+  <artifactId>phive-ves-engine</artifactId>
   <packaging>bundle</packaging>
-  <name>phive-ves-model</name>
-  <description>phive - Philip Helger Integrative Validation Engine - VES - Validation Execution Set definition</description>
-  <url>https://github.com/phax/phive/phive-ves-model</url>
+  <name>phive-ves-engine</name>
+  <description>phive - Philip Helger Integrative Validation Engine - VES - Validation Execution Set engine</description>
+  <url>https://github.com/phax/phive/phive-ves-engine</url>
   <inceptionYear>2023</inceptionYear>
   
   <licenses>
@@ -70,6 +70,10 @@
       <groupId>com.helger.phive</groupId>
       <artifactId>phive-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger.phive</groupId>
+      <artifactId>phive-xml</artifactId>
+    </dependency>
     
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
@@ -86,8 +90,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.phive.ves.model</Automatic-Module-Name>
-            <Export-Package>com.helger.phive.ves.model.*</Export-Package>
+            <Automatic-Module-Name>com.helger.phive.ves</Automatic-Module-Name>
+            <Export-Package>com.helger.phive.ves.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
         </configuration>

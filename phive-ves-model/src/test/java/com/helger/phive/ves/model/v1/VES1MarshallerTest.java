@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.v1;
+package com.helger.phive.ves.model.v1;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
