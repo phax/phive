@@ -30,6 +30,6 @@ public final class MockRepoStorageLocalFileSystem extends RepoStorageLocalFileSy
   public MockRepoStorageLocalFileSystem (@Nonnull final ERepoWritable eWriteEnabled,
                                          @Nonnull final ERepoDeletable eDeleteEnabled)
   {
-    super (TEST_REPO_DIR, eWriteEnabled, eDeleteEnabled);
+    super (TEST_REPO_DIR, "unittest-fs", eWriteEnabled, eDeleteEnabled);
   }
 }

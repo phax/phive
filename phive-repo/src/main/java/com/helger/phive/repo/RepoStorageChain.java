@@ -38,7 +38,7 @@ import com.helger.commons.collection.impl.ICommonsList;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class RepoStorageChain
+public class RepoStorageChain implements IRepoStorageChain
 {
   public static final boolean DEFAULT_CACHE_REMOTE_CONTENT = true;
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageChain.class);
@@ -103,13 +103,34 @@ public class RepoStorageChain
     return this;
   }
 
-  /**
-   * Read the provided key from any of the provided repository storages.
-   *
-   * @param aKey
-   *        The key to read. May not be <code>null</code>.
-   * @return <code>null</code> if the provided key does not exist.
-   */
+  public boolean exists (@Nonnull final RepoStorageKey aKey)
+  {
+    ValueEnforcer.notNull (aKey, "Key");
+
+    LOGGER.info ("Checking for existence of '" +
+                 aKey.getPath () +
+                 "' in " +
+                 m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
+
+    for (final IRepoStorage aStorage : m_aStorages)
+    {
+      // Try to read item
+      if (aStorage.exists (aKey))
+      {
+        LOGGER.debug ("Found '" +
+                      aKey.getPath () +
+                      "' in storage " +
+                      aStorage.getID () +
+                      " of type " +
+                      aStorage.getRepoType ().getID ());
+        return true;
+      }
+    }
+
+    LOGGER.debug ("Failed to find '" + aKey.getPath () + "' in any of the contained storages");
+    return false;
+  }
+
   @Nullable
   public RepoStorageItem read (@Nonnull final RepoStorageKey aKey)
   {

@@ -64,6 +64,7 @@ public final class RepoStorageHttpTest
   {
     return new RepoStorageHttp (new HttpClientManager (),
                                 LocalJettyRunner.ACCESS_URL_DEFAULT,
+                                "unittest",
                                 ERepoWritable.WITHOUT_WRITE,
                                 ERepoDeletable.WITHOUT_DELETE);
   }
@@ -90,6 +91,7 @@ public final class RepoStorageHttpTest
   {
     return new RepoStorageHttp (new HttpClientManager (),
                                 LocalJettyRunner.ACCESS_URL_DEFAULT,
+                                "unittest",
                                 ERepoWritable.WITH_WRITE,
                                 ERepoDeletable.WITH_DELETE);
   }

@@ -27,9 +27,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.ArrayHelper;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.phive.repo.ERepoDeletable;
 import com.helger.phive.repo.ERepoHashState;
@@ -50,20 +52,24 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
   private static final Logger LOGGER = LoggerFactory.getLogger (AbstractRepoStorage.class);
 
   private final RepoStorageType m_aType;
-  private boolean m_bVerifyHash = DEFAULT_VERIFY_HASH_VALUE;
+  private final String m_sID;
   // Currently constant
   private final EMessageDigestAlgorithm m_eMDAlgo = DEFAULT_MD_ALGORITHM;
   private final ERepoWritable m_eWriteEnabled;
   private final ERepoDeletable m_eDeleteEnabled;
+  private boolean m_bVerifyHash = DEFAULT_VERIFY_HASH_VALUE;
 
   protected AbstractRepoStorage (@Nonnull final RepoStorageType aType,
+                                 @Nonnull @Nonempty final String sID,
                                  @Nonnull final ERepoWritable eWriteEnabled,
                                  @Nonnull final ERepoDeletable eDeleteEnabled)
   {
     ValueEnforcer.notNull (aType, "Type");
+    ValueEnforcer.notEmpty (sID, "ID");
     ValueEnforcer.notNull (eWriteEnabled, "WriteEnabled");
     ValueEnforcer.notNull (eDeleteEnabled, "DeleteEnabled");
     m_aType = aType;
+    m_sID = sID;
     m_eWriteEnabled = eWriteEnabled;
     m_eDeleteEnabled = eDeleteEnabled;
   }
@@ -72,6 +78,13 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
   public final RepoStorageType getRepoType ()
   {
     return m_aType;
+  }
+
+  @Nonnull
+  @Nonempty
+  public final String getID ()
+  {
+    return m_sID;
   }
 
   public final boolean isVerifyHash ()
@@ -239,5 +252,17 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
       return ESuccess.FAILURE;
 
     return ESuccess.SUCCESS;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (null).append ("Type", m_aType)
+                                       .append ("ID", m_sID)
+                                       .append ("MDAlgo", m_eMDAlgo)
+                                       .append ("WriteEnabled", m_eWriteEnabled)
+                                       .append ("DeleteEnabled", m_eDeleteEnabled)
+                                       .append ("VerifyHash", m_bVerifyHash)
+                                       .getToString ();
   }
 }

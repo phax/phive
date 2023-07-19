@@ -60,10 +60,11 @@ public class RepoStorageHttp extends AbstractRepoStorage <RepoStorageHttp>
 
   public RepoStorageHttp (@Nonnull @WillNotClose final HttpClientManager aHttpClient,
                           @Nonnull @Nonempty final String sURLPrefix,
+                          @Nonnull @Nonempty final String sID,
                           @Nonnull final ERepoWritable eWriteEnabled,
                           @Nonnull final ERepoDeletable eDeleteEnabled)
   {
-    super (RepoStorageType.HTTP, eWriteEnabled, eDeleteEnabled);
+    super (RepoStorageType.HTTP, sID, eWriteEnabled, eDeleteEnabled);
     ValueEnforcer.notNull (aHttpClient, "HttpClient");
     ValueEnforcer.notEmpty (sURLPrefix, "URLPrefix");
     m_aHttpClient = aHttpClient;

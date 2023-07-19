@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.file.FileHelper;
 import com.helger.commons.io.file.FileOperationManager;
 import com.helger.commons.io.file.SimpleFileIO;
@@ -48,10 +49,11 @@ public class RepoStorageLocalFileSystem extends AbstractRepoStorage <RepoStorage
   private final File m_aBaseDir;
 
   public RepoStorageLocalFileSystem (@Nonnull final File aBaseDir,
+                                     @Nonnull @Nonempty final String sID,
                                      @Nonnull final ERepoWritable eWriteEnabled,
                                      @Nonnull final ERepoDeletable eDeleteEnabled)
   {
-    super (RepoStorageType.LOCAL_FILE_SYSTEM, eWriteEnabled, eDeleteEnabled);
+    super (RepoStorageType.LOCAL_FILE_SYSTEM, sID, eWriteEnabled, eDeleteEnabled);
     ValueEnforcer.notNull (aBaseDir, "BaseDir");
     ValueEnforcer.isFalse (aBaseDir.isFile (), "Base Directory may not be an existing file");
     FileOperationManager.INSTANCE.createDirRecursiveIfNotExisting (aBaseDir.getAbsoluteFile ());

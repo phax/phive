@@ -57,12 +57,14 @@ public final class RepoStorageChainTest
   {
     final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/http-only/http-only.txt");
 
-    final RepoStorageInMemory aInMemory = RepoStorageInMemory.createDefault (ERepoWritable.WITH_WRITE,
+    final RepoStorageInMemory aInMemory = RepoStorageInMemory.createDefault ("unittest-local",
+                                                                             ERepoWritable.WITH_WRITE,
                                                                              ERepoDeletable.WITHOUT_DELETE);
     final RepoStorageLocalFileSystem aLocalFS = new MockRepoStorageLocalFileSystem (ERepoWritable.WITH_WRITE,
                                                                                     ERepoDeletable.WITH_DELETE);
     final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (),
                                                        LocalJettyRunner.ACCESS_URL_DEFAULT,
+                                                       "unittest-http",
                                                        ERepoWritable.WITHOUT_WRITE,
                                                        ERepoDeletable.WITHOUT_DELETE);
 
@@ -109,12 +111,14 @@ public final class RepoStorageChainTest
   {
     final RepoStorageKey aKey = RepoStorageKey.of ("com/ecosio/http-only/http-only.txt");
 
-    final RepoStorageInMemory aInMemory = RepoStorageInMemory.createDefault (ERepoWritable.WITH_WRITE,
+    final RepoStorageInMemory aInMemory = RepoStorageInMemory.createDefault ("unittest-local",
+                                                                             ERepoWritable.WITH_WRITE,
                                                                              ERepoDeletable.WITHOUT_DELETE);
     final RepoStorageLocalFileSystem aLocalFS = new MockRepoStorageLocalFileSystem (ERepoWritable.WITH_WRITE,
                                                                                     ERepoDeletable.WITH_DELETE);
     final RepoStorageHttp aHttp = new RepoStorageHttp (new HttpClientManager (),
                                                        LocalJettyRunner.ACCESS_URL_DEFAULT,
+                                                       "unittest-http",
                                                        ERepoWritable.WITHOUT_WRITE,
                                                        ERepoDeletable.WITHOUT_DELETE);
     final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocalFS, aHttp),

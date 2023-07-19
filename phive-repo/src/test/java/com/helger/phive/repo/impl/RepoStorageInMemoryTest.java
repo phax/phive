@@ -40,7 +40,8 @@ public final class RepoStorageInMemoryTest
   @Test
   public void testReadWriteReadDelete ()
   {
-    final RepoStorageInMemory aRepo = RepoStorageInMemory.createDefault (ERepoWritable.WITH_WRITE,
+    final RepoStorageInMemory aRepo = RepoStorageInMemory.createDefault ("unittest",
+                                                                         ERepoWritable.WITH_WRITE,
                                                                          ERepoDeletable.WITH_DELETE);
     assertTrue (aRepo.canWrite ());
     assertTrue (aRepo.canDelete ());
@@ -81,7 +82,8 @@ public final class RepoStorageInMemoryTest
   @Test (expected = UnsupportedOperationException.class)
   public void testReadOnly ()
   {
-    final RepoStorageInMemory aRepo = RepoStorageInMemory.createDefault (ERepoWritable.WITHOUT_WRITE,
+    final RepoStorageInMemory aRepo = RepoStorageInMemory.createDefault ("unittest",
+                                                                         ERepoWritable.WITHOUT_WRITE,
                                                                          ERepoDeletable.WITHOUT_DELETE);
     assertFalse (aRepo.canWrite ());
     assertFalse (aRepo.canDelete ());

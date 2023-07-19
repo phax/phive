@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
@@ -69,11 +70,12 @@ public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemor
   private final boolean m_bAllowOverwrite;
 
   public RepoStorageInMemory (@Nonnegative final int nMaxSize,
+                              @Nonnull @Nonempty final String sID,
                               @Nonnull final ERepoWritable eWriteEnabled,
                               @Nonnull final ERepoDeletable eDeleteEnabled,
                               final boolean bAllowOverwrite)
   {
-    super (RepoStorageType.IN_MEMORY, eWriteEnabled, eDeleteEnabled);
+    super (RepoStorageType.IN_MEMORY, sID, eWriteEnabled, eDeleteEnabled);
     ValueEnforcer.isGT0 (nMaxSize, "Max size must be > 0");
     m_aCache = new MaxSizeMap (nMaxSize);
     m_bAllowOverwrite = bAllowOverwrite;
@@ -223,6 +225,8 @@ public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemor
   }
 
   /**
+   * @param sID
+   *        The ID of repo to use. May neither be <code>null</code> nor empty.
    * @return A writable and deletable {@link RepoStorageInMemory} with a maximum
    *         of 1000 entries. Never <code>null</code>.
    * @see #DEFAULT_MAX_SIZE
@@ -231,14 +235,16 @@ public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemor
    * @see #DEFAULT_ALLOW_OVERWRITE
    */
   @Nonnull
-  public static RepoStorageInMemory createDefault ()
+  public static RepoStorageInMemory createDefault (@Nonnull @Nonempty final String sID)
   {
-    return createDefault (DEFAULT_CAN_WRITE, DEFAULT_CAN_DELETE);
+    return createDefault (sID, DEFAULT_CAN_WRITE, DEFAULT_CAN_DELETE);
   }
 
   /**
    * @return A writable and deletable {@link RepoStorageInMemory} with a maximum
    *         of 1000 entries. Never <code>null</code>.
+   * @param sID
+   *        The ID of repo to use. May neither be <code>null</code> nor empty.
    * @param eWriteEnabled
    *        Write enabled?
    * @param eDeleteEnabled
@@ -247,9 +253,10 @@ public class RepoStorageInMemory extends AbstractRepoStorage <RepoStorageInMemor
    * @see #DEFAULT_ALLOW_OVERWRITE
    */
   @Nonnull
-  public static RepoStorageInMemory createDefault (@Nonnull final ERepoWritable eWriteEnabled,
+  public static RepoStorageInMemory createDefault (@Nonnull @Nonempty final String sID,
+                                                   @Nonnull final ERepoWritable eWriteEnabled,
                                                    @Nonnull final ERepoDeletable eDeleteEnabled)
   {
-    return new RepoStorageInMemory (DEFAULT_MAX_SIZE, eWriteEnabled, eDeleteEnabled, DEFAULT_ALLOW_OVERWRITE);
+    return new RepoStorageInMemory (DEFAULT_MAX_SIZE, sID, eWriteEnabled, eDeleteEnabled, DEFAULT_ALLOW_OVERWRITE);
   }
 }

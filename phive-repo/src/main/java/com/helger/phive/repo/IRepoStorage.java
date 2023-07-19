@@ -19,6 +19,7 @@ package com.helger.phive.repo;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ESuccess;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
 
@@ -28,7 +29,7 @@ import com.helger.security.messagedigest.EMessageDigestAlgorithm;
  *
  * @author Philip Helger
  */
-public interface IRepoStorage
+public interface IRepoStorage extends IHasID <String>
 {
   EMessageDigestAlgorithm DEFAULT_MD_ALGORITHM = EMessageDigestAlgorithm.SHA_256;
 
