@@ -106,17 +106,17 @@
       </dependency>
       <dependency>
         <groupId>com.helger.phive</groupId>
-        <artifactId>phive-ves</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.helger.phive</groupId>
-        <artifactId>phive-result</artifactId>
+        <artifactId>phive-ves-model</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger.phive</groupId>
         <artifactId>phive-repo</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.phive</groupId>
+        <artifactId>phive-result</artifactId>
         <version>${project.version}</version>
       </dependency>
     </dependencies>
@@ -143,9 +143,9 @@
   <modules>
     <module>phive-api</module>
     <module>phive-xml</module>
-    <module>phive-ves</module>
-    <module>phive-result</module>
+    <module>phive-ves-model</module>
     <module>phive-repo</module>
+    <module>phive-result</module>
   </modules>
   
   <build>

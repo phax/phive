@@ -24,11 +24,11 @@
     <artifactId>phive-parent-pom</artifactId>
     <version>9.0.0-SNAPSHOT</version>
   </parent>
-  <artifactId>phive-ves</artifactId>
+  <artifactId>phive-ves-model</artifactId>
   <packaging>bundle</packaging>
-  <name>phive-ves</name>
+  <name>phive-ves-model</name>
   <description>phive - Philip Helger Integrative Validation Engine - VES - Validation Execution Set definition</description>
-  <url>https://github.com/phax/phive/phive-ves</url>
+  <url>https://github.com/phax/phive/phive-ves-model</url>
   <inceptionYear>2023</inceptionYear>
   
   <licenses>
