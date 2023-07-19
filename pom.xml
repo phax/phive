@@ -101,12 +101,12 @@
       </dependency>
       <dependency>
         <groupId>com.helger.phive</groupId>
-        <artifactId>phive-xml</artifactId>
+        <artifactId>phive-ves-model</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>com.helger.phive</groupId>
-        <artifactId>phive-ves-model</artifactId>
+        <artifactId>phive-xml</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -147,8 +147,8 @@
   
   <modules>
     <module>phive-api</module>
-    <module>phive-xml</module>
     <module>phive-ves-model</module>
+    <module>phive-xml</module>
     <module>phive-repo</module>
     <module>phive-result</module>
     <module>phive-ves-engine</module>

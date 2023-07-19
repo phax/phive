@@ -72,7 +72,15 @@
     </dependency>
     <dependency>
       <groupId>com.helger.phive</groupId>
+      <artifactId>phive-ves-model</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phive</groupId>
       <artifactId>phive-xml</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phive</groupId>
+      <artifactId>phive-repo</artifactId>
     </dependency>
     
     <dependency>
