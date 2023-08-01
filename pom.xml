@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.4</version>
   </parent>
   <groupId>com.helger.phive</groupId>
   <artifactId>phive-parent-pom</artifactId>
@@ -45,7 +45,7 @@
     <connection>scm:git:git@github.com:phax/phive.git</connection>
     <developerConnection>scm:git:git@github.com:phax/phive.git</developerConnection>
     <url>http://github.com/phax/phive</url>
-    <tag>phive-parent-pom-8.0.1</tag>
+    <tag>8.x</tag>
   </scm>
 
   <organization>
@@ -73,14 +73,14 @@
       <dependency>
         <groupId>com.helger.commons</groupId>
         <artifactId>ph-commons-parent-pom</artifactId>
-        <version>11.0.2</version>
+        <version>11.1.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>com.helger.schematron</groupId>
         <artifactId>ph-schematron-parent-pom</artifactId>
-        <version>7.0.1</version>
+        <version>7.1.2</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
