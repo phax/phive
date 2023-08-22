@@ -6,14 +6,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executorset.VESID;
+import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
-import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.repo.IRepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
+import com.helger.phive.ves.v10.VesXsdType;
+import com.helger.phive.xml.source.IValidationSourceXML;
+import com.helger.phive.xml.xsd.ValidationExecutorXSD;
+
+import java.util.Locale;
 
 public class VESHelper
 {
@@ -21,12 +30,13 @@ public class VESHelper
 
   public static ValidationResult runAndApplyVES (@Nonnull final IRepoStorageChain aRepoChain,
                                                  @Nonnull final VESID aVESID,
-                                                 @Nonnull final IValidationSource aValidationSource)
+                                                 @Nonnull final IValidationSourceXML aValidationSource)
   {
     ValueEnforcer.notNull (aRepoChain, "RepoChain");
     ValueEnforcer.notNull (aVESID, "VESID");
     ValueEnforcer.notNull (aValidationSource, "ValidationSource");
 
+    // Create RepoStorageKey
     final RepoStorageKey aRepoKey = RepoStorageKey.of (aVESID, ".ves");
     LOGGER.info ("Trying to read VESID '" +
                  aVESID.getAsSingleID () +
@@ -51,8 +61,25 @@ public class VESHelper
       return null;
     }
 
-    // TODO do something with the VES :)
+    // Get name of xsd file
+    VesXsdType aVesXsdType = aVES.getXsd ();
+    String artefactId = aVesXsdType.getResource ().getArtifactId ();
+    String BASE_PATH = "ves/test1/";
+    String artefactFullName = artefactId + ".xsd";
 
-    return null;
+    // Get ReadableResource for xsd file
+    IReadableResource aReadableResXSD = new ClassPathResource (BASE_PATH + artefactFullName);
+
+    // Create an Executor with min.xsd and validate mini.xml
+    ValidationExecutorSet<IValidationSourceXML> aExecutorSet = ValidationExecutorSet.create (aVESID,
+                                                                                             aVES.getName(),
+                                                                                             false,
+                                                                                             ValidationExecutorXSD.create (aReadableResXSD));
+
+    // Validate
+    ValidationResultList aValidationResultList = new ValidationResultList();
+    ValidationExecutionManager.executeValidation (aExecutorSet, aValidationSource, aValidationResultList, Locale.ENGLISH);
+
+    return aValidationResultList.get(0);
   }
 }
