@@ -17,21 +17,23 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:ves:v1.0-new">
+<ves xmlns="urn:com:helger:phive:ves:v1.0">
     <groupId>com.helger.phive.test</groupId>
-    <artifactId>test_sch</artifactId>
+    <artifactId>test</artifactId>
     <version>1.0</version>
 
-    <name>phive SCH test</name>
+    <name>phive XSD test 1.0</name>
 
-    <schematron>
+    <xsd>
         <resource>
             <groupId>com.helger.phive.test</groupId>
-            <artifactId>mini-sch</artifactId>
-            <version>2023.8</version>
-            <type>sch</type>
+            <artifactId>mini</artifactId>
+            <version>1.0</version>
+            <type>xsd</type>
         </resource>
-
-        <engine>iso-schematron</engine>
-    </schematron>
+        
+        <namespaces>
+            <namespace prefix="foo" uri="urn:a"/>
+        </namespaces>
+    </xsd>
 </ves>

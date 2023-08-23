@@ -23,6 +23,7 @@ import com.helger.phive.repo.RepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.impl.RepoStorageInMemory;
+import com.helger.phive.ves.engine.load.VESLoader;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 
@@ -61,7 +62,7 @@ public final class VESHelperTest
     // Upload XML VES
     _addVESItem (aInMemoryRepo,
                  new VESID ("com.helger.phive.test", "test", "1.0"),
-                 new ClassPathResource ("ves/test-xsd1/xsd-test1.ves"));
+                 new ClassPathResource ("ves/test-xsd1/test.ves"));
 
     // Upload SCH
     _addVESItem (aInMemoryRepo,
@@ -70,7 +71,7 @@ public final class VESHelperTest
     // Upload SCH VES
     _addVESItem (aInMemoryRepo,
                  new VESID ("com.helger.phive.test", "test_sch", "1.0"),
-                 new ClassPathResource ("ves/test-sch1/sch-test2.ves"));
+                 new ClassPathResource ("ves/test-sch1/test.ves"));
 
     // Create RepoStorageChain with InMemoryRepo and return it
     return RepoStorageChain.of (aInMemoryRepo);
@@ -84,7 +85,7 @@ public final class VESHelperTest
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-xsd1/mini.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList validationResultList = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
+    final ValidationResultList validationResultList = VESLoader.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
     assertNotNull (validationResultList);
     assertEquals (1, validationResultList.size ());
     assertTrue (validationResultList.getFirst ().isSuccess ());
@@ -98,7 +99,7 @@ public final class VESHelperTest
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList validationResultList = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
+    final ValidationResultList validationResultList = VESLoader.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
     assertNotNull (validationResultList);
     assertEquals (1, validationResultList.size ());
     assertTrue (validationResultList.getFirst ().isSuccess ());
