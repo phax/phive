@@ -1,8 +1,20 @@
 package com.helger.phive.ves.engine.ves;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import javax.annotation.Nonnull;
+
+import org.junit.Test;
+
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
+import com.helger.commons.state.ESuccess;
 import com.helger.phive.api.executorset.VESID;
-import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.repo.ERepoDeletable;
 import com.helger.phive.repo.ERepoWritable;
 import com.helger.phive.repo.IRepoStorageChain;
@@ -13,73 +25,83 @@ import com.helger.phive.repo.impl.RepoStorageInMemory;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public final class VESHelperTest
+{
+  private void _addVESItem (@Nonnull final RepoStorageInMemory aInMemoryRepo,
+                            @Nonnull final VESID aVESID,
+                            final String sFileExt,
+                            @Nonnull @Nonempty final IReadableResource itemPath)
+  {
+    // Create StorageKey
+    final RepoStorageKey aKey = RepoStorageKey.of (aVESID, sFileExt);
 
-import java.io.IOException;
-import java.io.InputStream;
+    // Read in the ves file from resources
+    final byte [] aData = StreamHelper.getAllBytes (itemPath);
+    assertNotNull (aData);
 
-import static org.junit.Assert.assertTrue;
-
-public final class VESHelperTest {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger (VESHelperTest.class);
-
-  @Test
-  public void testVesHelperXsd () {
-
-    IRepoStorageChain aRepoChain = getRepoStorageChain ();
-    VESID aVESID = VESID.parseID ("com.helger.phive.test:test:1.0");
-    IValidationSourceXML aValidationSource =
-        ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini.xml"));
-
-    ValidationResult validationResult = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
-    assertTrue (validationResult.isSuccess ());
+    // Write data to InMemoryRepo
+    final ESuccess eSuccess = aInMemoryRepo.write (aKey, RepoStorageItem.of (aData));
+    assertNotNull (eSuccess);
+    assertTrue (eSuccess.isSuccess ());
   }
 
-  @Test
-  public void testVesHelperSch () {
-    IRepoStorageChain aRepoChain = getRepoStorageChain ();
-    VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:1.0");
-    IValidationSourceXML aValidationSource =
-        ValidationSourceXML.create (new ClassPathResource ("ves/test2/mini.xml"));
-
-    ValidationResult validationResult = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
-    assertTrue (validationResult.isSuccess ());
-  }
-
-  private IRepoStorageChain getRepoStorageChain () {
-
-    //Create an InMemoryRepo. Name it, enable write and delete.
+  @Nonnull
+  private IRepoStorageChain _getRepoStorageChain ()
+  {
+    // Create an InMemoryRepo. Name it, enable write and delete.
     final RepoStorageInMemory aInMemoryRepo = RepoStorageInMemory.createDefault ("unittest-local",
-                                                                                ERepoWritable.WITH_WRITE,
-                                                                                ERepoDeletable.WITH_DELETE);
+                                                                                 ERepoWritable.WITH_WRITE,
+                                                                                 ERepoDeletable.WITH_DELETE);
 
-    addItem (aInMemoryRepo, "com/helger/phive/test/test/1.0/test-1.0.ves",
-             "ves/test1/ves-xsd-test1.xml");
-    addItem (aInMemoryRepo, "com/helger/phive/test/test_sch/1.0/test_sch-1.0.ves",
-             "ves/test2/ves-sch-test2.xml");
+    // Upload XSD
+    _addVESItem (aInMemoryRepo,
+                 new VESID ("com.helger.phive.test", "mini", "1.0"),
+                 ".xsd",
+                 new ClassPathResource ("ves/test1/mini.xsd"));
+    // Upload XML VES
+    _addVESItem (aInMemoryRepo,
+                 new VESID ("com.helger.phive.test", "test", "1.0"),
+                 VESHelper.FILE_EXT_VES,
+                 new ClassPathResource ("ves/test1/ves-xsd-test1.xml"));
 
-    //Create RepoStorageChain with InMemoryRepo and return it
+    // Upload SCH
+    _addVESItem (aInMemoryRepo,
+                 new VESID ("com.helger.phive.test", "mini-sch", "2023.8"),
+                 ".sch",
+                 new ClassPathResource ("ves/test2/mini.sch"));
+    // Upload SCH VES
+    _addVESItem (aInMemoryRepo,
+                 new VESID ("com.helger.phive.test", "test_sch", "1.0"),
+                 VESHelper.FILE_EXT_VES,
+                 new ClassPathResource ("ves/test2/ves-sch-test2.xml"));
+
+    // Create RepoStorageChain with InMemoryRepo and return it
     return RepoStorageChain.of (aInMemoryRepo);
   }
 
-  private void addItem (RepoStorageInMemory aInMemoryRepo, String key, String itemPath) {
-    //Create StorageKey
-    final RepoStorageKey aKey = RepoStorageKey.of (key);
+  @Test
+  public void testVesHelperXsd ()
+  {
+    final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
+    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test:1.0");
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini.xml"));
 
-    //Read in the ves file from resources
-    byte[] aData;
-    try (InputStream is = ClassPathResource.getInputStream (itemPath)) {
-      aData = new byte[is.available ()];
-      is.read (aData);
-    } catch (IOException e) {
-      throw new RuntimeException (e);
-    }
-
-    //Write data to InMemoryRepo
-    aInMemoryRepo.write (aKey, RepoStorageItem.of (aData));
+    final ValidationResultList validationResultList = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
+    assertNotNull (validationResultList);
+    assertEquals (1, validationResultList.size ());
+    assertTrue (validationResultList.getFirst ().isSuccess ());
   }
 
+  @Test
+  public void testVesHelperSch ()
+  {
+    final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
+    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:1.0");
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test2/mini.xml"));
+
+    final ValidationResultList validationResultList = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
+    assertNotNull (validationResultList);
+    assertEquals (1, validationResultList.size ());
+    assertTrue (validationResultList.getFirst ().isSuccess ());
+  }
 }

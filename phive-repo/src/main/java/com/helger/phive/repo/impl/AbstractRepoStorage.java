@@ -210,6 +210,8 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
       throw new UnsupportedOperationException ("write is not enabled");
     }
 
+    LOGGER.info ("Writing item '" + aKey.getPath () + "' with " + aItem.data ().size () + " bytes to RepoStorage");
+
     // Create the message digest up front
     final byte [] aDigest = MessageDigestValue.create (aItem.data ().bytes (), m_eMDAlgo).bytes ();
 
