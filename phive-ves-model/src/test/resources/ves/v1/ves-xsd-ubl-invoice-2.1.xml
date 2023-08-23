@@ -29,7 +29,7 @@
       <groupId>org.oasis-open</groupId>
       <artifactId>ubl</artifactId>
       <version>2.1</version>
-      <classifier>zip</classifier>
+      <type>zip</type>
     </resource>
     <!-- when resource is ZIP, main is needed -->
     <main>xsdrt/maindoc/UBL-Invoice-2.1.xsd</main>
@@ -42,7 +42,7 @@ PUBLIC "http://www.w3.org/2000/09/xmldsig#" "maven:com.helger.xsd:ph-xsds-xmldsi
           <groupId>org.w3</groupId>
           <artifactId>xmldsig-core</artifactId>
           <version>1.0</version>
-          <classifier>xsd</classifier>
+          <type>xsd</type>
         </resource>
       </public>
 <!-- 
@@ -53,7 +53,7 @@ REWRITE_SYSTEM "StandardBusinessDocumentHeader.xsd" "maven:com.helger:ph-sbdh:ja
           <groupId>org.gs1</groupId>
           <artifactId>sbdh</artifactId>
           <version>1.2</version>
-          <classifier>xsd</classifier>
+          <type>xsd</type>
         </resource>
       </system>
     </catalog>

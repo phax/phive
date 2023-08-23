@@ -30,7 +30,7 @@
       <groupId>org.oasis-open</groupId>
       <artifactId>ubl</artifactId>
       <version>2.1</version>
-      <classifier>zip</classifier>
+      <type>zip</type>
     </resource>
     <!-- when resource is ZIP, main is needed -->
     <main>xsdrt/maindoc/UBL-CreditNote-2.1.xsd</main>

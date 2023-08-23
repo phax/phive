@@ -38,7 +38,7 @@
       <groupId>org.peppol.billing</groupId>
       <artifactId>ubl</artifactId>
       <version>2023.5</version>
-      <classifier>xslt</classifier>
+      <type>xslt</type>
     </resource>
 
     <engine>iso-schematron</engine>

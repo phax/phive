@@ -46,7 +46,7 @@
       <groupId>de.kosit</groupId>
       <artifactId>xrechnung-ubl</artifactId>
       <version>1.8.1</version>
-      <classifier>xslt</classifier>
+      <type>xslt</type>
     </resource>
     
     <engine>iso-schematron</engine>
