@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
+import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.executorset.VESID;
-import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.repo.IRepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
@@ -24,10 +24,8 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
 
   @Nonnull
-  public ValidationExecutorSet <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageChain aRepoChain,
-                                                                      @Nonnull final LoadedVES.Header aHeader,
-                                                                      @Nonnull final LoadedVES.Status aStatus,
-                                                                      @Nonnull final VesSchematronType aSCH)
+  public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageChain aRepoChain,
+                                                                    @Nonnull final VesSchematronType aSCH)
   {
     final VESID aSCHVESID = VESLoader.wrapID (aSCH.getResource ());
     final String sResourceType = aSCH.getResource ().getType ();
@@ -100,9 +98,11 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       }
     }
 
-    final boolean bIsDeprecated = !aStatus.isDTValidNow () || aStatus.isDeprecated ();
-
-    // Create an Executor with min.xsd and validate mini.xml
-    return ValidationExecutorSet.create (aSCHVESID, aHeader.getName (), bIsDeprecated, aExecutorSCH);
+    LOGGER.info ("Loaded XSD ValidationExecutorSchematron using resource type '" +
+                 sResourceType +
+                 "' and path '" +
+                 aSCHKey.getPath () +
+                 "'");
+    return aExecutorSCH;
   }
 }

@@ -16,6 +16,7 @@
  */
 package com.helger.phive.api.executorset;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import javax.annotation.Nonnull;
@@ -48,7 +49,9 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aList = new CommonsArrayList <> ();
   private final boolean m_bDeprecated;
 
-  public ValidationExecutorSet (@Nonnull final VESID aID, @Nonnull @Nonempty final String sDisplayName, final boolean bDeprecated)
+  public ValidationExecutorSet (@Nonnull final VESID aID,
+                                @Nonnull @Nonempty final String sDisplayName,
+                                final boolean bDeprecated)
   {
     m_aID = ValueEnforcer.notNull (aID, "ID");
     m_sDisplayName = ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -163,6 +166,25 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
                                                                                   @Nonnull @Nonempty final String sDisplayName,
                                                                                   final boolean bIsDeprecated,
                                                                                   @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
+  {
+    ValueEnforcer.notNull (aID, "ID");
+    ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
+    ValueEnforcer.noNullValue (aValidationExecutors, "ValidationExecutors");
+
+    final ValidationExecutorSet <ST> ret = new ValidationExecutorSet <> (aID, sDisplayName, bIsDeprecated);
+
+    // Add Schematrons
+    for (final IValidationExecutor <ST> aItem : aValidationExecutors)
+      ret.addExecutor (aItem);
+
+    return ret;
+  }
+
+  @Nonnull
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
+                                                                                  @Nonnull @Nonempty final String sDisplayName,
+                                                                                  final boolean bIsDeprecated,
+                                                                                  @Nonnull final Collection <? extends IValidationExecutor <ST>> aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");

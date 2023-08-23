@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
+import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.executorset.VESID;
-import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.repo.IRepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
@@ -22,10 +22,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
   @Nonnull
-  public ValidationExecutorSet <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageChain aRepoChain,
-                                                               @Nonnull final LoadedVES.Header aHeader,
-                                                               @Nonnull final LoadedVES.Status aStatus,
-                                                               @Nonnull final VesXsdType aXSD)
+  public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageChain aRepoChain,
+                                                             @Nonnull final VesXsdType aXSD)
   {
     final VESID aXSDVESID = VESLoader.wrapID (aXSD.getResource ());
     final String sResourceType = aXSD.getResource ().getType ();
@@ -79,11 +77,6 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                  "' and path '" +
                  aXSDKey.getPath () +
                  "'");
-
-    final boolean bIsDeprecated = !aStatus.isDTValidNow () || aStatus.isDeprecated ();
-
-    // Create an Executor with min.xsd and validate mini.xml
-    return ValidationExecutorSet.create (aXSDVESID, aHeader.getName (), bIsDeprecated, aExecutorXSD);
+    return aExecutorXSD;
   }
-
 }

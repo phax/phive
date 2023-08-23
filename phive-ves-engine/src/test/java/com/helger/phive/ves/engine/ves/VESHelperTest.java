@@ -72,34 +72,58 @@ public final class VESHelperTest
     _addVESItem (aInMemoryRepo,
                  new VESID ("com.helger.phive.test", "test_sch", "1.0"),
                  new ClassPathResource ("ves/test-sch1/test.ves"));
+    // Upload SCH VES with requires
+    _addVESItem (aInMemoryRepo,
+                 new VESID ("com.helger.phive.test", "test_sch", "2.0"),
+                 new ClassPathResource ("ves/test-sch1/test2.ves"));
 
     // Create RepoStorageChain with InMemoryRepo and return it
     return RepoStorageChain.of (aInMemoryRepo);
   }
 
   @Test
-  public void testVesHelperXsd ()
+  public void testLoadXSD1 ()
   {
     final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
     final VESID aVESID = VESID.parseID ("com.helger.phive.test:test:1.0");
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-xsd1/mini.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList validationResultList = VESLoader.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
+    final ValidationResultList validationResultList = VESLoader.loadVESAndApplyValidation (aRepoChain,
+                                                                                           aVESID,
+                                                                                           aValidationSource);
     assertNotNull (validationResultList);
     assertEquals (1, validationResultList.size ());
     assertTrue (validationResultList.getFirst ().isSuccess ());
   }
 
   @Test
-  public void testVesHelperSch ()
+  public void testLoadSCH1 ()
   {
     final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
     final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:1.0");
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList validationResultList = VESLoader.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
+    final ValidationResultList validationResultList = VESLoader.loadVESAndApplyValidation (aRepoChain,
+                                                                                           aVESID,
+                                                                                           aValidationSource);
+    assertNotNull (validationResultList);
+    assertEquals (1, validationResultList.size ());
+    assertTrue (validationResultList.getFirst ().isSuccess ());
+  }
+
+  @Test
+  public void testLoadSCH2Valid ()
+  {
+    final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
+    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:2.0");
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
+    assertNotNull (aValidationSource.getNode ());
+
+    final ValidationResultList validationResultList = VESLoader.loadVESAndApplyValidation (aRepoChain,
+                                                                                           aVESID,
+                                                                                           aValidationSource);
     assertNotNull (validationResultList);
     assertEquals (1, validationResultList.size ());
     assertTrue (validationResultList.getFirst ().isSuccess ());

@@ -19,6 +19,7 @@ import com.helger.phive.repo.IRepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.RepoStorageReadableResource;
+import com.helger.phive.ves.engine.load.LoadedVES.Requirement;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
 import com.helger.phive.ves.v10.VesCustomErrorType;
@@ -214,19 +215,28 @@ public final class VESLoader
     if (aVES.getRequires () != null)
     {
       final VesRequiresType aReq = aVES.getRequires ();
-      ret.setRequires (new LoadedVES.Requirement (new VESID (aReq.getGroupId (),
-                                                             aReq.getArtifactId (),
-                                                             aReq.getVersion ()),
-                                                  _wrap (aReq.getNamespaces ()),
-                                                  _wrap (aReq.getOutput ()),
-                                                  aReq.isStopOnError ()));
+      final Requirement aRequirement = new LoadedVES.Requirement (new VESID (aReq.getGroupId (),
+                                                                             aReq.getArtifactId (),
+                                                                             aReq.getVersion ()),
+                                                                  _wrap (aReq.getNamespaces ()),
+                                                                  _wrap (aReq.getOutput ()),
+                                                                  aReq.isStopOnError ());
+      ret.setRequires (aRequirement, () -> {
+        // Recursive load required artefact; required to have this in scope
+        final LoadedVES aLoadedRequirement = loadVES (aRequirement.getRequiredVESID ());
+        if (aLoadedRequirement == null)
+          throw new IllegalStateException ("Failed to load required VESID '" +
+                                           aRequirement.getRequiredVESID ().getAsSingleID () +
+                                           "'");
+        return aLoadedRequirement;
+      });
     }
     if (aVES.getXsd () != null)
     {
       // XSD
       if (m_aLoaderXSD != null)
       {
-        ret.setExecutorSet (m_aLoaderXSD.loadXSD (m_aRepoChain, aHeader, aStatus, aVES.getXsd ()));
+        ret.setExecutor (m_aLoaderXSD.loadXSD (m_aRepoChain, aVES.getXsd ()));
       }
       else
       {
@@ -239,10 +249,7 @@ public final class VESLoader
         // Schematron
         if (m_aLoaderSchematron != null)
         {
-          ret.setExecutorSet (m_aLoaderSchematron.loadSchematron (m_aRepoChain,
-                                                                  aHeader,
-                                                                  aStatus,
-                                                                  aVES.getSchematron ()));
+          ret.setExecutor (m_aLoaderSchematron.loadSchematron (m_aRepoChain, aVES.getSchematron ()));
         }
         else
         {
@@ -255,7 +262,7 @@ public final class VESLoader
           // EDIFACT
           if (m_aLoaderEdifact != null)
           {
-            ret.setExecutorSet (m_aLoaderEdifact.loadEdifact (m_aRepoChain, aHeader, aStatus, aVES.getEdifact ()));
+            ret.setExecutor (m_aLoaderEdifact.loadEdifact (m_aRepoChain, aVES.getEdifact ()));
           }
           else
           {
@@ -265,28 +272,29 @@ public final class VESLoader
         else
           throw new IllegalStateException ("Unsupported base syntax");
 
-    if (!ret.hasExecutorSet ())
+    if (!ret.hasExecutor ())
       return null;
 
     return ret;
   }
 
   @Nonnull
-  public static ValidationResultList runAndApplyVES (@Nonnull final IRepoStorageChain aRepoChain,
-                                                     @Nonnull final VESID aVESID,
-                                                     @Nonnull final IValidationSource aValidationSource)
+  public static ValidationResultList loadVESAndApplyValidation (@Nonnull final IRepoStorageChain aRepoChain,
+                                                                @Nonnull final VESID aVESID,
+                                                                @Nonnull final IValidationSource aValidationSource)
   {
     ValueEnforcer.notNull (aRepoChain, "RepoChain");
     ValueEnforcer.notNull (aVESID, "VESID");
     ValueEnforcer.notNull (aValidationSource, "ValidationSource");
 
+    // load
     final LoadedVES aLoadedVES = new VESLoader (aRepoChain).loadVES (aVESID);
+    if (aLoadedVES == null)
+      throw new IllegalStateException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
 
+    // validate
     final ValidationResultList aValidationResultList = new ValidationResultList ();
-
-    if (aLoadedVES != null)
-      aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
-
+    aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
     return aValidationResultList;
   }
 }
