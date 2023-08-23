@@ -17,8 +17,10 @@ import com.helger.phive.repo.IRepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
+import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.ves.v10.VesXsdType;
+import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.xsd.ValidationExecutorXSD;
 
@@ -61,24 +63,46 @@ public class VESHelper
       return null;
     }
 
-    // Get name of xsd file
-    VesXsdType aVesXsdType = aVES.getXsd ();
-    String artefactId = aVesXsdType.getResource ().getArtifactId ();
-    String BASE_PATH = "ves/test1/";
-    String artefactFullName = artefactId + ".xsd";
-
-    // Get ReadableResource for xsd file
-    IReadableResource aReadableResXSD = new ClassPathResource (BASE_PATH + artefactFullName);
-
-    // Create an Executor with min.xsd and validate mini.xml
-    ValidationExecutorSet<IValidationSourceXML> aExecutorSet = ValidationExecutorSet.create (aVESID,
-                                                                                             aVES.getName(),
-                                                                                             false,
-                                                                                             ValidationExecutorXSD.create (aReadableResXSD));
-
-    // Validate
     ValidationResultList aValidationResultList = new ValidationResultList();
-    ValidationExecutionManager.executeValidation (aExecutorSet, aValidationSource, aValidationResultList, Locale.ENGLISH);
+
+    if(aVES.getXsd () != null) {
+      // Get name of xsd file
+      VesXsdType aVesXsdType = aVES.getXsd ();
+      String artefactId = aVesXsdType.getResource ().getArtifactId ();
+      String BASE_PATH = "ves/test1/";
+      String artefactFullName = artefactId + ".xsd";
+
+      // Get ReadableResource for xsd file
+      IReadableResource aReadableResXSD = new ClassPathResource (BASE_PATH + artefactFullName);
+
+      // Create an Executor with min.xsd and validate mini.xml
+      ValidationExecutorSet<IValidationSourceXML> aExecutorSet = ValidationExecutorSet.create (aVESID,
+                                                                                               aVES.getName(),
+                                                                                               false,
+                                                                                               ValidationExecutorXSD.create (aReadableResXSD));
+
+      // Validate
+      ValidationExecutionManager.executeValidation (aExecutorSet, aValidationSource, aValidationResultList, Locale.ENGLISH);
+
+    } else {
+      // Get name of xsd file
+      VesSchematronType aVESSchematron = aVES.getSchematron();
+      String artefactId = aVESSchematron.getResource().getArtifactId();
+      String BASE_PATH = "ves/test2/";
+      String artefactFullName = artefactId + ".sch";
+
+      // Get ReadableResource for sch file
+      IReadableResource aReadableRes = new ClassPathResource(BASE_PATH + artefactFullName);
+
+      // Create an Executor with min.sch and validate mini.xml
+      ValidationExecutorSet<IValidationSourceXML> aExecutorSet =
+          ValidationExecutorSet.create(aVESID, aVES.getName(), false,
+                                       ValidationExecutorSchematron.createSCH(aReadableRes, null));
+
+      // Validate
+      ValidationExecutionManager.executeValidation(aExecutorSet, aValidationSource,
+                                                   aValidationResultList, Locale.ENGLISH);
+    }
 
     return aValidationResultList.get(0);
   }

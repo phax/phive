@@ -19,20 +19,19 @@
 -->
 <ves xmlns="urn:com:helger:phive:ves:v1.0-new">
     <groupId>com.helger.phive.test</groupId>
-    <artifactId>test</artifactId>
+    <artifactId>test_sch</artifactId>
     <version>1.0</version>
 
-    <name>phive XSD test 1.0</name>
+    <name>phive SCH test</name>
 
-    <xsd>
+    <schematron>
         <resource>
             <groupId>com.helger.phive.test</groupId>
             <artifactId>mini</artifactId>
-            <version>1.0</version>
-            <classifier>zip</classifier>
+            <version>2023.8</version>
+            <classifier>sch</classifier>
         </resource>
-        <namespaces>
-            <namespace prefix="foo" uri="urn:a"/>
-        </namespaces>
-    </xsd>
+
+        <engine>iso-schematron</engine>
+    </schematron>
 </ves>
