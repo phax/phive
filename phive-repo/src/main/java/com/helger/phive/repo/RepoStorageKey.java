@@ -79,7 +79,7 @@ public final class RepoStorageKey
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Path", m_sPath).getToString ();
+    return new ToStringGenerator (null).append ("Path", m_sPath).getToString ();
   }
 
   @Nonnull

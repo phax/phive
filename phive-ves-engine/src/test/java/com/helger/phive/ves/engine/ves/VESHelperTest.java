@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
@@ -29,10 +30,10 @@ public final class VESHelperTest
 {
   private void _addVESItem (@Nonnull final RepoStorageInMemory aInMemoryRepo,
                             @Nonnull final VESID aVESID,
-                            final String sFileExt,
                             @Nonnull @Nonempty final IReadableResource itemPath)
   {
     // Create StorageKey
+    final String sFileExt = "." + FilenameHelper.getExtension (itemPath.getPath ());
     final RepoStorageKey aKey = RepoStorageKey.of (aVESID, sFileExt);
 
     // Read in the ves file from resources
@@ -56,24 +57,20 @@ public final class VESHelperTest
     // Upload XSD
     _addVESItem (aInMemoryRepo,
                  new VESID ("com.helger.phive.test", "mini", "1.0"),
-                 ".xsd",
-                 new ClassPathResource ("ves/test1/mini.xsd"));
+                 new ClassPathResource ("ves/test-xsd1/mini.xsd"));
     // Upload XML VES
     _addVESItem (aInMemoryRepo,
                  new VESID ("com.helger.phive.test", "test", "1.0"),
-                 VESHelper.FILE_EXT_VES,
-                 new ClassPathResource ("ves/test1/ves-xsd-test1.xml"));
+                 new ClassPathResource ("ves/test-xsd1/xsd-test1.ves"));
 
     // Upload SCH
     _addVESItem (aInMemoryRepo,
                  new VESID ("com.helger.phive.test", "mini-sch", "2023.8"),
-                 ".sch",
-                 new ClassPathResource ("ves/test2/mini.sch"));
+                 new ClassPathResource ("ves/test-sch1/mini.sch"));
     // Upload SCH VES
     _addVESItem (aInMemoryRepo,
                  new VESID ("com.helger.phive.test", "test_sch", "1.0"),
-                 VESHelper.FILE_EXT_VES,
-                 new ClassPathResource ("ves/test2/ves-sch-test2.xml"));
+                 new ClassPathResource ("ves/test-sch1/sch-test2.ves"));
 
     // Create RepoStorageChain with InMemoryRepo and return it
     return RepoStorageChain.of (aInMemoryRepo);
@@ -84,7 +81,8 @@ public final class VESHelperTest
   {
     final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
     final VESID aVESID = VESID.parseID ("com.helger.phive.test:test:1.0");
-    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini.xml"));
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-xsd1/mini.xml"));
+    assertNotNull (aValidationSource.getNode ());
 
     final ValidationResultList validationResultList = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
     assertNotNull (validationResultList);
@@ -97,7 +95,8 @@ public final class VESHelperTest
   {
     final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
     final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:1.0");
-    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test2/mini.xml"));
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
+    assertNotNull (aValidationSource.getNode ());
 
     final ValidationResultList validationResultList = VESHelper.runAndApplyVES (aRepoChain, aVESID, aValidationSource);
     assertNotNull (validationResultList);

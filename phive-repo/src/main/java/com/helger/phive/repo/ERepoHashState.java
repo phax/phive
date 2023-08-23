@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.name.IHasDisplayName;
 
+/**
+ * This enum contains the hash comparison result when reading from the repo
+ *
+ * @author Philip Helger
+ */
 public enum ERepoHashState implements IHasDisplayName
 {
   VERIFIED_MATCHING ("verified and matching"),

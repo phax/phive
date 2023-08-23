@@ -92,7 +92,7 @@ public final class RepoStorageItem
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Data", m_aData).append ("HashState", m_eHashState).getToString ();
+    return new ToStringGenerator (null).append ("Data", m_aData).append ("HashState", m_eHashState).getToString ();
   }
 
   /**

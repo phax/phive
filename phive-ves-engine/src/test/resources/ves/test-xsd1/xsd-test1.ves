@@ -31,6 +31,7 @@
             <version>1.0</version>
             <type>xsd</type>
         </resource>
+        
         <namespaces>
             <namespace prefix="foo" uri="urn:a"/>
         </namespaces>

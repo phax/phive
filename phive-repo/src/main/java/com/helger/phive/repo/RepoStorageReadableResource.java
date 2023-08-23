@@ -11,6 +11,7 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.UnsupportedOperation;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.string.ToStringGenerator;
 
 /**
  * Implementation of {@link IReadableResource} for {@link RepoStorageKey} and
@@ -70,7 +71,7 @@ public class RepoStorageReadableResource implements IReadableResource
 
   public boolean exists ()
   {
-    return false;
+    return true;
   }
 
   @Nullable
@@ -91,5 +92,11 @@ public class RepoStorageReadableResource implements IReadableResource
   public IReadableResource getReadableCloneForPath (final String sPath)
   {
     throw new UnsupportedOperationException ("Clone not supported");
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (null).append ("Key", m_aKey).append ("Item", m_aItem).getToString ();
   }
 }

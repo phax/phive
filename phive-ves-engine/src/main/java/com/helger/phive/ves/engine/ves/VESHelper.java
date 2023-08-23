@@ -3,6 +3,7 @@ package com.helger.phive.ves.engine.ves;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.RepoStorageReadableResource;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
+import com.helger.phive.ves.v10.VesNamespaceListType;
+import com.helger.phive.ves.v10.VesNamespaceType;
 import com.helger.phive.ves.v10.VesResourceType;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.ves.v10.VesType;
@@ -30,6 +33,7 @@ import com.helger.phive.xml.schematron.ESchematronEngine;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.xsd.ValidationExecutorXSD;
+import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 @Immutable
 public final class VESHelper
@@ -68,6 +72,29 @@ public final class VESHelper
         return false;
     }
     return true;
+  }
+
+  private static void _wrap (@Nullable final VesNamespaceListType aNamespaces,
+                             @Nonnull final MapBasedNamespaceContext aNSCtx)
+  {
+    if (aNamespaces != null)
+      for (final VesNamespaceType aNamespace : aNamespaces.getNamespace ())
+      {
+        final String sPrefix = aNamespace.getPrefix ();
+        if (aNamespace.isOverwrite ())
+        {
+          // Simply overwrite
+          aNSCtx.addMapping (sPrefix, aNamespace.getUri ());
+        }
+        else
+        {
+          // Error in case it already exists
+          if (aNSCtx.getNamespaceURI (sPrefix).length () > 0)
+            LOGGER.error ("The namespace prefix '" + sPrefix + "' is already mapped in the current namespace context");
+          else
+            aNSCtx.addMapping (sPrefix, aNamespace.getUri ());
+        }
+      }
   }
 
   @Nonnull
@@ -155,39 +182,54 @@ public final class VESHelper
 
     final IReadableResource aRepoRes = new RepoStorageReadableResource (aSCHKey, aSCHItem);
 
-    final String sEngine = aSCH.getEngine ();
-    final ESchematronEngine eEngine = ESchematronEngine.getFromIDOrNull (sEngine);
-    if (eEngine == null)
-    {
-      LOGGER.error ("Schematron engine '" +
-                    sEngine +
-                    "' is unknown. Valid IDs are: " +
-                    StringHelper.imploder ()
-                                .source (ESchematronEngine.values (), x -> "'" + x.getID () + "'")
-                                .separator (", ")
-                                .build ());
-      return null;
-    }
+    // Resolve Namespace Context
+    final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
+    _wrap (aSCH.getNamespaces (), aNSCtx);
 
     final ValidationExecutorSchematron aExecutorSCH;
     switch (sResourceType)
     {
       case "sch":
       {
+        // Resolve Schematron Engine
+        final String sEngine = aSCH.getEngine ();
+        final ESchematronEngine eEngine = ESchematronEngine.getFromIDOrNull (sEngine);
+        if (eEngine == null)
+        {
+          LOGGER.error ("Schematron engine '" +
+                        sEngine +
+                        "' is unknown. Valid IDs are: " +
+                        StringHelper.imploder ()
+                                    .source (ESchematronEngine.values (), x -> "'" + x.getID () + "'")
+                                    .separator (", ")
+                                    .build ());
+          return null;
+        }
+
         switch (eEngine)
         {
           case PURE:
-            // aExecutorSCH = new SchematronResourcePure (aRepoRes);
+            aExecutorSCH = ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
             break;
+          case ISO_SCHEMATRON:
+            aExecutorSCH = ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
+            break;
+          case SCHXSLT:
+            aExecutorSCH = ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
+            break;
+          default:
+            throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
         }
-        // TODO
-        aExecutorSCH = null;
         break;
       }
       case "xslt":
       {
-        // TODO
-        aExecutorSCH = null;
+        // Indicate a potential error
+        if (StringHelper.hasText (aSCH.getEngine ()))
+          LOGGER.error ("Schematron resource type '" + sResourceType + "' does not use the 'engine' element");
+
+        // Simple
+        aExecutorSCH = ValidationExecutorSchematron.createXSLT (aRepoRes, aNSCtx);
         break;
       }
       default:
@@ -216,7 +258,7 @@ public final class VESHelper
     final RepoStorageKey aRepoKey = RepoStorageKey.of (aVESID, FILE_EXT_VES);
     LOGGER.info ("Trying to read VESID '" +
                  aVESID.getAsSingleID () +
-                 "' from Repo in path '" +
+                 "' from repo in path '" +
                  aRepoKey.getPath () +
                  "'");
 

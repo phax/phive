@@ -151,8 +151,9 @@ public class RepoStorageChain implements IRepoStorageChain
                             aKey.getPath () +
                             "' from " +
                             aStorage.getRepoType ().getID () +
-                            " with hash state " +
-                            aItem.getHashState ().getDisplayName ();
+                            " with hash state '" +
+                            aItem.getHashState ().getDisplayName () +
+                            "'";
         if (aItem.getHashState () != ERepoHashState.VERIFIED_MATCHING)
           LOGGER.warn (sMsg);
         else
@@ -174,7 +175,9 @@ public class RepoStorageChain implements IRepoStorageChain
         }
         return aItem;
       }
+      // else try reading from next repo
     }
+    // Not found in any storeage
     return null;
   }
 
