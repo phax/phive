@@ -18,8 +18,8 @@
 
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
-           xmlns="urn:com:helger:phive:ves:v1.0-new" 
-           targetNamespace="urn:com:helger:phive:ves:v1.0-new"
+           xmlns="urn:com:helger:phive:ves:v1.0" 
+           targetNamespace="urn:com:helger:phive:ves:v1.0"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="1.0">
@@ -409,24 +409,6 @@ Version: 2023-08-23
           <xs:documentation>Optional date when the validation artefact was published or released</xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:element name="validFrom" type="xs:dateTime" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>
-            The optional point in time, when the validation artefact becomes mandatory.
-            This element SHOULD contain timezone information. 
-            If this element is missing, it means the validation artefact is valid "since forever".
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="validTo" type="xs:dateTime" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>
-            The optional point in time, until when the validation artefact may be used.
-            This element SHOULD contain timezone information. 
-            If this element is missing, it means the validation artefact is valid "until eternity".
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
       
       <xs:element name="requires" type="VesRequiresType" minOccurs="0">
         <xs:annotation>
@@ -451,7 +433,55 @@ Version: 2023-08-23
 
   <xs:element name="ves" type="VesType">
     <xs:annotation>
-      <xs:documentation>The root element of the Validation Execution Set definition</xs:documentation>
+      <xs:documentation>
+        The root element of the Validation Execution Set (VES) definition.
+        A VES is always immutable. The immutable part of a VES is contained in the "ves-status-x.y" XSD.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:complexType name="VesStatusType">
+    <xs:sequence>
+      <xs:group ref="VesCoordinateGroup">
+        <xs:annotation>
+          <xs:documentation>The structured VESID of the VES</xs:documentation>
+        </xs:annotation>
+      </xs:group>
+      <xs:element name="validFrom" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The optional point in time, when the validation artefact becomes mandatory.
+            This element SHOULD contain timezone information. 
+            If this element is missing, it means the validation artefact is valid "since forever".
+            This field is theoretically mutable.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="validTo" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The optional point in time, until when the validation artefact may be used.
+            This element SHOULD contain timezone information. 
+            If this element is missing, it means the validation artefact is valid "until eternity".
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deprecated" type="xs:boolean" minOccurs="0" default="false">
+        <xs:annotation>
+          <xs:documentation>
+            This element provides the possibility to explicitly mark this object as "deprecated" and
+            no longer usable.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="status" type="VesStatusType">
+    <xs:annotation>
+      <xs:documentation>
+        The root element of the Validation Execution Set (VES) status definition.
+      </xs:documentation>
     </xs:annotation>
   </xs:element>
 </xs:schema>

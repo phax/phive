@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:ves:v1.0-new">
+<ves xmlns="urn:com:helger:phive:ves:v1.0">
   <groupId>de.kosit</groupId>
   <artifactId>xrechnung23</artifactId>
   <version>1.8.1</version>

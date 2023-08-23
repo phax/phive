@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:ves:v1.0-new">
+<ves xmlns="urn:com:helger:phive:ves:v1.0">
   <groupId>eu.cen.en16931</groupId>
   <artifactId>ubl-creditnote</artifactId>
   <version>1.3.10</version>

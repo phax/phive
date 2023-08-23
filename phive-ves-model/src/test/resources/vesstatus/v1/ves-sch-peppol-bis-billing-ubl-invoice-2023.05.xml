@@ -17,14 +17,11 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:ves:v1.0">
-  <id>
-    <groupId>un.unece.uncefact</groupId>
-    <artifactId>CrossIndustryInvoice</artifactId>
-    <version>D16B</version>
-  </id>
-  <name>CII CrossIndustryInvoice D16B</name>
-  
-  <validation>
-  </validation>
-</ves>
+<status xmlns="urn:com:helger:phive:ves:v1.0">
+  <groupId>org.peppol.billing</groupId>
+  <artifactId>ubl-invoice</artifactId>
+  <version>2023.5</version>
+
+  <!-- Brussels time -->
+  <validFrom>2023-08-07T00:00:00+02:00</validFrom>
+</status>

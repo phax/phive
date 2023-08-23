@@ -20,23 +20,23 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.jaxb.GenericJAXBMarshaller;
 import com.helger.phive.ves.v10.ObjectFactory;
-import com.helger.phive.ves.v10.VesType;
+import com.helger.phive.ves.v10.VesStatusType;
 
 /**
- * A marshaller to read VES v1 declarations.
+ * A marshaller to read VES Status v1 declarations.
  *
  * @author Philip Helger
  */
-public class VES1Marshaller extends GenericJAXBMarshaller <VesType>
+public class VESStatus1Marshaller extends GenericJAXBMarshaller <VesStatusType>
 {
   /**
    * The XML Schema path to validate against.
    */
   public static final ClassPathResource XSD = new ClassPathResource ("schemas/ves/ves-1.0.xsd",
-                                                                     VES1Marshaller.class.getClassLoader ());
+                                                                     VESStatus1Marshaller.class.getClassLoader ());
 
-  public VES1Marshaller ()
+  public VESStatus1Marshaller ()
   {
-    super (VesType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createVes);
+    super (VesStatusType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createStatus);
   }
 }
