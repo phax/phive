@@ -192,8 +192,9 @@ public final class LoadedVES
   private final Header m_aHeader;
   private final Status m_aStatus;
   private Requirement m_aRequires;
-  private IValidationExecutor <? extends IValidationSource> m_aExecutor;
   private IVESDeferredLoader m_aRequiresLoader;
+  private LoadedVES m_aLoadedRequires;
+  private IValidationExecutor <? extends IValidationSource> m_aExecutor;
 
   LoadedVES (@Nonnull final Header aHeader, @Nonnull final Status aStatus)
   {
@@ -230,6 +231,19 @@ public final class LoadedVES
     m_aExecutor = aExecutor;
   }
 
+  @Nullable
+  private IValidationExecutor <? extends IValidationSource> _getRequiresExecutor ()
+  {
+    if (m_aRequires != null)
+    {
+      if (m_aLoadedRequires == null)
+        m_aLoadedRequires = m_aRequiresLoader.deferredLoad ();
+      if (m_aLoadedRequires != null)
+        return m_aLoadedRequires.getExecutor ();
+    }
+    return null;
+  }
+
   public void applyValidation (@Nonnull final IValidationSource aValidationSource,
                                @Nonnull final ValidationResultList aValidationResultList,
                                @Nonnull final Locale aLocale)
@@ -245,6 +259,7 @@ public final class LoadedVES
 
     // Create an Executor with min.xsd and validate mini.xml
     final ICommonsList <IValidationExecutor <? extends IValidationSource>> aExecutors = new CommonsArrayList <> ();
+    aExecutors.addIfNotNull (_getRequiresExecutor ());
     aExecutors.add (m_aExecutor);
     final IValidationExecutorSet <? extends IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                                     m_aHeader.getName (),
