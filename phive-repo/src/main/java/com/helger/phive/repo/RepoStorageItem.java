@@ -16,10 +16,14 @@
  */
 package com.helger.phive.repo;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
@@ -55,6 +59,16 @@ public final class RepoStorageItem
   public ByteArrayWrapper data ()
   {
     return m_aData;
+  }
+
+  @Nullable
+  public <T> T withDataInputStream (@Nonnull final Function <InputStream, T> aFunc) throws IOException
+  {
+    ValueEnforcer.notNull (aFunc, "Func");
+    try (final InputStream aIS = m_aData.getBufferedInputStream ())
+    {
+      return aFunc.apply (aIS);
+    }
   }
 
   @Nonnull

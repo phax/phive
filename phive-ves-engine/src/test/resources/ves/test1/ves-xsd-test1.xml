@@ -29,7 +29,7 @@
             <groupId>com.helger.phive.test</groupId>
             <artifactId>mini</artifactId>
             <version>1.0</version>
-            <classifier>zip</classifier>
+            <type>xsd</type>
         </resource>
         <namespaces>
             <namespace prefix="foo" uri="urn:a"/>

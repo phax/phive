@@ -29,7 +29,7 @@
             <groupId>com.helger.phive.test</groupId>
             <artifactId>mini</artifactId>
             <version>2023.8</version>
-            <classifier>sch</classifier>
+            <type>sch</type>
         </resource>
 
         <engine>iso-schematron</engine>

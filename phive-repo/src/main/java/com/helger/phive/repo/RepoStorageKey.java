@@ -88,6 +88,21 @@ public final class RepoStorageKey
     return new RepoStorageKey (sPath);
   }
 
+  /**
+   * Create a {@link RepoStorageKey} from the passed VESID and the file
+   * extension. The algorithm is like this:
+   * <code>sGroupID.replace ('.', '/') + "/" + sArtifactID + "/" + sVersion + "/" + sArtifactID + "-" + sVersion [+ "-" + sClassifier] + sFileExt</code>
+   * which is basically
+   * <code>group/artifact/version/artifact-version[-classifier].fileExtension</code>
+   *
+   * @param aVESID
+   *        The VESID to convert. Considers an optionally present classifier.
+   *        May not be <code>null</code>.
+   * @param sFileExt
+   *        The file extension to use. Must start with ".". May not be
+   *        <code>null</code>.
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static RepoStorageKey of (@Nonnull final VESID aVESID, @Nonnull @Nonempty final String sFileExt)
   {
