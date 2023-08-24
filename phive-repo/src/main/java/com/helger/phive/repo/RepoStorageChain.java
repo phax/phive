@@ -38,7 +38,7 @@ import com.helger.commons.collection.impl.ICommonsList;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class RepoStorageChain implements IRepoStorageChain
+public class RepoStorageChain implements IRepoStorageBase
 {
   public static final boolean DEFAULT_CACHE_REMOTE_CONTENT = true;
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageChain.class);

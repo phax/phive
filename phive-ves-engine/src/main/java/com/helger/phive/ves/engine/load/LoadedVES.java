@@ -199,7 +199,7 @@ public final class LoadedVES
   private final Header m_aHeader;
   private final Status m_aStatus;
   private Requirement m_aRequires;
-  private IVESDeferredLoader m_aRequiresLoader;
+  private IVESSpecificDeferredLoader m_aRequiresLoader;
   private LoadedVES m_aLoadedRequires;
   private IValidationExecutor <? extends IValidationSource> m_aExecutor;
 
@@ -211,7 +211,19 @@ public final class LoadedVES
     m_aStatus = aStatus;
   }
 
-  void setRequires (@Nonnull final Requirement aRequirement, @Nonnull final IVESDeferredLoader aDeferredLoader)
+  @Nonnull
+  public Header getHeader ()
+  {
+    return m_aHeader;
+  }
+
+  @Nonnull
+  public Status getStatus ()
+  {
+    return m_aStatus;
+  }
+
+  void setRequires (@Nonnull final Requirement aRequirement, @Nonnull final IVESSpecificDeferredLoader aDeferredLoader)
   {
     ValueEnforcer.notNull (aRequirement, "Requirement");
     ValueEnforcer.notNull (aDeferredLoader, "DeferredLoader");

@@ -11,7 +11,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.executorset.VESID;
-import com.helger.phive.repo.IRepoStorageChain;
+import com.helger.phive.repo.IRepoStorageBase;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.RepoStorageReadableResource;
@@ -24,7 +24,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
   @Nonnull
-  public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageChain aRepoChain,
+  public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aDataProvider,
                                                              @Nonnull final VesXsdType aXSD,
                                                              @Nonnull final ErrorList aErrorList)
   {
@@ -33,7 +33,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     final RepoStorageKey aXSDKey = RepoStorageKey.of (aXSDVESID, "." + sResourceType);
 
     // Read referenced Item
-    final RepoStorageItem aXSDItem = aRepoChain.read (aXSDKey);
+    final RepoStorageItem aXSDItem = aDataProvider.read (aXSDKey);
     if (aXSDItem == null)
     {
       aErrorList.add (SingleError.builderError ()

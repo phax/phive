@@ -11,7 +11,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.executorset.VESID;
-import com.helger.phive.repo.IRepoStorageChain;
+import com.helger.phive.repo.IRepoStorageBase;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.RepoStorageReadableResource;
@@ -26,7 +26,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
 
   @Nonnull
-  public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageChain aRepoChain,
+  public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageBase aDataProvider,
                                                                     @Nonnull final VesSchematronType aSCH,
                                                                     @Nonnull final ErrorList aErrorList)
   {
@@ -35,7 +35,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
     final RepoStorageKey aSCHKey = RepoStorageKey.of (aSCHVESID, "." + sResourceType);
 
     // Read referenced Item
-    final RepoStorageItem aSCHItem = aRepoChain.read (aSCHKey);
+    final RepoStorageItem aSCHItem = aDataProvider.read (aSCHKey);
     if (aSCHItem == null)
     {
       aErrorList.add (SingleError.builderError ()

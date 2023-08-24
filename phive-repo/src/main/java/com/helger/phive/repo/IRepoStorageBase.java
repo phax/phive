@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  *
  * @author Philip Helger
  */
-public interface IRepoStorageChain
+public interface IRepoStorageBase
 {
   /**
    * Test if the provided repo storage element is present or not.

@@ -9,7 +9,7 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
-import com.helger.phive.repo.IRepoStorageChain;
+import com.helger.phive.repo.IRepoStorageBase;
 
 public class VESHelper
 {
@@ -17,7 +17,7 @@ public class VESHelper
   {}
 
   @Nonnull
-  public static ValidationResultList loadVESAndApplyValidation (@Nonnull final IRepoStorageChain aRepoChain,
+  public static ValidationResultList loadVESAndApplyValidation (@Nonnull final IRepoStorageBase aRepoChain,
                                                                 @Nonnull final VESID aVESID,
                                                                 @Nonnull final IValidationSource aValidationSource,
                                                                 @Nonnull final ErrorList aErrorList)
@@ -28,7 +28,7 @@ public class VESHelper
     ValueEnforcer.notNull (aErrorList, "ErrorList");
 
     // load
-    final LoadedVES aLoadedVES = new VESLoader (aRepoChain).loadVES (aVESID, aErrorList);
+    final LoadedVES aLoadedVES = new VESLoader (aRepoChain).loadVESFromRepo (aVESID, aErrorList);
     if (aLoadedVES == null)
       throw new IllegalStateException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
 

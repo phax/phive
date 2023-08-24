@@ -29,6 +29,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.io.ByteArrayWrapper;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 
@@ -144,4 +146,13 @@ public final class RepoStorageItem
 
     return of (s.getBytes (StandardCharsets.UTF_8));
   }
+
+  @Nonnull
+  public static RepoStorageItem of (@Nonnull final IReadableResource aRes)
+  {
+    ValueEnforcer.notNull (aRes, "Resource");
+
+    return of (StreamHelper.getAllBytes (aRes));
+  }
+
 }
