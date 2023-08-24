@@ -23,11 +23,13 @@
     <version>1.0</version>
 
     <name>phive SCH test</name>
+    
+    <!-- No requires -->
 
     <schematron>
         <resource>
             <groupId>com.helger.phive.test</groupId>
-            <artifactId>mini-sch</artifactId>
+            <artifactId>mini-sch1</artifactId>
             <version>2023.8</version>
             <type>sch</type>
         </resource>

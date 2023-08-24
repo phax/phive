@@ -232,9 +232,8 @@ public final class LoadedVES
     return m_aExecutor;
   }
 
-  void setExecutor (@Nonnull final IValidationExecutor <? extends IValidationSource> aExecutor)
+  void setExecutor (@Nullable final IValidationExecutor <? extends IValidationSource> aExecutor)
   {
-    ValueEnforcer.notNull (aExecutor, "Executor");
     m_aExecutor = aExecutor;
   }
 

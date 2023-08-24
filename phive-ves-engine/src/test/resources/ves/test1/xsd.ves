@@ -19,7 +19,7 @@
 -->
 <ves xmlns="urn:com:helger:phive:ves:v1.0">
     <groupId>com.helger.phive.test</groupId>
-    <artifactId>test</artifactId>
+    <artifactId>test_xsd</artifactId>
     <version>1.0</version>
 
     <name>phive XSD test 1.0</name>

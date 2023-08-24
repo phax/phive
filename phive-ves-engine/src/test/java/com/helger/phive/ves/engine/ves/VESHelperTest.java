@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import javax.annotation.Nonnull;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.helger.commons.annotation.Nonempty;
@@ -30,16 +31,18 @@ import com.helger.phive.xml.source.ValidationSourceXML;
 
 public final class VESHelperTest
 {
-  private void _addVESItem (@Nonnull final RepoStorageInMemory aInMemoryRepo,
-                            @Nonnull final VESID aVESID,
-                            @Nonnull @Nonempty final IReadableResource itemPath)
+  private static IRepoStorageChain s_aRepoStorage;
+
+  private static void _addResource (@Nonnull final RepoStorageInMemory aInMemoryRepo,
+                                    @Nonnull final VESID aVESID,
+                                    @Nonnull @Nonempty final IReadableResource aPayload)
   {
     // Create StorageKey
-    final String sFileExt = "." + FilenameHelper.getExtension (itemPath.getPath ());
+    final String sFileExt = "." + FilenameHelper.getExtension (aPayload.getPath ());
     final RepoStorageKey aKey = RepoStorageKey.of (aVESID, sFileExt);
 
     // Read in the ves file from resources
-    final byte [] aData = StreamHelper.getAllBytes (itemPath);
+    final byte [] aData = StreamHelper.getAllBytes (aPayload);
     assertNotNull (aData);
 
     // Write data to InMemoryRepo
@@ -48,98 +51,124 @@ public final class VESHelperTest
     assertTrue (eSuccess.isSuccess ());
   }
 
-  @Nonnull
-  private IRepoStorageChain _getRepoStorageChain ()
+  @BeforeClass
+  public static void beforeClass ()
   {
     // Create an InMemoryRepo. Name it, enable write and delete.
     final RepoStorageInMemory aInMemoryRepo = RepoStorageInMemory.createDefault ("unittest-local",
                                                                                  ERepoWritable.WITH_WRITE,
                                                                                  ERepoDeletable.WITH_DELETE);
 
-    // Upload XSD
-    _addVESItem (aInMemoryRepo,
-                 new VESID ("com.helger.phive.test", "mini", "1.0"),
-                 new ClassPathResource ("ves/test-xsd1/mini.xsd"));
-    // Upload XML VES
-    _addVESItem (aInMemoryRepo,
-                 new VESID ("com.helger.phive.test", "test", "1.0"),
-                 new ClassPathResource ("ves/test-xsd1/test.ves"));
+    // Upload XSD #1
+    _addResource (aInMemoryRepo,
+                  new VESID ("com.helger.phive.test", "mini", "1.0"),
+                  new ClassPathResource ("ves/test1/mini.xsd"));
+    // Upload XSD VES #1
+    _addResource (aInMemoryRepo,
+                  new VESID ("com.helger.phive.test", "test_xsd", "1.0"),
+                  new ClassPathResource ("ves/test1/xsd.ves"));
 
-    // Upload SCH
-    _addVESItem (aInMemoryRepo,
-                 new VESID ("com.helger.phive.test", "mini-sch", "2023.8"),
-                 new ClassPathResource ("ves/test-sch1/mini.sch"));
-    // Upload SCH VES
-    _addVESItem (aInMemoryRepo,
-                 new VESID ("com.helger.phive.test", "test_sch", "1.0"),
-                 new ClassPathResource ("ves/test-sch1/test.ves"));
-    // Upload SCH VES with requires
-    _addVESItem (aInMemoryRepo,
-                 new VESID ("com.helger.phive.test", "test_sch", "2.0"),
-                 new ClassPathResource ("ves/test-sch1/test2.ves"));
+    // Upload SCH #1
+    _addResource (aInMemoryRepo,
+                  new VESID ("com.helger.phive.test", "mini-sch1", "2023.8"),
+                  new ClassPathResource ("ves/test1/mini1.sch"));
+    // Upload SCH #2
+    _addResource (aInMemoryRepo,
+                  new VESID ("com.helger.phive.test", "mini-sch2", "2023.8"),
+                  new ClassPathResource ("ves/test1/mini2.sch"));
+    // Upload SCH VES #1
+    _addResource (aInMemoryRepo,
+                  new VESID ("com.helger.phive.test", "test_sch", "1.0"),
+                  new ClassPathResource ("ves/test1/sch1.ves"));
+    // Upload SCH VES #2 with XSD requires
+    _addResource (aInMemoryRepo,
+                  new VESID ("com.helger.phive.test", "test_sch", "2.0"),
+                  new ClassPathResource ("ves/test1/sch2.ves"));
+    // Upload SCH VES #3 with SCH requires
+    _addResource (aInMemoryRepo,
+                  new VESID ("com.helger.phive.test", "test_sch", "3.0"),
+                  new ClassPathResource ("ves/test1/sch3.ves"));
 
     // Create RepoStorageChain with InMemoryRepo and return it
-    return RepoStorageChain.of (aInMemoryRepo);
+    s_aRepoStorage = RepoStorageChain.of (aInMemoryRepo);
   }
 
   @Test
   public void testLoadXSD1 ()
   {
-    final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test:1.0");
-    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-xsd1/mini.xml"));
+    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_xsd:1.0");
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (aRepoChain,
+    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
                                                                                             aErrorList);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
-    assertTrue (aValidationResultList.getFirst ().isSuccess ());
-
-    assertEquals (0, aErrorList.size ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
   }
 
   @Test
   public void testLoadSCH1 ()
   {
-    final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
     final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:1.0");
-    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (aRepoChain,
+    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
                                                                                             aErrorList);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
-    assertTrue (aValidationResultList.getFirst ().isSuccess ());
-
-    assertEquals (0, aErrorList.size ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
   }
 
   @Test
   public void testLoadSCH2Valid ()
   {
-    final IRepoStorageChain aRepoChain = _getRepoStorageChain ();
     final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:2.0");
-    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (aRepoChain,
+    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
                                                                                             aErrorList);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
     assertNotNull (aValidationResultList);
     assertEquals (2, aValidationResultList.size ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
+    assertTrue (aValidationResultList.get (1).getErrorList ().toString (), aValidationResultList.get (1).isSuccess ());
+  }
+
+  @Test
+  public void testLoadSCH3Valid ()
+  {
+    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:3.0");
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
+    assertNotNull (aValidationSource.getNode ());
+
+    final ErrorList aErrorList = new ErrorList ();
+    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
+                                                                                            aVESID,
+                                                                                            aValidationSource,
+                                                                                            aErrorList);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
+    assertNotNull (aValidationResultList);
+    assertEquals (3, aValidationResultList.size ());
     assertTrue (aValidationResultList.get (0).isSuccess ());
     assertTrue (aValidationResultList.get (1).isSuccess ());
-
-    assertEquals (0, aErrorList.size ());
+    assertTrue (aValidationResultList.get (2).isSuccess ());
   }
 }

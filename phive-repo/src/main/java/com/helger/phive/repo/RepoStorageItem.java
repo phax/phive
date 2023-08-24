@@ -50,6 +50,8 @@ public final class RepoStorageItem
 
   private RepoStorageItem (@Nonnull final ByteArrayWrapper aData, @Nonnull final ERepoHashState eHashState)
   {
+    ValueEnforcer.notNull (aData, "Data");
+    ValueEnforcer.notNull (eHashState, "HashState");
     m_aData = aData;
     m_eHashState = eHashState;
   }

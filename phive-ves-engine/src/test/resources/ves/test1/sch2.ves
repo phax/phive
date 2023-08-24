@@ -26,14 +26,14 @@
     
     <requires stopOnError="true">
       <groupId>com.helger.phive.test</groupId>
-      <artifactId>test</artifactId>
+      <artifactId>test_xsd</artifactId>
       <version>1.0</version>
     </requires>
 
     <schematron>
         <resource>
             <groupId>com.helger.phive.test</groupId>
-            <artifactId>mini-sch</artifactId>
+            <artifactId>mini-sch1</artifactId>
             <version>2023.8</version>
             <type>sch</type>
         </resource>
