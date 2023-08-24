@@ -11,7 +11,7 @@ import com.helger.phive.xml.source.IValidationSourceXML;
 public interface IVESLoaderXSD
 {
   @Nonnull
-  IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull IRepoStorageBase aDataProvider,
+  IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull IRepoStorageBase aRepo,
                                                       @Nonnull VesXsdType aXSD,
                                                       @Nonnull ErrorList aErrorList);
 }

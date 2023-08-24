@@ -11,7 +11,7 @@ import com.helger.phive.xml.source.IValidationSourceBinary;
 public interface IVESLoaderEdifact
 {
   @Nonnull
-  IValidationExecutor <IValidationSourceBinary> loadEdifact (@Nonnull IRepoStorageBase aDataProvider,
+  IValidationExecutor <IValidationSourceBinary> loadEdifact (@Nonnull IRepoStorageBase aRepo,
                                                              @Nonnull VesEdifactType aEDI,
                                                              @Nonnull ErrorList aErrorList);
 }

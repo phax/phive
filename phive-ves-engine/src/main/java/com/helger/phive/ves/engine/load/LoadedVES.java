@@ -272,10 +272,15 @@ public final class LoadedVES
   private ICommonsList <IValidationExecutor <? extends IValidationSource>> _getValidationExecutorsRecursive ()
   {
     if (m_aRequires == null)
+    {
+      // We don't have a required, so we're the root
       return new CommonsArrayList <> (m_aExecutor);
+    }
 
     final ICommonsList <IValidationExecutor <? extends IValidationSource>> ret;
+    // Take the one from required
     ret = _getLoadedVESRequiresNotNull ()._getValidationExecutorsRecursive ();
+    // Add ours
     ret.add (m_aExecutor);
     return ret;
   }
@@ -301,10 +306,13 @@ public final class LoadedVES
     if (m_aExecutor == null)
       throw new IllegalStateException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
 
+    final boolean bIsValid = _isRecursivelyValid ();
+    final ICommonsList <IValidationExecutor <? extends IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
+
     final IValidationExecutorSet <? extends IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                                     m_aHeader.getName (),
-                                                                                                    !_isRecursivelyValid (),
-                                                                                                    _getValidationExecutorsRecursive ());
+                                                                                                    !bIsValid,
+                                                                                                    aExecutors);
 
     // Validate
     ValidationExecutionManager.executeValidation (GenericReflection.uncheckedCast (aVES),

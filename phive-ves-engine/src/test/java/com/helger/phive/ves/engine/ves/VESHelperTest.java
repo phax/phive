@@ -60,8 +60,11 @@ public final class VESHelperTest
                                @Nonnull @Nonempty final IReadableResource aPayload)
   {
     final ErrorList aErrorList = new ErrorList ();
+
     // Read VES as XML
     final VesType aVES = new VES1Marshaller ().setCollectErrors (aErrorList).read (aPayload);
+    assertNotNull (aVES);
+
     // Convert to loaded VES - checking that it is okay
     final LoadedVES aLoadedVES = new VESLoader (aInMemoryRepo).convertToLoadedVES (Status.createUndefined (),
                                                                                    aVES,

@@ -11,7 +11,7 @@ import com.helger.phive.xml.source.IValidationSourceXML;
 public interface IVESLoaderSchematron
 {
   @Nonnull
-  IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull IRepoStorageBase aDataProvider,
+  IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull IRepoStorageBase aRepo,
                                                              @Nonnull VesSchematronType aSCH,
                                                              @Nonnull ErrorList aErrorList);
 }

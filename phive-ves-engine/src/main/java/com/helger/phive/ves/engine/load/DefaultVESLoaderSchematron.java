@@ -26,7 +26,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
 
   @Nonnull
-  public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageBase aDataProvider,
+  public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageBase aRepo,
                                                                     @Nonnull final VesSchematronType aSCH,
                                                                     @Nonnull final ErrorList aErrorList)
   {
@@ -35,7 +35,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
     final RepoStorageKey aSCHKey = RepoStorageKey.of (aSCHVESID, "." + sResourceType);
 
     // Read referenced Item
-    final RepoStorageItem aSCHItem = aDataProvider.read (aSCHKey);
+    final RepoStorageItem aSCHItem = aRepo.read (aSCHKey);
     if (aSCHItem == null)
     {
       aErrorList.add (SingleError.builderError ()

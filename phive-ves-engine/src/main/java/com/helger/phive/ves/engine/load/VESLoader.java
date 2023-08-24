@@ -103,15 +103,15 @@ public final class VESLoader
     return ret;
   }
 
-  private final IRepoStorageBase m_aDataProvider;
+  private final IRepoStorageBase m_aRepo;
   private IVESLoaderXSD m_aLoaderXSD = new DefaultVESLoaderXSD ();
   private IVESLoaderSchematron m_aLoaderSchematron = new DefaultVESLoaderSchematron ();
   private IVESLoaderEdifact m_aLoaderEdifact = null;
 
-  public VESLoader (@Nonnull final IRepoStorageBase aDataProvider)
+  public VESLoader (@Nonnull final IRepoStorageBase aRepo)
   {
-    ValueEnforcer.notNull (aDataProvider, "DataProvider");
-    m_aDataProvider = aDataProvider;
+    ValueEnforcer.notNull (aRepo, "Repo");
+    m_aRepo = aRepo;
   }
 
   @Nullable
@@ -190,7 +190,7 @@ public final class VESLoader
     {
       // XSD
       if (m_aLoaderXSD != null)
-        ret.setExecutor (m_aLoaderXSD.loadXSD (m_aDataProvider, aVES.getXsd (), aErrorList));
+        ret.setExecutor (m_aLoaderXSD.loadXSD (m_aRepo, aVES.getXsd (), aErrorList));
       else
         aErrorList.add (SingleError.builderError ()
                                    .errorText ("The VES contains an XSD element, but no XSD loader is present")
@@ -201,7 +201,7 @@ public final class VESLoader
       {
         // Schematron
         if (m_aLoaderSchematron != null)
-          ret.setExecutor (m_aLoaderSchematron.loadSchematron (m_aDataProvider, aVES.getSchematron (), aErrorList));
+          ret.setExecutor (m_aLoaderSchematron.loadSchematron (m_aRepo, aVES.getSchematron (), aErrorList));
         else
           aErrorList.add (SingleError.builderError ()
                                      .errorText ("The VES contains a Schematron element, but no Schematron loader is present")
@@ -212,7 +212,7 @@ public final class VESLoader
         {
           // EDIFACT
           if (m_aLoaderEdifact != null)
-            ret.setExecutor (m_aLoaderEdifact.loadEdifact (m_aDataProvider, aVES.getEdifact (), aErrorList));
+            ret.setExecutor (m_aLoaderEdifact.loadEdifact (m_aRepo, aVES.getEdifact (), aErrorList));
           else
             aErrorList.add (SingleError.builderError ()
                                        .errorText ("The VES contains an Edifact element, but no Edifact loader is present")
@@ -270,9 +270,9 @@ public final class VESLoader
     // Check if an explicit status is available
     final LoadedVES.Status aStatus;
     final RepoStorageKey aRepoKeyStatus = RepoStorageKey.of (aVESID, FILE_EXT_STATUS);
-    if (m_aDataProvider.exists (aRepoKeyStatus))
+    if (m_aRepo.exists (aRepoKeyStatus))
     {
-      final RepoStorageItem aRepoContentStatus = m_aDataProvider.read (aRepoKeyStatus);
+      final RepoStorageItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
       // it's okay, if it does not exist
       if (aRepoContentStatus != null)
       {
@@ -282,7 +282,7 @@ public final class VESLoader
                                                                                                             aRepoContentStatus));
         if (aVESStatus == null)
         {
-          // Error in XML
+          // Error in Status XML - breaking error
           aErrorList.add (SingleError.builderError ()
                                      .errorFieldName (aRepoKeyStatus.getPath ())
                                      .errorText ("Failed to read VES Status as XML.")
@@ -296,17 +296,19 @@ public final class VESLoader
       }
       else
       {
+        // Status is supposed to exist, but does not
         aStatus = LoadedVES.Status.createUndefined ();
       }
     }
     else
     {
+      // Status does not exist
       aStatus = LoadedVES.Status.createUndefined ();
     }
 
-    // Read VES from repo
+    // Read VES content from repo
     final RepoStorageKey aRepoKeyVES = RepoStorageKey.of (aVESID, FILE_EXT_VES);
-    final RepoStorageItem aRepoContentVES = m_aDataProvider.read (aRepoKeyVES);
+    final RepoStorageItem aRepoContentVES = m_aRepo.read (aRepoKeyVES);
     if (aRepoContentVES == null)
     {
       aErrorList.add (SingleError.builderError ()
@@ -329,6 +331,7 @@ public final class VESLoader
       return null;
     }
 
+    // Now read into data model
     return convertToLoadedVES (aStatus, aVES, aErrorList);
   }
 }

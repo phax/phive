@@ -24,7 +24,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
   @Nonnull
-  public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aDataProvider,
+  public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aRepo,
                                                              @Nonnull final VesXsdType aXSD,
                                                              @Nonnull final ErrorList aErrorList)
   {
@@ -33,7 +33,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     final RepoStorageKey aXSDKey = RepoStorageKey.of (aXSDVESID, "." + sResourceType);
 
     // Read referenced Item
-    final RepoStorageItem aXSDItem = aDataProvider.read (aXSDKey);
+    final RepoStorageItem aXSDItem = aRepo.read (aXSDKey);
     if (aXSDItem == null)
     {
       aErrorList.add (SingleError.builderError ()
