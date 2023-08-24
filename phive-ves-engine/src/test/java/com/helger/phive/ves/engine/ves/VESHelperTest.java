@@ -167,8 +167,8 @@ public final class VESHelperTest
 
     assertNotNull (aValidationResultList);
     assertEquals (3, aValidationResultList.size ());
-    assertTrue (aValidationResultList.get (0).isSuccess ());
-    assertTrue (aValidationResultList.get (1).isSuccess ());
-    assertTrue (aValidationResultList.get (2).isSuccess ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
+    assertTrue (aValidationResultList.get (1).getErrorList ().toString (), aValidationResultList.get (1).isSuccess ());
+    assertTrue (aValidationResultList.get (2).getErrorList ().toString (), aValidationResultList.get (2).isSuccess ());
   }
 }
