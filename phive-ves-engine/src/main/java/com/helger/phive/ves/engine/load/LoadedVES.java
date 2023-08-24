@@ -28,6 +28,11 @@ import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
+/**
+ * This class represents a single Loaded VES.
+ *
+ * @author Philip Helger
+ */
 public final class LoadedVES
 {
   public static final class Header
