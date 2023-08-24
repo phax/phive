@@ -271,16 +271,7 @@ Version: 2023-08-23
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-     
-      <xs:element name="namespaces" type="VesNamespaceListType" minOccurs="0">
-        <xs:annotation>
-          <xs:documentation>
-            All the namespaces referenced by the XML schema and the proposed prefixes.
-            Note: XML Schemas without namespace URI are NOT supported.
-          </xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
+     </xs:sequence>
   </xs:complexType>
   
   <xs:complexType name="VesOptionType">
