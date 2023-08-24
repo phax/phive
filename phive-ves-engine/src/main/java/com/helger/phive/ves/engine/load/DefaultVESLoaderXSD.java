@@ -5,6 +5,8 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.error.SingleError;
+import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.execute.IValidationExecutor;
@@ -23,7 +25,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
 
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageChain aRepoChain,
-                                                             @Nonnull final VesXsdType aXSD)
+                                                             @Nonnull final VesXsdType aXSD,
+                                                             @Nonnull final ErrorList aErrorList)
   {
     final VESID aXSDVESID = VESLoader.wrapID (aXSD.getResource ());
     final String sResourceType = aXSD.getResource ().getType ();
@@ -33,7 +36,10 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     final RepoStorageItem aXSDItem = aRepoChain.read (aXSDKey);
     if (aXSDItem == null)
     {
-      LOGGER.warn ("Failed to resolve XSD artifact '" + aXSDKey.getPath () + "'");
+      aErrorList.add (SingleError.builderError ()
+                                 .errorFieldName (aXSDKey.getPath ())
+                                 .errorText ("Failed to load XSD artifact from repository")
+                                 .build ());
       return null;
     }
 
@@ -46,7 +52,13 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       {
         // Indicate a potential error
         if (StringHelper.hasText (aXSD.getMain ()))
-          LOGGER.error ("XSD resource type '" + sResourceType + "' does not use the 'main' element");
+        {
+          aErrorList.add (SingleError.builderWarn ()
+                                     .errorText ("XSD resource type '" +
+                                                 sResourceType +
+                                                 "' does not use the 'main' element")
+                                     .build ());
+        }
 
         // Load "as is"
         aExecutorXSD = ValidationExecutorXSD.create (aRepoRes);
@@ -57,7 +69,11 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         final String sMain = aXSD.getMain ();
         if (StringHelper.hasNoText (sMain))
         {
-          LOGGER.error ("XSD resource type '" + sResourceType + "' requires the 'main' element to be provided!");
+          aErrorList.add (SingleError.builderError ()
+                                     .errorText ("XSD resource type '" +
+                                                 sResourceType +
+                                                 "' requires the 'main' element to be provided!")
+                                     .build ());
           return null;
         }
 
@@ -68,10 +84,13 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
       default:
       {
-        LOGGER.error ("Unsupported XSD resource type '" + sResourceType + "' found");
+        aErrorList.add (SingleError.builderError ()
+                                   .errorText ("Unsupported XSD resource type '" + sResourceType + "' found")
+                                   .build ());
         return null;
       }
     }
+
     LOGGER.info ("Loaded XSD ValidationExecutorXSD using resource type '" +
                  sResourceType +
                  "' and path '" +

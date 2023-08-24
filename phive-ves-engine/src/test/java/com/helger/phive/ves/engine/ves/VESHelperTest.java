@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
@@ -23,7 +24,7 @@ import com.helger.phive.repo.RepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.impl.RepoStorageInMemory;
-import com.helger.phive.ves.engine.load.VESLoader;
+import com.helger.phive.ves.engine.load.VESHelper;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 
@@ -89,12 +90,16 @@ public final class VESHelperTest
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-xsd1/mini.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList validationResultList = VESLoader.loadVESAndApplyValidation (aRepoChain,
-                                                                                           aVESID,
-                                                                                           aValidationSource);
-    assertNotNull (validationResultList);
-    assertEquals (1, validationResultList.size ());
-    assertTrue (validationResultList.getFirst ().isSuccess ());
+    final ErrorList aErrorList = new ErrorList ();
+    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (aRepoChain,
+                                                                                            aVESID,
+                                                                                            aValidationSource,
+                                                                                            aErrorList);
+    assertNotNull (aValidationResultList);
+    assertEquals (1, aValidationResultList.size ());
+    assertTrue (aValidationResultList.getFirst ().isSuccess ());
+
+    assertEquals (0, aErrorList.size ());
   }
 
   @Test
@@ -105,12 +110,16 @@ public final class VESHelperTest
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList validationResultList = VESLoader.loadVESAndApplyValidation (aRepoChain,
-                                                                                           aVESID,
-                                                                                           aValidationSource);
-    assertNotNull (validationResultList);
-    assertEquals (1, validationResultList.size ());
-    assertTrue (validationResultList.getFirst ().isSuccess ());
+    final ErrorList aErrorList = new ErrorList ();
+    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (aRepoChain,
+                                                                                            aVESID,
+                                                                                            aValidationSource,
+                                                                                            aErrorList);
+    assertNotNull (aValidationResultList);
+    assertEquals (1, aValidationResultList.size ());
+    assertTrue (aValidationResultList.getFirst ().isSuccess ());
+
+    assertEquals (0, aErrorList.size ());
   }
 
   @Test
@@ -121,11 +130,16 @@ public final class VESHelperTest
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test-sch1/mini.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList validationResultList = VESLoader.loadVESAndApplyValidation (aRepoChain,
-                                                                                           aVESID,
-                                                                                           aValidationSource);
-    assertNotNull (validationResultList);
-    assertEquals (1, validationResultList.size ());
-    assertTrue (validationResultList.getFirst ().isSuccess ());
+    final ErrorList aErrorList = new ErrorList ();
+    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (aRepoChain,
+                                                                                            aVESID,
+                                                                                            aValidationSource,
+                                                                                            aErrorList);
+    assertNotNull (aValidationResultList);
+    assertEquals (2, aValidationResultList.size ());
+    assertTrue (aValidationResultList.get (0).isSuccess ());
+    assertTrue (aValidationResultList.get (1).isSuccess ());
+
+    assertEquals (0, aErrorList.size ());
   }
 }

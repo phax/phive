@@ -5,6 +5,8 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.error.SingleError;
+import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.execute.IValidationExecutor;
@@ -25,7 +27,8 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageChain aRepoChain,
-                                                                    @Nonnull final VesSchematronType aSCH)
+                                                                    @Nonnull final VesSchematronType aSCH,
+                                                                    @Nonnull final ErrorList aErrorList)
   {
     final VESID aSCHVESID = VESLoader.wrapID (aSCH.getResource ());
     final String sResourceType = aSCH.getResource ().getType ();
@@ -35,7 +38,10 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
     final RepoStorageItem aSCHItem = aRepoChain.read (aSCHKey);
     if (aSCHItem == null)
     {
-      LOGGER.warn ("Failed to resolve Schematron artifact '" + aSCHKey.getPath () + "'");
+      aErrorList.add (SingleError.builderError ()
+                                 .errorFieldName (aSCHKey.getPath ())
+                                 .errorText ("Failed to load Schematron artifact from repository")
+                                 .build ());
       return null;
     }
 
@@ -55,13 +61,16 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
         final ESchematronEngine eEngine = ESchematronEngine.getFromIDOrNull (sEngine);
         if (eEngine == null)
         {
-          LOGGER.error ("Schematron engine '" +
-                        sEngine +
-                        "' is unknown. Valid IDs are: " +
-                        StringHelper.imploder ()
-                                    .source (ESchematronEngine.values (), x -> "'" + x.getID () + "'")
-                                    .separator (", ")
-                                    .build ());
+          aErrorList.add (SingleError.builderError ()
+                                     .errorText ("Schematron engine '" +
+                                                 sEngine +
+                                                 "' is unknown. Valid IDs are: " +
+                                                 StringHelper.imploder ()
+                                                             .source (ESchematronEngine.values (),
+                                                                      x -> "'" + x.getID () + "'")
+                                                             .separator (", ")
+                                                             .build ())
+                                     .build ());
           return null;
         }
 
@@ -85,7 +94,13 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       {
         // Indicate a potential error
         if (StringHelper.hasText (aSCH.getEngine ()))
-          LOGGER.error ("Schematron resource type '" + sResourceType + "' does not use the 'engine' element");
+        {
+          aErrorList.add (SingleError.builderWarn ()
+                                     .errorText ("Schematron resource type '" +
+                                                 sResourceType +
+                                                 "' does not support the 'engine' element")
+                                     .build ());
+        }
 
         // Simple
         aExecutorSCH = ValidationExecutorSchematron.createXSLT (aRepoRes, aNSCtx);
@@ -93,7 +108,9 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       }
       default:
       {
-        LOGGER.error ("Unsupported Schematron resource type '" + sResourceType + "' found");
+        aErrorList.add (SingleError.builderError ()
+                                   .errorText ("Unsupported Schematron resource type '" + sResourceType + "' found")
+                                   .build ());
         return null;
       }
     }

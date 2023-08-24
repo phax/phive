@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsList;
@@ -15,6 +16,7 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.XMLOffsetDate;
 import com.helger.commons.datetime.XMLOffsetDateTime;
 import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.commons.state.ETriState;
 import com.helger.phive.api.execute.IValidationExecutor;
@@ -107,14 +109,19 @@ public final class LoadedVES
     }
 
     @Nonnull
-    public ETriState getDeprecated ()
+    public ETriState getExplicitlyDeprecated ()
     {
       return m_eDeprecated;
     }
 
-    public boolean isDeprecated ()
+    public boolean isExplicitlyDeprecated ()
     {
       return m_eDeprecated.getAsBooleanValue (false);
+    }
+
+    public boolean isOverallValid ()
+    {
+      return isDTValidNow () && !isExplicitlyDeprecated ();
     }
 
     @Nonnull
@@ -231,17 +238,45 @@ public final class LoadedVES
     m_aExecutor = aExecutor;
   }
 
-  @Nullable
-  private IValidationExecutor <? extends IValidationSource> _getRequiresExecutor ()
+  @Nonnull
+  private LoadedVES _getLoadedVESRequiresNotNull ()
   {
-    if (m_aRequires != null)
+    LoadedVES ret = m_aLoadedRequires;
+    if (ret == null)
     {
-      if (m_aLoadedRequires == null)
-        m_aLoadedRequires = m_aRequiresLoader.deferredLoad ();
-      if (m_aLoadedRequires != null)
-        return m_aLoadedRequires.getExecutor ();
+      // TODO do something with the error list
+      final ErrorList aErrorList = new ErrorList ();
+      m_aLoadedRequires = ret = m_aRequiresLoader.deferredLoad (aErrorList);
+      if (ret == null)
+        throw new IllegalStateException ("Failed to load required VES '" +
+                                         m_aRequires.getRequiredVESID ().getAsSingleID () +
+                                         "': " +
+                                         aErrorList.getAllFailures ());
     }
-    return null;
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableObject
+  private ICommonsList <IValidationExecutor <? extends IValidationSource>> _getValidationExecutorsRecursive ()
+  {
+    if (m_aRequires == null)
+      return new CommonsArrayList <> (m_aExecutor);
+
+    final ICommonsList <IValidationExecutor <? extends IValidationSource>> ret;
+    ret = _getLoadedVESRequiresNotNull ()._getValidationExecutorsRecursive ();
+    ret.add (m_aExecutor);
+    return ret;
+  }
+
+  private boolean _isRecursivelyValid ()
+  {
+    // No requirement
+    if (m_aRequires == null)
+      return m_aStatus.isOverallValid ();
+
+    // Requirement present
+    return _getLoadedVESRequiresNotNull ()._isRecursivelyValid () && m_aStatus.isOverallValid ();
   }
 
   public void applyValidation (@Nonnull final IValidationSource aValidationSource,
@@ -255,16 +290,10 @@ public final class LoadedVES
     if (m_aExecutor == null)
       throw new IllegalStateException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
 
-    final boolean bIsDeprecated = !m_aStatus.isDTValidNow () || m_aStatus.isDeprecated ();
-
-    // Create an Executor with min.xsd and validate mini.xml
-    final ICommonsList <IValidationExecutor <? extends IValidationSource>> aExecutors = new CommonsArrayList <> ();
-    aExecutors.addIfNotNull (_getRequiresExecutor ());
-    aExecutors.add (m_aExecutor);
     final IValidationExecutorSet <? extends IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                                     m_aHeader.getName (),
-                                                                                                    bIsDeprecated,
-                                                                                                    aExecutors);
+                                                                                                    !_isRecursivelyValid (),
+                                                                                                    _getValidationExecutorsRecursive ());
 
     // Validate
     ValidationExecutionManager.executeValidation (GenericReflection.uncheckedCast (aVES),

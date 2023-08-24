@@ -1,7 +1,5 @@
 package com.helger.phive.ves.engine.load;
 
-import java.util.Locale;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -10,11 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.state.ETriState;
 import com.helger.phive.api.executorset.VESID;
-import com.helger.phive.api.result.ValidationResultList;
-import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.repo.IRepoStorageChain;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
@@ -154,13 +152,14 @@ public final class VESLoader
   }
 
   @Nullable
-  public LoadedVES loadVES (@Nonnull final VESID aVESID)
+  public LoadedVES loadVES (@Nonnull final VESID aVESID, @Nonnull final ErrorList aErrorList)
   {
     ValueEnforcer.notNull (aVESID, "VESID");
+    ValueEnforcer.notNull (aErrorList, "ErrorList");
 
     LOGGER.info ("Trying to read VESID '" + aVESID.getAsSingleID () + "' from repository");
 
-    // Check if a status is available
+    // Check if an explicit status is available
     final LoadedVES.Status aStatus;
     {
       final RepoStorageKey aRepoKeyStatus = RepoStorageKey.of (aVESID, FILE_EXT_STATUS);
@@ -169,12 +168,16 @@ public final class VESLoader
       if (aRepoContentStatus != null)
       {
         // Read VES Status as XML
-        final VesStatusType aVESStatus = new VESStatus1Marshaller ().read (new RepoStorageReadableResource (aRepoKeyStatus,
+        final VesStatusType aVESStatus = new VESStatus1Marshaller ().setCollectErrors (aErrorList)
+                                                                    .read (new RepoStorageReadableResource (aRepoKeyStatus,
                                                                                                             aRepoContentStatus));
         if (aVESStatus == null)
         {
           // Error in XML
-          LOGGER.error ("Failed to read VES Status of '" + aRepoKeyStatus.getPath () + "' as XML.");
+          aErrorList.add (SingleError.builderError ()
+                                     .errorFieldName (aRepoKeyStatus.getPath ())
+                                     .errorText ("Failed to read VES Status as XML.")
+                                     .build ());
           return null;
         }
 
@@ -193,19 +196,27 @@ public final class VESLoader
     final RepoStorageItem aRepoContentVES = m_aRepoChain.read (aRepoKeyVES);
     if (aRepoContentVES == null)
     {
-      LOGGER.error ("Failed to resolve '" + aRepoKeyVES.getPath () + "' from repository");
+      aErrorList.add (SingleError.builderError ()
+                                 .errorFieldName (aRepoKeyVES.getPath ())
+                                 .errorText ("Failed to resolve VES from repository.")
+                                 .build ());
       return null;
     }
 
     // Read VES as XML
-    final VesType aVES = new VES1Marshaller ().read (new RepoStorageReadableResource (aRepoKeyVES, aRepoContentVES));
+    final VesType aVES = new VES1Marshaller ().setCollectErrors (aErrorList)
+                                              .read (new RepoStorageReadableResource (aRepoKeyVES, aRepoContentVES));
     if (aVES == null)
     {
       // Error in XML
-      LOGGER.error ("Failed to read VES of '" + aRepoKeyVES.getPath () + "' as XML.");
+      aErrorList.add (SingleError.builderError ()
+                                 .errorFieldName (aRepoKeyVES.getPath ())
+                                 .errorText ("Failed to read VES as XML.")
+                                 .build ());
       return null;
     }
 
+    // Extract data
     final LoadedVES.Header aHeader = new LoadedVES.Header (new VESID (aVES.getGroupId (),
                                                                       aVES.getArtifactId (),
                                                                       aVES.getVersion ()),
@@ -221,9 +232,11 @@ public final class VESLoader
                                                                   _wrap (aReq.getNamespaces ()),
                                                                   _wrap (aReq.getOutput ()),
                                                                   aReq.isStopOnError ());
-      ret.setRequires (aRequirement, () -> {
+      ret.setRequires (aRequirement, aLocalErrorList -> {
+        // Use this deferred loader, to ensure the same surrounding VESLoader
+        // instance is used
         // Recursive load required artefact; required to have this in scope
-        final LoadedVES aLoadedRequirement = loadVES (aRequirement.getRequiredVESID ());
+        final LoadedVES aLoadedRequirement = loadVES (aRequirement.getRequiredVESID (), aLocalErrorList);
         if (aLoadedRequirement == null)
           throw new IllegalStateException ("Failed to load required VESID '" +
                                            aRequirement.getRequiredVESID ().getAsSingleID () +
@@ -235,66 +248,42 @@ public final class VESLoader
     {
       // XSD
       if (m_aLoaderXSD != null)
-      {
-        ret.setExecutor (m_aLoaderXSD.loadXSD (m_aRepoChain, aVES.getXsd ()));
-      }
+        ret.setExecutor (m_aLoaderXSD.loadXSD (m_aRepoChain, aVES.getXsd (), aErrorList));
       else
-      {
-        LOGGER.error ("The VES contains an XSD element, but no XSD loader is present");
-      }
+        aErrorList.add (SingleError.builderError ()
+                                   .errorText ("The VES contains an XSD element, but no XSD loader is present")
+                                   .build ());
     }
     else
       if (aVES.getSchematron () != null)
       {
         // Schematron
         if (m_aLoaderSchematron != null)
-        {
-          ret.setExecutor (m_aLoaderSchematron.loadSchematron (m_aRepoChain, aVES.getSchematron ()));
-        }
+          ret.setExecutor (m_aLoaderSchematron.loadSchematron (m_aRepoChain, aVES.getSchematron (), aErrorList));
         else
-        {
-          LOGGER.error ("The VES contains a Schematron element, but no Schematron loader is present");
-        }
+          aErrorList.add (SingleError.builderError ()
+                                     .errorText ("The VES contains a Schematron element, but no Schematron loader is present")
+                                     .build ());
       }
       else
         if (aVES.getEdifact () != null)
         {
           // EDIFACT
           if (m_aLoaderEdifact != null)
-          {
-            ret.setExecutor (m_aLoaderEdifact.loadEdifact (m_aRepoChain, aVES.getEdifact ()));
-          }
+            ret.setExecutor (m_aLoaderEdifact.loadEdifact (m_aRepoChain, aVES.getEdifact (), aErrorList));
           else
-          {
-            LOGGER.error ("The VES contains an Edifact element, but no Edifact loader is present");
-          }
+            aErrorList.add (SingleError.builderError ()
+                                       .errorText ("The VES contains an Edifact element, but no Edifact loader is present")
+                                       .build ());
         }
         else
           throw new IllegalStateException ("Unsupported base syntax");
 
     if (!ret.hasExecutor ())
+    {
       return null;
+    }
 
     return ret;
-  }
-
-  @Nonnull
-  public static ValidationResultList loadVESAndApplyValidation (@Nonnull final IRepoStorageChain aRepoChain,
-                                                                @Nonnull final VESID aVESID,
-                                                                @Nonnull final IValidationSource aValidationSource)
-  {
-    ValueEnforcer.notNull (aRepoChain, "RepoChain");
-    ValueEnforcer.notNull (aVESID, "VESID");
-    ValueEnforcer.notNull (aValidationSource, "ValidationSource");
-
-    // load
-    final LoadedVES aLoadedVES = new VESLoader (aRepoChain).loadVES (aVESID);
-    if (aLoadedVES == null)
-      throw new IllegalStateException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
-
-    // validate
-    final ValidationResultList aValidationResultList = new ValidationResultList ();
-    aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
-    return aValidationResultList;
   }
 }
