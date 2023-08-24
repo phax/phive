@@ -18,6 +18,7 @@ import com.helger.phive.repo.IRepoStorageBase;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.RepoStorageReadableResource;
+import com.helger.phive.ves.engine.load.LoadedVES.EVESSyntax;
 import com.helger.phive.ves.engine.load.LoadedVES.Requirement;
 import com.helger.phive.ves.engine.load.LoadedVES.Status;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
@@ -45,6 +46,12 @@ public final class VESLoader
   static VESID wrapID (@Nonnull final VesResourceType aVRT)
   {
     return new VESID (aVRT.getGroupId (), aVRT.getArtifactId (), aVRT.getVersion ());
+  }
+
+  @Nonnull
+  static RepoStorageKey wrapKey (@Nonnull final VesResourceType aVRT)
+  {
+    return RepoStorageKey.of (wrapID (aVRT), "." + aVRT.getType ());
   }
 
   static void wrap (@Nullable final VesNamespaceListType aNamespaces, @Nonnull final MapBasedNamespaceContext aNSCtx)
@@ -158,12 +165,21 @@ public final class VESLoader
                                        @Nonnull final VesType aVES,
                                        @Nonnull final ErrorList aErrorList)
   {
+    ValueEnforcer.notNull (aStatus, "Status");
+    ValueEnforcer.notNull (aVES, "VES");
+    ValueEnforcer.notNull (aErrorList, "ErrorList");
+
+    final EVESSyntax eSyntax = aVES.getXsd () != null ? EVESSyntax.XSD : aVES.getSchematron () != null
+                                                                                                       ? EVESSyntax.SCHEMATRON
+                                                                                                       : EVESSyntax.EDIFACT;
+
     // Extract data
     final LoadedVES.Header aHeader = new LoadedVES.Header (new VESID (aVES.getGroupId (),
                                                                       aVES.getArtifactId (),
                                                                       aVES.getVersion ()),
                                                            aVES.getName (),
-                                                           aVES.getReleased ());
+                                                           aVES.getReleased (),
+                                                           eSyntax);
     final LoadedVES ret = new LoadedVES (aHeader, aStatus);
     if (aVES.getRequires () != null)
     {

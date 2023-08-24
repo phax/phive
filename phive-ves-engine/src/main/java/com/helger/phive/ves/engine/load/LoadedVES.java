@@ -35,19 +35,32 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
  */
 public final class LoadedVES
 {
+  public enum EVESSyntax
+  {
+    XSD,
+    SCHEMATRON,
+    EDIFACT
+  }
+
   public static final class Header
   {
     private final VESID m_aVESID;
     private final String m_sName;
     private final XMLOffsetDate m_aReleased;
+    private final EVESSyntax m_eVESSyntax;
 
-    Header (@Nonnull final VESID aVESID, @Nonnull @Nonempty final String sName, @Nullable final XMLOffsetDate aReleased)
+    Header (@Nonnull final VESID aVESID,
+            @Nonnull @Nonempty final String sName,
+            @Nullable final XMLOffsetDate aReleased,
+            @Nonnull final EVESSyntax eVESSyntax)
     {
       ValueEnforcer.notNull (aVESID, "VESID");
       ValueEnforcer.notEmpty (sName, "Name");
+      ValueEnforcer.notNull (eVESSyntax, "VESSyntax");
       m_aVESID = aVESID;
       m_sName = sName;
       m_aReleased = aReleased;
+      m_eVESSyntax = eVESSyntax;
     }
 
     @Nonnull
@@ -67,6 +80,12 @@ public final class LoadedVES
     public XMLOffsetDate getReleaseDate ()
     {
       return m_aReleased;
+    }
+
+    @Nonnull
+    public EVESSyntax getVESSyntax ()
+    {
+      return m_eVESSyntax;
     }
   }
 

@@ -10,7 +10,6 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.execute.IValidationExecutor;
-import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.repo.IRepoStorageBase;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
@@ -30,9 +29,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
                                                                     @Nonnull final VesSchematronType aSCH,
                                                                     @Nonnull final ErrorList aErrorList)
   {
-    final VESID aSCHVESID = VESLoader.wrapID (aSCH.getResource ());
-    final String sResourceType = aSCH.getResource ().getType ();
-    final RepoStorageKey aSCHKey = RepoStorageKey.of (aSCHVESID, "." + sResourceType);
+    final RepoStorageKey aSCHKey = VESLoader.wrapKey (aSCH.getResource ());
 
     // Read referenced Item
     final RepoStorageItem aSCHItem = aRepo.read (aSCHKey);
@@ -52,6 +49,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
     VESLoader.wrap (aSCH.getNamespaces (), aNSCtx);
 
     final ValidationExecutorSchematron aExecutorSCH;
+    final String sResourceType = aSCH.getResource ().getType ();
     switch (sResourceType)
     {
       case "sch":
