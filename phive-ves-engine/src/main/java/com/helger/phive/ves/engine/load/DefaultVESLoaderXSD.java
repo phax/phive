@@ -2,7 +2,6 @@ package com.helger.phive.ves.engine.load;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -14,24 +13,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.ls.LSResourceResolver;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
+import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
+import com.helger.commons.id.IHasID;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceInputStream;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.string.ToStringGenerator;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.IValidationExecutor;
-import com.helger.phive.api.executorset.VESID;
 import com.helger.phive.repo.IRepoStorageBase;
 import com.helger.phive.repo.RepoStorageItem;
 import com.helger.phive.repo.RepoStorageKey;
 import com.helger.phive.repo.RepoStorageReadableResource;
+import com.helger.phive.ves.v10.VesXsdCatalogItemPublicType;
+import com.helger.phive.ves.v10.VesXsdCatalogItemSystemType;
 import com.helger.phive.ves.v10.VesXsdType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.xsd.ValidationExecutorXSD;
@@ -42,14 +47,78 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
+  private enum ECatalogType
+  {
+    PUBLIC,
+    SYSTEM
+  }
+
+  private static final class CatalogEntry implements IHasID <String>
+  {
+    private final ECatalogType m_eType;
+    private final String m_sID;
+    private final RepoStorageKey m_aKey;
+
+    public CatalogEntry (@Nonnull final ECatalogType eType,
+                         @Nonnull @Nonempty final String sID,
+                         @Nonnull final RepoStorageKey aKey)
+    {
+      ValueEnforcer.notNull (eType, "Type");
+      ValueEnforcer.notEmpty (sID, "ID");
+      ValueEnforcer.notNull (aKey, "Key");
+      m_eType = eType;
+      m_sID = sID;
+      m_aKey = aKey;
+    }
+
+    @Nonnull
+    public ECatalogType getType ()
+    {
+      return m_eType;
+    }
+
+    @Nonnull
+    @Nonempty
+    public String getID ()
+    {
+      return m_sID;
+    }
+
+    @Nonnull
+    public RepoStorageKey getRepoStorageKey ()
+    {
+      return m_aKey;
+    }
+
+    @Override
+    public String toString ()
+    {
+      return new ToStringGenerator (null).append ("Type", m_eType)
+                                         .append ("ID", m_sID)
+                                         .append ("Key", m_aKey)
+                                         .getToString ();
+    }
+  }
+
+  @Nullable
+  private static final String _unifyPath (@Nullable final String x)
+  {
+    String ret = FilenameHelper.getPathUsingUnixSeparator (x);
+    if (ret != null)
+    {
+      // Make absolute to simply LS resource resolving
+      if (!ret.startsWith ("/"))
+        ret = "/" + ret;
+    }
+    return ret;
+  }
+
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aRepo,
                                                              @Nonnull final VesXsdType aXSD,
                                                              @Nonnull final ErrorList aErrorList)
   {
-    final VESID aXSDVESID = VESLoader.wrapID (aXSD.getResource ());
-    final String sResourceType = aXSD.getResource ().getType ();
-    final RepoStorageKey aXSDKey = RepoStorageKey.of (aXSDVESID, "." + sResourceType);
+    final RepoStorageKey aXSDKey = VESLoader.wrapKey (aXSD.getResource ());
 
     // Read referenced Item
     final RepoStorageItem aXSDItem = aRepo.read (aXSDKey);
@@ -62,9 +131,41 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       return null;
     }
 
+    // Read catalog items (if any)
+    final ICommonsOrderedMap <String, CatalogEntry> aCatalogEntries = new CommonsLinkedHashMap <> ();
+    if (aXSD.getCatalog () != null)
+    {
+      for (final Object aItem : aXSD.getCatalog ().getPublicOrSystem ())
+      {
+        final CatalogEntry aEntry;
+        if (aItem instanceof VesXsdCatalogItemPublicType)
+        {
+          final VesXsdCatalogItemPublicType aPublic = (VesXsdCatalogItemPublicType) aItem;
+          aEntry = new CatalogEntry (ECatalogType.PUBLIC,
+                                     aPublic.getUri (),
+                                     VESLoader.wrapKey (aPublic.getResource ()));
+        }
+        else
+        {
+          final VesXsdCatalogItemSystemType aSystem = (VesXsdCatalogItemSystemType) aItem;
+          aEntry = new CatalogEntry (ECatalogType.SYSTEM, aSystem.getId (), VESLoader.wrapKey (aSystem.getResource ()));
+        }
+        if (aCatalogEntries.containsKey (aEntry.getID ()))
+        {
+          aErrorList.add (SingleError.builderError ()
+                                     .errorFieldName (aEntry.getID ())
+                                     .errorText ("Another catalog item with the same identifier is already present")
+                                     .build ());
+          return null;
+        }
+        aCatalogEntries.put (aEntry.getID (), aEntry);
+      }
+    }
+
     final IReadableResource aRepoRes = new RepoStorageReadableResource (aXSDKey, aXSDItem);
 
     final ValidationExecutorXSD aExecutorXSD;
+    final String sResourceType = aXSD.getResource ().getType ();
     switch (sResourceType)
     {
       case "xsd":
@@ -85,18 +186,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
       case "zip":
       {
-        final Function <String, String> fctUnify = x -> {
-          String ret = FilenameHelper.getPathUsingUnixSeparator (x);
-          if (ret != null)
-          {
-            // Make absolute to simply LS resource resolving
-            if (!ret.startsWith ("/"))
-              ret = "/" + ret;
-          }
-          return ret;
-        };
-
-        final String sMain = fctUnify.apply (aXSD.getMain ());
+        final String sMain = _unifyPath (aXSD.getMain ());
         if (StringHelper.hasNoText (sMain))
         {
           aErrorList.add (SingleError.builderError ()
@@ -118,7 +208,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           ZipEntry aEntry = null;
           while ((aEntry = aZIS.getNextEntry ()) != null)
           {
-            final String sEntryName = fctUnify.apply (aEntry.getName ());
+            final String sEntryName = _unifyPath (aEntry.getName ());
             if (sMain.equals (sEntryName))
               bFoundMain = true;
 
@@ -139,6 +229,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         {
           aErrorList.add (SingleError.builderError ()
                                      .errorText ("XSD resource type '" + sResourceType + "' seems to be a broken ZIP")
+                                     .linkedException (ex)
                                      .build ());
           return null;
         }
