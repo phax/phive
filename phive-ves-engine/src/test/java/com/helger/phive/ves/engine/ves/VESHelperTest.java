@@ -2,12 +2,17 @@ package com.helger.phive.ves.engine.ves;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.error.list.ErrorList;
@@ -29,6 +34,7 @@ import com.helger.phive.ves.engine.load.LoadedVES;
 import com.helger.phive.ves.engine.load.LoadedVES.Status;
 import com.helger.phive.ves.engine.load.VESHelper;
 import com.helger.phive.ves.engine.load.VESLoader;
+import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.source.IValidationSourceXML;
@@ -36,6 +42,7 @@ import com.helger.phive.xml.source.ValidationSourceXML;
 
 public final class VESHelperTest
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (VESHelperTest.class);
   private static IRepoStorageBase s_aRepoStorage;
 
   private static void _addResource (@Nonnull final RepoStorageInMemory aInMemoryRepo,
@@ -72,6 +79,7 @@ public final class VESHelperTest
     final LoadedVES aLoadedVES = new VESLoader (aInMemoryRepo).setUseEagerRequirementLoading (false)
                                                               .convertToLoadedVES (Status.createUndefined (),
                                                                                    aVES,
+                                                                                   new VESLoaderStatus (),
                                                                                    aErrorList);
     assertNotNull (aLoadedVES);
     assertEquals (aErrorList.getAllFailures ().toString (), 0, aErrorList.size ());
@@ -240,7 +248,8 @@ public final class VESHelperTest
     final ErrorList aErrorList = new ErrorList ();
     final LoadedVES aLoadedVES = new VESLoader (s_aRepoStorage).setUseEagerRequirementLoading (true)
                                                                .loadVESFromRepo (aVESID, aErrorList);
-    if (aLoadedVES == null)
-      throw new IllegalStateException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
+    assertNull (aLoadedVES);
+
+    aErrorList.getAllErrors ().forEach (x -> LOGGER.error (x.getAsString (Locale.US)));
   }
 }
