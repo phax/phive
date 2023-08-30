@@ -42,6 +42,15 @@ import com.helger.phive.ves.v10.VesStatusType;
 import com.helger.phive.ves.v10.VesType;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
+/**
+ * This class loads VES data into {@link LoadedVES} objects. It supports dynamic
+ * rule creation for each syntax, using the {@link IVESLoaderXSD},
+ * {@link IVESLoaderSchematron} and {@link IVESLoaderEdifact} classes. By
+ * default only XSD and Schematron are support. Edifact needs to be implemented
+ * manually.
+ *
+ * @author Philip Helger
+ */
 @ThreadSafe
 public final class VESLoader
 {
@@ -194,7 +203,7 @@ public final class VESLoader
     private final ICommonsSet <VESID> m_aLoaded = new CommonsLinkedHashSet <> ();
 
     @Nonnull
-    public ESuccess addLoadedVES (@Nonnull final VESID aVESID)
+    public ESuccess addVESID (@Nonnull final VESID aVESID)
     {
       return ESuccess.valueOf (m_aRWLock.writeLockedBoolean ( () -> m_aLoaded.add (aVESID)));
     }
@@ -357,7 +366,8 @@ public final class VESLoader
 
     LOGGER.info ("Trying to read VESID '" + aVESID.getAsSingleID () + "' directly");
 
-    if (aLoaderStatus.addLoadedVES (aVESID).isFailure ())
+    // Ensure the VESID is not yet in the loader chain
+    if (aLoaderStatus.addVESID (aVESID).isFailure ())
     {
       aErrorList.add (SingleError.builderError ()
                                  .errorText ("The VESID '" +
@@ -389,7 +399,8 @@ public final class VESLoader
 
     LOGGER.info ("Trying to read VESID '" + aVESID.getAsSingleID () + "' from repository");
 
-    if (aLoaderStatus.addLoadedVES (aVESID).isFailure ())
+    // Ensure the VESID is not yet in the loader chain
+    if (aLoaderStatus.addVESID (aVESID).isFailure ())
     {
       aErrorList.add (SingleError.builderError ()
                                  .errorText ("The VESID '" +
@@ -423,7 +434,8 @@ public final class VESLoader
           return null;
         }
 
-        aStatus = new LoadedVES.Status (aVESStatus.getValidFrom (),
+        aStatus = new LoadedVES.Status (aVESStatus.getStatusLastModified (),
+                                        aVESStatus.getValidFrom (),
                                         aVESStatus.getValidTo (),
                                         ETriState.valueOf (aVESStatus.isDeprecated ()));
       }

@@ -96,18 +96,28 @@ public final class LoadedVES
    */
   public static final class Status
   {
+    private final XMLOffsetDateTime m_aStatusLastMod;
     private final XMLOffsetDateTime m_aValidFrom;
     private final XMLOffsetDateTime m_aValidTo;
     private final ETriState m_eDeprecated;
 
-    Status (@Nullable final XMLOffsetDateTime aValidFrom,
+    Status (@Nonnull final XMLOffsetDateTime aStatusLastMod,
+            @Nullable final XMLOffsetDateTime aValidFrom,
             @Nullable final XMLOffsetDateTime aValidTo,
             @Nonnull final ETriState eDeprecated)
     {
+      ValueEnforcer.notNull (aStatusLastMod, "StatusLastMod");
       ValueEnforcer.notNull (eDeprecated, "Deprecated");
+      m_aStatusLastMod = aStatusLastMod;
       m_aValidFrom = aValidFrom;
       m_aValidTo = aValidTo;
       m_eDeprecated = eDeprecated;
+    }
+
+    @Nonnull
+    public XMLOffsetDateTime getStatusLastModification ()
+    {
+      return m_aStatusLastMod;
     }
 
     public boolean isDTValidNow ()
@@ -151,7 +161,8 @@ public final class LoadedVES
     @Nonnull
     public static Status createUndefined ()
     {
-      return new Status (null, null, ETriState.UNDEFINED);
+      // Create an undefined status per now
+      return new Status (PDTFactory.getCurrentXMLOffsetDateTime (), null, null, ETriState.UNDEFINED);
     }
   }
 
@@ -247,7 +258,8 @@ public final class LoadedVES
     return m_aStatus;
   }
 
-  void setLazyRequires (@Nonnull final Requirement aRequirement, @Nonnull final IVESSpecificDeferredLoader aDeferredLoader)
+  void setLazyRequires (@Nonnull final Requirement aRequirement,
+                        @Nonnull final IVESSpecificDeferredLoader aDeferredLoader)
   {
     ValueEnforcer.notNull (aRequirement, "Requirement");
     ValueEnforcer.notNull (aDeferredLoader, "DeferredLoader");

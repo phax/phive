@@ -8,6 +8,12 @@ import com.helger.phive.repo.IRepoStorageBase;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 
+/**
+ * This interface is used by {@link VESLoader} create an
+ * {@link IValidationExecutor} from the VES Schematron requirements.
+ *
+ * @author Philip Helger
+ */
 public interface IVESLoaderSchematron
 {
   @Nonnull

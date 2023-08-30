@@ -186,8 +186,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
       case "zip":
       {
-        final String sMain = _unifyPath (aXSD.getMain ());
-        if (StringHelper.hasNoText (sMain))
+        final String sMainUnified = _unifyPath (aXSD.getMain ());
+        if (StringHelper.hasNoText (sMainUnified))
         {
           aErrorList.add (SingleError.builderError ()
                                      .errorText ("XSD resource type '" +
@@ -208,8 +208,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           ZipEntry aEntry = null;
           while ((aEntry = aZIS.getNextEntry ()) != null)
           {
-            final String sEntryName = _unifyPath (aEntry.getName ());
-            if (sMain.equals (sEntryName))
+            final String sEntryNameUnified = _unifyPath (aEntry.getName ());
+            if (sMainUnified.equals (sEntryNameUnified))
               bFoundMain = true;
 
             try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ())
@@ -221,7 +221,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 aBAOS.write (aBuffer, 0, nLen);
                 nUnzippedLed += nLen;
               }
-              aZIPContent.put (sEntryName, aBAOS);
+              aZIPContent.put (sEntryNameUnified, aBAOS);
             }
           }
         }
@@ -240,7 +240,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                                      .errorText ("XSD resource type '" +
                                                  sResourceType +
                                                  "' does not contain the main element '" +
-                                                 sMain +
+                                                 sMainUnified +
                                                  "'")
                                      .build ());
           return null;
@@ -312,9 +312,12 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           }
         };
 
-        final Schema aSchema = new XMLSchemaCache (aResResolver).getSchema (new ReadableResourceInputStream (sMain,
-                                                                                                             aZIPContent.get (sMain)
-                                                                                                                        .getAsInputStream ()));
+        // Now create the parsed XML Schema using a ResourceResolver and an
+        // InputStream based on the Main file of the ZIP
+        final ReadableResourceInputStream aRes = new ReadableResourceInputStream (sMainUnified,
+                                                                                  aZIPContent.get (sMainUnified)
+                                                                                             .getAsInputStream ());
+        final Schema aSchema = new XMLSchemaCache (aResResolver).getSchema (aRes);
         if (aSchema == null)
           throw new IllegalStateException ("Failed to resolve Schema");
 

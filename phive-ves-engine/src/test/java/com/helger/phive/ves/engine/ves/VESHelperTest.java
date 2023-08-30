@@ -241,14 +241,36 @@ public final class VESHelperTest
   }
 
   @Test
-  public void test3RecursiveXSD ()
+  public void test3RecursiveXSDEager ()
   {
     final VESID aVESID = VESID.parseID ("com.helger.phive.test3:xsd1:1.0");
 
     final ErrorList aErrorList = new ErrorList ();
     final LoadedVES aLoadedVES = new VESLoader (s_aRepoStorage).setUseEagerRequirementLoading (true)
                                                                .loadVESFromRepo (aVESID, aErrorList);
+    // Loading of required fails immediately
     assertNull (aLoadedVES);
+
+    aErrorList.getAllErrors ().forEach (x -> LOGGER.error (x.getAsString (Locale.US)));
+  }
+
+  @Test
+  public void test3RecursiveXSDLazy ()
+  {
+    final VESID aVESID = VESID.parseID ("com.helger.phive.test3:xsd1:1.0");
+
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoadedVES = new VESLoader (s_aRepoStorage).setUseEagerRequirementLoading (false)
+                                                               .loadVESFromRepo (aVESID, aErrorList);
+    // Requirements are not yet loaded - so Loading so OK so far
+    assertNotNull (aLoadedVES);
+
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
+    assertNotNull (aValidationSource.getNode ());
+
+    final ValidationResultList aValidationResultList = new ValidationResultList ();
+    // Should throw an exception
+    aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.US);
 
     aErrorList.getAllErrors ().forEach (x -> LOGGER.error (x.getAsString (Locale.US)));
   }

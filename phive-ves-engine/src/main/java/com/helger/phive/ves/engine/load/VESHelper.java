@@ -17,6 +17,11 @@ import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.repo.IRepoStorageBase;
 
+/**
+ * VES helper class
+ *
+ * @author Philip Helger
+ */
 @Immutable
 public final class VESHelper
 {
@@ -25,6 +30,23 @@ public final class VESHelper
   private VESHelper ()
   {}
 
+  /**
+   * Load the validation rules from an external repository, identified by a
+   * VESID and apply the validation rules onto the provided data to be
+   * validated. All errors occurring are stored in the provided error list.
+   *
+   * @param aRepo
+   *        Repository to load from
+   * @param aVESID
+   *        The VESID of the artefacts to load
+   * @param aValidationSource
+   *        The data to be validated
+   * @param aErrorList
+   *        The error list to be filled, containing the loading errors.
+   * @return The validation result list.
+   * @throws IllegalStateException
+   *         If anything goes wrong
+   */
   @Nonnull
   public static ValidationResultList loadVESAndApplyValidation (@Nonnull final IRepoStorageBase aRepo,
                                                                 @Nonnull final VESID aVESID,
@@ -47,12 +69,12 @@ public final class VESHelper
 
     // validate
     final ValidationResultList aValidationResultList = new ValidationResultList ();
-    final Duration d = StopWatch.runMeasured ( () -> {
+    final Duration aDuration = StopWatch.runMeasured ( () -> {
       aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
     });
 
-    if (d.compareTo (Duration.ofMillis (500)) > 0)
-      LOGGER.warn ("Finished validation of '" + aVESID.getAsSingleID () + "' after " + d);
+    if (aDuration.compareTo (Duration.ofMillis (500)) > 0)
+      LOGGER.warn ("Finished validation of '" + aVESID.getAsSingleID () + "' after " + aDuration);
 
     return aValidationResultList;
   }
