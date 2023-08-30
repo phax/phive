@@ -96,7 +96,7 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
   public final IMPLTYPE setVerifyHash (final boolean b)
   {
     m_bVerifyHash = b;
-    LOGGER.info ("RepoStorage " + m_aType.getID () + ": hash verification is now: " + (b ? "enabled" : "disabled"));
+    LOGGER.info ("RepoStorage[" + m_aType.getID () + "]: hash verification is now: " + (b ? "enabled" : "disabled"));
     return thisAsT ();
   }
 
@@ -184,7 +184,7 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
     }
     catch (final IOException ex)
     {
-      LOGGER.error ("Failed to read item '" + aKey.getPath () + "'", ex);
+      LOGGER.error ("Failed to read RepoStorage[" + m_aType.getID () + "] item '" + aKey.getPath () + "'", ex);
     }
 
     return null;
@@ -206,11 +206,17 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
 
     if (!canWrite ())
     {
-      LOGGER.error ("Trying to write on a RepoStorage with write disabled");
+      LOGGER.error ("Trying to write on a RepoStorage[" + m_aType.getID () + "] with write disabled");
       throw new UnsupportedOperationException ("write is not enabled");
     }
 
-    LOGGER.info ("Writing item '" + aKey.getPath () + "' with " + aItem.data ().size () + " bytes to RepoStorage");
+    LOGGER.info ("Writing item '" +
+                 aKey.getPath () +
+                 "' with " +
+                 aItem.data ().size () +
+                 " bytes to RepoStorage[" +
+                 m_aType.getID () +
+                 "]");
 
     // Create the message digest up front
     final byte [] aDigest = MessageDigestValue.create (aItem.data ().bytes (), m_eMDAlgo).bytes ();
@@ -241,7 +247,7 @@ public abstract class AbstractRepoStorage <IMPLTYPE extends AbstractRepoStorage 
 
     if (!canDelete ())
     {
-      LOGGER.error ("Trying to delete on a RepoStorage with delete disabled");
+      LOGGER.error ("Trying to delete on a RepoStorage[" + m_aType.getID () + "] with delete disabled");
       throw new UnsupportedOperationException ("delete is not enabled");
     }
 
