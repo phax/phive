@@ -131,13 +131,14 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v9.0.0 - work in progress
+* v9.0.0-beta1 - 2023-08-30 [don't use in production]
     * Removed `VOM*` in favour of `VES*`
     * Added new submodule "phive-repo" to be able to retrieve artefacts from remote storage locations
     * Added new submodule "phive-ves-model" that contain the VES data structures
     * Added new submodule "phive-ves-engine" that contain the VES execution engine
     * Renamed the submodule "phive-engine" to "phive-xml" to indicate, that this is the part dealing with XML validation only. This also lead to new package names.
     * Renamed the submodule "phive-json" to "phive-result" to indicate, that this is deals with validation results in general. The JSON stuff got its own package in there.
+    * Initial version for declaration VES rules for XSD and Schematron
 * v8.0.1 - 2023-03-17
     * Added support for resolving the pseudo version `latest` in `ValidationExecutorSetRegistry`. See [issue #16](https://github.com/phax/phive/issues/16) - thx @adammscisz
 * v8.0.0 - 2023-02-19
