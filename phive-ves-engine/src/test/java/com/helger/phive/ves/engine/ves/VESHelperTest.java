@@ -69,7 +69,8 @@ public final class VESHelperTest
     assertNotNull (aVES);
 
     // Convert to loaded VES - checking that it is okay
-    final LoadedVES aLoadedVES = new VESLoader (aInMemoryRepo).convertToLoadedVES (Status.createUndefined (),
+    final LoadedVES aLoadedVES = new VESLoader (aInMemoryRepo).setUseEagerRequirementLoading (false)
+                                                              .convertToLoadedVES (Status.createUndefined (),
                                                                                    aVES,
                                                                                    aErrorList);
     assertNotNull (aLoadedVES);
@@ -118,6 +119,15 @@ public final class VESHelperTest
                     new VESID ("com.helger.phive.test2", "UBL-xsdrt", "2.1"),
                     new ClassPathResource ("ves/test2/UBL-2.1-xsdrt.zip"));
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test2/xsd.ves"));
+    }
+
+    // test3
+    {
+      _addResource (aInMemoryRepo,
+                    new VESID ("com.helger.phive.test3", "mini", "1.0"),
+                    new ClassPathResource ("ves/test3/mini.xsd"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd1.ves"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd2.ves"));
     }
 
     // Create RepoStorageChain with InMemoryRepo and return it
@@ -220,5 +230,17 @@ public final class VESHelperTest
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
     assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
+  }
+
+  @Test
+  public void test3RecursiveXSD ()
+  {
+    final VESID aVESID = VESID.parseID ("com.helger.phive.test3:xsd1:1.0");
+
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoadedVES = new VESLoader (s_aRepoStorage).setUseEagerRequirementLoading (true)
+                                                               .loadVESFromRepo (aVESID, aErrorList);
+    if (aLoadedVES == null)
+      throw new IllegalStateException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
   }
 }

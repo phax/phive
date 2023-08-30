@@ -114,6 +114,7 @@ public final class VESLoader
   private IVESLoaderXSD m_aLoaderXSD = new DefaultVESLoaderXSD ();
   private IVESLoaderSchematron m_aLoaderSchematron = new DefaultVESLoaderSchematron ();
   private IVESLoaderEdifact m_aLoaderEdifact = null;
+  private boolean m_bUseEagerRequirementLoading = false;
 
   public VESLoader (@Nonnull final IRepoStorageBase aRepo)
   {
@@ -160,6 +161,18 @@ public final class VESLoader
     return this;
   }
 
+  public boolean isUseEagerRequirementLoading ()
+  {
+    return m_bUseEagerRequirementLoading;
+  }
+
+  @Nonnull
+  public VESLoader setUseEagerRequirementLoading (final boolean b)
+  {
+    m_bUseEagerRequirementLoading = b;
+    return this;
+  }
+
   @Nullable
   public LoadedVES convertToLoadedVES (@Nonnull final LoadedVES.Status aStatus,
                                        @Nonnull final VesType aVES,
@@ -190,17 +203,34 @@ public final class VESLoader
                                                                   _wrap (aReq.getNamespaces ()),
                                                                   _wrap (aReq.getOutput ()),
                                                                   aReq.isStopOnError ());
-      ret.setRequires (aRequirement, aLocalErrorList -> {
-        // Use this deferred loader, to ensure the same surrounding VESLoader
-        // instance is used
+      if (m_bUseEagerRequirementLoading)
+      {
+        // Eager loading
+
         // Recursive load required artefact; required to have this in scope
-        final LoadedVES aLoadedRequirement = loadVESFromRepo (aRequirement.getRequiredVESID (), aLocalErrorList);
+        final LoadedVES aLoadedRequirement = loadVESFromRepo (aRequirement.getRequiredVESID (), aErrorList);
         if (aLoadedRequirement == null)
           throw new IllegalStateException ("Failed to load required VESID '" +
                                            aRequirement.getRequiredVESID ().getAsSingleID () +
                                            "'");
-        return aLoadedRequirement;
-      });
+
+        ret.setEagerRequires (aRequirement, aLoadedRequirement);
+      }
+      else
+      {
+        // Lazy loading
+        ret.setLazyRequires (aRequirement, aLocalErrorList -> {
+          // Use this deferred loader, to ensure the same surrounding VESLoader
+          // instance is used
+          // Recursive load required artefact; required to have this in scope
+          final LoadedVES aLoadedRequirement = loadVESFromRepo (aRequirement.getRequiredVESID (), aLocalErrorList);
+          if (aLoadedRequirement == null)
+            throw new IllegalStateException ("Failed to load required VESID '" +
+                                             aRequirement.getRequiredVESID ().getAsSingleID () +
+                                             "'");
+          return aLoadedRequirement;
+        });
+      }
     }
     if (aVES.getXsd () != null)
     {

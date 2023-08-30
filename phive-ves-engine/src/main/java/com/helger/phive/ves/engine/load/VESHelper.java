@@ -37,7 +37,8 @@ public final class VESHelper
     ValueEnforcer.notNull (aErrorList, "ErrorList");
 
     // load
-    final LoadedVES aLoadedVES = new VESLoader (aRepo).loadVESFromRepo (aVESID, aErrorList);
+    final LoadedVES aLoadedVES = new VESLoader (aRepo).setUseEagerRequirementLoading (true)
+                                                      .loadVESFromRepo (aVESID, aErrorList);
     if (aLoadedVES == null)
       throw new IllegalStateException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
 

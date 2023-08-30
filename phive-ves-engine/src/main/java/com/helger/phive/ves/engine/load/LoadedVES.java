@@ -247,14 +247,26 @@ public final class LoadedVES
     return m_aStatus;
   }
 
-  void setRequires (@Nonnull final Requirement aRequirement, @Nonnull final IVESSpecificDeferredLoader aDeferredLoader)
+  void setLazyRequires (@Nonnull final Requirement aRequirement, @Nonnull final IVESSpecificDeferredLoader aDeferredLoader)
   {
     ValueEnforcer.notNull (aRequirement, "Requirement");
     ValueEnforcer.notNull (aDeferredLoader, "DeferredLoader");
     if (m_aRequires != null)
       throw new IllegalStateException ("You can only set on Requires element");
     m_aRequires = aRequirement;
+    m_aLoadedRequires = null;
     m_aRequiresLoader = aDeferredLoader;
+  }
+
+  void setEagerRequires (@Nonnull final Requirement aRequirement, @Nonnull final LoadedVES aLoadedVES)
+  {
+    ValueEnforcer.notNull (aRequirement, "Requirement");
+    ValueEnforcer.notNull (aLoadedVES, "LoadedVES");
+    if (m_aRequires != null)
+      throw new IllegalStateException ("You can only set on Requires element");
+    m_aRequires = aRequirement;
+    m_aLoadedRequires = aLoadedVES;
+    m_aRequiresLoader = null;
   }
 
   public boolean hasExecutor ()
