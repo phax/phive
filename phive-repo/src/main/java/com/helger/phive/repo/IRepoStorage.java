@@ -29,7 +29,7 @@ import com.helger.security.messagedigest.EMessageDigestAlgorithm;
  *
  * @author Philip Helger
  */
-public interface IRepoStorage extends IHasID <String>
+public interface IRepoStorage extends IHasID <String>, IRepoStorageBase
 {
   EMessageDigestAlgorithm DEFAULT_MD_ALGORITHM = EMessageDigestAlgorithm.SHA_256;
 

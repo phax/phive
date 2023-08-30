@@ -18,10 +18,26 @@
 
 -->
 <ves xmlns="urn:com:helger:phive:ves:v1.0">
-  <id>
-    <groupId>un.unece.uncefact</groupId>
-    <artifactId>CrossIndustryInvoice</artifactId>
-    <version>D16B</version>
-  </id>
-  <name>CII CrossIndustryInvoice D16B</name>
+    <groupId>com.helger.phive.test</groupId>
+    <artifactId>test_sch</artifactId>
+    <version>2.0</version>
+
+    <name>phive SCH test with requires</name>
+    
+    <requires stopOnError="true">
+      <groupId>com.helger.phive.test</groupId>
+      <artifactId>test_xsd</artifactId>
+      <version>1.0</version>
+    </requires>
+
+    <schematron>
+        <resource>
+            <groupId>com.helger.phive.test</groupId>
+            <artifactId>mini-sch1</artifactId>
+            <version>2023.8</version>
+            <type>sch</type>
+        </resource>
+
+        <engine>iso-schematron</engine>
+    </schematron>
 </ves>

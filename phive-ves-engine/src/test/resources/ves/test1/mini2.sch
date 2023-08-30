@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright (C) 2014-2023 Philip Helger (www.helger.com)
@@ -17,14 +17,10 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:ves:v1.0">
-  <id>
-    <groupId>un.unece.uncefact</groupId>
-    <artifactId>CrossIndustryInvoice</artifactId>
-    <version>D16B</version>
-  </id>
-  <name>CII CrossIndustryInvoice D16B</name>
-  
-  <validation>
-  </validation>
-</ves>
+<schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2">
+    <pattern>
+        <rule context="a">
+            <assert test="contains (text(), 'Hallo')">Text ohne Hallo geht gar nicht</assert>
+        </rule>
+    </pattern>
+</schema>

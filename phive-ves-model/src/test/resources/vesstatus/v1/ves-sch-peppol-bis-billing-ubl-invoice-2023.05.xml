@@ -17,21 +17,14 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:ves:v1.0">
-  <groupId>com.helger.edifact</groupId>
-  <artifactId>test-desadv-d01b</artifactId>
-  <version>1.4.0</version>
+<status xmlns="urn:com:helger:phive:ves:v1.0">
+  <groupId>org.peppol.billing</groupId>
+  <artifactId>ubl-invoice</artifactId>
+  <version>2023.5</version>
   
-  <name>Test binding for DESADV D01B</name>
-  
-  <edifact>
-    <!-- No resource necessary -->
-    <directory>D01B</directory>
-    <message>DESADV</message>
-    <subset>EANCOM</subset>
-    <subset>CUSTOMER</subset>
-    <input>
-      <option name="warnOnUNTMismatch" value="true" />
-    </input>
-  </edifact>
-</ves>
+  <!-- Last update of this status file -->
+  <statusLastModified>2023-08-30T17:10:05+02:00</statusLastModified>
+
+  <!-- Brussels time -->
+  <validFrom>2023-08-07T00:00:00+02:00</validFrom>
+</status>

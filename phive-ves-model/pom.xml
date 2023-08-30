@@ -122,8 +122,10 @@
             <arg>-Xph-annotate</arg>
             <arg>-Xph-fields-private</arg>
             <arg>-Xph-code-quality</arg>
+            <!--
             <arg>-Xph-implements</arg>
             <arg>java.io.Serializable</arg>
+            -->
             <arg>-Xph-equalshashcode</arg>
             <arg>-Xph-tostring</arg>
             <arg>-Xph-list-extension</arg>

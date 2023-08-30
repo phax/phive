@@ -18,25 +18,24 @@
 
 -->
 <ves xmlns="urn:com:helger:phive:ves:v1.0">
-  <id>
-    <groupId>com.helger.edifact</groupId>
-    <artifactId>test-desadv-d01b</artifactId>
-    <version>1.4.0</version>
-  </id>
-  <name>Test binding for DESADV D01B</name>
-  
-  <validation>
-    <edifact>
-      <directory>d01b</directory>
-      <message>DESADV</message>
-    </edifact>
+  <groupId>com.helger.phive.test3</groupId>
+  <artifactId>xsd1</artifactId>
+  <version>1.0</version>
 
-    <schematron>
-      <resource>
-        <groupId>com.helger</groupId>
-        <artifactId>test-special</artifactId>
-        <version>1.5.678</version>
-      </resource>
-    </schematron>
-  </validation>
+  <name>bla</name>
+
+  <requires stopOnError="false">
+    <groupId>com.helger.phive.test3</groupId>
+    <artifactId>xsd2</artifactId>
+    <version>1.0</version>
+  </requires>
+
+  <xsd>
+    <resource>
+      <groupId>com.helger.phive.test3</groupId>
+      <artifactId>mini</artifactId>
+      <version>1.0</version>
+      <type>xsd</type>
+    </resource>
+  </xsd>
 </ves>

@@ -38,7 +38,7 @@ import com.helger.commons.collection.impl.ICommonsList;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class RepoStorageChain implements IRepoStorageChain
+public class RepoStorageChain implements IRepoStorageBase
 {
   public static final boolean DEFAULT_CACHE_REMOTE_CONTENT = true;
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageChain.class);
@@ -107,27 +107,30 @@ public class RepoStorageChain implements IRepoStorageChain
   {
     ValueEnforcer.notNull (aKey, "Key");
 
-    LOGGER.info ("Checking for existence of '" +
-                 aKey.getPath () +
-                 "' in " +
-                 m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Checking for existence of '" +
+                    aKey.getPath () +
+                    "' in " +
+                    m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
 
     for (final IRepoStorage aStorage : m_aStorages)
     {
       // Try to read item
       if (aStorage.exists (aKey))
       {
-        LOGGER.debug ("Found '" +
-                      aKey.getPath () +
-                      "' in storage " +
-                      aStorage.getID () +
-                      " of type " +
-                      aStorage.getRepoType ().getID ());
+        if (LOGGER.isDebugEnabled ())
+          LOGGER.debug ("Found '" +
+                        aKey.getPath () +
+                        "' in storage " +
+                        aStorage.getID () +
+                        " of type " +
+                        aStorage.getRepoType ().getID ());
         return true;
       }
     }
 
-    LOGGER.debug ("Failed to find '" + aKey.getPath () + "' in any of the contained storages");
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Failed to find '" + aKey.getPath () + "' in any of the contained storages");
     return false;
   }
 
@@ -136,10 +139,11 @@ public class RepoStorageChain implements IRepoStorageChain
   {
     ValueEnforcer.notNull (aKey, "Key");
 
-    LOGGER.info ("Trying to read '" +
-                 aKey.getPath () +
-                 "' from " +
-                 m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Trying to read '" +
+                    aKey.getPath () +
+                    "' from " +
+                    m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
 
     for (final IRepoStorage aStorage : m_aStorages)
     {
@@ -151,12 +155,16 @@ public class RepoStorageChain implements IRepoStorageChain
                             aKey.getPath () +
                             "' from " +
                             aStorage.getRepoType ().getID () +
-                            " with hash state " +
-                            aItem.getHashState ().getDisplayName ();
+                            " with hash state '" +
+                            aItem.getHashState ().getDisplayName () +
+                            "'";
         if (aItem.getHashState () != ERepoHashState.VERIFIED_MATCHING)
           LOGGER.warn (sMsg);
         else
-          LOGGER.info (sMsg);
+        {
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug (sMsg);
+        }
 
         if (aStorage.getRepoType ().isRemote () && m_bCacheRemoteContent)
         {
@@ -164,17 +172,25 @@ public class RepoStorageChain implements IRepoStorageChain
           if (m_aWritableStorages.isNotEmpty ())
           {
             // Store locally
-            LOGGER.info ("Storing '" +
-                         aKey.getPath () +
-                         "' to " +
-                         m_aWritableStorages.getAllMapped (x -> x.getRepoType ().getID ()));
+            if (LOGGER.isDebugEnabled ())
+              LOGGER.debug ("Storing '" +
+                            aKey.getPath () +
+                            "' to " +
+                            m_aWritableStorages.getAllMapped (x -> x.getRepoType ().getID ()));
             for (final IRepoStorage aWritableStorage : m_aWritableStorages)
               aWritableStorage.write (aKey, aItem);
           }
         }
         return aItem;
       }
+
+      // else try reading from next repo
     }
+
+    // Not found in any storage
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Failed to read '" + aKey.getPath () + "' from any of the contained storages");
+
     return null;
   }
 

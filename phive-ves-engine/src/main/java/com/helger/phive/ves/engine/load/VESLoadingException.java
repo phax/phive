@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Philip Helger & ecosio
+ * Copyright (C) 2014-2023 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,35 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.repo;
+package com.helger.phive.ves.engine.load;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.name.IHasDisplayName;
-
 /**
- * This enum contains the hash comparison result when reading from the repo
+ * Specific exception when VES loading fails (e.g. on lazy requirement
+ * resolution)
  *
  * @author Philip Helger
  */
-public enum ERepoHashState implements IHasDisplayName
+public class VESLoadingException extends RuntimeException
 {
-  VERIFIED_MATCHING ("verified and matching"),
-  VERIFIED_NON_MATCHING ("verified and NOT matching"),
-  NOT_VERIFIED ("not verified");
-
-  private final String m_sDisplayName;
-
-  ERepoHashState (@Nonnull @Nonempty final String sDisplayName)
+  public VESLoadingException (@Nonnull final String sMsg)
   {
-    m_sDisplayName = sDisplayName;
+    super (sMsg);
   }
 
-  @Nonnull
-  @Nonempty
-  public String getDisplayName ()
+  public VESLoadingException (@Nonnull final String sMsg, @Nonnull final Exception aCause)
   {
-    return m_sDisplayName;
+    super (sMsg, aCause);
   }
 }

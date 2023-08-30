@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Philip Helger & ecosio
+ * Copyright (C) 2014-2023 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,35 +14,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.repo;
+package com.helger.phive.xml.schematron;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.id.IHasID;
+import com.helger.commons.lang.EnumHelper;
 
-/**
- * This enum contains the hash comparison result when reading from the repo
- *
- * @author Philip Helger
- */
-public enum ERepoHashState implements IHasDisplayName
+public enum ESchematronEngine implements IHasID <String>
 {
-  VERIFIED_MATCHING ("verified and matching"),
-  VERIFIED_NON_MATCHING ("verified and NOT matching"),
-  NOT_VERIFIED ("not verified");
+  PURE ("pure"),
+  ISO_SCHEMATRON ("iso-schematron"),
+  SCHXSLT ("schxslt");
 
-  private final String m_sDisplayName;
+  private final String m_sID;
 
-  ERepoHashState (@Nonnull @Nonempty final String sDisplayName)
+  ESchematronEngine (@Nonnull @Nonempty final String sID)
   {
-    m_sDisplayName = sDisplayName;
+    m_sID = sID;
   }
 
   @Nonnull
   @Nonempty
-  public String getDisplayName ()
+  public String getID ()
   {
-    return m_sDisplayName;
+    return m_sID;
+  }
+
+  @Nullable
+  public static ESchematronEngine getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (ESchematronEngine.class, sID);
   }
 }

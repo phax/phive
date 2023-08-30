@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright (C) 2014-2023 Philip Helger (www.helger.com)
@@ -17,21 +17,10 @@
     limitations under the License.
 
 -->
-<ves xmlns="urn:com:helger:phive:ves:v1.0-new">
-  <groupId>com.helger.phive.test</groupId>
-  <artifactId>test</artifactId>
-  <version>1.0</version>
-  
-  <name>phive XSD test 1.0</name>
-  
-  <xsd>
-    <resource>
-      <groupId>com.helger.phive.test</groupId>
-      <artifactId>mini</artifactId>
-      <version>1.0</version>
-    </resource>
-    <namespaces>
-      <namespace prefix="foo" uri="urn:a" />
-    </namespaces>
-  </xsd>
-</ves>
+<schema xmlns="http://purl.oclc.org/dsdl/schematron" queryBinding="xslt2">
+    <pattern>
+        <rule context="root">
+            <assert test="count(a) &gt; 0">Ich kaufe ein 'a'</assert>
+        </rule>
+    </pattern>
+</schema>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Philip Helger & ecosio
+ * Copyright (C) 2014-2023 Philip Helger (www.helger.com)
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,35 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.repo;
+package com.helger.phive.ves.engine.load;
 
 import javax.annotation.Nonnull;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.name.IHasDisplayName;
+import com.helger.commons.error.list.ErrorList;
 
 /**
- * This enum contains the hash comparison result when reading from the repo
+ * Internal helper interface
  *
  * @author Philip Helger
  */
-public enum ERepoHashState implements IHasDisplayName
+@FunctionalInterface
+interface IVESSpecificDeferredLoader
 {
-  VERIFIED_MATCHING ("verified and matching"),
-  VERIFIED_NON_MATCHING ("verified and NOT matching"),
-  NOT_VERIFIED ("not verified");
-
-  private final String m_sDisplayName;
-
-  ERepoHashState (@Nonnull @Nonempty final String sDisplayName)
-  {
-    m_sDisplayName = sDisplayName;
-  }
-
+  /**
+   * Load a VESID asynchronously
+   *
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @return The loaded VES object. Never <code>null</code>.
+   */
   @Nonnull
-  @Nonempty
-  public String getDisplayName ()
-  {
-    return m_sDisplayName;
-  }
+  LoadedVES deferredLoad (@Nonnull ErrorList aErrorList);
 }

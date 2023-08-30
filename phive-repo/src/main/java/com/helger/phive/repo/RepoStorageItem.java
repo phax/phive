@@ -16,15 +16,21 @@
  */
 package com.helger.phive.repo;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.function.Function;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.io.ByteArrayWrapper;
+import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.type.ObjectType;
 
@@ -46,6 +52,8 @@ public final class RepoStorageItem
 
   private RepoStorageItem (@Nonnull final ByteArrayWrapper aData, @Nonnull final ERepoHashState eHashState)
   {
+    ValueEnforcer.notNull (aData, "Data");
+    ValueEnforcer.notNull (eHashState, "HashState");
     m_aData = aData;
     m_eHashState = eHashState;
   }
@@ -55,6 +63,16 @@ public final class RepoStorageItem
   public ByteArrayWrapper data ()
   {
     return m_aData;
+  }
+
+  @Nullable
+  public <T> T withDataInputStream (@Nonnull final Function <InputStream, T> aFunc) throws IOException
+  {
+    ValueEnforcer.notNull (aFunc, "Func");
+    try (final InputStream aIS = m_aData.getBufferedInputStream ())
+    {
+      return aFunc.apply (aIS);
+    }
   }
 
   @Nonnull
@@ -78,7 +96,7 @@ public final class RepoStorageItem
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Data", m_aData).append ("HashState", m_eHashState).getToString ();
+    return new ToStringGenerator (null).append ("Data", m_aData).append ("HashState", m_eHashState).getToString ();
   }
 
   /**
@@ -128,4 +146,13 @@ public final class RepoStorageItem
 
     return of (s.getBytes (StandardCharsets.UTF_8));
   }
+
+  @Nonnull
+  public static RepoStorageItem of (@Nonnull final IReadableResource aRes)
+  {
+    ValueEnforcer.notNull (aRes, "Resource");
+
+    return of (StreamHelper.getAllBytes (aRes));
+  }
+
 }
