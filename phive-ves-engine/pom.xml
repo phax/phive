@@ -98,8 +98,8 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Automatic-Module-Name>com.helger.phive.ves</Automatic-Module-Name>
-            <Export-Package>com.helger.phive.ves.*</Export-Package>
+            <Automatic-Module-Name>com.helger.phive.ves.engine</Automatic-Module-Name>
+            <Export-Package>com.helger.phive.ves.engine.*</Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
