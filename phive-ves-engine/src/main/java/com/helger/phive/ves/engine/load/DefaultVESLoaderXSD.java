@@ -319,7 +319,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                                                                                              .getAsInputStream ());
         final Schema aSchema = new XMLSchemaCache (aResResolver).getSchema (aRes);
         if (aSchema == null)
-          throw new IllegalStateException ("Failed to resolve Schema");
+          throw new IllegalStateException ("Failed to resolve XML Schema from ZIP");
 
         aExecutorXSD = new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aRepoRes),
                                                   () -> aSchema);

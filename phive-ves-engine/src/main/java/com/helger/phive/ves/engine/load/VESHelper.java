@@ -44,7 +44,7 @@ public final class VESHelper
    * @param aErrorList
    *        The error list to be filled, containing the loading errors.
    * @return The validation result list.
-   * @throws IllegalStateException
+   * @throws VESLoadingException
    *         If anything goes wrong
    */
   @Nonnull
@@ -62,7 +62,7 @@ public final class VESHelper
     final LoadedVES aLoadedVES = new VESLoader (aRepo).setUseEagerRequirementLoading (true)
                                                       .loadVESFromRepo (aVESID, aErrorList);
     if (aLoadedVES == null)
-      throw new IllegalStateException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
+      throw new VESLoadingException ("Failed to load VES '" + aVESID.getAsSingleID () + "'");
 
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start validation of '" + aVESID.getAsSingleID () + "'");

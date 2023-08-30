@@ -307,10 +307,10 @@ public final class LoadedVES
       final ErrorList aErrorList = new ErrorList ();
       m_aLoadedRequires = ret = m_aRequiresLoader.deferredLoad (aErrorList);
       if (ret == null)
-        throw new IllegalStateException ("Failed to load required VES '" +
-                                         m_aRequires.getRequiredVESID ().getAsSingleID () +
-                                         "': " +
-                                         aErrorList.getAllFailures ());
+        throw new VESLoadingException ("Failed to load required VES '" +
+                                       m_aRequires.getRequiredVESID ().getAsSingleID () +
+                                       "': " +
+                                       aErrorList.getAllFailures ());
     }
     return ret;
   }
@@ -354,7 +354,7 @@ public final class LoadedVES
     ValueEnforcer.notNull (aLocale, "Locale");
 
     if (m_aExecutor == null)
-      throw new IllegalStateException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
+      throw new VESLoadingException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
 
     final boolean bIsValid = _isRecursivelyValid ();
     final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();

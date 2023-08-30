@@ -281,9 +281,9 @@ public final class VESLoader
                                                                 aLoaderStatus,
                                                                 aLocalErrorList);
           if (aLoadedRequirement == null)
-            throw new IllegalStateException ("Failed to load required VESID '" +
-                                             aRequirement.getRequiredVESID ().getAsSingleID () +
-                                             "' [lazy]");
+            throw new VESLoadingException ("Failed to load required VESID '" +
+                                           aRequirement.getRequiredVESID ().getAsSingleID () +
+                                           "' [lazy]");
           return aLoadedRequirement;
         });
       }

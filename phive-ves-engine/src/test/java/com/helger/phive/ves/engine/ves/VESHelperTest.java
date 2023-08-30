@@ -35,6 +35,7 @@ import com.helger.phive.ves.engine.load.LoadedVES.Status;
 import com.helger.phive.ves.engine.load.VESHelper;
 import com.helger.phive.ves.engine.load.VESLoader;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
+import com.helger.phive.ves.engine.load.VESLoadingException;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.source.IValidationSourceXML;
@@ -254,7 +255,7 @@ public final class VESHelperTest
     aErrorList.getAllErrors ().forEach (x -> LOGGER.error (x.getAsString (Locale.US)));
   }
 
-  @Test
+  @Test (expected = VESLoadingException.class)
   public void test3RecursiveXSDLazy ()
   {
     final VESID aVESID = VESID.parseID ("com.helger.phive.test3:xsd1:1.0");
@@ -269,9 +270,7 @@ public final class VESHelperTest
     assertNotNull (aValidationSource.getNode ());
 
     final ValidationResultList aValidationResultList = new ValidationResultList ();
-    // Should throw an exception
+    // Should throw a VESLoadingException
     aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.US);
-
-    aErrorList.getAllErrors ().forEach (x -> LOGGER.error (x.getAsString (Locale.US)));
   }
 }
