@@ -37,6 +37,7 @@ import com.helger.commons.version.Version;
  * version or a pseudo version.
  *
  * @author Philip Helger
+ * @since 9.0.0
  */
 @Immutable
 @MustImplementComparable
@@ -48,6 +49,14 @@ public final class VESVersion implements Comparable <VESVersion>
   private final Version m_aStaticVersion;
   private final EVESPseudoVersion m_ePseudoVersion;
 
+  /**
+   * Constructor - only invoked by the static factory methods below
+   *
+   * @param aStaticVersion
+   *        Static version. May be <code>null</code>.
+   * @param ePseudoVersion
+   *        Pseudo version. May be <code>null</code>.
+   */
   private VESVersion (@Nullable final Version aStaticVersion, @Nullable final EVESPseudoVersion ePseudoVersion)
   {
     ValueEnforcer.isTrue (aStaticVersion != null || ePseudoVersion != null,
@@ -62,12 +71,18 @@ public final class VESVersion implements Comparable <VESVersion>
    * @return <code>true</code> if it is a static version, <code>false</code> if
    *         it is a pseudo version
    * @see #isPseudoVersion()
+   * @see #getStaticVersion()
    */
   public boolean isStaticVersion ()
   {
     return m_aStaticVersion != null;
   }
 
+  /**
+   * @return The static version of this VER version. Guaranteed to be
+   *         non-<code>null</code> if {@link #isStaticVersion()} returns true.
+   * @see #isStaticVersion()
+   */
   @Nullable
   public Version getStaticVersion ()
   {
@@ -78,12 +93,18 @@ public final class VESVersion implements Comparable <VESVersion>
    * @return <code>true</code> if it is a pseudo version, <code>false</code> if
    *         it is a static version
    * @see #isStaticVersion()
+   * @see #getPseudoVersion()
    */
   public boolean isPseudoVersion ()
   {
     return m_ePseudoVersion != null;
   }
 
+  /**
+   * @return The pseudo version of this VER version. Guaranteed to be
+   *         non-<code>null</code> if {@link #isPseudoVersion()} returns true.
+   * @see #isPseudoVersion()
+   */
   @Nullable
   public EVESPseudoVersion getPseudoVersion ()
   {
@@ -91,12 +112,27 @@ public final class VESVersion implements Comparable <VESVersion>
   }
 
   @Nonnull
+  public static String getAsString (@Nonnull final Version aVersion)
+  {
+    return aVersion.getAsString (false, false);
+  }
+
+  @Nonnull
+  public static String getAsString (@Nonnull final EVESPseudoVersion ePseudoVersion)
+  {
+    return ePseudoVersion.getID ();
+  }
+
+  /**
+   * @return The unified string representation of the Version.
+   */
+  @Nonnull
   public String getAsString ()
   {
     if (m_aStaticVersion != null)
-      return m_aStaticVersion.getAsString (false, false);
+      return getAsString (m_aStaticVersion);
 
-    return m_ePseudoVersion.getID ();
+    return getAsString (m_ePseudoVersion);
   }
 
   /**
