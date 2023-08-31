@@ -56,13 +56,18 @@ public final class VESVersionTest
 
     // Invalid pseudo version
     ver = VESVersion.parseOrNull ("blafoo");
-    assertNull (ver);
+    assertNotNull (ver);
+    assertTrue (ver.isStaticVersion ());
+    assertNotNull (ver.getStaticVersion ());
+    assertFalse (ver.isPseudoVersion ());
+    assertNull (ver.getPseudoVersion ());
+    assertEquals ("blafoo", ver.getAsString ());
   }
 
   @Test
   public void testGetAsString ()
   {
-    assertEquals ("1.2.3.bla", VESVersion.parseOrNull ("1.2.3.bla").getAsString ());
+    assertEquals ("1.2.3-bla", VESVersion.parseOrNull ("1.2.3.bla").getAsString ());
     assertEquals ("1.2.3", VESVersion.parseOrNull ("1.2.3").getAsString ());
     assertEquals ("1.2", VESVersion.parseOrNull ("1.2").getAsString ());
     assertEquals ("1", VESVersion.parseOrNull ("1").getAsString ());

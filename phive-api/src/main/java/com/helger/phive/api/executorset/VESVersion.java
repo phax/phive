@@ -114,7 +114,40 @@ public final class VESVersion implements Comparable <VESVersion>
   @Nonnull
   public static String getAsString (@Nonnull final Version aVersion)
   {
-    return aVersion.getAsString (false, false);
+    // Different implementation then Version.getAsString (...)
+    String ret = "";
+    char cSep = '-';
+    boolean bMust = false;
+    if (aVersion.hasQualifier ())
+      ret = aVersion.getQualifier ();
+
+    if (aVersion.getMicro () > 0)
+    {
+      if (!ret.isEmpty ())
+        ret = cSep + ret;
+      ret = aVersion.getMicro () + ret;
+      cSep = '.';
+      bMust = true;
+    }
+
+    if (aVersion.getMinor () > 0 || bMust)
+    {
+      if (!ret.isEmpty ())
+        ret = cSep + ret;
+      ret = aVersion.getMinor () + ret;
+      cSep = '.';
+      bMust = true;
+    }
+
+    if (aVersion.getMajor () > 0 || bMust)
+    {
+      if (!ret.isEmpty ())
+        ret = cSep + ret;
+      ret = aVersion.getMajor () + ret;
+      cSep = '.';
+    }
+
+    return ret;
   }
 
   @Nonnull
@@ -223,7 +256,7 @@ public final class VESVersion implements Comparable <VESVersion>
       return false;
 
     // Parse to Version object
-    final Version aParsedVersion = Version.parseDotOnly (sVersion);
+    final Version aParsedVersion = Version.parse (sVersion);
     if (aParsedVersion == null)
       return false;
 
@@ -236,6 +269,22 @@ public final class VESVersion implements Comparable <VESVersion>
       return true;
     if (sVersion.equals (aParsedVersion.getAsString (false, false)))
       return true;
+    if (sVersion.equals (getAsString (aParsedVersion)))
+      return true;
+
+    LOGGER.warn ("'" +
+                 sVersion +
+                 "' is none of '" +
+                 aParsedVersion.getAsString (true, true) +
+                 "' x '" +
+                 aParsedVersion.getAsString (true, false) +
+                 "' x '" +
+                 aParsedVersion.getAsString (false, true) +
+                 "' x '" +
+                 aParsedVersion.getAsString (false, false) +
+                 "' x '" +
+                 getAsString (aParsedVersion) +
+                 "'");
 
     // Nope
     return false;
@@ -255,7 +304,7 @@ public final class VESVersion implements Comparable <VESVersion>
     if (isValidStaticVersion (sVersion))
     {
       // Try to convert into a Version object instead
-      return of (Version.parseDotOnly (sVersion));
+      return of (Version.parse (sVersion));
     }
 
     throw new IllegalArgumentException ("Failed to parse '" + sVersion + "' to a VES Version");

@@ -54,7 +54,7 @@ public final class VESIDTest
     final VESID aID1 = new VESID ("com.helger", "phive", "3.0.0.SNAPSHOT");
     assertEquals ("com.helger", aID1.getGroupID ());
     assertEquals ("phive", aID1.getArtifactID ());
-    assertEquals ("3.0.0.SNAPSHOT", aID1.getVersionString ());
+    assertEquals ("3-SNAPSHOT", aID1.getVersionString ());
     assertNull (aID1.getClassifier ());
     CommonsTestHelper.testEqualsImplementationWithEqualContentObject (aID1,
                                                                       new VESID ("com.helger",
