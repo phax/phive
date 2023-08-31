@@ -228,9 +228,13 @@ public final class VESVersion implements Comparable <VESVersion>
       return false;
 
     // Check if the parsing result equals the original in a way
-    if (sVersion.equals (aParsedVersion.getAsString (true)))
+    if (sVersion.equals (aParsedVersion.getAsString (true, true)))
       return true;
-    if (sVersion.equals (aParsedVersion.getAsString (false)))
+    if (sVersion.equals (aParsedVersion.getAsString (true, false)))
+      return true;
+    if (sVersion.equals (aParsedVersion.getAsString (false, true)))
+      return true;
+    if (sVersion.equals (aParsedVersion.getAsString (false, false)))
       return true;
 
     // Nope

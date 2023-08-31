@@ -78,7 +78,7 @@ public final class PhiveJsonHelperTest
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID, "name", false);
     PhiveJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
     final String sJson = aObj.getAsJsonString ();
-    assertEquals ("{\"ves\":{\"vesid\":\"group:art:1.0\",\"name\":\"name\",\"deprecated\":false}," +
+    assertEquals ("{\"ves\":{\"vesid\":\"group:art:1\",\"name\":\"name\",\"deprecated\":false}," +
                   "\"success\":true," +
                   "\"interrupted\":false," +
                   "\"mostSevereErrorLevel\":\"SUCCESS\"," +
