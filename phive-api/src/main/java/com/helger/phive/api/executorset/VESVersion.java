@@ -112,11 +112,13 @@ public final class VESVersion implements Comparable <VESVersion>
   }
 
   @Nonnull
-  private static String _getAsString (@Nonnull final Version aVersion, final boolean bEnforceNumbers)
+  private static String _getAsString (@Nonnull final Version aVersion,
+                                      final char cClassifierSep,
+                                      final boolean bEnforceNumbers)
   {
     // Different implementation then Version.getAsString (...)
     String ret = "";
-    char cSep = '-';
+    char cSep = cClassifierSep;
     boolean bMust = bEnforceNumbers;
     if (aVersion.hasQualifier ())
       ret = aVersion.getQualifier ();
@@ -152,7 +154,7 @@ public final class VESVersion implements Comparable <VESVersion>
   @Nonnull
   public static String getAsString (@Nonnull final Version aVersion)
   {
-    return _getAsString (aVersion, false);
+    return _getAsString (aVersion, '-', false);
   }
 
   @Nonnull
@@ -266,18 +268,26 @@ public final class VESVersion implements Comparable <VESVersion>
       return false;
 
     // Check if the parsing result equals the original in a way
-    if (sVersion.equals (_getAsString (aParsedVersion, true)))
+    if (sVersion.equals (_getAsString (aParsedVersion, '-', true)))
       return true;
-    if (sVersion.equals (_getAsString (aParsedVersion, false)))
+    if (sVersion.equals (_getAsString (aParsedVersion, '-', false)))
+      return true;
+    if (sVersion.equals (_getAsString (aParsedVersion, '.', true)))
+      return true;
+    if (sVersion.equals (_getAsString (aParsedVersion, '.', false)))
       return true;
 
     // TODO make debug
     LOGGER.warn ("'" +
                  sVersion +
                  "' is none of '" +
-                 _getAsString (aParsedVersion, true) +
+                 _getAsString (aParsedVersion, '-', true) +
                  "' x '" +
-                 _getAsString (aParsedVersion, false) +
+                 _getAsString (aParsedVersion, '-', false) +
+                 "' x '" +
+                 _getAsString (aParsedVersion, '.', true) +
+                 "' x '" +
+                 _getAsString (aParsedVersion, '.', false) +
                  "'");
 
     // Nope
