@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementComparable;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.collection.impl.CommonsLinkedHashSet;
+import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.StringHelper;
@@ -114,12 +116,13 @@ public final class VESVersion implements Comparable <VESVersion>
   @Nonnull
   private static String _getAsString (@Nonnull final Version aVersion,
                                       final char cClassifierSep,
-                                      final boolean bEnforceNumbers)
+                                      final boolean bEnforceAllNumbers,
+                                      final boolean bEnforceAtLeastMinor)
   {
     // Different implementation then Version.getAsString (...)
     String ret = "";
     char cSep = cClassifierSep;
-    boolean bMust = bEnforceNumbers;
+    boolean bMust = bEnforceAllNumbers;
     if (aVersion.hasQualifier ())
       ret = aVersion.getQualifier ();
 
@@ -131,6 +134,9 @@ public final class VESVersion implements Comparable <VESVersion>
       cSep = '.';
       bMust = true;
     }
+
+    if (bEnforceAtLeastMinor)
+      bMust = true;
 
     if (aVersion.getMinor () > 0 || bMust)
     {
@@ -154,7 +160,7 @@ public final class VESVersion implements Comparable <VESVersion>
   @Nonnull
   public static String getAsString (@Nonnull final Version aVersion)
   {
-    return _getAsString (aVersion, '-', false);
+    return _getAsString (aVersion, '-', false, false);
   }
 
   @Nonnull
@@ -268,27 +274,22 @@ public final class VESVersion implements Comparable <VESVersion>
       return false;
 
     // Check if the parsing result equals the original in a way
-    if (sVersion.equals (_getAsString (aParsedVersion, '-', true)))
-      return true;
-    if (sVersion.equals (_getAsString (aParsedVersion, '-', false)))
-      return true;
-    if (sVersion.equals (_getAsString (aParsedVersion, '.', true)))
-      return true;
-    if (sVersion.equals (_getAsString (aParsedVersion, '.', false)))
-      return true;
+    final ICommonsSet <String> aPossibleVersions = new CommonsLinkedHashSet <> ();
+    for (final char c : "-.".toCharArray ())
+      for (final boolean bEnforceAllNumbers : new boolean [] { true, false })
+        for (final boolean bEnforceMinor : new boolean [] { true, false })
+        {
+          final String sText = _getAsString (aParsedVersion, c, bEnforceAllNumbers, bEnforceMinor);
+          if (sVersion.equals (sText))
+            return true;
+          aPossibleVersions.add (sText);
+        }
 
     // TODO make debug
     LOGGER.warn ("'" +
                  sVersion +
-                 "' is none of '" +
-                 _getAsString (aParsedVersion, '-', true) +
-                 "' x '" +
-                 _getAsString (aParsedVersion, '-', false) +
-                 "' x '" +
-                 _getAsString (aParsedVersion, '.', true) +
-                 "' x '" +
-                 _getAsString (aParsedVersion, '.', false) +
-                 "'");
+                 "' is none of " +
+                 StringHelper.imploder ().source (aPossibleVersions, x -> "'" + x + "'").separator (" or ").build ());
 
     // Nope
     return false;
