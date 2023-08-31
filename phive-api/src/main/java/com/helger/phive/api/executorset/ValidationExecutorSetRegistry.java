@@ -65,7 +65,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
 {
   /** Name of the pseudo version that indicates to use the latest version */
   @Deprecated (since = "8.0.2", forRemoval = true)
-  public static final String PSEUDO_VERSION_LATEST = VESID.PSEUDO_VERSION_LATEST;
+  public static final String PSEUDO_VERSION_LATEST = EVESPseudoVersion.LATEST.getID ();
 
   public static final boolean DEFAULT_RESOLVE_PSEUDO_VERSIONS = true;
 
@@ -176,7 +176,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
           final VESID aVESID = aEntry.getKey ();
           if (aVESID.getGroupID ().equals (sGroupID) &&
               aVESID.getArtifactID ().equals (sArtifactID) &&
-              (aVersionsToIgnore == null || !aVersionsToIgnore.contains (aVESID.getVersion ())))
+              (aVersionsToIgnore == null || !aVersionsToIgnore.contains (aVESID.getVersionString ())))
             aMatching.put (aEntry);
         }
       });
@@ -187,13 +187,13 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
         final IValidationExecutorSet <SOURCETYPE> ret = aMatching.getLastValue ();
         if (LOGGER.isDebugEnabled ())
           LOGGER.debug ("Resolved pseudo version '" +
-                        VESID.PSEUDO_VERSION_LATEST +
+                        EVESPseudoVersion.LATEST.getID () +
                         "' of '" +
                         sGroupID +
                         VESID.ID_SEPARATOR +
                         sArtifactID +
                         "' to '" +
-                        ret.getID ().getVersion () +
+                        ret.getID ().getVersionString () +
                         "'");
         return ret;
       }
@@ -212,7 +212,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     if (ret == null)
     {
       // No exact match - check pseudo version
-      if (VESID.PSEUDO_VERSION_LATEST.equals (aID.getVersion ()))
+      if (EVESPseudoVersion.LATEST.getID ().equals (aID.getVersionString ()))
       {
         if (isResolvePseudoVersions ())
         {

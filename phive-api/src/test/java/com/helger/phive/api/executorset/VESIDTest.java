@@ -51,22 +51,36 @@ public final class VESIDTest
   @Test
   public void testBasic ()
   {
-    final VESID aID1 = new VESID ("com.helger", "phive", "3.0.0-SNAPSHOT");
+    final VESID aID1 = new VESID ("com.helger", "phive", "3.0.0.SNAPSHOT");
     assertEquals ("com.helger", aID1.getGroupID ());
     assertEquals ("phive", aID1.getArtifactID ());
-    assertEquals ("3.0.0-SNAPSHOT", aID1.getVersion ());
+    assertEquals ("3.0.0.SNAPSHOT", aID1.getVersionString ());
     assertNull (aID1.getClassifier ());
-    CommonsTestHelper.testEqualsImplementationWithEqualContentObject (aID1, new VESID ("com.helger", "phive", "3.0.0-SNAPSHOT"));
-    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.holger", "phive", "3.0.0-SNAPSHOT"));
-    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.helger", "phivengine", "3.0.0-SNAPSHOT"));
-    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.helger", "phive", "3.0.0"));
-    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1, new VESID ("com.helger", "phive", "3.0.0-SNAPSHOT", "src"));
+    CommonsTestHelper.testEqualsImplementationWithEqualContentObject (aID1,
+                                                                      new VESID ("com.helger",
+                                                                                 "phive",
+                                                                                 "3.0.0.SNAPSHOT"));
+    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
+                                                                          new VESID ("com.holger",
+                                                                                     "phive",
+                                                                                     "3.0.0.SNAPSHOT"));
+    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
+                                                                          new VESID ("com.helger",
+                                                                                     "phivengine",
+                                                                                     "3.0.0.SNAPSHOT"));
+    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
+                                                                          new VESID ("com.helger", "phive", "3.0.0"));
+    CommonsTestHelper.testEqualsImplementationWithDifferentContentObject (aID1,
+                                                                          new VESID ("com.helger",
+                                                                                     "phive",
+                                                                                     "3.0.0.SNAPSHOT",
+                                                                                     "src"));
   }
 
   @Test
   public void testParseID ()
   {
-    final VESID aID1 = new VESID ("com.helger", "phive", "3.0.0-SNAPSHOT");
+    final VESID aID1 = new VESID ("com.helger", "phive", "3.0.0.SNAPSHOT");
     final VESID aID2 = aID1.getWithClassifier ("test");
 
     assertEquals (aID1, VESID.parseIDOrNull (aID1.getAsSingleID ()));

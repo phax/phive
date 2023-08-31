@@ -112,7 +112,7 @@ public final class RepoStorageKey
 
     final String sGroupID = aVESID.getGroupID ();
     final String sArtifactID = aVESID.getArtifactID ();
-    final String sVersion = aVESID.getVersion ();
+    final String sVersion = aVESID.getVersionString ();
     final String sClassifier = aVESID.hasClassifier () ? "-" + aVESID.getClassifier () : "";
     return new RepoStorageKey (sGroupID.replace ('.', '/') +
                                "/" +

@@ -44,9 +44,6 @@ import com.helger.commons.string.ToStringGenerator;
 @MustImplementEqualsAndHashcode
 public final class VESID implements Comparable <VESID>
 {
-  /** Name of the pseudo version that indicates to use the latest version */
-  public static final String PSEUDO_VERSION_LATEST = "latest";
-
   /** The regular expression to which each part must conform */
   @RegEx
   public static final String REGEX_PART = "[a-zA-Z0-9_\\-\\.]+";
@@ -56,7 +53,7 @@ public final class VESID implements Comparable <VESID>
 
   private final String m_sGroupID;
   private final String m_sArtifactID;
-  private final String m_sVersion;
+  private final VESVersion m_aVersion;
   private final String m_sClassifier;
   // status vars
   private int m_nHashCode = IHashCodeGenerator.ILLEGAL_HASHCODE;
@@ -111,17 +108,25 @@ public final class VESID implements Comparable <VESID>
                 @Nonnull @Nonempty final String sVersion,
                 @Nullable final String sClassifier)
   {
+    this (sGroupID, sArtifactID, VESVersion.parseOrThrow (sVersion), sClassifier);
+  }
+
+  protected VESID (@Nonnull @Nonempty final String sGroupID,
+                   @Nonnull @Nonempty final String sArtifactID,
+                   @Nonnull final VESVersion aVersion,
+                   @Nullable final String sClassifier)
+  {
     ValueEnforcer.notEmpty (sGroupID, "GroupID");
     ValueEnforcer.isTrue (isValidPart (sGroupID), () -> "GroupID '" + sGroupID + "' is invalid");
     ValueEnforcer.notEmpty (sArtifactID, "ArtifactID");
     ValueEnforcer.isTrue (isValidPart (sArtifactID), () -> "ArtifactID '" + sArtifactID + "' is invalid");
-    ValueEnforcer.notEmpty (sVersion, "Version");
-    ValueEnforcer.isTrue (isValidPart (sVersion), () -> "Version '" + sVersion + "' is invalid");
+    ValueEnforcer.notNull (aVersion, "Version");
+    ValueEnforcer.isTrue (isValidPart (aVersion.getAsString ()), () -> "Version '" + aVersion + "' is invalid");
     if (StringHelper.hasText (sClassifier))
       ValueEnforcer.isTrue (isValidPart (sClassifier), () -> "Classifier '" + sClassifier + "' is invalid");
     m_sGroupID = sGroupID;
     m_sArtifactID = sArtifactID;
-    m_sVersion = sVersion;
+    m_aVersion = aVersion;
     // Unify "" and null
     m_sClassifier = StringHelper.hasText (sClassifier) ? sClassifier : null;
   }
@@ -142,9 +147,21 @@ public final class VESID implements Comparable <VESID>
 
   @Nonnull
   @Nonempty
+  public String getVersionString ()
+  {
+    return m_aVersion.getAsString ();
+  }
+
+  @Deprecated (forRemoval = true, since = "9.0.0")
   public String getVersion ()
   {
-    return m_sVersion;
+    return getVersionString ();
+  }
+
+  @Nonnull
+  public VESVersion getVersionObj ()
+  {
+    return m_aVersion;
   }
 
   public boolean hasClassifier ()
@@ -159,17 +176,17 @@ public final class VESID implements Comparable <VESID>
   }
 
   @Nonnull
-  public VESID getWithVersion (@Nonnull @Nonempty final String sNewVersion)
+  public VESID getWithVersion (@Nonnull final VESVersion aNewVersion)
   {
-    if (EqualsHelper.equals (m_sVersion, sNewVersion))
+    if (EqualsHelper.equals (m_aVersion, aNewVersion))
       return this;
-    return new VESID (m_sGroupID, m_sArtifactID, sNewVersion, m_sClassifier);
+    return new VESID (m_sGroupID, m_sArtifactID, aNewVersion, m_sClassifier);
   }
 
   @Nonnull
   public VESID getWithVersionLatest ()
   {
-    return getWithVersion (PSEUDO_VERSION_LATEST);
+    return getWithVersion (VESVersion.of (EVESPseudoVersion.LATEST));
   }
 
   @Nonnull
@@ -177,14 +194,14 @@ public final class VESID implements Comparable <VESID>
   {
     if (EqualsHelper.equals (m_sClassifier, sNewClassifier))
       return this;
-    return new VESID (m_sGroupID, m_sArtifactID, m_sVersion, sNewClassifier);
+    return new VESID (m_sGroupID, m_sArtifactID, m_aVersion, sNewClassifier);
   }
 
   @Nonnull
   @Nonempty
   public String getAsSingleID ()
   {
-    String ret = m_sGroupID + ID_SEPARATOR + m_sArtifactID + ID_SEPARATOR + m_sVersion;
+    String ret = m_sGroupID + ID_SEPARATOR + m_sArtifactID + ID_SEPARATOR + getVersionString ();
     if (hasClassifier ())
       ret += ID_SEPARATOR + m_sClassifier;
     return ret;
@@ -198,7 +215,7 @@ public final class VESID implements Comparable <VESID>
       ret = m_sArtifactID.compareTo (aOther.m_sArtifactID);
       if (ret == 0)
       {
-        ret = m_sVersion.compareTo (aOther.m_sVersion);
+        ret = m_aVersion.compareTo (aOther.m_aVersion);
         if (ret == 0)
           ret = CompareHelper.compare (m_sClassifier, aOther.m_sClassifier);
       }
@@ -216,7 +233,7 @@ public final class VESID implements Comparable <VESID>
     final VESID rhs = (VESID) o;
     return m_sGroupID.equals (rhs.m_sGroupID) &&
            m_sArtifactID.equals (rhs.m_sArtifactID) &&
-           m_sVersion.equals (rhs.m_sVersion) &&
+           m_aVersion.equals (rhs.m_aVersion) &&
            EqualsHelper.equals (m_sClassifier, rhs.m_sClassifier);
   }
 
@@ -227,7 +244,7 @@ public final class VESID implements Comparable <VESID>
     if (ret == IHashCodeGenerator.ILLEGAL_HASHCODE)
       ret = m_nHashCode = new HashCodeGenerator (this).append (m_sGroupID)
                                                       .append (m_sArtifactID)
-                                                      .append (m_sVersion)
+                                                      .append (m_aVersion)
                                                       .append (m_sClassifier)
                                                       .getHashCode ();
     return ret;
@@ -238,7 +255,7 @@ public final class VESID implements Comparable <VESID>
   {
     return new ToStringGenerator (null).append ("GroupID", m_sGroupID)
                                        .append ("ArtifactID", m_sArtifactID)
-                                       .append ("Version", m_sVersion)
+                                       .append ("Version", m_aVersion)
                                        .appendIf ("Classifier", m_sClassifier, StringHelper::hasText)
                                        .getToString ();
   }
@@ -261,7 +278,7 @@ public final class VESID implements Comparable <VESID>
     {
       return parseID (sVESID);
     }
-    catch (final IllegalArgumentException ex)
+    catch (final RuntimeException ex)
     {
       return null;
     }
