@@ -46,6 +46,8 @@ import com.helger.commons.version.Version;
 @MustImplementEqualsAndHashcode
 public final class VESVersion implements Comparable <VESVersion>
 {
+  public static final String QUALIFIER_SNAPSHOT = "SNAPSHOT";
+
   private static final Logger LOGGER = LoggerFactory.getLogger (VESVersion.class);
 
   private final Version m_aStaticVersion;
@@ -181,6 +183,47 @@ public final class VESVersion implements Comparable <VESVersion>
     return getAsString (m_ePseudoVersion);
   }
 
+  @Nonnull
+  private static Version _getWithoutQualifier (@Nonnull final Version aSrc)
+  {
+    return new Version (aSrc.getMajor (), aSrc.getMinor (), aSrc.getMicro (), null);
+  }
+
+  private static int _compareSemantically (@Nonnull final Version aLhs, @Nonnull final Version aRhs)
+  {
+    if (QUALIFIER_SNAPSHOT.equals (aLhs.getQualifier ()))
+    {
+      if (QUALIFIER_SNAPSHOT.equals (aRhs.getQualifier ()))
+      {
+        // Lhs & Rhs are Snapshots
+        return aLhs.compareTo (aRhs);
+      }
+      // Lhs is Snapshot
+      final Version aLhsClean = _getWithoutQualifier (aLhs);
+      final int nCmp = aLhsClean.compareTo (aRhs);
+      if (nCmp == 0)
+      {
+        // Snapshots come before release
+        return -1;
+      }
+      return nCmp;
+    }
+
+    if (QUALIFIER_SNAPSHOT.equals (aRhs.getQualifier ()))
+    {
+      // Rhs is Snapshot
+      final Version aRhsClean = _getWithoutQualifier (aRhs);
+      final int nCmp = aLhs.compareTo (aRhsClean);
+      if (nCmp == 0)
+      {
+        // Snapshots come before release
+        return +1;
+      }
+      return nCmp;
+    }
+    return aLhs.compareTo (aRhs);
+  }
+
   /**
    * Compare a static version with a pseudo version
    *
@@ -205,7 +248,7 @@ public final class VESVersion implements Comparable <VESVersion>
     if (isStaticVersion ())
     {
       if (rhs.isStaticVersion ())
-        return m_aStaticVersion.compareTo (rhs.m_aStaticVersion);
+        return _compareSemantically (m_aStaticVersion, rhs.m_aStaticVersion);
       return _compare (m_aStaticVersion, rhs.m_ePseudoVersion);
     }
 
@@ -258,6 +301,25 @@ public final class VESVersion implements Comparable <VESVersion>
     return new VESVersion (null, ePseudoVersion);
   }
 
+  /**
+   * Checks if the provided version is a valid static version.
+   * <ul>
+   * <li>1.0.0</li>
+   * <li>1.0</li>
+   * <li>1</li>
+   * <li>1.0.0-SNAPSHOT</li>
+   * <li>1.0-SNAPSHOT</li>
+   * <li>1-SNAPSHOT</li>
+   * <li>1.0.0.SNAPSHOT</li>
+   * <li>1.0.SNAPSHOT</li>
+   * <li>1.SNAPSHOT</li>
+   * </ul>
+   *
+   * @param sVersion
+   *        The version to check
+   * @return <code>true</code> if the version is a valid static version,
+   *         <code>false</code> if not.
+   */
   public static boolean isValidStaticVersion (@Nullable final String sVersion)
   {
     // Must not be empty
@@ -285,11 +347,14 @@ public final class VESVersion implements Comparable <VESVersion>
           aPossibleVersions.add (sText);
         }
 
-    // TODO make debug
-    LOGGER.warn ("'" +
-                 sVersion +
-                 "' is none of " +
-                 StringHelper.imploder ().source (aPossibleVersions, x -> "'" + x + "'").separator (" or ").build ());
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("'" +
+                    sVersion +
+                    "' is none of " +
+                    StringHelper.imploder ()
+                                .source (aPossibleVersions, x -> "'" + x + "'")
+                                .separator (" or ")
+                                .build ());
 
     // Nope
     return false;
