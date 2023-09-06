@@ -17,7 +17,6 @@
 package com.helger.phive.ves.model.v1;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.jaxb.GenericJAXBMarshaller;
 import com.helger.phive.ves.v10.ObjectFactory;
 import com.helger.phive.ves.v10.VesStatusType;
@@ -29,14 +28,8 @@ import com.helger.phive.ves.v10.VesStatusType;
  */
 public class VESStatus1Marshaller extends GenericJAXBMarshaller <VesStatusType>
 {
-  /**
-   * The XML Schema path to validate against.
-   */
-  public static final ClassPathResource XSD = new ClassPathResource ("schemas/ves/ves-1.0.xsd",
-                                                                     VESStatus1Marshaller.class.getClassLoader ());
-
   public VESStatus1Marshaller ()
   {
-    super (VesStatusType.class, new CommonsArrayList <> (XSD), new ObjectFactory ()::createStatus);
+    super (VesStatusType.class, new CommonsArrayList <> (CVES1.XSD_RES), new ObjectFactory ()::createStatus);
   }
 }

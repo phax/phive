@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 Philip Helger (www.helger.com)
+ * Copyright (C) 2023 Philip Helger & ecosio
  * philip[at]helger[dot]com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.model.v1;
+package com.helger.phive.repo;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.jaxb.GenericJAXBMarshaller;
-import com.helger.phive.ves.v10.ObjectFactory;
-import com.helger.phive.ves.v10.VesType;
+import org.junit.Test;
+
+import com.helger.commons.mock.SPITestHelper;
 
 /**
- * A marshaller to read VES v1 declarations.
- *
+ * Test SPI definitions
+ * 
  * @author Philip Helger
  */
-public class VES1Marshaller extends GenericJAXBMarshaller <VesType>
+public final class SPITest
 {
-  public VES1Marshaller ()
+  @Test
+  public void testBasic () throws Exception
   {
-    super (VesType.class, new CommonsArrayList <> (CVES1.XSD_RES), new ObjectFactory ()::createVes);
+    SPITestHelper.testIfAllSPIImplementationsAreValid ();
   }
 }

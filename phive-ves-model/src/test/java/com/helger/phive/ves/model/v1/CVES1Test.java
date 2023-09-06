@@ -16,20 +16,20 @@
  */
 package com.helger.phive.ves.model.v1;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.jaxb.GenericJAXBMarshaller;
-import com.helger.phive.ves.v10.ObjectFactory;
-import com.helger.phive.ves.v10.VesType;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
- * A marshaller to read VES v1 declarations.
+ * Test class for class {@link CVES1}.
  *
  * @author Philip Helger
  */
-public class VES1Marshaller extends GenericJAXBMarshaller <VesType>
+public final class CVES1Test
 {
-  public VES1Marshaller ()
+  @Test
+  public void testBasic ()
   {
-    super (VesType.class, new CommonsArrayList <> (CVES1.XSD_RES), new ObjectFactory ()::createVes);
+    assertTrue (CVES1.XSD_RES.exists ());
   }
 }

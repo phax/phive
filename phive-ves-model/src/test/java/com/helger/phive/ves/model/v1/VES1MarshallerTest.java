@@ -17,7 +17,6 @@
 package com.helger.phive.ves.model.v1;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -40,12 +39,6 @@ public final class VES1MarshallerTest
   private static final String TEST_BASE_PATH = "src/test/resources/ves/v1/";
 
   @Test
-  public void testBasic ()
-  {
-    assertTrue (VES1Marshaller.XSD.exists ());
-  }
-
-  @Test
   public void testReadGoodExamples ()
   {
     final VES1Marshaller m = new VES1Marshaller ();
@@ -56,5 +49,4 @@ public final class VES1MarshallerTest
       assertNotNull (aVES);
     }
   }
-
 }

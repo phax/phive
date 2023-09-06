@@ -16,20 +16,29 @@
  */
 package com.helger.phive.ves.model.v1;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.jaxb.GenericJAXBMarshaller;
-import com.helger.phive.ves.v10.ObjectFactory;
-import com.helger.phive.ves.v10.VesType;
+import javax.annotation.concurrent.Immutable;
+
+import com.helger.commons.io.resource.ClassPathResource;
 
 /**
- * A marshaller to read VES v1 declarations.
+ * Constants for the VES1 data model
  *
  * @author Philip Helger
  */
-public class VES1Marshaller extends GenericJAXBMarshaller <VesType>
+@Immutable
+public final class CVES1
 {
-  public VES1Marshaller ()
-  {
-    super (VesType.class, new CommonsArrayList <> (CVES1.XSD_RES), new ObjectFactory ()::createVes);
-  }
+  /**
+   * The namespace URI of the VES1 XML data model
+   */
+  public static final String NAMESPACE_URI = "urn:com:helger:phive:ves:v1.0";
+
+  /**
+   * The XML Schema path to validate against.
+   */
+  public static final ClassPathResource XSD_RES = new ClassPathResource ("schemas/ves/ves-1.0.xsd",
+                                                                         CVES1.class.getClassLoader ());
+
+  private CVES1 ()
+  {}
 }

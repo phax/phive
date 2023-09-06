@@ -17,7 +17,6 @@
 package com.helger.phive.ves.model.v1;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
@@ -30,7 +29,7 @@ import com.helger.commons.io.file.IFileFilter;
 import com.helger.phive.ves.v10.VesStatusType;
 
 /**
- * Test class for class {@link VES1Marshaller}.
+ * Test class for class {@link VESStatus1Marshaller}.
  *
  * @author Philip Helger
  */
@@ -38,12 +37,6 @@ public final class VESStatus1MarshallerTest
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (VESStatus1MarshallerTest.class);
   private static final String TEST_BASE_PATH = "src/test/resources/vesstatus/v1/";
-
-  @Test
-  public void testBasic ()
-  {
-    assertTrue (VESStatus1Marshaller.XSD.exists ());
-  }
 
   @Test
   public void testReadGoodExamples ()
