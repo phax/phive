@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.result.json;
+package com.helger.phive.result.exception;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.json.IJsonObject;
+import com.helger.phive.result.json.PhiveJsonHelper;
 
 /**
  * Test class for class {@link PhiveRestoredException}.

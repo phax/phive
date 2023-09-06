@@ -66,6 +66,7 @@ import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
 
 /**
@@ -87,10 +88,6 @@ public final class PhiveJsonHelper
   public static final String JSON_TRISTATE_TRUE = "TRUE";
   public static final String JSON_TRISTATE_FALSE = "FALSE";
   public static final String JSON_TRISTATE_UNDEFINED = "UNDEFINED";
-
-  public static final String JSON_CLASS = "class";
-  public static final String JSON_MESSAGE = "message";
-  public static final String JSON_STACK_TRACE = "stackTrace";
 
   public static final String JSON_RESOURCE_ID = "resource";
   public static final String JSON_LINE_NUM = "line";
@@ -255,9 +252,9 @@ public final class PhiveJsonHelper
       return null;
     if (t instanceof PhiveRestoredException)
       return ((PhiveRestoredException) t).getAsJson ();
-    return new JsonObject ().add (JSON_CLASS, t.getClass ().getName ())
-                            .addIfNotNull (JSON_MESSAGE, t.getMessage ())
-                            .add (JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
+    return new JsonObject ().add (PhiveRestoredException.JSON_CLASS, t.getClass ().getName ())
+                            .addIfNotNull (PhiveRestoredException.JSON_MESSAGE, t.getMessage ())
+                            .add (PhiveRestoredException.JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
   }
 
   @Nullable

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.result.json;
+package com.helger.phive.result.exception;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,15 +27,19 @@ import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 
 /**
- * This is a work around to read "exceptions" from JSON without actually having
- * the need to create "Exception" objects. It has the fields class name,
- * exception message and stack trace.
+ * This is a work around to read "exceptions" from external sources (like JSON)
+ * without actually having the need to create "Exception" objects. It has the
+ * fields class name, exception message and stack trace.
  *
  * @author Philip Helger
  * @since 6.0.0
  */
 public class PhiveRestoredException extends Exception
 {
+  public static final String JSON_CLASS = "class";
+  public static final String JSON_MESSAGE = "message";
+  public static final String JSON_STACK_TRACE = "stackTrace";
+
   private final String m_sClassName;
   private final String m_sMessage;
   private final ICommonsList <String> m_aStackTraceLines;
@@ -87,10 +91,9 @@ public class PhiveRestoredException extends Exception
   @Nullable
   public IJsonObject getAsJson ()
   {
-    return new JsonObject ().add (PhiveJsonHelper.JSON_CLASS, m_sClassName)
-                            .addIfNotNull (PhiveJsonHelper.JSON_MESSAGE, m_sMessage)
-                            .add (PhiveJsonHelper.JSON_STACK_TRACE,
-                                  StringHelper.getImploded ('\n', m_aStackTraceLines));
+    return new JsonObject ().add (JSON_CLASS, m_sClassName)
+                            .addIfNotNull (JSON_MESSAGE, m_sMessage)
+                            .add (JSON_STACK_TRACE, StringHelper.getImploded ('\n', m_aStackTraceLines));
   }
 
   @Nullable
@@ -99,10 +102,9 @@ public class PhiveRestoredException extends Exception
     if (aObj == null)
       return null;
 
-    final String sClassName = aObj.getAsString (PhiveJsonHelper.JSON_CLASS);
-    final String sMessage = aObj.getAsString (PhiveJsonHelper.JSON_MESSAGE);
-    final ICommonsList <String> aStackTraceLines = StringHelper.getExploded ('\n',
-                                                                             aObj.getAsString (PhiveJsonHelper.JSON_STACK_TRACE));
+    final String sClassName = aObj.getAsString (JSON_CLASS);
+    final String sMessage = aObj.getAsString (JSON_MESSAGE);
+    final ICommonsList <String> aStackTraceLines = StringHelper.getExploded ('\n', aObj.getAsString (JSON_STACK_TRACE));
     if (sClassName == null)
       return null;
 
