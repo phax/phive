@@ -80,7 +80,17 @@ public final class VESVersionTest
     assertEquals ("1.2.3", VESVersion.parseOrNull ("1.2.3").getAsString ());
     assertEquals ("1.2", VESVersion.parseOrNull ("1.2").getAsString ());
     assertEquals ("1", VESVersion.parseOrNull ("1").getAsString ());
+    assertEquals ("1", VESVersion.parseOrNull ("1.0").getAsString ());
+    assertEquals ("1", VESVersion.parseOrNull ("1.0.0").getAsString ());
     assertEquals ("0.1", VESVersion.parseOrNull ("0.1").getAsString ());
+  }
+
+  @Test
+  public void testZero ()
+  {
+    assertEquals ("0", VESVersion.parseOrNull ("0").getAsString ());
+    assertEquals ("0", VESVersion.parseOrNull ("0.0").getAsString ());
+    assertEquals ("0", VESVersion.parseOrNull ("0.0.0").getAsString ());
   }
 
   @Test

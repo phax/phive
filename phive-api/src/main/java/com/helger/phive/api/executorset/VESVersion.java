@@ -83,6 +83,16 @@ public final class VESVersion implements Comparable <VESVersion>
   }
 
   /**
+   * @return <code>true</code> if this is a static version, and if the qualifier
+   *         is "SNAPSHOT".
+   * @see #isStaticVersion()
+   */
+  public boolean isStaticSnapshotVersion ()
+  {
+    return m_aStaticVersion != null && QUALIFIER_SNAPSHOT.equals (m_aStaticVersion.getQualifier ());
+  }
+
+  /**
    * @return The static version of this VER version. Guaranteed to be
    *         non-<code>null</code> if {@link #isStaticVersion()} returns true.
    * @see #isStaticVersion()
@@ -149,7 +159,8 @@ public final class VESVersion implements Comparable <VESVersion>
       bMust = true;
     }
 
-    if (aVersion.getMajor () > 0 || bMust)
+    // Avoid empty string
+    if (aVersion.getMajor () > 0 || bMust || ret.isEmpty ())
     {
       if (!ret.isEmpty ())
         ret = cSep + ret;
