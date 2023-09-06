@@ -22,7 +22,8 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.name.IHasDisplayName;
 
 /**
- * This enum contains the hash comparison result when reading from the repo
+ * This enum contains the hash comparison result when reading from the
+ * repository.
  *
  * @author Philip Helger
  */

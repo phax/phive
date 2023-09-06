@@ -75,13 +75,13 @@ public class RepoStorageChain implements IRepoStorageBase
 
   @Nonnull
   @Nonempty
-  public final ICommonsList <IRepoStorage> internalGetStorages ()
+  protected final ICommonsList <IRepoStorage> internalGetAllStorages ()
   {
     return m_aStorages.getClone ();
   }
 
   @Nonnull
-  public final ICommonsList <IRepoStorage> internalGetWritableStorages ()
+  protected final ICommonsList <IRepoStorage> internalGetAllWritableStorages ()
   {
     return m_aWritableStorages.getClone ();
   }
@@ -91,13 +91,13 @@ public class RepoStorageChain implements IRepoStorageBase
    *         written to a persistent local repository for faster access next
    *         time.
    */
-  public boolean isCacheRemoteContent ()
+  public final boolean isCacheRemoteContent ()
   {
     return m_bCacheRemoteContent;
   }
 
   @Nonnull
-  public RepoStorageChain setCacheRemoteContent (final boolean bCacheRemoteContent)
+  public final RepoStorageChain setCacheRemoteContent (final boolean bCacheRemoteContent)
   {
     m_bCacheRemoteContent = bCacheRemoteContent;
     return this;
@@ -111,7 +111,7 @@ public class RepoStorageChain implements IRepoStorageBase
       LOGGER.debug ("Checking for existence of '" +
                     aKey.getPath () +
                     "' in " +
-                    m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
+                    m_aStorages.getAllMapped (IRepoStorage::getRepoTypeID));
 
     for (final IRepoStorage aStorage : m_aStorages)
     {
@@ -124,7 +124,7 @@ public class RepoStorageChain implements IRepoStorageBase
                         "' in storage " +
                         aStorage.getID () +
                         " of type " +
-                        aStorage.getRepoType ().getID ());
+                        aStorage.getRepoTypeID ());
         return true;
       }
     }
@@ -143,7 +143,7 @@ public class RepoStorageChain implements IRepoStorageBase
       LOGGER.debug ("Trying to read '" +
                     aKey.getPath () +
                     "' from " +
-                    m_aStorages.getAllMapped (x -> x.getRepoType ().getID ()));
+                    m_aStorages.getAllMapped (IRepoStorage::getRepoTypeID));
 
     for (final IRepoStorage aStorage : m_aStorages)
     {
@@ -154,7 +154,7 @@ public class RepoStorageChain implements IRepoStorageBase
         final String sMsg = "Successfully read '" +
                             aKey.getPath () +
                             "' from " +
-                            aStorage.getRepoType ().getID () +
+                            aStorage.getRepoTypeID () +
                             " with hash state '" +
                             aItem.getHashState ().getDisplayName () +
                             "'";
@@ -176,7 +176,7 @@ public class RepoStorageChain implements IRepoStorageBase
               LOGGER.debug ("Storing '" +
                             aKey.getPath () +
                             "' to " +
-                            m_aWritableStorages.getAllMapped (x -> x.getRepoType ().getID ()));
+                            m_aWritableStorages.getAllMapped (IRepoStorage::getRepoTypeID));
             for (final IRepoStorage aWritableStorage : m_aWritableStorages)
               aWritableStorage.write (aKey, aItem);
           }

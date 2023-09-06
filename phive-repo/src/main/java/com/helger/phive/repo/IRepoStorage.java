@@ -19,6 +19,7 @@ package com.helger.phive.repo;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.state.ESuccess;
 import com.helger.security.messagedigest.EMessageDigestAlgorithm;
@@ -39,6 +40,17 @@ public interface IRepoStorage extends IHasID <String>, IRepoStorageBase
    */
   @Nonnull
   RepoStorageType getRepoType ();
+
+  /**
+   * @return The ID of the repository storage type the implementation handles.
+   *         May neither be <code>null</code> nor empty.
+   */
+  @Nonnull
+  @Nonempty
+  default String getRepoTypeID ()
+  {
+    return getRepoType ().getID ();
+  }
 
   /**
    * Test if the provided repo storage element is present or not.

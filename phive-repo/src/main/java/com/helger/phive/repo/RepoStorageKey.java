@@ -19,6 +19,9 @@ package com.helger.phive.repo;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
@@ -35,6 +38,9 @@ import com.helger.phive.api.executorset.VESID;
 @Immutable
 public final class RepoStorageKey
 {
+  public static final String SUFFIX_SHA256 = ".sha256";
+  private static final Logger LOGGER = LoggerFactory.getLogger (RepoStorageKey.class);
+
   private final String m_sPath;
 
   protected RepoStorageKey (@Nonnull @Nonempty final String sPath)
@@ -56,7 +62,14 @@ public final class RepoStorageKey
   @ReturnsMutableCopy
   public RepoStorageKey getKeyHashSha256 ()
   {
-    return new RepoStorageKey (m_sPath + ".sha256");
+    if (m_sPath.endsWith (SUFFIX_SHA256))
+    {
+      // Seems like a doubled hash key
+      LOGGER.warn ("You are trying to create a RepoStorageKey SHA-256 of something that already seems to be a SHA-256 key: '" +
+                   m_sPath +
+                   "'");
+    }
+    return new RepoStorageKey (m_sPath + SUFFIX_SHA256);
   }
 
   @Override

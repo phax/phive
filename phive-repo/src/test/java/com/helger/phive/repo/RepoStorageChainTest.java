@@ -71,8 +71,8 @@ public final class RepoStorageChainTest
     final RepoStorageChain aChain = RepoStorageChain.of (new CommonsArrayList <> (aInMemory, aLocalFS, aHttp),
                                                          new CommonsArrayList <> (aInMemory, aLocalFS));
     assertTrue (aChain.isCacheRemoteContent ());
-    assertEquals (3, aChain.internalGetStorages ().size ());
-    assertEquals (2, aChain.internalGetWritableStorages ().size ());
+    assertEquals (3, aChain.internalGetAllStorages ().size ());
+    assertEquals (2, aChain.internalGetAllWritableStorages ().size ());
 
     // Ensure it does not exist locally
     assertNull (aInMemory.read (aKey));
@@ -125,8 +125,8 @@ public final class RepoStorageChainTest
                                                          new CommonsArrayList <> (aInMemory, aLocalFS))
                                                     .setCacheRemoteContent (false);
     assertFalse (aChain.isCacheRemoteContent ());
-    assertEquals (3, aChain.internalGetStorages ().size ());
-    assertEquals (2, aChain.internalGetWritableStorages ().size ());
+    assertEquals (3, aChain.internalGetAllStorages ().size ());
+    assertEquals (2, aChain.internalGetAllWritableStorages ().size ());
 
     // Ensure it does not exist locally
     assertNull (aInMemory.read (aKey));

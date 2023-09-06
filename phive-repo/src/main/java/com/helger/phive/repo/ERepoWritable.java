@@ -18,6 +18,11 @@ package com.helger.phive.repo;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Defines if a repository supports the action of writing elements or not.
+ *
+ * @author Philip Helger
+ */
 public enum ERepoWritable
 {
   WITH_WRITE,

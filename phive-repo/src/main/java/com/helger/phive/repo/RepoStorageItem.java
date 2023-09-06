@@ -36,9 +36,8 @@ import com.helger.commons.type.ObjectType;
 
 /**
  * This is an abstract representation of a file retrieved from a repository. It
- * contains the data, the MIME-Type and a hashing status. It does not contain
- * information of a folder or filename - that may be taken from
- * {@link RepoStorageKey}.
+ * contains the data and a hashing status. It does not contain information of a
+ * folder or filename - that may be taken from {@link RepoStorageKey}.
  *
  * @author Philip Helger
  */
