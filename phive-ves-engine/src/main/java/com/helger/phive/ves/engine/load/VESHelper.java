@@ -28,10 +28,10 @@ import org.slf4j.LoggerFactory;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.timing.StopWatch;
-import com.helger.phive.api.executorset.VESID;
+import com.helger.diver.api.version.VESID;
+import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
-import com.helger.phive.repo.IRepoStorageBase;
 
 /**
  * VES helper class

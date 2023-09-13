@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
+import com.helger.diver.api.version.VESID;
 import com.helger.phive.api.source.IValidationSource;
 
 /**

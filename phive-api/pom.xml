@@ -58,6 +58,10 @@
       <groupId>com.helger.commons</groupId>
       <artifactId>ph-commons</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.helger.diver</groupId>
+      <artifactId>ph-diver-api</artifactId>
+    </dependency>
     
     <dependency>
       <groupId>org.slf4j</groupId>

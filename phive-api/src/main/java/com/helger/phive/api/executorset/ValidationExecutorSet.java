@@ -31,6 +31,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.diver.api.version.VESID;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 

@@ -41,6 +41,8 @@ import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.diver.api.version.EVESPseudoVersion;
+import com.helger.diver.api.version.VESID;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 

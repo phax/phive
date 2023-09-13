@@ -79,10 +79,15 @@
       <artifactId>phive-xml</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.helger.phive</groupId>
-      <artifactId>phive-repo</artifactId>
+      <groupId>com.helger.diver</groupId>
+      <artifactId>ph-diver-repo</artifactId>
     </dependency>
     
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>

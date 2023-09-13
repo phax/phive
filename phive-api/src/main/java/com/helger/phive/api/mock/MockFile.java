@@ -27,7 +27,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.phive.api.executorset.VESID;
+import com.helger.diver.api.version.VESID;
 
 /**
  * This class describes a simple test file: the path where it resides and the
