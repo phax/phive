@@ -36,6 +36,12 @@ import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
+/**
+ * The default implementation of {@link IVESLoaderSchematron} for Schematron
+ * validation.
+ *
+ * @author Philip Helger
+ */
 public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
@@ -129,7 +135,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       }
     }
 
-    LOGGER.info ("Loaded XSD ValidationExecutorSchematron using resource type '" +
+    LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
                  sResourceType +
                  "' and path '" +
                  aSCHKey.getPath () +

@@ -51,6 +51,7 @@ import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.ves.v10.VesXmlPreconditionType;
 import com.helger.phive.ves.v10.VesXsdCatalogItemPublicType;
 import com.helger.phive.ves.v10.VesXsdCatalogItemSystemType;
 import com.helger.phive.ves.v10.VesXsdType;
@@ -59,16 +60,32 @@ import com.helger.phive.xml.xsd.ValidationExecutorXSD;
 import com.helger.xml.ls.SimpleLSResourceResolver;
 import com.helger.xml.schema.XMLSchemaCache;
 
+/**
+ * The default implementation of {@link IVESLoaderXSD} for XML Schema
+ * validation.
+ *
+ * @author Philip Helger
+ */
 public class DefaultVESLoaderXSD implements IVESLoaderXSD
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
+  /**
+   * Catalog entry type
+   *
+   * @author Philip Helger
+   */
   private enum ECatalogType
   {
     PUBLIC,
     SYSTEM
   }
 
+  /**
+   * Represent a single XML catalog entry
+   *
+   * @author Philip Helger
+   */
   private static final class CatalogEntry implements IHasID <String>
   {
     private final ECatalogType m_eType;
@@ -178,6 +195,9 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
     }
 
+    // Check for precondition
+    final VesXmlPreconditionType aPrecondition = aXSD.getPrecondition ();
+
     final IReadableResource aRepoRes = new RepoStorageReadableResource (aXSDKey, aXSDItem);
 
     final ValidationExecutorXSD aExecutorXSD;
@@ -193,6 +213,25 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                                      .errorText ("XSD resource type '" +
                                                  sResourceType +
                                                  "' does not use the 'main' element")
+                                     .build ());
+        }
+
+        if (aCatalogEntries.isNotEmpty ())
+        {
+          // TODO implement catalog support
+          aErrorList.add (SingleError.builderWarn ()
+                                     .errorText ("XSD resource type '" +
+                                                 sResourceType +
+                                                 "' is missing support for catalog entries")
+                                     .build ());
+        }
+        if (aPrecondition != null)
+        {
+          // TODO implement precondition support
+          aErrorList.add (SingleError.builderWarn ()
+                                     .errorText ("XSD resource type '" +
+                                                 sResourceType +
+                                                 "' is missing support for XSD preconditions")
                                      .build ());
         }
 
@@ -262,6 +301,25 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                                                  "'")
                                      .build ());
           return null;
+        }
+
+        if (aCatalogEntries.isNotEmpty ())
+        {
+          // TODO implement catalog support
+          aErrorList.add (SingleError.builderWarn ()
+                                     .errorText ("XSD resource type '" +
+                                                 sResourceType +
+                                                 "' does not yet support catalog entries")
+                                     .build ());
+        }
+        if (aPrecondition != null)
+        {
+          // TODO implement precondition support
+          aErrorList.add (SingleError.builderWarn ()
+                                     .errorText ("XSD resource type '" +
+                                                 sResourceType +
+                                                 "' is missing support for XSD preconditions")
+                                     .build ());
         }
 
         LOGGER.info ("Loaded ZIP with " +
@@ -353,7 +411,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
     }
 
-    LOGGER.info ("Loaded XSD ValidationExecutorXSD using resource type '" +
+    LOGGER.info ("Loaded ValidationExecutorXSD using resource type '" +
                  sResourceType +
                  "' and path '" +
                  aXSDKey.getPath () +
