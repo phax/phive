@@ -36,13 +36,15 @@ import com.helger.diver.api.version.VESID;
  * @author Philip Helger
  */
 @Immutable
-public class MockFile
+public class TestFile
 {
   private final IReadableResource m_aResource;
   private final VESID m_aVESID;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
-  public MockFile (@Nonnull final IReadableResource aResource, @Nonnull final VESID aVESID, @Nullable final Set <String> aExpectedErrorIDs)
+  public TestFile (@Nonnull final IReadableResource aResource,
+                   @Nonnull final VESID aVESID,
+                   @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aVESID = ValueEnforcer.notNull (aVESID, "VESID");
@@ -86,8 +88,9 @@ public class MockFile
   }
 
   @Nonnull
-  public static MockFile createGoodCase (@Nonnull final IReadableResource aResource, @Nonnull final VESID aVESID)
+  public static TestFile createGoodCase (@Nonnull final IReadableResource aResource, @Nonnull final VESID aVESID)
   {
-    return new MockFile (aResource, aVESID, null);
+    // Good case: no error
+    return new TestFile (aResource, aVESID, null);
   }
 }
