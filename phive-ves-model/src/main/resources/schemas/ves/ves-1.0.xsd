@@ -23,10 +23,9 @@
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="1.0">
-
   <xs:annotation>
     <xs:documentation>
-This XML Schema is used describe "Validation Execution Sets" as used by the phive-validation library.
+This XML Schema is used describe "Validation Execution Sets" as used by the phive validation library.
 
 Version: 2023-08-23
     </xs:documentation>
@@ -54,7 +53,7 @@ Version: 2023-08-23
       </xs:element>
     </xs:sequence>
   </xs:group>
-  
+ 
 
   <xs:complexType name="VesNamespaceType">
     <xs:attribute name="prefix" type="xs:token" use="required">
@@ -348,6 +347,11 @@ Version: 2023-08-23
   </xs:complexType>
   
   <xs:simpleType name="VesEdifactDirectoryType">
+    <xs:annotation>
+      <xs:documentation>
+        Must be in the form "D96A" or "D01B".
+      </xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:pattern value="D\d\d[ABC]" />
     </xs:restriction>
