@@ -28,12 +28,9 @@ Basically this library wraps different XML Schemas and Schematrons in a certain 
 
 ## Validation executor set identification
 
-Every set of validation artefacts is uniquely identified based on a structure that is similar to [Maven coordinates](https://maven.apache.org/pom.html#Maven_Coordinates). The identifier for a set of validation artefacts is a so called "VESID" ("Validation Executor Set ID"). Each VESID consists of a mandatory group ID, a mandatory artefact ID, a mandatory version number (ideally following the semantic versioning principles) and an optional classifier.
+Every set of validation artefacts is uniquely identified based with a [VESID](https://github.com/phax/ph-diver#vesid).
 E.g. the "Peppol BIS Billing UBL Invoice release May 2023" is identified with the group ID `eu.peppol.bis3`, the artefact ID is `invoice` and the version number is `2023.5` (representing "May 2023") (without a classifier).
 Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.simplerinvoicing`, the artifact ID `invoice` and the version number `1.2` (also without a classifier).
-
-Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. 
-  Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
 
 ## How to validate documents with programmatic rules
 
