@@ -72,6 +72,11 @@
     </dependency>
     
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
       <scope>test</scope>
@@ -87,7 +92,10 @@
         <configuration>
           <instructions>
             <Automatic-Module-Name>com.helger.phive.ves.model</Automatic-Module-Name>
-            <Export-Package>com.helger.phive.ves.model.*</Export-Package>
+            <Export-Package>
+              com.helger.phive.ves.model.v1.*,
+              com.helger.phive.ves.v10.*
+            </Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
         </configuration>

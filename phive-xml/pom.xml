@@ -78,6 +78,12 @@
       <groupId>com.helger.phive</groupId>
       <artifactId>phive-api</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   
   <build>
@@ -89,7 +95,11 @@
         <configuration>
           <instructions>
             <Automatic-Module-Name>com.helger.phive.xml</Automatic-Module-Name>
-            <Export-Package>com.helger.phive.xml.*</Export-Package>
+            <Export-Package>
+              com.helger.phive.xml.schematron.*,
+              com.helger.phive.xml.source.*,
+              com.helger.phive.xml.xsd.*
+            </Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
             <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.schematron.svrl.ISVRLLocationBeautifierSPI</Provide-Capability>
