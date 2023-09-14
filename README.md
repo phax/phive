@@ -146,7 +146,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Moved class `PhiveRestoredException` into a separate package
     * Using the class `VESID` etc. from `ph-diver-api` instead
     * Replaced the `phive-repo` with `ph-diver-repo` instead
-    * Moved classes `[I]ValidationSourceBinary` from `phive-xml` to `phive-api` 
+    * Moved classes `[I]ValidationSourceBinary` from `phive-xml` to `phive-api`
+    * Renamed class `MockFile` to `TestFile`
 * v9.0.0-beta2 - 2023-09-06 [don't use in production]
     * Reworked the version handling inside class `VESID` so that a strict ordering by version is possible
     * Added specific support for the `SNAPSHOT` version, so that `1.0.0-SNAPSHOT` is lower then `1.0.0`
