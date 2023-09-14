@@ -56,6 +56,18 @@ public class ValidationResult implements ISuccessIndicator
     this (aValidationArtefact, aErrorList, ETriState.valueOf (aErrorList.containsNoError ()));
   }
 
+  /**
+   * Constructor
+   *
+   * @param aValidationArtefact
+   *        The validation artefact that was applied. May not be
+   *        <code>null</code>.
+   * @param aErrorList
+   *        The list of errors applying the validation artefact. May not be
+   *        <code>null</code>.
+   * @param eSuccess
+   *        The overall success state. Must not be <code>null</code>.
+   */
   protected ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
                               @Nonnull final IErrorList aErrorList,
                               @Nonnull final ETriState eSuccess)
@@ -112,7 +124,7 @@ public class ValidationResult implements ISuccessIndicator
 
   /**
    * Create an instance for an ignored result.
-   * 
+   *
    * @param aValidationArtefact
    *        The validation artefact that was ignored.
    * @return Never <code>null</code>.

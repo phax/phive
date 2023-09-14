@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.error.IError;
@@ -134,6 +135,8 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    */
   public void forEachFlattened (@Nonnull final Consumer <? super IError> aConsumer)
   {
+    ValueEnforcer.notNull (aConsumer, "Consumer");
+
     for (final ValidationResult aItem : this)
       aItem.getErrorList ().forEach (aConsumer);
   }
