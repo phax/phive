@@ -1,26 +1,24 @@
 # PHIVE - Integrative Validation Engine
 
-[![javadoc](https://javadoc.io/badge2/com.helger.phive/phive-ves-engine/javadoc.svg)](https://javadoc.io/doc/com.helger.phive/phive-ves-engine)
+[![javadoc](https://javadoc.io/badge2/com.helger.phive/phive-engine/javadoc.svg)](https://javadoc.io/doc/com.helger.phive/phive-engine)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom) 
 
-A generic business document validation engine originally developed for Peppol but now also supporting many other document types.
+A generic document validation engine originally developed for Peppol but now also supporting many other document types.
 
-"phive" is an abbreviation of "Philip Helger Integrative Validation Engine" and is pronounced exactly like the digit 5: `[ˈfaɪv]`.
+The original name was "ph-bdve" but because it was so difficult to pronounce, it was decided to change the name to "phive" which is an abbreviation of "Philip Helger Integrative Validation Engine" and is pronounced exactly like the digit 5: `[ˈfaɪv]`. The old name of the repository was "ph-bdve".
 
-This project only contains the validation **engine** - all the preconfigured rules are available in a separate repository at https://github.com/phax/phive-rules
+This project only contains the validation **engine** - all the preconfigured rules are available at https://github.com/phax/phive-rules
 
 This project is licensed under the Apache 2 license.
 
 A live version of this engine can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload) and at [ecosio](https://ecosio.com/en/peppol-and-xml-document-validator/).
 
-This project has the following sub-modules (since v9.0.0):
-* **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
-* **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set. 
-* **`phive-xml`** (previoulsy `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
-* **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents
-* **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
+This project has the following sub-modules:
+* **phive-api** - a generic API that is independent of the effective validation logic
+* **phive-engine** - the validation engine that assembles all the pieces together and validates documents
+* **phive-json** - helper classes to convert validation results from and to JSON
 
-Note: please see [README v5](docs/READMEv5.md), [README v6](docs/READMEv6.md) and [README v8](docs/READMEv8.md) for previous documentation.
+Note: please see [README v5](docs/READMEv5.md) for the v5 documentation and [README v6](docs/READMEv6.md) for the v6 documentation.
 
 # Usage guide
 
@@ -29,23 +27,22 @@ Basically this library wraps different XML Schemas and Schematrons in a certain 
 ## Validation executor set identification
 
 Every set of validation artefacts is uniquely identified based on a structure that is similar to [Maven coordinates](https://maven.apache.org/pom.html#Maven_Coordinates). The identifier for a set of validation artefacts is a so called "VESID" ("Validation Executor Set ID"). Each VESID consists of a mandatory group ID, a mandatory artefact ID, a mandatory version number (ideally following the semantic versioning principles) and an optional classifier.
-E.g. the "Peppol BIS Billing UBL Invoice release May 2023" is identified with the group ID `eu.peppol.bis3`, the artefact ID is `invoice` and the version number is `2023.5` (representing "May 2023") (without a classifier).
+E.g. the "Peppol Invoice Fall release 2018" is identified with the group ID `eu.peppol.bis2`, the artefact ID is `t10` (based on "transaction 10" from CEN BII - historical reasons...), the version number is `3.7.0` (representing "Fall 2018") and no classifier is present.
 Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.simplerinvoicing`, the artifact ID `invoice` and the version number `1.2` (also without a classifier).
 
-Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. 
-  Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
+Each VESID can be represented in a single string in the form `groupID:artifiactID:version[:classifier]`. Neither group ID, nor artifact ID, nor version number, nor classifier may contain the colon (':') character, any bracket character ('<' and '>') nor any other character forbidden in filenames in any OS.
 
-## How to validate documents with programmatic rules
+## How to validate documents
 
-At least the `phive-xml` project and one library with rule sets (like e.g. `phive-rules-peppol` from https://github.com/phax/phive-rules) 
-  is needed in your application. See the section on usage in a Maven project below.
+At least the `phive-engine` project and one library with rule sets (like e.g. `phive-rules-peppol` from https://github.com/phax/phive-rules) is needed in your application. See the section on usage in a Maven project below.
 All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
 Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
 Example for registering (only) Peppol validation artefacts:
 
 ```java
-final ValidationExecutorSetRegistry <IValidationSourceXML> aVESRegistry = new ValidationExecutorSetRegistry<> ();
-PeppolValidation.initStandard (aVESRegistry);
+    final ValidationExecutorSetRegistry <IValidationSourceXML> aVESRegistry = new ValidationExecutorSetRegistry<> ();
+    PeppolValidation.initStandard (aVESRegistry);
+    return aVESRegistry;
 ```
 
 The instance of class `ValidationExecutorSetRegistry` can be kept as a (static) singleton - it is thread-safe.
@@ -53,7 +50,7 @@ Therefore the registration process need to be performed only once.
 
 Validating a business document requires a few more steps.
 1. Access to the registry is needed.
-1. A specific `VESID` instance (e.g. `PeppolValidation2023_05.VID_OPENPEPPOL_INVOICE_UBL_V3`) - there are constants available for all VES identifiers defined in this project.
+1. A specific `VESID` instance (e.g. `PeppolValidation3_10_0.VID_OPENPEPPOL_INVOICE_V3`) - there are constants available for all VES identifiers defined in this project.
 1. The `ValidationExecutionManager` is an in-between class that can be used to customize the execution. But it is created very quickly, so there is no harm on creating it on the fly every time.
 1. An instance of class `ValidationSourceXML` to identify the document to be validate. Class `ValidationSourceXML` has factory methods for the default cases (having an `org.w3c.dom.Node` or having an `com.helger.commons.io.resource.IReadableResource`).
 1. The validation results are stored in an instance of class `ValidationResultList`. This class is a list of `ValidationResult` instances - each `ValidationResult` represents the result of a single level of validation.
@@ -64,44 +61,35 @@ Validating a business document requires a few more steps.
     // Resolve the VES ID
     final IValidationExecutorSet<IValidationSourceXML> aVES = aVESRegistry.getOfID (aVESID);
     if (aVES != null) {
+      // Code for 6.x:
+      final ValidationExecutionManager<IValidationSourceXML> aVEM = new ValidationExecutionManager<> (aVES);
       // What to validate?
       IValidationSourceXML aValidationSource = ...;
-      
-      // Build execution manager 
-      final ValidationExecutionManager<IValidationSourceXML> aVEM = new ValidationExecutionManager<> (aVES);
-      
-      // Main execution of rules on validation source
+      // Main execution
       final ValidationResultList aValidationResult = aVEM.executeValidation (aValidationSource);
       if (aValidationResult.containsAtLeastOneError ()) {
         // errors found ...
       } else {
-        // no errors (but maybe warnings) found ...
+        // no errors (but maybe warnings) found
       }                                                                       
     }                                                                             
 ```
 
-Since v6 the following simpler code can be used instead:
+Since v6 you have an easier solution to perform the same:
 
 ```java
     // Resolve the VES ID
     final IValidationExecutorSet<IValidationSourceXML> aVES = aVESRegistry.getOfID (aVESID);
     if (aVES != null) {
-      // What to validate?
-      IValidationSourceXML aValidationSource = ...;
-      
       // Shortcut introduced in v6
       final ValidationResultList aValidationResult = ValidationExecutionManager.executeValidation (aVES, aValidationSource);
       if (aValidationResult.containsAtLeastOneError ()) {
         // errors found ...
       } else {
-        // no errors (but maybe warnings) found ...
+        // no errors (but maybe warnings) found
       }                                                                       
     }                                                                             
 ```
-
-## How to validate documents with programmatic rules
-
-TODO The description of this section needs to be written
 
 # Maven usage
 
@@ -110,17 +98,17 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
 ```xml
 <dependency>
   <groupId>com.helger.phive</groupId>
-  <artifactId>phive-xml</artifactId>
+  <artifactId>phive-engine</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```
 
-If you are interested in the validation result transformation you need to also include this artefact.  
+If you are interested in the JSON binding you may also include this artefact.  
 
 ```xml
 <dependency>
   <groupId>com.helger.phive</groupId>
-  <artifactId>phive-result</artifactId>
+  <artifactId>phive-json</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```
@@ -143,7 +131,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v9.0.0 - 2023-09-14
+* v9.0.0-rc1 - 2023-09-14
     * Moved class `PhiveRestoredException` into a separate package
     * Using the class `VESID` etc. from `ph-diver-api` instead
     * Replaced the `phive-repo` with `ph-diver-repo` instead 
