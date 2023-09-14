@@ -14,12 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.xml.source;
+package com.helger.phive.api.source;
 
 import javax.annotation.Nullable;
 
 import com.helger.commons.io.ByteArrayWrapper;
-import com.helger.phive.api.source.IValidationSource;
 
 /**
  * Binary validation source.

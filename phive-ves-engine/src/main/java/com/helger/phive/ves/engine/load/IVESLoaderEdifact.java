@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.source.IValidationSourceBinary;
 import com.helger.phive.ves.v10.VesEdifactType;
-import com.helger.phive.xml.source.IValidationSourceBinary;
 
 /**
  * This interface is used by {@link VESLoader} create an
