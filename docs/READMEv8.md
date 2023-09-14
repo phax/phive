@@ -1,4 +1,4 @@
-# PHIVE - Integrative Validation Engine
+# PHIVE v7 and v8
 
 [![javadoc](https://javadoc.io/badge2/com.helger.phive/phive-engine/javadoc.svg)](https://javadoc.io/doc/com.helger.phive/phive-engine)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom) 

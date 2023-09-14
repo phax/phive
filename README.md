@@ -13,14 +13,16 @@ This project is licensed under the Apache 2 license.
 
 A live version of this engine can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload) and at [ecosio](https://ecosio.com/en/peppol-and-xml-document-validator/).
 
-This project has the following sub-modules (since v9.0.0):
+This project has the following sub-modules:
 * **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
 * **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set. 
 * **`phive-xml`** (previoulsy `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
-* **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents
+* **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
 
-Note: please see [README v5](docs/READMEv5.md), [README v6](docs/READMEv6.md) and [README v8](docs/READMEv8.md) for previous documentation.
+Note: this library does NOT include an EDIFACT validation. It's a placeholder for local implementations.
+
+Note: please see [README v5](docs/READMEv5.md), [README v6](docs/READMEv6.md) and [README v7/v8](docs/READMEv8.md) for previous documentation.
 
 # Usage guide
 
@@ -98,7 +100,7 @@ Since v6 the following simpler code can be used instead:
 
 ## How to validate documents with programmatic rules
 
-TODO The description of this section needs to be written
+TODO The description of this section needs to be written. Please have patience until everything is ready and setup.
 
 # Maven usage
 
