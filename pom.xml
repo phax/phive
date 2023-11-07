@@ -42,8 +42,8 @@
   </licenses>
   
   <scm>
-    <connection>scm:git:git@github.com:phax/phive.git</connection>
-    <developerConnection>scm:git:git@github.com:phax/phive.git</developerConnection>
+    <connection>scm:git:https://github.com/phax/phive.git</connection>
+    <developerConnection>scm:git:https://github.com/phax/phive.git</developerConnection>
     <url>http://github.com/phax/phive</url>
     <tag>HEAD</tag>
   </scm>
