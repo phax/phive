@@ -357,6 +357,18 @@ Version: 2023-08-23
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="VesEdifactSyntaxVersionType">
+    <xs:annotation>
+      <xs:documentation>
+        Must be in the form 1 to 4.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="4" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:complexType name="VesEdifactType">
     <xs:sequence>
       <xs:element name="directory" type="VesEdifactDirectoryType">
@@ -367,6 +379,11 @@ Version: 2023-08-23
       <xs:element name="message" type="xs:token">
         <xs:annotation>
           <xs:documentation>The EDIFACT message type, like 'DESADV'</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="syntaxVersion" type="VesEdifactSyntaxVersionType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The EDIFACT syntax version to be used. If none is provided, no special checks will be performed</xs:documentation>
         </xs:annotation>
       </xs:element>
       
