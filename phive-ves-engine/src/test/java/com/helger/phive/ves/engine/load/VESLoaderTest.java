@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.ves.engine.ves;
+package com.helger.phive.ves.engine.load;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -46,11 +46,8 @@ import com.helger.diver.repo.RepoStorageItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
 import com.helger.phive.api.result.ValidationResultList;
-import com.helger.phive.ves.engine.load.LoadedVES;
 import com.helger.phive.ves.engine.load.LoadedVES.Status;
-import com.helger.phive.ves.engine.load.VESLoader;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
-import com.helger.phive.ves.engine.load.VESLoadingException;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.source.IValidationSourceXML;
