@@ -340,7 +340,10 @@ public final class VESLoader
           if (aLoadedRequirement == null)
             throw new VESLoadingException ("Failed to load required VESID '" +
                                            aRequirement.getRequiredVESID ().getAsSingleID () +
-                                           "' [lazy]");
+                                           "' [lazy]: " +
+                                           StringHelper.getImplodedMapped ("\n  ",
+                                                                           aLocalErrorList,
+                                                                           x -> x.getAsString (Locale.ENGLISH)));
           return aLoadedRequirement;
         });
       }
