@@ -16,6 +16,10 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
@@ -30,6 +34,7 @@ import com.helger.commons.collection.impl.CommonsLinkedHashSet;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
@@ -37,14 +42,17 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
+import com.helger.commons.timing.StopWatch;
 import com.helger.diver.api.version.VESID;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.RepoStorageItem;
-import com.helger.diver.repo.RepoStorageKey;
+import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
-import com.helger.phive.ves.engine.load.LoadedVES.EVESSyntax;
+import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.ves.engine.load.LoadedVES.Requirement;
 import com.helger.phive.ves.engine.load.LoadedVES.Status;
+import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
 import com.helger.phive.ves.v10.VesCustomErrorType;
@@ -72,19 +80,143 @@ public final class VESLoader
 {
   public static final String FILE_EXT_VES = ".ves";
   public static final String FILE_EXT_STATUS = ".status";
+  public static final boolean DEFAULT_USE_EAGER_REQUIREMENT_LOADING = false;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (VESLoader.class);
+  private static final Duration DURATION_WARN = Duration.ofMillis (500);
 
-  @Nonnull
-  static VESID wrapID (@Nonnull final VesResourceType aVRT)
+  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+  private final IRepoStorageBase m_aRepo;
+  @GuardedBy ("m_aRWLock")
+  private IVESLoaderXSD m_aLoaderXSD = new DefaultVESLoaderXSD ();
+  @GuardedBy ("m_aRWLock")
+  private IVESLoaderSchematron m_aLoaderSchematron = new DefaultVESLoaderSchematron ();
+  @GuardedBy ("m_aRWLock")
+  private IVESLoaderEdifact m_aLoaderEdifact = null;
+  @GuardedBy ("m_aRWLock")
+  private boolean m_bUseEagerRequirementLoading = DEFAULT_USE_EAGER_REQUIREMENT_LOADING;
+
+  public VESLoader (@Nonnull final IRepoStorageBase aRepo)
   {
-    return new VESID (aVRT.getGroupId (), aVRT.getArtifactId (), aVRT.getVersion ());
+    ValueEnforcer.notNull (aRepo, "Repo");
+    m_aRepo = aRepo;
   }
 
-  @Nonnull
-  static RepoStorageKey wrapKey (@Nonnull final VesResourceType aVRT)
+  /**
+   * @return The XSD loader to be used. May be <code>null</code>.
+   */
+  @Nullable
+  public IVESLoaderXSD getLoaderXSD ()
   {
-    return RepoStorageKey.of (wrapID (aVRT), "." + aVRT.getType ());
+    return m_aRWLock.readLockedGet ( () -> m_aLoaderXSD);
+  }
+
+  /**
+   * Set the XSD loader to be used.
+   *
+   * @param aLoader
+   *        The loader to be used. May be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public VESLoader setLoaderXSD (@Nullable final IVESLoaderXSD aLoader)
+  {
+    m_aRWLock.writeLocked ( () -> m_aLoaderXSD = aLoader);
+    return this;
+  }
+
+  /**
+   * @return The Schematron loader to be used. May be <code>null</code>.
+   */
+  @Nullable
+  public IVESLoaderSchematron getLoaderSchematron ()
+  {
+    return m_aRWLock.readLockedGet ( () -> m_aLoaderSchematron);
+  }
+
+  /**
+   * Set the Schematron loader to be used.
+   *
+   * @param aLoader
+   *        The loader to be used. May be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public VESLoader setLoaderSchematron (@Nullable final IVESLoaderSchematron aLoader)
+  {
+    m_aRWLock.writeLocked ( () -> m_aLoaderSchematron = aLoader);
+    return this;
+  }
+
+  /**
+   * @return The Edifact loader to be used. May be <code>null</code>.
+   */
+  @Nullable
+  public IVESLoaderEdifact getLoaderEdifact ()
+  {
+    return m_aRWLock.readLockedGet ( () -> m_aLoaderEdifact);
+  }
+
+  /**
+   * Set the Edifact loader to be used.
+   *
+   * @param aLoader
+   *        The loader to be used. May be <code>null</code>.
+   * @return this for chaining
+   */
+  @Nonnull
+  public VESLoader setLoaderEdifact (@Nullable final IVESLoaderEdifact aLoader)
+  {
+    m_aRWLock.writeLocked ( () -> m_aLoaderEdifact = aLoader);
+    return this;
+  }
+
+  /**
+   * @return <code>true</code> if eager requirement loading is enabled,
+   *         <code>false</code> if lazy loading is enabled.
+   */
+  public boolean isUseEagerRequirementLoading ()
+  {
+    return m_aRWLock.readLockedBoolean ( () -> m_bUseEagerRequirementLoading);
+  }
+
+  /**
+   * User eager or lazy loading of dependent resources.
+   *
+   * @param b
+   *        <code>true</code> for eager loading, <code>false</code> for lazy
+   *        loading
+   * @return this for chaining
+   */
+  @Nonnull
+  public VESLoader setUseEagerRequirementLoading (final boolean b)
+  {
+    m_aRWLock.writeLocked ( () -> m_bUseEagerRequirementLoading = b);
+    return this;
+  }
+
+  @ThreadSafe
+  public static final class VESLoaderStatus
+  {
+    private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
+    @GuardedBy ("m_aRWLock")
+    private final ICommonsSet <VESID> m_aLoaded = new CommonsLinkedHashSet <> ();
+
+    @Nonnull
+    public ESuccess addVESID (@Nonnull final VESID aVESID)
+    {
+      return ESuccess.valueOf (m_aRWLock.writeLockedBoolean ( () -> m_aLoaded.add (aVESID)));
+    }
+
+    @Nonnull
+    @Nonempty
+    public String getDepedencyChain (@Nullable final VESID aLastOne)
+    {
+      final ICommonsList <VESID> aList = m_aLoaded.getCopyAsList ();
+      if (aLastOne != null)
+        aList.add (aLastOne);
+      return StringHelper.imploder ().source (aList, x -> "'" + x.getAsSingleID () + "'").separator (" -> ").build ();
+    }
   }
 
   static void wrap (@Nullable final VesNamespaceListType aNamespaces, @Nonnull final MapBasedNamespaceContext aNSCtx)
@@ -143,103 +275,11 @@ public final class VESLoader
     return ret;
   }
 
-  private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private final IRepoStorageBase m_aRepo;
-  @GuardedBy ("m_aRWLock")
-  private IVESLoaderXSD m_aLoaderXSD = new DefaultVESLoaderXSD ();
-  @GuardedBy ("m_aRWLock")
-  private IVESLoaderSchematron m_aLoaderSchematron = new DefaultVESLoaderSchematron ();
-  @GuardedBy ("m_aRWLock")
-  private IVESLoaderEdifact m_aLoaderEdifact = null;
-  @GuardedBy ("m_aRWLock")
-  private boolean m_bUseEagerRequirementLoading = false;
-
-  public VESLoader (@Nonnull final IRepoStorageBase aRepo)
-  {
-    ValueEnforcer.notNull (aRepo, "Repo");
-    m_aRepo = aRepo;
-  }
-
-  @Nullable
-  public IVESLoaderXSD getLoaderXSD ()
-  {
-    return m_aRWLock.readLockedGet ( () -> m_aLoaderXSD);
-  }
-
-  @Nonnull
-  public VESLoader setLoaderXSD (@Nullable final IVESLoaderXSD aLoader)
-  {
-    m_aRWLock.writeLocked ( () -> m_aLoaderXSD = aLoader);
-    return this;
-  }
-
-  @Nullable
-  public IVESLoaderSchematron getLoaderSchematron ()
-  {
-    return m_aRWLock.readLockedGet ( () -> m_aLoaderSchematron);
-  }
-
-  @Nonnull
-  public VESLoader setLoaderSchematron (@Nullable final IVESLoaderSchematron aLoader)
-  {
-    m_aRWLock.writeLocked ( () -> m_aLoaderSchematron = aLoader);
-    return this;
-  }
-
-  @Nullable
-  public IVESLoaderEdifact getLoaderEdifact ()
-  {
-    return m_aRWLock.readLockedGet ( () -> m_aLoaderEdifact);
-  }
-
-  @Nonnull
-  public VESLoader setLoaderEdifact (@Nullable final IVESLoaderEdifact aLoader)
-  {
-    m_aRWLock.writeLocked ( () -> m_aLoaderEdifact = aLoader);
-    return this;
-  }
-
-  public boolean isUseEagerRequirementLoading ()
-  {
-    return m_aRWLock.readLockedBoolean ( () -> m_bUseEagerRequirementLoading);
-  }
-
-  @Nonnull
-  public VESLoader setUseEagerRequirementLoading (final boolean b)
-  {
-    m_aRWLock.writeLocked ( () -> m_bUseEagerRequirementLoading = b);
-    return this;
-  }
-
-  @ThreadSafe
-  public static final class VESLoaderStatus
-  {
-    private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-    @GuardedBy ("m_aRWLock")
-    private final ICommonsSet <VESID> m_aLoaded = new CommonsLinkedHashSet <> ();
-
-    @Nonnull
-    public ESuccess addVESID (@Nonnull final VESID aVESID)
-    {
-      return ESuccess.valueOf (m_aRWLock.writeLockedBoolean ( () -> m_aLoaded.add (aVESID)));
-    }
-
-    @Nonnull
-    @Nonempty
-    public String getDepedencyChain (@Nullable final VESID aLastOne)
-    {
-      final ICommonsList <VESID> aList = m_aLoaded.getCopyAsList ();
-      if (aLastOne != null)
-        aList.add (aLastOne);
-      return StringHelper.imploder ().source (aList, x -> "'" + x.getAsSingleID () + "'").separator (" -> ").build ();
-    }
-  }
-
   @Nullable
   public LoadedVES convertToLoadedVES (@Nonnull final LoadedVES.Status aStatus,
                                        @Nonnull final VesType aVES,
                                        @Nonnull final VESLoaderStatus aLoaderStatus,
-                                       @Nonnull final ErrorList aErrorList)
+                                       @Nonnull final ErrorList aErrorList) throws VESLoadingException
   {
     ValueEnforcer.notNull (aStatus, "Status");
     ValueEnforcer.notNull (aVES, "VES");
@@ -300,7 +340,10 @@ public final class VESLoader
           if (aLoadedRequirement == null)
             throw new VESLoadingException ("Failed to load required VESID '" +
                                            aRequirement.getRequiredVESID ().getAsSingleID () +
-                                           "' [lazy]");
+                                           "' [lazy]: " +
+                                           StringHelper.getImplodedMapped ("\n  ",
+                                                                           aLocalErrorList,
+                                                                           x -> x.getAsString (Locale.ENGLISH)));
           return aLoadedRequirement;
         });
       }
@@ -404,12 +447,35 @@ public final class VESLoader
     return convertToLoadedVES (aStatus, aVES, aLoaderStatus, aErrorList);
   }
 
+  /**
+   * Load a VES by the provided VESID and fill all errors into the provided
+   * {@link ErrorList}.
+   *
+   * @param aVESID
+   *        The VESID to load. May not be <code>null</code>.
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if loading failed
+   */
   @Nullable
   public LoadedVES loadVESFromRepo (@Nonnull final VESID aVESID, @Nonnull final ErrorList aErrorList)
   {
     return loadVESFromRepo (aVESID, new VESLoaderStatus (), aErrorList);
   }
 
+  /**
+   * Load a VES by the provided VESID and fill all errors into the provided
+   * {@link ErrorList}.
+   *
+   * @param aVESID
+   *        The VESID to load. May not be <code>null</code>.
+   * @param aLoaderStatus
+   *        The internal loader status to be used, to make sure no cycles etc.
+   *        are contained
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if loading failed
+   */
   @Nullable
   public LoadedVES loadVESFromRepo (@Nonnull final VESID aVESID,
                                     @Nonnull final VESLoaderStatus aLoaderStatus,
@@ -435,7 +501,7 @@ public final class VESLoader
 
     // Check if an explicit status is available
     final LoadedVES.Status aStatus;
-    final RepoStorageKey aRepoKeyStatus = RepoStorageKey.of (aVESID, FILE_EXT_STATUS);
+    final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_STATUS);
     if (m_aRepo.exists (aRepoKeyStatus))
     {
       final RepoStorageItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
@@ -474,7 +540,7 @@ public final class VESLoader
     }
 
     // Read VES content from repo
-    final RepoStorageKey aRepoKeyVES = RepoStorageKey.of (aVESID, FILE_EXT_VES);
+    final RepoStorageKeyOfArtefact aRepoKeyVES = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_VES);
     final RepoStorageItem aRepoContentVES = m_aRepo.read (aRepoKeyVES);
     if (aRepoContentVES == null)
     {
@@ -500,5 +566,94 @@ public final class VESLoader
 
     // Now read into data model
     return convertToLoadedVES (aStatus, aVES, aLoaderStatus, aErrorList);
+  }
+
+  @Nonnull
+  static VESID createVESID (@Nonnull final VesResourceType aVRT)
+  {
+    // No classifier contained
+    return new VESID (aVRT.getGroupId (), aVRT.getArtifactId (), aVRT.getVersion ());
+  }
+
+  @Nonnull
+  static RepoStorageKeyOfArtefact createRepoStorageKey (@Nonnull final VesResourceType aVRT)
+  {
+    // File extension must start with a dot
+    return RepoStorageKeyOfArtefact.of (createVESID (aVRT), "." + aVRT.getType ());
+  }
+
+  /**
+   * Load the validation rules from an external repository, identified by a
+   * VESID and apply the validation rules onto the provided data to be
+   * validated. All errors occurring are stored in the provided error list.
+   *
+   * @param aRepo
+   *        Repository to load from. Must not be <code>null</code>.
+   * @param aVESID
+   *        The VESID of the artefacts to load. Must not be <code>null</code>.
+   * @param aValidationSource
+   *        The data to be validated. Must not be <code>null</code>.
+   * @param aErrorList
+   *        The error list to be filled, containing the loading errors.
+   *        Validation errors will be returned in a separate
+   *        {@link ValidationResultList}. Must not be <code>null</code>.
+   * @return The validation result
+   * @throws VESLoadingException
+   *         If anything goes wrong
+   */
+  @Nonnull
+  public static VESValidationResult loadVESAndApplyValidation (@Nonnull final IRepoStorageBase aRepo,
+                                                               @Nonnull final VESID aVESID,
+                                                               @Nonnull final IValidationSource aValidationSource,
+                                                               @Nonnull final ErrorList aErrorList) throws VESLoadingException
+  {
+    ValueEnforcer.notNull (aRepo, "RepoChain");
+    ValueEnforcer.notNull (aVESID, "VESID");
+    ValueEnforcer.notNull (aValidationSource, "ValidationSource");
+    ValueEnforcer.notNull (aErrorList, "ErrorList");
+
+    // Remember start date time
+    final OffsetDateTime aStartDT = PDTFactory.getCurrentOffsetDateTime ();
+
+    // load
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Start VES loading of '" + aVESID.getAsSingleID () + "'");
+
+    final StopWatch aSWLoad = StopWatch.createdStarted ();
+    final LoadedVES aLoadedVES = new VESLoader (aRepo).setUseEagerRequirementLoading (true)
+                                                      .loadVESFromRepo (aVESID, aErrorList);
+    aSWLoad.stop ();
+    if (aLoadedVES == null)
+    {
+      throw new VESLoadingException ("Failed to load VES '" +
+                                     aVESID.getAsSingleID () +
+                                     "': " +
+                                     StringHelper.getImplodedMapped ("\n  ",
+                                                                     aErrorList,
+                                                                     x -> x.getAsString (Locale.ENGLISH)));
+    }
+
+    final Duration aLoadDuration = aSWLoad.getDuration ();
+    if (aLoadDuration.compareTo (DURATION_WARN) > 0)
+      LOGGER.warn ("Finished VES loading of '" + aVESID.getAsSingleID () + "' after " + aLoadDuration);
+
+    // validate
+    if (LOGGER.isDebugEnabled ())
+      LOGGER.debug ("Start validation of '" + aVESID.getAsSingleID () + "'");
+
+    final ValidationResultList aValidationResultList = new ValidationResultList ();
+    final Duration aValidateDuration = StopWatch.runMeasured ( () -> {
+      aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
+    });
+    if (aValidateDuration.compareTo (DURATION_WARN) > 0)
+      LOGGER.warn ("Finished validation of '" + aVESID.getAsSingleID () + "' after " + aValidateDuration);
+
+    // Collect all results
+    return new VESValidationResult (aVESID,
+                                    aValidationSource,
+                                    aStartDT,
+                                    aLoadDuration,
+                                    aValidateDuration,
+                                    aValidationResultList);
   }
 }
