@@ -78,8 +78,15 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
 @ThreadSafe
 public final class VESLoader
 {
+  /**
+   * File extension for VES files
+   */
   public static final String FILE_EXT_VES = ".ves";
+  /**
+   * File extension for status files
+   */
   public static final String FILE_EXT_STATUS = ".status";
+
   public static final boolean DEFAULT_USE_EAGER_REQUIREMENT_LOADING = false;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (VESLoader.class);
@@ -490,6 +497,7 @@ public final class VESLoader
     // Ensure the VESID is not yet in the loader chain
     if (aLoaderStatus.addVESID (aVESID).isFailure ())
     {
+      // This is a circular dependency
       aErrorList.add (SingleError.builderError ()
                                  .errorText ("The VESID '" +
                                              aVESID.getAsSingleID () +

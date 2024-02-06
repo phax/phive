@@ -104,7 +104,9 @@ public final class LoadedVES
   }
 
   /**
-   * The potentially mutable part of a loaded VES.
+   * The potentially mutable part of a loaded VES. This is the syntax
+   * independent version of the status, in case there will be more then one
+   * version.
    *
    * @author Philip Helger
    */
