@@ -43,12 +43,11 @@ import com.helger.diver.repo.ERepoWritable;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.RepoStorageChain;
 import com.helger.diver.repo.RepoStorageItem;
-import com.helger.diver.repo.RepoStorageKey;
+import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.ves.engine.load.LoadedVES;
 import com.helger.phive.ves.engine.load.LoadedVES.Status;
-import com.helger.phive.ves.engine.load.VESHelper;
 import com.helger.phive.ves.engine.load.VESLoader;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
 import com.helger.phive.ves.engine.load.VESLoadingException;
@@ -57,9 +56,9 @@ import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 
-public final class VESHelperTest
+public final class VESLoaderTest
 {
-  private static final Logger LOGGER = LoggerFactory.getLogger (VESHelperTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger (VESLoaderTest.class);
   private static IRepoStorageBase s_aRepoStorage;
 
   private static void _addResource (@Nonnull final RepoStorageInMemory aInMemoryRepo,
@@ -68,7 +67,7 @@ public final class VESHelperTest
   {
     // Create StorageKey
     final String sFileExt = "." + FilenameHelper.getExtension (aPayload.getPath ());
-    final RepoStorageKey aKey = RepoStorageKey.of (aVESID, sFileExt);
+    final RepoStorageKeyOfArtefact aKey = RepoStorageKeyOfArtefact.of (aVESID, sFileExt);
 
     // Read in the ves file from resources
     final byte [] aData = StreamHelper.getAllBytes (aPayload);
@@ -167,10 +166,11 @@ public final class VESHelperTest
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
+    final ValidationResultList aValidationResultList = VESLoader.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
-                                                                                            aErrorList);
+                                                                                            aErrorList)
+                                                                .getValidationResultList ();
     assertEquals (aErrorList.toString (), 0, aErrorList.size ());
 
     assertNotNull (aValidationResultList);
@@ -186,10 +186,11 @@ public final class VESHelperTest
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
+    final ValidationResultList aValidationResultList = VESLoader.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
-                                                                                            aErrorList);
+                                                                                            aErrorList)
+                                                                .getValidationResultList ();
     assertEquals (aErrorList.toString (), 0, aErrorList.size ());
 
     assertNotNull (aValidationResultList);
@@ -205,10 +206,11 @@ public final class VESHelperTest
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
+    final ValidationResultList aValidationResultList = VESLoader.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
-                                                                                            aErrorList);
+                                                                                            aErrorList)
+                                                                .getValidationResultList ();
     assertEquals (aErrorList.toString (), 0, aErrorList.size ());
 
     assertNotNull (aValidationResultList);
@@ -225,10 +227,11 @@ public final class VESHelperTest
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
+    final ValidationResultList aValidationResultList = VESLoader.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
-                                                                                            aErrorList);
+                                                                                            aErrorList)
+                                                                .getValidationResultList ();
     assertEquals (aErrorList.toString (), 0, aErrorList.size ());
 
     assertNotNull (aValidationResultList);
@@ -246,10 +249,11 @@ public final class VESHelperTest
     assertNotNull (aValidationSource.getNode ());
 
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResultList aValidationResultList = VESHelper.loadVESAndApplyValidation (s_aRepoStorage,
+    final ValidationResultList aValidationResultList = VESLoader.loadVESAndApplyValidation (s_aRepoStorage,
                                                                                             aVESID,
                                                                                             aValidationSource,
-                                                                                            aErrorList);
+                                                                                            aErrorList)
+                                                                .getValidationResultList ();
     assertEquals (aErrorList.toString (), 0, aErrorList.size ());
 
     assertNotNull (aValidationResultList);

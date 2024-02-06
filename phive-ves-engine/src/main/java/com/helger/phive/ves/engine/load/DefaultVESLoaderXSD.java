@@ -23,6 +23,7 @@ import java.util.zip.ZipInputStream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceInputStream;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
+import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.diver.repo.IRepoStorageBase;
@@ -68,6 +70,9 @@ import com.helger.xml.schema.XMLSchemaCache;
  */
 public class DefaultVESLoaderXSD implements IVESLoaderXSD
 {
+  public static final String RESOURCE_TYPE_ZIP = "zip";
+  public static final String RESOURCE_TYPE_XSD = "xsd";
+
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
   /**
@@ -75,10 +80,30 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
    *
    * @author Philip Helger
    */
-  private enum ECatalogType
+  public enum ECatalogType implements IHasID <String>
   {
-    PUBLIC,
-    SYSTEM
+    PUBLIC ("public"),
+    SYSTEM ("system");
+
+    private final String m_sID;
+
+    ECatalogType (@Nonnull @Nonempty final String sID)
+    {
+      m_sID = sID;
+    }
+
+    @Nonnull
+    @Nonempty
+    public String getID ()
+    {
+      return m_sID;
+    }
+
+    @Nullable
+    public static ECatalogType getFromIDOrNull (@Nullable final String sID)
+    {
+      return EnumHelper.getFromIDOrNull (ECatalogType.class, sID);
+    }
   }
 
   /**
@@ -86,7 +111,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
    *
    * @author Philip Helger
    */
-  private static final class CatalogEntry implements IHasID <String>
+  @Immutable
+  public static final class CatalogEntry implements IHasID <String>
   {
     private final ECatalogType m_eType;
     private final String m_sID;
@@ -136,12 +162,13 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   @Nullable
   private static final String _unifyPath (@Nullable final String x)
   {
+    // Converty any "\" to "/"
     String ret = FilenameHelper.getPathUsingUnixSeparator (x);
     if (ret != null)
     {
       // Make absolute to simply LS resource resolving
       if (!ret.startsWith ("/"))
-        ret = "/" + ret;
+        ret = '/' + ret;
     }
     return ret;
   }
@@ -151,7 +178,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                                                              @Nonnull final VesXsdType aXSD,
                                                              @Nonnull final ErrorList aErrorList)
   {
-    final RepoStorageKey aXSDKey = VESLoader.wrapKey (aXSD.getResource ());
+    final RepoStorageKey aXSDKey = VESLoader.createRepoStorageKey (aXSD.getResource ());
 
     // Read referenced Item
     final RepoStorageItem aXSDItem = aRepo.read (aXSDKey);
@@ -176,12 +203,14 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           final VesXsdCatalogItemPublicType aPublic = (VesXsdCatalogItemPublicType) aItem;
           aEntry = new CatalogEntry (ECatalogType.PUBLIC,
                                      aPublic.getUri (),
-                                     VESLoader.wrapKey (aPublic.getResource ()));
+                                     VESLoader.createRepoStorageKey (aPublic.getResource ()));
         }
         else
         {
           final VesXsdCatalogItemSystemType aSystem = (VesXsdCatalogItemSystemType) aItem;
-          aEntry = new CatalogEntry (ECatalogType.SYSTEM, aSystem.getId (), VESLoader.wrapKey (aSystem.getResource ()));
+          aEntry = new CatalogEntry (ECatalogType.SYSTEM,
+                                     aSystem.getId (),
+                                     VESLoader.createRepoStorageKey (aSystem.getResource ()));
         }
         if (aCatalogEntries.containsKey (aEntry.getID ()))
         {
@@ -204,7 +233,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     final String sResourceType = aXSD.getResource ().getType ();
     switch (sResourceType)
     {
-      case "xsd":
+      case RESOURCE_TYPE_XSD:
       {
         // Indicate a potential error
         if (StringHelper.hasText (aXSD.getMain ()))
@@ -239,7 +268,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         aExecutorXSD = ValidationExecutorXSD.create (aRepoRes);
         break;
       }
-      case "zip":
+      case RESOURCE_TYPE_ZIP:
       {
         final String sMainUnified = _unifyPath (aXSD.getMain ());
         if (StringHelper.hasNoText (sMainUnified))

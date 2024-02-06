@@ -20,6 +20,8 @@ import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
@@ -42,6 +44,7 @@ import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
@@ -51,13 +54,7 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
  */
 public final class LoadedVES
 {
-  public enum EVESSyntax
-  {
-    XSD,
-    SCHEMATRON,
-    EDIFACT
-  }
-
+  @Immutable
   public static final class Header
   {
     private final VESID m_aVESID;
@@ -110,6 +107,7 @@ public final class LoadedVES
    *
    * @author Philip Helger
    */
+  @Immutable
   public static final class Status
   {
     private final XMLOffsetDateTime m_aStatusLastMod;
@@ -136,12 +134,12 @@ public final class LoadedVES
       return m_aStatusLastMod;
     }
 
-    public boolean isDTValidNow ()
+    public boolean isDateTimeValidNow ()
     {
-      return isDTValidAt (PDTFactory.getCurrentXMLOffsetDateTime ());
+      return isDateTimeValidAt (PDTFactory.getCurrentXMLOffsetDateTime ());
     }
 
-    public boolean isDTValidAt (@Nonnull final XMLOffsetDateTime aDT)
+    public boolean isDateTimeValidAt (@Nonnull final XMLOffsetDateTime aDT)
     {
       if (m_aValidFrom != null)
       {
@@ -171,7 +169,7 @@ public final class LoadedVES
 
     public boolean isOverallValid ()
     {
-      return isDTValidNow () && !isExplicitlyDeprecated ();
+      return isDateTimeValidNow () && !isExplicitlyDeprecated ();
     }
 
     @Nonnull
@@ -187,6 +185,7 @@ public final class LoadedVES
    *
    * @author Philip Helger
    */
+  @NotThreadSafe
   public static final class OutputType
   {
     private final ICommonsMap <String, EErrorLevel> m_aCustomErrorLevels = new CommonsHashMap <> ();
@@ -202,6 +201,7 @@ public final class LoadedVES
    *
    * @author Philip Helger
    */
+  @NotThreadSafe
   public static final class Requirement
   {
     private final VESID m_aRequiredVESID;

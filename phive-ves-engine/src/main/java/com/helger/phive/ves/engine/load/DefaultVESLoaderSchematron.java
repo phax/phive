@@ -44,6 +44,9 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
  */
 public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 {
+  public static final String RESOURCE_TYPE_SCH = "sch";
+  public static final String RESOURCE_TYPE_XSLT = "xslt";
+
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
 
   @Nonnull
@@ -51,7 +54,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
                                                                     @Nonnull final VesSchematronType aSCH,
                                                                     @Nonnull final ErrorList aErrorList)
   {
-    final RepoStorageKey aSCHKey = VESLoader.wrapKey (aSCH.getResource ());
+    final RepoStorageKey aSCHKey = VESLoader.createRepoStorageKey (aSCH.getResource ());
 
     // Read referenced Item
     final RepoStorageItem aSCHItem = aRepo.read (aSCHKey);
@@ -74,7 +77,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
     final String sResourceType = aSCH.getResource ().getType ();
     switch (sResourceType)
     {
-      case "sch":
+      case RESOURCE_TYPE_SCH:
       {
         // Resolve Schematron Engine
         final String sEngine = aSCH.getEngine ();
@@ -110,7 +113,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
         }
         break;
       }
-      case "xslt":
+      case RESOURCE_TYPE_XSLT:
       {
         // Indicate a potential error
         if (StringHelper.hasText (aSCH.getEngine ()))
