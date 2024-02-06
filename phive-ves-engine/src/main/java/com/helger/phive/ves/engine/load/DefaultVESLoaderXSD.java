@@ -287,7 +287,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         long nUnzippedLed = 0;
         final byte [] aBuffer = new byte [4096];
         boolean bFoundMain = false;
-        try (ZipInputStream aZIS = new ZipInputStream (aRepoRes.getInputStream ()))
+        try (final ZipInputStream aZIS = new ZipInputStream (aRepoRes.getInputStream ()))
         {
           ZipEntry aEntry = null;
           while ((aEntry = aZIS.getNextEntry ()) != null)

@@ -52,6 +52,7 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public final class LoadedVES
 {
   @Immutable
@@ -262,12 +263,18 @@ public final class LoadedVES
     m_aStatus = aStatus;
   }
 
+  /**
+   * @return The header of the loaded VES. Never <code>null</code>.
+   */
   @Nonnull
   public Header getHeader ()
   {
     return m_aHeader;
   }
 
+  /**
+   * @return The status information of the loaded VES. Never <code>null</code>.
+   */
   @Nonnull
   public Status getStatus ()
   {
@@ -297,11 +304,18 @@ public final class LoadedVES
     m_aRequiresLoader = null;
   }
 
+  /**
+   * @return <code>true</code> if a validation executor is present,
+   *         <code>false</code> if not.
+   */
   public boolean hasExecutor ()
   {
     return m_aExecutor != null;
   }
 
+  /**
+   * @return The contained validation executor. May be <code>null</code>.
+   */
   @Nullable
   public IValidationExecutor <? extends IValidationSource> getExecutor ()
   {
@@ -319,7 +333,7 @@ public final class LoadedVES
     LoadedVES ret = m_aLoadedRequires;
     if (ret == null)
     {
-      // TODO do something with the error list
+      // TODO do something better with the error list
       final ErrorList aErrorList = new ErrorList ();
       m_aLoadedRequires = ret = m_aRequiresLoader.deferredLoad (aErrorList);
       if (ret == null)
@@ -353,12 +367,16 @@ public final class LoadedVES
 
   private boolean _isRecursivelyValid ()
   {
+    // Local status first, because in case of failure, this is a quicker break
+    if (!m_aStatus.isOverallValid ())
+      return false;
+
     // No requirement
     if (m_aRequires == null)
-      return m_aStatus.isOverallValid ();
+      return true;
 
     // Requirement present
-    return _getLoadedVESRequiresNotNull ()._isRecursivelyValid () && m_aStatus.isOverallValid ();
+    return _getLoadedVESRequiresNotNull ()._isRecursivelyValid ();
   }
 
   public void applyValidation (@Nonnull final IValidationSource aValidationSource,
@@ -369,7 +387,7 @@ public final class LoadedVES
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aLocale, "Locale");
 
-    if (m_aExecutor == null)
+    if (!hasExecutor ())
       throw new VESLoadingException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
 
     final boolean bIsValid = _isRecursivelyValid ();

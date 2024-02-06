@@ -40,8 +40,8 @@ import com.helger.commons.state.ESuccess;
 import com.helger.diver.api.version.VESID;
 import com.helger.diver.repo.ERepoDeletable;
 import com.helger.diver.repo.ERepoWritable;
+import com.helger.diver.repo.IRepoStorage;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.diver.repo.RepoStorageChain;
 import com.helger.diver.repo.RepoStorageItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
@@ -58,47 +58,47 @@ public final class VESLoaderTest
   private static final Logger LOGGER = LoggerFactory.getLogger (VESLoaderTest.class);
   private static IRepoStorageBase s_aRepoStorage;
 
-  private static void _addResource (@Nonnull final RepoStorageInMemory aInMemoryRepo,
+  private static void _addResource (@Nonnull final IRepoStorage aRepo,
                                     @Nonnull final VESID aVESID,
-                                    @Nonnull @Nonempty final IReadableResource aPayload)
+                                    @Nonnull @Nonempty final IReadableResource aRulesPayload)
   {
     // Create StorageKey
-    final String sFileExt = "." + FilenameHelper.getExtension (aPayload.getPath ());
+    final String sFileExt = "." + FilenameHelper.getExtension (aRulesPayload.getPath ());
     final RepoStorageKeyOfArtefact aKey = RepoStorageKeyOfArtefact.of (aVESID, sFileExt);
 
     // Read in the ves file from resources
-    final byte [] aData = StreamHelper.getAllBytes (aPayload);
+    final byte [] aData = StreamHelper.getAllBytes (aRulesPayload);
     assertNotNull (aData);
 
-    if (aInMemoryRepo.exists (aKey))
+    if (aRepo.exists (aKey))
       throw new IllegalStateException ("The key '" + aKey.getPath () + "' is already in the Repo");
 
     // Write data to InMemoryRepo
-    final ESuccess eSuccess = aInMemoryRepo.write (aKey, RepoStorageItem.of (aData));
+    final ESuccess eSuccess = aRepo.write (aKey, RepoStorageItem.of (aData));
     assertNotNull (eSuccess);
     assertTrue (eSuccess.isSuccess ());
   }
 
-  private static void _addVES (@Nonnull final RepoStorageInMemory aInMemoryRepo,
-                               @Nonnull @Nonempty final IReadableResource aPayload)
+  private static void _addVES (@Nonnull final IRepoStorage aRepo,
+                               @Nonnull @Nonempty final IReadableResource aVesPayload)
   {
     final ErrorList aErrorList = new ErrorList ();
 
     // Read VES as XML
-    final VesType aVES = new VES1Marshaller ().setCollectErrors (aErrorList).read (aPayload);
+    final VesType aVES = new VES1Marshaller ().setCollectErrors (aErrorList).read (aVesPayload);
     assertNotNull (aVES);
 
     // Convert to loaded VES - checking that it is okay
-    final LoadedVES aLoadedVES = new VESLoader (aInMemoryRepo).setUseEagerRequirementLoading (false)
-                                                              .convertToLoadedVES (Status.createUndefined (),
-                                                                                   aVES,
-                                                                                   new VESLoaderStatus (),
-                                                                                   aErrorList);
+    final LoadedVES aLoadedVES = new VESLoader (aRepo).setUseEagerRequirementLoading (false)
+                                                      .convertToLoadedVES (Status.createUndefined (),
+                                                                           aVES,
+                                                                           new VESLoaderStatus (),
+                                                                           aErrorList);
     assertNotNull (aLoadedVES);
     assertEquals (aErrorList.getAllFailures ().toString (), 0, aErrorList.size ());
 
     // Take VESID from the inside
-    _addResource (aInMemoryRepo, aLoadedVES.getHeader ().getVESID (), aPayload);
+    _addResource (aRepo, aLoadedVES.getHeader ().getVESID (), aVesPayload);
   }
 
   @BeforeClass
@@ -151,8 +151,8 @@ public final class VESLoaderTest
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd2.ves"));
     }
 
-    // Create RepoStorageChain with InMemoryRepo and return it
-    s_aRepoStorage = RepoStorageChain.of (aInMemoryRepo);
+    // No chain needed - use repo as is
+    s_aRepoStorage = aInMemoryRepo;
   }
 
   @Test
