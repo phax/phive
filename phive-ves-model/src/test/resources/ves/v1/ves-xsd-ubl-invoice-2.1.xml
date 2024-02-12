@@ -39,7 +39,7 @@ PUBLIC "http://www.w3.org/2000/09/xmldsig#" "maven:com.helger.xsd:ph-xsds-xmldsi
        -->
       <public uri="http://www.w3.org/2000/09/xmldsig#">
         <resource>
-          <groupId>org.w3</groupId>
+          <groupId>org.w3.xsd</groupId>
           <artifactId>xmldsig-core</artifactId>
           <version>1.0</version>
           <type>xsd</type>

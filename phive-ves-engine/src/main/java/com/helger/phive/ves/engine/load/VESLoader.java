@@ -554,7 +554,7 @@ public final class VESLoader
     {
       aErrorList.add (SingleError.builderError ()
                                  .errorFieldName (aRepoKeyVES.getPath ())
-                                 .errorText ("Failed to resolve VES from repository.")
+                                 .errorText ("Failed to resolve provied VES from repository.")
                                  .build ());
       return null;
     }
