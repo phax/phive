@@ -17,7 +17,9 @@
 package com.helger.phive.ves.engine.load;
 
 import java.io.IOException;
+import java.math.RoundingMode;
 import java.net.URI;
+import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -40,14 +42,17 @@ import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.io.file.FilenameHelper;
+import com.helger.commons.io.misc.SizeHelper;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceInputStream;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.lang.EnumHelper;
+import com.helger.commons.math.MathHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.timing.StopWatch;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.diver.repo.RepoStorageItem;
+import com.helger.diver.repo.IRepoStorageItem;
 import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.EValidationType;
@@ -181,7 +186,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     final RepoStorageKey aXSDKey = VESLoader.createRepoStorageKey (aXSD.getResource ());
 
     // Read referenced Item
-    final RepoStorageItem aXSDItem = aRepo.read (aXSDKey);
+    final IRepoStorageItem aXSDItem = aRepo.read (aXSDKey);
     if (aXSDItem == null)
     {
       aErrorList.add (SingleError.builderError ()
@@ -229,6 +234,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
 
     final IReadableResource aRepoRes = new RepoStorageReadableResource (aXSDKey, aXSDItem);
 
+    final StopWatch aSW = StopWatch.createdStarted ();
     final ValidationExecutorXSD aExecutorXSD;
     final String sResourceType = aXSD.getResource ().getType ();
     switch (sResourceType)
@@ -283,8 +289,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
 
         // Read ZIP file as a whole
         final ICommonsMap <String, NonBlockingByteArrayOutputStream> aZIPContent = new CommonsHashMap <> ();
-        final int nSourceLen = aXSDItem.data ().size ();
-        long nUnzippedLed = 0;
+        final long nSourceLen = aXSDItem.getContent ().getLength ();
+        long nUnzippedLen = 0;
         final byte [] aBuffer = new byte [4096];
         boolean bFoundMain = false;
         try (final ZipInputStream aZIS = new ZipInputStream (aRepoRes.getInputStream ()))
@@ -303,7 +309,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
               while ((nLen = aZIS.read (aBuffer)) > 0)
               {
                 aBAOS.write (aBuffer, 0, nLen);
-                nUnzippedLed += nLen;
+                nUnzippedLen += nLen;
               }
 
               // Remember ZIP entry in map
@@ -322,6 +328,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
 
         if (!bFoundMain)
         {
+          // Make sure that the reference "main" object exists
           aErrorList.add (SingleError.builderError ()
                                      .errorText ("XSD resource type '" +
                                                  sResourceType +
@@ -351,16 +358,19 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                                      .build ());
         }
 
+        final SizeHelper aSH = SizeHelper.getSizeHelperOfLocale (Locale.ROOT);
         LOGGER.info ("Loaded ZIP with " +
-                     nSourceLen +
-                     " bytes to " +
+                     aSH.getAsMatching (nSourceLen) +
+                     " with " +
                      aZIPContent.size () +
-                     " entries and unzipped " +
-                     nUnzippedLed +
+                     " entries; unzipped size is " +
+                     aSH.getAsMatching (nUnzippedLen) +
                      " bytes (~" +
-                     ((float) nUnzippedLed / nSourceLen * 100) +
+                     MathHelper.getDividedBigDecimal (nUnzippedLen * 100, nSourceLen, 2, RoundingMode.HALF_UP) +
                      "%)");
 
+        // Use a specific Resource Resolver to load entries from within the ZIP
+        // file
         final LSResourceResolver aResResolver = new SimpleLSResourceResolver ()
         {
           @Override
@@ -374,13 +384,16 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
             // Remove the filename from main
             final URI aBaseURI = URI.create (sBaseURI);
 
-            final String sRelativeSystemId = sSystemId == null ? null : FilenameHelper.getCleanPath (FilenameHelper
-                                                                                                                   .getPath (aBaseURI.getPath ()) +
-                                                                                                     "/" +
-                                                                                                     sSystemId);
+            final String sRelativeSystemId;
+            if (sSystemId == null)
+              sRelativeSystemId = null;
+            else
+              sRelativeSystemId = FilenameHelper.getCleanPath (FilenameHelper.getPath (aBaseURI.getPath ()) +
+                                                               '/' +
+                                                               sSystemId);
 
             if (LOGGER.isDebugEnabled ())
-              LOGGER.debug ("Resolving '" +
+              LOGGER.debug ("  Trying to resolve '" +
                             sNamespaceURI +
                             "' and '" +
                             sPublicId +
@@ -399,11 +412,11 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
             final NonBlockingByteArrayOutputStream aZIPResolved = aZIPContent.get (sRelativeSystemId);
             if (aZIPResolved != null)
             {
-              LOGGER.info ("Resolved '" + sRelativeSystemId + "' to ZIP file content");
+              LOGGER.info ("  Successfully resolved '" + sRelativeSystemId + "' to ZIP file content");
               return new ReadableResourceInputStream (sRelativeSystemId, aZIPResolved.getAsInputStream ());
             }
 
-            LOGGER.warn ("Failed to resolve '" +
+            LOGGER.warn ("  Failed to resolve '" +
                          sNamespaceURI +
                          "' and '" +
                          sPublicId +
@@ -440,11 +453,14 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
     }
 
+    aSW.stop ();
     LOGGER.info ("Loaded ValidationExecutorXSD using resource type '" +
                  sResourceType +
                  "' and path '" +
                  aXSDKey.getPath () +
-                 "'");
+                 "' in " +
+                 aSW.getMillis () +
+                 "ms");
     return aExecutorXSD;
   }
 }

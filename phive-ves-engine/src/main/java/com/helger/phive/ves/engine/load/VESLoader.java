@@ -45,7 +45,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
 import com.helger.diver.api.version.VESID;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.diver.repo.RepoStorageItem;
+import com.helger.diver.repo.IRepoStorageItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.result.ValidationResultList;
@@ -492,88 +492,103 @@ public final class VESLoader
     ValueEnforcer.notNull (aLoaderStatus, "LoaderStatus");
     ValueEnforcer.notNull (aErrorList, "ErrorList");
 
-    LOGGER.info ("Trying to read VESID '" + aVESID.getAsSingleID () + "' from repository");
+    final boolean bIsRoot = aLoaderStatus.m_aLoaded.isEmpty ();
 
-    // Ensure the VESID is not yet in the loader chain
-    if (aLoaderStatus.addVESID (aVESID).isFailure ())
-    {
-      // This is a circular dependency
-      aErrorList.add (SingleError.builderError ()
-                                 .errorText ("The VESID '" +
-                                             aVESID.getAsSingleID () +
-                                             "' was already loaded. It seems like you have a circular dependency: " +
-                                             aLoaderStatus.getDepedencyChain (aVESID))
-                                 .build ());
-      return null;
-    }
+    LOGGER.info ("Trying to read VESID " + aLoaderStatus.getDepedencyChain (aVESID) + " from repository");
 
-    // Check if an explicit status is available
-    final LoadedVES.Status aStatus;
-    final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_STATUS);
-    if (m_aRepo.exists (aRepoKeyStatus))
+    LoadedVES ret = null;
+    try
     {
-      final RepoStorageItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
-      // it's okay, if it does not exist
-      if (aRepoContentStatus != null)
+      // Ensure the VESID is not yet in the loader chain
+      if (aLoaderStatus.addVESID (aVESID).isFailure ())
       {
-        // Read VES Status as XML
-        final VesStatusType aVESStatus = new VESStatus1Marshaller ().setCollectErrors (aErrorList)
-                                                                    .read (new RepoStorageReadableResource (aRepoKeyStatus,
-                                                                                                            aRepoContentStatus));
-        if (aVESStatus == null)
-        {
-          // Error in Status XML - breaking error
-          aErrorList.add (SingleError.builderError ()
-                                     .errorFieldName (aRepoKeyStatus.getPath ())
-                                     .errorText ("Failed to read VES Status as XML.")
-                                     .build ());
-          return null;
-        }
+        // This is a circular dependency
+        aErrorList.add (SingleError.builderError ()
+                                   .errorText ("The VESID '" +
+                                               aVESID.getAsSingleID () +
+                                               "' was already loaded. It seems like you have a circular dependency: " +
+                                               aLoaderStatus.getDepedencyChain (aVESID))
+                                   .build ());
+        return null;
+      }
 
-        aStatus = new LoadedVES.Status (aVESStatus.getStatusLastModified (),
-                                        aVESStatus.getValidFrom (),
-                                        aVESStatus.getValidTo (),
-                                        ETriState.valueOf (aVESStatus.isDeprecated ()));
+      // Check if an explicit status is available
+      final LoadedVES.Status aStatus;
+      final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_STATUS);
+      if (m_aRepo.exists (aRepoKeyStatus))
+      {
+        final IRepoStorageItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
+        // it's okay, if it does not exist
+        if (aRepoContentStatus != null)
+        {
+          // Read VES Status as XML
+          final VesStatusType aVESStatus = new VESStatus1Marshaller ().setCollectErrors (aErrorList)
+                                                                      .read (new RepoStorageReadableResource (aRepoKeyStatus,
+                                                                                                              aRepoContentStatus));
+          if (aVESStatus == null)
+          {
+            // Error in Status XML - breaking error
+            aErrorList.add (SingleError.builderError ()
+                                       .errorFieldName (aRepoKeyStatus.getPath ())
+                                       .errorText ("Failed to read VES Status as XML.")
+                                       .build ());
+            return null;
+          }
+
+          aStatus = new LoadedVES.Status (aVESStatus.getStatusLastModified (),
+                                          aVESStatus.getValidFrom (),
+                                          aVESStatus.getValidTo (),
+                                          ETriState.valueOf (aVESStatus.isDeprecated ()));
+        }
+        else
+        {
+          // Status is supposed to exist, but does not
+          aStatus = LoadedVES.Status.createUndefined ();
+        }
       }
       else
       {
-        // Status is supposed to exist, but does not
+        // Status does not exist
         aStatus = LoadedVES.Status.createUndefined ();
       }
-    }
-    else
-    {
-      // Status does not exist
-      aStatus = LoadedVES.Status.createUndefined ();
-    }
 
-    // Read VES content from repo
-    final RepoStorageKeyOfArtefact aRepoKeyVES = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_VES);
-    final RepoStorageItem aRepoContentVES = m_aRepo.read (aRepoKeyVES);
-    if (aRepoContentVES == null)
-    {
-      aErrorList.add (SingleError.builderError ()
-                                 .errorFieldName (aRepoKeyVES.getPath ())
-                                 .errorText ("Failed to resolve provied VES from repository.")
-                                 .build ());
-      return null;
-    }
+      // Read VES content from repo
+      final RepoStorageKeyOfArtefact aRepoKeyVES = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_VES);
+      final IRepoStorageItem aRepoContentVES = m_aRepo.read (aRepoKeyVES);
+      if (aRepoContentVES == null)
+      {
+        aErrorList.add (SingleError.builderError ()
+                                   .errorFieldName (aRepoKeyVES.getPath ())
+                                   .errorText ("Failed to resolve provied VES from repository.")
+                                   .build ());
+        return null;
+      }
 
-    // Read VES as XML
-    final VesType aVES = new VES1Marshaller ().setCollectErrors (aErrorList)
-                                              .read (new RepoStorageReadableResource (aRepoKeyVES, aRepoContentVES));
-    if (aVES == null)
-    {
-      // Error in XML
-      aErrorList.add (SingleError.builderError ()
-                                 .errorFieldName (aRepoKeyVES.getPath ())
-                                 .errorText ("Failed to read VES as XML.")
-                                 .build ());
-      return null;
-    }
+      // Read VES as XML
+      final VesType aVES = new VES1Marshaller ().setCollectErrors (aErrorList)
+                                                .read (new RepoStorageReadableResource (aRepoKeyVES, aRepoContentVES));
+      if (aVES == null)
+      {
+        // Error in XML
+        aErrorList.add (SingleError.builderError ()
+                                   .errorFieldName (aRepoKeyVES.getPath ())
+                                   .errorText ("Failed to read VES as XML.")
+                                   .build ());
+        return null;
+      }
 
-    // Now read into data model
-    return convertToLoadedVES (aStatus, aVES, aLoaderStatus, aErrorList);
+      // Now read into data model
+      ret = convertToLoadedVES (aStatus, aVES, aLoaderStatus, aErrorList);
+      return ret;
+    }
+    finally
+    {
+      if (bIsRoot)
+        if (ret == null)
+          LOGGER.error ("Failed to load VESID " + aVESID.getAsSingleID () + "' from repository");
+        else
+          LOGGER.info ("Successfully finished loading VESID " + aVESID.getAsSingleID () + "' from repository");
+    }
   }
 
   @Nonnull

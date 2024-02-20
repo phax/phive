@@ -42,7 +42,7 @@ import com.helger.diver.repo.ERepoDeletable;
 import com.helger.diver.repo.ERepoWritable;
 import com.helger.diver.repo.IRepoStorage;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.diver.repo.RepoStorageItem;
+import com.helger.diver.repo.RepoStorageContentByteArray;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
 import com.helger.phive.api.result.ValidationResultList;
@@ -74,7 +74,7 @@ public final class VESLoaderTest
       throw new IllegalStateException ("The key '" + aKey.getPath () + "' is already in the Repo");
 
     // Write data to InMemoryRepo
-    final ESuccess eSuccess = aRepo.write (aKey, RepoStorageItem.of (aData));
+    final ESuccess eSuccess = aRepo.write (aKey, RepoStorageContentByteArray.of (aData));
     assertNotNull (eSuccess);
     assertTrue (eSuccess.isSuccess ());
   }
