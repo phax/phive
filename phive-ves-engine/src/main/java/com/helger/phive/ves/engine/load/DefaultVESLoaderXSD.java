@@ -357,8 +357,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                      aZIPContent.size () +
                      " entries and unzipped " +
                      nUnzippedLed +
-                     " bytes (" +
-                     (nUnzippedLed / nSourceLen * 100) +
+                     " bytes (~" +
+                     ((float) nUnzippedLed / nSourceLen * 100) +
                      "%)");
 
         final LSResourceResolver aResResolver = new SimpleLSResourceResolver ()
