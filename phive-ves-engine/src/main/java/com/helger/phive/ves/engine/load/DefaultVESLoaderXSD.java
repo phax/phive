@@ -52,7 +52,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.diver.repo.IRepoStorageItem;
+import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.EValidationType;
@@ -186,7 +186,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     final RepoStorageKey aXSDKey = VESLoader.createRepoStorageKey (aXSD.getResource ());
 
     // Read referenced Item
-    final IRepoStorageItem aXSDItem = aRepo.read (aXSDKey);
+    final IRepoStorageReadItem aXSDItem = aRepo.read (aXSDKey);
     if (aXSDItem == null)
     {
       aErrorList.add (SingleError.builderError ()
@@ -232,7 +232,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     // Check for precondition
     final VesXmlPreconditionType aPrecondition = aXSD.getPrecondition ();
 
-    final IReadableResource aRepoRes = new RepoStorageReadableResource (aXSDKey, aXSDItem);
+    final IReadableResource aRepoRes = new RepoStorageReadableResource (aXSDKey, aXSDItem.getContent ());
 
     final StopWatch aSW = StopWatch.createdStarted ();
     final ValidationExecutorXSD aExecutorXSD;

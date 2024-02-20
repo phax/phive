@@ -26,7 +26,7 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.diver.repo.IRepoStorageItem;
+import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.execute.IValidationExecutor;
@@ -57,7 +57,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
     final RepoStorageKey aSCHKey = VESLoader.createRepoStorageKey (aSCH.getResource ());
 
     // Read referenced Item
-    final IRepoStorageItem aSCHItem = aRepo.read (aSCHKey);
+    final IRepoStorageReadItem aSCHItem = aRepo.read (aSCHKey);
     if (aSCHItem == null)
     {
       aErrorList.add (SingleError.builderError ()
@@ -67,7 +67,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       return null;
     }
 
-    final IReadableResource aRepoRes = new RepoStorageReadableResource (aSCHKey, aSCHItem);
+    final IReadableResource aRepoRes = new RepoStorageReadableResource (aSCHKey, aSCHItem.getContent ());
 
     // Resolve Namespace Context
     final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();

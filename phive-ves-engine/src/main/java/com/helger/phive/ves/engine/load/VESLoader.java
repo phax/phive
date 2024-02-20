@@ -45,7 +45,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
 import com.helger.diver.api.version.VESID;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.diver.repo.IRepoStorageItem;
+import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.result.ValidationResultList;
@@ -517,14 +517,14 @@ public final class VESLoader
       final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_STATUS);
       if (m_aRepo.exists (aRepoKeyStatus))
       {
-        final IRepoStorageItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
+        final IRepoStorageReadItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
         // it's okay, if it does not exist
         if (aRepoContentStatus != null)
         {
           // Read VES Status as XML
           final VesStatusType aVESStatus = new VESStatus1Marshaller ().setCollectErrors (aErrorList)
                                                                       .read (new RepoStorageReadableResource (aRepoKeyStatus,
-                                                                                                              aRepoContentStatus));
+                                                                                                              aRepoContentStatus.getContent ()));
           if (aVESStatus == null)
           {
             // Error in Status XML - breaking error
@@ -554,7 +554,7 @@ public final class VESLoader
 
       // Read VES content from repo
       final RepoStorageKeyOfArtefact aRepoKeyVES = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_VES);
-      final IRepoStorageItem aRepoContentVES = m_aRepo.read (aRepoKeyVES);
+      final IRepoStorageReadItem aRepoContentVES = m_aRepo.read (aRepoKeyVES);
       if (aRepoContentVES == null)
       {
         aErrorList.add (SingleError.builderError ()
@@ -566,7 +566,8 @@ public final class VESLoader
 
       // Read VES as XML
       final VesType aVES = new VES1Marshaller ().setCollectErrors (aErrorList)
-                                                .read (new RepoStorageReadableResource (aRepoKeyVES, aRepoContentVES));
+                                                .read (new RepoStorageReadableResource (aRepoKeyVES,
+                                                                                        aRepoContentVES.getContent ()));
       if (aVES == null)
       {
         // Error in XML
