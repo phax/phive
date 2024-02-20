@@ -31,11 +31,6 @@
     <groupId>org.oasis-open.ubl</groupId>
     <artifactId>invoice</artifactId>
     <version>2.1</version>
-    
-    <namespaces>
-      <!-- redefined only this prefix -->
-      <namespace prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" overwrite="true" />
-    </namespaces>
   </requires>
   
   <schematron>
@@ -48,6 +43,17 @@
     <engine>iso-schematron</engine>
     <!-- 
     <precondition type="xpath">/ubl:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PostalAddress/cac:Country/cbc:IdentificationCode = 'AT'</precondition>
+    -->
+    <!--
+    <namespaces>
+      <namespace prefix="ubl" uri="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" />
+      <namespace prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance" />
+      <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
+      <namespace prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
+      <namespace prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" />
+      <namespace prefix="cec" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" />
+      <namespace prefix="ds" uri="http://www.w3.org/2000/09/xmldsig#" />
+    </namespaces>
     -->
     <!-- 
     <input>

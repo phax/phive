@@ -57,17 +57,6 @@ REWRITE_SYSTEM "StandardBusinessDocumentHeader.xsd" "maven:com.helger:ph-sbdh:ja
         </resource>
       </system>
     </catalog>
-    <!--
-    <namespaces>
-      <namespace prefix="" uri="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" />
-      <namespace prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance" />
-      <namespace prefix="xs" uri="http://www.w3.org/2001/XMLSchema" />
-      <namespace prefix="cac" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" />
-      <namespace prefix="cbc" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" />
-      <namespace prefix="cec" uri="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" />
-      <namespace prefix="ds" uri="http://www.w3.org/2000/09/xmldsig#" />
-    </namespaces>
-    -->
     <!-- 
     <precondition type="xpath">count(/Invoice/cec:UBLExtensions/cec:UBLExtension/cec:ExtensionContent/ds:Signature)</precondition>
      -->
