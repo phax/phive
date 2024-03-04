@@ -46,7 +46,9 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
 public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 {
   public static final String RESOURCE_TYPE_SCH = "sch";
+  public static final String FILE_EXT_SCH = '.' + RESOURCE_TYPE_SCH;
   public static final String RESOURCE_TYPE_XSLT = "xslt";
+  public static final String FILE_EXT_XSLT = '.' + RESOURCE_TYPE_XSLT;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
 

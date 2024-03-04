@@ -74,7 +74,9 @@ import com.helger.xml.schema.XMLSchemaCache;
 public class DefaultVESLoaderXSD implements IVESLoaderXSD
 {
   public static final String RESOURCE_TYPE_ZIP = "zip";
+  public static final String FILE_EXT_ZIP = '.' + RESOURCE_TYPE_ZIP;
   public static final String RESOURCE_TYPE_XSD = "xsd";
+  public static final String FILE_EXT_XSD = '.' + RESOURCE_TYPE_XSD;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
