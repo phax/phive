@@ -25,7 +25,6 @@ import java.util.zip.ZipInputStream;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
 import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
@@ -35,22 +34,18 @@ import org.w3c.dom.ls.LSResourceResolver;
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.id.IHasID;
 import com.helger.commons.io.file.FilenameHelper;
 import com.helger.commons.io.misc.SizeHelper;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.resource.inmemory.ReadableResourceInputStream;
 import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.lang.EnumHelper;
 import com.helger.commons.math.MathHelper;
 import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.timing.StopWatch;
+import com.helger.diver.api.version.VESID;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
@@ -58,6 +53,9 @@ import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.ves.engine.load.catalog.EVESCatalogType;
+import com.helger.phive.ves.engine.load.catalog.VESCatalog;
+import com.helger.phive.ves.engine.load.catalog.VESCatalogEntry;
 import com.helger.phive.ves.v10.VesXmlPreconditionType;
 import com.helger.phive.ves.v10.VesXsdCatalogItemPublicType;
 import com.helger.phive.ves.v10.VesXsdCatalogItemSystemType;
@@ -80,90 +78,6 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
 
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
-  /**
-   * Catalog entry type
-   *
-   * @author Philip Helger
-   */
-  public enum ECatalogType implements IHasID <String>
-  {
-    PUBLIC ("public"),
-    SYSTEM ("system");
-
-    private final String m_sID;
-
-    ECatalogType (@Nonnull @Nonempty final String sID)
-    {
-      m_sID = sID;
-    }
-
-    @Nonnull
-    @Nonempty
-    public String getID ()
-    {
-      return m_sID;
-    }
-
-    @Nullable
-    public static ECatalogType getFromIDOrNull (@Nullable final String sID)
-    {
-      return EnumHelper.getFromIDOrNull (ECatalogType.class, sID);
-    }
-  }
-
-  /**
-   * Represent a single XML catalog entry
-   *
-   * @author Philip Helger
-   */
-  @Immutable
-  public static final class CatalogEntry implements IHasID <String>
-  {
-    private final ECatalogType m_eType;
-    private final String m_sID;
-    private final RepoStorageKey m_aKey;
-
-    public CatalogEntry (@Nonnull final ECatalogType eType,
-                         @Nonnull @Nonempty final String sID,
-                         @Nonnull final RepoStorageKey aKey)
-    {
-      ValueEnforcer.notNull (eType, "Type");
-      ValueEnforcer.notEmpty (sID, "ID");
-      ValueEnforcer.notNull (aKey, "Key");
-      m_eType = eType;
-      m_sID = sID;
-      m_aKey = aKey;
-    }
-
-    @Nonnull
-    public ECatalogType getType ()
-    {
-      return m_eType;
-    }
-
-    @Nonnull
-    @Nonempty
-    public String getID ()
-    {
-      return m_sID;
-    }
-
-    @Nonnull
-    public RepoStorageKey getRepoStorageKey ()
-    {
-      return m_aKey;
-    }
-
-    @Override
-    public String toString ()
-    {
-      return new ToStringGenerator (null).append ("Type", m_eType)
-                                         .append ("ID", m_sID)
-                                         .append ("Key", m_aKey)
-                                         .getToString ();
-    }
-  }
-
   @Nullable
   private static final String _unifyPath (@Nullable final String x)
   {
@@ -181,8 +95,14 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aRepo,
                                                              @Nonnull final VesXsdType aXSD,
-                                                             @Nonnull final ErrorList aErrorList)
+                                                             @Nonnull final ErrorList aErrorList,
+                                                             @Nonnull final IVESAsyncLoader aAsyncLoader)
   {
+    ValueEnforcer.notNull (aRepo, "Repo");
+    ValueEnforcer.notNull (aXSD, "XSD");
+    ValueEnforcer.notNull (aErrorList, "ErrorList");
+    ValueEnforcer.notNull (aAsyncLoader, "AsyncLoader");
+
     final RepoStorageKey aXSDKey = VESLoader.createRepoStorageKey (aXSD.getResource ());
 
     // Read referenced Item
@@ -197,35 +117,36 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     }
 
     // Read catalog items (if any)
-    final ICommonsOrderedMap <String, CatalogEntry> aCatalogEntries = new CommonsLinkedHashMap <> ();
+    final VESCatalog aCatalogEntries = new VESCatalog ();
     if (aXSD.getCatalog () != null)
     {
       for (final Object aItem : aXSD.getCatalog ().getPublicOrSystem ())
       {
-        final CatalogEntry aEntry;
+        final VESCatalogEntry aEntry;
         if (aItem instanceof VesXsdCatalogItemPublicType)
         {
           final VesXsdCatalogItemPublicType aPublic = (VesXsdCatalogItemPublicType) aItem;
-          aEntry = new CatalogEntry (ECatalogType.PUBLIC,
-                                     aPublic.getUri (),
-                                     VESLoader.createRepoStorageKey (aPublic.getResource ()));
+          aEntry = new VESCatalogEntry (EVESCatalogType.PUBLIC,
+                                        aPublic.getUri (),
+                                        VESLoader.createRepoStorageKey (aPublic.getResource ()));
         }
         else
         {
           final VesXsdCatalogItemSystemType aSystem = (VesXsdCatalogItemSystemType) aItem;
-          aEntry = new CatalogEntry (ECatalogType.SYSTEM,
-                                     aSystem.getId (),
-                                     VESLoader.createRepoStorageKey (aSystem.getResource ()));
+          aEntry = new VESCatalogEntry (EVESCatalogType.SYSTEM,
+                                        aSystem.getId (),
+                                        VESLoader.createRepoStorageKey (aSystem.getResource ()));
         }
-        if (aCatalogEntries.containsKey (aEntry.getID ()))
+        if (aCatalogEntries.addEntry (aEntry).isUnchanged ())
         {
           aErrorList.add (SingleError.builderError ()
                                      .errorFieldName (aEntry.getID ())
-                                     .errorText ("Another catalog item with the same identifier is already present")
+                                     .errorText ("Another catalog item with the same identifier '" +
+                                                 aEntry.getID () +
+                                                 "' is already present")
                                      .build ());
           return null;
         }
-        aCatalogEntries.put (aEntry.getID (), aEntry);
       }
     }
 
@@ -254,20 +175,16 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         if (aCatalogEntries.isNotEmpty ())
         {
           // TODO implement catalog support
-          aErrorList.add (SingleError.builderWarn ()
-                                     .errorText ("XSD resource type '" +
-                                                 sResourceType +
-                                                 "' is missing support for catalog entries")
-                                     .build ());
+          final String sMsg = "XSD resource type '" + sResourceType + "' is missing support for catalog entries";
+          LOGGER.warn (sMsg);
+          aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
         }
         if (aPrecondition != null)
         {
           // TODO implement precondition support
-          aErrorList.add (SingleError.builderWarn ()
-                                     .errorText ("XSD resource type '" +
-                                                 sResourceType +
-                                                 "' is missing support for XSD preconditions")
-                                     .build ());
+          final String sMsg = "XSD resource type '" + sResourceType + "' is missing support for XSD preconditions";
+          LOGGER.warn (sMsg);
+          aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
         }
 
         // Load "as is"
@@ -342,20 +259,16 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         if (aCatalogEntries.isNotEmpty ())
         {
           // TODO implement catalog support
-          aErrorList.add (SingleError.builderWarn ()
-                                     .errorText ("XSD resource type '" +
-                                                 sResourceType +
-                                                 "' does not yet support catalog entries")
-                                     .build ());
+          final String sMsg = "XSD resource type '" + sResourceType + "' does not yet support catalog entries";
+          LOGGER.warn (sMsg);
+          aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
         }
         if (aPrecondition != null)
         {
           // TODO implement precondition support
-          aErrorList.add (SingleError.builderWarn ()
-                                     .errorText ("XSD resource type '" +
-                                                 sResourceType +
-                                                 "' is missing support for XSD preconditions")
-                                     .build ());
+          final String sMsg = "XSD resource type '" + sResourceType + "' is missing support for XSD preconditions";
+          LOGGER.warn (sMsg);
+          aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
         }
 
         final SizeHelper aSH = SizeHelper.getSizeHelperOfLocale (Locale.ROOT);
@@ -388,9 +301,13 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
             if (sSystemId == null)
               sRelativeSystemId = null;
             else
-              sRelativeSystemId = FilenameHelper.getCleanPath (FilenameHelper.getPath (aBaseURI.getPath ()) +
-                                                               '/' +
-                                                               sSystemId);
+            {
+              String sBasePath = FilenameHelper.getPath (aBaseURI.getPath ());
+              // Avoid double slash
+              if (!StringHelper.endsWith (sBasePath, '/'))
+                sBasePath += '/';
+              sRelativeSystemId = FilenameHelper.getCleanPath (sBasePath + sSystemId);
+            }
 
             if (LOGGER.isDebugEnabled ())
               LOGGER.debug ("  Trying to resolve '" +
@@ -405,15 +322,48 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                             sBaseURI +
                             "'");
 
-            // Catalog has precedence
-            // TODO resolve by catalog
-
-            // Search in ZIP
-            final NonBlockingByteArrayOutputStream aZIPResolved = aZIPContent.get (sRelativeSystemId);
-            if (aZIPResolved != null)
+            if (StringHelper.hasText (sRelativeSystemId))
             {
-              LOGGER.info ("  Successfully resolved '" + sRelativeSystemId + "' to ZIP file content");
-              return new ReadableResourceInputStream (sRelativeSystemId, aZIPResolved.getAsInputStream ());
+              // Matches in ZIP have precedence
+              final NonBlockingByteArrayOutputStream aZIPResolved = aZIPContent.get (sRelativeSystemId);
+              if (aZIPResolved != null)
+              {
+                LOGGER.info ("  Successfully resolved '" + sRelativeSystemId + "' to ZIP file content");
+                return new ReadableResourceInputStream (sRelativeSystemId, aZIPResolved.getAsInputStream ());
+              }
+              LOGGER.warn ("  Failed to resolve System ID '" + sRelativeSystemId + "' in ZIP content");
+            }
+
+            // Then check in catalog
+            if (aCatalogEntries.isNotEmpty ())
+            {
+              if (StringHelper.hasText (sNamespaceURI))
+              {
+                final VESCatalogEntry aEntry = aCatalogEntries.findEntryByUri (sNamespaceURI);
+                if (aEntry != null)
+                {
+                  final VESID aCatalogVESID = aEntry.getRepoStorageKey ().getVESID ();
+
+                  // Load referenced catalog resource
+                  final IRepoStorageReadItem aLoadedCatalogRes = aAsyncLoader.loadResource (aCatalogVESID,
+                                                                                            "." + RESOURCE_TYPE_XSD);
+                  if (aLoadedCatalogRes != null)
+                  {
+                    LOGGER.info ("  Successfully resolved namespace URI '" +
+                                 sNamespaceURI +
+                                 "' to Catalog entry pointing to '" +
+                                 aCatalogVESID.getAsSingleID () +
+                                 "'");
+                    return new ReadableResourceInputStream (sRelativeSystemId,
+                                                            aLoadedCatalogRes.getContent ().getInputStream ());
+                  }
+                  LOGGER.warn ("  Failed to resolve referenced catalog entry '" + aCatalogVESID.getAsSingleID () + "'");
+                }
+                else
+                {
+                  LOGGER.warn ("  Found no catalog entry for namespace URI '" + sNamespaceURI + "'");
+                }
+              }
             }
 
             LOGGER.warn ("  Failed to resolve '" +

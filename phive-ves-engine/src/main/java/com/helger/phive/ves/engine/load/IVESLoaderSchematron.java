@@ -35,5 +35,6 @@ public interface IVESLoaderSchematron
   @Nonnull
   IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull IRepoStorageBase aRepo,
                                                              @Nonnull VesSchematronType aSCH,
-                                                             @Nonnull ErrorList aErrorList);
+                                                             @Nonnull ErrorList aErrorList,
+                                                             @Nonnull IVESAsyncLoader aAsyncLoader);
 }

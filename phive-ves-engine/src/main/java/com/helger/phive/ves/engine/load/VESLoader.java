@@ -35,6 +35,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
@@ -350,17 +351,25 @@ public final class VESLoader
                                            "' [lazy]: " +
                                            StringHelper.getImplodedMapped ("\n  ",
                                                                            aLocalErrorList,
-                                                                           x -> x.getAsString (Locale.ENGLISH)));
+                                                                           IError::getAsStringLocaleIndepdent));
           return aLoadedRequirement;
         });
       }
     }
+
+    final IVESAsyncLoader aAsyncLoader = (aAsyncLoadVESID, sFileExt) -> {
+      // Always eager loading
+
+      final RepoStorageKeyOfArtefact aRepoKey = RepoStorageKeyOfArtefact.of (aAsyncLoadVESID, sFileExt);
+      return m_aRepo.read (aRepoKey);
+    };
+
     if (aVES.getXsd () != null)
     {
       // XSD
       final IVESLoaderXSD aLoader = getLoaderXSD ();
       if (aLoader != null)
-        ret.setExecutor (aLoader.loadXSD (m_aRepo, aVES.getXsd (), aLoadingErrors));
+        ret.setExecutor (aLoader.loadXSD (m_aRepo, aVES.getXsd (), aLoadingErrors, aAsyncLoader));
       else
         aLoadingErrors.add (SingleError.builderError ()
                                        .errorText ("The VES contains an XSD element, but no XSD loader is present")
@@ -372,7 +381,7 @@ public final class VESLoader
         // Schematron
         final IVESLoaderSchematron aLoader = getLoaderSchematron ();
         if (aLoader != null)
-          ret.setExecutor (aLoader.loadSchematron (m_aRepo, aVES.getSchematron (), aLoadingErrors));
+          ret.setExecutor (aLoader.loadSchematron (m_aRepo, aVES.getSchematron (), aLoadingErrors, aAsyncLoader));
         else
           aLoadingErrors.add (SingleError.builderError ()
                                          .errorText ("The VES contains a Schematron element, but no Schematron loader is present")
@@ -384,7 +393,7 @@ public final class VESLoader
           // EDIFACT
           final IVESLoaderEdifact aLoader = getLoaderEdifact ();
           if (aLoader != null)
-            ret.setExecutor (aLoader.loadEdifact (m_aRepo, aVES.getEdifact (), aLoadingErrors));
+            ret.setExecutor (aLoader.loadEdifact (m_aRepo, aVES.getEdifact (), aLoadingErrors, aAsyncLoader));
           else
             aLoadingErrors.add (SingleError.builderError ()
                                            .errorText ("The VES contains an Edifact element, but no Edifact loader is present")
@@ -559,7 +568,7 @@ public final class VESLoader
       {
         aLoadingErrors.add (SingleError.builderError ()
                                        .errorFieldName (aRepoKeyVES.getPath ())
-                                       .errorText ("Failed to resolve provied VES from repository.")
+                                       .errorText ("Failed to resolve provided VES from repository.")
                                        .build ());
         return null;
       }
@@ -654,7 +663,7 @@ public final class VESLoader
                                      "': " +
                                      StringHelper.getImplodedMapped ("\n  ",
                                                                      aLoadingErrors,
-                                                                     x -> x.getAsString (Locale.ENGLISH)));
+                                                                     IError::getAsStringLocaleIndepdent));
     }
 
     final Duration aLoadDuration = aSWLoad.getDuration ();

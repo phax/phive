@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.commons.ValueEnforcer;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
@@ -52,8 +53,14 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageBase aRepo,
                                                                     @Nonnull final VesSchematronType aSCH,
-                                                                    @Nonnull final ErrorList aErrorList)
+                                                                    @Nonnull final ErrorList aErrorList,
+                                                                    @Nonnull final IVESAsyncLoader aAsyncLoader)
   {
+    ValueEnforcer.notNull (aRepo, "Repo");
+    ValueEnforcer.notNull (aSCH, "SCH");
+    ValueEnforcer.notNull (aErrorList, "ErrorList");
+    ValueEnforcer.notNull (aAsyncLoader, "AsyncLoader");
+
     final RepoStorageKey aSCHKey = VESLoader.createRepoStorageKey (aSCH.getResource ());
 
     // Read referenced Item

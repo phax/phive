@@ -17,24 +17,29 @@
 package com.helger.phive.ves.engine.load;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.helger.commons.error.list.ErrorList;
-import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.phive.api.execute.IValidationExecutor;
-import com.helger.phive.ves.v10.VesXsdType;
-import com.helger.phive.xml.source.IValidationSourceXML;
+import com.helger.diver.api.version.VESID;
+import com.helger.diver.repo.IRepoStorageReadItem;
 
 /**
- * This interface is used by {@link VESLoader} create an
- * {@link IValidationExecutor} from the VES XSD requirements.
+ * Interface for an asynchronous on-demand loader for resources.
  *
  * @author Philip Helger
  */
-public interface IVESLoaderXSD
+public interface IVESAsyncLoader
 {
-  @Nonnull
-  IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull IRepoStorageBase aRepo,
-                                                      @Nonnull VesXsdType aXSD,
-                                                      @Nonnull ErrorList aErrorList,
-                                                      @Nonnull IVESAsyncLoader aAsyncLoader);
+  /**
+   * Load the resource with the provided VESID.
+   *
+   * @param aVESID
+   *        The VESID to load. May not be <code>null</code>.
+   * @param sFileExt
+   *        The file extension to load. Must neither be <code>null</code> nor
+   *        empty. Must start with a dot (<code>.</code>).
+   * @return <code>null</code> if loading the resource behind the VESID failed
+   *         (e.g. because no such resource exists).
+   */
+  @Nullable
+  IRepoStorageReadItem loadResource (@Nonnull VESID aVESID, @Nonnull String sFileExt);
 }

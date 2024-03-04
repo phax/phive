@@ -35,5 +35,6 @@ public interface IVESLoaderEdifact
   @Nonnull
   IValidationExecutor <IValidationSourceBinary> loadEdifact (@Nonnull IRepoStorageBase aRepo,
                                                              @Nonnull VesEdifactType aEDI,
-                                                             @Nonnull ErrorList aErrorList);
+                                                             @Nonnull ErrorList aErrorList,
+                                                             @Nonnull IVESAsyncLoader aAsyncLoader);
 }
