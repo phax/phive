@@ -150,13 +150,18 @@ Version: 2023-08-23
   </xs:complexType>
 
   <xs:complexType name="VesRequiresType">
+    <xs:annotation>
+      <xs:documentation>
+        Defines a "requires" dependency to a different VES
+      </xs:documentation>
+    </xs:annotation>
     <xs:sequence>
       <!-- Required references -->
       <xs:group ref="VesCoordinateGroup"/>
       
       <!-- Customization parameter -->
-      <xs:element name="namespaces" type="VesNamespaceListType" minOccurs="0"/>
-      <xs:element name="output" type="VesOutputType" minOccurs="0"/>
+      <xs:element name="namespaces" type="VesNamespaceListType" minOccurs="0" />
+      <xs:element name="output" type="VesOutputType" minOccurs="0" />
     </xs:sequence>
     <xs:attribute name="stopOnError" type="xs:boolean" default="true">
       <xs:annotation>
@@ -424,7 +429,7 @@ Version: 2023-08-23
       
       <xs:element name="requires" type="VesRequiresType" minOccurs="0">
         <xs:annotation>
-          <xs:documentation>An optional reference to an existing validation artefact that must be executed prior to this validation artefact.</xs:documentation>
+          <xs:documentation>An optional reference to an existing validation artefact (VES) that must be executed prior to this validation artefact.</xs:documentation>
         </xs:annotation>
       </xs:element>
       
