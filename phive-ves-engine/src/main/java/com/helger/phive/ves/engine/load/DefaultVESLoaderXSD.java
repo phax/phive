@@ -258,13 +258,6 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           return null;
         }
 
-        if (aCatalogEntries.isNotEmpty ())
-        {
-          // TODO implement catalog support
-          final String sMsg = "XSD resource type '" + sResourceType + "' does not yet support catalog entries";
-          LOGGER.warn (sMsg);
-          aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
-        }
         if (aPrecondition != null)
         {
           // TODO implement precondition support
@@ -324,9 +317,62 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                             sBaseURI +
                             "'");
 
+            // Catalog has precedence
+            if (aCatalogEntries.isNotEmpty ())
+            {
+              // Check public entries first
+              if (StringHelper.hasText (sNamespaceURI))
+              {
+                final VESCatalogEntry aEntry = aCatalogEntries.findEntryByUri (sNamespaceURI);
+                if (aEntry != null)
+                {
+                  final VESID aTargetVESID = aEntry.getRepoStorageKey ().getVESID ();
+
+                  // Load referenced catalog resource
+                  final IRepoStorageReadItem aLoadedCatalogRes = aAsyncLoader.loadResource (aTargetVESID,
+                                                                                            "." + RESOURCE_TYPE_XSD);
+                  if (aLoadedCatalogRes != null)
+                  {
+                    LOGGER.info ("  Successfully resolved namespace URI '" +
+                                 sNamespaceURI +
+                                 "' to Catalog Entry pointing to '" +
+                                 aTargetVESID.getAsSingleID () +
+                                 "'");
+                    return new ReadableResourceInputStream (sRelativeSystemId,
+                                                            aLoadedCatalogRes.getContent ().getInputStream ());
+                  }
+                  LOGGER.warn ("  Failed to resolve Catalog Entry pointing to '" + aTargetVESID.getAsSingleID () + "'");
+                }
+                else
+                {
+                  LOGGER.warn ("  Found no Catalog Entry for namespace URI '" + sNamespaceURI + "'");
+                }
+              }
+
+              if (StringHelper.hasText (sPublicId))
+              {
+                // TODO implement catalog support
+                final String sMsg = "XSD resource type '" +
+                                    sResourceType +
+                                    "' does not yet support catalog entries for PUBLIC ID";
+                LOGGER.warn (sMsg);
+                aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
+              }
+
+              if (StringHelper.hasText (sSystemId))
+              {
+                // TODO implement catalog support
+                final String sMsg = "XSD resource type '" +
+                                    sResourceType +
+                                    "' does not yet support catalog entries for SYSTEM ID";
+                LOGGER.warn (sMsg);
+                aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
+              }
+            }
+
             if (StringHelper.hasText (sRelativeSystemId))
             {
-              // Matches in ZIP have precedence
+              // Matches in ZIP are the default
               final NonBlockingByteArrayOutputStream aZIPResolved = aZIPContent.get (sRelativeSystemId);
               if (aZIPResolved != null)
               {
@@ -334,38 +380,6 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 return new ReadableResourceInputStream (sRelativeSystemId, aZIPResolved.getAsInputStream ());
               }
               LOGGER.warn ("  Failed to resolve System ID '" + sRelativeSystemId + "' in ZIP content");
-            }
-
-            // Then check in catalog
-            if (aCatalogEntries.isNotEmpty ())
-            {
-              if (StringHelper.hasText (sNamespaceURI))
-              {
-                final VESCatalogEntry aEntry = aCatalogEntries.findEntryByUri (sNamespaceURI);
-                if (aEntry != null)
-                {
-                  final VESID aCatalogVESID = aEntry.getRepoStorageKey ().getVESID ();
-
-                  // Load referenced catalog resource
-                  final IRepoStorageReadItem aLoadedCatalogRes = aAsyncLoader.loadResource (aCatalogVESID,
-                                                                                            "." + RESOURCE_TYPE_XSD);
-                  if (aLoadedCatalogRes != null)
-                  {
-                    LOGGER.info ("  Successfully resolved namespace URI '" +
-                                 sNamespaceURI +
-                                 "' to Catalog entry pointing to '" +
-                                 aCatalogVESID.getAsSingleID () +
-                                 "'");
-                    return new ReadableResourceInputStream (sRelativeSystemId,
-                                                            aLoadedCatalogRes.getContent ().getInputStream ());
-                  }
-                  LOGGER.warn ("  Failed to resolve referenced catalog entry '" + aCatalogVESID.getAsSingleID () + "'");
-                }
-                else
-                {
-                  LOGGER.warn ("  Found no catalog entry for namespace URI '" + sNamespaceURI + "'");
-                }
-              }
             }
 
             LOGGER.warn ("  Failed to resolve '" +
