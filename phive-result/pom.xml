@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger.phive</groupId>
     <artifactId>phive-parent-pom</artifactId>
-    <version>9.1.0</version>
+    <version>9.1.1-SNAPSHOT</version>
   </parent>
   <artifactId>phive-result</artifactId>
   <packaging>bundle</packaging>
