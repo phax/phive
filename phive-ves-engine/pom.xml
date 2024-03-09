@@ -105,7 +105,8 @@
           <instructions>
             <Automatic-Module-Name>com.helger.phive.ves.engine</Automatic-Module-Name>
             <Export-Package>
-              com.helger.phive.ves.engine.load.*
+              com.helger.phive.ves.engine.load,
+              com.helger.phive.ves.engine.load.catalog
             </Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>

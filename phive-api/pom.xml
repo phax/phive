@@ -80,13 +80,13 @@
           <instructions>
             <Automatic-Module-Name>com.helger.phive.api</Automatic-Module-Name>
             <Export-Package>
-              com.helger.phive.api.*,
-              com.helger.phive.api.artefact.*,
-              com.helger.phive.api.execute.*,
-              com.helger.phive.api.executorset.*,
-              com.helger.phive.api.mock.*,
-              com.helger.phive.api.result.*,
-              com.helger.phive.api.source.*
+              com.helger.phive.api,
+              com.helger.phive.api.artefact,
+              com.helger.phive.api.execute,
+              com.helger.phive.api.executorset,
+              com.helger.phive.api.mock,
+              com.helger.phive.api.result,
+              com.helger.phive.api.source
             </Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
