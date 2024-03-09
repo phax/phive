@@ -142,6 +142,10 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v9.1.0 - 2024-03-09
+    * Updated to ph-schematron 8.0.0 using Saxon 12.x
+    * Updated to ph-diver 1.1.0
+    * Improved dynamic VES loading heavily
 * v9.0.0 - 2023-09-14
     * Moved class `PhiveRestoredException` into a separate package
     * Using the class `VESID` etc. from `ph-diver-api` instead
