@@ -24,19 +24,18 @@ import com.helger.commons.id.IHasID;
 import com.helger.commons.lang.EnumHelper;
 
 /**
- * Defines the Schematron engine to be used.
+ * Defines the potential Schematron output types.
  *
  * @author Philip Helger
  */
-public enum ESchematronEngine implements IHasID <String>
+public enum ESchematronOutput implements IHasID <String>
 {
-  PURE ("pure"),
-  ISO_SCHEMATRON ("iso-schematron"),
-  SCHXSLT ("schxslt");
+  SVRL ("svrl"),
+  OIOUBL ("oioubl");
 
   private final String m_sID;
 
-  ESchematronEngine (@Nonnull @Nonempty final String sID)
+  ESchematronOutput (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }
@@ -49,8 +48,8 @@ public enum ESchematronEngine implements IHasID <String>
   }
 
   @Nullable
-  public static ESchematronEngine getFromIDOrNull (@Nullable final String sID)
+  public static ESchematronOutput getFromIDOrNull (@Nullable final String sID)
   {
-    return EnumHelper.getFromIDOrNull (ESchematronEngine.class, sID);
+    return EnumHelper.getFromIDOrNull (ESchematronOutput.class, sID);
   }
 }

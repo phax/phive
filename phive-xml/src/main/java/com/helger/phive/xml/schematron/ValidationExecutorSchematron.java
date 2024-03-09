@@ -88,12 +88,6 @@ public class ValidationExecutorSchematron extends
                                           implements
                                           IValidationExecutor.ICacheSupport
 {
-  private enum ESchematronOutput
-  {
-    SVRL,
-    OIOUBL
-  }
-
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
 
   private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
