@@ -51,7 +51,6 @@ import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
-import com.helger.phive.ves.engine.load.LoadedVES.Requirement;
 import com.helger.phive.ves.engine.load.LoadedVES.Status;
 import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
@@ -285,44 +284,55 @@ public final class VESLoader
 
   @Nullable
   public LoadedVES convertToLoadedVES (@Nonnull final LoadedVES.Status aStatus,
-                                       @Nonnull final VesType aVES,
+                                       @Nonnull final VesType aSrcVes,
                                        @Nonnull final VESLoaderStatus aLoaderStatus,
                                        @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
   {
+    return _convertToLoadedVES (aStatus, null, aSrcVes, aLoaderStatus, aLoadingErrors);
+  }
+
+  @Nullable
+  private LoadedVES _convertToLoadedVES (@Nonnull final LoadedVES.Status aStatus,
+                                         @Nullable final LoadedVES.Requirement aLoadingRequirement,
+                                         @Nonnull final VesType aSrcVes,
+                                         @Nonnull final VESLoaderStatus aLoaderStatus,
+                                         @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
+  {
     ValueEnforcer.notNull (aStatus, "Status");
-    ValueEnforcer.notNull (aVES, "VES");
+    ValueEnforcer.notNull (aSrcVes, "VES");
     ValueEnforcer.notNull (aLoaderStatus, "LoaderStatus");
     ValueEnforcer.notNull (aLoadingErrors, "LoadingErrors");
 
-    final EVESSyntax eSyntax = aVES.getXsd () != null ? EVESSyntax.XSD : aVES.getSchematron () != null
-                                                                                                       ? EVESSyntax.SCHEMATRON
-                                                                                                       : EVESSyntax.EDIFACT;
+    final EVESSyntax eSyntax = aSrcVes.getXsd () != null ? EVESSyntax.XSD : aSrcVes.getSchematron () != null
+                                                                                                             ? EVESSyntax.SCHEMATRON
+                                                                                                             : EVESSyntax.EDIFACT;
 
     // Extract data
-    final LoadedVES.Header aHeader = new LoadedVES.Header (new VESID (aVES.getGroupId (),
-                                                                      aVES.getArtifactId (),
-                                                                      aVES.getVersion ()),
-                                                           aVES.getName (),
-                                                           aVES.getReleased (),
+    final LoadedVES.Header aHeader = new LoadedVES.Header (new VESID (aSrcVes.getGroupId (),
+                                                                      aSrcVes.getArtifactId (),
+                                                                      aSrcVes.getVersion ()),
+                                                           aSrcVes.getName (),
+                                                           aSrcVes.getReleased (),
                                                            eSyntax);
     final LoadedVES ret = new LoadedVES (aHeader, aStatus);
-    if (aVES.getRequires () != null)
+    if (aSrcVes.getRequires () != null)
     {
-      final VesRequiresType aReq = aVES.getRequires ();
-      final Requirement aRequirement = new LoadedVES.Requirement (new VESID (aReq.getGroupId (),
-                                                                             aReq.getArtifactId (),
-                                                                             aReq.getVersion ()),
-                                                                  _wrap (aReq.getNamespaces ()),
-                                                                  _wrap (aReq.getOutput ()),
-                                                                  aReq.isStopOnError ());
+      final VesRequiresType aSrcReq = aSrcVes.getRequires ();
+      final LoadedVES.Requirement aRequirement = new LoadedVES.Requirement (new VESID (aSrcReq.getGroupId (),
+                                                                                       aSrcReq.getArtifactId (),
+                                                                                       aSrcReq.getVersion ()),
+                                                                            _wrap (aSrcReq.getNamespaces ()),
+                                                                            _wrap (aSrcReq.getOutput ()),
+                                                                            aSrcReq.isStopOnError ());
       if (isUseEagerRequirementLoading ())
       {
         // Eager loading
 
         // Recursive load required artefact; required to have this in scope
-        final LoadedVES aLoadedRequirement = loadVESFromRepo (aRequirement.getRequiredVESID (),
-                                                              aLoaderStatus,
-                                                              aLoadingErrors);
+        final LoadedVES aLoadedRequirement = _loadVESFromRepo (aRequirement.getRequiredVESID (),
+                                                               aRequirement,
+                                                               aLoaderStatus,
+                                                               aLoadingErrors);
         if (aLoadedRequirement == null)
         {
           aLoadingErrors.add (SingleError.builderError ()
@@ -342,9 +352,10 @@ public final class VESLoader
           // Use this deferred loader, to ensure the same surrounding VESLoader
           // instance is used
           // Recursive load required artefact; required to have this in scope
-          final LoadedVES aLoadedRequirement = loadVESFromRepo (aRequirement.getRequiredVESID (),
-                                                                aLoaderStatus,
-                                                                aLocalErrorList);
+          final LoadedVES aLoadedRequirement = _loadVESFromRepo (aRequirement.getRequiredVESID (),
+                                                                 aRequirement,
+                                                                 aLoaderStatus,
+                                                                 aLocalErrorList);
           if (aLoadedRequirement == null)
             throw new VESLoadingException ("Failed to load required VESID '" +
                                            aRequirement.getRequiredVESID ().getAsSingleID () +
@@ -364,36 +375,48 @@ public final class VESLoader
       return m_aRepo.read (aRepoKey);
     };
 
-    if (aVES.getXsd () != null)
+    if (aSrcVes.getXsd () != null)
     {
       // XSD
       final IVESLoaderXSD aLoader = getLoaderXSD ();
       if (aLoader != null)
-        ret.setExecutor (aLoader.loadXSD (m_aRepo, aVES.getXsd (), aLoadingErrors, aAsyncLoader));
+        ret.setExecutor (aLoader.loadXSD (m_aRepo,
+                                          aSrcVes.getXsd (),
+                                          aLoadingRequirement,
+                                          aLoadingErrors,
+                                          aAsyncLoader));
       else
         aLoadingErrors.add (SingleError.builderError ()
                                        .errorText ("The VES contains an XSD element, but no XSD loader is present")
                                        .build ());
     }
     else
-      if (aVES.getSchematron () != null)
+      if (aSrcVes.getSchematron () != null)
       {
         // Schematron
         final IVESLoaderSchematron aLoader = getLoaderSchematron ();
         if (aLoader != null)
-          ret.setExecutor (aLoader.loadSchematron (m_aRepo, aVES.getSchematron (), aLoadingErrors, aAsyncLoader));
+          ret.setExecutor (aLoader.loadSchematron (m_aRepo,
+                                                   aSrcVes.getSchematron (),
+                                                   aLoadingRequirement,
+                                                   aLoadingErrors,
+                                                   aAsyncLoader));
         else
           aLoadingErrors.add (SingleError.builderError ()
                                          .errorText ("The VES contains a Schematron element, but no Schematron loader is present")
                                          .build ());
       }
       else
-        if (aVES.getEdifact () != null)
+        if (aSrcVes.getEdifact () != null)
         {
           // EDIFACT
           final IVESLoaderEdifact aLoader = getLoaderEdifact ();
           if (aLoader != null)
-            ret.setExecutor (aLoader.loadEdifact (m_aRepo, aVES.getEdifact (), aLoadingErrors, aAsyncLoader));
+            ret.setExecutor (aLoader.loadEdifact (m_aRepo,
+                                                  aSrcVes.getEdifact (),
+                                                  aLoadingRequirement,
+                                                  aLoadingErrors,
+                                                  aAsyncLoader));
           else
             aLoadingErrors.add (SingleError.builderError ()
                                            .errorText ("The VES contains an Edifact element, but no Edifact loader is present")
@@ -476,7 +499,7 @@ public final class VESLoader
   @Nullable
   public LoadedVES loadVESFromRepo (@Nonnull final VESID aVESID, @Nonnull final ErrorList aLoadingErrors)
   {
-    return loadVESFromRepo (aVESID, new VESLoaderStatus (), aLoadingErrors);
+    return _loadVESFromRepo (aVESID, null, new VESLoaderStatus (), aLoadingErrors);
   }
 
   /**
@@ -496,6 +519,30 @@ public final class VESLoader
   public LoadedVES loadVESFromRepo (@Nonnull final VESID aVESID,
                                     @Nonnull final VESLoaderStatus aLoaderStatus,
                                     @Nonnull final ErrorList aLoadingErrors)
+  {
+    return _loadVESFromRepo (aVESID, null, aLoaderStatus, aLoadingErrors);
+  }
+
+  /**
+   * Load a VES by the provided VESID and fill all errors into the provided
+   * {@link ErrorList}.
+   *
+   * @param aVESID
+   *        The VESID to load. May not be <code>null</code>.
+   * @param aRequirement
+   *        The requirement that is currently loaded. May be <code>null</code>.
+   * @param aLoaderStatus
+   *        The internal loader status to be used, to make sure no cycles etc.
+   *        are contained
+   * @param aLoadingErrors
+   *        The loading error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if loading failed
+   */
+  @Nullable
+  private LoadedVES _loadVESFromRepo (@Nonnull final VESID aVESID,
+                                      @Nullable final LoadedVES.Requirement aRequirement,
+                                      @Nonnull final VESLoaderStatus aLoaderStatus,
+                                      @Nonnull final ErrorList aLoadingErrors)
   {
     ValueEnforcer.notNull (aVESID, "VESID");
     ValueEnforcer.notNull (aLoaderStatus, "LoaderStatus");
@@ -588,7 +635,7 @@ public final class VESLoader
       }
 
       // Now read into data model
-      ret = convertToLoadedVES (aStatus, aVES, aLoaderStatus, aLoadingErrors);
+      ret = _convertToLoadedVES (aStatus, aRequirement, aVES, aLoaderStatus, aLoadingErrors);
       return ret;
     }
     finally

@@ -25,9 +25,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.datetime.PDTFactory;
@@ -191,11 +192,28 @@ public final class LoadedVES
   @NotThreadSafe
   public static final class OutputType
   {
-    private final ICommonsMap <String, EErrorLevel> m_aCustomErrorLevels = new CommonsHashMap <> ();
+    private final ICommonsMap <String, EErrorLevel> m_aCustomErrorLevels = new CommonsTreeMap <> ();
 
     public void addCustomErrorLevel (@Nonnull final String sID, @Nonnull final EErrorLevel eErrorLevel)
     {
+      ValueEnforcer.notNull (sID, "ID");
+      ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
+
       m_aCustomErrorLevels.put (sID, eErrorLevel);
+    }
+
+    @Nonnull
+    @ReturnsMutableCopy
+    public ICommonsMap <String, EErrorLevel> getAllCustomErrorLevels ()
+    {
+      return m_aCustomErrorLevels.getClone ();
+    }
+
+    @Nonnull
+    @ReturnsMutableObject
+    public ICommonsMap <String, EErrorLevel> customErrorLevels ()
+    {
+      return m_aCustomErrorLevels;
     }
   }
 

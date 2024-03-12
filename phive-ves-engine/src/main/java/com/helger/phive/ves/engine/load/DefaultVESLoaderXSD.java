@@ -97,6 +97,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aRepo,
                                                              @Nonnull final VesXsdType aXSD,
+                                                             @Nullable final LoadedVES.Requirement aRequirement,
                                                              @Nonnull final ErrorList aErrorList,
                                                              @Nonnull final IVESAsyncLoader aAsyncLoader)
   {
@@ -345,7 +346,9 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 }
                 else
                 {
-                  LOGGER.warn ("  Found no Catalog Entry for namespace URI '" + sNamespaceURI + "'");
+                  // Will be resolved otherwise
+                  if (LOGGER.isDebugEnabled ())
+                    LOGGER.debug ("  Found no Catalog Entry for namespace URI '" + sNamespaceURI + "'");
                 }
               }
 
@@ -354,19 +357,41 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 // TODO implement catalog support
                 final String sMsg = "XSD resource type '" +
                                     sResourceType +
-                                    "' does not yet support catalog entries for PUBLIC ID";
+                                    "' does not yet support catalog entries for PUBLIC ID ('" +
+                                    sPublicId +
+                                    "')";
                 LOGGER.warn (sMsg);
                 aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
               }
 
               if (StringHelper.hasText (sSystemId))
               {
-                // TODO implement catalog support
-                final String sMsg = "XSD resource type '" +
-                                    sResourceType +
-                                    "' does not yet support catalog entries for SYSTEM ID";
-                LOGGER.warn (sMsg);
-                aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
+                final VESCatalogEntry aEntry = aCatalogEntries.findEntryBySystemID (sSystemId);
+                if (aEntry != null)
+                {
+                  final VESID aTargetVESID = aEntry.getRepoStorageKey ().getVESID ();
+
+                  // Load referenced catalog resource
+                  final IRepoStorageReadItem aLoadedCatalogRes = aAsyncLoader.loadResource (aTargetVESID,
+                                                                                            "." + RESOURCE_TYPE_XSD);
+                  if (aLoadedCatalogRes != null)
+                  {
+                    LOGGER.info ("  Successfully resolved System ID '" +
+                                 sSystemId +
+                                 "' to Catalog Entry pointing to '" +
+                                 aTargetVESID.getAsSingleID () +
+                                 "'");
+                    return new ReadableResourceInputStream (sRelativeSystemId,
+                                                            aLoadedCatalogRes.getContent ().getInputStream ());
+                  }
+                  LOGGER.warn ("  Failed to resolve Catalog Entry pointing to '" + aTargetVESID.getAsSingleID () + "'");
+                }
+                else
+                {
+                  // Will be resolved otherwise
+                  if (LOGGER.isDebugEnabled ())
+                    LOGGER.debug ("  Found no Catalog Entry for System ID '" + sSystemId + "'");
+                }
               }
             }
 

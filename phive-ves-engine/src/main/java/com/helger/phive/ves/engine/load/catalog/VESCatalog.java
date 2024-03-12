@@ -76,6 +76,17 @@ public final class VESCatalog implements IHasSize
     return null;
   }
 
+  @Nullable
+  public VESCatalogEntry findEntryBySystemID (@Nullable final String sSystemId)
+  {
+    if (StringHelper.hasText (sSystemId))
+      for (final VESCatalogEntry aEntry : m_aEntries.values ())
+        if (aEntry.getType () == EVESCatalogType.SYSTEM)
+          if (sSystemId.equals (aEntry.getID ()))
+            return aEntry;
+    return null;
+  }
+
   @Override
   public String toString ()
   {

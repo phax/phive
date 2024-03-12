@@ -17,12 +17,17 @@
 package com.helger.phive.ves.engine.load;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.error.SingleError;
+import com.helger.commons.error.level.EErrorLevel;
+import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
@@ -31,6 +36,9 @@ import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.ves.v10.VesCustomErrorType;
+import com.helger.phive.ves.v10.VesErrorLevelType;
+import com.helger.phive.ves.v10.VesOutputType;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.xml.schematron.ESchematronEngine;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
@@ -55,6 +63,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageBase aRepo,
                                                                     @Nonnull final VesSchematronType aSCH,
+                                                                    @Nullable final LoadedVES.Requirement aRequirement,
                                                                     @Nonnull final ErrorList aErrorList,
                                                                     @Nonnull final IVESAsyncLoader aAsyncLoader)
   {
@@ -146,6 +155,49 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
         return null;
       }
     }
+
+    final ICommonsMap <String, IErrorLevel> aCustomErrorLevels = new CommonsHashMap <> ();
+
+    // Is something defined at the Schematron itself?
+    if (aSCH.getOutput () != null)
+    {
+      final VesOutputType aOutput = aSCH.getOutput ();
+
+      // Check for custom error levels
+      if (aOutput.hasCustomErrorEntries ())
+        for (final VesCustomErrorType aCustomError : aOutput.getCustomError ())
+        {
+          final String sKey = aCustomError.getId ();
+          final VesErrorLevelType eLevel = aCustomError.getLevel ();
+          final EErrorLevel eErrorLevel;
+          switch (eLevel)
+          {
+            case ERROR:
+              eErrorLevel = EErrorLevel.ERROR;
+              break;
+            case WARN:
+              eErrorLevel = EErrorLevel.WARN;
+              break;
+            case INFO:
+              eErrorLevel = EErrorLevel.INFO;
+              break;
+            default:
+              throw new IllegalStateException ("Unxpected error level: " + eLevel);
+          }
+          if (StringHelper.hasText (sKey) && eErrorLevel != null)
+            aCustomErrorLevels.put (sKey, eErrorLevel);
+        }
+    }
+
+    // Are we changing the output levels on a "required" resource?
+    if (aRequirement != null && aRequirement.getOutput ().customErrorLevels ().isNotEmpty ())
+    {
+      // These ones overwrite the original ones
+      aCustomErrorLevels.putAll (aRequirement.getOutput ().customErrorLevels ());
+    }
+
+    if (aCustomErrorLevels.isNotEmpty ())
+      aExecutorSCH.addCustomErrorLevels (aCustomErrorLevels);
 
     LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
                  sResourceType +

@@ -17,6 +17,7 @@
 package com.helger.phive.ves.engine.load;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
@@ -35,6 +36,7 @@ public interface IVESLoaderEdifact
   @Nonnull
   IValidationExecutor <IValidationSourceBinary> loadEdifact (@Nonnull IRepoStorageBase aRepo,
                                                              @Nonnull VesEdifactType aEDI,
+                                                             @Nullable LoadedVES.Requirement aRequirement,
                                                              @Nonnull ErrorList aErrorList,
                                                              @Nonnull IVESAsyncLoader aAsyncLoader);
 }
