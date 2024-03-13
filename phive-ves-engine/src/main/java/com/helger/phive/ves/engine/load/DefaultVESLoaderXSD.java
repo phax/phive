@@ -97,7 +97,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aRepo,
                                                              @Nonnull final VesXsdType aXSD,
-                                                             @Nullable final LoadedVES.Requirement aRequirement,
+                                                             @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
                                                              @Nonnull final ErrorList aErrorList,
                                                              @Nonnull final IVESAsyncLoader aAsyncLoader)
   {

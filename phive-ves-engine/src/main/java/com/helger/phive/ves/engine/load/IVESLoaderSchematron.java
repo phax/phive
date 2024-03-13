@@ -33,10 +33,29 @@ import com.helger.phive.xml.source.IValidationSourceXML;
  */
 public interface IVESLoaderSchematron
 {
+  /**
+   * Load a Schematron validation from a VES.
+   *
+   * @param aRepo
+   *        The repository to load the data from. May not be <code>null</code>.
+   * @param aSCH
+   *        The JAXB VES Schematron object with the details. May not be
+   *        <code>null</code>.
+   * @param aLoadingRequiredVES
+   *        In case the loading was recursively triggered via a "requires"
+   *        (=include), this is the data of the requirements. May be
+   *        <code>null</code>.
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @param aAsyncLoader
+   *        The callback to be invoked, if loading this artefacts needs to
+   *        trigger the loading of another artefact.
+   * @return The validation executor to be used. May not be <code>null</code>.
+   */
   @Nonnull
   IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull IRepoStorageBase aRepo,
                                                              @Nonnull VesSchematronType aSCH,
-                                                             @Nullable LoadedVES.Requirement aRequirement,
+                                                             @Nullable LoadedVES.RequiredVES aLoadingRequiredVES,
                                                              @Nonnull ErrorList aErrorList,
                                                              @Nonnull IVESAsyncLoader aAsyncLoader);
 }

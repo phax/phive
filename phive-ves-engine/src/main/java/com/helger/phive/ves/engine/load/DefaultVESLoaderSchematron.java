@@ -63,7 +63,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   @Nonnull
   public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageBase aRepo,
                                                                     @Nonnull final VesSchematronType aSCH,
-                                                                    @Nullable final LoadedVES.Requirement aRequirement,
+                                                                    @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
                                                                     @Nonnull final ErrorList aErrorList,
                                                                     @Nonnull final IVESAsyncLoader aAsyncLoader)
   {
@@ -190,10 +190,10 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
     }
 
     // Are we changing the output levels on a "required" resource?
-    if (aRequirement != null && aRequirement.getOutput ().customErrorLevels ().isNotEmpty ())
+    if (aLoadingRequiredVES != null && aLoadingRequiredVES.getOutput ().customErrorLevels ().isNotEmpty ())
     {
       // These ones overwrite the original ones
-      aCustomErrorLevels.putAll (aRequirement.getOutput ().customErrorLevels ());
+      aCustomErrorLevels.putAll (aLoadingRequiredVES.getOutput ().customErrorLevels ());
     }
 
     if (aCustomErrorLevels.isNotEmpty ())

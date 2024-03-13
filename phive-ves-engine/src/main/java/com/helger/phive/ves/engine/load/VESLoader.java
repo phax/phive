@@ -293,7 +293,7 @@ public final class VESLoader
 
   @Nullable
   private LoadedVES _convertToLoadedVES (@Nonnull final LoadedVES.Status aStatus,
-                                         @Nullable final LoadedVES.Requirement aLoadingRequirement,
+                                         @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
                                          @Nonnull final VesType aSrcVes,
                                          @Nonnull final VESLoaderStatus aLoaderStatus,
                                          @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
@@ -318,47 +318,47 @@ public final class VESLoader
     if (aSrcVes.getRequires () != null)
     {
       final VesRequiresType aSrcReq = aSrcVes.getRequires ();
-      final LoadedVES.Requirement aRequirement = new LoadedVES.Requirement (new VESID (aSrcReq.getGroupId (),
-                                                                                       aSrcReq.getArtifactId (),
-                                                                                       aSrcReq.getVersion ()),
-                                                                            _wrap (aSrcReq.getNamespaces ()),
-                                                                            _wrap (aSrcReq.getOutput ()),
-                                                                            aSrcReq.isStopOnError ());
+      final LoadedVES.RequiredVES aSrcRequiredVES = new LoadedVES.RequiredVES (new VESID (aSrcReq.getGroupId (),
+                                                                                          aSrcReq.getArtifactId (),
+                                                                                          aSrcReq.getVersion ()),
+                                                                               _wrap (aSrcReq.getNamespaces ()),
+                                                                               _wrap (aSrcReq.getOutput ()),
+                                                                               aSrcReq.isStopOnError ());
       if (isUseEagerRequirementLoading ())
       {
         // Eager loading
 
         // Recursive load required artefact; required to have this in scope
-        final LoadedVES aLoadedRequirement = _loadVESFromRepo (aRequirement.getRequiredVESID (),
-                                                               aRequirement,
+        final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
+                                                               aSrcRequiredVES,
                                                                aLoaderStatus,
                                                                aLoadingErrors);
         if (aLoadedRequirement == null)
         {
           aLoadingErrors.add (SingleError.builderError ()
                                          .errorText ("Failed to load required VESID '" +
-                                                     aRequirement.getRequiredVESID ().getAsSingleID () +
+                                                     aSrcRequiredVES.getRequiredVESID ().getAsSingleID () +
                                                      "' [eager]")
                                          .build ());
           return null;
         }
 
-        ret.setEagerRequires (aRequirement, aLoadedRequirement);
+        ret.setEagerRequires (aSrcRequiredVES, aLoadedRequirement);
       }
       else
       {
         // Lazy loading
-        ret.setLazyRequires (aRequirement, aLocalErrorList -> {
+        ret.setLazyRequires (aSrcRequiredVES, aLocalErrorList -> {
           // Use this deferred loader, to ensure the same surrounding VESLoader
           // instance is used
           // Recursive load required artefact; required to have this in scope
-          final LoadedVES aLoadedRequirement = _loadVESFromRepo (aRequirement.getRequiredVESID (),
-                                                                 aRequirement,
+          final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
+                                                                 aSrcRequiredVES,
                                                                  aLoaderStatus,
                                                                  aLocalErrorList);
           if (aLoadedRequirement == null)
             throw new VESLoadingException ("Failed to load required VESID '" +
-                                           aRequirement.getRequiredVESID ().getAsSingleID () +
+                                           aSrcRequiredVES.getRequiredVESID ().getAsSingleID () +
                                            "' [lazy]: " +
                                            StringHelper.getImplodedMapped ("\n  ",
                                                                            aLocalErrorList,
@@ -382,7 +382,7 @@ public final class VESLoader
       if (aLoader != null)
         ret.setExecutor (aLoader.loadXSD (m_aRepo,
                                           aSrcVes.getXsd (),
-                                          aLoadingRequirement,
+                                          aLoadingRequiredVES,
                                           aLoadingErrors,
                                           aAsyncLoader));
       else
@@ -398,7 +398,7 @@ public final class VESLoader
         if (aLoader != null)
           ret.setExecutor (aLoader.loadSchematron (m_aRepo,
                                                    aSrcVes.getSchematron (),
-                                                   aLoadingRequirement,
+                                                   aLoadingRequiredVES,
                                                    aLoadingErrors,
                                                    aAsyncLoader));
         else
@@ -414,7 +414,7 @@ public final class VESLoader
           if (aLoader != null)
             ret.setExecutor (aLoader.loadEdifact (m_aRepo,
                                                   aSrcVes.getEdifact (),
-                                                  aLoadingRequirement,
+                                                  aLoadingRequiredVES,
                                                   aLoadingErrors,
                                                   aAsyncLoader));
           else
@@ -529,8 +529,8 @@ public final class VESLoader
    *
    * @param aVESID
    *        The VESID to load. May not be <code>null</code>.
-   * @param aRequirement
-   *        The requirement that is currently loaded. May be <code>null</code>.
+   * @param aLoadingRequiredVES
+   *        The required VES that is currently loaded. May be <code>null</code>.
    * @param aLoaderStatus
    *        The internal loader status to be used, to make sure no cycles etc.
    *        are contained
@@ -540,7 +540,7 @@ public final class VESLoader
    */
   @Nullable
   private LoadedVES _loadVESFromRepo (@Nonnull final VESID aVESID,
-                                      @Nullable final LoadedVES.Requirement aRequirement,
+                                      @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
                                       @Nonnull final VESLoaderStatus aLoaderStatus,
                                       @Nonnull final ErrorList aLoadingErrors)
   {
@@ -635,7 +635,7 @@ public final class VESLoader
       }
 
       // Now read into data model
-      ret = _convertToLoadedVES (aStatus, aRequirement, aVES, aLoaderStatus, aLoadingErrors);
+      ret = _convertToLoadedVES (aStatus, aLoadingRequiredVES, aVES, aLoaderStatus, aLoadingErrors);
       return ret;
     }
     finally

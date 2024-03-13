@@ -223,14 +223,14 @@ public final class LoadedVES
    * @author Philip Helger
    */
   @NotThreadSafe
-  public static final class Requirement
+  public static final class RequiredVES
   {
     private final VESID m_aRequiredVESID;
     private final MapBasedNamespaceContext m_aNSCtx;
     private final OutputType m_aOutput;
     private final boolean m_bStopOnError;
 
-    Requirement (@Nonnull final VESID aRequiredVESID,
+    RequiredVES (@Nonnull final VESID aRequiredVESID,
                  @Nonnull final MapBasedNamespaceContext aNSCtx,
                  @Nonnull final OutputType aOutput,
                  final boolean bStopOnError)
@@ -270,7 +270,7 @@ public final class LoadedVES
 
   private final Header m_aHeader;
   private final Status m_aStatus;
-  private Requirement m_aRequires;
+  private RequiredVES m_aRequires;
   private IVESSpecificDeferredLoader m_aRequiresLoader;
   private LoadedVES m_aLoadedRequires;
   private IValidationExecutor <? extends IValidationSource> m_aExecutor;
@@ -301,7 +301,7 @@ public final class LoadedVES
     return m_aStatus;
   }
 
-  void setLazyRequires (@Nonnull final Requirement aRequirement,
+  void setLazyRequires (@Nonnull final RequiredVES aRequirement,
                         @Nonnull final IVESSpecificDeferredLoader aDeferredLoader)
   {
     ValueEnforcer.notNull (aRequirement, "Requirement");
@@ -313,7 +313,7 @@ public final class LoadedVES
     m_aRequiresLoader = aDeferredLoader;
   }
 
-  void setEagerRequires (@Nonnull final Requirement aRequirement, @Nonnull final LoadedVES aLoadedVES)
+  void setEagerRequires (@Nonnull final RequiredVES aRequirement, @Nonnull final LoadedVES aLoadedVES)
   {
     ValueEnforcer.notNull (aRequirement, "Requirement");
     ValueEnforcer.notNull (aLoadedVES, "LoadedVES");
