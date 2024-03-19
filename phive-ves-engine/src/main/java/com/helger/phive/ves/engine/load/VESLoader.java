@@ -591,10 +591,22 @@ public final class VESLoader
             return null;
           }
 
+          // Is a replacement ID present?
+          final VESID aReplacementVESID;
+          if (aVESStatus.getReplacement () != null)
+          {
+            aReplacementVESID = new VESID (aVESStatus.getReplacement ().getGroupId (),
+                                           aVESStatus.getReplacement ().getArtifactId (),
+                                           aVESStatus.getReplacement ().getVersion ());
+          }
+          else
+            aReplacementVESID = null;
+
           aStatus = new LoadedVES.Status (aVESStatus.getStatusLastModified (),
                                           aVESStatus.getValidFrom (),
                                           aVESStatus.getValidTo (),
-                                          ETriState.valueOf (aVESStatus.isDeprecated ()));
+                                          ETriState.valueOf (aVESStatus.isDeprecated ()),
+                                          aReplacementVESID);
         }
         else
         {

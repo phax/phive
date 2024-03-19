@@ -44,6 +44,7 @@ import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executorset.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
+import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.ves.model.v1.EVESSyntax;
@@ -119,11 +120,13 @@ public final class LoadedVES
     private final XMLOffsetDateTime m_aValidFrom;
     private final XMLOffsetDateTime m_aValidTo;
     private final ETriState m_eDeprecated;
+    private final VESID m_aReplacementVESID;
 
     Status (@Nonnull final XMLOffsetDateTime aStatusLastMod,
             @Nullable final XMLOffsetDateTime aValidFrom,
             @Nullable final XMLOffsetDateTime aValidTo,
-            @Nonnull final ETriState eDeprecated)
+            @Nonnull final ETriState eDeprecated,
+            @Nullable final VESID aReplacementVESID)
     {
       ValueEnforcer.notNull (aStatusLastMod, "StatusLastMod");
       ValueEnforcer.notNull (eDeprecated, "Deprecated");
@@ -131,6 +134,7 @@ public final class LoadedVES
       m_aValidFrom = aValidFrom;
       m_aValidTo = aValidTo;
       m_eDeprecated = eDeprecated;
+      m_aReplacementVESID = aReplacementVESID;
     }
 
     @Nonnull
@@ -180,11 +184,17 @@ public final class LoadedVES
       return getDateTimeValidityNow ().isValid () && !isExplicitlyDeprecated ();
     }
 
+    @Nullable
+    public VESID getReplacementVESID ()
+    {
+      return m_aReplacementVESID;
+    }
+
     @Nonnull
     public static Status createUndefined ()
     {
       // Create an undefined status per now
-      return new Status (PDTFactory.getCurrentXMLOffsetDateTime (), null, null, ETriState.UNDEFINED);
+      return new Status (PDTFactory.getCurrentXMLOffsetDateTime (), null, null, ETriState.UNDEFINED, null);
     }
   }
 
@@ -424,8 +434,8 @@ public final class LoadedVES
 
     final IValidationExecutorSet <IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                           m_aHeader.getName (),
-                                                                                          EValidationExecutorStatusType.DEPRECATED ==
-                                                                                                                eStatus,
+                                                                                          new ValidationExecutorSetStatus (eStatus,
+                                                                                                                           m_aStatus.getReplacementVESID ()),
                                                                                           aExecutors);
 
     // Validate
