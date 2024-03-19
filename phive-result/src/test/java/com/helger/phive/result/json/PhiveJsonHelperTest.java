@@ -42,6 +42,7 @@ import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
+import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.phive.xml.source.IValidationSourceXML;
@@ -76,7 +77,9 @@ public final class PhiveJsonHelperTest
     final IJsonObject aObj = new JsonObject ();
     final Locale aDisplayLocale = Locale.US;
     final VESID aVESID = new VESID ("group", "art", "1.0");
-    final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID, "name", false);
+    final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
+                                                                          "name",
+                                                                          ValidationExecutorSetStatus.createValid ());
     PhiveJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
     final String sJson = aObj.getAsJsonString ();
     assertEquals ("{\"ves\":{\"vesid\":\"group:art:1\",\"name\":\"name\",\"deprecated\":false}," +
@@ -94,7 +97,9 @@ public final class PhiveJsonHelperTest
     // Register
     final ValidationExecutorSetRegistry <IValidationSourceXML> aRegistry = new ValidationExecutorSetRegistry <> ();
     final VESID aVESID = new VESID ("group", "art", "1.0");
-    final ValidationExecutorSet <IValidationSourceXML> aVES = new ValidationExecutorSet <> (aVESID, "name", false);
+    final ValidationExecutorSet <IValidationSourceXML> aVES = new ValidationExecutorSet <> (aVESID,
+                                                                                            "name",
+                                                                                            ValidationExecutorSetStatus.createValid ());
     aVES.addExecutor (ValidationExecutorXSD.create (new ClassPathResource ("test/schema1.xsd")));
     aRegistry.registerValidationExecutorSet (aVES);
 

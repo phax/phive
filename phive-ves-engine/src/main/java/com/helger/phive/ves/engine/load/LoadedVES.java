@@ -41,6 +41,7 @@ import com.helger.commons.state.ETriState;
 import com.helger.diver.api.version.VESID;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.execute.ValidationExecutionManager;
+import com.helger.phive.api.executorset.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResultList;
@@ -138,26 +139,29 @@ public final class LoadedVES
       return m_aStatusLastMod;
     }
 
-    public boolean isDateTimeValidNow ()
+    @Nonnull
+    public EValidationExecutorStatusType getDateTimeValidityNow ()
     {
-      return isDateTimeValidAt (PDTFactory.getCurrentXMLOffsetDateTime ());
+      // Get the validity at the current point in time
+      return getDateTimeValidityAt (PDTFactory.getCurrentXMLOffsetDateTime ());
     }
 
-    public boolean isDateTimeValidAt (@Nonnull final XMLOffsetDateTime aDT)
+    @Nonnull
+    public EValidationExecutorStatusType getDateTimeValidityAt (@Nonnull final XMLOffsetDateTime aDT)
     {
       if (m_aValidFrom != null)
       {
         // Already valid?
         if (aDT.isBefore (m_aValidFrom))
-          return false;
+          return EValidationExecutorStatusType.NOT_YET_ACTIVE;
       }
       if (m_aValidTo != null)
       {
-        // Not yet valid?
+        // Still valid?
         if (aDT.isAfter (m_aValidTo))
-          return false;
+          return EValidationExecutorStatusType.EXPIRED;
       }
-      return true;
+      return EValidationExecutorStatusType.VALID;
     }
 
     @Nonnull
@@ -173,7 +177,7 @@ public final class LoadedVES
 
     public boolean isOverallValid ()
     {
-      return isDateTimeValidNow () && !isExplicitlyDeprecated ();
+      return getDateTimeValidityNow ().isValid () && !isExplicitlyDeprecated ();
     }
 
     @Nonnull
@@ -385,18 +389,23 @@ public final class LoadedVES
     return ret;
   }
 
-  private boolean _isRecursivelyValid ()
+  @Nonnull
+  private EValidationExecutorStatusType _getRecursiveExecutorStatusType ()
   {
     // Local status first, because in case of failure, this is a quicker break
-    if (!m_aStatus.isOverallValid ())
-      return false;
+    final EValidationExecutorStatusType ret = m_aStatus.getDateTimeValidityNow ();
+    if (!ret.isValid ())
+      return ret;
+
+    if (!m_aStatus.isExplicitlyDeprecated ())
+      return EValidationExecutorStatusType.DEPRECATED;
 
     // No requirement
     if (m_aRequires == null)
-      return true;
+      return EValidationExecutorStatusType.VALID;
 
     // Requirement present
-    return _getLoadedVESRequiresNotNull ()._isRecursivelyValid ();
+    return _getLoadedVESRequiresNotNull ()._getRecursiveExecutorStatusType ();
   }
 
   public void applyValidation (@Nonnull final IValidationSource aValidationSource,
@@ -410,12 +419,13 @@ public final class LoadedVES
     if (!hasExecutor ())
       throw new VESLoadingException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
 
-    final boolean bIsValid = _isRecursivelyValid ();
+    final EValidationExecutorStatusType eStatus = _getRecursiveExecutorStatusType ();
     final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
 
     final IValidationExecutorSet <IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                           m_aHeader.getName (),
-                                                                                          !bIsValid,
+                                                                                          EValidationExecutorStatusType.DEPRECATED ==
+                                                                                                                eStatus,
                                                                                           aExecutors);
 
     // Validate

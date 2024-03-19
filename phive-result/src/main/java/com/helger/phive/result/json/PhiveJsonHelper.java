@@ -62,6 +62,7 @@ import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
+import com.helger.phive.api.executorset.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
@@ -106,6 +107,9 @@ public final class PhiveJsonHelper
   public static final String JSON_VESID = "vesid";
   public static final String JSON_NAME = "name";
   public static final String JSON_DEPRECATED = "deprecated";
+  public static final String JSON_STATUS = "status";
+  public static final String JSON_TYPE = "type";
+  public static final String JSON_REPLACEMENT_VESID = "replacementVesid";
 
   public static final String JSON_SUCCESS = "success";
   public static final String JSON_ARTIFACT_TYPE = "artifactType";
@@ -464,7 +468,11 @@ public final class PhiveJsonHelper
    * {
    *   "vesid" : string,
    *   "name" : string,
-   *   "deprecated" : boolean
+   *   "deprecated" : boolean,
+   *   "status" : {
+   *     "type": string,
+   *     "replacementVesid" : string?
+   *   }
    * }
    * </pre>
    *
@@ -477,9 +485,15 @@ public final class PhiveJsonHelper
   {
     ValueEnforcer.notNull (aVES, "VES");
 
+    final IValidationExecutorSetStatus aStatus = aVES.getStatus ();
+    final IJsonObject aStatusJson = new JsonObject ().add (JSON_TYPE, aStatus.getType ().getID ());
+    if (aStatus.hasReplacementVESID ())
+      aStatusJson.add (JSON_REPLACEMENT_VESID, aStatus.getReplacementVESID ().getAsSingleID ());
+
     return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
                             .add (JSON_NAME, aVES.getDisplayName ())
-                            .add (JSON_DEPRECATED, aVES.isDeprecated ());
+                            .add (JSON_DEPRECATED, aStatus.isDeprecated ())
+                            .addJson (JSON_STATUS, aStatusJson);
   }
 
   /**
