@@ -48,19 +48,19 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   private final VESID m_aID;
   private final String m_sDisplayName;
   private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aList = new CommonsArrayList <> ();
-  private ValidationExecutorSetStatus m_aStatus;
+  private final IValidationExecutorSetStatus m_aStatus;
 
   @Deprecated (forRemoval = true, since = "9.2.0")
   public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
                                 final boolean bDeprecated)
   {
-    this (aID, sDisplayName, ValidationExecutorSetStatus.createDeprecated (bDeprecated));
+    this (aID, sDisplayName, ValidationExecutorSetStatus.createDeprecatedNow (bDeprecated));
   }
 
   public ValidationExecutorSet (@Nonnull final VESID aID,
                                 @Nonnull @Nonempty final String sDisplayName,
-                                @Nonnull final ValidationExecutorSetStatus aStatus)
+                                @Nonnull final IValidationExecutorSetStatus aStatus)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -104,7 +104,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   }
 
   @Nonnull
-  public final ValidationExecutorSetStatus getStatus ()
+  public final IValidationExecutorSetStatus getStatus ()
   {
     return m_aStatus;
   }
@@ -184,7 +184,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   {
     return create (aID,
                    sDisplayName,
-                   ValidationExecutorSetStatus.createDeprecated (bIsDeprecated),
+                   ValidationExecutorSetStatus.createDeprecatedNow (bIsDeprecated),
                    aValidationExecutors);
   }
 
@@ -192,7 +192,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   @SafeVarargs
   public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
-                                                                                  @Nonnull final ValidationExecutorSetStatus aStatus,
+                                                                                  @Nonnull final IValidationExecutorSetStatus aStatus,
                                                                                   @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
@@ -217,14 +217,14 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   {
     return create (aID,
                    sDisplayName,
-                   ValidationExecutorSetStatus.createDeprecated (bIsDeprecated),
+                   ValidationExecutorSetStatus.createDeprecatedNow (bIsDeprecated),
                    aValidationExecutors);
   }
 
   @Nonnull
   public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
-                                                                                  @Nonnull final ValidationExecutorSetStatus aStatus,
+                                                                                  @Nonnull final IValidationExecutorSetStatus aStatus,
                                                                                   @Nonnull final Collection <? extends IValidationExecutor <ST>> aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
@@ -270,7 +270,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
     return createDerived (aBaseVES,
                           aID,
                           sDisplayName,
-                          ValidationExecutorSetStatus.createDeprecated (bIsDeprecated),
+                          ValidationExecutorSetStatus.createDeprecatedNow (bIsDeprecated),
                           aValidationExecutors);
   }
 
@@ -296,7 +296,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   public static <ST extends IValidationSource> ValidationExecutorSet <ST> createDerived (@Nonnull final IValidationExecutorSet <ST> aBaseVES,
                                                                                          @Nonnull final VESID aID,
                                                                                          @Nonnull @Nonempty final String sDisplayName,
-                                                                                         @Nonnull final ValidationExecutorSetStatus aStatus,
+                                                                                         @Nonnull final IValidationExecutorSetStatus aStatus,
                                                                                          @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");

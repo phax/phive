@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.string.StringHelper;
 import com.helger.diver.api.version.VESID;
 
 /**
@@ -15,6 +16,14 @@ import com.helger.diver.api.version.VESID;
  */
 public interface IValidationExecutorSetStatus
 {
+  /**
+   * @return The date and time of the last modification of this status.
+   *         Precision is limited to milliseconds. May never be
+   *         <code>null</code>.
+   */
+  @Nonnull
+  OffsetDateTime getStatusLastModification ();
+
   /**
    * @return The effective status type. May not be <code>null</code>.
    */
@@ -35,6 +44,11 @@ public interface IValidationExecutorSetStatus
     return getValidFrom () != null;
   }
 
+  /**
+   * @return The date and time from which this artefact is valid. Precision is
+   *         limited to milliseconds. May be <code>null</code> to indicate
+   *         "since forever".
+   */
   @Nullable
   OffsetDateTime getValidFrom ();
 
@@ -43,8 +57,25 @@ public interface IValidationExecutorSetStatus
     return getValidTo () != null;
   }
 
+  /**
+   * @return The date and time until which this artefact is valid. Precision is
+   *         limited to milliseconds. May be <code>null</code> to indicate
+   *         "forever".
+   */
   @Nullable
   OffsetDateTime getValidTo ();
+
+  default boolean hasDeprecationReason ()
+  {
+    return StringHelper.hasText (getDeprecationReason ());
+  }
+
+  /**
+   * @return If this is deprecated, this field may contain a human readable
+   *         description. May be <code>null</code>.
+   */
+  @Nullable
+  String getDeprecationReason ();
 
   /**
    * @return <code>true</code> if a replacement VESID is present,

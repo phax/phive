@@ -45,8 +45,8 @@ import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.RepoStorageContentByteArray;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
+import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
-import com.helger.phive.ves.engine.load.LoadedVES.Status;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
@@ -90,7 +90,7 @@ public final class VESLoaderTest
 
     // Convert to loaded VES - checking that it is okay
     final LoadedVES aLoadedVES = new VESLoader (aRepo).setUseEagerRequirementLoading (false)
-                                                      .convertToLoadedVES (Status.createUndefined (),
+                                                      .convertToLoadedVES (ValidationExecutorSetStatus.createValidNow (),
                                                                            aVES,
                                                                            new VESLoaderStatus (),
                                                                            aErrorList);

@@ -16,7 +16,6 @@
  */
 package com.helger.phive.ves.engine.load;
 
-import java.time.OffsetDateTime;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -32,20 +31,17 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.XMLOffsetDate;
-import com.helger.commons.datetime.XMLOffsetDateTime;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.lang.GenericReflection;
-import com.helger.commons.state.ETriState;
 import com.helger.diver.api.version.VESID;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executorset.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
+import com.helger.phive.api.executorset.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
-import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.ves.model.v1.EVESSyntax;
@@ -104,122 +100,6 @@ public final class LoadedVES
     public EVESSyntax getVESSyntax ()
     {
       return m_eVESSyntax;
-    }
-  }
-
-  /**
-   * The potentially mutable part of a loaded VES. This is the syntax
-   * independent version of the status, in case there will be more then one
-   * version.
-   *
-   * @author Philip Helger
-   */
-  @Immutable
-  public static final class Status
-  {
-    private final XMLOffsetDateTime m_aStatusLastMod;
-    private final XMLOffsetDateTime m_aValidFrom;
-    private final XMLOffsetDateTime m_aValidTo;
-    private final ETriState m_eDeprecated;
-    private final VESID m_aReplacementVESID;
-
-    Status (@Nonnull final XMLOffsetDateTime aStatusLastMod,
-            @Nullable final XMLOffsetDateTime aValidFrom,
-            @Nullable final XMLOffsetDateTime aValidTo,
-            @Nonnull final ETriState eDeprecated,
-            @Nullable final VESID aReplacementVESID)
-    {
-      ValueEnforcer.notNull (aStatusLastMod, "StatusLastMod");
-      ValueEnforcer.notNull (eDeprecated, "Deprecated");
-      m_aStatusLastMod = aStatusLastMod;
-      m_aValidFrom = aValidFrom;
-      m_aValidTo = aValidTo;
-      m_eDeprecated = eDeprecated;
-      m_aReplacementVESID = aReplacementVESID;
-    }
-
-    @Nonnull
-    public XMLOffsetDateTime getStatusLastModification ()
-    {
-      return m_aStatusLastMod;
-    }
-
-    @Nonnull
-    public XMLOffsetDateTime getValidFrom ()
-    {
-      return m_aValidFrom;
-    }
-
-    @Nonnull
-    public OffsetDateTime getValidFromOffset ()
-    {
-      return m_aValidFrom == null ? null : m_aValidFrom.toOffsetDateTime ();
-    }
-
-    @Nonnull
-    public XMLOffsetDateTime getValidTo ()
-    {
-      return m_aValidTo;
-    }
-
-    @Nonnull
-    public OffsetDateTime getValidToOffset ()
-    {
-      return m_aValidTo == null ? null : m_aValidTo.toOffsetDateTime ();
-    }
-
-    @Nonnull
-    public EValidationExecutorStatusType getDateTimeValidityNow ()
-    {
-      // Get the validity at the current point in time
-      return getDateTimeValidityAt (PDTFactory.getCurrentXMLOffsetDateTime ());
-    }
-
-    @Nonnull
-    public EValidationExecutorStatusType getDateTimeValidityAt (@Nonnull final XMLOffsetDateTime aDT)
-    {
-      if (m_aValidFrom != null)
-      {
-        // Already valid?
-        if (aDT.isBefore (m_aValidFrom))
-          return EValidationExecutorStatusType.NOT_YET_ACTIVE;
-      }
-      if (m_aValidTo != null)
-      {
-        // Still valid?
-        if (aDT.isAfter (m_aValidTo))
-          return EValidationExecutorStatusType.EXPIRED;
-      }
-      return EValidationExecutorStatusType.VALID;
-    }
-
-    @Nonnull
-    public ETriState getExplicitlyDeprecated ()
-    {
-      return m_eDeprecated;
-    }
-
-    public boolean isExplicitlyDeprecated ()
-    {
-      return m_eDeprecated.getAsBooleanValue (false);
-    }
-
-    public boolean isOverallValid ()
-    {
-      return getDateTimeValidityNow ().isValid () && !isExplicitlyDeprecated ();
-    }
-
-    @Nullable
-    public VESID getReplacementVESID ()
-    {
-      return m_aReplacementVESID;
-    }
-
-    @Nonnull
-    public static Status createUndefined ()
-    {
-      // Create an undefined status per now
-      return new Status (PDTFactory.getCurrentXMLOffsetDateTime (), null, null, ETriState.UNDEFINED, null);
     }
   }
 
@@ -308,13 +188,13 @@ public final class LoadedVES
   }
 
   private final Header m_aHeader;
-  private final Status m_aStatus;
+  private final IValidationExecutorSetStatus m_aStatus;
   private RequiredVES m_aRequires;
   private IVESSpecificDeferredLoader m_aRequiresLoader;
   private LoadedVES m_aLoadedRequires;
   private IValidationExecutor <? extends IValidationSource> m_aExecutor;
 
-  LoadedVES (@Nonnull final Header aHeader, @Nonnull final Status aStatus)
+  LoadedVES (@Nonnull final Header aHeader, @Nonnull final IValidationExecutorSetStatus aStatus)
   {
     ValueEnforcer.notNull (aHeader, "Header");
     ValueEnforcer.notNull (aStatus, "Status");
@@ -335,7 +215,7 @@ public final class LoadedVES
    * @return The status information of the loaded VES. Never <code>null</code>.
    */
   @Nonnull
-  public Status getStatus ()
+  public IValidationExecutorSetStatus getStatus ()
   {
     return m_aStatus;
   }
@@ -428,12 +308,9 @@ public final class LoadedVES
   public EValidationExecutorStatusType getExecutorStatusType ()
   {
     // Local status first, because in case of failure, this is a quicker break
-    final EValidationExecutorStatusType ret = m_aStatus.getDateTimeValidityNow ();
+    final EValidationExecutorStatusType ret = m_aStatus.getType ();
     if (!ret.isValid ())
       return ret;
-
-    if (!m_aStatus.isExplicitlyDeprecated ())
-      return EValidationExecutorStatusType.DEPRECATED;
 
     // No requirement
     if (m_aRequires == null)
@@ -454,20 +331,13 @@ public final class LoadedVES
     if (!hasExecutor ())
       throw new VESLoadingException ("The loaded VES has no Executor and can therefore not be used for validating objects");
 
-    // Create status
-    final EValidationExecutorStatusType eStatusType = getExecutorStatusType ();
-    final ValidationExecutorSetStatus aVESStatus = new ValidationExecutorSetStatus (eStatusType,
-                                                                                    m_aStatus.getValidFromOffset (),
-                                                                                    m_aStatus.getValidToOffset (),
-                                                                                    m_aStatus.getReplacementVESID ());
-
     // Build executors
     final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
 
     // Assemble VES
     final IValidationExecutorSet <IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                           m_aHeader.getName (),
-                                                                                          aVESStatus,
+                                                                                          m_aStatus,
                                                                                           aExecutors);
 
     // Validate

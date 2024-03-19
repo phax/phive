@@ -35,13 +35,13 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.XMLOffsetDateTime;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.ESuccess;
-import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
 import com.helger.diver.api.version.VESID;
@@ -49,9 +49,11 @@ import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
+import com.helger.phive.api.executorset.EValidationExecutorStatusType;
+import com.helger.phive.api.executorset.IValidationExecutorSetStatus;
+import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
-import com.helger.phive.ves.engine.load.LoadedVES.Status;
 import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
@@ -283,7 +285,7 @@ public final class VESLoader
   }
 
   @Nullable
-  public LoadedVES convertToLoadedVES (@Nonnull final LoadedVES.Status aStatus,
+  public LoadedVES convertToLoadedVES (@Nonnull final IValidationExecutorSetStatus aStatus,
                                        @Nonnull final VesType aSrcVes,
                                        @Nonnull final VESLoaderStatus aLoaderStatus,
                                        @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
@@ -292,7 +294,7 @@ public final class VESLoader
   }
 
   @Nullable
-  private LoadedVES _convertToLoadedVES (@Nonnull final LoadedVES.Status aStatus,
+  private LoadedVES _convertToLoadedVES (@Nonnull final IValidationExecutorSetStatus aStatus,
                                          @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
                                          @Nonnull final VesType aSrcVes,
                                          @Nonnull final VESLoaderStatus aLoaderStatus,
@@ -439,11 +441,14 @@ public final class VESLoader
   @Nullable
   public LoadedVES loadVESDirect (@Nonnull final IReadableResource aVESRes, @Nonnull final ErrorList aLoadingErrors)
   {
-    return loadVESDirect (Status.createUndefined (), aVESRes, new VESLoaderStatus (), aLoadingErrors);
+    return loadVESDirect (ValidationExecutorSetStatus.createValidNow (),
+                          aVESRes,
+                          new VESLoaderStatus (),
+                          aLoadingErrors);
   }
 
   @Nullable
-  public LoadedVES loadVESDirect (@Nonnull final LoadedVES.Status aStatus,
+  public LoadedVES loadVESDirect (@Nonnull final IValidationExecutorSetStatus aStatus,
                                   @Nonnull final IReadableResource aVESRes,
                                   @Nonnull final VESLoaderStatus aLoaderStatus,
                                   @Nonnull final ErrorList aLoadingErrors)
@@ -523,6 +528,12 @@ public final class VESLoader
     return _loadVESFromRepo (aVESID, null, aLoaderStatus, aLoadingErrors);
   }
 
+  @Nullable
+  private static OffsetDateTime _toODT (@Nullable final XMLOffsetDateTime a)
+  {
+    return a == null ? null : a.toOffsetDateTime ();
+  }
+
   /**
    * Load a VES by the provided VESID and fill all errors into the provided
    * {@link ErrorList}.
@@ -569,7 +580,7 @@ public final class VESLoader
       }
 
       // Check if an explicit status is available
-      final LoadedVES.Status aStatus;
+      final IValidationExecutorSetStatus aStatus;
       final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_STATUS);
       if (m_aRepo.exists (aRepoKeyStatus))
       {
@@ -591,6 +602,25 @@ public final class VESLoader
             return null;
           }
 
+          // Determine the status type
+          final OffsetDateTime aCheckDT = PDTFactory.getCurrentOffsetDateTime ();
+          final OffsetDateTime aValidFrom = _toODT (aVESStatus.getValidFrom ());
+          final OffsetDateTime aValidTo = _toODT (aVESStatus.getValidTo ());
+          final EValidationExecutorStatusType eType;
+          // Already valid?
+          if (aValidFrom != null && aCheckDT.isBefore (aValidFrom))
+            eType = EValidationExecutorStatusType.NOT_YET_ACTIVE;
+          else
+            // Still valid?
+            if (aValidTo != null && aCheckDT.isAfter (aValidTo))
+              eType = EValidationExecutorStatusType.EXPIRED;
+            else
+              // Deprecated?
+              if (aVESStatus.isDeprecated () != null && aVESStatus.isDeprecated ().booleanValue ())
+                eType = EValidationExecutorStatusType.DEPRECATED;
+              else
+                eType = EValidationExecutorStatusType.VALID;
+
           // Is a replacement ID present?
           final VESID aReplacementVESID;
           if (aVESStatus.getReplacement () != null)
@@ -602,22 +632,23 @@ public final class VESLoader
           else
             aReplacementVESID = null;
 
-          aStatus = new LoadedVES.Status (aVESStatus.getStatusLastModified (),
-                                          aVESStatus.getValidFrom (),
-                                          aVESStatus.getValidTo (),
-                                          ETriState.valueOf (aVESStatus.isDeprecated ()),
-                                          aReplacementVESID);
+          aStatus = new ValidationExecutorSetStatus (_toODT (aVESStatus.getStatusLastModified ()),
+                                                     eType,
+                                                     aValidFrom,
+                                                     aValidTo,
+                                                     aVESStatus.getDeprecationReason (),
+                                                     aReplacementVESID);
         }
         else
         {
           // Status is supposed to exist, but does not
-          aStatus = LoadedVES.Status.createUndefined ();
+          aStatus = ValidationExecutorSetStatus.createValidNow ();
         }
       }
       else
       {
         // Status does not exist
-        aStatus = LoadedVES.Status.createUndefined ();
+        aStatus = ValidationExecutorSetStatus.createValidNow ();
       }
 
       // Read VES content from repo

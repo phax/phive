@@ -79,7 +79,7 @@ public final class PhiveJsonHelperTest
     final VESID aVESID = new VESID ("group", "art", "1.0");
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
                                                                           "name",
-                                                                          ValidationExecutorSetStatus.createValid ());
+                                                                          ValidationExecutorSetStatus.createValidNow ());
     PhiveJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
     final String sJson = aObj.getAsJsonString ();
     assertEquals ("{\"ves\":{\"vesid\":\"group:art:1\",\"name\":\"name\",\"deprecated\":false,\"status\":{\"type\":\"valid\"}}," +
@@ -99,7 +99,7 @@ public final class PhiveJsonHelperTest
     final VESID aVESID = new VESID ("group", "art", "1.0");
     final ValidationExecutorSet <IValidationSourceXML> aVES = new ValidationExecutorSet <> (aVESID,
                                                                                             "name",
-                                                                                            ValidationExecutorSetStatus.createValid ());
+                                                                                            ValidationExecutorSetStatus.createValidNow ());
     aVES.addExecutor (ValidationExecutorXSD.create (new ClassPathResource ("test/schema1.xsd")));
     aRegistry.registerValidationExecutorSet (aVES);
 

@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.diver.api.version.VESID;
 
@@ -17,21 +18,35 @@ import com.helger.diver.api.version.VESID;
  */
 public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
 {
+  private final OffsetDateTime m_aStatusLastModDT;
   private final EValidationExecutorStatusType m_eType;
   private final OffsetDateTime m_aValidFrom;
   private final OffsetDateTime m_aValidTo;
+  private final String m_sDeprecationReason;
   private final VESID m_aReplacementVESID;
 
-  public ValidationExecutorSetStatus (@Nonnull final EValidationExecutorStatusType eType,
+  public ValidationExecutorSetStatus (@Nonnull final OffsetDateTime aStatusLastModDT,
+                                      @Nonnull final EValidationExecutorStatusType eType,
                                       @Nullable final OffsetDateTime aValidFrom,
                                       @Nullable final OffsetDateTime aValidTo,
+                                      @Nullable final String sDeprecationReason,
                                       @Nullable final VESID aReplacementVESID)
   {
+    ValueEnforcer.notNull (aStatusLastModDT, "StatusLastModDT");
     ValueEnforcer.notNull (eType, "Type");
+
+    m_aStatusLastModDT = PDTFactory.getWithMillisOnly (aStatusLastModDT);
     m_eType = eType;
-    m_aValidFrom = aValidFrom;
-    m_aValidTo = aValidTo;
+    m_aValidFrom = PDTFactory.getWithMillisOnly (aValidFrom);
+    m_aValidTo = PDTFactory.getWithMillisOnly (aValidTo);
+    m_sDeprecationReason = sDeprecationReason;
     m_aReplacementVESID = aReplacementVESID;
+  }
+
+  @Nonnull
+  public final OffsetDateTime getStatusLastModification ()
+  {
+    return m_aStatusLastModDT;
   }
 
   @Nonnull
@@ -53,6 +68,12 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   }
 
   @Nullable
+  public final String getDeprecationReason ()
+  {
+    return m_sDeprecationReason;
+  }
+
+  @Nullable
   public VESID getReplacementVESID ()
   {
     return m_aReplacementVESID;
@@ -61,23 +82,37 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("Type", m_eType)
+    return new ToStringGenerator (null).append ("StatusLastModDT", m_aStatusLastModDT)
+                                       .append ("Type", m_eType)
                                        .append ("ValidFrom", m_aValidFrom)
                                        .append ("ValidTo", m_aValidTo)
+                                       .append ("DeprecationReason", m_sDeprecationReason)
                                        .append ("ReplacementVESID", m_aReplacementVESID)
                                        .getToString ();
   }
 
   @Nonnull
-  public static ValidationExecutorSetStatus createValid ()
+  public static ValidationExecutorSetStatus createValidNow ()
   {
-    return createDeprecated (false);
+    return createDeprecatedNow (false);
   }
 
   @Nonnull
-  public static ValidationExecutorSetStatus createDeprecated (final boolean bDeprecated)
+  public static ValidationExecutorSetStatus createDeprecatedNow (final boolean bDeprecated)
   {
-    return new ValidationExecutorSetStatus (bDeprecated ? EValidationExecutorStatusType.DEPRECATED
-                                                        : EValidationExecutorStatusType.VALID, null, null, null);
+    return createDeprecated (PDTFactory.getCurrentOffsetDateTime (), bDeprecated);
+  }
+
+  @Nonnull
+  public static ValidationExecutorSetStatus createDeprecated (@Nonnull final OffsetDateTime aStatusLastModDT,
+                                                              final boolean bDeprecated)
+  {
+    return new ValidationExecutorSetStatus (aStatusLastModDT,
+                                            bDeprecated ? EValidationExecutorStatusType.DEPRECATED
+                                                        : EValidationExecutorStatusType.VALID,
+                                            (OffsetDateTime) null,
+                                            (OffsetDateTime) null,
+                                            (String) null,
+                                            (VESID) null);
   }
 }
