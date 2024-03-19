@@ -515,6 +515,7 @@ Version: 2024-03-19
         <xs:annotation>
           <xs:documentation>
             This element provides the possibility to provide the reason for deprecation.
+            The content should be provided in English language only. As free text. 
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -522,6 +523,8 @@ Version: 2024-03-19
         <xs:annotation>
           <xs:documentation>
             In case the element coordinates are deprecated, use this resource instead.
+            This is primarily intended as a hint to the validation user to make sure he's using
+            the correct validation rules.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
