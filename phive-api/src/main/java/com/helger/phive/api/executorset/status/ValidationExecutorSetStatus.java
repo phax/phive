@@ -4,8 +4,10 @@ import java.time.OffsetDateTime;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -18,6 +20,8 @@ import com.helger.diver.api.version.VESID;
  * @author Philip Helger
  * @since 9.2.0
  */
+@Immutable
+@MustImplementEqualsAndHashcode
 public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
 {
   private final OffsetDateTime m_aStatusLastModDT;
