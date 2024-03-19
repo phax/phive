@@ -7,6 +7,8 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.equals.EqualsHelper;
+import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.diver.api.version.VESID;
 
@@ -77,6 +79,35 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   public VESID getReplacementVESID ()
   {
     return m_aReplacementVESID;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+
+    final ValidationExecutorSetStatus rhs = (ValidationExecutorSetStatus) o;
+    return m_aStatusLastModDT.equals (rhs.m_aStatusLastModDT) &&
+           m_eType.equals (rhs.m_eType) &&
+           EqualsHelper.equals (m_aValidFrom, rhs.m_aValidFrom) &&
+           EqualsHelper.equals (m_aValidTo, rhs.m_aValidTo) &&
+           EqualsHelper.equals (m_sDeprecationReason, rhs.m_sDeprecationReason) &&
+           EqualsHelper.equals (m_aReplacementVESID, rhs.m_aReplacementVESID);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aStatusLastModDT)
+                                       .append (m_eType)
+                                       .append (m_aValidFrom)
+                                       .append (m_aValidTo)
+                                       .append (m_sDeprecationReason)
+                                       .append (m_aReplacementVESID)
+                                       .getHashCode ();
   }
 
   @Override
