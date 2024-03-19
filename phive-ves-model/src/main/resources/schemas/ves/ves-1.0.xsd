@@ -468,6 +468,48 @@ Version: 2024-03-19
       </xs:group>
     </xs:sequence>
   </xs:complexType>
+  
+  <xs:complexType name="VesStatusHistoryItemType">
+    <xs:annotation>
+      <xs:documentation>
+        The content of this element needs to be the human readable description of what was changed.
+        That should be human readable text in English language.
+        Note: history items are immutable and MUST NOT be altered later at any costs.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="changeDateTime" type="xs:dateTime" use="required">
+          <xs:annotation>
+            <xs:documentation>The date and time when the change was published</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="author" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>Who is responsible for the change</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="changeCode" type="xs:normalizedString" use="optional">
+          <xs:annotation>
+            <xs:documentation>
+              An optional code for the activity that was performed.
+              No default code list exists at the time of creation.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>    
+  </xs:complexType>
+  
+  <xs:complexType name="VesStatusHistoryType">
+    <xs:sequence>
+      <xs:element name="historyItem" type="VesStatusHistoryItemType" minOccurs="1" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>Contains the details of the status changes</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="VesStatusType">
     <xs:sequence>
@@ -525,6 +567,13 @@ Version: 2024-03-19
             In case the element coordinates are deprecated, use this resource instead.
             This is primarily intended as a hint to the validation user to make sure he's using
             the correct validation rules.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="history" type="VesStatusHistoryType">
+        <xs:annotation>
+          <xs:documentation>
+            This element allows the editor to provide information about the different status changes.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
