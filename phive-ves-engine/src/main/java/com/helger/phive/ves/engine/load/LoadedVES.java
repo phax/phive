@@ -425,7 +425,7 @@ public final class LoadedVES
   }
 
   @Nonnull
-  private EValidationExecutorStatusType _getRecursiveExecutorStatusType ()
+  public EValidationExecutorStatusType getExecutorStatusType ()
   {
     // Local status first, because in case of failure, this is a quicker break
     final EValidationExecutorStatusType ret = m_aStatus.getDateTimeValidityNow ();
@@ -440,7 +440,7 @@ public final class LoadedVES
       return EValidationExecutorStatusType.VALID;
 
     // Requirement present
-    return _getLoadedVESRequiresNotNull ()._getRecursiveExecutorStatusType ();
+    return _getLoadedVESRequiresNotNull ().getExecutorStatusType ();
   }
 
   public void applyValidation (@Nonnull final IValidationSource aValidationSource,
@@ -452,15 +452,19 @@ public final class LoadedVES
     ValueEnforcer.notNull (aLocale, "Locale");
 
     if (!hasExecutor ())
-      throw new VESLoadingException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
+      throw new VESLoadingException ("The loaded VES has no Executor and can therefore not be used for validating objects");
 
-    final EValidationExecutorStatusType eStatusType = _getRecursiveExecutorStatusType ();
-    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
-
+    // Create status
+    final EValidationExecutorStatusType eStatusType = getExecutorStatusType ();
     final ValidationExecutorSetStatus aVESStatus = new ValidationExecutorSetStatus (eStatusType,
                                                                                     m_aStatus.getValidFromOffset (),
                                                                                     m_aStatus.getValidToOffset (),
                                                                                     m_aStatus.getReplacementVESID ());
+
+    // Build executors
+    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
+
+    // Assemble VES
     final IValidationExecutorSet <IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                           m_aHeader.getName (),
                                                                                           aVESStatus,
