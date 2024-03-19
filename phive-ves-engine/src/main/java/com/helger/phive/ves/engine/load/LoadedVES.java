@@ -16,6 +16,7 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import java.time.OffsetDateTime;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -141,6 +142,30 @@ public final class LoadedVES
     public XMLOffsetDateTime getStatusLastModification ()
     {
       return m_aStatusLastMod;
+    }
+
+    @Nonnull
+    public XMLOffsetDateTime getValidFrom ()
+    {
+      return m_aValidFrom;
+    }
+
+    @Nonnull
+    public OffsetDateTime getValidFromOffset ()
+    {
+      return m_aValidFrom == null ? null : m_aValidFrom.toOffsetDateTime ();
+    }
+
+    @Nonnull
+    public XMLOffsetDateTime getValidTo ()
+    {
+      return m_aValidTo;
+    }
+
+    @Nonnull
+    public OffsetDateTime getValidToOffset ()
+    {
+      return m_aValidTo == null ? null : m_aValidTo.toOffsetDateTime ();
     }
 
     @Nonnull
@@ -429,13 +454,16 @@ public final class LoadedVES
     if (!hasExecutor ())
       throw new VESLoadingException ("The loaded VES has no Executor Set and can therefore not be used for validating objects");
 
-    final EValidationExecutorStatusType eStatus = _getRecursiveExecutorStatusType ();
+    final EValidationExecutorStatusType eStatusType = _getRecursiveExecutorStatusType ();
     final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
 
+    final ValidationExecutorSetStatus aVESStatus = new ValidationExecutorSetStatus (eStatusType,
+                                                                                    m_aStatus.getValidFromOffset (),
+                                                                                    m_aStatus.getValidToOffset (),
+                                                                                    m_aStatus.getReplacementVESID ());
     final IValidationExecutorSet <IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
                                                                                           m_aHeader.getName (),
-                                                                                          new ValidationExecutorSetStatus (eStatus,
-                                                                                                                           m_aStatus.getReplacementVESID ()),
+                                                                                          aVESStatus,
                                                                                           aExecutors);
 
     // Validate

@@ -1,5 +1,7 @@
 package com.helger.phive.api.executorset;
 
+import java.time.OffsetDateTime;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -27,6 +29,22 @@ public interface IValidationExecutorSetStatus
   {
     return getType ().isDeprecated ();
   }
+
+  default boolean hasValidFrom ()
+  {
+    return getValidFrom () != null;
+  }
+
+  @Nullable
+  OffsetDateTime getValidFrom ();
+
+  default boolean hasValidTo ()
+  {
+    return getValidTo () != null;
+  }
+
+  @Nullable
+  OffsetDateTime getValidTo ();
 
   /**
    * @return <code>true</code> if a replacement VESID is present,
