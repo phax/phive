@@ -33,6 +33,8 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.diver.api.version.VESID;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
+import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
 
 /**

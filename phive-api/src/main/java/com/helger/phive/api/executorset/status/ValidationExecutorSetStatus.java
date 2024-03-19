@@ -1,4 +1,4 @@
-package com.helger.phive.api.executorset;
+package com.helger.phive.api.executorset.status;
 
 import java.time.OffsetDateTime;
 
@@ -95,6 +95,12 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   public static ValidationExecutorSetStatus createValidNow ()
   {
     return createDeprecatedNow (false);
+  }
+
+  @Nonnull
+  public static ValidationExecutorSetStatus createValidAt (@Nonnull final OffsetDateTime aStatusLastModDT)
+  {
+    return createDeprecated (aStatusLastModDT, false);
   }
 
   @Nonnull

@@ -1,4 +1,4 @@
-package com.helger.phive.api.executorset;
+package com.helger.phive.api.executorset.status;
 
 import java.time.OffsetDateTime;
 

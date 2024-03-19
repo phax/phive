@@ -35,7 +35,6 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
 import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.XMLOffsetDateTime;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -49,13 +48,13 @@ import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
-import com.helger.phive.api.executorset.EValidationExecutorStatusType;
-import com.helger.phive.api.executorset.IValidationExecutorSetStatus;
-import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
+import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
+import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
+import com.helger.phive.ves.model.v1.VESStatus1Helper;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
 import com.helger.phive.ves.v10.VesCustomErrorType;
 import com.helger.phive.ves.v10.VesErrorLevelType;
@@ -528,12 +527,6 @@ public final class VESLoader
     return _loadVESFromRepo (aVESID, null, aLoaderStatus, aLoadingErrors);
   }
 
-  @Nullable
-  private static OffsetDateTime _toODT (@Nullable final XMLOffsetDateTime a)
-  {
-    return a == null ? null : a.toOffsetDateTime ();
-  }
-
   /**
    * Load a VES by the provided VESID and fill all errors into the provided
    * {@link ErrorList}.
@@ -602,42 +595,8 @@ public final class VESLoader
             return null;
           }
 
-          // Determine the status type
-          final OffsetDateTime aCheckDT = PDTFactory.getCurrentOffsetDateTime ();
-          final OffsetDateTime aValidFrom = _toODT (aVESStatus.getValidFrom ());
-          final OffsetDateTime aValidTo = _toODT (aVESStatus.getValidTo ());
-          final EValidationExecutorStatusType eType;
-          // Already valid?
-          if (aValidFrom != null && aCheckDT.isBefore (aValidFrom))
-            eType = EValidationExecutorStatusType.NOT_YET_ACTIVE;
-          else
-            // Still valid?
-            if (aValidTo != null && aCheckDT.isAfter (aValidTo))
-              eType = EValidationExecutorStatusType.EXPIRED;
-            else
-              // Deprecated?
-              if (aVESStatus.isDeprecated () != null && aVESStatus.isDeprecated ().booleanValue ())
-                eType = EValidationExecutorStatusType.DEPRECATED;
-              else
-                eType = EValidationExecutorStatusType.VALID;
-
-          // Is a replacement ID present?
-          final VESID aReplacementVESID;
-          if (aVESStatus.getReplacement () != null)
-          {
-            aReplacementVESID = new VESID (aVESStatus.getReplacement ().getGroupId (),
-                                           aVESStatus.getReplacement ().getArtifactId (),
-                                           aVESStatus.getReplacement ().getVersion ());
-          }
-          else
-            aReplacementVESID = null;
-
-          aStatus = new ValidationExecutorSetStatus (_toODT (aVESStatus.getStatusLastModified ()),
-                                                     eType,
-                                                     aValidFrom,
-                                                     aValidTo,
-                                                     aVESStatus.getDeprecationReason (),
-                                                     aReplacementVESID);
+          // Convert JAXB data model to Java date model
+          aStatus = VESStatus1Helper.convert (aVESStatus);
         }
         else
         {

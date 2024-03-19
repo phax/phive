@@ -62,8 +62,8 @@ import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
-import com.helger.phive.api.executorset.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
+import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
@@ -108,8 +108,12 @@ public final class PhiveJsonHelper
   public static final String JSON_NAME = "name";
   public static final String JSON_DEPRECATED = "deprecated";
   public static final String JSON_STATUS = "status";
-  public static final String JSON_TYPE = "type";
-  public static final String JSON_REPLACEMENT_VESID = "replacementVesid";
+  public static final String JSON_STATUS_LAST_MODIFICATION = "lastModification";
+  public static final String JSON_STATUS_TYPE = "type";
+  public static final String JSON_STATUS_VALID_FROM = "validFrom";
+  public static final String JSON_STATUS_VALID_TO = "validTo";
+  public static final String JSON_STATUS_DEPRECATION_REASON = "deprecationReason";
+  public static final String JSON_STATUS_REPLACEMENT_VESID = "replacementVesid";
 
   public static final String JSON_SUCCESS = "success";
   public static final String JSON_ARTIFACT_TYPE = "artifactType";
@@ -470,6 +474,7 @@ public final class PhiveJsonHelper
    *   "name" : string,
    *   "deprecated" : boolean,
    *   "status" : {
+   *     "lastModification" : dateTime
    *     "type": string,
    *     "replacementVesid" : string?
    *   }
@@ -486,9 +491,17 @@ public final class PhiveJsonHelper
     ValueEnforcer.notNull (aVES, "VES");
 
     final IValidationExecutorSetStatus aStatus = aVES.getStatus ();
-    final IJsonObject aStatusJson = new JsonObject ().add (JSON_TYPE, aStatus.getType ().getID ());
+    final IJsonObject aStatusJson = new JsonObject ().add (JSON_STATUS_LAST_MODIFICATION,
+                                                           PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()))
+                                                     .add (JSON_STATUS_TYPE, aStatus.getType ().getID ())
+                                                     .addIfNotNull (JSON_STATUS_VALID_FROM,
+                                                                    PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()))
+                                                     .addIfNotNull (JSON_STATUS_VALID_TO,
+                                                                    PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()))
+                                                     .addIfNotEmpty (JSON_STATUS_DEPRECATION_REASON,
+                                                                     aStatus.getDeprecationReason ());
     if (aStatus.hasReplacementVESID ())
-      aStatusJson.add (JSON_REPLACEMENT_VESID, aStatus.getReplacementVESID ().getAsSingleID ());
+      aStatusJson.add (JSON_STATUS_REPLACEMENT_VESID, aStatus.getReplacementVESID ().getAsSingleID ());
 
     return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
                             .add (JSON_NAME, aVES.getDisplayName ())

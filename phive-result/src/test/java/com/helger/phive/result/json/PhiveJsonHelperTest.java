@@ -22,12 +22,14 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Locale;
 
 import org.junit.Test;
 
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.datetime.PDTFactory;
+import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -42,7 +44,7 @@ import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
-import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
+import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.phive.xml.source.IValidationSourceXML;
@@ -77,12 +79,16 @@ public final class PhiveJsonHelperTest
     final IJsonObject aObj = new JsonObject ();
     final Locale aDisplayLocale = Locale.US;
     final VESID aVESID = new VESID ("group", "art", "1.0");
+
+    final OffsetDateTime aNow = PDTFactory.getCurrentOffsetDateTimeMillisOnly ();
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
                                                                           "name",
-                                                                          ValidationExecutorSetStatus.createValidNow ());
+                                                                          ValidationExecutorSetStatus.createValidAt (aNow));
     PhiveJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
     final String sJson = aObj.getAsJsonString ();
-    assertEquals ("{\"ves\":{\"vesid\":\"group:art:1\",\"name\":\"name\",\"deprecated\":false,\"status\":{\"type\":\"valid\"}}," +
+    assertEquals ("{\"ves\":{\"vesid\":\"group:art:1\",\"name\":\"name\",\"deprecated\":false,\"status\":{\"lastModification\":\"" +
+                  PDTWebDateHelper.getAsStringXSD (aNow) +
+                  "\",\"type\":\"valid\"}}," +
                   "\"success\":true," +
                   "\"interrupted\":false," +
                   "\"mostSevereErrorLevel\":\"SUCCESS\"," +

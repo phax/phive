@@ -45,7 +45,7 @@ import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.RepoStorageContentByteArray;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
-import com.helger.phive.api.executorset.ValidationExecutorSetStatus;
+import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
