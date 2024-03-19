@@ -27,7 +27,7 @@
     <xs:documentation>
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
-Version: 2023-08-23
+Version: 2024-03-19
     </xs:documentation>
   </xs:annotation>
 
@@ -456,6 +456,18 @@ Version: 2023-08-23
       </xs:documentation>
     </xs:annotation>
   </xs:element>
+  
+  <xs:complexType name="VesStatusReplacementType">
+    <xs:sequence>
+      <xs:group ref="VesCoordinateGroup">
+        <xs:annotation>
+          <xs:documentation>
+            The structured VESID of the replacement VES. Must have the same type as the source VES.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:group>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="VesStatusType">
     <xs:sequence>
@@ -496,6 +508,20 @@ Version: 2023-08-23
           <xs:documentation>
             This element provides the possibility to explicitly mark this object as "deprecated" and
             no longer usable.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="deprecationReason" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            This element provides the possibility to provide the reason for deprecation.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="replacement" type="VesStatusReplacementType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            In case the element coordinates are deprecated, use this resource instead.
           </xs:documentation>
         </xs:annotation>
       </xs:element>

@@ -142,6 +142,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v9.1.1 - work in progress
+    * Extended the VES status XSD with new optional elements
 * v9.1.0 - 2024-03-09
     * Updated to ph-schematron 8.0.0 using Saxon 12.x
     * Updated to ph-diver 1.1.0
