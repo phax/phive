@@ -5,12 +5,15 @@ import java.time.OffsetDateTime;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.XMLOffsetDateTime;
 import com.helger.diver.api.version.VESID;
 import com.helger.phive.api.executorset.status.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
+import com.helger.phive.api.executorset.status.ValidationExecutorSetStatusHistoryItem;
 import com.helger.phive.ves.v10.VesStatusType;
 
 /**
@@ -62,11 +65,22 @@ public final class VESStatus1Helper
     else
       aReplacementVESID = null;
 
+    // Read history items
+    final ICommonsList <ValidationExecutorSetStatusHistoryItem> aHistoryItems = new CommonsArrayList <> ();
+    for (final var aHI : aVESStatus.getHistory ().getHistoryItem ())
+    {
+      aHistoryItems.add (new ValidationExecutorSetStatusHistoryItem (aHI.getChangeDateTime ().toOffsetDateTime (),
+                                                                     aHI.getAuthor (),
+                                                                     aHI.getChangeCode (),
+                                                                     aHI.getValue ()));
+    }
+
     return new ValidationExecutorSetStatus (_toODT (aVESStatus.getStatusLastModified ()),
                                             eType,
                                             aValidFrom,
                                             aValidTo,
                                             aVESStatus.getDeprecationReason (),
-                                            aReplacementVESID);
+                                            aReplacementVESID,
+                                            aHistoryItems);
   }
 }

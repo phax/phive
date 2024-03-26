@@ -8,6 +8,11 @@ import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -30,13 +35,15 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   private final OffsetDateTime m_aValidTo;
   private final String m_sDeprecationReason;
   private final VESID m_aReplacementVESID;
+  private final ICommonsList <ValidationExecutorSetStatusHistoryItem> m_aHistoryItems;
 
   public ValidationExecutorSetStatus (@Nonnull final OffsetDateTime aStatusLastModDT,
                                       @Nonnull final EValidationExecutorStatusType eType,
                                       @Nullable final OffsetDateTime aValidFrom,
                                       @Nullable final OffsetDateTime aValidTo,
                                       @Nullable final String sDeprecationReason,
-                                      @Nullable final VESID aReplacementVESID)
+                                      @Nullable final VESID aReplacementVESID,
+                                      @Nullable final ICommonsList <ValidationExecutorSetStatusHistoryItem> aHistoryItems)
   {
     ValueEnforcer.notNull (aStatusLastModDT, "StatusLastModDT");
     ValueEnforcer.notNull (eType, "Type");
@@ -47,6 +54,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     m_aValidTo = PDTFactory.getWithMillisOnly (aValidTo);
     m_sDeprecationReason = sDeprecationReason;
     m_aReplacementVESID = aReplacementVESID;
+    m_aHistoryItems = new CommonsArrayList <> (aHistoryItems);
   }
 
   @Nonnull
@@ -85,6 +93,22 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     return m_aReplacementVESID;
   }
 
+  @Nonnull
+  @Nonempty
+  @ReturnsMutableObject
+  public ICommonsList <ValidationExecutorSetStatusHistoryItem> historyItems ()
+  {
+    return m_aHistoryItems;
+  }
+
+  @Nonnull
+  @Nonempty
+  @ReturnsMutableCopy
+  public ICommonsList <ValidationExecutorSetStatusHistoryItem> getAllHistoryItems ()
+  {
+    return m_aHistoryItems.getClone ();
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -93,6 +117,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
 
+    // History items are not contained on purpose
     final ValidationExecutorSetStatus rhs = (ValidationExecutorSetStatus) o;
     return m_aStatusLastModDT.equals (rhs.m_aStatusLastModDT) &&
            m_eType.equals (rhs.m_eType) &&
@@ -105,6 +130,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   @Override
   public int hashCode ()
   {
+    // History items are not contained on purpose
     return new HashCodeGenerator (this).append (m_aStatusLastModDT)
                                        .append (m_eType)
                                        .append (m_aValidFrom)
@@ -123,6 +149,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
                                        .append ("ValidTo", m_aValidTo)
                                        .append ("DeprecationReason", m_sDeprecationReason)
                                        .append ("ReplacementVESID", m_aReplacementVESID)
+                                       .append ("HistoryItems", m_aHistoryItems)
                                        .getToString ();
   }
 
@@ -154,6 +181,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
                                             (OffsetDateTime) null,
                                             (OffsetDateTime) null,
                                             (String) null,
-                                            (VESID) null);
+                                            (VESID) null,
+                                            (ICommonsList <ValidationExecutorSetStatusHistoryItem>) null);
   }
 }

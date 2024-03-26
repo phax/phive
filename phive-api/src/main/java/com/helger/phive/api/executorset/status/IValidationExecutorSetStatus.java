@@ -5,6 +5,10 @@ import java.time.OffsetDateTime;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.string.StringHelper;
 import com.helger.diver.api.version.VESID;
 
@@ -91,4 +95,14 @@ public interface IValidationExecutorSetStatus
    */
   @Nullable
   VESID getReplacementVESID ();
+
+  @Nonnull
+  @Nonempty
+  @ReturnsMutableObject
+  ICommonsList <ValidationExecutorSetStatusHistoryItem> historyItems ();
+
+  @Nonnull
+  @Nonempty
+  @ReturnsMutableCopy
+  ICommonsList <ValidationExecutorSetStatusHistoryItem> getAllHistoryItems ();
 }
