@@ -567,6 +567,10 @@ Version: 2024-03-19
             In case the element coordinates are deprecated, use this resource instead.
             This is primarily intended as a hint to the validation user to make sure he's using
             the correct validation rules.
+            If this artefact is deprecated and a later version exists, the latest version is 
+              always considered the appropriate replacement.
+            However if group ID or artefact ID changed, it needs to be explicitly provided here 
+              as a replacement VESID.
           </xs:documentation>
         </xs:annotation>
       </xs:element>

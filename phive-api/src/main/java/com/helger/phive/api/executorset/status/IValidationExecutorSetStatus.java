@@ -107,7 +107,11 @@ public interface IValidationExecutorSetStatus
   }
 
   /**
-   * @return The replacement VESID to be used. May be <code>null</code>.
+   * @return The replacement VESID to be used. May be <code>null</code>. If this
+   *         artefact is deprecated and a later version exists, the latest
+   *         version is always considered the appropriate replacement. However
+   *         if group ID or artefact ID changed, it needs to be explicitly
+   *         provided here as a replacement VESID.
    */
   @Nullable
   VESID getReplacementVESID ();
