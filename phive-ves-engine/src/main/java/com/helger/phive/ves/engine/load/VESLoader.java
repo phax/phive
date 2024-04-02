@@ -653,13 +653,15 @@ public final class VESLoader
                       m_eLatestResMode);
         return null;
       }
-      LOGGER.info ("Successfully resolved pseudo version in '" +
-                   aVESID.getAsSingleID () +
-                   "' using resolution mode " +
-                   m_eLatestResMode +
-                   " to '" +
-                   aStaticVESID.getAsSingleID () +
-                   "'");
+
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Successfully resolved pseudo version in '" +
+                      aVESID.getAsSingleID () +
+                      "' using resolution mode " +
+                      m_eLatestResMode +
+                      " to '" +
+                      aStaticVESID.getAsSingleID () +
+                      "'");
     }
 
     LOGGER.info ("Trying to read VESID " + aLoaderStatus.getDepedencyChain (aStaticVESID) + " from repository");
