@@ -754,9 +754,9 @@ public final class VESLoader
     {
       if (bIsRoot)
         if (ret == null)
-          LOGGER.error ("Failed to load VESID " + aStaticVESID.getAsSingleID () + "' from repository");
+          LOGGER.error ("Failed to load VESID '" + aStaticVESID.getAsSingleID () + "' from repository");
         else
-          LOGGER.info ("Successfully finished loading VESID " + aStaticVESID.getAsSingleID () + "' from repository");
+          LOGGER.info ("Successfully finished loading VESID '" + aStaticVESID.getAsSingleID () + "' from repository");
     }
   }
 

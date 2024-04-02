@@ -334,11 +334,12 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                                                                                             "." + RESOURCE_TYPE_XSD);
                   if (aLoadedCatalogRes != null)
                   {
-                    LOGGER.info ("  Successfully resolved namespace URI '" +
-                                 sNamespaceURI +
-                                 "' to Catalog Entry pointing to '" +
-                                 aTargetVESID.getAsSingleID () +
-                                 "'");
+                    if (LOGGER.isDebugEnabled ())
+                      LOGGER.debug ("  Successfully resolved namespace URI '" +
+                                    sNamespaceURI +
+                                    "' to Catalog Entry pointing to '" +
+                                    aTargetVESID.getAsSingleID () +
+                                    "'");
                     return new ReadableResourceInputStream (sRelativeSystemId,
                                                             aLoadedCatalogRes.getContent ().getInputStream ());
                   }
@@ -401,7 +402,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
               final NonBlockingByteArrayOutputStream aZIPResolved = aZIPContent.get (sRelativeSystemId);
               if (aZIPResolved != null)
               {
-                LOGGER.info ("  Successfully resolved '" + sRelativeSystemId + "' to ZIP file content");
+                if (LOGGER.isDebugEnabled ())
+                  LOGGER.debug ("  Successfully resolved '" + sRelativeSystemId + "' to ZIP file content");
                 return new ReadableResourceInputStream (sRelativeSystemId, aZIPResolved.getAsInputStream ());
               }
               LOGGER.warn ("  Failed to resolve System ID '" + sRelativeSystemId + "' in ZIP content");
