@@ -142,6 +142,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v9.2.1 - work in progress
+    * Added support for the pseudo version resolution in `VESLoader.loadVESFromRepo`
+    * The `VESLoader` now requires a `IRepoStorageWithToc` instead of a `IRepoStorageBase` in the constructor
 * v9.2.0 - 2024-03-29
     * Updated to ph-commons 11.1.5
     * Ensured Java 21 compatibility

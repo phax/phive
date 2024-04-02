@@ -43,11 +43,12 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
+import com.helger.diver.api.version.EVESPseudoVersion;
 import com.helger.diver.api.version.VESID;
-import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
+import com.helger.diver.repo.toc.IRepoStorageWithToc;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
@@ -80,6 +81,34 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
 public final class VESLoader
 {
   /**
+   * Defines the latest version resolution modes.
+   *
+   * @author Philip Helger
+   * @since 9.2.1
+   */
+  public enum ELatestResolutionMode
+  {
+    /**
+     * Use the latest overall version available, independent if this is a
+     * snapshot or a release build.
+     */
+    LATEST_OVERALL,
+    /**
+     * Use the latest release version only. Snapshot versions are ignored.
+     */
+    LATEST_RELEASES,
+    /**
+     * Do not try to resolve latest versions at all.
+     */
+    NOT_SUPPORTED;
+
+    /**
+     * Default: latest is the latest
+     */
+    public static final ELatestResolutionMode DEFAULT = LATEST_OVERALL;
+  }
+
+  /**
    * File extension for VES files
    */
   public static final String FILE_EXT_VES = ".ves";
@@ -94,7 +123,7 @@ public final class VESLoader
   private static final Duration DURATION_WARN = Duration.ofMillis (500);
 
   private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
-  private final IRepoStorageBase m_aRepo;
+  private final IRepoStorageWithToc m_aRepo;
   @GuardedBy ("m_aRWLock")
   private IVESLoaderXSD m_aLoaderXSD = new DefaultVESLoaderXSD ();
   @GuardedBy ("m_aRWLock")
@@ -103,8 +132,10 @@ public final class VESLoader
   private IVESLoaderEdifact m_aLoaderEdifact = null;
   @GuardedBy ("m_aRWLock")
   private boolean m_bUseEagerRequirementLoading = DEFAULT_USE_EAGER_REQUIREMENT_LOADING;
+  @GuardedBy ("m_aRWLock")
+  private ELatestResolutionMode m_eLatestResMode = ELatestResolutionMode.DEFAULT;
 
-  public VESLoader (@Nonnull final IRepoStorageBase aRepo)
+  public VESLoader (@Nonnull final IRepoStorageWithToc aRepo)
   {
     ValueEnforcer.notNull (aRepo, "Repo");
     m_aRepo = aRepo;
@@ -200,6 +231,35 @@ public final class VESLoader
   public VESLoader setUseEagerRequirementLoading (final boolean b)
   {
     m_aRWLock.writeLocked ( () -> m_bUseEagerRequirementLoading = b);
+    return this;
+  }
+
+  /**
+   * @return The resolution mode for latest pseudo versions. Never
+   *         <code>null</code>.
+   * @since 9.2.1
+   */
+  @Nonnull
+  public ELatestResolutionMode getLatestResolutionMode ()
+  {
+    return m_aRWLock.readLockedGet ( () -> m_eLatestResMode);
+  }
+
+  /**
+   * Set the "latest version" resolution mode. The default is
+   * {@link ELatestResolutionMode#DEFAULT}.
+   *
+   * @param e
+   *        The mode to use. Must not be <code>null</code>.
+   * @return this for chaining
+   * @since 9.2.1
+   */
+  @Nonnull
+  public VESLoader setLatestResolutionMode (@Nonnull final ELatestResolutionMode e)
+  {
+    ValueEnforcer.notNull (e, "LatestResolutionMode");
+
+    m_aRWLock.writeLocked ( () -> m_eLatestResMode = e);
     return this;
   }
 
@@ -532,7 +592,8 @@ public final class VESLoader
    * {@link ErrorList}.
    *
    * @param aVESID
-   *        The VESID to load. May not be <code>null</code>.
+   *        The VESID to load. May be a static version or a pseudo version. May
+   *        not be <code>null</code>.
    * @param aLoadingRequiredVES
    *        The required VES that is currently loaded. May be <code>null</code>.
    * @param aLoaderStatus
@@ -554,27 +615,74 @@ public final class VESLoader
 
     final boolean bIsRoot = aLoaderStatus.m_aLoaded.isEmpty ();
 
-    LOGGER.info ("Trying to read VESID " + aLoaderStatus.getDepedencyChain (aVESID) + " from repository");
+    // resolve eventual pseudo version here
+    final VESID aStaticVESID;
+    if (aVESID.getVersionObj ().isStaticVersion ())
+      aStaticVESID = aVESID;
+    else
+    {
+      final EVESPseudoVersion ePseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
+      switch (ePseudoVersion)
+      {
+        case LATEST:
+          // Resolve latest version
+          switch (m_eLatestResMode)
+          {
+            case LATEST_OVERALL:
+              aStaticVESID = m_aRepo.getLatestVersion (aVESID.getGroupID (), aVESID.getArtifactID ());
+              break;
+            case LATEST_RELEASES:
+              aStaticVESID = m_aRepo.getLatestReleaseVersion (aVESID.getGroupID (), aVESID.getArtifactID ());
+              break;
+            case NOT_SUPPORTED:
+              aStaticVESID = aVESID;
+              break;
+            default:
+              throw new IllegalStateException ("Unsupported latest resolution mode " + m_eLatestResMode);
+          }
+          break;
+        default:
+          throw new IllegalStateException ("Unsupported pseudo version " + ePseudoVersion);
+      }
+
+      if (aStaticVESID == null)
+      {
+        LOGGER.error ("Failed to resolve pseudo version in '" +
+                      aVESID.getAsSingleID () +
+                      "' using resolution mode " +
+                      m_eLatestResMode);
+        return null;
+      }
+      LOGGER.info ("Successfully resolved pseudo version in '" +
+                   aVESID.getAsSingleID () +
+                   "' using resolution mode " +
+                   m_eLatestResMode +
+                   " to '" +
+                   aStaticVESID.getAsSingleID () +
+                   "'");
+    }
+
+    LOGGER.info ("Trying to read VESID " + aLoaderStatus.getDepedencyChain (aStaticVESID) + " from repository");
 
     LoadedVES ret = null;
     try
     {
       // Ensure the VESID is not yet in the loader chain
-      if (aLoaderStatus.addVESID (aVESID).isFailure ())
+      if (aLoaderStatus.addVESID (aStaticVESID).isFailure ())
       {
         // This is a circular dependency
         aLoadingErrors.add (SingleError.builderError ()
                                        .errorText ("The VESID '" +
-                                                   aVESID.getAsSingleID () +
+                                                   aStaticVESID.getAsSingleID () +
                                                    "' was already loaded. It seems like you have a circular dependency: " +
-                                                   aLoaderStatus.getDepedencyChain (aVESID))
+                                                   aLoaderStatus.getDepedencyChain (aStaticVESID))
                                        .build ());
         return null;
       }
 
       // Check if an explicit status is available
       final IValidationExecutorSetStatus aStatus;
-      final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_STATUS);
+      final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aStaticVESID, FILE_EXT_STATUS);
       if (m_aRepo.exists (aRepoKeyStatus))
       {
         final IRepoStorageReadItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
@@ -611,7 +719,7 @@ public final class VESLoader
       }
 
       // Read VES content from repo
-      final RepoStorageKeyOfArtefact aRepoKeyVES = RepoStorageKeyOfArtefact.of (aVESID, FILE_EXT_VES);
+      final RepoStorageKeyOfArtefact aRepoKeyVES = RepoStorageKeyOfArtefact.of (aStaticVESID, FILE_EXT_VES);
       final IRepoStorageReadItem aRepoContentVES = m_aRepo.read (aRepoKeyVES);
       if (aRepoContentVES == null)
       {
@@ -644,9 +752,9 @@ public final class VESLoader
     {
       if (bIsRoot)
         if (ret == null)
-          LOGGER.error ("Failed to load VESID " + aVESID.getAsSingleID () + "' from repository");
+          LOGGER.error ("Failed to load VESID " + aStaticVESID.getAsSingleID () + "' from repository");
         else
-          LOGGER.info ("Successfully finished loading VESID " + aVESID.getAsSingleID () + "' from repository");
+          LOGGER.info ("Successfully finished loading VESID " + aStaticVESID.getAsSingleID () + "' from repository");
     }
   }
 
@@ -684,7 +792,7 @@ public final class VESLoader
    *         If anything goes wrong
    */
   @Nonnull
-  public static VESValidationResult loadVESAndApplyValidation (@Nonnull final IRepoStorageBase aRepo,
+  public static VESValidationResult loadVESAndApplyValidation (@Nonnull final IRepoStorageWithToc aRepo,
                                                                @Nonnull final VESID aVESID,
                                                                @Nonnull final IValidationSource aValidationSource,
                                                                @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException

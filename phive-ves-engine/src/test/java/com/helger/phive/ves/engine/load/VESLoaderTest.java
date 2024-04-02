@@ -41,10 +41,10 @@ import com.helger.diver.api.version.VESID;
 import com.helger.diver.repo.ERepoDeletable;
 import com.helger.diver.repo.ERepoWritable;
 import com.helger.diver.repo.IRepoStorage;
-import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.RepoStorageContentByteArray;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
+import com.helger.diver.repo.toc.IRepoStorageWithToc;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
@@ -56,7 +56,7 @@ import com.helger.phive.xml.source.ValidationSourceXML;
 public final class VESLoaderTest
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (VESLoaderTest.class);
-  private static IRepoStorageBase s_aRepoStorage;
+  private static IRepoStorageWithToc s_aRepoStorage;
 
   private static void _addResource (@Nonnull final IRepoStorage aRepo,
                                     @Nonnull final VESID aVESID,
@@ -79,7 +79,7 @@ public final class VESLoaderTest
     assertTrue (eSuccess.isSuccess ());
   }
 
-  private static void _addVES (@Nonnull final IRepoStorage aRepo,
+  private static void _addVES (@Nonnull final IRepoStorageWithToc aRepo,
                                @Nonnull @Nonempty final IReadableResource aVesPayload)
   {
     final ErrorList aErrorList = new ErrorList ();
