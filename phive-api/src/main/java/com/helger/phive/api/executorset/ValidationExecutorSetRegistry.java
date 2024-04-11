@@ -50,6 +50,7 @@ import com.helger.diver.api.version.VESID;
 import com.helger.diver.api.version.VESPseudoVersionRegistry;
 import com.helger.diver.api.version.VESVersion;
 import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
+import com.helger.phive.api.diver.IPseudoVersionResolver;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -192,34 +193,6 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     return aMatching;
   }
 
-  @Nonnull
-  private static Predicate <VESVersion> _getVersionAcceptor (@Nullable final Set <String> aVersionsToIgnore,
-                                                             final boolean bIncludeSnapshots)
-  {
-    if (CollectionHelper.isEmpty (aVersionsToIgnore))
-    {
-      if (bIncludeSnapshots)
-      {
-        // We take all
-        return x -> true;
-      }
-
-      // We take everything except static snapshot versions
-      return x -> !x.isStaticSnapshotVersion ();
-    }
-
-    // We have something to ignore
-    if (bIncludeSnapshots)
-    {
-      // We take all, except for the ignored versions
-      return x -> !aVersionsToIgnore.contains (x.getAsString ());
-    }
-
-    // We take all except static snapshot versions and except for the ignored
-    // versions
-    return x -> !x.isStaticSnapshotVersion () && !aVersionsToIgnore.contains (x.getAsString ());
-  }
-
   @Nullable
   private IValidationExecutorSet <SOURCETYPE> _getOldestVersion (@Nullable final String sGroupID,
                                                                  @Nullable final String sArtifactID,
@@ -229,8 +202,8 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     // Sorted by key
     final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
                                                                                                             sArtifactID,
-                                                                                                            _getVersionAcceptor (aVersionsToIgnore,
-                                                                                                                                 bIncludeSnapshots),
+                                                                                                            IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                                       bIncludeSnapshots),
                                                                                                             Comparator.naturalOrder ());
 
     if (aMatching != null && aMatching.isNotEmpty ())
@@ -275,8 +248,8 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     // Sorted by key
     final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
                                                                                                             sArtifactID,
-                                                                                                            _getVersionAcceptor (aVersionsToIgnore,
-                                                                                                                                 bIncludeSnapshots),
+                                                                                                            IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                                       bIncludeSnapshots),
                                                                                                             Comparator.reverseOrder ());
 
     if (aMatching != null && aMatching.isNotEmpty ())
@@ -322,8 +295,8 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     // Sorted by key
     final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
                                                                                                             sArtifactID,
-                                                                                                            _getVersionAcceptor (aVersionsToIgnore,
-                                                                                                                                 bIncludeSnapshots),
+                                                                                                            IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                                       bIncludeSnapshots),
                                                                                                             Comparator.reverseOrder ());
 
     if (aMatching != null && aMatching.isNotEmpty ())

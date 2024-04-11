@@ -25,7 +25,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.iterate.ReverseListIterator;
 import com.helger.commons.compare.ESortOrder;
@@ -54,34 +53,6 @@ final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VE
     m_aRepo = aRepo;
   }
 
-  @Nonnull
-  private static Predicate <VESVersion> _getVersionAcceptor (@Nullable final Set <String> aVersionsToIgnore,
-                                                             final boolean bIncludeSnapshots)
-  {
-    if (CollectionHelper.isEmpty (aVersionsToIgnore))
-    {
-      if (bIncludeSnapshots)
-      {
-        // We take all
-        return x -> true;
-      }
-
-      // We take everything except static snapshot versions
-      return x -> !x.isStaticSnapshotVersion ();
-    }
-
-    // We have something to ignore
-    if (bIncludeSnapshots)
-    {
-      // We take all, except for the ignored versions
-      return x -> !aVersionsToIgnore.contains (x.getAsString ());
-    }
-
-    // We take all except static snapshot versions and except for the ignored
-    // versions
-    return x -> !x.isStaticSnapshotVersion () && !aVersionsToIgnore.contains (x.getAsString ());
-  }
-
   @Nullable
   private VESID _resolveByVersion (@Nullable final String sGroupID,
                                    @Nullable final String sArtifactID,
@@ -96,7 +67,8 @@ final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VE
       if (aToc != null)
       {
         // Build version acceptor
-        final Predicate <VESVersion> aVersionAcceptor = _getVersionAcceptor (aVersionsToIgnore, bIncludeSnapshots);
+        final Predicate <VESVersion> aVersionAcceptor = IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
+                                                                                                   bIncludeSnapshots);
 
         // Get iterator through all versions, so that the first match can be
         // used

@@ -18,8 +18,13 @@ package com.helger.phive.api.diver;
 
 import java.time.OffsetDateTime;
 import java.util.Set;
+import java.util.function.Predicate;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.helger.commons.collection.CollectionHelper;
+import com.helger.diver.api.version.VESVersion;
 
 /**
  * Generic pseudo version resolver interface
@@ -32,7 +37,8 @@ import javax.annotation.Nullable;
 public interface IPseudoVersionResolver <RESULTTYPE>
 {
   /**
-   * Get the validation executor set with the oldest (lowest) version number.
+   * Get the validation executor set with the oldest (lowest) version number
+   * (including snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
@@ -49,6 +55,20 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                @Nullable String sArtifactID,
                                @Nullable Set <String> aVersionsToIgnore);
 
+  /**
+   * Get the validation executor set with the oldest (lowest) version number
+   * (excluding snapshots).
+   *
+   * @param sGroupID
+   *        VES Group ID to use. May be <code>null</code>.
+   * @param sArtifactID
+   *        VES Artefact ID to use. May be <code>null</code>.
+   * @param aVersionsToIgnore
+   *        An optional set of Version numbers not to consider. This may be used
+   *        to exclude certain versions from being returned. May be
+   *        <code>null</code>.
+   * @return <code>null</code> if no matching version was found.
+   */
   @Nullable
   RESULTTYPE getOldestReleaseVersion (@Nullable String sGroupID,
                                       @Nullable String sArtifactID,
@@ -89,4 +109,31 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                             @Nullable Set <String> aVersionsToIgnore,
                                             @Nullable OffsetDateTime aCheckDateTime);
 
+  @Nonnull
+  static Predicate <VESVersion> getVersionAcceptor (@Nullable final Set <String> aVersionsToIgnore,
+                                                    final boolean bIncludeSnapshots)
+  {
+    if (CollectionHelper.isEmpty (aVersionsToIgnore))
+    {
+      if (bIncludeSnapshots)
+      {
+        // We take all
+        return x -> true;
+      }
+
+      // We take everything except static snapshot versions
+      return x -> !x.isStaticSnapshotVersion ();
+    }
+
+    // We have something to ignore
+    if (bIncludeSnapshots)
+    {
+      // We take all, except for the ignored versions
+      return x -> !aVersionsToIgnore.contains (x.getAsString ());
+    }
+
+    // We take all except static snapshot versions and except for the ignored
+    // versions
+    return x -> !x.isStaticSnapshotVersion () && !aVersionsToIgnore.contains (x.getAsString ());
+  }
 }
