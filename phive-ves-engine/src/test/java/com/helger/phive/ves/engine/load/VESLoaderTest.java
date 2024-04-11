@@ -132,6 +132,10 @@ public final class VESLoaderTest
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch2.ves"));
       // Upload SCH VES #3 with SCH requires
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch3.ves"));
+      // Upload SCH #3 status
+      _addResource (aInMemoryRepo,
+                    new VESID ("com.helger.phive.test", "test_sch", "3.0"),
+                    new ClassPathResource ("ves/test1/sch3.status"));
       // Upload SCH VES #4 with snapshot version
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch4-snapshot.ves"));
     }
@@ -165,6 +169,26 @@ public final class VESLoaderTest
                                                                               aLoadingErrors);
     assertNotNull (aLoaded);
     assertEquals ("com.helger.phive.test:test_sch:1", aLoaded.getHeader ().getVESID ().getAsSingleID ());
+  }
+
+  @Test
+  public void testPseudoVersionLatestReleaseActive ()
+  {
+    final ErrorList aLoadingErrors = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest-release-active"),
+                                                                              aLoadingErrors);
+    assertNotNull (aLoaded);
+    assertEquals ("com.helger.phive.test:test_sch:2", aLoaded.getHeader ().getVESID ().getAsSingleID ());
+  }
+
+  @Test
+  public void testPseudoVersionLatestActive ()
+  {
+    final ErrorList aLoadingErrors = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest-active"),
+                                                                              aLoadingErrors);
+    assertNotNull (aLoaded);
+    assertEquals ("com.helger.phive.test:test_sch:4-SNAPSHOT", aLoaded.getHeader ().getVESID ().getAsSingleID ());
   }
 
   @Test
