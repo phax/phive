@@ -43,6 +43,12 @@ import com.helger.phive.ves.model.v1.VESStatus1Helper;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
 import com.helger.phive.ves.v10.VesStatusType;
 
+/**
+ * Helper class used by {@link VESLoader} to resolve the pseudo versions based
+ * on a repository table of contents and the status objects.
+ *
+ * @author Philip Helger
+ */
 final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VESID>
 {
   private final IRepoStorageWithToc m_aRepo;
@@ -128,6 +134,11 @@ final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VE
     return _resolveByVersion (sGroupID, sArtifactID, aVersionsToIgnore, false, ESortOrder.DESCENDING, null);
   }
 
+  /**
+   * This helper class does the real status loading and interpretation.
+   *
+   * @author Philip Helger
+   */
   private final class VESIDSelectorByStatusValidity implements Predicate <VESID>
   {
     private final OffsetDateTime m_aRealCheckDateTime;
@@ -140,10 +151,12 @@ final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VE
 
     public boolean test (@Nonnull final VESID aVESID)
     {
+      // Check if there is a "status" object available in the repo
       final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, VESLoader.FILE_EXT_STATUS);
       final IRepoStorageReadItem aRepoContentStatus = m_aRepo.read (aRepoKeyStatus);
       if (aRepoContentStatus != null)
       {
+        // We found a status - interpret it
         final VesStatusType aVESStatus = new VESStatus1Marshaller ().read (new RepoStorageReadableResource (aRepoKeyStatus,
                                                                                                             aRepoContentStatus.getContent ()));
         if (aVESStatus != null)
