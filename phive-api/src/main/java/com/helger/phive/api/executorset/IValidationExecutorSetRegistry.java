@@ -16,7 +16,7 @@
  */
 package com.helger.phive.api.executorset;
 
-import java.util.Set;
+import java.time.OffsetDateTime;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
@@ -26,6 +26,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
 import com.helger.diver.api.version.VESID;
+import com.helger.phive.api.diver.IPseudoVersionResolver;
 import com.helger.phive.api.source.IValidationSource;
 
 /**
@@ -36,7 +37,8 @@ import com.helger.phive.api.source.IValidationSource;
  * @param <SOURCETYPE>
  *        The validation source type to be used.
  */
-public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource>
+public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource> extends
+                                                IPseudoVersionResolver <IValidationExecutorSet <SOURCETYPE>>
 {
   /**
    * @return <code>true</code> if the resolution of pseudo versions (like e.g.
@@ -128,26 +130,8 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
   IValidationExecutorSet <SOURCETYPE> findFirst (@Nonnull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
 
   /**
-   * Get the validation executor set with the latest (highest) version number.
-   *
-   * @param sGroupID
-   *        VES Group ID to use. May be <code>null</code>.
-   * @param sArtifactID
-   *        VES Artefact ID to use. May be <code>null</code>.
-   * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
-   * @return <code>null</code> if no matching version was found.
-   * @since 8.0.1
-   */
-  @Nullable
-  IValidationExecutorSet <SOURCETYPE> getLatestVersion (@Nullable String sGroupID,
-                                                        @Nullable String sArtifactID,
-                                                        @Nullable Set <String> aVersionsToIgnore);
-
-  /**
-   * Find the validation executor set with the specified ID.
+   * Find the validation executor set with the specified ID. This method
+   * supports pseudo version.
    *
    * @param aID
    *        The ID to search. May be <code>null</code>.
@@ -155,4 +139,19 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    */
   @Nullable
   IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable VESID aID);
+
+  /**
+   * Find the validation executor set with the specified ID for the provided
+   * point in time. This method supports pseudo version.
+   *
+   * @param aID
+   *        The ID to search. May be <code>null</code>.
+   * @param aCheckDateTime
+   *        The date and time for which the version should be resolved. If
+   *        <code>null</code> if provided, the current point in time is used.
+   * @return <code>null</code> if no such validation executor set is registered.
+   * @since 9.2.1
+   */
+  @Nullable
+  IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable VESID aID, @Nullable OffsetDateTime aCheckDateTime);
 }

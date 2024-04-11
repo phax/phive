@@ -132,6 +132,8 @@ public final class VESLoaderTest
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch2.ves"));
       // Upload SCH VES #3 with SCH requires
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch3.ves"));
+      // Upload SCH VES #4 with snapshot version
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch4-snapshot.ves"));
     }
 
     // test2
@@ -153,6 +155,36 @@ public final class VESLoaderTest
 
     // No chain needed - use repo as is
     s_aRepoStorage = aInMemoryRepo;
+  }
+
+  @Test
+  public void testPseudoVersionOldest ()
+  {
+    final ErrorList aLoadingErrors = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:oldest"),
+                                                                              aLoadingErrors);
+    assertNotNull (aLoaded);
+    assertEquals ("com.helger.phive.test:test_sch:1", aLoaded.getHeader ().getVESID ().getAsSingleID ());
+  }
+
+  @Test
+  public void testPseudoVersionLatestRelease ()
+  {
+    final ErrorList aLoadingErrors = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest-release"),
+                                                                              aLoadingErrors);
+    assertNotNull (aLoaded);
+    assertEquals ("com.helger.phive.test:test_sch:3", aLoaded.getHeader ().getVESID ().getAsSingleID ());
+  }
+
+  @Test
+  public void testPseudoVersionLatest ()
+  {
+    final ErrorList aLoadingErrors = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest"),
+                                                                              aLoadingErrors);
+    assertNotNull (aLoaded);
+    assertEquals ("com.helger.phive.test:test_sch:4-SNAPSHOT", aLoaded.getHeader ().getVESID ().getAsSingleID ());
   }
 
   @Test

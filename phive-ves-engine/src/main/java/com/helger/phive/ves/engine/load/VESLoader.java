@@ -43,12 +43,14 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
-import com.helger.diver.api.version.EVESPseudoVersion;
+import com.helger.diver.api.version.IVESPseudoVersion;
 import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.version.VESPseudoVersionRegistry;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.diver.repo.toc.IRepoStorageWithToc;
+import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
@@ -81,34 +83,6 @@ import com.helger.xml.namespace.MapBasedNamespaceContext;
 public final class VESLoader
 {
   /**
-   * Defines the latest version resolution modes.
-   *
-   * @author Philip Helger
-   * @since 9.2.1
-   */
-  public enum ELatestResolutionMode
-  {
-    /**
-     * Use the latest overall version available, independent if this is a
-     * snapshot or a release build.
-     */
-    LATEST_OVERALL,
-    /**
-     * Use the latest release version only. Snapshot versions are ignored.
-     */
-    LATEST_RELEASES,
-    /**
-     * Do not try to resolve latest versions at all.
-     */
-    NOT_SUPPORTED;
-
-    /**
-     * Default: latest is the latest
-     */
-    public static final ELatestResolutionMode DEFAULT = LATEST_OVERALL;
-  }
-
-  /**
    * File extension for VES files
    */
   public static final String FILE_EXT_VES = ".ves";
@@ -118,6 +92,7 @@ public final class VESLoader
   public static final String FILE_EXT_STATUS = ".status";
 
   public static final boolean DEFAULT_USE_EAGER_REQUIREMENT_LOADING = false;
+  public static final boolean DEFAULT_RESOLVE_PSEUDO_VERSIONS = true;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (VESLoader.class);
   private static final Duration DURATION_WARN = Duration.ofMillis (500);
@@ -133,7 +108,7 @@ public final class VESLoader
   @GuardedBy ("m_aRWLock")
   private boolean m_bUseEagerRequirementLoading = DEFAULT_USE_EAGER_REQUIREMENT_LOADING;
   @GuardedBy ("m_aRWLock")
-  private ELatestResolutionMode m_eLatestResMode = ELatestResolutionMode.DEFAULT;
+  private boolean m_bResolvePseudoVersions = DEFAULT_RESOLVE_PSEUDO_VERSIONS;
 
   public VESLoader (@Nonnull final IRepoStorageWithToc aRepo)
   {
@@ -235,31 +210,29 @@ public final class VESLoader
   }
 
   /**
-   * @return The resolution mode for latest pseudo versions. Never
-   *         <code>null</code>.
+   * @return <code>true</code> if pseudo versions should be resolved,
+   *         <code>false</code> otherwise. The default is
+   *         {@link #DEFAULT_RESOLVE_PSEUDO_VERSIONS}
    * @since 9.2.1
    */
   @Nonnull
-  public ELatestResolutionMode getLatestResolutionMode ()
+  public boolean isResolvePseudoVersions ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_eLatestResMode);
+    return m_aRWLock.readLockedBoolean ( () -> m_bResolvePseudoVersions);
   }
 
   /**
-   * Set the "latest version" resolution mode. The default is
-   * {@link ELatestResolutionMode#DEFAULT}.
+   * Enable or disable the resolution of pseudo versions.
    *
-   * @param e
-   *        The mode to use. Must not be <code>null</code>.
+   * @param b
+   *        <code>true</code> to enable it, <code>false</code> to disable it
    * @return this for chaining
    * @since 9.2.1
    */
   @Nonnull
-  public VESLoader setLatestResolutionMode (@Nonnull final ELatestResolutionMode e)
+  public VESLoader setResolvePseudoVersions (@Nonnull final boolean b)
   {
-    ValueEnforcer.notNull (e, "LatestResolutionMode");
-
-    m_aRWLock.writeLocked ( () -> m_eLatestResMode = e);
+    m_aRWLock.writeLocked ( () -> m_bResolvePseudoVersions = b);
     return this;
   }
 
@@ -621,45 +594,49 @@ public final class VESLoader
       aStaticVESID = aVESID;
     else
     {
-      final EVESPseudoVersion ePseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
-      switch (ePseudoVersion)
-      {
-        case LATEST:
-          // Resolve latest version
-          switch (m_eLatestResMode)
-          {
-            case LATEST_OVERALL:
-              aStaticVESID = m_aRepo.getLatestVersion (aVESID.getGroupID (), aVESID.getArtifactID ());
-              break;
-            case LATEST_RELEASES:
-              aStaticVESID = m_aRepo.getLatestReleaseVersion (aVESID.getGroupID (), aVESID.getArtifactID ());
-              break;
-            case NOT_SUPPORTED:
-              aStaticVESID = aVESID;
-              break;
-            default:
-              throw new IllegalStateException ("Unsupported latest resolution mode " + m_eLatestResMode);
-          }
-          break;
-        default:
-          throw new IllegalStateException ("Unsupported pseudo version " + ePseudoVersion);
-      }
-
-      if (aStaticVESID == null)
+      if (!isResolvePseudoVersions ())
       {
         LOGGER.error ("Failed to resolve pseudo version in '" +
                       aVESID.getAsSingleID () +
-                      "' using resolution mode " +
-                      m_eLatestResMode);
+                      "' as pseudo version resolution is disabled");
+        return null;
+      }
+
+      final IVESPseudoVersion aPseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
+      final VESLoaderPseudoVersionResolver aResolver = new VESLoaderPseudoVersionResolver (m_aRepo);
+      if (aPseudoVersion.equals (VESPseudoVersionRegistry.OLDEST))
+        aStaticVESID = aResolver.getOldestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+      else
+        if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
+          aStaticVESID = aResolver.getLatestReleaseVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+        else
+          if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST))
+            aStaticVESID = aResolver.getLatestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+          else
+            if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_ACTIVE))
+              aStaticVESID = aResolver.getLatestActiveVersion (aVESID.getGroupID (),
+                                                               aVESID.getArtifactID (),
+                                                               null,
+                                                               null);
+            else
+              if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_RELEASE_ACTIVE))
+                aStaticVESID = aResolver.getLatestReleaseActiveVersion (aVESID.getGroupID (),
+                                                                        aVESID.getArtifactID (),
+                                                                        null,
+                                                                        null);
+              else
+                throw new IllegalStateException ("Unsupported pseudo version " + aPseudoVersion);
+
+      if (aStaticVESID == null)
+      {
+        LOGGER.error ("Failed to resolve pseudo version in '" + aVESID.getAsSingleID () + "'");
         return null;
       }
 
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Successfully resolved pseudo version in '" +
                       aVESID.getAsSingleID () +
-                      "' using resolution mode " +
-                      m_eLatestResMode +
-                      " to '" +
+                      "' to '" +
                       aStaticVESID.getAsSingleID () +
                       "'");
     }

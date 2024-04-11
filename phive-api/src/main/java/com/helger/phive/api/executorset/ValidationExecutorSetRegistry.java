@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.executorset;
 
+import java.time.OffsetDateTime;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -32,17 +34,22 @@ import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ELockType;
 import com.helger.commons.annotation.MustBeLocked;
 import com.helger.commons.annotation.ReturnsMutableCopy;
+import com.helger.commons.collection.CollectionHelper;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.collection.impl.ICommonsNavigableMap;
 import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.diver.api.version.EVESPseudoVersion;
+import com.helger.diver.api.version.IVESPseudoVersion;
 import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.version.VESPseudoVersionRegistry;
+import com.helger.diver.api.version.VESVersion;
+import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -65,10 +72,6 @@ import com.helger.phive.api.source.IValidationSource;
 public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource> implements
                                            IValidationExecutorSetRegistry <SOURCETYPE>
 {
-  /** Name of the pseudo version that indicates to use the latest version */
-  @Deprecated (since = "8.0.2", forRemoval = true)
-  public static final String PSEUDO_VERSION_LATEST = EVESPseudoVersion.LATEST.getID ();
-
   public static final boolean DEFAULT_RESOLVE_PSEUDO_VERSIONS = true;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutorSetRegistry.class);
@@ -162,35 +165,181 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   @Nullable
+  private ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> _getAllMatchingVES (@Nullable final String sGroupID,
+                                                                                                @Nullable final String sArtifactID,
+                                                                                                @Nonnull final Predicate <VESVersion> aVersionsToAccept,
+                                                                                                @Nullable final Comparator <VESID> aComparator)
+  {
+    if (StringHelper.hasNoText (sGroupID))
+      return null;
+    if (StringHelper.hasNoText (sArtifactID))
+      return null;
+
+    // Sorted by key
+    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = new CommonsTreeMap <> (aComparator);
+
+    // Get all versions matching Group ID and Artifact ID only
+    m_aRWLock.readLocked ( () -> {
+      for (final Map.Entry <VESID, IValidationExecutorSet <SOURCETYPE>> aEntry : m_aMap.entrySet ())
+      {
+        final VESID aVESID = aEntry.getKey ();
+        if (aVESID.getGroupID ().equals (sGroupID) &&
+            aVESID.getArtifactID ().equals (sArtifactID) &&
+            aVersionsToAccept.test (aVESID.getVersionObj ()))
+          aMatching.put (aEntry);
+      }
+    });
+    return aMatching;
+  }
+
+  @Nonnull
+  private static Predicate <VESVersion> _getVersionAcceptor (@Nullable final Set <String> aVersionsToIgnore,
+                                                             final boolean bIncludeSnapshots)
+  {
+    if (CollectionHelper.isEmpty (aVersionsToIgnore))
+    {
+      if (bIncludeSnapshots)
+      {
+        // We take all
+        return x -> true;
+      }
+
+      // We take everything except static snapshot versions
+      return x -> !x.isStaticSnapshotVersion ();
+    }
+
+    // We have something to ignore
+    if (bIncludeSnapshots)
+    {
+      // We take all, except for the ignored versions
+      return x -> !aVersionsToIgnore.contains (x.getAsString ());
+    }
+
+    // We take all except static snapshot versions and except for the ignored
+    // versions
+    return x -> !x.isStaticSnapshotVersion () && !aVersionsToIgnore.contains (x.getAsString ());
+  }
+
+  @Nullable
+  private IValidationExecutorSet <SOURCETYPE> _getOldestVersion (@Nullable final String sGroupID,
+                                                                 @Nullable final String sArtifactID,
+                                                                 @Nullable final Set <String> aVersionsToIgnore,
+                                                                 final boolean bIncludeSnapshots)
+  {
+    // Sorted by key
+    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
+                                                                                                            sArtifactID,
+                                                                                                            _getVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                 bIncludeSnapshots),
+                                                                                                            Comparator.naturalOrder ());
+
+    if (aMatching != null && aMatching.isNotEmpty ())
+    {
+      // Now determine the one with the first version
+      final IValidationExecutorSet <SOURCETYPE> ret = aMatching.getFirstValue ();
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Resolved oldest version of '" +
+                      sGroupID +
+                      VESID.ID_SEPARATOR +
+                      sArtifactID +
+                      "' to '" +
+                      ret.getID ().getVersionString () +
+                      "'");
+      return ret;
+    }
+    return null;
+  }
+
+  @Nullable
+  public IValidationExecutorSet <SOURCETYPE> getOldestVersion (@Nullable final String sGroupID,
+                                                               @Nullable final String sArtifactID,
+                                                               @Nullable final Set <String> aVersionsToIgnore)
+  {
+    return _getOldestVersion (sGroupID, sArtifactID, aVersionsToIgnore, true);
+  }
+
+  @Nullable
+  public IValidationExecutorSet <SOURCETYPE> getOldestReleaseVersion (@Nullable final String sGroupID,
+                                                                      @Nullable final String sArtifactID,
+                                                                      @Nullable final Set <String> aVersionsToIgnore)
+  {
+    return _getOldestVersion (sGroupID, sArtifactID, aVersionsToIgnore, false);
+  }
+
+  @Nullable
+  private IValidationExecutorSet <SOURCETYPE> _getLatestVersion (@Nullable final String sGroupID,
+                                                                 @Nullable final String sArtifactID,
+                                                                 @Nullable final Set <String> aVersionsToIgnore,
+                                                                 final boolean bIncludeSnapshots)
+  {
+    // Sorted by key
+    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
+                                                                                                            sArtifactID,
+                                                                                                            _getVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                 bIncludeSnapshots),
+                                                                                                            Comparator.reverseOrder ());
+
+    if (aMatching != null && aMatching.isNotEmpty ())
+    {
+      // Now determine the one with the latest version
+      final IValidationExecutorSet <SOURCETYPE> ret = aMatching.getFirstValue ();
+      if (LOGGER.isDebugEnabled ())
+        LOGGER.debug ("Resolved latest version of '" +
+                      sGroupID +
+                      VESID.ID_SEPARATOR +
+                      sArtifactID +
+                      "' to '" +
+                      ret.getID ().getVersionString () +
+                      "'");
+      return ret;
+    }
+    return null;
+  }
+
+  @Nullable
   public IValidationExecutorSet <SOURCETYPE> getLatestVersion (@Nullable final String sGroupID,
                                                                @Nullable final String sArtifactID,
                                                                @Nullable final Set <String> aVersionsToIgnore)
   {
-    if (StringHelper.hasText (sGroupID) && StringHelper.hasText (sArtifactID))
+    return _getLatestVersion (sGroupID, sArtifactID, aVersionsToIgnore, true);
+  }
+
+  @Nullable
+  public IValidationExecutorSet <SOURCETYPE> getLatestReleaseVersion (@Nullable final String sGroupID,
+                                                                      @Nullable final String sArtifactID,
+                                                                      @Nullable final Set <String> aVersionsToIgnore)
+  {
+    return _getLatestVersion (sGroupID, sArtifactID, aVersionsToIgnore, false);
+  }
+
+  @Nullable
+  private IValidationExecutorSet <SOURCETYPE> _getLatestActiveVersion (@Nullable final String sGroupID,
+                                                                       @Nullable final String sArtifactID,
+                                                                       @Nullable final Set <String> aVersionsToIgnore,
+                                                                       final boolean bIncludeSnapshots,
+                                                                       @Nullable final OffsetDateTime aCheckDateTime)
+  {
+    // Sorted by key
+    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
+                                                                                                            sArtifactID,
+                                                                                                            _getVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                 bIncludeSnapshots),
+                                                                                                            Comparator.reverseOrder ());
+
+    if (aMatching != null && aMatching.isNotEmpty ())
     {
-      // Sorted by key
-      final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = new CommonsTreeMap <> ();
+      // Make sure we have a non-null check date time
+      final OffsetDateTime aRealCheckDateTime = aCheckDateTime != null ? aCheckDateTime : PDTFactory
+                                                                                                    .getCurrentOffsetDateTime ();
 
-      // Get all versions matching Group ID and Artifact ID only
-      m_aRWLock.readLocked ( () -> {
-        for (final Map.Entry <VESID, IValidationExecutorSet <SOURCETYPE>> aEntry : m_aMap.entrySet ())
-        {
-          final VESID aVESID = aEntry.getKey ();
-          if (aVESID.getGroupID ().equals (sGroupID) &&
-              aVESID.getArtifactID ().equals (sArtifactID) &&
-              (aVersionsToIgnore == null || !aVersionsToIgnore.contains (aVESID.getVersionString ())))
-            aMatching.put (aEntry);
-        }
-      });
-
-      if (aMatching.isNotEmpty ())
+      // Now determine the one with the latest active version
+      final IValidationExecutorSet <SOURCETYPE> ret = CollectionHelper.findFirst (aMatching.values (),
+                                                                                  x -> x.getStatus ()
+                                                                                        .isValidPer (aRealCheckDateTime));
+      if (ret != null)
       {
-        // Now determine the one with the latest version
-        final IValidationExecutorSet <SOURCETYPE> ret = aMatching.getLastValue ();
         if (LOGGER.isDebugEnabled ())
-          LOGGER.debug ("Resolved pseudo version '" +
-                        EVESPseudoVersion.LATEST.getID () +
-                        "' of '" +
+          LOGGER.debug ("Resolved latest active version of '" +
                         sGroupID +
                         VESID.ID_SEPARATOR +
                         sArtifactID +
@@ -204,7 +353,32 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   @Nullable
+  public IValidationExecutorSet <SOURCETYPE> getLatestActiveVersion (@Nullable final String sGroupID,
+                                                                     @Nullable final String sArtifactID,
+                                                                     @Nullable final Set <String> aVersionsToIgnore,
+                                                                     @Nullable final OffsetDateTime aCheckDateTime)
+  {
+    return _getLatestActiveVersion (sGroupID, sArtifactID, aVersionsToIgnore, true, aCheckDateTime);
+  }
+
+  @Nullable
+  public IValidationExecutorSet <SOURCETYPE> getLatestReleaseActiveVersion (@Nullable final String sGroupID,
+                                                                            @Nullable final String sArtifactID,
+                                                                            @Nullable final Set <String> aVersionsToIgnore,
+                                                                            @Nullable final OffsetDateTime aCheckDateTime)
+  {
+    return _getLatestActiveVersion (sGroupID, sArtifactID, aVersionsToIgnore, false, aCheckDateTime);
+  }
+
+  @Nullable
   public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aID)
+  {
+    return getOfID (aID, (OffsetDateTime) null);
+  }
+
+  @Nullable
+  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aID,
+                                                      @Nullable final OffsetDateTime aCheckDateTime)
   {
     if (aID == null)
       return null;
@@ -213,16 +387,47 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     IValidationExecutorSet <SOURCETYPE> ret = m_aRWLock.readLockedGet ( () -> m_aMap.get (aID));
     if (ret == null)
     {
-      // No exact match - check pseudo version
-      if (EVESPseudoVersion.LATEST.getID ().equals (aID.getVersionString ()))
+      // No exact match - check if it is a pseudo version
+      final IVESPseudoVersion aPseudoVersion = VESPseudoVersionRegistry.getInstance ()
+                                                                       .getFromIDOrNull (aID.getVersionString ());
+      if (aPseudoVersion != null)
       {
         if (isResolvePseudoVersions ())
         {
           if (LOGGER.isDebugEnabled ())
             LOGGER.debug ("Trying to resolve pseudo version latest of '" + aID.getAsSingleID () + "'");
 
-          // Now determine the one with the latest version
-          ret = getLatestVersion (aID.getGroupID (), aID.getArtifactID (), null);
+          if (aPseudoVersion.equals (VESPseudoVersionRegistry.OLDEST))
+          {
+            // Now determine the one with the oldest version
+            ret = getOldestVersion (aID.getGroupID (), aID.getArtifactID (), null);
+          }
+          else
+            if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST))
+            {
+              // Now determine the one with the latest version
+              ret = getLatestVersion (aID.getGroupID (), aID.getArtifactID (), null);
+            }
+            else
+              if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
+              {
+                // Now determine the one with the latest version
+                ret = getLatestReleaseVersion (aID.getGroupID (), aID.getArtifactID (), null);
+              }
+              else
+                if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_ACTIVE))
+                {
+                  // Now determine the one with the latest active version
+                  ret = getLatestActiveVersion (aID.getGroupID (), aID.getArtifactID (), null, aCheckDateTime);
+                }
+                else
+                  if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_RELEASE_ACTIVE))
+                  {
+                    // Now determine the one with the latest active version
+                    ret = getLatestReleaseActiveVersion (aID.getGroupID (), aID.getArtifactID (), null, aCheckDateTime);
+                  }
+                  else
+                    LOGGER.warn ("The pseudo version " + aPseudoVersion + " is currently not supported.");
         }
         else
         {
