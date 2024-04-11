@@ -25,6 +25,7 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.ICommonsList;
+import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.string.StringHelper;
 import com.helger.diver.api.version.VESID;
 
@@ -84,6 +85,20 @@ public interface IValidationExecutorSetStatus
    */
   @Nullable
   OffsetDateTime getValidTo ();
+
+  default boolean isValidPerNow ()
+  {
+    return isValidPer (PDTFactory.getCurrentOffsetDateTime ());
+  }
+
+  default boolean isValidPer (@Nonnull final OffsetDateTime aDT)
+  {
+    if (hasValidFrom () && aDT.isBefore (getValidFrom ()))
+      return false;
+    if (hasValidTo () && aDT.isAfter (getValidTo ()))
+      return false;
+    return true;
+  }
 
   default boolean hasDeprecationReason ()
   {
