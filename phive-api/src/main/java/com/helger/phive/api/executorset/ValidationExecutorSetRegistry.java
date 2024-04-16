@@ -344,69 +344,69 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   @Nullable
-  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aID)
+  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aVESID)
   {
-    return getOfID (aID, (OffsetDateTime) null);
+    return getOfID (aVESID, (OffsetDateTime) null);
   }
 
   @Nullable
-  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aID,
+  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aVESID,
                                                       @Nullable final OffsetDateTime aCheckDateTime)
   {
-    if (aID == null)
+    if (aVESID == null)
       return null;
 
     // Try exact match first
-    IValidationExecutorSet <SOURCETYPE> ret = m_aRWLock.readLockedGet ( () -> m_aMap.get (aID));
-    if (ret == null)
-    {
-      // No exact match - check if it is a pseudo version
-      final IVESPseudoVersion aPseudoVersion = VESPseudoVersionRegistry.getInstance ()
-                                                                       .getFromIDOrNull (aID.getVersionString ());
-      if (aPseudoVersion != null)
-      {
-        if (isResolvePseudoVersions ())
-        {
-          if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Trying to resolve pseudo version latest of '" + aID.getAsSingleID () + "'");
+    IValidationExecutorSet <SOURCETYPE> ret = m_aRWLock.readLockedGet ( () -> m_aMap.get (aVESID));
 
-          if (aPseudoVersion.equals (VESPseudoVersionRegistry.OLDEST))
-          {
-            // Now determine the one with the oldest version
-            ret = getOldestVersion (aID.getGroupID (), aID.getArtifactID (), null);
-          }
-          else
-            if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST))
-            {
-              // Now determine the one with the latest version
-              ret = getLatestVersion (aID.getGroupID (), aID.getArtifactID (), null);
-            }
-            else
-              if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
-              {
-                // Now determine the one with the latest version
-                ret = getLatestReleaseVersion (aID.getGroupID (), aID.getArtifactID (), null);
-              }
-              else
-                if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_ACTIVE))
-                {
-                  // Now determine the one with the latest active version
-                  ret = getLatestActiveVersion (aID.getGroupID (), aID.getArtifactID (), null, aCheckDateTime);
-                }
-                else
-                  if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_RELEASE_ACTIVE))
-                  {
-                    // Now determine the one with the latest active version
-                    ret = getLatestReleaseActiveVersion (aID.getGroupID (), aID.getArtifactID (), null, aCheckDateTime);
-                  }
-                  else
-                    LOGGER.warn ("The pseudo version " + aPseudoVersion + " is currently not supported.");
+    // No exact match - check if it is a pseudo version
+    if (ret == null && aVESID.getVersionObj ().isPseudoVersion ())
+    {
+      if (isResolvePseudoVersions ())
+      {
+        if (LOGGER.isDebugEnabled ())
+          LOGGER.debug ("Trying to resolve pseudo version latest of '" + aVESID.getAsSingleID () + "'");
+
+        final IVESPseudoVersion aPseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
+        if (aPseudoVersion.equals (VESPseudoVersionRegistry.OLDEST))
+        {
+          // Now determine the one with the oldest version
+          ret = getOldestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
         }
         else
-        {
-          if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("The pseudo version resolving is disabled.");
-        }
+          if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST))
+          {
+            // Now determine the one with the latest version
+            ret = getLatestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+          }
+          else
+            if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
+            {
+              // Now determine the one with the latest version
+              ret = getLatestReleaseVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+            }
+            else
+              if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_ACTIVE))
+              {
+                // Now determine the one with the latest active version
+                ret = getLatestActiveVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null, aCheckDateTime);
+              }
+              else
+                if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_RELEASE_ACTIVE))
+                {
+                  // Now determine the one with the latest active version
+                  ret = getLatestReleaseActiveVersion (aVESID.getGroupID (),
+                                                       aVESID.getArtifactID (),
+                                                       null,
+                                                       aCheckDateTime);
+                }
+                else
+                  LOGGER.warn ("The pseudo version " + aPseudoVersion + " is currently not supported.");
+      }
+      else
+      {
+        if (LOGGER.isDebugEnabled ())
+          LOGGER.debug ("The pseudo version resolving is disabled.");
       }
     }
     return ret;
