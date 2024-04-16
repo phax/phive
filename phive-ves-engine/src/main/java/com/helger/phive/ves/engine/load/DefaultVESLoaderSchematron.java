@@ -16,6 +16,8 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -23,7 +25,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.CommonsHashMap;
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
@@ -61,149 +65,156 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
 
   @Nonnull
-  public IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull final IRepoStorageBase aRepo,
-                                                                    @Nonnull final VesSchematronType aSCH,
-                                                                    @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
-                                                                    @Nonnull final ErrorList aErrorList,
-                                                                    @Nonnull final IVESAsyncLoader aAsyncLoader)
+  public ICommonsList <IValidationExecutor <IValidationSourceXML>> loadSchematrons (@Nonnull final IRepoStorageBase aRepo,
+                                                                                    @Nonnull final List <VesSchematronType> aSCHList,
+                                                                                    @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
+                                                                                    @Nonnull final ErrorList aErrorList,
+                                                                                    @Nonnull final IVESAsyncLoader aAsyncLoader)
   {
     ValueEnforcer.notNull (aRepo, "Repo");
-    ValueEnforcer.notNull (aSCH, "SCH");
+    ValueEnforcer.notEmptyNoNullValue (aSCHList, "SCHList");
     ValueEnforcer.notNull (aErrorList, "ErrorList");
     ValueEnforcer.notNull (aAsyncLoader, "AsyncLoader");
 
-    final RepoStorageKey aSCHKey = VESLoader.createRepoStorageKey (aSCH.getResource ());
+    final ICommonsList <IValidationExecutor <IValidationSourceXML>> ret = new CommonsArrayList <> ();
 
-    // Read referenced Item
-    final IRepoStorageReadItem aSCHItem = aRepo.read (aSCHKey);
-    if (aSCHItem == null)
+    for (final VesSchematronType aSCH : aSCHList)
     {
-      aErrorList.add (SingleError.builderError ()
-                                 .errorFieldName (aSCHKey.getPath ())
-                                 .errorText ("Failed to load Schematron artifact from repository")
-                                 .build ());
-      return null;
-    }
+      final RepoStorageKey aSCHKey = VESLoader.createRepoStorageKey (aSCH.getResource ());
 
-    final IReadableResource aRepoRes = new RepoStorageReadableResource (aSCHKey, aSCHItem.getContent ());
-
-    // Resolve Namespace Context
-    final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
-    VESLoader.wrap (aSCH.getNamespaces (), aNSCtx);
-
-    final ValidationExecutorSchematron aExecutorSCH;
-    final String sResourceType = aSCH.getResource ().getType ();
-    switch (sResourceType)
-    {
-      case RESOURCE_TYPE_SCH:
-      {
-        // Resolve Schematron Engine
-        final String sEngine = aSCH.getEngine ();
-        final ESchematronEngine eEngine = ESchematronEngine.getFromIDOrNull (sEngine);
-        if (eEngine == null)
-        {
-          aErrorList.add (SingleError.builderError ()
-                                     .errorText ("Schematron engine '" +
-                                                 sEngine +
-                                                 "' is unknown. Valid IDs are: " +
-                                                 StringHelper.imploder ()
-                                                             .source (ESchematronEngine.values (),
-                                                                      x -> "'" + x.getID () + "'")
-                                                             .separator (", ")
-                                                             .build ())
-                                     .build ());
-          return null;
-        }
-
-        switch (eEngine)
-        {
-          case PURE:
-            aExecutorSCH = ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
-            break;
-          case ISO_SCHEMATRON:
-            aExecutorSCH = ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
-            break;
-          case SCHXSLT:
-            aExecutorSCH = ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
-            break;
-          default:
-            throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
-        }
-        break;
-      }
-      case RESOURCE_TYPE_XSLT:
-      {
-        // Indicate a potential error
-        if (StringHelper.hasText (aSCH.getEngine ()))
-        {
-          aErrorList.add (SingleError.builderWarn ()
-                                     .errorText ("Schematron resource type '" +
-                                                 sResourceType +
-                                                 "' does not support the 'engine' element")
-                                     .build ());
-        }
-
-        // Simple
-        aExecutorSCH = ValidationExecutorSchematron.createXSLT (aRepoRes, aNSCtx);
-        break;
-      }
-      default:
+      // Read referenced Item
+      final IRepoStorageReadItem aSCHItem = aRepo.read (aSCHKey);
+      if (aSCHItem == null)
       {
         aErrorList.add (SingleError.builderError ()
-                                   .errorText ("Unsupported Schematron resource type '" + sResourceType + "' found")
+                                   .errorFieldName (aSCHKey.getPath ())
+                                   .errorText ("Failed to load Schematron artifact from repository")
                                    .build ());
-        return null;
+        continue;
       }
-    }
 
-    final ICommonsMap <String, IErrorLevel> aCustomErrorLevels = new CommonsHashMap <> ();
+      final IReadableResource aRepoRes = new RepoStorageReadableResource (aSCHKey, aSCHItem.getContent ());
 
-    // Is something defined at the Schematron itself?
-    if (aSCH.getOutput () != null)
-    {
-      final VesOutputType aOutput = aSCH.getOutput ();
+      // Resolve Namespace Context
+      final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
+      VESLoader.wrap (aSCH.getNamespaces (), aNSCtx);
 
-      // Check for custom error levels
-      if (aOutput.hasCustomErrorEntries ())
-        for (final VesCustomErrorType aCustomError : aOutput.getCustomError ())
+      final ValidationExecutorSchematron aExecutorSCH;
+      final String sResourceType = aSCH.getResource ().getType ();
+      switch (sResourceType)
+      {
+        case RESOURCE_TYPE_SCH:
         {
-          final String sKey = aCustomError.getId ();
-          final VesErrorLevelType eLevel = aCustomError.getLevel ();
-          final EErrorLevel eErrorLevel;
-          switch (eLevel)
+          // Resolve Schematron Engine
+          final String sEngine = aSCH.getEngine ();
+          final ESchematronEngine eEngine = ESchematronEngine.getFromIDOrNull (sEngine);
+          if (eEngine == null)
           {
-            case ERROR:
-              eErrorLevel = EErrorLevel.ERROR;
+            aErrorList.add (SingleError.builderError ()
+                                       .errorText ("Schematron engine '" +
+                                                   sEngine +
+                                                   "' is unknown. Valid IDs are: " +
+                                                   StringHelper.imploder ()
+                                                               .source (ESchematronEngine.values (),
+                                                                        x -> "'" + x.getID () + "'")
+                                                               .separator (", ")
+                                                               .build ())
+                                       .build ());
+            continue;
+          }
+
+          switch (eEngine)
+          {
+            case PURE:
+              aExecutorSCH = ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
               break;
-            case WARN:
-              eErrorLevel = EErrorLevel.WARN;
+            case ISO_SCHEMATRON:
+              aExecutorSCH = ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
               break;
-            case INFO:
-              eErrorLevel = EErrorLevel.INFO;
+            case SCHXSLT:
+              aExecutorSCH = ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
               break;
             default:
-              throw new IllegalStateException ("Unxpected error level: " + eLevel);
+              throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
           }
-          if (StringHelper.hasText (sKey) && eErrorLevel != null)
-            aCustomErrorLevels.put (sKey, eErrorLevel);
+          break;
         }
+        case RESOURCE_TYPE_XSLT:
+        {
+          // Indicate a potential error
+          if (StringHelper.hasText (aSCH.getEngine ()))
+          {
+            aErrorList.add (SingleError.builderWarn ()
+                                       .errorText ("Schematron resource type '" +
+                                                   sResourceType +
+                                                   "' does not support the 'engine' element")
+                                       .build ());
+          }
+
+          // Simple
+          aExecutorSCH = ValidationExecutorSchematron.createXSLT (aRepoRes, aNSCtx);
+          break;
+        }
+        default:
+        {
+          aErrorList.add (SingleError.builderError ()
+                                     .errorText ("Unsupported Schematron resource type '" + sResourceType + "' found")
+                                     .build ());
+          continue;
+        }
+      }
+
+      final ICommonsMap <String, IErrorLevel> aCustomErrorLevels = new CommonsHashMap <> ();
+
+      // Is something defined at the Schematron itself?
+      if (aSCH.getOutput () != null)
+      {
+        final VesOutputType aOutput = aSCH.getOutput ();
+
+        // Check for custom error levels
+        if (aOutput.hasCustomErrorEntries ())
+          for (final VesCustomErrorType aCustomError : aOutput.getCustomError ())
+          {
+            final String sKey = aCustomError.getId ();
+            final VesErrorLevelType eLevel = aCustomError.getLevel ();
+            final EErrorLevel eErrorLevel;
+            switch (eLevel)
+            {
+              case ERROR:
+                eErrorLevel = EErrorLevel.ERROR;
+                break;
+              case WARN:
+                eErrorLevel = EErrorLevel.WARN;
+                break;
+              case INFO:
+                eErrorLevel = EErrorLevel.INFO;
+                break;
+              default:
+                throw new IllegalStateException ("Unxpected error level: " + eLevel);
+            }
+            if (StringHelper.hasText (sKey) && eErrorLevel != null)
+              aCustomErrorLevels.put (sKey, eErrorLevel);
+          }
+      }
+
+      // Are we changing the output levels on a "required" resource?
+      if (aLoadingRequiredVES != null && aLoadingRequiredVES.getOutput ().customErrorLevels ().isNotEmpty ())
+      {
+        // These ones overwrite the original ones
+        aCustomErrorLevels.putAll (aLoadingRequiredVES.getOutput ().customErrorLevels ());
+      }
+
+      if (aCustomErrorLevels.isNotEmpty ())
+        aExecutorSCH.addCustomErrorLevels (aCustomErrorLevels);
+
+      LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
+                   sResourceType +
+                   "' and path '" +
+                   aSCHKey.getPath () +
+                   "'");
+      ret.add (aExecutorSCH);
     }
 
-    // Are we changing the output levels on a "required" resource?
-    if (aLoadingRequiredVES != null && aLoadingRequiredVES.getOutput ().customErrorLevels ().isNotEmpty ())
-    {
-      // These ones overwrite the original ones
-      aCustomErrorLevels.putAll (aLoadingRequiredVES.getOutput ().customErrorLevels ());
-    }
-
-    if (aCustomErrorLevels.isNotEmpty ())
-      aExecutorSCH.addCustomErrorLevels (aCustomErrorLevels);
-
-    LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
-                 sResourceType +
-                 "' and path '" +
-                 aSCHKey.getPath () +
-                 "'");
-    return aExecutorSCH;
+    return ret;
   }
 }

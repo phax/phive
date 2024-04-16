@@ -16,9 +16,12 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.phive.api.execute.IValidationExecutor;
@@ -38,9 +41,9 @@ public interface IVESLoaderSchematron
    *
    * @param aRepo
    *        The repository to load the data from. May not be <code>null</code>.
-   * @param aSCH
-   *        The JAXB VES Schematron object with the details. May not be
-   *        <code>null</code>.
+   * @param aSCHList
+   *        The JAXB VES Schematron objects with the details. Order is
+   *        important. May not be <code>null</code>.
    * @param aLoadingRequiredVES
    *        In case the loading was recursively triggered via a "requires"
    *        (=include), this is the data of the requirements. May be
@@ -50,12 +53,13 @@ public interface IVESLoaderSchematron
    * @param aAsyncLoader
    *        The callback to be invoked, if loading this artefacts needs to
    *        trigger the loading of another artefact.
-   * @return The validation executor to be used. May not be <code>null</code>.
+   * @return The validation executors to be used. May not be <code>null</code>
+   *         and not be empty.
    */
   @Nonnull
-  IValidationExecutor <IValidationSourceXML> loadSchematron (@Nonnull IRepoStorageBase aRepo,
-                                                             @Nonnull VesSchematronType aSCH,
-                                                             @Nullable LoadedVES.RequiredVES aLoadingRequiredVES,
-                                                             @Nonnull ErrorList aErrorList,
-                                                             @Nonnull IVESAsyncLoader aAsyncLoader);
+  ICommonsList <IValidationExecutor <IValidationSourceXML>> loadSchematrons (@Nonnull IRepoStorageBase aRepo,
+                                                                             @Nonnull List <VesSchematronType> aSCHList,
+                                                                             @Nullable LoadedVES.RequiredVES aLoadingRequiredVES,
+                                                                             @Nonnull ErrorList aErrorList,
+                                                                             @Nonnull IVESAsyncLoader aAsyncLoader);
 }

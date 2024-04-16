@@ -335,9 +335,9 @@ public final class VESLoader
     ValueEnforcer.notNull (aLoaderStatus, "LoaderStatus");
     ValueEnforcer.notNull (aLoadingErrors, "LoadingErrors");
 
-    final EVESSyntax eSyntax = aSrcVes.getXsd () != null ? EVESSyntax.XSD : aSrcVes.getSchematron () != null
-                                                                                                             ? EVESSyntax.SCHEMATRON
-                                                                                                             : EVESSyntax.EDIFACT;
+    final EVESSyntax eSyntax = aSrcVes.getXsd () != null ? EVESSyntax.XSD : !aSrcVes.getSchematron ().isEmpty ()
+                                                                                                                 ? EVESSyntax.SCHEMATRON
+                                                                                                                 : EVESSyntax.EDIFACT;
 
     // Extract data
     final LoadedVES.Header aHeader = new LoadedVES.Header (new VESID (aSrcVes.getGroupId (),
@@ -412,31 +412,39 @@ public final class VESLoader
       // XSD
       final IVESLoaderXSD aLoader = getLoaderXSD ();
       if (aLoader != null)
-        ret.setExecutor (aLoader.loadXSD (m_aRepo,
+      {
+        ret.addExecutor (aLoader.loadXSD (m_aRepo,
                                           aSrcVes.getXsd (),
                                           aLoadingRequiredVES,
                                           aLoadingErrors,
                                           aAsyncLoader));
+      }
       else
+      {
         aLoadingErrors.add (SingleError.builderError ()
                                        .errorText ("The VES contains an XSD element, but no XSD loader is present")
                                        .build ());
+      }
     }
     else
-      if (aSrcVes.getSchematron () != null)
+      if (!aSrcVes.getSchematron ().isEmpty ())
       {
         // Schematron
         final IVESLoaderSchematron aLoader = getLoaderSchematron ();
         if (aLoader != null)
-          ret.setExecutor (aLoader.loadSchematron (m_aRepo,
-                                                   aSrcVes.getSchematron (),
-                                                   aLoadingRequiredVES,
-                                                   aLoadingErrors,
-                                                   aAsyncLoader));
+        {
+          ret.addExecutors (aLoader.loadSchematrons (m_aRepo,
+                                                     aSrcVes.getSchematron (),
+                                                     aLoadingRequiredVES,
+                                                     aLoadingErrors,
+                                                     aAsyncLoader));
+        }
         else
+        {
           aLoadingErrors.add (SingleError.builderError ()
                                          .errorText ("The VES contains a Schematron element, but no Schematron loader is present")
                                          .build ());
+        }
       }
       else
         if (aSrcVes.getEdifact () != null)
@@ -444,15 +452,19 @@ public final class VESLoader
           // EDIFACT
           final IVESLoaderEdifact aLoader = getLoaderEdifact ();
           if (aLoader != null)
-            ret.setExecutor (aLoader.loadEdifact (m_aRepo,
+          {
+            ret.addExecutor (aLoader.loadEdifact (m_aRepo,
                                                   aSrcVes.getEdifact (),
                                                   aLoadingRequiredVES,
                                                   aLoadingErrors,
                                                   aAsyncLoader));
+          }
           else
+          {
             aLoadingErrors.add (SingleError.builderError ()
                                            .errorText ("The VES contains an Edifact element, but no Edifact loader is present")
                                            .build ());
+          }
         }
         else
           throw new IllegalStateException ("Unsupported base syntax");

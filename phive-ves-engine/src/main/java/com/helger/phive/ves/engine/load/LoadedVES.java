@@ -16,6 +16,7 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -192,7 +193,7 @@ public final class LoadedVES
   private RequiredVES m_aRequires;
   private IVESSpecificDeferredLoader m_aRequiresLoader;
   private LoadedVES m_aLoadedRequires;
-  private IValidationExecutor <? extends IValidationSource> m_aExecutor;
+  private final ICommonsList <IValidationExecutor <? extends IValidationSource>> m_aExecutors = new CommonsArrayList <> ();
 
   LoadedVES (@Nonnull final Header aHeader, @Nonnull final IValidationExecutorSetStatus aStatus)
   {
@@ -249,21 +250,20 @@ public final class LoadedVES
    */
   public boolean hasExecutor ()
   {
-    return m_aExecutor != null;
+    return m_aExecutors.isNotEmpty ();
   }
 
-  /**
-   * @return The contained validation executor. May be <code>null</code>.
-   */
-  @Nullable
-  public IValidationExecutor <? extends IValidationSource> getExecutor ()
+  void addExecutor (@Nullable final IValidationExecutor <? extends IValidationSource> aExecutor)
   {
-    return m_aExecutor;
+    if (aExecutor != null)
+      m_aExecutors.add (aExecutor);
   }
 
-  void setExecutor (@Nullable final IValidationExecutor <? extends IValidationSource> aExecutor)
+  void addExecutors (@Nullable final Collection <? extends IValidationExecutor <? extends IValidationSource>> aExecutors)
   {
-    m_aExecutor = aExecutor;
+    if (aExecutors != null)
+      for (final IValidationExecutor <? extends IValidationSource> aExecutor : aExecutors)
+        addExecutor (aExecutor);
   }
 
   @Nonnull
@@ -299,8 +299,10 @@ public final class LoadedVES
       // Take the one from required
       ret = _getLoadedVESRequiresNotNull ()._getValidationExecutorsRecursive ();
     }
-    // Add ours
-    ret.add (GenericReflection.uncheckedCast (m_aExecutor));
+
+    // Add our executors
+    for (final IValidationExecutor <?> aExecutor : m_aExecutors)
+      ret.add (GenericReflection.uncheckedCast (aExecutor));
     return ret;
   }
 

@@ -441,9 +441,28 @@ Version: 2024-03-19
           </xs:documentation>
         </xs:annotation>
         <!-- matches the ValidationArtefactTypeType -->
-        <xs:element name="xsd" type="VesXsdType" />
-        <xs:element name="schematron" type="VesSchematronType"/>
-        <xs:element name="edifact" type="VesEdifactType"/>
+        <xs:element name="xsd" type="VesXsdType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              Only one XML Schema per VES makes sense. 
+              Use the "zip" approach if the schema consists of multiple files.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="schematron" type="VesSchematronType" minOccurs="1" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              Multiple independent Schematrons can be applied on top of each other.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="edifact" type="VesEdifactType" minOccurs="1" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>
+              Currently one set of rules for Edifact is sufficient.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:element>
       </xs:choice>
     </xs:sequence>
   </xs:complexType>
