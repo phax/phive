@@ -30,13 +30,16 @@ import com.helger.commons.collection.iterate.ReverseListIterator;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.string.StringHelper;
+import com.helger.diver.api.version.IVESPseudoVersion;
 import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.version.VESPseudoVersionRegistry;
 import com.helger.diver.api.version.VESVersion;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.diver.repo.toc.IRepoStorageWithToc;
 import com.helger.diver.repo.toc.RepoToc;
+import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
 import com.helger.phive.api.diver.IPseudoVersionResolver;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.ves.model.v1.VESStatus1Helper;
@@ -49,7 +52,7 @@ import com.helger.phive.ves.v10.VesStatusType;
  *
  * @author Philip Helger
  */
-final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VESID>
+public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VESID>
 {
   private final IRepoStorageWithToc m_aRepo;
 
@@ -197,5 +200,59 @@ final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VE
                               false,
                               ESortOrder.DESCENDING,
                               new VESIDSelectorByStatusValidity (aCheckDateTime));
+  }
+
+  /**
+   * Resolve the provided VESID with a pseudo version to a static version.
+   *
+   * @param aRepo
+   *        The repository that contains the effective versions to be resolved.
+   *        May not be <code>null</code>.
+   * @param aVESID
+   *        The VESID with the pseudo version. May not be <code>null</code>.
+   * @param aVersionsToIgnore
+   *        An optional set of static versions that should be ignored and not
+   *        returned. May be <code>null</code>.
+   * @param aCheckDateTime
+   *        The date and time for which the resolution should be performed. If
+   *        <code>null</code> the current date and time will be used.
+   * @return <code>null</code> if the pseudo version could not be resolved.
+   * @since 9.2.1
+   */
+  @Nullable
+  public static VESID resolvePseudoVersion (@Nonnull final IRepoStorageWithToc aRepo,
+                                            @Nonnull final VESID aVESID,
+                                            @Nullable final Set <String> aVersionsToIgnore,
+                                            @Nullable final OffsetDateTime aCheckDateTime)
+  {
+    ValueEnforcer.notNull (aRepo, "Repo");
+    ValueEnforcer.notNull (aVESID, "VESID");
+    ValueEnforcer.isTrue ( () -> aVESID.getVersionObj ().isPseudoVersion (), "VESID Version must be a pseudo version");
+
+    final IVESPseudoVersion aPseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
+    final VESLoaderPseudoVersionResolver aResolver = new VESLoaderPseudoVersionResolver (aRepo);
+
+    if (aPseudoVersion.equals (VESPseudoVersionRegistry.OLDEST))
+      return aResolver.getOldestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), aVersionsToIgnore);
+
+    if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
+      return aResolver.getLatestReleaseVersion (aVESID.getGroupID (), aVESID.getArtifactID (), aVersionsToIgnore);
+
+    if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST))
+      return aResolver.getLatestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), aVersionsToIgnore);
+
+    if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_ACTIVE))
+      return aResolver.getLatestActiveVersion (aVESID.getGroupID (),
+                                               aVESID.getArtifactID (),
+                                               aVersionsToIgnore,
+                                               aCheckDateTime);
+
+    if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_RELEASE_ACTIVE))
+      return aResolver.getLatestReleaseActiveVersion (aVESID.getGroupID (),
+                                                      aVESID.getArtifactID (),
+                                                      aVersionsToIgnore,
+                                                      aCheckDateTime);
+
+    throw new IllegalStateException ("Unsupported pseudo version " + aPseudoVersion);
   }
 }
