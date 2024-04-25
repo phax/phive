@@ -146,6 +146,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Updated to ph-diver 1.2.0
     * Added support for the pseudo version resolution in `VESLoader.loadVESFromRepo`
     * The `VESLoader` now requires a `IRepoStorageWithToc` instead of a `IRepoStorageBase` in the constructor
+    * Added support for new pseudo versions `latest-active` and `latest-release-active`
 * v9.2.0 - 2024-03-29
     * Updated to ph-commons 11.1.5
     * Ensured Java 21 compatibility
