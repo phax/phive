@@ -27,7 +27,7 @@
     <xs:documentation>
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
-Version: 2024-03-19
+Version: 2024-05-06
     </xs:documentation>
   </xs:annotation>
 
@@ -408,6 +408,26 @@ Version: 2024-03-19
       </xs:element>
     </xs:sequence>
   </xs:complexType>
+  
+  <xs:complexType name="VesLicenseType">
+    <xs:annotation>
+      <xs:documentation>
+        Contains information about a single license
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="spdxid" type="xs:string" use="optional">
+          <xs:annotation>
+            <xs:documentation>
+              The SPDX ID of the license if applicable.
+              See: https://spdx.org/licenses/
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>    
+  </xs:complexType>
 
   <xs:complexType name="VesType">
     <xs:sequence>
@@ -424,6 +444,15 @@ Version: 2024-03-19
       <xs:element name="released" type="xs:date" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Optional date when the validation artefact was published or released</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="license" type="VesLicenseType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Contains the license(s) under which this artefact is published.
+            If more then one license is present, it means that the user has to choose one of these licenses.
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
       
