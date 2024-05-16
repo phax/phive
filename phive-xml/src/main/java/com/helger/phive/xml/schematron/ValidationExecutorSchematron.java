@@ -95,7 +95,7 @@ public class ValidationExecutorSchematron extends
   private final String m_sPrerequisiteXPath;
   private final MapBasedNamespaceContext m_aNamespaceContext;
   private boolean m_bCacheSchematron = ICacheSupport.DEFAULT_CACHE;
-  private ICommonsMap <String, IErrorLevel> m_aCustomErrorLevels;
+  private ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
                                        @Nullable final String sPrerequisiteXPath,
@@ -166,17 +166,18 @@ public class ValidationExecutorSchematron extends
    *        The new error level to use. May be more or less severe than the
    *        original one.
    * @return this for chaining
-   * @see #addCustomErrorLevels(Map)
+   * @see #addCustomErrorDetails(Map)
    */
   @Nonnull
-  public final ValidationExecutorSchematron addCustomErrorLevel (@Nonnull @Nonempty final String sErrorID,
-                                                                 @Nonnull final EErrorLevel eErrorLevel)
+  public final ValidationExecutorSchematron addCustomErrorDetail (@Nonnull @Nonempty final String sErrorID,
+                                                                  @Nonnull final CustomErrorDetails aErrorDetails)
   {
     ValueEnforcer.notEmpty (sErrorID, "ErrorID");
-    ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
-    if (m_aCustomErrorLevels == null)
-      m_aCustomErrorLevels = new CommonsHashMap <> ();
-    m_aCustomErrorLevels.put (sErrorID, eErrorLevel);
+    ValueEnforcer.notNull (aErrorDetails, "ErrorDetails");
+
+    if (m_aCustomErrorDetails == null)
+      m_aCustomErrorDetails = new CommonsHashMap <> ();
+    m_aCustomErrorDetails.put (sErrorID, aErrorDetails);
     return this;
   }
 
@@ -188,16 +189,16 @@ public class ValidationExecutorSchematron extends
    *        The map from error ID (the Schematron assertion ID) to the new error
    *        level to use. May be <code>null</code>.
    * @return this for chaining
-   * @see #addCustomErrorLevel(String, EErrorLevel)
+   * @see #addCustomErrorDetail(String, EErrorLevel)
    */
   @Nonnull
-  public final ValidationExecutorSchematron addCustomErrorLevels (@Nullable final Map <String, ? extends IErrorLevel> aCustomErrorLevels)
+  public final ValidationExecutorSchematron addCustomErrorDetails (@Nullable final Map <String, ? extends CustomErrorDetails> aCustomErrorLevels)
   {
     if (aCustomErrorLevels != null && !aCustomErrorLevels.isEmpty ())
     {
-      if (m_aCustomErrorLevels == null)
-        m_aCustomErrorLevels = new CommonsHashMap <> ();
-      m_aCustomErrorLevels.putAll (aCustomErrorLevels);
+      if (m_aCustomErrorDetails == null)
+        m_aCustomErrorDetails = new CommonsHashMap <> ();
+      m_aCustomErrorDetails.putAll (aCustomErrorLevels);
     }
     return this;
   }
@@ -415,27 +416,33 @@ public class ValidationExecutorSchematron extends
                                  .build ());
     }
     // Apply custom levels
-    if (m_aCustomErrorLevels != null && aErrorList.isNotEmpty ())
+    if (m_aCustomErrorDetails != null && aErrorList.isNotEmpty ())
     {
       final ErrorList aOldErrorList = aErrorList.getClone ();
       aErrorList.clear ();
       for (final IError aCurError : aOldErrorList)
       {
         final String sErrorID = aCurError.getErrorID ();
-        final IErrorLevel aCustomLevel = m_aCustomErrorLevels.get (sErrorID);
-        if (aCustomLevel != null)
+        final CustomErrorDetails aCustomErrorDetails = m_aCustomErrorDetails.get (sErrorID);
+        if (aCustomErrorDetails != null)
         {
+          final IErrorLevel aErrorLevel = aCustomErrorDetails.getErrorLevel ();
           if (LOGGER.isDebugEnabled ())
             LOGGER.debug ("Changing error level of '" +
                           sErrorID +
                           "' from " +
                           aCurError.getErrorLevel ().getNumericLevel () +
                           " to " +
-                          aCustomLevel +
+                          aErrorLevel +
                           " (" +
-                          aCustomLevel.getNumericLevel () +
+                          aErrorLevel.getNumericLevel () +
                           ")");
-          aErrorList.add (SingleError.builder (aCurError).errorLevel (aCustomLevel).build ());
+
+          // Change error level and error text
+          aErrorList.add (SingleError.builder (aCurError)
+                                     .errorLevel (aErrorLevel)
+                                     .errorText (aCustomErrorDetails.getWithErrorTextPrefixOrSuffixApplied (aCurError.getErrorText (Locale.ROOT)))
+                                     .build ());
         }
         else
         {
@@ -458,7 +465,7 @@ public class ValidationExecutorSchematron extends
     return m_bCacheSchematron == rhs.m_bCacheSchematron &&
            EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath) &&
            EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
-           EqualsHelper.equals (m_aCustomErrorLevels, rhs.m_aCustomErrorLevels);
+           EqualsHelper.equals (m_aCustomErrorDetails, rhs.m_aCustomErrorDetails);
   }
 
   @Override
@@ -468,7 +475,7 @@ public class ValidationExecutorSchematron extends
                             .append (m_bCacheSchematron)
                             .append (m_sPrerequisiteXPath)
                             .append (m_aNamespaceContext)
-                            .append (m_aCustomErrorLevels)
+                            .append (m_aCustomErrorDetails)
                             .getHashCode ();
   }
 
@@ -479,7 +486,7 @@ public class ValidationExecutorSchematron extends
                             .append ("CacheSchematron", m_bCacheSchematron)
                             .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
                             .appendIfNotNull ("NamespaceContext", m_aNamespaceContext)
-                            .appendIfNotNull ("CustomErrorLevels", m_aCustomErrorLevels)
+                            .appendIfNotNull ("CustomErrorLevels", m_aCustomErrorDetails)
                             .getToString ();
   }
 

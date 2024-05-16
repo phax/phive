@@ -27,7 +27,9 @@
     <xs:documentation>
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
-Version: 2024-05-06
+Version history:
+  * 2024-05-16 - v1.0.0-RC1
+    * Initial version
     </xs:documentation>
   </xs:annotation>
 
@@ -134,6 +136,16 @@ Version: 2024-05-06
       <xs:element name="level" type="VesErrorLevelType">
         <xs:annotation>
           <xs:documentation>The adopted error level to assign to all found issues with the provided ID</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorTextPrefix" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Optional prefix to be added to the respective error text</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="errorTextSuffix" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Optional suffix to be added to the respective error text</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>

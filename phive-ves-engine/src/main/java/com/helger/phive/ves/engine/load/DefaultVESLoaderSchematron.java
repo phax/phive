@@ -31,7 +31,6 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.StringHelper;
@@ -41,9 +40,9 @@ import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.ves.v10.VesCustomErrorType;
-import com.helger.phive.ves.v10.VesErrorLevelType;
 import com.helger.phive.ves.v10.VesOutputType;
 import com.helger.phive.ves.v10.VesSchematronType;
+import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.phive.xml.schematron.ESchematronEngine;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
@@ -97,7 +96,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 
       // Resolve Namespace Context
       final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
-      VESLoader.wrap (aSCH.getNamespaces (), aNSCtx);
+      VESLoader.internalWrapNamespaceList (aSCH.getNamespaces (), aNSCtx);
 
       final ValidationExecutorSchematron aExecutorSCH;
       final String sResourceType = aSCH.getResource ().getType ();
@@ -164,7 +163,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
         }
       }
 
-      final ICommonsMap <String, IErrorLevel> aCustomErrorLevels = new CommonsHashMap <> ();
+      final ICommonsMap <String, CustomErrorDetails> aCustomErrorDetails = new CommonsHashMap <> ();
 
       // Is something defined at the Schematron itself?
       if (aSCH.getOutput () != null)
@@ -176,36 +175,24 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
           for (final VesCustomErrorType aCustomError : aOutput.getCustomError ())
           {
             final String sKey = aCustomError.getId ();
-            final VesErrorLevelType eLevel = aCustomError.getLevel ();
-            final EErrorLevel eErrorLevel;
-            switch (eLevel)
-            {
-              case ERROR:
-                eErrorLevel = EErrorLevel.ERROR;
-                break;
-              case WARN:
-                eErrorLevel = EErrorLevel.WARN;
-                break;
-              case INFO:
-                eErrorLevel = EErrorLevel.INFO;
-                break;
-              default:
-                throw new IllegalStateException ("Unxpected error level: " + eLevel);
-            }
+            final EErrorLevel eErrorLevel = VESLoader.internalWrapErrorLevel (aCustomError.getLevel ());
             if (StringHelper.hasText (sKey) && eErrorLevel != null)
-              aCustomErrorLevels.put (sKey, eErrorLevel);
+              aCustomErrorDetails.put (sKey,
+                                       new CustomErrorDetails (eErrorLevel,
+                                                               aCustomError.getErrorTextPrefix (),
+                                                               aCustomError.getErrorTextSuffix ()));
           }
       }
 
       // Are we changing the output levels on a "required" resource?
-      if (aLoadingRequiredVES != null && aLoadingRequiredVES.getOutput ().customErrorLevels ().isNotEmpty ())
+      if (aLoadingRequiredVES != null && aLoadingRequiredVES.getOutput ().customErrorDetails ().isNotEmpty ())
       {
         // These ones overwrite the original ones
-        aCustomErrorLevels.putAll (aLoadingRequiredVES.getOutput ().customErrorLevels ());
+        aCustomErrorDetails.putAll (aLoadingRequiredVES.getOutput ().customErrorDetails ());
       }
 
-      if (aCustomErrorLevels.isNotEmpty ())
-        aExecutorSCH.addCustomErrorLevels (aCustomErrorLevels);
+      if (aCustomErrorDetails.isNotEmpty ())
+        aExecutorSCH.addCustomErrorDetails (aCustomErrorDetails);
 
       LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
                    sResourceType +

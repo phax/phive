@@ -33,7 +33,6 @@ import com.helger.commons.collection.impl.CommonsTreeMap;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.datetime.XMLOffsetDate;
-import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.lang.GenericReflection;
 import com.helger.diver.api.version.VESID;
@@ -46,6 +45,7 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.ves.model.v1.EVESSyntax;
+import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
@@ -112,28 +112,28 @@ public final class LoadedVES
   @NotThreadSafe
   public static final class OutputType
   {
-    private final ICommonsMap <String, EErrorLevel> m_aCustomErrorLevels = new CommonsTreeMap <> ();
+    private final ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails = new CommonsTreeMap <> ();
 
-    public void addCustomErrorLevel (@Nonnull final String sID, @Nonnull final EErrorLevel eErrorLevel)
+    public void addCustomErrorLevel (@Nonnull final String sID, @Nonnull final CustomErrorDetails aErrorDetail)
     {
       ValueEnforcer.notNull (sID, "ID");
-      ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
+      ValueEnforcer.notNull (aErrorDetail, "ErrorDetail");
 
-      m_aCustomErrorLevels.put (sID, eErrorLevel);
+      m_aCustomErrorDetails.put (sID, aErrorDetail);
     }
 
     @Nonnull
     @ReturnsMutableCopy
-    public ICommonsMap <String, EErrorLevel> getAllCustomErrorLevels ()
+    public ICommonsMap <String, CustomErrorDetails> getAllCustomErrorDetails ()
     {
-      return m_aCustomErrorLevels.getClone ();
+      return m_aCustomErrorDetails.getClone ();
     }
 
     @Nonnull
     @ReturnsMutableObject
-    public ICommonsMap <String, EErrorLevel> customErrorLevels ()
+    public ICommonsMap <String, CustomErrorDetails> customErrorDetails ()
     {
-      return m_aCustomErrorLevels;
+      return m_aCustomErrorDetails;
     }
   }
 

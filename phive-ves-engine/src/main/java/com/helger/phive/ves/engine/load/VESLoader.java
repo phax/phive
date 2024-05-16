@@ -66,6 +66,7 @@ import com.helger.phive.ves.v10.VesRequiresType;
 import com.helger.phive.ves.v10.VesResourceType;
 import com.helger.phive.ves.v10.VesStatusType;
 import com.helger.phive.ves.v10.VesType;
+import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
@@ -258,7 +259,7 @@ public final class VESLoader
     }
   }
 
-  static void wrap (@Nullable final VesNamespaceListType aNamespaces, @Nonnull final MapBasedNamespaceContext aNSCtx)
+  static void internalWrapNamespaceList (@Nullable final VesNamespaceListType aNamespaces, @Nonnull final MapBasedNamespaceContext aNSCtx)
   {
     if (aNamespaces != null)
       for (final VesNamespaceType aNamespace : aNamespaces.getNamespace ())
@@ -284,12 +285,12 @@ public final class VESLoader
   private static MapBasedNamespaceContext _wrap (@Nullable final VesNamespaceListType aNamespaces)
   {
     final MapBasedNamespaceContext ret = new MapBasedNamespaceContext ();
-    wrap (aNamespaces, ret);
+    internalWrapNamespaceList (aNamespaces, ret);
     return ret;
   }
 
   @Nonnull
-  private static EErrorLevel _wrap (@Nonnull final VesErrorLevelType e)
+  static EErrorLevel internalWrapErrorLevel (@Nonnull final VesErrorLevelType e)
   {
     switch (e)
     {
@@ -310,7 +311,10 @@ public final class VESLoader
     final LoadedVES.OutputType ret = new LoadedVES.OutputType ();
     if (aOutput != null)
       for (final VesCustomErrorType aCustomError : aOutput.getCustomError ())
-        ret.addCustomErrorLevel (aCustomError.getId (), _wrap (aCustomError.getLevel ()));
+        ret.addCustomErrorLevel (aCustomError.getId (),
+                                 new CustomErrorDetails (internalWrapErrorLevel (aCustomError.getLevel ()),
+                                                         aCustomError.getErrorTextPrefix (),
+                                                         aCustomError.getErrorTextSuffix ()));
     return ret;
   }
 
