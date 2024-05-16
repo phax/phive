@@ -259,7 +259,8 @@ public final class VESLoader
     }
   }
 
-  static void internalWrapNamespaceList (@Nullable final VesNamespaceListType aNamespaces, @Nonnull final MapBasedNamespaceContext aNSCtx)
+  static void internalWrapNamespaceList (@Nullable final VesNamespaceListType aNamespaces,
+                                         @Nonnull final MapBasedNamespaceContext aNSCtx)
   {
     if (aNamespaces != null)
       for (final VesNamespaceType aNamespace : aNamespaces.getNamespace ())
@@ -311,10 +312,12 @@ public final class VESLoader
     final LoadedVES.OutputType ret = new LoadedVES.OutputType ();
     if (aOutput != null)
       for (final VesCustomErrorType aCustomError : aOutput.getCustomError ())
+      {
         ret.addCustomErrorLevel (aCustomError.getId (),
                                  new CustomErrorDetails (internalWrapErrorLevel (aCustomError.getLevel ()),
                                                          aCustomError.getErrorTextPrefix (),
                                                          aCustomError.getErrorTextSuffix ()));
+      }
     return ret;
   }
 
