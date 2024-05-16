@@ -43,7 +43,7 @@ public class CustomErrorDetailsTest
     assertTrue (a.hasErrorTextSuffix ());
     assertEquals ("suff", a.getErrorTextSuffix ());
     assertTrue (a.hasErrorTextPrefixOrSuffix ());
-    assertEquals ("preXsuff", a.getWithErrorTextPrefixOrSuffixApplied ("X"));
+    assertEquals ("preXsuff", a.getWithErrorTextPrefixAndSuffixApplied ("X"));
   }
 
   @Test
@@ -56,6 +56,18 @@ public class CustomErrorDetailsTest
     assertFalse (a.hasErrorTextSuffix ());
     assertNull (a.getErrorTextSuffix ());
     assertFalse (a.hasErrorTextPrefixOrSuffix ());
-    assertEquals ("X", a.getWithErrorTextPrefixOrSuffixApplied ("X"));
+    assertEquals ("X", a.getWithErrorTextPrefixAndSuffixApplied ("X"));
+  }
+
+  @Test
+  public void testBasicSpecifics ()
+  {
+    CustomErrorDetails a = new CustomErrorDetails (EErrorLevel.WARN, "pre", null);
+    assertTrue (a.hasErrorTextPrefixOrSuffix ());
+    assertEquals ("preX", a.getWithErrorTextPrefixAndSuffixApplied ("X"));
+
+    a = new CustomErrorDetails (EErrorLevel.WARN, null, "suff");
+    assertTrue (a.hasErrorTextPrefixOrSuffix ());
+    assertEquals ("Xsuff", a.getWithErrorTextPrefixAndSuffixApplied ("X"));
   }
 }

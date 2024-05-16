@@ -441,7 +441,7 @@ public class ValidationExecutorSchematron extends
           // Change error level and error text
           aErrorList.add (SingleError.builder (aCurError)
                                      .errorLevel (aErrorLevel)
-                                     .errorText (aCustomErrorDetails.getWithErrorTextPrefixOrSuffixApplied (aCurError.getErrorText (Locale.ROOT)))
+                                     .errorText (aCustomErrorDetails.getWithErrorTextPrefixAndSuffixApplied (aCurError.getErrorText (Locale.ROOT)))
                                      .build ());
         }
         else

@@ -81,7 +81,7 @@ public final class CustomErrorDetails
   }
 
   @Nonnull
-  public String getWithErrorTextPrefixOrSuffixApplied (@Nonnull final String s)
+  public String getWithErrorTextPrefixAndSuffixApplied (@Nonnull final String s)
   {
     String ret;
     if (hasErrorTextPrefix ())
