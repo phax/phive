@@ -143,7 +143,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 # News and noteworthy
 
 * v9.2.2 - work in progress
-    * Switched from custom error level to `CustomErroDetails`
+    * Switched from custom error level to `CustomErrorDetails`
 * v9.2.1 - 2024-04-25
     * Updated to ph-diver 1.2.0
     * Added support for the pseudo version resolution in `VESLoader.loadVESFromRepo`
