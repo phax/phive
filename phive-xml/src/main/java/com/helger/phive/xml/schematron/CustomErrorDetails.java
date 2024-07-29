@@ -101,4 +101,10 @@ public final class CustomErrorDetails
                                        .appendIfNotNull ("ErrorTextSuffix", m_sErrorTextSuffix)
                                        .getToString ();
   }
+
+  @Nonnull
+  public static CustomErrorDetails of (@Nonnull final IErrorLevel aErrorLevel)
+  {
+    return new CustomErrorDetails (aErrorLevel, null, null);
+  }
 }
