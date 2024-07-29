@@ -142,7 +142,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v9.2.2 - work in progress
+* v9.2.2 - 2024-07-29
     * Switched from custom error level to `CustomErrorDetails`
 * v9.2.1 - 2024-04-25
     * Updated to ph-diver 1.2.0
