@@ -26,7 +26,7 @@
   </parent>
   <groupId>com.helger.phive</groupId>
   <artifactId>phive-parent-pom</artifactId>
-  <version>9.2.3-SNAPSHOT</version>
+  <version>9.2.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>phive-parent-pom</name>
   <description>Base POM to build phive - the Philip Helger Integrative Validation Engine</description>
