@@ -39,7 +39,6 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.hashcode.HashCodeGenerator;
@@ -162,8 +161,8 @@ public class ValidationExecutorSchematron extends
    *
    * @param sErrorID
    *        The error ID, must match the Schematron assertion ID
-   * @param eErrorLevel
-   *        The new error level to use. May be more or less severe than the
+   * @param aErrorDetails
+   *        The new error details to use. May be more or less severe than the
    *        original one.
    * @return this for chaining
    * @see #addCustomErrorDetails(Map)
@@ -189,7 +188,7 @@ public class ValidationExecutorSchematron extends
    *        The map from error ID (the Schematron assertion ID) to the new error
    *        level to use. May be <code>null</code>.
    * @return this for chaining
-   * @see #addCustomErrorDetail(String, EErrorLevel)
+   * @see #addCustomErrorDetail(String, CustomErrorDetails)
    */
   @Nonnull
   public final ValidationExecutorSchematron addCustomErrorDetails (@Nullable final Map <String, ? extends CustomErrorDetails> aCustomErrorLevels)
