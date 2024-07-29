@@ -180,7 +180,7 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Get the tristate representation of the provided value. Either
+   * Get the tri-state representation of the provided value. Either
    * {@link #JSON_TRISTATE_TRUE} or {@link #JSON_TRISTATE_FALSE}.
    *
    * @param b
@@ -196,12 +196,12 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Get the tristate representation of the provided value. Either
+   * Get the tri-state representation of the provided value. Either
    * {@link #JSON_TRISTATE_TRUE}, {@link #JSON_TRISTATE_FALSE} or
    * {@link #JSON_TRISTATE_UNDEFINED}.
    *
    * @param eTriState
-   *        Tristate value to get converted. May not be <code>null</code>.
+   *        Tri-state value to get converted. May not be <code>null</code>.
    * @return A non-<code>null</code> JSON value string.
    * @see #getJsonTriState(boolean)
    */
@@ -216,7 +216,7 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Convert the provided value into a tristate value. Must be one of
+   * Convert the provided value into a tri-state value. Must be one of
    * {@link #JSON_TRISTATE_TRUE}, {@link #JSON_TRISTATE_FALSE} or
    * {@link #JSON_TRISTATE_UNDEFINED}.
    *
@@ -265,6 +265,22 @@ public final class PhiveJsonHelper
                             .add (PhiveRestoredException.JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
   }
 
+  /**
+   * Get the JSON representation of a location.<br>
+   *
+   * <pre>
+   * {
+   *   "resource" : string?,
+   *   "line" : number?,
+   *   "col" : number?
+   * }
+   * </pre>
+   *
+   * @param aLocation
+   *        The location to convert to a JSON object. May be <code>null</code>.
+   * @return <code>null</code> if the parameter is <code>null</code>, the JSON
+   *         object otherwise.
+   */
   @Nullable
   public static IJsonObject getJsonErrorLocation (@Nullable final ILocation aLocation)
   {
@@ -475,7 +491,10 @@ public final class PhiveJsonHelper
    *   "deprecated" : boolean,
    *   "status" : {
    *     "lastModification" : dateTime
-   *     "type": string,
+   *     "type" : string,
+   *     "validFrom" : string?,
+   *     "validTo" : string?,
+   *     "deprecationReason" : string?
    *     "replacementVesid" : string?
    *   }
    * }
@@ -549,15 +568,13 @@ public final class PhiveJsonHelper
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
     final IJsonArray aResultArray = new JsonArray ();
-    {
-      aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getJsonTriState (false))
-                                         .add (JSON_ARTIFACT_TYPE, ARTIFACT_TYPE_INPUT_PARAMETER)
-                                         .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
-                                         .addJson (JSON_ITEMS,
-                                                   new JsonArray (jsonErrorBuilder ().errorLevel (EErrorLevel.ERROR)
-                                                                                     .errorText (sErrorMsg)
-                                                                                     .build ())));
-    }
+    aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getJsonTriState (false))
+                                       .add (JSON_ARTIFACT_TYPE, ARTIFACT_TYPE_INPUT_PARAMETER)
+                                       .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
+                                       .addJson (JSON_ITEMS,
+                                                 new JsonArray (jsonErrorBuilder ().errorLevel (EErrorLevel.ERROR)
+                                                                                   .errorText (sErrorMsg)
+                                                                                   .build ())));
 
     aResponse.add (JSON_SUCCESS, false);
     aResponse.add (JSON_INTERRUPTED, false);
