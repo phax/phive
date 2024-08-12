@@ -9,6 +9,8 @@ A generic business document validation engine originally developed for Peppol bu
 
 This project only contains the validation **engine** - all the preconfigured rules are available in a separate repository at https://github.com/phax/phive-rules
 
+This project is part of my Peppol solution stack. See https://github.com/phax/peppol for other components and libraries in that area.
+
 This project is licensed under the Apache 2 license.
 
 A live version of this engine can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload) and at [ecosio](https://ecosio.com/en/peppol-and-xml-document-validator/).
