@@ -30,6 +30,11 @@ Note: please see [README v5](docs/READMEv5.md), [README v6](docs/READMEv6.md) an
 
 Basically this library wraps different XML Schemas and Schematrons in a certain order and under certain constraints and offers the possibility to validate XML documents based on the rules.
 
+The underlying model is the so called "Validation Pyramid":
+![Validation Pyramid](https://github.com/phax/phive/blob/master/docs/validation-pyramid.png?raw=true)
+
+Each layer of the Validation Pyramid reflects a single set of rules. Each rule set is identified by a VESID, and the resulting pyramid is also identified by a single VESID.
+
 ## Validation executor set identification
 
 Every set of validation artefacts is uniquely identified based with a [VESID](https://github.com/phax/ph-diver#vesid).
