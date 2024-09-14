@@ -19,7 +19,6 @@ package com.helger.phive.api.validity;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.error.list.IErrorList;
-import com.helger.phive.api.EExtendedValidity;
 
 /**
  * Generic interface for a decision provider for validation results.

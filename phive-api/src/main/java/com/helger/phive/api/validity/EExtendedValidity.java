@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.api;
+package com.helger.phive.api.validity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

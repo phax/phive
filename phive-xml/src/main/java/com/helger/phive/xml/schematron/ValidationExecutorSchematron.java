@@ -53,6 +53,7 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.execute.IValidationExecutorWithCacheSupport;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
@@ -86,7 +87,7 @@ import com.helger.xml.xpath.XPathHelper;
 public class ValidationExecutorSchematron extends
                                           AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorSchematron>
                                           implements
-                                          IValidationExecutor.ICacheSupport
+                                          IValidationExecutorWithCacheSupport
 {
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
 
@@ -94,7 +95,7 @@ public class ValidationExecutorSchematron extends
 
   private final String m_sPrerequisiteXPath;
   private final MapBasedNamespaceContext m_aNamespaceContext;
-  private boolean m_bCacheSchematron = ICacheSupport.DEFAULT_CACHE;
+  private boolean m_bCacheSchematron = IValidationExecutorWithCacheSupport.DEFAULT_CACHE;
   private ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
@@ -103,7 +104,7 @@ public class ValidationExecutorSchematron extends
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact, aValidityDeterminator);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematron (),
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationType ().isSchematron (),
                           "Artifact is not a Schematron");
     m_sPrerequisiteXPath = sPrerequisiteXPath;
     // Create a copy on demand
@@ -214,7 +215,7 @@ public class ValidationExecutorSchematron extends
     // get the Schematron resource to be used for this validation artefact
     final IReadableResource aSCHRes = aArtefact.getRuleResource ();
 
-    final IValidationType aVT = aArtefact.getValidationArtefactType ();
+    final IValidationType aVT = aArtefact.getValidationType ();
     if (aVT == EValidationType.SCHEMATRON_PURE)
     {
       final SchematronResourcePure aPureSCH = new SchematronResourcePure (aSCHRes);

@@ -58,7 +58,6 @@ import com.helger.json.IJsonObject;
 import com.helger.json.IJsonValue;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
-import com.helger.phive.api.EExtendedValidity;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -68,6 +67,7 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
 

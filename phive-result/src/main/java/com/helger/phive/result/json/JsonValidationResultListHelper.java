@@ -36,9 +36,9 @@ import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
-import com.helger.phive.api.EExtendedValidity;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.validity.EExtendedValidity;
 
 /**
  * A helper class that allows to heavily customize the creation of validation
@@ -188,7 +188,7 @@ public class JsonValidationResultListHelper
           break;
       }
       aVRT.add (PhiveJsonHelper.JSON_VALIDITY, aVR.getValidity ().getID ());
-      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
+      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationType ().getID ());
       if (m_aArtifactPathTypeToJson != null)
         aVRT.addIfNotNull (PhiveJsonHelper.JSON_ARTIFACT_PATH_TYPE,
                            m_aArtifactPathTypeToJson.apply (aVR.getValidationArtefact ().getRuleResource ()));

@@ -24,8 +24,8 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.phive.api.EExtendedValidity;
 import com.helger.phive.api.artefact.IValidationArtefact;
+import com.helger.phive.api.validity.EExtendedValidity;
 
 /**
  * This class captures the validation result of a single validation layer. It

@@ -81,7 +81,7 @@ public class ValidationExecutorXSDPartial extends
                                        @Nonnull final XSDPartialContext aPartialContext)
   {
     super (aValidationArtefact, aValidityDeterminator);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
+    ValueEnforcer.isTrue (aValidationArtefact.getValidationType ().isXSD (), "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     ValueEnforcer.notNull (aPartialContext, "PartialContext");
 

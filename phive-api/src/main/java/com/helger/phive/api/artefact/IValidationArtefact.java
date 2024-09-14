@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.phive.api.IValidationType;
-import com.helger.phive.api.internal.ChangeV10;
 
 /**
  * Base interface for a validation artefact, consisting of a type and a readable
@@ -33,17 +32,16 @@ import com.helger.phive.api.internal.ChangeV10;
 public interface IValidationArtefact
 {
   /**
-   * @return The validation artefact type - XSD or Schematron. May not be
+   * @return The validation artefact type - XSD or Schematron or so. May not be
    *         <code>null</code>.
    */
   @Nonnull
-  @ChangeV10 ("Rename to getValidationType")
-  IValidationType getValidationArtefactType ();
+  IValidationType getValidationType ();
 
   /**
    * @return The resource that contains the rules depending on the type (like
    *         XSD or Schematron). Never <code>null</code>.
-   * @see #getValidationArtefactType()
+   * @see #getValidationType()
    */
   @Nonnull
   IReadableResource getRuleResource ();

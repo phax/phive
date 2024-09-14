@@ -51,7 +51,7 @@ public class ValidationArtefact implements IValidationArtefact
   }
 
   @Nonnull
-  public IValidationType getValidationArtefactType ()
+  public IValidationType getValidationType ()
   {
     return m_aValidationArtefactType;
   }

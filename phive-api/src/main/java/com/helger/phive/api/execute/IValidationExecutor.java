@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.phive.api.artefact.IValidationArtefact;
-import com.helger.phive.api.internal.ChangeV10;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -39,45 +38,6 @@ import com.helger.phive.api.source.IValidationSource;
 public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
 {
   /**
-   * Nested interface for validation executors that support caching. Each
-   * implementation of IValidationExecutor is free to also implement this
-   * interface.
-   *
-   * @author Philip Helger
-   * @since 3.1.1
-   */
-  @ChangeV10 ("Extract to separate interface and extend from IValidationExecutor")
-  public interface ICacheSupport
-  {
-    /** By default caching should be enabled. */
-    boolean DEFAULT_CACHE = true;
-
-    /**
-     * @return <code>true</code> if caching is enabled, <code>false</code> if
-     *         not.
-     */
-    boolean isCacheArtefact ();
-
-    /**
-     * Enable or disable caching.
-     *
-     * @param bCacheArtefact
-     *        <code>true</code> to enable caching, <code>false</code> to disable
-     *        it.
-     * @return this for chaining
-     */
-    @Nonnull
-    ICacheSupport setCacheArtefact (boolean bCacheArtefact);
-
-    /**
-     * If caching of this artefact is enabled, ensure it is in the cache.
-     *
-     * @since 7.1.1
-     */
-    void ensureItemIsInCache ();
-  }
-
-  /**
    * @return The validation artefact used to validate the XML instances. Never
    *         <code>null</code>.
    */
@@ -91,7 +51,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
    */
   default boolean isStopValidationOnError ()
   {
-    return getValidationArtefact ().getValidationArtefactType ().isStopValidationOnError ();
+    return getValidationArtefact ().getValidationType ().isStopValidationOnError ();
   }
 
   /**

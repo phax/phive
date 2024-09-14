@@ -33,6 +33,7 @@ import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.execute.IValidationExecutorWithCacheSupport;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
@@ -129,8 +130,8 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   public void setValidationExecutorDoCache (final boolean bCache)
   {
     for (final IValidationExecutor <SOURCETYPE> aExecutor : m_aList)
-      if (aExecutor instanceof IValidationExecutor.ICacheSupport)
-        ((IValidationExecutor.ICacheSupport) aExecutor).setCacheArtefact (bCache);
+      if (aExecutor instanceof IValidationExecutorWithCacheSupport)
+        ((IValidationExecutorWithCacheSupport) aExecutor).setCacheArtefact (bCache);
   }
 
   /**
