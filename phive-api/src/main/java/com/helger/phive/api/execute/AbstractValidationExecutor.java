@@ -20,11 +20,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.commons.traits.IGenericImplTrait;
 import com.helger.phive.api.artefact.IValidationArtefact;
+import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.IValidityDeterminator;
 
 /**
  * Abstract base implementation of {@link IValidationExecutor}.
@@ -44,17 +47,29 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
   public static final boolean DEFAULT_STOP_VALIDATION_ON_ERROR = false;
 
   private final IValidationArtefact m_aValidationArtefact;
+  private final IValidityDeterminator m_aValidityDeterminator;
   private boolean m_bStopValidationOnError = DEFAULT_STOP_VALIDATION_ON_ERROR;
 
-  public AbstractValidationExecutor (@Nonnull final IValidationArtefact aValidationArtefact)
+  public AbstractValidationExecutor (@Nonnull final IValidationArtefact aValidationArtefact,
+                                     @Nonnull final IValidityDeterminator aValidityDeterminator)
   {
-    m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
+    ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
+    ValueEnforcer.notNull (aValidityDeterminator, "ValidityDeterminator");
+
+    m_aValidationArtefact = aValidationArtefact;
+    m_aValidityDeterminator = aValidityDeterminator;
   }
 
   @Nonnull
   public final IValidationArtefact getValidationArtefact ()
   {
     return m_aValidationArtefact;
+  }
+
+  @Nonnull
+  public final IValidityDeterminator getValidityDeterminator ()
+  {
+    return m_aValidityDeterminator;
   }
 
   @Override
@@ -79,6 +94,12 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
     return thisAsT ();
   }
 
+  @Nonnull
+  protected final ValidationResult createValidationResult (@Nonnull final IErrorList aErrorList)
+  {
+    return new ValidationResult (m_aValidationArtefact, aErrorList, m_aValidityDeterminator.getValidity (aErrorList));
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -100,6 +121,7 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
+                                       .append ("ValidityDeterminator", m_aValidityDeterminator)
                                        .append ("StopValidationOnError", m_bStopValidationOnError)
                                        .getToString ();
   }

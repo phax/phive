@@ -27,7 +27,7 @@ import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.string.StringHelper;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 
 /**
  * Defines the status of a VES.
@@ -129,7 +129,7 @@ public interface IValidationExecutorSetStatus
    *         provided here as a replacement VESID.
    */
   @Nullable
-  VESID getReplacementVESID ();
+  DVRCoordinate getReplacementVESID ();
 
   @Nonnull
   @Nonempty

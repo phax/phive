@@ -27,7 +27,7 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsHashSet;
 import com.helger.commons.collection.impl.ICommonsSet;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 
 /**
  * This class describes a simple test file: the path where it resides and the
@@ -39,11 +39,11 @@ import com.helger.diver.api.version.VESID;
 public class TestFile
 {
   private final IReadableResource m_aResource;
-  private final VESID m_aVESID;
+  private final DVRCoordinate m_aVESID;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
   public TestFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final VESID aVESID,
+                   @Nonnull final DVRCoordinate aVESID,
                    @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
@@ -65,7 +65,7 @@ public class TestFile
    * @return The VES ID passed in the constructor. Never <code>null</code>.
    */
   @Nonnull
-  public VESID getVESID ()
+  public DVRCoordinate getVESID ()
   {
     return m_aVESID;
   }
@@ -88,7 +88,8 @@ public class TestFile
   }
 
   @Nonnull
-  public static TestFile createGoodCase (@Nonnull final IReadableResource aResource, @Nonnull final VESID aVESID)
+  public static TestFile createGoodCase (@Nonnull final IReadableResource aResource,
+                                         @Nonnull final DVRCoordinate aVESID)
   {
     // Good case: no error
     return new TestFile (aResource, aVESID, null);

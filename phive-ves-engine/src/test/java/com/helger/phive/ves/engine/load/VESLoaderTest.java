@@ -37,7 +37,8 @@ import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.io.stream.StreamHelper;
 import com.helger.commons.state.ESuccess;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.diver.api.version.DVRVersionException;
 import com.helger.diver.repo.ERepoDeletable;
 import com.helger.diver.repo.ERepoWritable;
 import com.helger.diver.repo.IRepoStorage;
@@ -59,7 +60,7 @@ public final class VESLoaderTest
   private static IRepoStorageWithToc s_aRepoStorage;
 
   private static void _addResource (@Nonnull final IRepoStorage aRepo,
-                                    @Nonnull final VESID aVESID,
+                                    @Nonnull final DVRCoordinate aVESID,
                                     @Nonnull @Nonempty final IReadableResource aRulesPayload)
   {
     // Create StorageKey
@@ -102,7 +103,7 @@ public final class VESLoaderTest
   }
 
   @BeforeClass
-  public static void beforeClass ()
+  public static void beforeClass () throws DVRVersionException
   {
     // Create an InMemoryRepo. Name it, enable write and delete.
     final RepoStorageInMemory aInMemoryRepo = RepoStorageInMemory.createDefault ("unittest-local",
@@ -113,18 +114,18 @@ public final class VESLoaderTest
     {
       // Upload XSD #1
       _addResource (aInMemoryRepo,
-                    new VESID ("com.helger.phive.test", "mini", "1.0"),
+                    DVRCoordinate.create ("com.helger.phive.test", "mini", "1.0"),
                     new ClassPathResource ("ves/test1/mini.xsd"));
       // Upload XSD VES #1
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/xsd.ves"));
 
       // Upload SCH #1
       _addResource (aInMemoryRepo,
-                    new VESID ("com.helger.phive.test", "mini-sch1", "2023.8"),
+                    DVRCoordinate.create ("com.helger.phive.test", "mini-sch1", "2023.8"),
                     new ClassPathResource ("ves/test1/mini1.sch"));
       // Upload SCH #2
       _addResource (aInMemoryRepo,
-                    new VESID ("com.helger.phive.test", "mini-sch2", "2023.8"),
+                    DVRCoordinate.create ("com.helger.phive.test", "mini-sch2", "2023.8"),
                     new ClassPathResource ("ves/test1/mini2.sch"));
       // Upload SCH VES #1
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch1.ves"));
@@ -134,7 +135,7 @@ public final class VESLoaderTest
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch3.ves"));
       // Upload SCH #3 status
       _addResource (aInMemoryRepo,
-                    new VESID ("com.helger.phive.test", "test_sch", "3.0"),
+                    DVRCoordinate.create ("com.helger.phive.test", "test_sch", "3.0"),
                     new ClassPathResource ("ves/test1/sch3.status"));
       // Upload SCH VES #4 with snapshot version
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch4-snapshot.ves"));
@@ -143,7 +144,7 @@ public final class VESLoaderTest
     // test2
     {
       _addResource (aInMemoryRepo,
-                    new VESID ("com.helger.phive.test2", "UBL-xsdrt", "2.1"),
+                    DVRCoordinate.create ("com.helger.phive.test2", "UBL-xsdrt", "2.1"),
                     new ClassPathResource ("ves/test2/UBL-2.1-xsdrt.zip"));
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test2/xsd.ves"));
     }
@@ -151,7 +152,7 @@ public final class VESLoaderTest
     // test3
     {
       _addResource (aInMemoryRepo,
-                    new VESID ("com.helger.phive.test3", "mini", "1.0"),
+                    DVRCoordinate.create ("com.helger.phive.test3", "mini", "1.0"),
                     new ClassPathResource ("ves/test3/mini.xsd"));
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd1.ves"));
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd2.ves"));
@@ -165,7 +166,7 @@ public final class VESLoaderTest
   public void testPseudoVersionOldest ()
   {
     final ErrorList aLoadingErrors = new ErrorList ();
-    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:oldest"),
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:oldest"),
                                                                               aLoadingErrors);
     assertNotNull (aLoaded);
     assertEquals ("com.helger.phive.test:test_sch:1", aLoaded.getHeader ().getVESID ().getAsSingleID ());
@@ -175,7 +176,7 @@ public final class VESLoaderTest
   public void testPseudoVersionLatestReleaseActive ()
   {
     final ErrorList aLoadingErrors = new ErrorList ();
-    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest-release-active"),
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:latest-release-active"),
                                                                               aLoadingErrors);
     assertNotNull (aLoaded);
     assertEquals ("com.helger.phive.test:test_sch:2", aLoaded.getHeader ().getVESID ().getAsSingleID ());
@@ -185,7 +186,7 @@ public final class VESLoaderTest
   public void testPseudoVersionLatestActive ()
   {
     final ErrorList aLoadingErrors = new ErrorList ();
-    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest-active"),
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:latest-active"),
                                                                               aLoadingErrors);
     assertNotNull (aLoaded);
     assertEquals ("com.helger.phive.test:test_sch:4-SNAPSHOT", aLoaded.getHeader ().getVESID ().getAsSingleID ());
@@ -195,7 +196,7 @@ public final class VESLoaderTest
   public void testPseudoVersionLatestRelease ()
   {
     final ErrorList aLoadingErrors = new ErrorList ();
-    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest-release"),
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:latest-release"),
                                                                               aLoadingErrors);
     assertNotNull (aLoaded);
     assertEquals ("com.helger.phive.test:test_sch:3", aLoaded.getHeader ().getVESID ().getAsSingleID ());
@@ -205,7 +206,7 @@ public final class VESLoaderTest
   public void testPseudoVersionLatest ()
   {
     final ErrorList aLoadingErrors = new ErrorList ();
-    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (VESID.parseID ("com.helger.phive.test:test_sch:latest"),
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:latest"),
                                                                               aLoadingErrors);
     assertNotNull (aLoaded);
     assertEquals ("com.helger.phive.test:test_sch:4-SNAPSHOT", aLoaded.getHeader ().getVESID ().getAsSingleID ());
@@ -214,7 +215,7 @@ public final class VESLoaderTest
   @Test
   public void test1LoadXSD1 ()
   {
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_xsd:1.0");
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_xsd:1.0");
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
@@ -228,13 +229,14 @@ public final class VESLoaderTest
 
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
-    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
+                aValidationResultList.get (0).getValidity ().isValid ());
   }
 
   @Test
   public void test1LoadSCH1 ()
   {
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:1.0");
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:1.0");
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
@@ -248,13 +250,14 @@ public final class VESLoaderTest
 
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
-    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
+                aValidationResultList.get (0).getValidity ().isValid ());
   }
 
   @Test
   public void test1LoadSCH2Valid ()
   {
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:2.0");
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:2.0");
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
@@ -268,14 +271,16 @@ public final class VESLoaderTest
 
     assertNotNull (aValidationResultList);
     assertEquals (2, aValidationResultList.size ());
-    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
-    assertTrue (aValidationResultList.get (1).getErrorList ().toString (), aValidationResultList.get (1).isSuccess ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
+                aValidationResultList.get (0).getValidity ().isValid ());
+    assertTrue (aValidationResultList.get (1).getErrorList ().toString (),
+                aValidationResultList.get (1).getValidity ().isValid ());
   }
 
   @Test
   public void test1LoadSCH3Valid ()
   {
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test:test_sch:3.0");
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:3.0");
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
@@ -289,15 +294,18 @@ public final class VESLoaderTest
 
     assertNotNull (aValidationResultList);
     assertEquals (3, aValidationResultList.size ());
-    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
-    assertTrue (aValidationResultList.get (1).getErrorList ().toString (), aValidationResultList.get (1).isSuccess ());
-    assertTrue (aValidationResultList.get (2).getErrorList ().toString (), aValidationResultList.get (2).isSuccess ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
+                aValidationResultList.get (0).getValidity ().isValid ());
+    assertTrue (aValidationResultList.get (1).getErrorList ().toString (),
+                aValidationResultList.get (1).getValidity ().isValid ());
+    assertTrue (aValidationResultList.get (2).getErrorList ().toString (),
+                aValidationResultList.get (2).getValidity ().isValid ());
   }
 
   @Test
   public void test2LoadXSD1 ()
   {
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test2:test_xsd:1");
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test2:test_xsd:1");
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test2/base-example.xml"));
     assertNotNull (aValidationSource.getNode ());
 
@@ -311,13 +319,14 @@ public final class VESLoaderTest
 
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
-    assertTrue (aValidationResultList.get (0).getErrorList ().toString (), aValidationResultList.get (0).isSuccess ());
+    assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
+                aValidationResultList.get (0).getValidity ().isValid ());
   }
 
   @Test
   public void test3RecursiveXSDEager ()
   {
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test3:xsd1:1.0");
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test3:xsd1:1.0");
 
     final ErrorList aErrorList = new ErrorList ();
     final LoadedVES aLoadedVES = new VESLoader (s_aRepoStorage).setUseEagerRequirementLoading (true)
@@ -331,7 +340,7 @@ public final class VESLoaderTest
   @Test (expected = VESLoadingException.class)
   public void test3RecursiveXSDLazy ()
   {
-    final VESID aVESID = VESID.parseID ("com.helger.phive.test3:xsd1:1.0");
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test3:xsd1:1.0");
 
     final ErrorList aErrorList = new ErrorList ();
     final LoadedVES aLoadedVES = new VESLoader (s_aRepoStorage).setUseEagerRequirementLoading (false)

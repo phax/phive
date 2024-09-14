@@ -35,7 +35,7 @@ import com.helger.commons.collection.impl.ICommonsMap;
 import com.helger.commons.datetime.XMLOffsetDate;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.lang.GenericReflection;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
@@ -59,12 +59,12 @@ public final class LoadedVES
   @Immutable
   public static final class Header
   {
-    private final VESID m_aVESID;
+    private final DVRCoordinate m_aVESID;
     private final String m_sName;
     private final XMLOffsetDate m_aReleased;
     private final EVESSyntax m_eVESSyntax;
 
-    Header (@Nonnull final VESID aVESID,
+    Header (@Nonnull final DVRCoordinate aVESID,
             @Nonnull @Nonempty final String sName,
             @Nullable final XMLOffsetDate aReleased,
             @Nonnull final EVESSyntax eVESSyntax)
@@ -79,7 +79,7 @@ public final class LoadedVES
     }
 
     @Nonnull
-    public VESID getVESID ()
+    public DVRCoordinate getVESID ()
     {
       return m_aVESID;
     }
@@ -145,12 +145,12 @@ public final class LoadedVES
   @NotThreadSafe
   public static final class RequiredVES
   {
-    private final VESID m_aRequiredVESID;
+    private final DVRCoordinate m_aRequiredVESID;
     private final MapBasedNamespaceContext m_aNSCtx;
     private final OutputType m_aOutput;
     private final boolean m_bStopOnError;
 
-    RequiredVES (@Nonnull final VESID aRequiredVESID,
+    RequiredVES (@Nonnull final DVRCoordinate aRequiredVESID,
                  @Nonnull final MapBasedNamespaceContext aNSCtx,
                  @Nonnull final OutputType aOutput,
                  final boolean bStopOnError)
@@ -165,7 +165,7 @@ public final class LoadedVES
     }
 
     @Nonnull
-    public VESID getRequiredVESID ()
+    public DVRCoordinate getRequiredVESID ()
     {
       return m_aRequiredVESID;
     }

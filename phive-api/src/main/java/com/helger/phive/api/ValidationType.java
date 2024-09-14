@@ -25,7 +25,7 @@ import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
 
 /**
- * The custom implementation of {@link IValidationType}
+ * The default implementation of custom {@link IValidationType}.
  *
  * @author Philip Helger
  * @since 7.1.0

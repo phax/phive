@@ -51,13 +51,14 @@ import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.json.IJson;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.IJsonValue;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.phive.api.EExtendedValidity;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -116,6 +117,7 @@ public final class PhiveJsonHelper
   public static final String JSON_STATUS_REPLACEMENT_VESID = "replacementVesid";
 
   public static final String JSON_SUCCESS = "success";
+  public static final String JSON_VALIDITY = "validity";
   public static final String JSON_ARTIFACT_TYPE = "artifactType";
   public static final String JSON_ARTIFACT_PATH_TYPE = "artifactPathType";
   public static final String JSON_ARTIFACT_PATH = "artifactPath";
@@ -674,7 +676,7 @@ public final class PhiveJsonHelper
       final String sVESID = aObj.getAsString (JSON_VESID);
       if (StringHelper.hasText (sVESID))
       {
-        final VESID aVESID = VESID.parseIDOrNull (sVESID);
+        final DVRCoordinate aVESID = DVRCoordinate.parseOrNull (sVESID);
         if (aVESID != null)
           return aRegistry.getOfID (aVESID);
       }
@@ -731,6 +733,7 @@ public final class PhiveJsonHelper
                                                                 @Nonnull final Function <String, IValidationType> aValidationTypeResolver)
   {
     ValueEnforcer.notNull (aValidationTypeResolver, "ValidationTypeResolver");
+
     if (aJson == null)
       return null;
 
@@ -744,13 +747,43 @@ public final class PhiveJsonHelper
       final IJsonObject aResultObj = aResult.getAsObject ();
       if (aResultObj != null)
       {
-        final String sSuccess = aResultObj.getAsString (JSON_SUCCESS);
-        final ETriState eSuccess = getAsTriState (sSuccess);
-        if (eSuccess == null)
+        final String sValidity = aResultObj.getAsString (JSON_VALIDITY);
+        EExtendedValidity eValidity;
+        if (sValidity != null)
         {
-          if (LOGGER.isDebugEnabled ())
-            LOGGER.debug ("Failed to resolve TriState '" + sSuccess + "'");
-          continue;
+          eValidity = EExtendedValidity.getFromIDOrNull (sValidity);
+          if (eValidity == null)
+          {
+            if (LOGGER.isDebugEnabled ())
+              LOGGER.debug ("Failed to resolve Validity '" + sValidity + "'");
+            continue;
+          }
+        }
+        else
+        {
+          // Fall back to previous status
+          final String sSuccess = aResultObj.getAsString (JSON_SUCCESS);
+          final ETriState eSuccess = getAsTriState (sSuccess);
+          if (eSuccess == null)
+          {
+            if (LOGGER.isDebugEnabled ())
+              LOGGER.debug ("Failed to resolve TriState '" + sSuccess + "'");
+            continue;
+          }
+          switch (eSuccess)
+          {
+            case TRUE:
+              eValidity = EExtendedValidity.VALID;
+              break;
+            case FALSE:
+              eValidity = EExtendedValidity.INVALID;
+              break;
+            case UNDEFINED:
+              eValidity = EExtendedValidity.IGNORED;
+              break;
+            default:
+              throw new IllegalStateException ("Oops");
+          }
         }
 
         final String sValidationType = aResultObj.getAsString (JSON_ARTIFACT_TYPE);
@@ -776,7 +809,7 @@ public final class PhiveJsonHelper
         }
         final ValidationArtefact aVA = new ValidationArtefact (aValidationType, aRes);
 
-        if (eSuccess.isUndefined ())
+        if (eValidity.isIgnored ())
         {
           // Ignored level
           ret.add (ValidationResult.createIgnoredResult (aVA));
@@ -796,7 +829,7 @@ public final class PhiveJsonHelper
             }
           }
 
-          final ValidationResult aVR = new ValidationResult (aVA, aErrorList);
+          final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity);
           ret.add (aVR);
         }
       }

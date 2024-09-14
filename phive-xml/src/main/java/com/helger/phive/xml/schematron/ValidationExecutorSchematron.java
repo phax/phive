@@ -54,6 +54,7 @@ import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
@@ -97,10 +98,11 @@ public class ValidationExecutorSchematron extends
   private ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
+                                       @Nonnull final IValidityDeterminator aValidityDeterminator,
                                        @Nullable final String sPrerequisiteXPath,
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    super (aValidationArtefact);
+    super (aValidationArtefact, aValidityDeterminator);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isSchematron (),
                           "Artifact is not a Schematron");
     m_sPrerequisiteXPath = sPrerequisiteXPath;
@@ -307,11 +309,10 @@ public class ValidationExecutorSchematron extends
                                  m_sPrerequisiteXPath +
                                  "' - ignoring validation artefact.";
         LOGGER.error (sErrorMsg, ex);
-        return new ValidationResult (aArtefact,
-                                     new ErrorList (SingleError.builderError ()
-                                                               .errorText (sErrorMsg)
-                                                               .linkedException (ex)
-                                                               .build ()));
+        return createValidationResult (new ErrorList (SingleError.builderError ()
+                                                                 .errorText (sErrorMsg)
+                                                                 .linkedException (ex)
+                                                                 .build ()));
       }
     }
     // No prerequisite or prerequisite matched
@@ -450,7 +451,7 @@ public class ValidationExecutorSchematron extends
         }
       }
     }
-    return new ValidationResult (aArtefact, aErrorList);
+    return createValidationResult (aErrorList);
   }
 
   @Override
@@ -503,10 +504,12 @@ public class ValidationExecutorSchematron extends
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorSchematron createPure (@Nonnull final IReadableResource aRes,
+  public static ValidationExecutorSchematron createPure (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                         @Nonnull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, aRes),
+                                             aValidityDeterminator,
                                              null,
                                              aNamespaceContext);
   }
@@ -527,10 +530,12 @@ public class ValidationExecutorSchematron extends
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorSchematron createSCH (@Nonnull final IReadableResource aRes,
+  public static ValidationExecutorSchematron createSCH (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                        @Nonnull final IReadableResource aRes,
                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, aRes),
+                                             aValidityDeterminator,
                                              null,
                                              aNamespaceContext);
   }
@@ -549,10 +554,12 @@ public class ValidationExecutorSchematron extends
    * @since 7.1.2
    */
   @Nonnull
-  public static ValidationExecutorSchematron createSchXslt (@Nonnull final IReadableResource aRes,
+  public static ValidationExecutorSchematron createSchXslt (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                            @Nonnull final IReadableResource aRes,
                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT, aRes),
+                                             aValidityDeterminator,
                                              null,
                                              aNamespaceContext);
   }
@@ -571,10 +578,11 @@ public class ValidationExecutorSchematron extends
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorSchematron createXSLT (@Nonnull final IReadableResource aRes,
+  public static ValidationExecutorSchematron createXSLT (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                         @Nonnull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return createXSLT (aRes, null, aNamespaceContext);
+    return createXSLT (aValidityDeterminator, aRes, null, aNamespaceContext);
   }
 
   /**
@@ -595,11 +603,13 @@ public class ValidationExecutorSchematron extends
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorSchematron createXSLT (@Nonnull final IReadableResource aRes,
+  public static ValidationExecutorSchematron createXSLT (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                         @Nonnull final IReadableResource aRes,
                                                          @Nullable final String sPrerequisiteXPath,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, aRes),
+                                             aValidityDeterminator,
                                              sPrerequisiteXPath,
                                              aNamespaceContext);
   }
@@ -618,10 +628,12 @@ public class ValidationExecutorSchematron extends
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorSchematron createOIOUBL (@Nonnull final IReadableResource aRes,
+  public static ValidationExecutorSchematron createOIOUBL (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                           @Nonnull final IReadableResource aRes,
                                                            @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL, aRes),
+                                             aValidityDeterminator,
                                              null,
                                              aNamespaceContext);
   }

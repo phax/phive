@@ -30,10 +30,10 @@ import com.helger.commons.collection.iterate.ReverseListIterator;
 import com.helger.commons.compare.ESortOrder;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.string.StringHelper;
-import com.helger.diver.api.version.IVESPseudoVersion;
-import com.helger.diver.api.version.VESID;
-import com.helger.diver.api.version.VESPseudoVersionRegistry;
-import com.helger.diver.api.version.VESVersion;
+import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.diver.api.version.DVRPseudoVersionRegistry;
+import com.helger.diver.api.version.DVRVersion;
+import com.helger.diver.api.version.IDVRPseudoVersion;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
@@ -52,7 +52,7 @@ import com.helger.phive.ves.v10.VesStatusType;
  *
  * @author Philip Helger
  */
-public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <VESID>
+public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResolver <DVRCoordinate>
 {
   private final IRepoStorageWithToc m_aRepo;
 
@@ -63,26 +63,27 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
   }
 
   @Nullable
-  private VESID _resolveByVersion (@Nullable final String sGroupID,
-                                   @Nullable final String sArtifactID,
-                                   @Nullable final Set <String> aVersionsToIgnore,
-                                   final boolean bIncludeSnapshots,
-                                   @Nonnull final ESortOrder eSortOrder,
-                                   @Nullable final Predicate <VESID> aResultDecider)
+  private DVRCoordinate _findFirstMatchingByVersion (@Nullable final String sGroupID,
+                                                     @Nullable final String sArtifactID,
+                                                     @Nullable final Set <String> aVersionsToIgnore,
+                                                     final boolean bIncludeSnapshots,
+                                                     @Nonnull final ESortOrder eSortOrder,
+                                                     @Nullable final Predicate <DVRCoordinate> aResultDecider)
   {
     if (StringHelper.hasText (sGroupID) && StringHelper.hasText (sArtifactID))
     {
+      // Get all versions of group and artifact
       final RepoToc aToc = m_aRepo.readTocModel (sGroupID, sArtifactID);
       if (aToc != null)
       {
         // Build version acceptor
-        final Predicate <VESVersion> aVersionAcceptor = IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
-                                                                                                   bIncludeSnapshots);
+        final Predicate <DVRVersion> aVersionAcceptor = DVRVersion.getStaticVersionAcceptor (aVersionsToIgnore,
+                                                                                             bIncludeSnapshots);
 
         // Get iterator through all versions, so that the first match can be
         // used
-        final ICommonsList <VESVersion> aVersions = aToc.getAllVersionsAsList ();
-        final Iterator <VESVersion> it;
+        final ICommonsList <DVRVersion> aVersions = aToc.getAllVersionsAsList ();
+        final Iterator <DVRVersion> it;
         if (eSortOrder.isAscending ())
           it = aVersions.iterator ();
         else
@@ -91,10 +92,11 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
         // Iterate version list
         while (it.hasNext ())
         {
-          final VESVersion aCurVersion = it.next ();
+          final DVRVersion aCurVersion = it.next ();
           if (aVersionAcceptor.test (aCurVersion))
           {
-            final VESID ret = new VESID (sGroupID, sArtifactID, aCurVersion.getAsString ());
+            // Matches the version requirement
+            final DVRCoordinate ret = new DVRCoordinate (sGroupID, sArtifactID, aCurVersion);
             if (aResultDecider == null || aResultDecider.test (ret))
               return ret;
           }
@@ -106,35 +108,39 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
   }
 
   @Nullable
-  public VESID getOldestVersion (@Nullable final String sGroupID,
-                                 @Nullable final String sArtifactID,
-                                 @Nullable final Set <String> aVersionsToIgnore)
+  public DVRCoordinate getOldestVersion (@Nullable final String sGroupID,
+                                         @Nullable final String sArtifactID,
+                                         @Nullable final Set <String> aVersionsToIgnore)
   {
-    return _resolveByVersion (sGroupID, sArtifactID, aVersionsToIgnore, true, ESortOrder.ASCENDING, null);
+    // Oldest version on top
+    return _findFirstMatchingByVersion (sGroupID, sArtifactID, aVersionsToIgnore, true, ESortOrder.ASCENDING, null);
   }
 
   @Nullable
-  public VESID getOldestReleaseVersion (@Nullable final String sGroupID,
-                                        @Nullable final String sArtifactID,
-                                        @Nullable final Set <String> aVersionsToIgnore)
+  public DVRCoordinate getOldestReleaseVersion (@Nullable final String sGroupID,
+                                                @Nullable final String sArtifactID,
+                                                @Nullable final Set <String> aVersionsToIgnore)
   {
-    return _resolveByVersion (sGroupID, sArtifactID, aVersionsToIgnore, false, ESortOrder.ASCENDING, null);
+    // Oldest version on top
+    return _findFirstMatchingByVersion (sGroupID, sArtifactID, aVersionsToIgnore, false, ESortOrder.ASCENDING, null);
   }
 
   @Nullable
-  public VESID getLatestVersion (@Nullable final String sGroupID,
-                                 @Nullable final String sArtifactID,
-                                 @Nullable final Set <String> aVersionsToIgnore)
+  public DVRCoordinate getLatestVersion (@Nullable final String sGroupID,
+                                         @Nullable final String sArtifactID,
+                                         @Nullable final Set <String> aVersionsToIgnore)
   {
-    return _resolveByVersion (sGroupID, sArtifactID, aVersionsToIgnore, true, ESortOrder.DESCENDING, null);
+    // Newest version on top
+    return _findFirstMatchingByVersion (sGroupID, sArtifactID, aVersionsToIgnore, true, ESortOrder.DESCENDING, null);
   }
 
   @Nullable
-  public VESID getLatestReleaseVersion (@Nullable final String sGroupID,
-                                        @Nullable final String sArtifactID,
-                                        @Nullable final Set <String> aVersionsToIgnore)
+  public DVRCoordinate getLatestReleaseVersion (@Nullable final String sGroupID,
+                                                @Nullable final String sArtifactID,
+                                                @Nullable final Set <String> aVersionsToIgnore)
   {
-    return _resolveByVersion (sGroupID, sArtifactID, aVersionsToIgnore, false, ESortOrder.DESCENDING, null);
+    // Newest version on top
+    return _findFirstMatchingByVersion (sGroupID, sArtifactID, aVersionsToIgnore, false, ESortOrder.DESCENDING, null);
   }
 
   /**
@@ -142,7 +148,7 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
    *
    * @author Philip Helger
    */
-  private final class VESIDSelectorByStatusValidity implements Predicate <VESID>
+  private final class VESIDSelectorByStatusValidity implements Predicate <DVRCoordinate>
   {
     private final OffsetDateTime m_aRealCheckDateTime;
 
@@ -152,7 +158,7 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
       m_aRealCheckDateTime = aCheckDateTime != null ? aCheckDateTime : PDTFactory.getCurrentOffsetDateTime ();
     }
 
-    public boolean test (@Nonnull final VESID aVESID)
+    public boolean test (@Nonnull final DVRCoordinate aVESID)
     {
       // Check if there is a "status" object available in the repo
       final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, VESLoader.FILE_EXT_STATUS);
@@ -175,31 +181,33 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
   }
 
   @Nullable
-  public VESID getLatestActiveVersion (@Nullable final String sGroupID,
-                                       @Nullable final String sArtifactID,
-                                       @Nullable final Set <String> aVersionsToIgnore,
-                                       @Nullable final OffsetDateTime aCheckDateTime)
+  public DVRCoordinate getLatestActiveVersion (@Nullable final String sGroupID,
+                                               @Nullable final String sArtifactID,
+                                               @Nullable final Set <String> aVersionsToIgnore,
+                                               @Nullable final OffsetDateTime aCheckDateTime)
   {
-    return _resolveByVersion (sGroupID,
-                              sArtifactID,
-                              aVersionsToIgnore,
-                              true,
-                              ESortOrder.DESCENDING,
-                              new VESIDSelectorByStatusValidity (aCheckDateTime));
+    // Newest version on top
+    return _findFirstMatchingByVersion (sGroupID,
+                                        sArtifactID,
+                                        aVersionsToIgnore,
+                                        true,
+                                        ESortOrder.DESCENDING,
+                                        new VESIDSelectorByStatusValidity (aCheckDateTime));
   }
 
   @Nullable
-  public VESID getLatestReleaseActiveVersion (@Nullable final String sGroupID,
-                                              @Nullable final String sArtifactID,
-                                              @Nullable final Set <String> aVersionsToIgnore,
-                                              @Nullable final OffsetDateTime aCheckDateTime)
+  public DVRCoordinate getLatestReleaseActiveVersion (@Nullable final String sGroupID,
+                                                      @Nullable final String sArtifactID,
+                                                      @Nullable final Set <String> aVersionsToIgnore,
+                                                      @Nullable final OffsetDateTime aCheckDateTime)
   {
-    return _resolveByVersion (sGroupID,
-                              sArtifactID,
-                              aVersionsToIgnore,
-                              false,
-                              ESortOrder.DESCENDING,
-                              new VESIDSelectorByStatusValidity (aCheckDateTime));
+    // Newest version on top
+    return _findFirstMatchingByVersion (sGroupID,
+                                        sArtifactID,
+                                        aVersionsToIgnore,
+                                        false,
+                                        ESortOrder.DESCENDING,
+                                        new VESIDSelectorByStatusValidity (aCheckDateTime));
   }
 
   /**
@@ -220,25 +228,25 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
    * @since 9.2.1
    */
   @Nullable
-  public static VESID resolvePseudoVersion (@Nonnull final IRepoStorageWithToc aRepo,
-                                            @Nonnull final VESID aVESID,
-                                            @Nullable final Set <String> aVersionsToIgnore,
-                                            @Nullable final OffsetDateTime aCheckDateTime)
+  public static DVRCoordinate resolvePseudoVersion (@Nonnull final IRepoStorageWithToc aRepo,
+                                                    @Nonnull final DVRCoordinate aVESID,
+                                                    @Nullable final Set <String> aVersionsToIgnore,
+                                                    @Nullable final OffsetDateTime aCheckDateTime)
   {
     ValueEnforcer.notNull (aRepo, "Repo");
     ValueEnforcer.notNull (aVESID, "VESID");
     ValueEnforcer.isTrue ( () -> aVESID.getVersionObj ().isPseudoVersion (), "VESID Version must be a pseudo version");
 
-    final IVESPseudoVersion aPseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
+    final IDVRPseudoVersion aPseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
     final VESLoaderPseudoVersionResolver aResolver = new VESLoaderPseudoVersionResolver (aRepo);
 
-    if (aPseudoVersion.equals (VESPseudoVersionRegistry.OLDEST))
+    if (aPseudoVersion.equals (DVRPseudoVersionRegistry.OLDEST))
       return aResolver.getOldestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), aVersionsToIgnore);
 
-    if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
+    if (aPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST_RELEASE))
       return aResolver.getLatestReleaseVersion (aVESID.getGroupID (), aVESID.getArtifactID (), aVersionsToIgnore);
 
-    if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST))
+    if (aPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST))
       return aResolver.getLatestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), aVersionsToIgnore);
 
     if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_ACTIVE))

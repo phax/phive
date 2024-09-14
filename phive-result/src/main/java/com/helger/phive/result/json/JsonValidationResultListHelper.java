@@ -36,6 +36,7 @@ import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.phive.api.EExtendedValidity;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 
@@ -159,19 +160,34 @@ public class JsonValidationResultListHelper
     int nErrors = 0;
     boolean bValidationInterrupted = false;
     IErrorLevel aMostSevere = EErrorLevel.LOWEST;
+    EExtendedValidity eWorstValidity = EExtendedValidity.VALID;
+
     final IJsonArray aResultArray = new JsonArray ();
     for (final ValidationResult aVR : aValidationResultList)
     {
       final IJsonObject aVRT = new JsonObject ();
-      if (aVR.isIgnored ())
+      // Success is only contained for backwards compatibility reasons. Validity
+      // now does the trick
+      switch (aVR.getValidity ())
       {
-        bValidationInterrupted = true;
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (ETriState.UNDEFINED));
+        case IGNORED:
+          bValidationInterrupted = true;
+          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (ETriState.UNDEFINED));
+          break;
+        case VALID:
+          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (true));
+          break;
+        case INVALID:
+          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (false));
+          eWorstValidity = EExtendedValidity.INVALID;
+          break;
+        case UNCLEAR:
+          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (ETriState.UNDEFINED));
+          if (eWorstValidity.isValid ())
+            eWorstValidity = EExtendedValidity.UNCLEAR;
+          break;
       }
-      else
-      {
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (aVR.isSuccess ()));
-      }
+      aVRT.add (PhiveJsonHelper.JSON_VALIDITY, aVR.getValidity ().getID ());
       aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationArtefactType ().getID ());
       if (m_aArtifactPathTypeToJson != null)
         aVRT.addIfNotNull (PhiveJsonHelper.JSON_ARTIFACT_PATH_TYPE,
@@ -197,7 +213,9 @@ public class JsonValidationResultListHelper
       aResultArray.add (aVRT);
     }
     // Success if the worst that happened is a warning
-    aResponse.add (PhiveJsonHelper.JSON_SUCCESS, aMostSevere.isLE (EErrorLevel.WARN));
+    // This is an assumption atm
+    aResponse.add (PhiveJsonHelper.JSON_SUCCESS, eWorstValidity.isValid ());
+    aResponse.add (PhiveJsonHelper.JSON_VALIDITY, eWorstValidity.getID ());
     aResponse.add (PhiveJsonHelper.JSON_INTERRUPTED, bValidationInterrupted);
     if (m_aErrorLevelToJson != null)
       aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL, m_aErrorLevelToJson.apply (aMostSevere));

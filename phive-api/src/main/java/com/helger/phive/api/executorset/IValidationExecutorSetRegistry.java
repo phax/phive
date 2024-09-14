@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EChange;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.diver.IPseudoVersionResolver;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -90,13 +90,13 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * any way and can theoretically be re-registered afterwards.
    *
    * @param aVESID
-   *        The VES ID of the object to unregister. May be <code>null</code>.
+   *        The VESID of the object to unregister. May be <code>null</code>.
    * @return {@link EChange#CHANGED} if the removal was successful,
    *         {@link EChange#UNCHANGED} otherwise.
    * @since 6.0.1
    */
   @Nonnull
-  EChange unregisterValidationExecutorSet (@Nullable VESID aVESID);
+  EChange unregisterValidationExecutorSet (@Nullable DVRCoordinate aVESID);
 
   /**
    * @return A list of all contained validation executor sets in this registry.
@@ -133,19 +133,19 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * Find the validation executor set with the specified ID. This method
    * supports pseudo version.
    *
-   * @param aID
-   *        The ID to search. May be <code>null</code>.
+   * @param aVESID
+   *        The VESID to search. May be <code>null</code>.
    * @return <code>null</code> if no such validation executor set is registered.
    */
   @Nullable
-  IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable VESID aID);
+  IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable DVRCoordinate aVESID);
 
   /**
    * Find the validation executor set with the specified ID for the provided
    * point in time. This method supports pseudo version.
    *
-   * @param aID
-   *        The ID to search. May be <code>null</code>.
+   * @param aVESID
+   *        The VESID to search. May be <code>null</code>.
    * @param aCheckDateTime
    *        The date and time for which the version should be resolved. If
    *        <code>null</code> if provided, the current point in time is used.
@@ -153,5 +153,5 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * @since 9.2.1
    */
   @Nullable
-  IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable VESID aID, @Nullable OffsetDateTime aCheckDateTime);
+  IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable DVRCoordinate aVESID, @Nullable OffsetDateTime aCheckDateTime);
 }

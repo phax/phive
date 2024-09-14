@@ -21,11 +21,15 @@ import java.time.OffsetDateTime;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.XMLOffsetDateTime;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.diver.api.version.DVRVersionException;
 import com.helger.phive.api.executorset.status.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
@@ -39,6 +43,8 @@ import com.helger.phive.ves.v10.VesStatusType;
  */
 public final class VESStatus1Helper
 {
+  private static final Logger LOGGER = LoggerFactory.getLogger (VESStatus1Helper.class);
+
   private VESStatus1Helper ()
   {}
 
@@ -71,15 +77,20 @@ public final class VESStatus1Helper
           eType = EValidationExecutorStatusType.VALID;
 
     // Is a replacement ID present?
-    final VESID aReplacementVESID;
+    DVRCoordinate aReplacementVESID = null;
     if (aVESStatus.getReplacement () != null)
     {
-      aReplacementVESID = new VESID (aVESStatus.getReplacement ().getGroupId (),
-                                     aVESStatus.getReplacement ().getArtifactId (),
-                                     aVESStatus.getReplacement ().getVersion ());
+      try
+      {
+        aReplacementVESID = DVRCoordinate.create (aVESStatus.getReplacement ().getGroupId (),
+                                                  aVESStatus.getReplacement ().getArtifactId (),
+                                                  aVESStatus.getReplacement ().getVersion ());
+      }
+      catch (final DVRVersionException ex)
+      {
+        LOGGER.error ("DVR version error", ex);
+      }
     }
-    else
-      aReplacementVESID = null;
 
     // Read history items
     final ICommonsList <ValidationExecutorSetStatusHistoryItem> aHistoryItems = new CommonsArrayList <> ();

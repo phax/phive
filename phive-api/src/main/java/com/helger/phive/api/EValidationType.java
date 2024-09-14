@@ -23,14 +23,17 @@ import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.lang.EnumHelper;
 
 /**
- * Enum with the validation artefact type. Depending on this type, different
+ * Enum with all predefined validation types. Depending on this type, different
  * implementation logic must be used!
  *
  * @author Philip Helger
  */
 public enum EValidationType implements IValidationType
 {
-  /** Validate XML syntax by parsing without assigned XSDs */
+  /**
+   * Validate XML syntax by parsing without assigned XSDs. This is the
+   * wellformedness check.
+   */
   XML ("xml", "XML Syntax"),
   /** Validate XML against the rules of an XML Schema (XSD) */
   XSD ("xsd", "XML Schema"),
@@ -61,12 +64,12 @@ public enum EValidationType implements IValidationType
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
    * plugin)
    */
-  SCHEMATRON_XSLT ("schematron-xslt", "Schematron (XSLT)"),
+  SCHEMATRON_XSLT ("schematron-xslt", "Schematron (ISO XSLT2)"),
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
    * plugin) with different output (for OIOUBL only)
    */
-  SCHEMATRON_OIOUBL ("schematron-xslt-oioubl", "Schematron (XSLT) [OIOUBL]");
+  SCHEMATRON_OIOUBL ("schematron-xslt-oioubl", "Schematron (OIOUBL XSLT)");
 
   private final String m_sID;
   private final String m_sName;

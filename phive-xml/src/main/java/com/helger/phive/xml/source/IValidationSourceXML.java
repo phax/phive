@@ -34,7 +34,8 @@ import com.helger.xml.transform.TransformSourceFactory;
 public interface IValidationSourceXML extends IValidationSource
 {
   /**
-   * @return The source node to be validated. May be <code>null</code>.
+   * @return The source node to be validated. This may either be the whole DOM
+   *         Document or a single DOM Element. May be <code>null</code>.
    */
   @Nullable
   Node getNode ();
@@ -52,7 +53,7 @@ public interface IValidationSourceXML extends IValidationSource
     if (aNode == null)
       throw new IllegalStateException ("No input Node is present!");
 
-    Source ret = null;
+    final Source ret;
     if (isPartialSource ())
       ret = TransformSourceFactory.create (aNode);
     else

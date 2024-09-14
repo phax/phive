@@ -33,7 +33,7 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.equals.EqualsHelper;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 
 /**
  * Defines the status of a VES.
@@ -50,7 +50,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   private final OffsetDateTime m_aValidFrom;
   private final OffsetDateTime m_aValidTo;
   private final String m_sDeprecationReason;
-  private final VESID m_aReplacementVESID;
+  private final DVRCoordinate m_aReplacementVESID;
   private final ICommonsList <ValidationExecutorSetStatusHistoryItem> m_aHistoryItems;
 
   public ValidationExecutorSetStatus (@Nonnull final OffsetDateTime aStatusLastModDT,
@@ -58,7 +58,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
                                       @Nullable final OffsetDateTime aValidFrom,
                                       @Nullable final OffsetDateTime aValidTo,
                                       @Nullable final String sDeprecationReason,
-                                      @Nullable final VESID aReplacementVESID,
+                                      @Nullable final DVRCoordinate aReplacementVESID,
                                       @Nullable final ICommonsList <ValidationExecutorSetStatusHistoryItem> aHistoryItems)
   {
     ValueEnforcer.notNull (aStatusLastModDT, "StatusLastModDT");
@@ -104,7 +104,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   }
 
   @Nullable
-  public VESID getReplacementVESID ()
+  public DVRCoordinate getReplacementVESID ()
   {
     return m_aReplacementVESID;
   }
@@ -197,7 +197,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
                                             (OffsetDateTime) null,
                                             (OffsetDateTime) null,
                                             (String) null,
-                                            (VESID) null,
+                                            (DVRCoordinate) null,
                                             (ICommonsList <ValidationExecutorSetStatusHistoryItem>) null);
   }
 }

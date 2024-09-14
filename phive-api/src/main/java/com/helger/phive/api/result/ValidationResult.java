@@ -20,11 +20,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.state.ISuccessIndicator;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.phive.api.EExtendedValidity;
 import com.helger.phive.api.artefact.IValidationArtefact;
 
 /**
@@ -34,27 +34,11 @@ import com.helger.phive.api.artefact.IValidationArtefact;
  * @author Philip Helger
  */
 @Immutable
-public class ValidationResult implements ISuccessIndicator
+public class ValidationResult
 {
   private final IValidationArtefact m_aValidationArtefact;
   private final IErrorList m_aErrorList;
-  private final ETriState m_eSuccess;
-
-  /**
-   * Public constructor
-   *
-   * @param aValidationArtefact
-   *        The validation artefact that was applied. May not be
-   *        <code>null</code>.
-   * @param aErrorList
-   *        The list of errors applying the validation artefact. May not be
-   *        <code>null</code>. If this list contains any entry with a level of
-   *        error, it is considered a failure.
-   */
-  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IErrorList aErrorList)
-  {
-    this (aValidationArtefact, aErrorList, ETriState.valueOf (aErrorList.containsNoError ()));
-  }
+  private final EExtendedValidity m_eValidity;
 
   /**
    * Constructor
@@ -65,16 +49,16 @@ public class ValidationResult implements ISuccessIndicator
    * @param aErrorList
    *        The list of errors applying the validation artefact. May not be
    *        <code>null</code>.
-   * @param eSuccess
-   *        The overall success state. Must not be <code>null</code>.
+   * @param eValidity
+   *        The overall validity. Must not be <code>null</code>.
    */
-  protected ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                              @Nonnull final IErrorList aErrorList,
-                              @Nonnull final ETriState eSuccess)
+  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                           @Nonnull final IErrorList aErrorList,
+                           @Nonnull final EExtendedValidity eValidity)
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     m_aErrorList = ValueEnforcer.notNull (aErrorList, "ErrorList");
-    m_eSuccess = ValueEnforcer.notNull (eSuccess, "Success");
+    m_eValidity = ValueEnforcer.notNull (eValidity, "Success");
   }
 
   /**
@@ -82,7 +66,7 @@ public class ValidationResult implements ISuccessIndicator
    *         <code>null</code>.
    */
   @Nonnull
-  public IValidationArtefact getValidationArtefact ()
+  public final IValidationArtefact getValidationArtefact ()
   {
     return m_aValidationArtefact;
   }
@@ -92,25 +76,16 @@ public class ValidationResult implements ISuccessIndicator
    *         Never <code>null</code> but maybe empty.
    */
   @Nonnull
-  public IErrorList getErrorList ()
+  @ReturnsMutableObject
+  public final IErrorList getErrorList ()
   {
     return m_aErrorList;
   }
 
-  public boolean isSuccess ()
+  @Nonnull
+  public final EExtendedValidity getValidity ()
   {
-    return m_eSuccess.isTrue ();
-  }
-
-  /**
-   * @return <code>true</code> if there are no results on this layer, because
-   *         the underlying validation artefact was not applicable. If this
-   *         method returns <code>true</code> {@link #isSuccess()} and
-   *         {@link #isFailure()} will both return <code>false</code>!
-   */
-  public boolean isIgnored ()
-  {
-    return m_eSuccess.isUndefined ();
+    return m_eValidity;
   }
 
   @Override
@@ -118,7 +93,7 @@ public class ValidationResult implements ISuccessIndicator
   {
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
                                        .append ("ErrorList", m_aErrorList)
-                                       .append ("Success", m_eSuccess)
+                                       .append ("Validity", m_eValidity)
                                        .getToString ();
   }
 
@@ -132,6 +107,6 @@ public class ValidationResult implements ISuccessIndicator
   @Nonnull
   public static ValidationResult createIgnoredResult (@Nonnull final IValidationArtefact aValidationArtefact)
   {
-    return new ValidationResult (aValidationArtefact, new ErrorList (), ETriState.UNDEFINED);
+    return new ValidationResult (aValidationArtefact, new ErrorList (), EExtendedValidity.IGNORED);
   }
 }

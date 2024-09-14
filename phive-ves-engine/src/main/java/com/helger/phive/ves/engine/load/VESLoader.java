@@ -44,7 +44,8 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.state.ESuccess;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.diver.api.version.DVRVersionException;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
@@ -240,19 +241,19 @@ public final class VESLoader
   {
     private final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
     @GuardedBy ("m_aRWLock")
-    private final ICommonsSet <VESID> m_aLoaded = new CommonsLinkedHashSet <> ();
+    private final ICommonsSet <DVRCoordinate> m_aLoaded = new CommonsLinkedHashSet <> ();
 
     @Nonnull
-    public ESuccess addVESID (@Nonnull final VESID aVESID)
+    public ESuccess addVESID (@Nonnull final DVRCoordinate aVESID)
     {
       return ESuccess.valueOf (m_aRWLock.writeLockedBoolean ( () -> m_aLoaded.add (aVESID)));
     }
 
     @Nonnull
     @Nonempty
-    public String getDepedencyChain (@Nullable final VESID aLastOne)
+    public String getDepedencyChain (@Nullable final DVRCoordinate aLastOne)
     {
-      final ICommonsList <VESID> aList = m_aLoaded.getCopyAsList ();
+      final ICommonsList <DVRCoordinate> aList = m_aLoaded.getCopyAsList ();
       if (aLastOne != null)
         aList.add (aLastOne);
       return StringHelper.imploder ().source (aList, x -> "'" + x.getAsSingleID () + "'").separator (" -> ").build ();
@@ -330,6 +331,21 @@ public final class VESLoader
     return _convertToLoadedVES (aStatus, null, aSrcVes, aLoaderStatus, aLoadingErrors);
   }
 
+  @Nonnull
+  private static DVRCoordinate _createVESIDUnchecked (@Nonnull @Nonempty final String sGroupID,
+                                                      @Nonnull @Nonempty final String sArtifactID,
+                                                      @Nonnull @Nonempty final String sVersion)
+  {
+    try
+    {
+      return DVRCoordinate.create (sGroupID, sArtifactID, sVersion);
+    }
+    catch (final DVRVersionException ex)
+    {
+      throw new IllegalStateException (ex);
+    }
+  }
+
   @Nullable
   private LoadedVES _convertToLoadedVES (@Nonnull final IValidationExecutorSetStatus aStatus,
                                          @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
@@ -347,9 +363,9 @@ public final class VESLoader
                                                                                                                  : EVESSyntax.EDIFACT;
 
     // Extract data
-    final LoadedVES.Header aHeader = new LoadedVES.Header (new VESID (aSrcVes.getGroupId (),
-                                                                      aSrcVes.getArtifactId (),
-                                                                      aSrcVes.getVersion ()),
+    final LoadedVES.Header aHeader = new LoadedVES.Header (_createVESIDUnchecked (aSrcVes.getGroupId (),
+                                                                                  aSrcVes.getArtifactId (),
+                                                                                  aSrcVes.getVersion ()),
                                                            aSrcVes.getName (),
                                                            aSrcVes.getReleased (),
                                                            eSyntax);
@@ -357,9 +373,9 @@ public final class VESLoader
     if (aSrcVes.getRequires () != null)
     {
       final VesRequiresType aSrcReq = aSrcVes.getRequires ();
-      final LoadedVES.RequiredVES aSrcRequiredVES = new LoadedVES.RequiredVES (new VESID (aSrcReq.getGroupId (),
-                                                                                          aSrcReq.getArtifactId (),
-                                                                                          aSrcReq.getVersion ()),
+      final LoadedVES.RequiredVES aSrcRequiredVES = new LoadedVES.RequiredVES (_createVESIDUnchecked (aSrcReq.getGroupId (),
+                                                                                                      aSrcReq.getArtifactId (),
+                                                                                                      aSrcReq.getVersion ()),
                                                                                _wrap (aSrcReq.getNamespaces ()),
                                                                                _wrap (aSrcReq.getOutput ()),
                                                                                aSrcReq.isStopOnError ());
@@ -520,7 +536,7 @@ public final class VESLoader
     }
 
     // Build VESID
-    final VESID aVESID = new VESID (aVES.getGroupId (), aVES.getArtifactId (), aVES.getVersion ());
+    final DVRCoordinate aVESID = _createVESIDUnchecked (aVES.getGroupId (), aVES.getArtifactId (), aVES.getVersion ());
 
     LOGGER.info ("Trying to read VESID '" + aVESID.getAsSingleID () + "' directly");
 
@@ -555,9 +571,9 @@ public final class VESLoader
    * @since 9.2.1
    */
   @Nullable
-  public VESID resolvePseudoVersion (@Nonnull final VESID aVESID,
-                                     @Nullable final Set <String> aVersionsToIgnore,
-                                     @Nullable final OffsetDateTime aCheckDateTime)
+  public DVRCoordinate resolvePseudoVersion (@Nonnull final DVRCoordinate aVESID,
+                                             @Nullable final Set <String> aVersionsToIgnore,
+                                             @Nullable final OffsetDateTime aCheckDateTime)
   {
     return VESLoaderPseudoVersionResolver.resolvePseudoVersion (m_aRepo, aVESID, aVersionsToIgnore, aCheckDateTime);
   }
@@ -573,7 +589,7 @@ public final class VESLoader
    * @return <code>null</code> if loading failed
    */
   @Nullable
-  public LoadedVES loadVESFromRepo (@Nonnull final VESID aVESID, @Nonnull final ErrorList aLoadingErrors)
+  public LoadedVES loadVESFromRepo (@Nonnull final DVRCoordinate aVESID, @Nonnull final ErrorList aLoadingErrors)
   {
     return _loadVESFromRepo (aVESID, null, new VESLoaderStatus (), aLoadingErrors);
   }
@@ -592,7 +608,7 @@ public final class VESLoader
    * @return <code>null</code> if loading failed
    */
   @Nullable
-  public LoadedVES loadVESFromRepo (@Nonnull final VESID aVESID,
+  public LoadedVES loadVESFromRepo (@Nonnull final DVRCoordinate aVESID,
                                     @Nonnull final VESLoaderStatus aLoaderStatus,
                                     @Nonnull final ErrorList aLoadingErrors)
   {
@@ -616,7 +632,7 @@ public final class VESLoader
    * @return <code>null</code> if loading failed
    */
   @Nullable
-  private LoadedVES _loadVESFromRepo (@Nonnull final VESID aVESID,
+  private LoadedVES _loadVESFromRepo (@Nonnull final DVRCoordinate aVESID,
                                       @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
                                       @Nonnull final VESLoaderStatus aLoaderStatus,
                                       @Nonnull final ErrorList aLoadingErrors)
@@ -628,7 +644,7 @@ public final class VESLoader
     final boolean bIsRoot = aLoaderStatus.m_aLoaded.isEmpty ();
 
     // resolve eventual pseudo version here
-    final VESID aStaticVESID;
+    final DVRCoordinate aStaticVESID;
     if (aVESID.getVersionObj ().isStaticVersion ())
       aStaticVESID = aVESID;
     else
@@ -753,17 +769,12 @@ public final class VESLoader
   }
 
   @Nonnull
-  static VESID createVESID (@Nonnull final VesResourceType aVRT)
-  {
-    // No classifier contained
-    return new VESID (aVRT.getGroupId (), aVRT.getArtifactId (), aVRT.getVersion ());
-  }
-
-  @Nonnull
   static RepoStorageKeyOfArtefact createRepoStorageKey (@Nonnull final VesResourceType aVRT)
   {
     // File extension must start with a dot
-    return RepoStorageKeyOfArtefact.of (createVESID (aVRT), "." + aVRT.getType ());
+    return RepoStorageKeyOfArtefact.of (_createVESIDUnchecked (aVRT.getGroupId (),
+                                                               aVRT.getArtifactId (),
+                                                               aVRT.getVersion ()), "." + aVRT.getType ());
   }
 
   /**
@@ -787,7 +798,7 @@ public final class VESLoader
    */
   @Nonnull
   public static VESValidationResult loadVESAndApplyValidation (@Nonnull final IRepoStorageWithToc aRepo,
-                                                               @Nonnull final VESID aVESID,
+                                                               @Nonnull final DVRCoordinate aVESID,
                                                                @Nonnull final IValidationSource aValidationSource,
                                                                @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
   {

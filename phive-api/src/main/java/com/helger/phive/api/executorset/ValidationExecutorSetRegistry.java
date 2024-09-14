@@ -45,12 +45,11 @@ import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.diver.api.version.IVESPseudoVersion;
-import com.helger.diver.api.version.VESID;
-import com.helger.diver.api.version.VESPseudoVersionRegistry;
-import com.helger.diver.api.version.VESVersion;
+import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.diver.api.version.DVRPseudoVersionRegistry;
+import com.helger.diver.api.version.DVRVersion;
+import com.helger.diver.api.version.IDVRPseudoVersion;
 import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
-import com.helger.phive.api.diver.IPseudoVersionResolver;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -61,7 +60,7 @@ import com.helger.phive.api.source.IValidationSource;
  * {@link #registerValidationExecutorSet(IValidationExecutorSet)}. This needs to
  * be done only once upon initialization before usage.<br>
  * For applying validation of rules onto an XML document,
- * {@link #getOfID(VESID)} needs to be invoked to find a matching VES
+ * {@link #getOfID(DVRCoordinate)} needs to be invoked to find a matching VES
  * (Validation Executor Set - type `IValidationExecutorSet`). If the returned
  * value is non-<code>null</code> than some rules are registered.
  *
@@ -79,7 +78,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
 
   protected final SimpleReadWriteLock m_aRWLock = new SimpleReadWriteLock ();
   @GuardedBy ("m_aRWLock")
-  private final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> m_aMap = new CommonsHashMap <> ();
+  private final ICommonsMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> m_aMap = new CommonsHashMap <> ();
 
   @GuardedBy ("m_aRWLock")
   private boolean m_bResolvePseudoVersions = DEFAULT_RESOLVE_PSEUDO_VERSIONS;
@@ -102,7 +101,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
    */
   @Nonnull
   @MustBeLocked (ELockType.DEPENDS)
-  protected final ICommonsMap <VESID, IValidationExecutorSet <SOURCETYPE>> internalMap ()
+  protected final ICommonsMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> internalMap ()
   {
     return m_aMap;
   }
@@ -111,7 +110,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   {
     ValueEnforcer.notNull (aVES, "VES");
 
-    final VESID aKey = aVES.getID ();
+    final DVRCoordinate aKey = aVES.getID ();
     m_aRWLock.writeLocked ( () -> {
       if (m_aMap.containsKey (aKey))
         throw new IllegalStateException ("Another validation executor set with the ID '" +
@@ -131,16 +130,16 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   @Nonnull
-  public EChange unregisterValidationExecutorSet (@Nullable final VESID aVESID)
+  public EChange unregisterValidationExecutorSet (@Nullable final DVRCoordinate aDVRCoordinate)
   {
-    if (aVESID == null)
+    if (aDVRCoordinate == null)
       return EChange.UNCHANGED;
 
-    final EChange ret = m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aVESID));
+    final EChange ret = m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aDVRCoordinate));
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ((ret.isChanged () ? "Successfully unregistered" : "Failed to unregister") +
                     " validation executor set '" +
-                    aVESID.getAsSingleID () +
+                    aDVRCoordinate.getAsSingleID () +
                     "'");
     return ret;
   }
@@ -166,10 +165,10 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   @Nullable
-  private ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> _getAllMatchingVES (@Nullable final String sGroupID,
-                                                                                                @Nullable final String sArtifactID,
-                                                                                                @Nonnull final Predicate <VESVersion> aVersionsToAccept,
-                                                                                                @Nullable final Comparator <VESID> aComparator)
+  private ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> _getAllMatchingVES (@Nullable final String sGroupID,
+                                                                                                        @Nullable final String sArtifactID,
+                                                                                                        @Nonnull final Predicate <DVRVersion> aVersionsToAccept,
+                                                                                                        @Nullable final Comparator <DVRCoordinate> aComparator)
   {
     if (StringHelper.hasNoText (sGroupID))
       return null;
@@ -177,16 +176,16 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
       return null;
 
     // Sorted by key
-    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = new CommonsTreeMap <> (aComparator);
+    final ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aMatching = new CommonsTreeMap <> (aComparator);
 
     // Get all versions matching Group ID and Artifact ID only
     m_aRWLock.readLocked ( () -> {
-      for (final Map.Entry <VESID, IValidationExecutorSet <SOURCETYPE>> aEntry : m_aMap.entrySet ())
+      for (final Map.Entry <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aEntry : m_aMap.entrySet ())
       {
-        final VESID aVESID = aEntry.getKey ();
-        if (aVESID.getGroupID ().equals (sGroupID) &&
-            aVESID.getArtifactID ().equals (sArtifactID) &&
-            aVersionsToAccept.test (aVESID.getVersionObj ()))
+        final DVRCoordinate aDVRCoordinate = aEntry.getKey ();
+        if (aDVRCoordinate.getGroupID ().equals (sGroupID) &&
+            aDVRCoordinate.getArtifactID ().equals (sArtifactID) &&
+            aVersionsToAccept.test (aDVRCoordinate.getVersionObj ()))
           aMatching.put (aEntry);
       }
     });
@@ -200,11 +199,11 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                                                                  final boolean bIncludeSnapshots)
   {
     // Sorted by key
-    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
-                                                                                                            sArtifactID,
-                                                                                                            IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
-                                                                                                                                                       bIncludeSnapshots),
-                                                                                                            Comparator.naturalOrder ());
+    final ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
+                                                                                                                    sArtifactID,
+                                                                                                                    DVRVersion.getStaticVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                                         bIncludeSnapshots),
+                                                                                                                    Comparator.naturalOrder ());
 
     if (aMatching != null && aMatching.isNotEmpty ())
     {
@@ -213,7 +212,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Resolved oldest version of '" +
                       sGroupID +
-                      VESID.ID_SEPARATOR +
+                      DVRCoordinate.PART_SEPARATOR +
                       sArtifactID +
                       "' to '" +
                       ret.getID ().getVersionString () +
@@ -246,11 +245,11 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                                                                  final boolean bIncludeSnapshots)
   {
     // Sorted by key
-    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
-                                                                                                            sArtifactID,
-                                                                                                            IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
-                                                                                                                                                       bIncludeSnapshots),
-                                                                                                            Comparator.reverseOrder ());
+    final ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
+                                                                                                                    sArtifactID,
+                                                                                                                    DVRVersion.getStaticVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                                         bIncludeSnapshots),
+                                                                                                                    Comparator.reverseOrder ());
 
     if (aMatching != null && aMatching.isNotEmpty ())
     {
@@ -259,7 +258,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Resolved latest version of '" +
                       sGroupID +
-                      VESID.ID_SEPARATOR +
+                      DVRCoordinate.PART_SEPARATOR +
                       sArtifactID +
                       "' to '" +
                       ret.getID ().getVersionString () +
@@ -293,11 +292,11 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                                                                        @Nullable final OffsetDateTime aCheckDateTime)
   {
     // Sorted by key
-    final ICommonsNavigableMap <VESID, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
-                                                                                                            sArtifactID,
-                                                                                                            IPseudoVersionResolver.getVersionAcceptor (aVersionsToIgnore,
-                                                                                                                                                       bIncludeSnapshots),
-                                                                                                            Comparator.reverseOrder ());
+    final ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
+                                                                                                                    sArtifactID,
+                                                                                                                    DVRVersion.getStaticVersionAcceptor (aVersionsToIgnore,
+                                                                                                                                                         bIncludeSnapshots),
+                                                                                                                    Comparator.reverseOrder ());
 
     if (aMatching != null && aMatching.isNotEmpty ())
     {
@@ -314,7 +313,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
         if (LOGGER.isDebugEnabled ())
           LOGGER.debug ("Resolved latest active version of '" +
                         sGroupID +
-                        VESID.ID_SEPARATOR +
+                        DVRCoordinate.PART_SEPARATOR +
                         sArtifactID +
                         "' to '" +
                         ret.getID ().getVersionString () +
@@ -344,59 +343,62 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   @Nullable
-  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aVESID)
+  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final DVRCoordinate aDVRCoordinate)
   {
-    return getOfID (aVESID, (OffsetDateTime) null);
+    return getOfID (aDVRCoordinate, (OffsetDateTime) null);
   }
 
   @Nullable
-  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final VESID aVESID,
+  public IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable final DVRCoordinate aDVRCoordinate,
                                                       @Nullable final OffsetDateTime aCheckDateTime)
   {
-    if (aVESID == null)
+    if (aDVRCoordinate == null)
       return null;
 
     // Try exact match first
-    IValidationExecutorSet <SOURCETYPE> ret = m_aRWLock.readLockedGet ( () -> m_aMap.get (aVESID));
+    IValidationExecutorSet <SOURCETYPE> ret = m_aRWLock.readLockedGet ( () -> m_aMap.get (aDVRCoordinate));
 
     // No exact match - check if it is a pseudo version
-    if (ret == null && aVESID.getVersionObj ().isPseudoVersion ())
+    if (ret == null && aDVRCoordinate.getVersionObj ().isPseudoVersion ())
     {
       if (isResolvePseudoVersions ())
       {
         if (LOGGER.isDebugEnabled ())
-          LOGGER.debug ("Trying to resolve pseudo version latest of '" + aVESID.getAsSingleID () + "'");
+          LOGGER.debug ("Trying to resolve pseudo version latest of '" + aDVRCoordinate.getAsSingleID () + "'");
 
-        final IVESPseudoVersion aPseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
-        if (aPseudoVersion.equals (VESPseudoVersionRegistry.OLDEST))
+        final IDVRPseudoVersion aPseudoVersion = aDVRCoordinate.getVersionObj ().getPseudoVersion ();
+        if (aPseudoVersion.equals (DVRPseudoVersionRegistry.OLDEST))
         {
           // Now determine the one with the oldest version
-          ret = getOldestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+          ret = getOldestVersion (aDVRCoordinate.getGroupID (), aDVRCoordinate.getArtifactID (), null);
         }
         else
-          if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST))
+          if (aPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST))
           {
             // Now determine the one with the latest version
-            ret = getLatestVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+            ret = getLatestVersion (aDVRCoordinate.getGroupID (), aDVRCoordinate.getArtifactID (), null);
           }
           else
-            if (aPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
+            if (aPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST_RELEASE))
             {
               // Now determine the one with the latest version
-              ret = getLatestReleaseVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null);
+              ret = getLatestReleaseVersion (aDVRCoordinate.getGroupID (), aDVRCoordinate.getArtifactID (), null);
             }
             else
               if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_ACTIVE))
               {
                 // Now determine the one with the latest active version
-                ret = getLatestActiveVersion (aVESID.getGroupID (), aVESID.getArtifactID (), null, aCheckDateTime);
+                ret = getLatestActiveVersion (aDVRCoordinate.getGroupID (),
+                                              aDVRCoordinate.getArtifactID (),
+                                              null,
+                                              aCheckDateTime);
               }
               else
                 if (aPseudoVersion.equals (PhivePseudoVersionRegistrarSPIImpl.LATEST_RELEASE_ACTIVE))
                 {
                   // Now determine the one with the latest active version
-                  ret = getLatestReleaseActiveVersion (aVESID.getGroupID (),
-                                                       aVESID.getArtifactID (),
+                  ret = getLatestReleaseActiveVersion (aDVRCoordinate.getGroupID (),
+                                                       aDVRCoordinate.getArtifactID (),
                                                        null,
                                                        aCheckDateTime);
                 }

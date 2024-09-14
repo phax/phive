@@ -24,7 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -37,7 +37,7 @@ import com.helger.phive.api.source.IValidationSource;
 @NotThreadSafe
 public final class VESValidationResult
 {
-  private final VESID m_aVESID;
+  private final DVRCoordinate m_aVESID;
   private final IValidationSource m_aValidationSource;
   private final OffsetDateTime m_aStartDateTime;
   private final Duration m_aLoadingDuration;
@@ -61,7 +61,7 @@ public final class VESValidationResult
    * @param aValidationResultList
    *        The validation result list. May not be <code>null</code>.
    */
-  public VESValidationResult (@Nonnull final VESID aVESID,
+  public VESValidationResult (@Nonnull final DVRCoordinate aVESID,
                               @Nonnull final IValidationSource aValidationSource,
                               @Nonnull final OffsetDateTime aStartDateTime,
                               @Nonnull final Duration aLoadingDuration,
@@ -83,7 +83,7 @@ public final class VESValidationResult
   }
 
   @Nonnull
-  public VESID getVESID ()
+  public DVRCoordinate getVESID ()
   {
     return m_aVESID;
   }

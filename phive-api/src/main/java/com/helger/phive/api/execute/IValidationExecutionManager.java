@@ -86,7 +86,9 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    *        <code>null</code> to use the system default locale.
    * @see #executeValidation(IValidationSource, Locale)
    */
-  void executeValidation (@Nonnull SOURCETYPE aSource, @Nonnull ValidationResultList aValidationResults, @Nullable Locale aLocale);
+  void executeValidation (@Nonnull SOURCETYPE aSource,
+                          @Nonnull ValidationResultList aValidationResults,
+                          @Nullable Locale aLocale);
 
   /**
    * Perform a fast validation that stops on the first error.

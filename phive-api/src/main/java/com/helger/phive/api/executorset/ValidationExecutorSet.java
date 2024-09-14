@@ -31,7 +31,7 @@ import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.hashcode.HashCodeGenerator;
 import com.helger.commons.state.EChange;
 import com.helger.commons.string.ToStringGenerator;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
@@ -47,35 +47,35 @@ import com.helger.phive.api.source.IValidationSource;
 @NotThreadSafe
 public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implements IValidationExecutorSet <SOURCETYPE>
 {
-  private final VESID m_aID;
+  private final DVRCoordinate m_aVESID;
   private final String m_sDisplayName;
   private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aList = new CommonsArrayList <> ();
   private final IValidationExecutorSetStatus m_aStatus;
 
   @Deprecated (forRemoval = true, since = "9.2.0")
-  public ValidationExecutorSet (@Nonnull final VESID aID,
+  public ValidationExecutorSet (@Nonnull final DVRCoordinate aVESID,
                                 @Nonnull @Nonempty final String sDisplayName,
                                 final boolean bDeprecated)
   {
-    this (aID, sDisplayName, ValidationExecutorSetStatus.createDeprecatedNow (bDeprecated));
+    this (aVESID, sDisplayName, ValidationExecutorSetStatus.createDeprecatedNow (bDeprecated));
   }
 
-  public ValidationExecutorSet (@Nonnull final VESID aID,
+  public ValidationExecutorSet (@Nonnull final DVRCoordinate aVESID,
                                 @Nonnull @Nonempty final String sDisplayName,
                                 @Nonnull final IValidationExecutorSetStatus aStatus)
   {
-    ValueEnforcer.notNull (aID, "ID");
+    ValueEnforcer.notNull (aVESID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
     ValueEnforcer.notNull (aStatus, "Status");
-    m_aID = aID;
+    m_aVESID = aVESID;
     m_sDisplayName = sDisplayName;
     m_aStatus = aStatus;
   }
 
   @Nonnull
-  public final VESID getID ()
+  public final DVRCoordinate getID ()
   {
-    return m_aID;
+    return m_aVESID;
   }
 
   @Nonnull
@@ -156,20 +156,20 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ValidationExecutorSet <?> rhs = (ValidationExecutorSet <?>) o;
-    return m_aID.equals (rhs.m_aID) && m_sDisplayName.equals (rhs.m_sDisplayName) && m_aList.equals (rhs.m_aList);
+    return m_aVESID.equals (rhs.m_aVESID) && m_sDisplayName.equals (rhs.m_sDisplayName) && m_aList.equals (rhs.m_aList);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aID).append (m_sDisplayName).append (m_aList).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aVESID).append (m_sDisplayName).append (m_aList).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ())
-                            .append ("ID", m_aID)
+                            .append ("ID", m_aVESID)
                             .append ("DisplayName", m_sDisplayName)
                             .append ("List", m_aList)
                             .append ("Status", m_aStatus)
@@ -179,7 +179,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   @Nonnull
   @SafeVarargs
   @Deprecated (forRemoval = true, since = "9.2.0")
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
                                                                                   final boolean bIsDeprecated,
                                                                                   @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
@@ -192,7 +192,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
 
   @Nonnull
   @SafeVarargs
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
                                                                                   @Nonnull final IValidationExecutorSetStatus aStatus,
                                                                                   @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
@@ -212,7 +212,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
 
   @Nonnull
   @Deprecated (forRemoval = true, since = "9.2.0")
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
                                                                                   final boolean bIsDeprecated,
                                                                                   @Nonnull final Collection <? extends IValidationExecutor <ST>> aValidationExecutors)
@@ -224,7 +224,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   }
 
   @Nonnull
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final VESID aID,
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
                                                                                   @Nonnull final IValidationExecutorSetStatus aStatus,
                                                                                   @Nonnull final Collection <? extends IValidationExecutor <ST>> aValidationExecutors)
@@ -264,7 +264,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   @SafeVarargs
   @Deprecated (forRemoval = true, since = "9.2.0")
   public static <ST extends IValidationSource> ValidationExecutorSet <ST> createDerived (@Nonnull final IValidationExecutorSet <ST> aBaseVES,
-                                                                                         @Nonnull final VESID aID,
+                                                                                         @Nonnull final DVRCoordinate aID,
                                                                                          @Nonnull @Nonempty final String sDisplayName,
                                                                                          final boolean bIsDeprecated,
                                                                                          @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
@@ -296,7 +296,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   @Nonnull
   @SafeVarargs
   public static <ST extends IValidationSource> ValidationExecutorSet <ST> createDerived (@Nonnull final IValidationExecutorSet <ST> aBaseVES,
-                                                                                         @Nonnull final VESID aID,
+                                                                                         @Nonnull final DVRCoordinate aID,
                                                                                          @Nonnull @Nonempty final String sDisplayName,
                                                                                          @Nonnull final IValidationExecutorSetStatus aStatus,
                                                                                          @Nonnull final IValidationExecutor <ST>... aValidationExecutors)

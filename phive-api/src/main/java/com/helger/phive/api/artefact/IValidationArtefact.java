@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.phive.api.IValidationType;
+import com.helger.phive.api.internal.ChangeV10;
 
 /**
  * Base interface for a validation artefact, consisting of a type and a readable
@@ -36,6 +37,7 @@ public interface IValidationArtefact
    *         <code>null</code>.
    */
   @Nonnull
+  @ChangeV10 ("Rename to getValidationType")
   IValidationType getValidationArtefactType ();
 
   /**

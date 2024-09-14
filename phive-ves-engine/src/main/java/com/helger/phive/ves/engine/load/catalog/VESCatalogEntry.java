@@ -49,12 +49,18 @@ public final class VESCatalogEntry implements IHasID <String>
     m_aResourceKey = aResourceKey;
   }
 
+  /**
+   * @return The catalog entry type. Never <code>null</code>.
+   */
   @Nonnull
   public EVESCatalogType getType ()
   {
     return m_eType;
   }
 
+  /**
+   * @return The catalog ID or URI. Neither <code>null</code> nor empty.
+   */
   @Nonnull
   @Nonempty
   public String getID ()
@@ -62,6 +68,9 @@ public final class VESCatalogEntry implements IHasID <String>
     return m_sUriOrID;
   }
 
+  /**
+   * @return The repository key. Never <code>null</code>.
+   */
   @Nonnull
   public RepoStorageKeyOfArtefact getRepoStorageKey ()
   {

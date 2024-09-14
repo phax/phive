@@ -41,6 +41,7 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
@@ -64,6 +65,9 @@ public class ValidationExecutorXSDPartial extends
    *
    * @param aValidationArtefact
    *        The validation artefact to use. May not be <code>null</code>.
+   * @param aValidityDeterminator
+   *        The validity determinator for the result. May not be
+   *        <code>null</code>.
    * @param aSchemaProvider
    *        The XML Schema provider to use. May not be <code>null</code>.
    * @param aPartialContext
@@ -72,10 +76,11 @@ public class ValidationExecutorXSDPartial extends
    * @since 6.0.4
    */
   public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact,
+                                       @Nonnull final IValidityDeterminator aValidityDeterminator,
                                        @Nonnull final Supplier <? extends Schema> aSchemaProvider,
                                        @Nonnull final XSDPartialContext aPartialContext)
   {
-    super (aValidationArtefact);
+    super (aValidationArtefact, aValidityDeterminator);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationArtefactType ().isXSD (), "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     ValueEnforcer.notNull (aPartialContext, "PartialContext");
@@ -140,7 +145,7 @@ public class ValidationExecutorXSDPartial extends
     if (nMatchingNodes == 0)
     {
       // No match found - nothing to do
-      return new ValidationResult (aVA, aErrorList);
+      return createValidationResult (aErrorList);
     }
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
@@ -179,7 +184,7 @@ public class ValidationExecutorXSDPartial extends
       }
     }
     // Build result object
-    return new ValidationResult (aVA, aErrorList.getAllFailures ());
+    return createValidationResult (aErrorList.getAllFailures ());
   }
 
   @Override
@@ -208,6 +213,9 @@ public class ValidationExecutorXSDPartial extends
   /**
    * Create a new instance based on a single standalone XSD
    *
+   * @param aValidityDeterminator
+   *        The validity determinator for the result. May not be
+   *        <code>null</code>.
    * @param aXSDRes
    *        The XSD resource to use. May not be <code>null</code>.
    * @param aPartialContext
@@ -218,11 +226,13 @@ public class ValidationExecutorXSDPartial extends
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorXSDPartial create (@Nonnull final IReadableResource aXSDRes,
+  public static ValidationExecutorXSDPartial create (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                     @Nonnull final IReadableResource aXSDRes,
                                                      @Nonnull final XSDPartialContext aPartialContext)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
     return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aXSDRes),
+                                             aValidityDeterminator,
                                              () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
                                              aPartialContext);
   }
@@ -230,6 +240,9 @@ public class ValidationExecutorXSDPartial extends
   /**
    * Create a new instance based on one or more XSDs
    *
+   * @param aValidityDeterminator
+   *        The validity determinator for the result. May not be
+   *        <code>null</code>.
    * @param aXSDRes
    *        The XSD resources to use. May neither be <code>null</code> nor
    *        empty.
@@ -241,7 +254,8 @@ public class ValidationExecutorXSDPartial extends
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorXSDPartial create (@Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes,
+  public static ValidationExecutorXSDPartial create (@Nonnull final IValidityDeterminator aValidityDeterminator,
+                                                     @Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes,
                                                      @Nonnull final XSDPartialContext aPartialContext)
   {
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
@@ -249,6 +263,7 @@ public class ValidationExecutorXSDPartial extends
     // The last one is the important one for the name
     return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD,
                                                                      aXSDRes.get (aXSDRes.size () - 1)),
+                                             aValidityDeterminator,
                                              () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
                                              aPartialContext);
   }

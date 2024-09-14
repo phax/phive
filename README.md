@@ -33,7 +33,8 @@ Basically this library wraps different XML Schemas and Schematrons in a certain 
 The underlying model is the so called "Validation Pyramid":
 ![Validation Pyramid](https://github.com/phax/phive/blob/master/docs/validation-pyramid.png?raw=true)
 
-Each layer of the Validation Pyramid reflects a single set of rules. Each rule set is identified by a VESID, and the resulting pyramid is also identified by a single VESID.
+Each layer of the Validation Pyramid reflects a single set of rules. 
+  Each rule set is identified by a VESID, and the resulting pyramid is also identified by a single ID.
 
 ## Validation executor set identification
 
@@ -149,6 +150,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v9.3.0 - work in progress
+    * Updated to ph-diver 23.0.0
 * v9.2.2 - 2024-07-29
     * Switched from custom error level to `CustomErrorDetails`
 * v9.2.1 - 2024-04-25

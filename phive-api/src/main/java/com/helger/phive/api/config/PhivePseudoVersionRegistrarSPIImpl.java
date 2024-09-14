@@ -21,12 +21,12 @@ import javax.annotation.Nonnull;
 import com.helger.commons.annotation.IsSPIImplementation;
 import com.helger.commons.annotation.UsedViaReflection;
 import com.helger.commons.version.Version;
-import com.helger.diver.api.version.IPseudoVersionComparable;
-import com.helger.diver.api.version.IVESPseudoVersion;
-import com.helger.diver.api.version.IVESPseudoVersionRegistry;
-import com.helger.diver.api.version.VESPseudoVersion;
-import com.helger.diver.api.version.VESPseudoVersionRegistry;
-import com.helger.diver.api.version.spi.IVESPseudoVersionRegistrarSPI;
+import com.helger.diver.api.version.DVRPseudoVersion;
+import com.helger.diver.api.version.DVRPseudoVersionRegistry;
+import com.helger.diver.api.version.IDVRPseudoVersion;
+import com.helger.diver.api.version.IDVRPseudoVersionComparable;
+import com.helger.diver.api.version.IDVRPseudoVersionRegistry;
+import com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI;
 
 /**
  * Default pseudo version registrar
@@ -34,22 +34,22 @@ import com.helger.diver.api.version.spi.IVESPseudoVersionRegistrarSPI;
  * @author Philip Helger
  */
 @IsSPIImplementation
-public final class PhivePseudoVersionRegistrarSPIImpl implements IVESPseudoVersionRegistrarSPI
+public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersionRegistrarSPI
 {
   /**
    * Latest active indicates the latest version that is valid at a provided
    * point in time (including snapshots).
    */
-  public static final IVESPseudoVersion LATEST_ACTIVE;
+  public static final IDVRPseudoVersion LATEST_ACTIVE;
   static
   {
-    LATEST_ACTIVE = new VESPseudoVersion ("latest-active", new IPseudoVersionComparable ()
+    LATEST_ACTIVE = new DVRPseudoVersion ("latest-active", new IDVRPseudoVersionComparable ()
     {
-      public int compareToPseudoVersion (@Nonnull final IVESPseudoVersion aOtherPseudoVersion)
+      public int compareToPseudoVersion (@Nonnull final IDVRPseudoVersion aOtherPseudoVersion)
       {
         // Only LATEST and LATEST_RELEASE are greater
-        if (aOtherPseudoVersion.equals (VESPseudoVersionRegistry.LATEST) ||
-            aOtherPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE))
+        if (aOtherPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST) ||
+            aOtherPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST_RELEASE))
           return -1;
 
         // LATEST_ACTIVE is always greater
@@ -68,16 +68,16 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IVESPseudoVersi
    * Latest active release indicates the latest version that is valid at a
    * provided point in time (excluding snapshots).
    */
-  public static final IVESPseudoVersion LATEST_RELEASE_ACTIVE;
+  public static final IDVRPseudoVersion LATEST_RELEASE_ACTIVE;
   static
   {
-    LATEST_RELEASE_ACTIVE = new VESPseudoVersion ("latest-release-active", new IPseudoVersionComparable ()
+    LATEST_RELEASE_ACTIVE = new DVRPseudoVersion ("latest-release-active", new IDVRPseudoVersionComparable ()
     {
-      public int compareToPseudoVersion (@Nonnull final IVESPseudoVersion aOtherPseudoVersion)
+      public int compareToPseudoVersion (@Nonnull final IDVRPseudoVersion aOtherPseudoVersion)
       {
         // Only LATEST, LATEST_RELEASE and LATEST_ACTIVE are greater
-        if (aOtherPseudoVersion.equals (VESPseudoVersionRegistry.LATEST) ||
-            aOtherPseudoVersion.equals (VESPseudoVersionRegistry.LATEST_RELEASE) ||
+        if (aOtherPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST) ||
+            aOtherPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST_RELEASE) ||
             aOtherPseudoVersion.equals (LATEST_ACTIVE))
           return -1;
 
@@ -98,7 +98,7 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IVESPseudoVersi
   public PhivePseudoVersionRegistrarSPIImpl ()
   {}
 
-  public void registerPseudoVersions (@Nonnull final IVESPseudoVersionRegistry aRegistry)
+  public void registerPseudoVersions (@Nonnull final IDVRPseudoVersionRegistry aRegistry)
   {
     aRegistry.registerPseudoVersion (LATEST_ACTIVE);
     aRegistry.registerPseudoVersion (LATEST_RELEASE_ACTIVE);

@@ -19,7 +19,7 @@ package com.helger.phive.ves.engine.load;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.repo.IRepoStorageReadItem;
 
 /**
@@ -41,5 +41,5 @@ public interface IVESAsyncLoader
    *         (e.g. because no such resource exists).
    */
   @Nullable
-  IRepoStorageReadItem loadResource (@Nonnull VESID aVESID, @Nonnull String sFileExt);
+  IRepoStorageReadItem loadResource (@Nonnull DVRCoordinate aVESID, @Nonnull String sFileExt);
 }

@@ -48,7 +48,8 @@ import com.helger.phive.api.source.IValidationSource;
  *        The validation source type to be used.
  */
 @NotThreadSafe
-public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> implements IValidationExecutionManager <SOURCETYPE>
+public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> implements
+                                        IValidationExecutionManager <SOURCETYPE>
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutionManager.class);
 
@@ -162,7 +163,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
         assert aResult != null;
         aValidationResults.add (aResult);
 
-        if (aResult.isFailure () && aExecutor.isStopValidationOnError ())
+        if (aResult.getValidity ().isInvalid () && aExecutor.isStopValidationOnError ())
         {
           // Ignore all following executors
           bIgnoreRest = true;
@@ -181,12 +182,15 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
       // Execute validation
       // Note: locale doesn't matter because we don't use the texts
       final ValidationResult aResult = aExecutor.applyValidation (aSource, (Locale) null);
-      if (aResult.isFailure ())
+      if (aResult.getValidity ().isInvalid ())
       {
         // Break asap
         return EValidity.INVALID;
       }
     }
+
+    // Absence of invalidity means (currently) valid
+    // This interpretation may change sometimes
     return EValidity.VALID;
   }
 

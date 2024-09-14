@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.phive.api.artefact.IValidationArtefact;
+import com.helger.phive.api.internal.ChangeV10;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -45,6 +46,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
    * @author Philip Helger
    * @since 3.1.1
    */
+  @ChangeV10 ("Extract to separate interface and extend from IValidationExecutor")
   public interface ICacheSupport
   {
     /** By default caching should be enabled. */
@@ -93,7 +95,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
   }
 
   /**
-   * Perform validation. The class loader of the validation artefact is used.
+   * Perform validation of the provided source.
    *
    * @param aSource
    *        Source to be validated. May not be <code>null</code>.
@@ -106,7 +108,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
   }
 
   /**
-   * Perform validation
+   * Perform validation of the provided source.
    *
    * @param aSource
    *        Source to be validated. May not be <code>null</code>.

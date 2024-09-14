@@ -37,7 +37,8 @@ import com.helger.commons.error.text.ConstantHasErrorText;
 import com.helger.commons.io.resource.ClassPathResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.mock.CommonsTestHelper;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.diver.api.version.DVRVersionException;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.phive.api.execute.ValidationExecutionManager;
@@ -46,6 +47,7 @@ import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
@@ -74,11 +76,11 @@ public final class PhiveJsonHelperTest
   }
 
   @Test
-  public void testValidationResults ()
+  public void testValidationResults () throws DVRVersionException
   {
     final IJsonObject aObj = new JsonObject ();
     final Locale aDisplayLocale = Locale.US;
-    final VESID aVESID = new VESID ("group", "art", "1.0");
+    final DVRCoordinate aVESID = DVRCoordinate.create ("group", "art", "1.0");
 
     final OffsetDateTime aNow = PDTFactory.getCurrentOffsetDateTimeMillisOnly ();
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
@@ -90,6 +92,7 @@ public final class PhiveJsonHelperTest
                   PDTWebDateHelper.getAsStringXSD (aNow) +
                   "\",\"type\":\"valid\"}}," +
                   "\"success\":true," +
+                  "\"validity\":\"valid\"," +
                   "\"interrupted\":false," +
                   "\"mostSevereErrorLevel\":\"SUCCESS\"," +
                   "\"results\":[]," +
@@ -98,15 +101,16 @@ public final class PhiveJsonHelperTest
   }
 
   @Test
-  public void testValidationResultsBackAndForth ()
+  public void testValidationResultsBackAndForth () throws DVRVersionException
   {
     // Register
     final ValidationExecutorSetRegistry <IValidationSourceXML> aRegistry = new ValidationExecutorSetRegistry <> ();
-    final VESID aVESID = new VESID ("group", "art", "1.0");
+    final DVRCoordinate aVESID = DVRCoordinate.create ("group", "art", "1.0");
     final ValidationExecutorSet <IValidationSourceXML> aVES = new ValidationExecutorSet <> (aVESID,
                                                                                             "name",
                                                                                             ValidationExecutorSetStatus.createValidNow ());
-    aVES.addExecutor (ValidationExecutorXSD.create (new ClassPathResource ("test/schema1.xsd")));
+    aVES.addExecutor (ValidationExecutorXSD.create (IValidityDeterminator.DEFAULT,
+                                                    new ClassPathResource ("test/schema1.xsd")));
     aRegistry.registerValidationExecutorSet (aVES);
 
     // Validate

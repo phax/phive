@@ -45,7 +45,7 @@ import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.math.MathHelper;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.timing.StopWatch;
-import com.helger.diver.api.version.VESID;
+import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
@@ -53,6 +53,7 @@ import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.ves.engine.load.catalog.EVESCatalogType;
 import com.helger.phive.ves.engine.load.catalog.VESCatalog;
 import com.helger.phive.ves.engine.load.catalog.VESCatalogEntry;
@@ -83,7 +84,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   @Nullable
   private static final String _unifyPath (@Nullable final String x)
   {
-    // Converty any "\" to "/"
+    // Convert any "\" to "/"
     String ret = FilenameHelper.getPathUsingUnixSeparator (x);
     if (ret != null)
     {
@@ -156,7 +157,11 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     // Check for precondition
     final VesXmlPreconditionType aPrecondition = aXSD.getPrecondition ();
 
+    // Readable resource from repository content
     final IReadableResource aRepoRes = new RepoStorageReadableResource (aXSDKey, aXSDItem.getContent ());
+
+    // TODO make customizable at some point
+    final IValidityDeterminator aValidityDeterminator = IValidityDeterminator.DEFAULT;
 
     final StopWatch aSW = StopWatch.createdStarted ();
     final ValidationExecutorXSD aExecutorXSD;
@@ -191,7 +196,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         }
 
         // Load "as is"
-        aExecutorXSD = ValidationExecutorXSD.create (aRepoRes);
+        aExecutorXSD = ValidationExecutorXSD.create (aValidityDeterminator, aRepoRes);
         break;
       }
       case RESOURCE_TYPE_ZIP:
@@ -327,7 +332,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 final VESCatalogEntry aEntry = aCatalogEntries.findEntryByUri (sNamespaceURI);
                 if (aEntry != null)
                 {
-                  final VESID aTargetVESID = aEntry.getRepoStorageKey ().getVESID ();
+                  final DVRCoordinate aTargetVESID = aEntry.getRepoStorageKey ().getCoordinate ();
 
                   // Load referenced catalog resource
                   final IRepoStorageReadItem aLoadedCatalogRes = aAsyncLoader.loadResource (aTargetVESID,
@@ -370,7 +375,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 final VESCatalogEntry aEntry = aCatalogEntries.findEntryBySystemID (sSystemId);
                 if (aEntry != null)
                 {
-                  final VESID aTargetVESID = aEntry.getRepoStorageKey ().getVESID ();
+                  final DVRCoordinate aTargetVESID = aEntry.getRepoStorageKey ().getCoordinate ();
 
                   // Load referenced catalog resource
                   final IRepoStorageReadItem aLoadedCatalogRes = aAsyncLoader.loadResource (aTargetVESID,
@@ -434,6 +439,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           throw new IllegalStateException ("Failed to resolve XML Schema from ZIP");
 
         aExecutorXSD = new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aRepoRes),
+                                                  aValidityDeterminator,
                                                   () -> aSchema);
         break;
       }

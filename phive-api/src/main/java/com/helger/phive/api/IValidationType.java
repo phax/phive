@@ -26,6 +26,7 @@ import com.helger.commons.name.IHasName;
  *
  * @author Philip Helger
  * @since 7.1.0
+ * @see EValidationType
  */
 @MustImplementEqualsAndHashcode
 public interface IValidationType extends IHasID <String>, IHasName
