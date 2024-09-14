@@ -24,7 +24,7 @@ import com.helger.commons.error.list.IErrorList;
  * Generic interface for a decision provider for validation results.
  *
  * @author Philip Helger
- * @since 9.3.0
+ * @since 10.0.0
  */
 public interface IValidityDeterminator
 {

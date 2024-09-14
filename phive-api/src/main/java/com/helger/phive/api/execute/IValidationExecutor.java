@@ -25,6 +25,7 @@ import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.IValidityDeterminator;
 
 /**
  * Base interface for performing validation of a single XML document based on
@@ -43,6 +44,14 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
    */
   @Nonnull
   IValidationArtefact getValidationArtefact ();
+
+  /**
+   * @return The validity determinator used for that executor. Never
+   *         <code>null</code>.
+   * @since 10.0.0
+   */
+  @Nonnull
+  IValidityDeterminator getValidityDeterminator ();
 
   /**
    * @return <code>true</code> if a negative validation stops further

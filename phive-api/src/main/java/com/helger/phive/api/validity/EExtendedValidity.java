@@ -33,7 +33,7 @@ import com.helger.commons.lang.EnumHelper;
  * </ul>
  *
  * @author Philip Helger
- * @since 9.3.0
+ * @since 10.0.0
  */
 public enum EExtendedValidity implements IHasID <String>
 {
