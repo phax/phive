@@ -154,8 +154,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Updated to ph-diver 3.0.1
     * The outcome of a validation can now be `valid`, `invalid` or `unclear` (new)
         * Added new classes `EExtendedValidity` and `IValidityDeterminator`
-        * Each `IValidationExecutor` now has an `IValidityDeterminator`
-        * By using `IValidityDeterminator.DEFAULT` the previous state can be re-created
+        * Each `IValidationExecutorManager` now has an `IValidityDeterminator`
+        * By using `IValidityDeterminator.getDefault()` the previous state can be re-created
     * Renamed method `IValidationArtefact.getValidationArtefactType` to `getValidationType`
 * v9.2.2 - 2024-07-29
     * Switched from custom error level to `CustomErrorDetails`

@@ -86,6 +86,12 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
     addExecutors (aExecutors);
   }
 
+  @Nonnull
+  public final IValidityDeterminator <SOURCETYPE> getValidityDeterminator ()
+  {
+    return m_aValidityDeterminator;
+  }
+
   /**
    * Add a single executor.
    *

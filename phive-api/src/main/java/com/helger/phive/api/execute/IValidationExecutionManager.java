@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.state.EValidity;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.IValidityDeterminator;
 
 /**
  * Interface for an execution manager that applies a set of rules onto an object
@@ -35,6 +36,12 @@ import com.helger.phive.api.source.IValidationSource;
  */
 public interface IValidationExecutionManager <SOURCETYPE extends IValidationSource>
 {
+  /**
+   * @return The validity determinator to be used. Never <code>null</code>.
+   */
+  @Nonnull
+  IValidityDeterminator <SOURCETYPE> getValidityDeterminator ();
+
   /**
    * Perform a validation with all the contained executors and the system
    * default locale.
