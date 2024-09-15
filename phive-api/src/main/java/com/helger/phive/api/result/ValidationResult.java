@@ -25,7 +25,6 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.phive.api.artefact.IValidationArtefact;
-import com.helger.phive.api.validity.EExtendedValidity;
 
 /**
  * This class captures the validation result of a single validation layer. It
@@ -38,7 +37,22 @@ public class ValidationResult
 {
   private final IValidationArtefact m_aValidationArtefact;
   private final IErrorList m_aErrorList;
-  private final EExtendedValidity m_eValidity;
+  private final boolean m_bWasSkipped;
+
+  /**
+   * Constructor for non-skipped results
+   *
+   * @param aValidationArtefact
+   *        The validation artefact that was applied. May not be
+   *        <code>null</code>.
+   * @param aErrorList
+   *        The list of errors applying the validation artefact. May not be
+   *        <code>null</code>.
+   */
+  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IErrorList aErrorList)
+  {
+    this (aValidationArtefact, aErrorList, false);
+  }
 
   /**
    * Constructor
@@ -49,16 +63,16 @@ public class ValidationResult
    * @param aErrorList
    *        The list of errors applying the validation artefact. May not be
    *        <code>null</code>.
-   * @param eValidity
-   *        The overall validity. Must not be <code>null</code>.
+   * @param bWasSkipped
+   *        <code>true</code> if this validation layer was skipped.
    */
-  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                           @Nonnull final IErrorList aErrorList,
-                           @Nonnull final EExtendedValidity eValidity)
+  protected ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                              @Nonnull final IErrorList aErrorList,
+                              final boolean bWasSkipped)
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     m_aErrorList = ValueEnforcer.notNull (aErrorList, "ErrorList");
-    m_eValidity = ValueEnforcer.notNull (eValidity, "Success");
+    m_bWasSkipped = bWasSkipped;
   }
 
   /**
@@ -82,10 +96,9 @@ public class ValidationResult
     return m_aErrorList;
   }
 
-  @Nonnull
-  public final EExtendedValidity getValidity ()
+  public final boolean isSkipped ()
   {
-    return m_eValidity;
+    return m_bWasSkipped;
   }
 
   @Override
@@ -93,7 +106,7 @@ public class ValidationResult
   {
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
                                        .append ("ErrorList", m_aErrorList)
-                                       .append ("Validity", m_eValidity)
+                                       .append ("WasSkipped", m_bWasSkipped)
                                        .getToString ();
   }
 
@@ -105,8 +118,8 @@ public class ValidationResult
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static ValidationResult createIgnoredResult (@Nonnull final IValidationArtefact aValidationArtefact)
+  public static ValidationResult createSkippedResult (@Nonnull final IValidationArtefact aValidationArtefact)
   {
-    return new ValidationResult (aValidationArtefact, new ErrorList (), EExtendedValidity.IGNORED);
+    return new ValidationResult (aValidationArtefact, new ErrorList (), true);
   }
 }

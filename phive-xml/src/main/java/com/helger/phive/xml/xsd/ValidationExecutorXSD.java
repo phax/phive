@@ -40,7 +40,6 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.AbstractValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
-import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
@@ -57,10 +56,9 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
   private final Supplier <? extends Schema> m_aSchemaProvider;
 
   public ValidationExecutorXSD (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final IValidityDeterminator aValidityDeterminator,
                                 @Nonnull final Supplier <? extends Schema> aSchemaProvider)
   {
-    super (aValidationArtefact, aValidityDeterminator);
+    super (aValidationArtefact);
     ValueEnforcer.isTrue (aValidationArtefact.getValidationType ().isXSD (), "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     m_aSchemaProvider = aSchemaProvider;
@@ -137,30 +135,22 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
   /**
    * Create a new instance based on a single standalone XSD
    *
-   * @param aValidityDeterminator
-   *        The validity determinator for the result. May not be
-   *        <code>null</code>.
    * @param aXSDRes
    *        The XSD resource to use. May not be <code>null</code>.
    * @return A new validator that uses the supplied resource for the filename
    *         and uses {@link XMLSchemaCache} to resolve the XML Schema object.
    */
   @Nonnull
-  public static ValidationExecutorXSD create (@Nonnull final IValidityDeterminator aValidityDeterminator,
-                                              @Nonnull final IReadableResource aXSDRes)
+  public static ValidationExecutorXSD create (@Nonnull final IReadableResource aXSDRes)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes),
-                                      aValidityDeterminator,
                                       () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
   }
 
   /**
    * Create a new instance based on one or more XSDs
    *
-   * @param aValidityDeterminator
-   *        The validity determinator for the result. May not be
-   *        <code>null</code>.
    * @param aXSDRes
    *        The XSD resources to use. May neither be <code>null</code> nor
    *        empty.
@@ -169,23 +159,18 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorXSD create (@Nonnull final IValidityDeterminator aValidityDeterminator,
-                                              @Nonnull @Nonempty final IReadableResource... aXSDRes)
+  public static ValidationExecutorXSD create (@Nonnull @Nonempty final IReadableResource... aXSDRes)
   {
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 
     // The last one is the important one for the name
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, ArrayHelper.getLast (aXSDRes)),
-                                      aValidityDeterminator,
                                       () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
   }
 
   /**
    * Create a new instance based on one or more XSDs
    *
-   * @param aValidityDeterminator
-   *        The validity determinator for the result. May not be
-   *        <code>null</code>.
    * @param aXSDRes
    *        The XSD resources to use. May neither be <code>null</code> nor
    *        empty.
@@ -194,14 +179,12 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    * @since 6.0.4
    */
   @Nonnull
-  public static ValidationExecutorXSD create (@Nonnull final IValidityDeterminator aValidityDeterminator,
-                                              @Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes)
+  public static ValidationExecutorXSD create (@Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes)
   {
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 
     // The last one is the important one for the name
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes.get (aXSDRes.size () - 1)),
-                                      aValidityDeterminator,
                                       () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes));
   }
 }

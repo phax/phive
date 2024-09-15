@@ -117,7 +117,6 @@ public final class PhiveJsonHelper
   public static final String JSON_STATUS_REPLACEMENT_VESID = "replacementVesid";
 
   public static final String JSON_SUCCESS = "success";
-  public static final String JSON_VALIDITY = "validity";
   public static final String JSON_ARTIFACT_TYPE = "artifactType";
   public static final String JSON_ARTIFACT_PATH_TYPE = "artifactPathType";
   public static final String JSON_ARTIFACT_PATH = "artifactPath";
@@ -747,43 +746,29 @@ public final class PhiveJsonHelper
       final IJsonObject aResultObj = aResult.getAsObject ();
       if (aResultObj != null)
       {
-        final String sValidity = aResultObj.getAsString (JSON_VALIDITY);
-        EExtendedValidity eValidity;
-        if (sValidity != null)
+        // Fall back to previous status
+        final String sSuccess = aResultObj.getAsString (JSON_SUCCESS);
+        final ETriState eSuccess = getAsTriState (sSuccess);
+        if (eSuccess == null)
         {
-          eValidity = EExtendedValidity.getFromIDOrNull (sValidity);
-          if (eValidity == null)
-          {
-            if (LOGGER.isDebugEnabled ())
-              LOGGER.debug ("Failed to resolve Validity '" + sValidity + "'");
-            continue;
-          }
+          if (LOGGER.isDebugEnabled ())
+            LOGGER.debug ("Failed to resolve TriState '" + sSuccess + "'");
+          continue;
         }
-        else
+        final EExtendedValidity eValidity;
+        switch (eSuccess)
         {
-          // Fall back to previous status
-          final String sSuccess = aResultObj.getAsString (JSON_SUCCESS);
-          final ETriState eSuccess = getAsTriState (sSuccess);
-          if (eSuccess == null)
-          {
-            if (LOGGER.isDebugEnabled ())
-              LOGGER.debug ("Failed to resolve TriState '" + sSuccess + "'");
-            continue;
-          }
-          switch (eSuccess)
-          {
-            case TRUE:
-              eValidity = EExtendedValidity.VALID;
-              break;
-            case FALSE:
-              eValidity = EExtendedValidity.INVALID;
-              break;
-            case UNDEFINED:
-              eValidity = EExtendedValidity.IGNORED;
-              break;
-            default:
-              throw new IllegalStateException ("Oops");
-          }
+          case TRUE:
+            eValidity = EExtendedValidity.VALID;
+            break;
+          case FALSE:
+            eValidity = EExtendedValidity.INVALID;
+            break;
+          case UNDEFINED:
+            eValidity = EExtendedValidity.IGNORED;
+            break;
+          default:
+            throw new IllegalStateException ("Oops");
         }
 
         final String sValidationType = aResultObj.getAsString (JSON_ARTIFACT_TYPE);
@@ -812,7 +797,7 @@ public final class PhiveJsonHelper
         if (eValidity.isIgnored ())
         {
           // Ignored level
-          ret.add (ValidationResult.createIgnoredResult (aVA));
+          ret.add (ValidationResult.createSkippedResult (aVA));
         }
         else
         {
@@ -829,7 +814,7 @@ public final class PhiveJsonHelper
             }
           }
 
-          final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity);
+          final ValidationResult aVR = new ValidationResult (aVA, aErrorList);
           ret.add (aVR);
         }
       }

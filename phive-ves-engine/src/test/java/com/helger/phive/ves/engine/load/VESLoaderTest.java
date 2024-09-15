@@ -230,7 +230,7 @@ public final class VESLoaderTest
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
     assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
-                aValidationResultList.get (0).getValidity ().isValid ());
+                aValidationResultList.get (0).getErrorList ().containsNoError ());
   }
 
   @Test
@@ -251,7 +251,7 @@ public final class VESLoaderTest
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
     assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
-                aValidationResultList.get (0).getValidity ().isValid ());
+                aValidationResultList.get (0).getErrorList ().containsNoError ());
   }
 
   @Test
@@ -272,9 +272,9 @@ public final class VESLoaderTest
     assertNotNull (aValidationResultList);
     assertEquals (2, aValidationResultList.size ());
     assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
-                aValidationResultList.get (0).getValidity ().isValid ());
+                aValidationResultList.get (0).getErrorList ().containsNoError ());
     assertTrue (aValidationResultList.get (1).getErrorList ().toString (),
-                aValidationResultList.get (1).getValidity ().isValid ());
+                aValidationResultList.get (1).getErrorList ().containsNoError ());
   }
 
   @Test
@@ -295,11 +295,11 @@ public final class VESLoaderTest
     assertNotNull (aValidationResultList);
     assertEquals (3, aValidationResultList.size ());
     assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
-                aValidationResultList.get (0).getValidity ().isValid ());
+                aValidationResultList.get (0).getErrorList ().containsNoError ());
     assertTrue (aValidationResultList.get (1).getErrorList ().toString (),
-                aValidationResultList.get (1).getValidity ().isValid ());
+                aValidationResultList.get (1).getErrorList ().containsNoError ());
     assertTrue (aValidationResultList.get (2).getErrorList ().toString (),
-                aValidationResultList.get (2).getValidity ().isValid ());
+                aValidationResultList.get (2).getErrorList ().containsNoError ());
   }
 
   @Test
@@ -320,7 +320,7 @@ public final class VESLoaderTest
     assertNotNull (aValidationResultList);
     assertEquals (1, aValidationResultList.size ());
     assertTrue (aValidationResultList.get (0).getErrorList ().toString (),
-                aValidationResultList.get (0).getValidity ().isValid ());
+                aValidationResultList.get (0).getErrorList ().containsNoError ());
   }
 
   @Test

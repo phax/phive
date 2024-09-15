@@ -168,26 +168,19 @@ public class JsonValidationResultListHelper
       final IJsonObject aVRT = new JsonObject ();
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
-      switch (aVR.getValidity ())
+      if (aVR.isSkipped ())
       {
-        case IGNORED:
-          bValidationInterrupted = true;
-          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (ETriState.UNDEFINED));
-          break;
-        case VALID:
-          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (true));
-          break;
-        case INVALID:
-          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (false));
-          eWorstValidity = EExtendedValidity.INVALID;
-          break;
-        case UNCLEAR:
-          aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (ETriState.UNDEFINED));
-          if (eWorstValidity.isValid ())
-            eWorstValidity = EExtendedValidity.UNCLEAR;
-          break;
+        bValidationInterrupted = true;
+        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (ETriState.UNDEFINED));
       }
-      aVRT.add (PhiveJsonHelper.JSON_VALIDITY, aVR.getValidity ().getID ());
+      else
+      {
+        // Backwards compatible decision
+        final boolean bIsValid = aVR.getErrorList ().containsNoError ();
+        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (bIsValid));
+        if (!bIsValid)
+          eWorstValidity = EExtendedValidity.INVALID;
+      }
       aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationType ().getID ());
       if (m_aArtifactPathTypeToJson != null)
         aVRT.addIfNotNull (PhiveJsonHelper.JSON_ARTIFACT_PATH_TYPE,
@@ -215,7 +208,6 @@ public class JsonValidationResultListHelper
     // Success if the worst that happened is a warning
     // This is an assumption atm
     aResponse.add (PhiveJsonHelper.JSON_SUCCESS, eWorstValidity.isValid ());
-    aResponse.add (PhiveJsonHelper.JSON_VALIDITY, eWorstValidity.getID ());
     aResponse.add (PhiveJsonHelper.JSON_INTERRUPTED, bValidationInterrupted);
     if (m_aErrorLevelToJson != null)
       aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL, m_aErrorLevelToJson.apply (aMostSevere));

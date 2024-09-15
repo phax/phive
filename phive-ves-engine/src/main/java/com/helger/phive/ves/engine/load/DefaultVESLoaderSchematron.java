@@ -39,7 +39,6 @@ import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.execute.IValidationExecutor;
-import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.ves.v10.VesCustomErrorType;
 import com.helger.phive.ves.v10.VesOutputType;
 import com.helger.phive.ves.v10.VesSchematronType;
@@ -96,9 +95,6 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       // Readable resource from repository content
       final IReadableResource aRepoRes = new RepoStorageReadableResource (aSCHKey, aSCHItem.getContent ());
 
-      // TODO make customizable at some point
-      final IValidityDeterminator aValidityDeterminator = IValidityDeterminator.DEFAULT;
-
       // Resolve Namespace Context
       final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
       VESLoader.internalWrapNamespaceList (aSCH.getNamespaces (), aNSCtx);
@@ -130,13 +126,13 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
           switch (eEngine)
           {
             case PURE:
-              aExecutorSCH = ValidationExecutorSchematron.createPure (aValidityDeterminator, aRepoRes, aNSCtx);
+              aExecutorSCH = ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
               break;
             case ISO_SCHEMATRON:
-              aExecutorSCH = ValidationExecutorSchematron.createSCH (aValidityDeterminator, aRepoRes, aNSCtx);
+              aExecutorSCH = ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
               break;
             case SCHXSLT:
-              aExecutorSCH = ValidationExecutorSchematron.createSchXslt (aValidityDeterminator, aRepoRes, aNSCtx);
+              aExecutorSCH = ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
               break;
             default:
               throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
@@ -156,7 +152,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
           }
 
           // Simple
-          aExecutorSCH = ValidationExecutorSchematron.createXSLT (aValidityDeterminator, aRepoRes, aNSCtx);
+          aExecutorSCH = ValidationExecutorSchematron.createXSLT (aRepoRes, aNSCtx);
           break;
         }
         default:

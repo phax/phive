@@ -35,7 +35,6 @@ import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.execute.IValidationExecutor;
 import com.helger.phive.api.execute.IValidationExecutorWithCacheSupport;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
-import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
 
 /**
@@ -52,14 +51,6 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   private final String m_sDisplayName;
   private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aList = new CommonsArrayList <> ();
   private final IValidationExecutorSetStatus m_aStatus;
-
-  @Deprecated (forRemoval = true, since = "9.2.0")
-  public ValidationExecutorSet (@Nonnull final DVRCoordinate aVESID,
-                                @Nonnull @Nonempty final String sDisplayName,
-                                final boolean bDeprecated)
-  {
-    this (aVESID, sDisplayName, ValidationExecutorSetStatus.createDeprecatedNow (bDeprecated));
-  }
 
   public ValidationExecutorSet (@Nonnull final DVRCoordinate aVESID,
                                 @Nonnull @Nonempty final String sDisplayName,
@@ -179,20 +170,6 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
 
   @Nonnull
   @SafeVarargs
-  @Deprecated (forRemoval = true, since = "9.2.0")
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
-                                                                                  @Nonnull @Nonempty final String sDisplayName,
-                                                                                  final boolean bIsDeprecated,
-                                                                                  @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
-  {
-    return create (aID,
-                   sDisplayName,
-                   ValidationExecutorSetStatus.createDeprecatedNow (bIsDeprecated),
-                   aValidationExecutors);
-  }
-
-  @Nonnull
-  @SafeVarargs
   public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
                                                                                   @Nonnull final IValidationExecutorSetStatus aStatus,
@@ -212,19 +189,6 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   }
 
   @Nonnull
-  @Deprecated (forRemoval = true, since = "9.2.0")
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
-                                                                                  @Nonnull @Nonempty final String sDisplayName,
-                                                                                  final boolean bIsDeprecated,
-                                                                                  @Nonnull final Collection <? extends IValidationExecutor <ST>> aValidationExecutors)
-  {
-    return create (aID,
-                   sDisplayName,
-                   ValidationExecutorSetStatus.createDeprecatedNow (bIsDeprecated),
-                   aValidationExecutors);
-  }
-
-  @Nonnull
   public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
                                                                                   @Nonnull @Nonempty final String sDisplayName,
                                                                                   @Nonnull final IValidationExecutorSetStatus aStatus,
@@ -241,40 +205,6 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
       ret.addExecutor (aItem);
 
     return ret;
-  }
-
-  /**
-   * Create a derived VES from an existing VES. This means that only Schematrons
-   * can be added, but the XSDs are taken from the base VES only.
-   *
-   * @param aBaseVES
-   *        The base VES to copy from. May not be <code>null</code>.
-   * @param aID
-   *        The ID to use. May not be <code>null</code>.
-   * @param sDisplayName
-   *        The name of the VES. May neither be <code>null</code> nor empty.
-   * @param bIsDeprecated
-   *        <code>true</code> if this VES is considered deprecated,
-   *        <code>false</code> if not.
-   * @param aValidationExecutors
-   *        The resources to be associated with the VES. May not be
-   *        <code>null</code>.
-   * @return The newly created VES. Never <code>null</code>.
-   */
-  @Nonnull
-  @SafeVarargs
-  @Deprecated (forRemoval = true, since = "9.2.0")
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> createDerived (@Nonnull final IValidationExecutorSet <ST> aBaseVES,
-                                                                                         @Nonnull final DVRCoordinate aID,
-                                                                                         @Nonnull @Nonempty final String sDisplayName,
-                                                                                         final boolean bIsDeprecated,
-                                                                                         @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
-  {
-    return createDerived (aBaseVES,
-                          aID,
-                          sDisplayName,
-                          ValidationExecutorSetStatus.createDeprecatedNow (bIsDeprecated),
-                          aValidationExecutors);
   }
 
   /**

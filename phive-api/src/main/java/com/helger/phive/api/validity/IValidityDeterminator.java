@@ -19,35 +19,49 @@ package com.helger.phive.api.validity;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.error.list.IErrorList;
+import com.helger.commons.lang.GenericReflection;
+import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
  * Generic interface for a decision provider for validation results.
  *
  * @author Philip Helger
  * @since 10.0.0
+ * @param <SOURCETYPE>
+ *        The validation source type to use.
  */
-public interface IValidityDeterminator
+public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
 {
   /**
    * Get the validity of the provided error list.
    *
+   * @param aExecutor
+   *        The validation executor for which the validity state should be
+   *        determined. This gives access to the underlying rule resource and
+   *        the respective validation type. Never <code>null</code>.
    * @param aErrorList
    *        The error list to be evaluated. May not be <code>null</code> but
    *        empty.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  EExtendedValidity getValidity (@Nonnull IErrorList aErrorList);
+  EExtendedValidity getValidity (@Nonnull IValidationExecutor <SOURCETYPE> aExecutor, @Nonnull IErrorList aErrorList);
 
   /**
    * A validity determinator that marks entries with at least one error as
    * INVALID and others as VALID. It contains no uncertainty.
    */
-  IValidityDeterminator ONE_ERROR_INVALID = errList -> errList.containsAtLeastOneError () ? EExtendedValidity.INVALID
-                                                                                          : EExtendedValidity.VALID;
+  IValidityDeterminator <IValidationSource> ONE_ERROR_INVALID = (ex, errList) -> errList.containsAtLeastOneError ()
+                                                                                                                    ? EExtendedValidity.INVALID
+                                                                                                                    : EExtendedValidity.VALID;
 
   /**
-   * The default instance. It's {@link #ONE_ERROR_INVALID}
+   * @return The default instance. It's {@link #ONE_ERROR_INVALID}.
    */
-  IValidityDeterminator DEFAULT = ONE_ERROR_INVALID;
+  @Nonnull
+  static <ST extends IValidationSource> IValidityDeterminator <ST> getDefault ()
+  {
+    return GenericReflection.uncheckedCast (ONE_ERROR_INVALID);
+  }
 }

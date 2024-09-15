@@ -92,7 +92,6 @@ public final class PhiveJsonHelperTest
                   PDTWebDateHelper.getAsStringXSD (aNow) +
                   "\",\"type\":\"valid\"}}," +
                   "\"success\":true," +
-                  "\"validity\":\"valid\"," +
                   "\"interrupted\":false," +
                   "\"mostSevereErrorLevel\":\"SUCCESS\"," +
                   "\"results\":[]," +
@@ -109,12 +108,12 @@ public final class PhiveJsonHelperTest
     final ValidationExecutorSet <IValidationSourceXML> aVES = new ValidationExecutorSet <> (aVESID,
                                                                                             "name",
                                                                                             ValidationExecutorSetStatus.createValidNow ());
-    aVES.addExecutor (ValidationExecutorXSD.create (IValidityDeterminator.DEFAULT,
-                                                    new ClassPathResource ("test/schema1.xsd")));
+    aVES.addExecutor (ValidationExecutorXSD.create (new ClassPathResource ("test/schema1.xsd")));
     aRegistry.registerValidationExecutorSet (aVES);
 
     // Validate
-    final ValidationResultList aVRL = ValidationExecutionManager.executeValidation (aVES,
+    final ValidationResultList aVRL = ValidationExecutionManager.executeValidation (IValidityDeterminator.getDefault (),
+                                                                                    aVES,
                                                                                     ValidationSourceXML.create (new ClassPathResource ("test/schema1.xml")));
     assertTrue (aVRL.containsAtLeastOneError ());
 

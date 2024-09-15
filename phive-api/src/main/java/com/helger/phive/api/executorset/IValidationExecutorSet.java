@@ -58,17 +58,6 @@ public interface IValidationExecutorSet <SOURCETYPE extends IValidationSource> e
   ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ();
 
   /**
-   * @return <code>true</code> if this document is deprecated (phased-out or end
-   *         of life)?
-   * @see #getStatus()
-   */
-  @Deprecated (forRemoval = true, since = "9.2.0")
-  default boolean isDeprecated ()
-  {
-    return getStatus ().isDeprecated ();
-  }
-
-  /**
    * @return The VES status. Never <code>null</code>.
    */
   @Nonnull

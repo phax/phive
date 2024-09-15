@@ -44,6 +44,7 @@ import com.helger.phive.api.executorset.status.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
@@ -343,7 +344,8 @@ public final class LoadedVES
                                                                                           aExecutors);
 
     // Validate
-    ValidationExecutionManager.executeValidation (GenericReflection.uncheckedCast (aVES),
+    ValidationExecutionManager.executeValidation (IValidityDeterminator.getDefault (),
+                                                  GenericReflection.uncheckedCast (aVES),
                                                   aValidationSource,
                                                   aValidationResultList,
                                                   aLocale);

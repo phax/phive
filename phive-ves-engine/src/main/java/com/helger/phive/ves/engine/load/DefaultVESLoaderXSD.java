@@ -53,7 +53,6 @@ import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.IValidationExecutor;
-import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.ves.engine.load.catalog.EVESCatalogType;
 import com.helger.phive.ves.engine.load.catalog.VESCatalog;
 import com.helger.phive.ves.engine.load.catalog.VESCatalogEntry;
@@ -160,9 +159,6 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     // Readable resource from repository content
     final IReadableResource aRepoRes = new RepoStorageReadableResource (aXSDKey, aXSDItem.getContent ());
 
-    // TODO make customizable at some point
-    final IValidityDeterminator aValidityDeterminator = IValidityDeterminator.DEFAULT;
-
     final StopWatch aSW = StopWatch.createdStarted ();
     final ValidationExecutorXSD aExecutorXSD;
     final String sResourceType = aXSD.getResource ().getType ();
@@ -196,7 +192,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         }
 
         // Load "as is"
-        aExecutorXSD = ValidationExecutorXSD.create (aValidityDeterminator, aRepoRes);
+        aExecutorXSD = ValidationExecutorXSD.create (aRepoRes);
         break;
       }
       case RESOURCE_TYPE_ZIP:
@@ -439,7 +435,6 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           throw new IllegalStateException ("Failed to resolve XML Schema from ZIP");
 
         aExecutorXSD = new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aRepoRes),
-                                                  aValidityDeterminator,
                                                   () -> aSchema);
         break;
       }

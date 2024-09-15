@@ -36,6 +36,8 @@ import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.EExtendedValidity;
+import com.helger.phive.api.validity.IValidityDeterminator;
 
 /**
  * Execute multiple {@link IValidationExecutor}s at once. It is basically a
@@ -53,23 +55,34 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutionManager.class);
 
+  private final IValidityDeterminator <SOURCETYPE> m_aValidityDeterminator;
   private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aExecutors = new CommonsArrayList <> ();
 
   /**
    * Default constructor without executors.
+   *
+   * @param aValidityDeterminator
+   *        The validity determinator to be used. May not be <code>null</code>.
    */
-  public ValidationExecutionManager ()
-  {}
+  public ValidationExecutionManager (@Nonnull final IValidityDeterminator <SOURCETYPE> aValidityDeterminator)
+  {
+    ValueEnforcer.notNull (aValidityDeterminator, "ValidityDeterminator");
+    m_aValidityDeterminator = aValidityDeterminator;
+  }
 
   /**
    * Constructor with a collection of executors.
    *
+   * @param aValidityDeterminator
+   *        The validity determinator to be used. May not be <code>null</code>.
    * @param aExecutors
    *        The executors to be added. May be <code>null</code> but may not
    *        contain <code>null</code> values.
    */
-  public ValidationExecutionManager (@Nullable final Iterable <? extends IValidationExecutor <SOURCETYPE>> aExecutors)
+  public ValidationExecutionManager (@Nonnull final IValidityDeterminator <SOURCETYPE> aValidityDeterminator,
+                                     @Nullable final Iterable <? extends IValidationExecutor <SOURCETYPE>> aExecutors)
   {
+    this (aValidityDeterminator);
     addExecutors (aExecutors);
   }
 
@@ -154,7 +167,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
       if (bIgnoreRest)
       {
         // Ignore executor because of previous failures
-        aValidationResults.add (ValidationResult.createIgnoredResult (aExecutor.getValidationArtefact ()));
+        aValidationResults.add (ValidationResult.createSkippedResult (aExecutor.getValidationArtefact ()));
       }
       else
       {
@@ -163,7 +176,8 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
         assert aResult != null;
         aValidationResults.add (aResult);
 
-        if (aResult.getValidity ().isInvalid () && aExecutor.isStopValidationOnError ())
+        final EExtendedValidity eValidity = m_aValidityDeterminator.getValidity (aExecutor, aResult.getErrorList ());
+        if (eValidity.isInvalid () && aExecutor.isStopValidationOnError ())
         {
           // Ignore all following executors
           bIgnoreRest = true;
@@ -182,7 +196,8 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
       // Execute validation
       // Note: locale doesn't matter because we don't use the texts
       final ValidationResult aResult = aExecutor.applyValidation (aSource, (Locale) null);
-      if (aResult.getValidity ().isInvalid ())
+      final EExtendedValidity eValidity = m_aValidityDeterminator.getValidity (aExecutor, aResult.getErrorList ());
+      if (eValidity.isInvalid ())
       {
         // Break asap
         return EValidity.INVALID;
@@ -198,6 +213,8 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * This is a shortcut method to perform the full validation of a VES onto a
    * specific object to be validated.
    *
+   * @param aValidityDeterminator
+   *        The validity determinator to be used. May not be <code>null</code>.
    * @param aVES
    *        The VES to be used. May not be <code>null</code>.
    * @param aSource
@@ -205,16 +222,19 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @return The validation result list and never <code>null</code>.
    */
   @Nonnull
-  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                                       @Nonnull final IValidationExecutorSet <ST> aVES,
                                                                                        @Nonnull final ST aSource)
   {
-    return new ValidationExecutionManager <> (aVES).executeValidation (aSource);
+    return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource);
   }
 
   /**
    * This is a shortcut method to perform the full validation of a VES onto a
    * specific object to be validated.
    *
+   * @param aValidityDeterminator
+   *        The validity determinator to be used. May not be <code>null</code>.
    * @param aVES
    *        The VES to be used. May not be <code>null</code>.
    * @param aSource
@@ -224,17 +244,20 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @return The validation result list and never <code>null</code>.
    */
   @Nonnull
-  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                                       @Nonnull final IValidationExecutorSet <ST> aVES,
                                                                                        @Nonnull final ST aSource,
                                                                                        @Nullable final Locale aLocale)
   {
-    return new ValidationExecutionManager <> (aVES).executeValidation (aSource, aLocale);
+    return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource, aLocale);
   }
 
   /**
    * This is a shortcut method to perform the full validation of a VES onto a
    * specific object to be validated.
    *
+   * @param aValidityDeterminator
+   *        The validity determinator to be used. May not be <code>null</code>.
    * @param aVES
    *        The VES to be used. May not be <code>null</code>.
    * @param aSource
@@ -247,18 +270,23 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    *        The locale to be used for error messages. May be <code>null</code>.
    */
   @Nonnull
-  public static <ST extends IValidationSource> void executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+  public static <ST extends IValidationSource> void executeValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                       @Nonnull final IValidationExecutorSet <ST> aVES,
                                                                        @Nonnull final ST aSource,
                                                                        @Nonnull final ValidationResultList aValidationResults,
                                                                        @Nullable final Locale aLocale)
   {
-    new ValidationExecutionManager <> (aVES).executeValidation (aSource, aValidationResults, aLocale);
+    new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource,
+                                                                                       aValidationResults,
+                                                                                       aLocale);
   }
 
   /**
    * This is a shortcut method to perform the fast validation of a VES onto a
    * specific object to be validated.
    *
+   * @param aValidityDeterminator
+   *        The validity determinator to be used. May not be <code>null</code>.
    * @param aVES
    *        The VES to be used. May not be <code>null</code>.
    * @param aSource
@@ -266,9 +294,10 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @return The validity of the validated object and never <code>null</code>.
    */
   @Nonnull
-  public static <ST extends IValidationSource> EValidity executeFastValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+  public static <ST extends IValidationSource> EValidity executeFastValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                                @Nonnull final IValidationExecutorSet <ST> aVES,
                                                                                 @Nonnull final ST aSource)
   {
-    return new ValidationExecutionManager <> (aVES).executeFastValidation (aSource);
+    return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeFastValidation (aSource);
   }
 }
