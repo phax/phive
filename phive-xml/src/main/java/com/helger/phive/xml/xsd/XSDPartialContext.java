@@ -112,6 +112,21 @@ public class XSDPartialContext
   }
 
   /**
+   * Create a new XSD partial context with a min and max node constraint of 1.
+   *
+   * @param aXE
+   *        {@link XPathExpression} that must be satisfied. May not be
+   *        <code>null</code>.
+   * @return The new XSDPartialContext and never <code>null</code>.
+   * @since 10.0.0
+   */
+  @Nonnull
+  public static XSDPartialContext createMandatory (@Nonnull final XPathExpression aXE)
+  {
+    return new XSDPartialContext (aXE, 1, 1);
+  }
+
+  /**
    * Create a new XSD partial context with a min and max node constraint.
    *
    * @param aXE

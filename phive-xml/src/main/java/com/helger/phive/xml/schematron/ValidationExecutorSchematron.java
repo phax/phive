@@ -578,7 +578,7 @@ public class ValidationExecutorSchematron extends
 
   /**
    * Create a new instance for a single resource that uses the precompiled XSLT
-   * Schematron validation.
+   * ISO Schematron validation.
    *
    * @param aRes
    *        The resource pointing to the XSLT rules. May not be
