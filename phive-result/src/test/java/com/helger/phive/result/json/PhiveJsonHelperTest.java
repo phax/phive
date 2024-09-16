@@ -112,7 +112,7 @@ public final class PhiveJsonHelperTest
     aRegistry.registerValidationExecutorSet (aVES);
 
     // Validate
-    final ValidationResultList aVRL = ValidationExecutionManager.executeValidation (IValidityDeterminator.getDefault (),
+    final ValidationResultList aVRL = ValidationExecutionManager.executeValidation (IValidityDeterminator.createDefault (),
                                                                                     aVES,
                                                                                     ValidationSourceXML.create (new ClassPathResource ("test/schema1.xml")));
     assertTrue (aVRL.containsAtLeastOneError ());

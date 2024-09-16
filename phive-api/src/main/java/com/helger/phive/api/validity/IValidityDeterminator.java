@@ -19,7 +19,6 @@ package com.helger.phive.api.validity;
 import javax.annotation.Nonnull;
 
 import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.lang.GenericReflection;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 
@@ -49,19 +48,21 @@ public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
   EExtendedValidity getValidity (@Nonnull IValidationExecutor <SOURCETYPE> aExecutor, @Nonnull IErrorList aErrorList);
 
   /**
-   * A validity determinator that marks entries with at least one error as
-   * INVALID and others as VALID. It contains no uncertainty.
+   * @return A validity determinator that marks entries with at least one error
+   *         as INVALID and others as VALID. It contains no uncertainty.
    */
-  IValidityDeterminator <IValidationSource> ONE_ERROR_INVALID = (ex, errList) -> errList.containsAtLeastOneError ()
-                                                                                                                    ? EExtendedValidity.INVALID
-                                                                                                                    : EExtendedValidity.VALID;
+  static <ST extends IValidationSource> IValidityDeterminator <ST> createCertainOneErrorInvalid ()
+  {
+    return (ex, errList) -> errList.containsAtLeastOneError () ? EExtendedValidity.INVALID : EExtendedValidity.VALID;
+  }
 
   /**
-   * @return The default instance. It's {@link #ONE_ERROR_INVALID}.
+   * @return The default determinator. It's
+   *         {@link #createCertainOneErrorInvalid()}
    */
   @Nonnull
-  static <ST extends IValidationSource> IValidityDeterminator <ST> getDefault ()
+  static <ST extends IValidationSource> IValidityDeterminator <ST> createDefault ()
   {
-    return GenericReflection.uncheckedCast (ONE_ERROR_INVALID);
+    return createCertainOneErrorInvalid ();
   }
 }

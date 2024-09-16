@@ -37,8 +37,8 @@ import com.helger.commons.lang.EnumHelper;
  */
 public enum EExtendedValidity implements IHasID <String>
 {
-  /** Validation layer was ignored */
-  IGNORED ("ignored"),
+  /** Validation layer was skipped/ignored */
+  SKIPPED ("skipped"),
   /** Document matches rules on this layer */
   VALID ("valid"),
   /** Document does not match rules on this layer */
@@ -62,9 +62,9 @@ public enum EExtendedValidity implements IHasID <String>
     return m_sID;
   }
 
-  public boolean isIgnored ()
+  public boolean isSkipped ()
   {
-    return this == IGNORED;
+    return this == SKIPPED;
   }
 
   public boolean isValid ()

@@ -765,7 +765,7 @@ public final class PhiveJsonHelper
             eValidity = EExtendedValidity.INVALID;
             break;
           case UNDEFINED:
-            eValidity = EExtendedValidity.IGNORED;
+            eValidity = EExtendedValidity.SKIPPED;
             break;
           default:
             throw new IllegalStateException ("Oops");
@@ -794,7 +794,7 @@ public final class PhiveJsonHelper
         }
         final ValidationArtefact aVA = new ValidationArtefact (aValidationType, aRes);
 
-        if (eValidity.isIgnored ())
+        if (eValidity.isSkipped ())
         {
           // Ignored level
           ret.add (ValidationResult.createSkippedResult (aVA));

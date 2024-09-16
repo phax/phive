@@ -344,7 +344,7 @@ public final class LoadedVES
                                                                                           aExecutors);
 
     // Validate
-    ValidationExecutionManager.executeValidation (IValidityDeterminator.getDefault (),
+    ValidationExecutionManager.executeValidation (IValidityDeterminator.createDefault (),
                                                   GenericReflection.uncheckedCast (aVES),
                                                   aValidationSource,
                                                   aValidationResultList,
