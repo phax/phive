@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api;
 
+import javax.annotation.Nonnull;
+
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
 import com.helger.commons.id.IHasID;
 import com.helger.commons.name.IHasName;
@@ -32,20 +34,10 @@ import com.helger.commons.name.IHasName;
 public interface IValidationType extends IHasID <String>, IHasName
 {
   /**
-   * @return <code>true</code> if this is an XML Schema validation.
+   * @return The validation based type. Never <code>null</code>.
    */
-  default boolean isXSD ()
-  {
-    return false;
-  }
-
-  /**
-   * @return <code>true</code> if this is a Schematron validation.
-   */
-  default boolean isSchematron ()
-  {
-    return false;
-  }
+  @Nonnull
+  EValidationBaseType getBaseType ();
 
   /**
    * @return <code>true</code> to stop validation if an error occurs when using

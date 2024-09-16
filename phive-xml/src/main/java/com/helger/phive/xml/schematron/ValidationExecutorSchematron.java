@@ -52,9 +52,9 @@ import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
-import com.helger.phive.api.execute.AbstractValidationExecutor;
-import com.helger.phive.api.execute.IValidationExecutor;
-import com.helger.phive.api.execute.IValidationExecutorWithCacheSupport;
+import com.helger.phive.api.execute.IValidationExecutorCacheSupport;
+import com.helger.phive.api.executor.AbstractValidationExecutor;
+import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
@@ -87,7 +87,7 @@ import com.helger.xml.xpath.XPathHelper;
 public class ValidationExecutorSchematron extends
                                           AbstractValidationExecutor <IValidationSourceXML, ValidationExecutorSchematron>
                                           implements
-                                          IValidationExecutorWithCacheSupport
+                                          IValidationExecutorCacheSupport
 {
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
 
@@ -95,7 +95,7 @@ public class ValidationExecutorSchematron extends
 
   private final String m_sPrerequisiteXPath;
   private final MapBasedNamespaceContext m_aNamespaceContext;
-  private boolean m_bCacheSchematron = IValidationExecutorWithCacheSupport.DEFAULT_CACHE;
+  private boolean m_bCacheSchematron = IValidationExecutorCacheSupport.DEFAULT_CACHE;
   private ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails;
 
   public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
@@ -103,7 +103,9 @@ public class ValidationExecutorSchematron extends
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationType ().isSchematron (), "Artifact is not a Schematron");
+    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isSchematron (),
+                           "Artifact is not a Schematron");
+
     m_sPrerequisiteXPath = sPrerequisiteXPath;
     // Create a copy on demand
     m_aNamespaceContext = aNamespaceContext == null ? null : new MapBasedNamespaceContext (aNamespaceContext);

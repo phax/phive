@@ -36,15 +36,15 @@ import com.helger.diver.api.coord.DVRCoordinate;
  * @author Philip Helger
  */
 @Immutable
-public class TestFile
+public class PhiveTestFile
 {
   private final IReadableResource m_aResource;
   private final DVRCoordinate m_aVESID;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
-  public TestFile (@Nonnull final IReadableResource aResource,
-                   @Nonnull final DVRCoordinate aVESID,
-                   @Nullable final Set <String> aExpectedErrorIDs)
+  public PhiveTestFile (@Nonnull final IReadableResource aResource,
+                        @Nonnull final DVRCoordinate aVESID,
+                        @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
     m_aVESID = ValueEnforcer.notNull (aVESID, "VESID");
@@ -88,10 +88,10 @@ public class TestFile
   }
 
   @Nonnull
-  public static TestFile createGoodCase (@Nonnull final IReadableResource aResource,
-                                         @Nonnull final DVRCoordinate aVESID)
+  public static PhiveTestFile createGoodCase (@Nonnull final IReadableResource aResource,
+                                              @Nonnull final DVRCoordinate aVESID)
   {
     // Good case: no error
-    return new TestFile (aResource, aVESID, null);
+    return new PhiveTestFile (aResource, aVESID, null);
   }
 }

@@ -50,7 +50,7 @@ import com.helger.diver.api.version.DVRPseudoVersionRegistry;
 import com.helger.diver.api.version.DVRVersion;
 import com.helger.diver.api.version.IDVRPseudoVersion;
 import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
-import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 
 /**

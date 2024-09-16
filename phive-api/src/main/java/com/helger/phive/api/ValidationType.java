@@ -34,18 +34,22 @@ import com.helger.commons.string.ToStringGenerator;
 public class ValidationType implements IValidationType
 {
   private final String m_sID;
+  private final EValidationBaseType m_eBaseType;
   private final String m_sName;
   private final boolean m_bStopValidationOnError;
   private final boolean m_bContextRequired;
 
   public ValidationType (@Nonnull @Nonempty final String sID,
+                         @Nonnull final EValidationBaseType eBaseType,
                          @Nonnull @Nonempty final String sName,
                          final boolean bStopValidationOnError,
                          final boolean bContextRequired)
   {
     ValueEnforcer.notEmpty (sID, "ID");
+    ValueEnforcer.notNull (eBaseType, "BaseType");
     ValueEnforcer.notEmpty (sName, "Name");
     m_sID = sID;
+    m_eBaseType = eBaseType;
     m_sName = sName;
     m_bStopValidationOnError = bStopValidationOnError;
     m_bContextRequired = bContextRequired;
@@ -56,6 +60,12 @@ public class ValidationType implements IValidationType
   public String getID ()
   {
     return m_sID;
+  }
+
+  @Nonnull
+  public EValidationBaseType getBaseType ()
+  {
+    return m_eBaseType;
   }
 
   @Nonnull
@@ -84,6 +94,7 @@ public class ValidationType implements IValidationType
       return false;
     final ValidationType rhs = (ValidationType) o;
     return m_sID.equals (rhs.m_sID) &&
+           m_eBaseType.equals (rhs.m_eBaseType) &&
            m_sName.equals (rhs.m_sName) &&
            m_bStopValidationOnError == rhs.m_bStopValidationOnError &&
            m_bContextRequired == rhs.m_bContextRequired;
@@ -93,6 +104,7 @@ public class ValidationType implements IValidationType
   public int hashCode ()
   {
     return new HashCodeGenerator (this).append (m_sID)
+                                       .append (m_eBaseType)
                                        .append (m_sName)
                                        .append (m_bStopValidationOnError)
                                        .append (m_bContextRequired)
@@ -103,6 +115,7 @@ public class ValidationType implements IValidationType
   public String toString ()
   {
     return new ToStringGenerator (this).append ("ID", m_sID)
+                                       .append ("BaseType", m_eBaseType)
                                        .append ("Name", m_sName)
                                        .append ("StopValidationOnError", m_bStopValidationOnError)
                                        .append ("ContextRequired", m_bContextRequired)

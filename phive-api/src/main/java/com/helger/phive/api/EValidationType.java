@@ -34,49 +34,53 @@ public enum EValidationType implements IValidationType
    * Validate XML syntax by parsing without assigned XSDs. This is the
    * wellformedness check.
    */
-  XML ("xml", "XML Syntax"),
+  XML ("xml", EValidationBaseType.XML, "XML Syntax"),
   /** Validate XML against the rules of an XML Schema (XSD) */
-  XSD ("xsd", "XML Schema"),
+  XSD ("xsd", EValidationBaseType.XSD, "XML Schema"),
   /**
    * Validate part of an XML against the rules of an XML Schema (XSD) - e.g. for
    * extension/plugins. The context object needed for this type is an
    * <code>ValidationExecutorXSDPartial.ContextData</code>.
    */
-  PARTIAL_XSD ("partial-xsd", "Partial XML Schema"),
+  PARTIAL_XSD ("partial-xsd", EValidationBaseType.XSD, "Partial XML Schema"),
   /**
    * Pure Java implementation of Schematron - can only handle XPath 2 (was
    * originally called SCHEMATRON)
    */
-  SCHEMATRON_PURE ("schematron-pure", "Schematron (pure; XPath-only)"),
+  SCHEMATRON_PURE ("schematron-pure", EValidationBaseType.SCHEMATRON, "Schematron (pure; XPath-only)"),
   /**
    * Schematron implementation that must convert the SCH to XSLT before
    * validation
    */
-  SCHEMATRON_SCH ("schematron-sch", "Schematron (SCH)"),
+  SCHEMATRON_SCH ("schematron-sch", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT2)"),
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
    * plugin)
    *
    * @since 7.0.0
    */
-  SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", "Schematron (SchXslt XSLT2)"),
+  SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt XSLT2)"),
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
    * plugin)
    */
-  SCHEMATRON_XSLT ("schematron-xslt", "Schematron (ISO XSLT2)"),
+  SCHEMATRON_XSLT ("schematron-xslt", EValidationBaseType.SCHEMATRON, "Schematron (ISO XSLT2)"),
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven
    * plugin) with different output (for OIOUBL only)
    */
-  SCHEMATRON_OIOUBL ("schematron-xslt-oioubl", "Schematron (OIOUBL XSLT)");
+  SCHEMATRON_OIOUBL ("schematron-xslt-oioubl", EValidationBaseType.SCHEMATRON, "Schematron (OIOUBL XSLT)");
 
   private final String m_sID;
+  private final EValidationBaseType m_eBaseType;
   private final String m_sName;
 
-  EValidationType (@Nonnull @Nonempty final String sID, @Nonnull @Nonempty final String sName)
+  EValidationType (@Nonnull @Nonempty final String sID,
+                   @Nonnull final EValidationBaseType eBaseType,
+                   @Nonnull @Nonempty final String sName)
   {
     m_sID = sID;
+    m_eBaseType = eBaseType;
     m_sName = sName;
   }
 
@@ -88,38 +92,21 @@ public enum EValidationType implements IValidationType
   }
 
   @Nonnull
+  public EValidationBaseType getBaseType ()
+  {
+    return m_eBaseType;
+  }
+
+  @Nonnull
   @Nonempty
   public String getName ()
   {
     return m_sName;
   }
 
-  /**
-   * @return <code>true</code> if this is an XML validation. For XSD and
-   *         Schematron this will return <code>false</code>.
-   */
-  public boolean isXML ()
-  {
-    return this == XML;
-  }
-
-  public boolean isXSD ()
-  {
-    return this == XSD || this == PARTIAL_XSD;
-  }
-
-  public boolean isSchematron ()
-  {
-    return this == SCHEMATRON_PURE ||
-           this == SCHEMATRON_SCH ||
-           this == SCHEMATRON_SCHXSLT ||
-           this == SCHEMATRON_XSLT ||
-           this == SCHEMATRON_OIOUBL;
-  }
-
   public boolean isStopValidationOnError ()
   {
-    return isXML () || isXSD ();
+    return m_eBaseType.isXML () || m_eBaseType.isXSD ();
   }
 
   public boolean isContextRequired ()

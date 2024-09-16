@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.api.execute;
+package com.helger.phive.api.executor;
 
 import java.util.Locale;
 
@@ -28,8 +28,8 @@ import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
 
 /**
- * Base interface for performing validation of a single XML document based on
- * the rules of a single validation artefact.
+ * Base interface for performing validation of a single document based on the
+ * rules of a single validation artefact.
  *
  * @author Philip Helger
  * @param <SOURCETYPE>
@@ -40,7 +40,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource> exte
                                      ICloneable <IValidationExecutor <SOURCETYPE>>
 {
   /**
-   * @return The validation artefact used to validate the XML instances. Never
+   * @return The validation artefact used to validate the document. Never
    *         <code>null</code>.
    */
   @Nonnull
@@ -51,23 +51,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource> exte
    *         validations.
    * @since 5.3.1; previously on validation type level only
    */
-  default boolean isStopValidationOnError ()
-  {
-    return getValidationArtefact ().getValidationType ().isStopValidationOnError ();
-  }
-
-  /**
-   * Perform validation of the provided source.
-   *
-   * @param aSource
-   *        Source to be validated. May not be <code>null</code>.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  default ValidationResult applyValidation (@Nonnull final SOURCETYPE aSource)
-  {
-    return applyValidation (aSource, (Locale) null);
-  }
+  boolean isStopValidationOnError ();
 
   /**
    * Perform validation of the provided source.

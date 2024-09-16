@@ -37,7 +37,7 @@ public class ValidationResult
 {
   private final IValidationArtefact m_aValidationArtefact;
   private final IErrorList m_aErrorList;
-  private final boolean m_bWasSkipped;
+  private final boolean m_bSkipped;
 
   /**
    * Constructor for non-skipped results
@@ -72,7 +72,7 @@ public class ValidationResult
   {
     m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     m_aErrorList = ValueEnforcer.notNull (aErrorList, "ErrorList");
-    m_bWasSkipped = bWasSkipped;
+    m_bSkipped = bWasSkipped;
   }
 
   /**
@@ -98,7 +98,7 @@ public class ValidationResult
 
   public final boolean isSkipped ()
   {
-    return m_bWasSkipped;
+    return m_bSkipped;
   }
 
   @Override
@@ -106,7 +106,7 @@ public class ValidationResult
   {
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
                                        .append ("ErrorList", m_aErrorList)
-                                       .append ("WasSkipped", m_bWasSkipped)
+                                       .append ("Skipped", m_bSkipped)
                                        .getToString ();
   }
 

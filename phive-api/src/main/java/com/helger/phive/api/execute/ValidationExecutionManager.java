@@ -32,6 +32,7 @@ import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.collection.impl.ICommonsIterable;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.state.EValidity;
+import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
@@ -167,10 +168,12 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Executing validation on source " + aSource + (aLocale == null ? "" : " and locale " + aLocale));
 
-    boolean bIgnoreRest = false;
+    boolean bSkipRest = false;
+
+    // Run over all executors
     for (final IValidationExecutor <SOURCETYPE> aExecutor : getAllExecutors ())
     {
-      if (bIgnoreRest)
+      if (bSkipRest)
       {
         // Ignore executor because of previous failures
         aValidationResults.add (ValidationResult.createSkippedResult (aExecutor.getValidationArtefact ()));
@@ -182,11 +185,12 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
         assert aResult != null;
         aValidationResults.add (aResult);
 
+        // Determine validity
         final EExtendedValidity eValidity = m_aValidityDeterminator.getValidity (aExecutor, aResult.getErrorList ());
         if (eValidity.isInvalid () && aExecutor.isStopValidationOnError ())
         {
           // Ignore all following executors
-          bIgnoreRest = true;
+          bSkipRest = true;
         }
       }
     }
@@ -202,6 +206,8 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
       // Execute validation
       // Note: locale doesn't matter because we don't use the texts
       final ValidationResult aResult = aExecutor.applyValidation (aSource, (Locale) null);
+
+      // Determine validity
       final EExtendedValidity eValidity = m_aValidityDeterminator.getValidity (aExecutor, aResult.getErrorList ());
       if (eValidity.isInvalid ())
       {

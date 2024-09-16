@@ -40,7 +40,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
-import com.helger.phive.api.execute.AbstractValidationExecutor;
+import com.helger.phive.api.executor.AbstractValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
@@ -77,12 +77,19 @@ public class ValidationExecutorXSDPartial extends
                                        @Nonnull final XSDPartialContext aPartialContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationType ().isXSD (), "Artifact is not an XSD");
+    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
+                           "Artifact is not an XSD");
+    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().isContextRequired (),
+                           "Artifact must require a validation context");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     ValueEnforcer.notNull (aPartialContext, "PartialContext");
 
     m_aSchemaProvider = aSchemaProvider;
     m_aPartialContext = aPartialContext;
+
+    // By default, if an error occurs in an XSD, we don't continue with further
+    // validation layers
+    setStopValidationOnError (true);
   }
 
   /**

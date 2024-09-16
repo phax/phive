@@ -157,6 +157,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
         * Each `IValidationExecutorManager` now has an `IValidityDeterminator`
         * By using `IValidityDeterminator.getDefault()` the previous state can be re-created
     * Renamed method `IValidationArtefact.getValidationArtefactType` to `getValidationType`
+    * Moved classes `(Abstract|I)ValidationExecutor` to its own `.executor` package
+    * Renamed class `TestFile` to `PhiveTestFile`
 * v9.2.2 - 2024-07-29
     * Switched from custom error level to `CustomErrorDetails`
 * v9.2.1 - 2024-04-25

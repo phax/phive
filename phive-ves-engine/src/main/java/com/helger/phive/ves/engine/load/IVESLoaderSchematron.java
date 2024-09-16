@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import com.helger.commons.collection.impl.ICommonsList;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
-import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 

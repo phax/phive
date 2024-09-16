@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.api.execute;
+package com.helger.phive.api.executor;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -43,16 +43,15 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
                                                  IValidationExecutor <SOURCETYPE>,
                                                  IGenericImplTrait <IMPLTYPE>
 {
-  public static final boolean DEFAULT_STOP_VALIDATION_ON_ERROR = false;
-
   private final IValidationArtefact m_aValidationArtefact;
-  private boolean m_bStopValidationOnError = DEFAULT_STOP_VALIDATION_ON_ERROR;
+  private boolean m_bStopValidationOnError;
 
   public AbstractValidationExecutor (@Nonnull final IValidationArtefact aValidationArtefact)
   {
     ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
 
     m_aValidationArtefact = aValidationArtefact;
+    m_bStopValidationOnError = aValidationArtefact.getValidationType ().isStopValidationOnError ();
   }
 
   @Nonnull
@@ -61,7 +60,6 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
     return m_aValidationArtefact;
   }
 
-  @Override
   public final boolean isStopValidationOnError ()
   {
     return m_bStopValidationOnError;
@@ -97,13 +95,14 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final AbstractValidationExecutor <?, ?> rhs = (AbstractValidationExecutor <?, ?>) o;
-    return m_aValidationArtefact.equals (rhs.m_aValidationArtefact);
+    return m_aValidationArtefact.equals (rhs.m_aValidationArtefact) &&
+           m_bStopValidationOnError == rhs.m_bStopValidationOnError;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aValidationArtefact).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aValidationArtefact).append (m_bStopValidationOnError).getHashCode ();
   }
 
   @Override

@@ -52,7 +52,7 @@ import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
-import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.ves.engine.load.catalog.EVESCatalogType;
 import com.helger.phive.ves.engine.load.catalog.VESCatalog;
 import com.helger.phive.ves.engine.load.catalog.VESCatalogEntry;

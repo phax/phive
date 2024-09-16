@@ -30,7 +30,7 @@ import com.helger.commons.error.IError;
 import com.helger.commons.error.list.ErrorList;
 
 /**
- * A managed list of {@link ValidationResult} objects
+ * A managed list of {@link ValidationResult} objects.
  *
  * @author Philip Helger
  */

@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 
 import com.helger.commons.error.list.IErrorList;
 import com.helger.commons.lang.GenericReflection;
-import com.helger.phive.api.execute.IValidationExecutor;
+import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 
 /**

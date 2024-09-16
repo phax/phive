@@ -39,7 +39,7 @@ import com.helger.commons.string.ToStringGenerator;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
-import com.helger.phive.api.execute.AbstractValidationExecutor;
+import com.helger.phive.api.executor.AbstractValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
@@ -60,8 +60,10 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
                                 @Nonnull final Supplier <? extends Schema> aSchemaProvider)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue (aValidationArtefact.getValidationType ().isXSD (), "Artifact is not an XSD");
+    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
+                           "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
+
     m_aSchemaProvider = aSchemaProvider;
 
     // By default, if an error occurs in an XSD, we don't continue with further
