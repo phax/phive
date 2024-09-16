@@ -150,6 +150,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v10.0.2 - 2024-09-16
+    * Re-release due to Maven Central issue
 * v10.0.1 - 2024-09-16
     * Fixed the validation types in `ValidationExecutorXSDPartial.create`
 * v10.0.0 - 2024-09-16
