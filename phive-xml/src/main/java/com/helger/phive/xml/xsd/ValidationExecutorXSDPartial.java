@@ -266,7 +266,7 @@ public class ValidationExecutorXSDPartial extends
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 
     // The last one is the important one for the name
-    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD,
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.PARTIAL_XSD,
                                                                      aXSDRes.get (aXSDRes.size () - 1)),
                                              () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
                                              aPartialContext);
