@@ -31,6 +31,7 @@ import org.xml.sax.SAXParseException;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.error.SingleError;
 import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
@@ -180,6 +181,17 @@ public class ValidationExecutorXSDPartial extends
     }
     // Build result object
     return createValidationResult (aErrorList.getAllFailures ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ValidationExecutorXSDPartial getClone ()
+  {
+    final ValidationExecutorXSDPartial ret = new ValidationExecutorXSDPartial (getValidationArtefact (),
+                                                                               m_aSchemaProvider,
+                                                                               m_aPartialContext);
+    ret.setStopValidationOnError (isStopValidationOnError ());
+    return ret;
   }
 
   @Override

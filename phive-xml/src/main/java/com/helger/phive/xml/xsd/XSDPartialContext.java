@@ -19,7 +19,7 @@ package com.helger.phive.xml.xsd;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.Immutable;
 import javax.xml.xpath.XPathExpression;
 
 import com.helger.commons.ValueEnforcer;
@@ -31,7 +31,7 @@ import com.helger.commons.string.ToStringGenerator;
  *
  * @author Philip Helger
  */
-@NotThreadSafe
+@Immutable
 public class XSDPartialContext
 {
   private final XPathExpression m_aXE;

@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
+import com.helger.commons.lang.ICloneable;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
@@ -35,7 +36,8 @@ import com.helger.phive.api.source.IValidationSource;
  *        The validation source type to be used.
  */
 @MustImplementEqualsAndHashcode
-public interface IValidationExecutor <SOURCETYPE extends IValidationSource>
+public interface IValidationExecutor <SOURCETYPE extends IValidationSource> extends
+                                     ICloneable <IValidationExecutor <SOURCETYPE>>
 {
   /**
    * @return The validation artefact used to validate the XML instances. Never

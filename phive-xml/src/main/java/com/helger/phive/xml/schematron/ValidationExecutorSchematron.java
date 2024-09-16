@@ -33,6 +33,7 @@ import org.w3c.dom.Node;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.annotation.ReturnsMutableObject;
 import com.helger.commons.collection.impl.CommonsHashMap;
 import com.helger.commons.collection.impl.ICommonsMap;
@@ -450,6 +451,20 @@ public class ValidationExecutorSchematron extends
       }
     }
     return createValidationResult (aErrorList);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public ValidationExecutorSchematron getClone ()
+  {
+    final ValidationExecutorSchematron ret = new ValidationExecutorSchematron (getValidationArtefact (),
+                                                                               m_sPrerequisiteXPath,
+                                                                               m_aNamespaceContext);
+    ret.setStopValidationOnError (isStopValidationOnError ());
+    ret.setCacheArtefact (m_bCacheSchematron);
+    if (m_aCustomErrorDetails != null)
+      ret.addCustomErrorDetails (m_aCustomErrorDetails.getClone ());
+    return ret;
   }
 
   @Override
