@@ -75,7 +75,7 @@ Validating a business document requires a few more steps.
       IValidationSourceXML aValidationSource = ...;
       
       // Build execution manager 
-      final ValidationExecutionManager<IValidationSourceXML> aVEM = new ValidationExecutionManager<> (aVES);
+      final ValidationExecutionManager<IValidationSourceXML> aVEM = new ValidationExecutionManager<> (IValidityDeterminator.createDefault (), aVES);
       
       // Main execution of rules on validation source
       final ValidationResultList aValidationResult = aVEM.executeValidation (aValidationSource);
@@ -97,7 +97,7 @@ Since v6 the following simpler code can be used instead:
       IValidationSourceXML aValidationSource = ...;
       
       // Shortcut introduced in v6
-      final ValidationResultList aValidationResult = ValidationExecutionManager.executeValidation (aVES, aValidationSource);
+      final ValidationResultList aValidationResult = ValidationExecutionManager.executeValidation (IValidityDeterminator.createDefault (), aVES, aValidationSource);
       if (aValidationResult.containsAtLeastOneError ()) {
         // errors found ...
       } else {
@@ -150,7 +150,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v10.0.0 - work in progress
+* v10.0.0 - 2024-09-16
     * Updated to ph-diver 3.0.1
     * The outcome of a validation can now be `valid`, `invalid` or `unclear` (new)
         * Added new classes `EExtendedValidity` and `IValidityDeterminator`
