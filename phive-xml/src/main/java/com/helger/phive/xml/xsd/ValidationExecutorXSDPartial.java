@@ -241,7 +241,7 @@ public class ValidationExecutorXSDPartial extends
                                                      @Nonnull final XSDPartialContext aPartialContext)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
-    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.XSD, aXSDRes),
+    return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.PARTIAL_XSD, aXSDRes),
                                              () -> XMLSchemaCache.getInstance ().getSchema (aXSDRes),
                                              aPartialContext);
   }
