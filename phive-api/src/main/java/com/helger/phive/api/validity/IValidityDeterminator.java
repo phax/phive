@@ -17,6 +17,7 @@
 package com.helger.phive.api.validity;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.helger.commons.error.list.IErrorList;
 import com.helger.phive.api.executor.IValidationExecutor;
@@ -38,14 +39,14 @@ public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
    * @param aExecutor
    *        The validation executor for which the validity state should be
    *        determined. This gives access to the underlying rule resource and
-   *        the respective validation type. Never <code>null</code>.
+   *        the respective validation type. May be <code>null</code>.
    * @param aErrorList
    *        The error list to be evaluated. May not be <code>null</code> but
    *        empty.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  EExtendedValidity getValidity (@Nonnull IValidationExecutor <SOURCETYPE> aExecutor, @Nonnull IErrorList aErrorList);
+  EExtendedValidity getValidity (@Nullable IValidationExecutor <SOURCETYPE> aExecutor, @Nonnull IErrorList aErrorList);
 
   /**
    * @return A validity determinator that marks entries with at least one error
