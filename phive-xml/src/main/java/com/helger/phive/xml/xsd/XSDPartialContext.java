@@ -123,7 +123,7 @@ public class XSDPartialContext
   @Nonnull
   public static XSDPartialContext createMandatory (@Nonnull final XPathExpression aXE)
   {
-    return new XSDPartialContext (aXE, 1, 1);
+    return create (aXE, 1, 1);
   }
 
   /**
