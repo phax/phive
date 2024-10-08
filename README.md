@@ -18,7 +18,7 @@ A live version of this engine can be found on [Peppol Practical](http://peppol.h
 This project has the following sub-modules:
 * **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
 * **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set. 
-* **`phive-xml`** (previoulsy `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
+* **`phive-xml`** (previously `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
 * **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
 
@@ -67,44 +67,7 @@ Validating a business document requires a few more steps.
 1. Your application logic than needs to define what to do with the results. 
 
 
-```java
-    // Resolve the VES ID
-    final IValidationExecutorSet<IValidationSourceXML> aVES = aVESRegistry.getOfID (aVESID);
-    if (aVES != null) {
-      // What to validate?
-      IValidationSourceXML aValidationSource = ...;
-      
-      // Build execution manager 
-      final ValidationExecutionManager<IValidationSourceXML> aVEM = new ValidationExecutionManager<> (IValidityDeterminator.createDefault (), aVES);
-      
-      // Main execution of rules on validation source
-      final ValidationResultList aValidationResult = aVEM.executeValidation (aValidationSource);
-      if (aValidationResult.containsAtLeastOneError ()) {
-        // errors found ...
-      } else {
-        // no errors (but maybe warnings) found ...
-      }                                                                       
-    }                                                                             
-```
-
-Since v6 the following simpler code can be used instead:
-
-```java
-    // Resolve the VES ID
-    final IValidationExecutorSet<IValidationSourceXML> aVES = aVESRegistry.getOfID (aVESID);
-    if (aVES != null) {
-      // What to validate?
-      IValidationSourceXML aValidationSource = ...;
-      
-      // Shortcut introduced in v6
-      final ValidationResultList aValidationResult = ValidationExecutionManager.executeValidation (IValidityDeterminator.createDefault (), aVES, aValidationSource);
-      if (aValidationResult.containsAtLeastOneError ()) {
-        // errors found ...
-      } else {
-        // no errors (but maybe warnings) found ...
-      }                                                                       
-    }                                                                             
-```
+A basic example can be found in the tests at https://github.com/phax/phive/blob/master/phive-xml/src/test/java/com/helger/phive/api/execute/ValidationExecutionManagerFuncTest.java
 
 ## How to validate documents with programmatic rules
 
