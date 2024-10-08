@@ -60,7 +60,7 @@ Therefore the registration process need to be performed only once.
 
 Validating a business document requires a few more steps.
 1. Access to the registry is needed.
-1. A specific `VESID` instance (e.g. `PeppolValidation2023_05.VID_OPENPEPPOL_INVOICE_UBL_V3`) - there are constants available for all VES identifiers defined in this project.
+1. A specific `VESID` instance (e.g. `PeppolValidation2024_05.VID_OPENPEPPOL_INVOICE_UBL_V3` - from `phive-rules`) - there are constants available for all VES identifiers defined in this project.
 1. The `ValidationExecutionManager` is an in-between class that can be used to customize the execution. But it is created very quickly, so there is no harm on creating it on the fly every time.
 1. An instance of class `ValidationSourceXML` to identify the document to be validate. Class `ValidationSourceXML` has factory methods for the default cases (having an `org.w3c.dom.Node` or having an `com.helger.commons.io.resource.IReadableResource`).
 1. The validation results are stored in an instance of class `ValidationResultList`. This class is a list of `ValidationResult` instances - each `ValidationResult` represents the result of a single level of validation.
