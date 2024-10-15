@@ -225,6 +225,27 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * This is a shortcut method to perform the full validation of a VES onto a
    * specific object to be validated.
    *
+   * @param aVES
+   *        The VES to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The object to be validated. May not be <code>null</code>.
+   * @return The validation result list and never <code>null</code>.
+   * @deprecated Use
+   *             {@link #executeValidation(IValidityDeterminator, IValidationExecutorSet, IValidationSource)}
+   *             instead
+   */
+  @Nonnull
+  @Deprecated (forRemoval = true, since = "10.0.0")
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+                                                                                       @Nonnull final ST aSource)
+  {
+    return executeValidation (IValidityDeterminator.createDefault (), aVES, aSource);
+  }
+
+  /**
+   * This is a shortcut method to perform the full validation of a VES onto a
+   * specific object to be validated.
+   *
    * @param aValidityDeterminator
    *        The validity determinator to be used. May not be <code>null</code>.
    * @param aVES
@@ -239,6 +260,30 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
                                                                                        @Nonnull final ST aSource)
   {
     return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource);
+  }
+
+  /**
+   * This is a shortcut method to perform the full validation of a VES onto a
+   * specific object to be validated.
+   *
+   * @param aVES
+   *        The VES to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The object to be validated. May not be <code>null</code>.
+   * @param aLocale
+   *        The locale to be used for error messages. May be <code>null</code>.
+   * @return The validation result list and never <code>null</code>.
+   * @deprecated Use
+   *             {@link #executeValidation(IValidityDeterminator, IValidationExecutorSet, IValidationSource, Locale)}
+   *             instead
+   */
+  @Nonnull
+  @Deprecated (forRemoval = true, since = "10.0.0")
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+                                                                                       @Nonnull final ST aSource,
+                                                                                       @Nullable final Locale aLocale)
+  {
+    return executeValidation (IValidityDeterminator.createDefault (), aVES, aSource, aLocale);
   }
 
   /**
@@ -262,6 +307,34 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
                                                                                        @Nullable final Locale aLocale)
   {
     return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource, aLocale);
+  }
+
+  /**
+   * This is a shortcut method to perform the full validation of a VES onto a
+   * specific object to be validated.
+   *
+   * @param aVES
+   *        The VES to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The object to be validated. May not be <code>null</code>.
+   * @param aValidationResults
+   *        The result list to be filled. May not be <code>null</code>. Note:
+   *        this list is NOT altered before start. For each contained executor a
+   *        result is added to the result list.
+   * @param aLocale
+   *        The locale to be used for error messages. May be <code>null</code>.
+   * @deprecated Use
+   *             {@link #executeValidation(IValidityDeterminator, IValidationExecutorSet, IValidationSource, ValidationResultList, Locale)}
+   *             instead
+   */
+  @Nonnull
+  @Deprecated (forRemoval = true, since = "10.0.0")
+  public static <ST extends IValidationSource> void executeValidation (@Nonnull final IValidationExecutorSet <ST> aVES,
+                                                                       @Nonnull final ST aSource,
+                                                                       @Nonnull final ValidationResultList aValidationResults,
+                                                                       @Nullable final Locale aLocale)
+  {
+    executeValidation (IValidityDeterminator.createDefault (), aVES, aSource, aValidationResults, aLocale);
   }
 
   /**
