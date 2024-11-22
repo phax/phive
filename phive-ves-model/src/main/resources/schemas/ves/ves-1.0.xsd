@@ -28,6 +28,8 @@
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
 Version history:
+  * 2024-11-22 - v1.0.0-RC2
+    * Added "description" to VesCustomErrorType
   * 2024-05-16 - v1.0.0-RC1
     * Initial version
     </xs:documentation>
@@ -55,7 +57,6 @@ Version history:
       </xs:element>
     </xs:sequence>
   </xs:group>
- 
 
   <xs:complexType name="VesNamespaceType">
     <xs:attribute name="prefix" type="xs:token" use="required">
@@ -128,9 +129,9 @@ Version history:
 
   <xs:complexType name="VesCustomErrorType">
     <xs:sequence>
-      <xs:element name="id"    type="xs:string">
+      <xs:element name="id" type="xs:string">
         <xs:annotation>
-          <xs:documentation>ID of the error who's error level is to be modified</xs:documentation>
+          <xs:documentation>ID of the error that is to be modified</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="level" type="VesErrorLevelType">
@@ -146,6 +147,11 @@ Version history:
       <xs:element name="errorTextSuffix" type="xs:string" minOccurs="0">
         <xs:annotation>
           <xs:documentation>Optional suffix to be added to the respective error text</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="description" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Reason for the customization</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>
