@@ -16,7 +16,6 @@
  */
 package com.helger.phive.result.json;
 
-import java.net.MalformedURLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -39,12 +38,7 @@ import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.text.ConstantHasErrorText;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.resource.FileSystemResource;
 import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.resource.URLResource;
-import com.helger.commons.io.resource.inmemory.IMemoryReadableResource;
-import com.helger.commons.io.resource.wrapped.IWrappedReadableResource;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.location.ILocation;
 import com.helger.commons.location.SimpleLocation;
@@ -68,6 +62,7 @@ import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
+import com.helger.phive.result.PhiveResultHelper;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
 
@@ -83,13 +78,19 @@ import com.helger.schematron.svrl.SVRLResourceError;
 @Immutable
 public final class PhiveJsonHelper
 {
-  public static final String JSON_ERRORLEVEL_SUCCESS = "SUCCESS";
-  public static final String JSON_ERRORLEVEL_WARN = "WARN";
-  public static final String JSON_ERRORLEVEL_ERROR = "ERROR";
+  @Deprecated (forRemoval = true, since = "10.0.3")
+  public static final String JSON_ERRORLEVEL_SUCCESS = PhiveResultHelper.VALUE_ERRORLEVEL_SUCCESS;
+  @Deprecated (forRemoval = true, since = "10.0.3")
+  public static final String JSON_ERRORLEVEL_WARN = PhiveResultHelper.VALUE_ERRORLEVEL_WARN;
+  @Deprecated (forRemoval = true, since = "10.0.3")
+  public static final String JSON_ERRORLEVEL_ERROR = PhiveResultHelper.VALUE_ERRORLEVEL_ERROR;
 
-  public static final String JSON_TRISTATE_TRUE = "TRUE";
-  public static final String JSON_TRISTATE_FALSE = "FALSE";
-  public static final String JSON_TRISTATE_UNDEFINED = "UNDEFINED";
+  @Deprecated (forRemoval = true, since = "10.0.3")
+  public static final String JSON_TRISTATE_TRUE = PhiveResultHelper.VALUE_TRISTATE_TRUE;
+  @Deprecated (forRemoval = true, since = "10.0.3")
+  public static final String JSON_TRISTATE_FALSE = PhiveResultHelper.VALUE_TRISTATE_FALSE;
+  @Deprecated (forRemoval = true, since = "10.0.3")
+  public static final String JSON_TRISTATE_UNDEFINED = PhiveResultHelper.VALUE_TRISTATE_UNDEFINED;
 
   public static final String JSON_RESOURCE_ID = "resource";
   public static final String JSON_LINE_NUM = "line";
@@ -135,14 +136,16 @@ public final class PhiveJsonHelper
   private PhiveJsonHelper ()
   {}
 
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static boolean isConsideredError (@Nonnull final IErrorLevel aErrorLevel)
   {
-    return aErrorLevel.isGE (EErrorLevel.ERROR);
+    return PhiveResultHelper.isConsideredError (aErrorLevel);
   }
 
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static boolean isConsideredWarning (@Nonnull final IErrorLevel aErrorLevel)
   {
-    return aErrorLevel.isGE (EErrorLevel.WARN);
+    return PhiveResultHelper.isConsideredWarning (aErrorLevel);
   }
 
   /**
@@ -157,27 +160,17 @@ public final class PhiveJsonHelper
    */
   @Nonnull
   @Nonempty
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static String getJsonErrorLevel (@Nonnull final IErrorLevel aErrorLevel)
   {
-    ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
-
-    if (isConsideredError (aErrorLevel))
-      return JSON_ERRORLEVEL_ERROR;
-    if (isConsideredWarning (aErrorLevel))
-      return JSON_ERRORLEVEL_WARN;
-    return JSON_ERRORLEVEL_SUCCESS;
+    return PhiveResultHelper.getErrorLevelValue (aErrorLevel);
   }
 
   @Nullable
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static IErrorLevel getAsErrorLevel (@Nullable final String sErrorLevel)
   {
-    if (JSON_ERRORLEVEL_ERROR.equals (sErrorLevel))
-      return EErrorLevel.ERROR;
-    if (JSON_ERRORLEVEL_WARN.equals (sErrorLevel))
-      return EErrorLevel.WARN;
-    if (JSON_ERRORLEVEL_SUCCESS.equals (sErrorLevel))
-      return EErrorLevel.SUCCESS;
-    return null;
+    return PhiveResultHelper.getAsErrorLevel (sErrorLevel);
   }
 
   /**
@@ -191,9 +184,10 @@ public final class PhiveJsonHelper
    */
   @Nonnull
   @Nonempty
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static String getJsonTriState (final boolean b)
   {
-    return b ? JSON_TRISTATE_TRUE : JSON_TRISTATE_FALSE;
+    return PhiveResultHelper.getTriStateValue (b);
   }
 
   /**
@@ -207,13 +201,10 @@ public final class PhiveJsonHelper
    * @see #getJsonTriState(boolean)
    */
   @Nonnull
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static String getJsonTriState (@Nonnull final ETriState eTriState)
   {
-    ValueEnforcer.notNull (eTriState, "TriState");
-
-    if (eTriState.isUndefined ())
-      return JSON_TRISTATE_UNDEFINED;
-    return getJsonTriState (eTriState.isTrue ());
+    return PhiveResultHelper.getTriStateValue (eTriState);
   }
 
   /**
@@ -226,15 +217,10 @@ public final class PhiveJsonHelper
    * @return <code>null</code> if the provided value is unknown.
    */
   @Nullable
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static ETriState getAsTriState (@Nullable final String sTriState)
   {
-    if (JSON_TRISTATE_TRUE.equals (sTriState))
-      return ETriState.TRUE;
-    if (JSON_TRISTATE_FALSE.equals (sTriState))
-      return ETriState.FALSE;
-    if (JSON_TRISTATE_UNDEFINED.equals (sTriState))
-      return ETriState.UNDEFINED;
-    return null;
+    return PhiveResultHelper.getAsTriState (sTriState);
   }
 
   /**
@@ -261,9 +247,9 @@ public final class PhiveJsonHelper
       return null;
     if (t instanceof PhiveRestoredException)
       return ((PhiveRestoredException) t).getAsJson ();
-    return new JsonObject ().add (PhiveRestoredException.JSON_CLASS, t.getClass ().getName ())
-                            .addIfNotNull (PhiveRestoredException.JSON_MESSAGE, t.getMessage ())
-                            .add (PhiveRestoredException.JSON_STACK_TRACE, StackTraceHelper.getStackAsString (t));
+    return PhiveRestoredException.getAsJson (t.getClass ().getName (),
+                                             t.getMessage (),
+                                             StackTraceHelper.getStackAsString (t));
   }
 
   /**
@@ -342,7 +328,6 @@ public final class PhiveJsonHelper
    * @param t
    *        The optional stack trace of the error. May be <code>null</code>.
    * @return The JSON object with the error. Never <code>null</code>.
-   * @see #getJsonErrorLevel(IErrorLevel)
    * @see #getJsonErrorLocation(ILocation)
    * @see #getJsonStackTrace(Throwable)
    * @see #getJsonError(IError, Locale)
@@ -390,7 +375,6 @@ public final class PhiveJsonHelper
    *        The display locale to resolve the error text. May not be
    *        <code>null</code>.
    * @return The JSON object with the error. Never <code>null</code>.
-   * @see #getJsonErrorLevel(IErrorLevel)
    * @see #getJsonStackTrace(Throwable)
    * @see #getJsonError(IErrorLevel, String, String, ILocation, String, String,
    *      Throwable)
@@ -445,7 +429,7 @@ public final class PhiveJsonHelper
   public static IError getAsIError (@Nonnull final IJsonObject aObj)
   {
     final LocalDateTime aErrorDT = PDTWebDateHelper.getLocalDateTimeFromXSD (aObj.getAsString (JSON_ERROR_DATETIME));
-    final IErrorLevel aErrorLevel = getAsErrorLevel (aObj.getAsString (JSON_ERROR_LEVEL));
+    final IErrorLevel aErrorLevel = PhiveResultHelper.getAsErrorLevel (aObj.getAsString (JSON_ERROR_LEVEL));
     final String sErrorID = aObj.getAsString (JSON_ERROR_ID);
     final String sErrorFieldName = aObj.getAsString (JSON_ERROR_FIELD_NAME);
     // Try new structured version
@@ -542,7 +526,7 @@ public final class PhiveJsonHelper
    *   "interrupted" : boolean,
    *   "mostSevereErrorLevel" : string,
    *   "results" : array {
-   *     "success" : string,  // as defined by {@link #getJsonTriState(ETriState)}
+   *     "success" : string,  // as defined by {@link PhiveResultHelper#getTriStateValue(ETriState)}
    *     "artifactType" : string,
    *     "artifactPath" : string,
    *     "items" : array {
@@ -569,7 +553,7 @@ public final class PhiveJsonHelper
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
     final IJsonArray aResultArray = new JsonArray ();
-    aResultArray.add (new JsonObject ().add (JSON_SUCCESS, getJsonTriState (false))
+    aResultArray.add (new JsonObject ().add (JSON_SUCCESS, PhiveResultHelper.getTriStateValue (false))
                                        .add (JSON_ARTIFACT_TYPE, ARTIFACT_TYPE_INPUT_PARAMETER)
                                        .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
                                        .addJson (JSON_ITEMS,
@@ -579,26 +563,17 @@ public final class PhiveJsonHelper
 
     aResponse.add (JSON_SUCCESS, false);
     aResponse.add (JSON_INTERRUPTED, false);
-    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, getJsonErrorLevel (EErrorLevel.ERROR));
+    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
     aResponse.addJson (JSON_RESULTS, aResultArray);
     aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
   }
 
   @Nonnull
   @Nonempty
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static String getArtifactPathType (@Nonnull final IReadableResource aRes)
   {
-    if (aRes instanceof ClassPathResource)
-      return "classpath";
-    if (aRes instanceof FileSystemResource)
-      return "file";
-    if (aRes instanceof URLResource)
-      return "url";
-    if (aRes instanceof IMemoryReadableResource)
-      return "in-memory";
-    if (aRes instanceof IWrappedReadableResource)
-      return "wrapped";
-    return "unknown";
+    return PhiveResultHelper.getArtifactPathType (aRes);
   }
 
   /**
@@ -613,7 +588,7 @@ public final class PhiveJsonHelper
     *   "interrupted" : boolean,
     *   "mostSevereErrorLevel" : string,
     *   "results" : array {
-    *     "success" : string,  // as defined by {@link #getJsonTriState(ETriState)}
+    *     "success" : string,  // as defined by {@link PhiveResultHelper#getTriStateValue(ETriState)}
     *     "artifactType" : string,
     *     "artifactPathType" : string?,
     *     "artifactPath" : string,
@@ -684,29 +659,11 @@ public final class PhiveJsonHelper
   }
 
   @Nullable
+  @Deprecated (forRemoval = true, since = "10.0.3")
   public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType,
                                                            @Nullable final String sArtefactPath)
   {
-    if (StringHelper.hasNoText (sArtefactPathType))
-      return null;
-    if (StringHelper.hasNoText (sArtefactPath))
-      return null;
-
-    if ("file".equals (sArtefactPathType))
-      return new FileSystemResource (sArtefactPath);
-
-    if ("url".equals (sArtefactPathType))
-      try
-      {
-        return new URLResource (sArtefactPath);
-      }
-      catch (final MalformedURLException ex)
-      {
-        return null;
-      }
-
-    // Default to class path
-    return new ClassPathResource (sArtefactPath);
+    return PhiveResultHelper.getAsValidationResource (sArtefactPathType, sArtefactPath);
   }
 
   @Nullable
@@ -748,7 +705,7 @@ public final class PhiveJsonHelper
       {
         // Fall back to previous status
         final String sSuccess = aResultObj.getAsString (JSON_SUCCESS);
-        final ETriState eSuccess = getAsTriState (sSuccess);
+        final ETriState eSuccess = PhiveResultHelper.getAsTriState (sSuccess);
         if (eSuccess == null)
         {
           if (LOGGER.isDebugEnabled ())
@@ -781,7 +738,7 @@ public final class PhiveJsonHelper
         }
         final String sArtefactPathType = aResultObj.getAsString (JSON_ARTIFACT_PATH_TYPE);
         final String sArtefactPath = aResultObj.getAsString (JSON_ARTIFACT_PATH);
-        final IReadableResource aRes = getAsValidationResource (sArtefactPathType, sArtefactPath);
+        final IReadableResource aRes = PhiveResultHelper.getAsValidationResource (sArtefactPathType, sArtefactPath);
         if (aRes == null)
         {
           if (LOGGER.isDebugEnabled ())

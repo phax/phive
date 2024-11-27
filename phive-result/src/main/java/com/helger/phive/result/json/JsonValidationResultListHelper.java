@@ -39,6 +39,7 @@ import com.helger.json.JsonObject;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.validity.EExtendedValidity;
+import com.helger.phive.result.PhiveResultHelper;
 
 /**
  * A helper class that allows to heavily customize the creation of validation
@@ -51,8 +52,8 @@ public class JsonValidationResultListHelper
 {
   private IValidationExecutorSet <?> m_aVES;
   private Function <IValidationExecutorSet <?>, IJsonObject> m_aVESToJson = PhiveJsonHelper::getJsonVES;
-  private Function <IReadableResource, String> m_aArtifactPathTypeToJson = PhiveJsonHelper::getArtifactPathType;
-  private Function <IErrorLevel, String> m_aErrorLevelToJson = PhiveJsonHelper::getJsonErrorLevel;
+  private Function <IReadableResource, String> m_aArtifactPathTypeToJson = PhiveResultHelper::getArtifactPathType;
+  private Function <IErrorLevel, String> m_aErrorLevelToJson = PhiveResultHelper::getErrorLevelValue;
   private BiFunction <IError, Locale, IJsonObject> m_aErrorToJson = PhiveJsonHelper::getJsonError;
   private MutableInt m_aWarningCount;
   private MutableInt m_aErrorCount;
@@ -121,7 +122,7 @@ public class JsonValidationResultListHelper
     *   "interrupted" : boolean,
     *   "mostSevereErrorLevel" : string,
     *   "results" : array {
-    *     "success" : string,  // as defined by {@link PhiveJsonHelper#getJsonTriState(ETriState)}
+    *     "success" : string,  // as defined by {@link PhiveResultHelper#getTriStateValue(ETriState)}
     *     "artifactType" : string,
     *     "artifactPathType" : string?,
     *     "artifactPath" : string,
@@ -171,13 +172,13 @@ public class JsonValidationResultListHelper
       if (aVR.isSkipped ())
       {
         bValidationInterrupted = true;
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (ETriState.UNDEFINED));
+        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (ETriState.UNDEFINED));
       }
       else
       {
         // Backwards compatible decision
         final boolean bIsValid = aVR.getErrorList ().containsNoError ();
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveJsonHelper.getJsonTriState (bIsValid));
+        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (bIsValid));
         if (!bIsValid)
           eWorstValidity = EExtendedValidity.INVALID;
       }
@@ -193,10 +194,10 @@ public class JsonValidationResultListHelper
         if (aError.getErrorLevel ().isGT (aMostSevere))
           aMostSevere = aError.getErrorLevel ();
 
-        if (PhiveJsonHelper.isConsideredError (aError.getErrorLevel ()))
+        if (PhiveResultHelper.isConsideredError (aError.getErrorLevel ()))
           nErrors++;
         else
-          if (PhiveJsonHelper.isConsideredWarning (aError.getErrorLevel ()))
+          if (PhiveResultHelper.isConsideredWarning (aError.getErrorLevel ()))
             nWarnings++;
 
         if (m_aErrorToJson != null)

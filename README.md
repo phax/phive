@@ -113,6 +113,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v10.0.3 - work in progress
+    * Added default XML serialization of validation results
 * v10.0.2 - 2024-09-16
     * Re-release due to Maven Central issue
 * v10.0.1 - 2024-09-16

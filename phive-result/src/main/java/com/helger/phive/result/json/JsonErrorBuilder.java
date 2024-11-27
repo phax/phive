@@ -30,6 +30,7 @@ import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.location.ILocation;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
+import com.helger.phive.result.PhiveResultHelper;
 
 /**
  * A flexible builder that can be used to convert data from an {@link IError}
@@ -42,7 +43,7 @@ public class JsonErrorBuilder implements IBuilder <IJsonObject>
 {
   private LocalDateTime m_aErrorDateTime;
   private IErrorLevel m_aErrorLevel;
-  private Function <IErrorLevel, String> m_aErrorLevelToJson = PhiveJsonHelper::getJsonErrorLevel;
+  private Function <IErrorLevel, String> m_aErrorLevelToJson = PhiveResultHelper::getErrorLevelValue;
   private String m_sErrorID;
   private String m_sErrorFieldName;
   private ILocation m_aErrorLocation;
