@@ -45,10 +45,10 @@ import com.helger.xml.microdom.MicroElement;
 
 /**
  * A helper class that allows to heavily customize the creation of validation
- * result list JSONs
+ * result list XMLs
  *
  * @author Philip Helger
- * @since 7.2.3
+ * @since 10.0.3
  */
 public class XMLValidationResultListHelper
 {
@@ -143,7 +143,7 @@ public class XMLValidationResultListHelper
    * </pre>
    *
    * @param aResponse
-   *        The response JSON object to add to. May not be <code>null</code>.
+   *        The response XML object to add to. May not be <code>null</code>.
    * @param aValidationResultList
    *        The validation result list containing the validation results per
    *        layer. May not be <code>null</code>.
@@ -172,11 +172,11 @@ public class XMLValidationResultListHelper
     int nWarnings = 0;
     int nErrors = 0;
     {
+      // Calculate overalls
       boolean bValidationInterrupted = false;
       IErrorLevel aMostSevere = EErrorLevel.LOWEST;
       EExtendedValidity eWorstValidity = EExtendedValidity.VALID;
 
-      // Calculate overalls
       for (final ValidationResult aVR : aValidationResultList)
       {
         if (aVR.isSkipped ())
@@ -216,6 +216,7 @@ public class XMLValidationResultListHelper
       }
     }
 
+    // Add the items afterwards
     for (final ValidationResult aVR : aValidationResultList)
     {
       final IMicroElement aVRT = new MicroElement (PhiveXMLHelper.XML_RESULT);
@@ -253,6 +254,8 @@ public class XMLValidationResultListHelper
       }
       aResponse.appendChild (aVRT);
     }
+
+    // This is the end of the XML
     aResponse.appendElement (PhiveXMLHelper.XML_DURATION_MS).appendText (Long.toString (nDurationMilliseconds));
 
     // Set consumer values
