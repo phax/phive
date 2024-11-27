@@ -211,15 +211,15 @@ public final class PhiveXMLHelper
    * Get the XML representation of an error.<br>
    *
    * <pre>
-   * {
-   *   "errorLevel" : string,
-   *   "errorID" : string?,
-   *   "errorFieldName" : string?,
-   *   "errorLocation" : object?,
-   *   "test" : string?,
-   *   "errorText" : string,
-   *   "exception : object?
-   * }
+   * &lt;error&gt;
+   *   &lt;errorLevel&gt;string&lt;/errorLevel&gt;?
+   *   &lt;errorID&gt;string&lt;/errorID&gt;?
+   *   &lt;errorFieldName&gt;string&lt;/errorFieldName&gt;?
+   *   &lt;errorLocation&gt;object&lt;/errorLocation&gt;?
+   *   &lt;test&gt;string&lt;/test&gt;?
+   *   &lt;errorText&gt;string&lt;/errorText&gt;
+   *   &lt;exception&gt;object&lt;/exception&gt;?
+   * &lt;/error&gt;
    * </pre>
    *
    * @param aErrorLevel
@@ -271,15 +271,15 @@ public final class PhiveXMLHelper
    * Get the XML representation of an error.<br>
    *
    * <pre>
-   * {
-   *   "errorLevel" : string,
-   *   "errorID" : string?,
-   *   "errorFieldName" : string?,
-   *   "errorLocation" : object?,
-   *   "test" : string?,
-   *   "errorText" : string,
-   *   "exception : object?
-   * }
+   * &lt;error&gt;
+   *   &lt;errorLevel&gt;string&lt;/errorLevel&gt;?
+   *   &lt;errorID&gt;string&lt;/errorID&gt;?
+   *   &lt;errorFieldName&gt;string&lt;/errorFieldName&gt;?
+   *   &lt;errorLocation&gt;object&lt;/errorLocation&gt;?
+   *   &lt;test&gt;string&lt;/test&gt;?
+   *   &lt;errorText&gt;string&lt;/errorText&gt;
+   *   &lt;exception&gt;object&lt;/exception&gt;?
+   * &lt;/error&gt;
    * </pre>
    *
    * @param aError
@@ -388,19 +388,19 @@ public final class PhiveXMLHelper
    * Create the VES details as an XML Object.<br>
    *
    * <pre>
-   * {
-   *   "vesid" : string,
-   *   "name" : string,
-   *   "deprecated" : boolean,
-   *   "status" : {
-   *     "lastModification" : dateTime
-   *     "type" : string,
-   *     "validFrom" : string?,
-   *     "validTo" : string?,
-   *     "deprecationReason" : string?
-   *     "replacementVesid" : string?
-   *   }
-   * }
+   * &lt;ves&gt;
+   *   &lt;vesid&gt;string&lt;/vesid&gt;
+   *   &lt;name&gt;string&lt;/name&gt;
+   *   &lt;deprecated&gt;boolean&lt;/deprecated&gt;
+   *   &lt;status&gt;
+   *     &lt;lastModification&gt;dateTime&lt;/lastModification&gt;
+   *     &lt;type&gt;string&lt;/type&gt;
+   *     &lt;validFrom&gt;string&lt;/validFrom&gt;?
+   *     &lt;validTo&gt;string&lt;/validTo&gt;?
+   *     &lt;deprecationReason&gt;string&lt;/deprecationReason&gt;?
+   *     &lt;replacementVesid&gt;string&lt;/replacementVesid&gt;?
+   *   &lt;/status&gt;
+   * &lt;/ves&gt;
    * </pre>
    *
    * @param aVES
@@ -447,20 +447,20 @@ public final class PhiveXMLHelper
    * <br>
    *
    * <pre>
-   * {
-   *   "success" : boolean,
-   *   "interrupted" : boolean,
-   *   "mostSevereErrorLevel" : string,
-   *   "results" : array {
-   *     "success" : string,  // as defined by {@link PhiveResultHelper#getTriStateValue(ETriState)}
-   *     "artifactType" : string,
-   *     "artifactPath" : string,
-   *     "items" : array {
-   *       error structure as in {@link #getXMLError(IError, Locale, String)}
-   *     }
-   *   },
-   *   "durationMS" : number
-   * }
+   * &lt;item&gt;
+   *   &lt;success&gt;boolean&lt;/success&gt;
+   *   &lt;interrupted&gt;boolean&lt;/interrupted&gt;
+   *   &lt;mostSevereErrorLevel&gt;string&lt;/mostSevereErrorLevel&gt;
+   *   &lt;result&gt;
+   *     &lt;success&gt;string&lt;/success&gt;  // as defined by {@link PhiveResultHelper#getTriStateValue(ETriState)}
+   *     &lt;artifactType&gt;string&lt;/artifactType&gt;
+   *     &lt;artifactPath&gt;string&lt;/artifactPath&gt;
+   *     &lt;item&gt;
+   *       // error structure as in {@link #getXMLError(IError, Locale, String)}
+   *     &lt;/item&gt;+
+   *   &lt;/result&gt;+
+   *   &lt;durationMS&gt;number&lt;/durationMS&gt;
+   * &lt;/item&gt;
    * </pre>
    *
    * @param aResponse
@@ -498,22 +498,24 @@ public final class PhiveXMLHelper
    * {@link #applyGlobalError(IMicroElement, String, long)}.<br>
    *
    * <pre>
-    * {
-    *   "ves" : object as defined by {@link #getXMLVES(IValidationExecutorSet,String)}
-    *   "success" : boolean,
-    *   "interrupted" : boolean,
-    *   "mostSevereErrorLevel" : string,
-    *   "results" : array {
-    *     "success" : string,  // as defined by {@link PhiveResultHelper#getTriStateValue(ETriState)}
-    *     "artifactType" : string,
-    *     "artifactPathType" : string?,
-    *     "artifactPath" : string,
-    *     "items" : array {
-    *       error structure as in {@link #getXMLError(IError, Locale,String)}
-    *     }
-    *   },
-    *   "durationMS" : number
-    * }
+   * &lt;resultList&gt;
+   *   &lt;ves&gt;
+   *     // object as defined by {@link #getXMLVES(IValidationExecutorSet,String)}
+   *   &lt;/ves&gt;
+   *   &lt;success&gt;boolean&lt;/success&gt;
+   *   &lt;interrupted&gt;boolean&lt;/interrupted&gt;
+   *   &lt;mostSevereErrorLevel&gt;string&lt;/mostSevereErrorLevel&gt;
+   *   &lt;result&gt;
+   *     &lt;success&gt;string&lt;/success&gt;  // as defined by {@link PhiveResultHelper#getTriStateValue(ETriState)}
+   *     &lt;artifactType&gt;string&lt;/artifactType&gt;
+   *     &lt;artifactPathType&gt;string&lt;/artifactPathType&gt;
+   *     &lt;artifactPath&gt;string&lt;/artifactPath&gt;
+   *     &lt;item&gt;
+   *       // error structure as in {@link #getXMLError(IError, Locale, String)}
+   *     &lt;/item&gt;+
+   *   &lt;/result&gt;+
+   *   &lt;durationMS&gt;number&lt;/durationMS&gt;
+   * &lt;/resultList&gt;
    * </pre>
    *
    * @param aResponse
