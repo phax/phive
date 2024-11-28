@@ -34,7 +34,9 @@ public enum EValidationBaseType implements IHasID <String>, IHasName
   XML ("xml", "XML"),
   XSD ("xsd", "XML Schema"),
   SCHEMATRON ("sch", "Schematron"),
-  EDIFACT ("edifact", "EDIFACT");
+  EDIFACT ("edifact", "EDIFACT"),
+  PDF ("pdf", "PDF"),
+  OTHER ("other", "Other");
 
   private final String m_sID;
   private final String m_sName;
