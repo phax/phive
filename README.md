@@ -113,7 +113,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v10.0.3 - work in progress
+* v10.0.3 - 2024-12-01
     * Added default XML serialization of validation results
     * Added new `EValidationBaseType` entries
 * v10.0.2 - 2024-09-16
