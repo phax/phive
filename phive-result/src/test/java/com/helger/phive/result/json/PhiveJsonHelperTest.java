@@ -40,6 +40,7 @@ import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
+import com.helger.json.serialize.JsonWriterSettings;
 import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
@@ -143,6 +144,8 @@ public final class PhiveJsonHelperTest
     final IJsonObject aObj2 = new JsonObject ();
     PhiveJsonHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, 123, null, null);
 
+    assertEquals (aObj.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED),
+                  aObj2.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED));
     CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
   }
 

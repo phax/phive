@@ -16,20 +16,22 @@
  */
 package com.helger.phive.xml.source;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.xml.transform.Source;
+import javax.annotation.WillNotClose;
 
 import org.w3c.dom.Node;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
 import com.helger.xml.XMLHelper;
-import com.helger.xml.serialize.read.DOMReader;
-import com.helger.xml.transform.TransformSourceFactory;
+import com.helger.xml.serialize.write.XMLWriter;
 
 /**
  * Default implementation of {@link IValidationSourceXML}.
@@ -62,6 +64,13 @@ public class ValidationSourceXML implements IValidationSourceXML
     m_bPartialSource = bPartialSource;
   }
 
+  @Nonnull
+  @Nonempty
+  public String getValidationSourceTypeID ()
+  {
+    return VALIDATION_SOURCE_TYPE;
+  }
+
   @Nullable
   public String getSystemID ()
   {
@@ -83,6 +92,12 @@ public class ValidationSourceXML implements IValidationSourceXML
   public boolean isPartialSource ()
   {
     return m_bPartialSource;
+  }
+
+  public void writeTo (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
+  {
+    if (XMLWriter.writeToStream (getNode (), aOS).isFailure ())
+      throw new IOException ("Failed write XML node to OutputStream");
   }
 
   @Override
@@ -138,16 +153,6 @@ public class ValidationSourceXML implements IValidationSourceXML
   @Nonnull
   public static ValidationSourceXML create (@Nonnull final IReadableResource aResource)
   {
-    // Read on demand only
-    return new ValidationSourceXML (aResource.getPath (), () -> DOMReader.readXMLDOM (aResource), false)
-    {
-      @Override
-      @Nonnull
-      public Source getAsTransformSource ()
-      {
-        // Use resource as TransformSource to get error line and column
-        return TransformSourceFactory.create (aResource);
-      }
-    };
+    return new ValidationSourceXMLReadableResource (aResource);
   }
 }

@@ -16,10 +16,15 @@
  */
 package com.helger.phive.api.source;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillNotClose;
 
 import com.helger.commons.ValueEnforcer;
+import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.io.ByteArrayWrapper;
 import com.helger.commons.string.ToStringGenerator;
 
@@ -35,12 +40,21 @@ public class ValidationSourceBinary implements IValidationSourceBinary
   private final boolean m_bPartialSource;
   private final ByteArrayWrapper m_aBAW;
 
-  protected ValidationSourceBinary (@Nullable final String sSystemID, @Nonnull final ByteArrayWrapper aBAW, final boolean bPartialSource)
+  protected ValidationSourceBinary (@Nullable final String sSystemID,
+                                    @Nonnull final ByteArrayWrapper aBAW,
+                                    final boolean bPartialSource)
   {
     ValueEnforcer.notNull (aBAW, "BAW");
     m_sSystemID = sSystemID;
     m_aBAW = aBAW;
     m_bPartialSource = bPartialSource;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getValidationSourceTypeID ()
+  {
+    return VALIDATION_SOURCE_TYPE;
   }
 
   @Nullable
@@ -58,6 +72,12 @@ public class ValidationSourceBinary implements IValidationSourceBinary
   public ByteArrayWrapper getBytes ()
   {
     return m_aBAW;
+  }
+
+  public void writeTo (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
+  {
+    // Just forward
+    m_aBAW.writeTo (aOS);
   }
 
   @Override
@@ -84,4 +104,22 @@ public class ValidationSourceBinary implements IValidationSourceBinary
     ValueEnforcer.notNull (aBytes, "Bytes");
     return new ValidationSourceBinary (sSystemID, new ByteArrayWrapper (aBytes, false), false);
   }
+
+  /**
+   * Create a partial validation source from an existing byte array.
+   *
+   * @param sSystemID
+   *        System ID to use. May be <code>null</code>.
+   * @param aBytes
+   *        The bytes to use. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   * @since 10.1.0
+   */
+  @Nonnull
+  public static ValidationSourceBinary createPartial (@Nullable final String sSystemID, @Nonnull final byte [] aBytes)
+  {
+    ValueEnforcer.notNull (aBytes, "Bytes");
+    return new ValidationSourceBinary (sSystemID, new ByteArrayWrapper (aBytes, false), true);
+  }
+
 }

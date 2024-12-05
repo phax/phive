@@ -27,12 +27,14 @@ import com.helger.xml.XMLHelper;
 import com.helger.xml.transform.TransformSourceFactory;
 
 /**
- * XML validation source.
+ * XML validation source interface.
  *
  * @author Philip Helger
  */
 public interface IValidationSourceXML extends IValidationSource
 {
+  String VALIDATION_SOURCE_TYPE = "xml";
+
   /**
    * @return The source node to be validated. This may either be the whole DOM
    *         Document or a single DOM Element. May be <code>null</code>.

@@ -22,6 +22,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
 import com.helger.commons.error.level.EErrorLevel;
@@ -34,6 +37,12 @@ import com.helger.commons.io.resource.inmemory.IMemoryReadableResource;
 import com.helger.commons.io.resource.wrapped.IWrappedReadableResource;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
+import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.source.IValidationSourceBinary;
+import com.helger.phive.api.source.ValidationSourceBinary;
+import com.helger.phive.xml.source.IValidationSourceXML;
+import com.helger.phive.xml.source.ValidationSourceXML;
+import com.helger.xml.serialize.read.DOMReader;
 
 /**
  * Contains stateless phive result helper methods.
@@ -50,6 +59,8 @@ public final class PhiveResultHelper
   public static final String VALUE_TRISTATE_TRUE = "TRUE";
   public static final String VALUE_TRISTATE_FALSE = "FALSE";
   public static final String VALUE_TRISTATE_UNDEFINED = "UNDEFINED";
+
+  private static final Logger LOGGER = LoggerFactory.getLogger (PhiveResultHelper.class);
 
   private PhiveResultHelper ()
   {}
@@ -197,5 +208,30 @@ public final class PhiveResultHelper
 
     // Default to class path
     return new ClassPathResource (sArtefactPath);
+  }
+
+  @Nullable
+  public static IValidationSource createValidationSource (@Nullable final String sValidationSourceTypeID,
+                                                          @Nullable final String sSystemID,
+                                                          final boolean bIsPartialSource,
+                                                          @Nullable final byte [] aPayloadBytes)
+  {
+    if (StringHelper.hasNoText (sValidationSourceTypeID))
+      return null;
+    if (aPayloadBytes == null)
+      return null;
+
+    switch (sValidationSourceTypeID)
+    {
+      case IValidationSourceBinary.VALIDATION_SOURCE_TYPE:
+        return bIsPartialSource ? ValidationSourceBinary.createPartial (sSystemID, aPayloadBytes)
+                                : ValidationSourceBinary.create (sSystemID, aPayloadBytes);
+      case IValidationSourceXML.VALIDATION_SOURCE_TYPE:
+        // Parse on demand only
+        return new ValidationSourceXML (sSystemID, () -> DOMReader.readXMLDOM (aPayloadBytes), bIsPartialSource);
+      default:
+        LOGGER.warn ("Unsupported Validation Source Type ID '" + sValidationSourceTypeID + "'");
+    }
+    return null;
   }
 }

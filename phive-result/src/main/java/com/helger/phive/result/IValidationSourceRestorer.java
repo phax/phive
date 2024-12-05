@@ -14,25 +14,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.helger.phive.api.source;
+package com.helger.phive.result;
 
 import javax.annotation.Nullable;
 
-import com.helger.commons.io.ByteArrayWrapper;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
- * Binary validation source.
+ * Callback interface to restore a {@link IValidationSource} from deserialized
+ * parameters.
  *
  * @author Philip Helger
- * @since 6.0.3
+ * @since 10.1.0
  */
-public interface IValidationSourceBinary extends IValidationSource
+public interface IValidationSourceRestorer
 {
-  String VALIDATION_SOURCE_TYPE = "binary";
-
-  /**
-   * @return The bytes to be validated. May be <code>null</code>.
-   */
   @Nullable
-  ByteArrayWrapper getBytes ();
+  IValidationSource restoreValidationSource (@Nullable String sValidationSourceTypeID,
+                                             @Nullable String sSystemID,
+                                             boolean bIsPartialSource,
+                                             @Nullable byte [] aPayloadBytes);
 }

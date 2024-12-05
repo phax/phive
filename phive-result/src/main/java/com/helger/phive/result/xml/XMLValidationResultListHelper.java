@@ -38,6 +38,7 @@ import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.xml.microdom.IMicroElement;
@@ -54,6 +55,9 @@ public class XMLValidationResultListHelper
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (XMLValidationResultListHelper.class);
 
+  private Function <IValidationSource, IMicroElement> m_aSourceToXML = src -> PhiveXMLHelper.getXMLValidationSource (src,
+                                                                                                                     true,
+                                                                                                                     PhiveXMLHelper.XML_VALIDATION_SOURCE);
   private IValidationExecutorSet <?> m_aVES;
   private Function <IValidationExecutorSet <?>, IMicroElement> m_aVESToXML = ves -> PhiveXMLHelper.getXMLVES (ves,
                                                                                                               PhiveXMLHelper.XML_VES);
@@ -67,6 +71,13 @@ public class XMLValidationResultListHelper
 
   public XMLValidationResultListHelper ()
   {}
+
+  @Nonnull
+  public XMLValidationResultListHelper sourceToXML (@Nullable final Function <IValidationSource, IMicroElement> a)
+  {
+    m_aSourceToXML = a;
+    return this;
+  }
 
   @Nonnull
   public XMLValidationResultListHelper ves (@Nullable final IValidationExecutorSet <?> a)
@@ -160,6 +171,14 @@ public class XMLValidationResultListHelper
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
+
+    // Added in 10.1.0
+    if (aValidationResultList.hasValidationSource () && m_aSourceToXML != null)
+    {
+      final IMicroElement eSource = m_aSourceToXML.apply (aValidationResultList.getValidationSource ());
+      if (eSource != null)
+        aResponse.appendChild (eSource);
+    }
 
     if (m_aVES != null && m_aVESToXML != null)
     {

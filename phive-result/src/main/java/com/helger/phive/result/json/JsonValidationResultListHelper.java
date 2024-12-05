@@ -38,6 +38,7 @@ import com.helger.json.JsonObject;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
 
@@ -50,6 +51,9 @@ import com.helger.phive.result.PhiveResultHelper;
  */
 public class JsonValidationResultListHelper
 {
+  // By default, include source content
+  private Function <IValidationSource, IJsonObject> m_aSourceToJson = vs -> PhiveJsonHelper.getJsonValidationSource (vs,
+                                                                                                                     true);
   private IValidationExecutorSet <?> m_aVES;
   private Function <IValidationExecutorSet <?>, IJsonObject> m_aVESToJson = PhiveJsonHelper::getJsonVES;
   private Function <IReadableResource, String> m_aArtifactPathTypeToJson = PhiveResultHelper::getArtifactPathType;
@@ -60,6 +64,13 @@ public class JsonValidationResultListHelper
 
   public JsonValidationResultListHelper ()
   {}
+
+  @Nonnull
+  public JsonValidationResultListHelper sourceToJson (@Nullable final Function <IValidationSource, IJsonObject> a)
+  {
+    m_aSourceToJson = a;
+    return this;
+  }
 
   @Nonnull
   public JsonValidationResultListHelper ves (@Nullable final IValidationExecutorSet <?> a)
@@ -153,6 +164,13 @@ public class JsonValidationResultListHelper
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
+
+    // Added in 10.1.0
+    if (aValidationResultList.hasValidationSource () && m_aSourceToJson != null)
+    {
+      aResponse.addIfNotNull (PhiveJsonHelper.JSON_VALIDATION_SOURCE,
+                              m_aSourceToJson.apply (aValidationResultList.getValidationSource ()));
+    }
 
     if (m_aVES != null && m_aVESToJson != null)
       aResponse.addIfNotNull (PhiveJsonHelper.JSON_VES, m_aVESToJson.apply (m_aVES));

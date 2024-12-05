@@ -16,8 +16,9 @@
  */
 package com.helger.phive.result.json;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
 
@@ -31,6 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.base64.Base64;
+import com.helger.commons.base64.Base64OutputStream;
 import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
@@ -39,6 +42,7 @@ import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.text.ConstantHasErrorText;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.location.ILocation;
 import com.helger.commons.location.SimpleLocation;
@@ -62,6 +66,7 @@ import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
+import com.helger.phive.result.IValidationSourceRestorer;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
@@ -69,7 +74,7 @@ import com.helger.schematron.svrl.SVRLResourceError;
 /**
  * A utility class to create a common JSON representation of a PHIVE result. Use
  * {@link #applyGlobalError(IJsonObject, String, long)} or
- * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, List, Locale, long, MutableInt, MutableInt)}
+ * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}
  * to add the result to an arbitrary {@link IJsonObject}.
  *
  * @author Philip Helger
@@ -105,6 +110,13 @@ public final class PhiveJsonHelper
   public static final String JSON_ERROR_TEXT = "errorText";
   public static final String JSON_EXCEPTION = "exception";
   public static final String JSON_TEST = "test";
+
+  // Added in 10.1.0
+  public static final String JSON_VALIDATION_SOURCE = "validationSource";
+  public static final String JSON_SOURCE_TYPE_ID = "sourceTypeID";
+  public static final String JSON_SYSTEM_ID = "systemID";
+  public static final String JSON_PARTIAL_SOURCE = "partialSource";
+  public static final String JSON_PAYLOAD = "payload";
 
   public static final String JSON_VESID = "vesid";
   public static final String JSON_NAME = "name";
@@ -467,15 +479,61 @@ public final class PhiveJsonHelper
   }
 
   /**
+   * Create the Validation Source details as an JSON Object.<br>
+   *
+   * <pre>
+   * {
+   *   "sourceTypeID" : string,
+   *   "systemID" : string?,
+   *   "partialSource" : boolean,
+   *   "payload" : base64?
+   * }
+   * </pre>
+   *
+   * @param aSource
+   *        The validation source to use. May not be <code>null</code>. empty.
+   * @param bWithPayload
+   *        <code>true</code> to include the payload, or <code>false</code> to
+   *        omit it.
+   * @return The created JSON object.
+   * @since 10.1.0
+   */
+  @Nonnull
+  public static IJsonObject getJsonValidationSource (@Nonnull final IValidationSource aSource,
+                                                     final boolean bWithPayload)
+  {
+    ValueEnforcer.notNull (aSource, "Source");
+
+    final IJsonObject ret = new JsonObject ().add (JSON_SOURCE_TYPE_ID, aSource.getValidationSourceTypeID ())
+                                             .addIfNotNull (JSON_SYSTEM_ID, aSource.getSystemID ())
+                                             .add (JSON_PARTIAL_SOURCE, aSource.isPartialSource ());
+    if (bWithPayload)
+    {
+      try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
+           final Base64OutputStream aB64OS = new Base64OutputStream (aBAOS))
+      {
+        aSource.writeTo (aB64OS);
+        aB64OS.flushBase64 ();
+        ret.add (JSON_PAYLOAD, aBAOS.getAsString (StandardCharsets.ISO_8859_1));
+      }
+      catch (final IOException ex)
+      {
+        LOGGER.error ("Failed to write Base64 encoded payload to JSON", ex);
+      }
+    }
+    return ret;
+  }
+
+  /**
    * Create the VES status as a JSON Object.<br>
    *
    * <pre>
    * {
-   *   "lastModification" : dateTime
+   *   "lastModification" : dateTime,
    *   "type" : string,
    *   "validFrom" : string?,
    *   "validTo" : string?,
-   *   "deprecationReason" : string?
+   *   "deprecationReason" : string?,
    *   "replacementVesid" : string?
    * }
    * </pre>
@@ -514,11 +572,11 @@ public final class PhiveJsonHelper
    *   "name" : string,
    *   "deprecated" : boolean,
    *   "status" : {
-   *     "lastModification" : dateTime
+   *     "lastModification" : dateTime,
    *     "type" : string,
    *     "validFrom" : string?,
    *     "validTo" : string?,
-   *     "deprecationReason" : string?
+   *     "deprecationReason" : string?,
    *     "replacementVesid" : string?
    *   }
    * }
@@ -544,7 +602,7 @@ public final class PhiveJsonHelper
    * Add one global error to the response. Afterwards no validation results
    * should be added. The layout of the response object is very similar to the
    * one created by
-   * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, List, Locale, long, MutableInt, MutableInt)}.
+   * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}.
    * <br>
    *
    * <pre>
@@ -697,11 +755,13 @@ public final class PhiveJsonHelper
   public static ValidationResultList getAsValidationResultList (@Nullable final IJsonObject aJson)
   {
     // By default we're only resolving in the enum
-    return getAsValidationResultList (aJson, EValidationType::getFromIDOrNull);
+    return getAsValidationResultList (aJson,
+                                      EValidationType::getFromIDOrNull,
+                                      PhiveResultHelper::createValidationSource);
   }
 
   /**
-   * Try to parse a JSON structure and convert it back to a
+   * Try to parse the default JSON structure and convert it back to a
    * {@link ValidationResultList}.
    *
    * @param aJson
@@ -709,22 +769,53 @@ public final class PhiveJsonHelper
    * @param aValidationTypeResolver
    *        The validation type resolver to be used. May not be
    *        <code>null</code>.
+   * @param aValidationSourceRestorer
+   *        The function to restore {@link IValidationSource} objects. May not
+   *        be <code>null</code>.
    * @return <code>null</code> in case reverse operation fails.
    */
   @Nullable
   public static ValidationResultList getAsValidationResultList (@Nullable final IJsonObject aJson,
-                                                                @Nonnull final Function <String, IValidationType> aValidationTypeResolver)
+                                                                @Nonnull final Function <String, IValidationType> aValidationTypeResolver,
+                                                                @Nonnull final IValidationSourceRestorer aValidationSourceRestorer)
   {
     ValueEnforcer.notNull (aValidationTypeResolver, "ValidationTypeResolver");
+    ValueEnforcer.notNull (aValidationSourceRestorer, "ValidationSourceRestorer");
 
     if (aJson == null)
       return null;
+
+    final IValidationSource aValidationSource;
+    {
+      final IJsonObject aJsonVS = aJson.getAsObject (PhiveJsonHelper.JSON_VALIDATION_SOURCE);
+      if (aJsonVS != null)
+      {
+        final String sBase64EncodedPayload = aJsonVS.getAsString (PhiveJsonHelper.JSON_PAYLOAD);
+        final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
+        if (aPayloadBytes == null)
+        {
+          // Error in base64 decoding
+          LOGGER.warn ("Failed to Base64 decode the provided payload");
+          aValidationSource = null;
+        }
+        else
+        {
+          aValidationSource = aValidationSourceRestorer.restoreValidationSource (aJsonVS.getAsString (PhiveJsonHelper.JSON_SOURCE_TYPE_ID),
+                                                                                 aJsonVS.getAsString (PhiveJsonHelper.JSON_SYSTEM_ID),
+                                                                                 aJsonVS.getAsBoolean (PhiveJsonHelper.JSON_PARTIAL_SOURCE,
+                                                                                                       false),
+                                                                                 aPayloadBytes);
+        }
+      }
+      else
+        aValidationSource = null;
+    }
 
     final IJsonArray aResults = aJson.getAsArray (JSON_RESULTS);
     if (aResults == null)
       return null;
 
-    final ValidationResultList ret = new ValidationResultList ();
+    final ValidationResultList ret = new ValidationResultList (aValidationSource);
     for (final IJson aResult : aResults)
     {
       final IJsonObject aResultObj = aResult.getAsObject ();

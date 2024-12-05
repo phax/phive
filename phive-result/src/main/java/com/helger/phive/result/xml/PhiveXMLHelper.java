@@ -16,8 +16,9 @@
  */
 package com.helger.phive.result.xml;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 import java.util.function.Function;
 
@@ -31,6 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import com.helger.commons.ValueEnforcer;
 import com.helger.commons.annotation.Nonempty;
+import com.helger.commons.base64.Base64;
+import com.helger.commons.base64.Base64OutputStream;
 import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.SingleError;
@@ -39,6 +42,7 @@ import com.helger.commons.error.level.IErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.error.text.ConstantHasErrorText;
 import com.helger.commons.io.resource.IReadableResource;
+import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
 import com.helger.commons.lang.StackTraceHelper;
 import com.helger.commons.location.ILocation;
 import com.helger.commons.location.SimpleLocation;
@@ -46,6 +50,7 @@ import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.StringParser;
+import com.helger.commons.typeconvert.TypeConverter;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
@@ -57,6 +62,7 @@ import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
+import com.helger.phive.result.IValidationSourceRestorer;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
@@ -67,7 +73,7 @@ import com.helger.xml.microdom.util.MicroHelper;
 /**
  * A utility class to create a common XML representation of a PHIVE result. Use
  * {@link #applyGlobalError(IMicroElement, String, long)} or
- * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, List, Locale, long, MutableInt, MutableInt)}
+ * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}
  * to add the result to an arbitrary {@link IMicroElement}.
  *
  * @author Philip Helger
@@ -89,6 +95,13 @@ public final class PhiveXMLHelper
   public static final String XML_ERROR_TEXT = "errorText";
   public static final String XML_EXCEPTION = "exception";
   public static final String XML_TEST = "test";
+
+  // Added in 10.1.0
+  public static final String XML_VALIDATION_SOURCE = "validationSource";
+  public static final String XML_SOURCE_TYPE_ID = "sourceTypeID";
+  public static final String XML_SYSTEM_ID = "systemID";
+  public static final String XML_PARTIAL_SOURCE = "partialSource";
+  public static final String XML_PAYLOAD = "payload";
 
   public static final String XML_VESID = "vesid";
   public static final String XML_NAME = "name";
@@ -385,6 +398,58 @@ public final class PhiveXMLHelper
   }
 
   /**
+   * Create the Validation Source details as an XML Object.<br>
+   *
+   * <pre>
+   * &lt;validationSource&gt;
+   *   &lt;implementation&gt;string&lt;/implementation&gt;
+   *   &lt;systemID&gt;string&lt;/systemID&gt;?
+   *   &lt;partialSource&gt;boolean&lt;/partialSource&gt;
+   *   &lt;payload&gt;base64Binary&lt;/payload&gt;?
+   * &lt;/validationSource&gt;
+   * </pre>
+   *
+   * @param aSource
+   *        The validation source to use. May not be <code>null</code>.
+   * @param bWithPayload
+   *        <code>true</code> to include the payload, or <code>false</code> to
+   *        omit it.
+   * @param sElementName
+   *        The XML element name to use. May neither be <code>null</code> nor
+   *        empty.
+   * @return The created XML object.
+   * @since 10.1.0
+   */
+  @Nonnull
+  public static IMicroElement getXMLValidationSource (@Nonnull final IValidationSource aSource,
+                                                      final boolean bWithPayload,
+                                                      @Nonnull @Nonempty final String sElementName)
+  {
+    ValueEnforcer.notNull (aSource, "Source");
+
+    final IMicroElement ret = new MicroElement (sElementName);
+    ret.appendElement (XML_SOURCE_TYPE_ID).appendText (aSource.getValidationSourceTypeID ());
+    if (aSource.hasSystemID ())
+      ret.appendElement (XML_SYSTEM_ID).appendText (aSource.getSystemID ());
+    ret.appendElement (XML_PARTIAL_SOURCE).appendText (aSource.isPartialSource ());
+    if (bWithPayload)
+    {
+      try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
+           final Base64OutputStream aB64OS = new Base64OutputStream (aBAOS))
+      {
+        aSource.writeTo (aB64OS);
+        aB64OS.flushBase64 ();
+        ret.appendElement (XML_PAYLOAD).appendText (aBAOS.getAsString (StandardCharsets.ISO_8859_1));
+      }
+      catch (final IOException ex)
+      {
+        LOGGER.error ("Failed to write Base64 encoded payload to XML", ex);
+      }
+    }
+    return ret;
+  }
+
+  /**
    * Create the VES status details as an XML Object.<br>
    *
    * <pre>
@@ -473,7 +538,7 @@ public final class PhiveXMLHelper
    * Add one global error to the response. Afterwards no validation results
    * should be added. The layout of the response object is very similar to the
    * one created by
-   * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, List, Locale, long, MutableInt, MutableInt)}.
+   * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}.
    * <br>
    *
    * <pre>
@@ -610,11 +675,13 @@ public final class PhiveXMLHelper
   public static ValidationResultList getAsValidationResultList (@Nullable final IMicroElement aXML)
   {
     // By default we're only resolving in the enum
-    return getAsValidationResultList (aXML, EValidationType::getFromIDOrNull);
+    return getAsValidationResultList (aXML,
+                                      EValidationType::getFromIDOrNull,
+                                      PhiveResultHelper::createValidationSource);
   }
 
   /**
-   * Try to parse a XML structure and convert it back to a
+   * Try to parse the default XML structure and convert it back to a
    * {@link ValidationResultList}.
    *
    * @param aXML
@@ -622,18 +689,51 @@ public final class PhiveXMLHelper
    * @param aValidationTypeResolver
    *        The validation type resolver to be used. May not be
    *        <code>null</code>.
+   * @param aValidationSourceRestorer
+   *        The function to restore {@link IValidationSource} objects. May not
+   *        be <code>null</code>.
    * @return <code>null</code> in case reverse operation fails.
    */
   @Nullable
   public static ValidationResultList getAsValidationResultList (@Nullable final IMicroElement aXML,
-                                                                @Nonnull final Function <String, IValidationType> aValidationTypeResolver)
+                                                                @Nonnull final Function <String, IValidationType> aValidationTypeResolver,
+                                                                @Nonnull final IValidationSourceRestorer aValidationSourceRestorer)
   {
     ValueEnforcer.notNull (aValidationTypeResolver, "ValidationTypeResolver");
 
     if (aXML == null)
       return null;
 
-    final ValidationResultList ret = new ValidationResultList ();
+    final IValidationSource aValidationSource;
+    {
+      final IMicroElement eVS = aXML.getFirstChildElement (XML_VALIDATION_SOURCE);
+      if (eVS != null)
+      {
+        final String sBase64EncodedPayload = MicroHelper.getChildTextContentTrimmed (eVS, XML_PAYLOAD);
+        final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
+        if (aPayloadBytes == null)
+        {
+          // Error in base64 decoding
+          LOGGER.warn ("Failed to Base64 decode the provided payload");
+          aValidationSource = null;
+        }
+        else
+        {
+          aValidationSource = aValidationSourceRestorer.restoreValidationSource (MicroHelper.getChildTextContentTrimmed (eVS,
+                                                                                                                         XML_SOURCE_TYPE_ID),
+                                                                                 MicroHelper.getChildTextContentTrimmed (eVS,
+                                                                                                                         XML_SYSTEM_ID),
+                                                                                 TypeConverter.convertToBoolean (MicroHelper.getChildTextContentTrimmed (eVS,
+                                                                                                                                                         XML_PARTIAL_SOURCE),
+                                                                                                                 false),
+                                                                                 aPayloadBytes);
+        }
+      }
+      else
+        aValidationSource = null;
+    }
+
+    final ValidationResultList ret = new ValidationResultList (aValidationSource);
     for (final IMicroElement eResult : aXML.getAllChildElements (XML_RESULT))
     {
       // Fall back to previous status

@@ -120,6 +120,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Added new class `ValidityDeterminatorRegistry` to support validity determination processes
     * Added optional `IValidationSource` to `ValidationResultList`
     * Changed parameter types in `PhiveJsonHelper` and `PhiveXMLHelper` from `List <? extends ValidationResult>` to `ValidationResultList`
+    * Added new class `ValidationSourceXMLReadableResource`
+    * Extended `IValidationSource` interface to make content serializable
 * v10.0.3 - 2024-12-01
     * Added default XML serialization of validation results
     * Added new `EValidationBaseType` entries
