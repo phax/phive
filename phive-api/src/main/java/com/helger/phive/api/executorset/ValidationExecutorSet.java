@@ -145,12 +145,11 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("ID", m_aVESID)
-                            .append ("DisplayName", m_sDisplayName)
-                            .append ("List", m_aList)
-                            .append ("Status", m_aStatus)
-                            .getToString ();
+    return new ToStringGenerator (this).append ("ID", m_aVESID)
+                                       .append ("DisplayName", m_sDisplayName)
+                                       .append ("List", m_aList)
+                                       .append ("Status", m_aStatus)
+                                       .getToString ();
   }
 
   @Nonnull

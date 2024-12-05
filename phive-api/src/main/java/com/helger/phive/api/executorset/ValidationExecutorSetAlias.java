@@ -140,10 +140,9 @@ public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> i
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("ID", m_aVESID)
-                            .append ("DisplayName", m_sDisplayName)
-                            .append ("VES", m_aVES)
-                            .getToString ();
+    return new ToStringGenerator (this).append ("ID", m_aVESID)
+                                       .append ("DisplayName", m_sDisplayName)
+                                       .append ("VES", m_aVES)
+                                       .getToString ();
   }
 }
