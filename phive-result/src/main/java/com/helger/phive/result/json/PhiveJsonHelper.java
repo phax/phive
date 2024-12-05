@@ -644,7 +644,8 @@ public final class PhiveJsonHelper
                                        .addJson (JSON_ITEMS,
                                                  new JsonArray (jsonErrorBuilder ().errorLevel (EErrorLevel.ERROR)
                                                                                    .errorText (sErrorMsg)
-                                                                                   .build ())));
+                                                                                   .build ()))
+                                       .add (JSON_DURATION_MS, nDurationMilliseconds));
 
     aResponse.add (JSON_SUCCESS, false);
     aResponse.add (JSON_INTERRUPTED, false);
@@ -884,12 +885,15 @@ public final class PhiveJsonHelper
             final IJsonObject aItemObj = aItem.getAsObject ();
             if (aItemObj != null)
             {
+              // Convert JSON to IError
               final IError aError = getAsIError (aItemObj);
               aErrorList.add (aError);
             }
           }
 
-          final ValidationResult aVR = new ValidationResult (aVA, aErrorList);
+          final long nDurationMS = aResultObj.getAsLong (JSON_DURATION_MS);
+
+          final ValidationResult aVR = new ValidationResult (aVA, aErrorList, nDurationMS);
           ret.add (aVR);
         }
       }

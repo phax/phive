@@ -578,11 +578,14 @@ public final class PhiveXMLHelper
     aResponse.appendElement (XML_MOST_SEVERE_ERROR_LEVEL)
              .appendText (PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
 
-    final IMicroElement aResult = aResponse.appendElement (XML_RESULT);
-    aResult.appendElement (XML_SUCCESS).appendText (PhiveResultHelper.getTriStateValue (false));
-    aResult.appendElement (XML_ARTIFACT_TYPE).appendText (ARTIFACT_TYPE_INPUT_PARAMETER);
-    aResult.appendElement (XML_ARTIFACT_PATH).appendText (ARTIFACT_PATH_NONE);
-    aResult.appendChild (xmlErrorBuilder (XML_ITEM).errorLevel (EErrorLevel.ERROR).errorText (sErrorMsg).build ());
+    {
+      final IMicroElement aResult = aResponse.appendElement (XML_RESULT);
+      aResult.appendElement (XML_SUCCESS).appendText (PhiveResultHelper.getTriStateValue (false));
+      aResult.appendElement (XML_ARTIFACT_TYPE).appendText (ARTIFACT_TYPE_INPUT_PARAMETER);
+      aResult.appendElement (XML_ARTIFACT_PATH).appendText (ARTIFACT_PATH_NONE);
+      aResult.appendChild (xmlErrorBuilder (XML_ITEM).errorLevel (EErrorLevel.ERROR).errorText (sErrorMsg).build ());
+      aResult.appendElement (XML_DURATION_MS).appendText (nDurationMilliseconds);
+    }
 
     aResponse.appendElement (XML_DURATION_MS).appendText (nDurationMilliseconds);
   }
@@ -799,7 +802,11 @@ public final class PhiveXMLHelper
           aErrorList.add (aError);
         }
 
-        final ValidationResult aVR = new ValidationResult (aVA, aErrorList);
+        final long nDurationMS = TypeConverter.convertToLong (MicroHelper.getChildTextContentTrimmed (eResult,
+                                                                                                      XML_DURATION_MS),
+                                                              0);
+
+        final ValidationResult aVR = new ValidationResult (aVA, aErrorList, nDurationMS);
         ret.add (aVR);
       }
     }

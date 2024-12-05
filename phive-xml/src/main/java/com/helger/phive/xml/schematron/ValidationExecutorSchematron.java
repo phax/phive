@@ -47,6 +47,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.StringHelper;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.timing.StopWatch;
 import com.helger.commons.wrapper.Wrapper;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
@@ -264,6 +265,8 @@ public class ValidationExecutorSchematron extends
 
     final IValidationArtefact aArtefact = getValidationArtefact ();
 
+    final StopWatch aSW = StopWatch.createdStarted ();
+
     // Get source as XML DOM Node
     Node aNode = null;
     try
@@ -313,7 +316,7 @@ public class ValidationExecutorSchematron extends
         return createValidationResult (new ErrorList (SingleError.builderError ()
                                                                  .errorText (sErrorMsg)
                                                                  .linkedException (ex)
-                                                                 .build ()));
+                                                                 .build ()), aSW.stopAndGetMillis ());
       }
     }
     // No prerequisite or prerequisite matched
@@ -452,7 +455,7 @@ public class ValidationExecutorSchematron extends
         }
       }
     }
-    return createValidationResult (aErrorList);
+    return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
   }
 
   @Nonnull

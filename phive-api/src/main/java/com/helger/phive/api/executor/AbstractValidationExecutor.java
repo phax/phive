@@ -16,6 +16,7 @@
  */
 package com.helger.phive.api.executor;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -82,9 +83,10 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
   }
 
   @Nonnull
-  protected final ValidationResult createValidationResult (@Nonnull final IErrorList aErrorList)
+  protected final ValidationResult createValidationResult (@Nonnull final IErrorList aErrorList,
+                                                           @Nonnegative final long nDurationMS)
   {
-    return new ValidationResult (m_aValidationArtefact, aErrorList);
+    return new ValidationResult (m_aValidationArtefact, aErrorList, nDurationMS);
   }
 
   @Override

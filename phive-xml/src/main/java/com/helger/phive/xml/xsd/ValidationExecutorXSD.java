@@ -36,6 +36,7 @@ import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.location.SimpleLocation;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.timing.StopWatch;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -83,6 +84,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     ValueEnforcer.notNull (aSource, "Source");
     final IValidationArtefact aVA = getValidationArtefact ();
 
+    final StopWatch aSW = StopWatch.createdStarted ();
+
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
     final Schema aSchema = m_aSchemaProvider.get ();
@@ -112,7 +115,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
       }
     }
     // Build result object
-    return createValidationResult (aErrorList.getAllFailures ());
+    return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
   }
 
   @Nonnull

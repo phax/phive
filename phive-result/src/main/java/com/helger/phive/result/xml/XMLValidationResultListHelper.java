@@ -35,6 +35,7 @@ import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.mutable.MutableInt;
 import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
+import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
@@ -237,6 +238,8 @@ public class XMLValidationResultListHelper
     // Add the items afterwards
     for (final ValidationResult aVR : aValidationResultList)
     {
+      final IValidationArtefact aVA = aVR.getValidationArtefact ();
+
       final IMicroElement aVRT = new MicroElement (PhiveXMLHelper.XML_RESULT);
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
@@ -251,16 +254,14 @@ public class XMLValidationResultListHelper
         final boolean bIsValid = aVR.getErrorList ().containsNoError ();
         aVRT.appendElement (PhiveXMLHelper.XML_SUCCESS).appendText (PhiveResultHelper.getTriStateValue (bIsValid));
       }
-      aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_TYPE)
-          .appendText (aVR.getValidationArtefact ().getValidationType ().getID ());
+      aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_TYPE).appendText (aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToXML != null)
       {
-        final String sPathType = m_aArtifactPathTypeToXML.apply (aVR.getValidationArtefact ().getRuleResource ());
+        final String sPathType = m_aArtifactPathTypeToXML.apply (aVA.getRuleResource ());
         if (StringHelper.hasText (sPathType))
           aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_PATH_TYPE).appendText (sPathType);
       }
-      aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_PATH)
-          .appendText (aVR.getValidationArtefact ().getRuleResourcePath ());
+      aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_PATH).appendText (aVA.getRuleResourcePath ());
 
       for (final IError aError : aVR.getErrorList ())
       {
@@ -270,6 +271,8 @@ public class XMLValidationResultListHelper
         else
           LOGGER.warn ("Failed to convert IError to XML");
       }
+      aVRT.appendElement (PhiveXMLHelper.XML_DURATION_MS).appendText (aVR.getDurationMS ());
+
       aResponse.appendChild (aVRT);
     }
 

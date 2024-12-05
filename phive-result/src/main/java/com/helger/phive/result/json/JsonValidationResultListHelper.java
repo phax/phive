@@ -35,6 +35,7 @@ import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
+import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
@@ -184,6 +185,8 @@ public class JsonValidationResultListHelper
     final IJsonArray aResultArray = new JsonArray ();
     for (final ValidationResult aVR : aValidationResultList)
     {
+      final IValidationArtefact aVA = aVR.getValidationArtefact ();
+
       final IJsonObject aVRT = new JsonObject ();
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
@@ -200,11 +203,11 @@ public class JsonValidationResultListHelper
         if (!bIsValid)
           eWorstValidity = EExtendedValidity.INVALID;
       }
-      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVR.getValidationArtefact ().getValidationType ().getID ());
+      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToJson != null)
         aVRT.addIfNotNull (PhiveJsonHelper.JSON_ARTIFACT_PATH_TYPE,
-                           m_aArtifactPathTypeToJson.apply (aVR.getValidationArtefact ().getRuleResource ()));
-      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_PATH, aVR.getValidationArtefact ().getRuleResourcePath ());
+                           m_aArtifactPathTypeToJson.apply (aVA.getRuleResource ()));
+      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_PATH, aVA.getRuleResourcePath ());
 
       final IJsonArray aItemArray = new JsonArray ();
       for (final IError aError : aVR.getErrorList ())
@@ -222,6 +225,7 @@ public class JsonValidationResultListHelper
           aItemArray.add (m_aErrorToJson.apply (aError, aDisplayLocale));
       }
       aVRT.addJson (PhiveJsonHelper.JSON_ITEMS, aItemArray);
+      aVRT.add (PhiveJsonHelper.JSON_DURATION_MS, aVR.getDurationMS ());
       aResultArray.add (aVRT);
     }
     // Success if the worst that happened is a warning

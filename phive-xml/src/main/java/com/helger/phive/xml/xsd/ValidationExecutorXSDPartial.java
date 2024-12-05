@@ -37,6 +37,7 @@ import com.helger.commons.error.level.EErrorLevel;
 import com.helger.commons.error.list.ErrorList;
 import com.helger.commons.io.resource.IReadableResource;
 import com.helger.commons.string.ToStringGenerator;
+import com.helger.commons.timing.StopWatch;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -108,6 +109,7 @@ public class ValidationExecutorXSDPartial extends
     ValueEnforcer.notNull (aSource, "Source");
 
     final IValidationArtefact aVA = getValidationArtefact ();
+    final StopWatch aSW = StopWatch.createdStarted ();
 
     NodeList aNodeSet;
     try
@@ -148,7 +150,7 @@ public class ValidationExecutorXSDPartial extends
     if (nMatchingNodes == 0)
     {
       // No match found - nothing to do
-      return createValidationResult (aErrorList);
+      return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
     }
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
@@ -187,7 +189,7 @@ public class ValidationExecutorXSDPartial extends
       }
     }
     // Build result object
-    return createValidationResult (aErrorList.getAllFailures ());
+    return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
   }
 
   @Nonnull

@@ -16,6 +16,7 @@
  */
 package com.helger.phive.api.result;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -38,6 +39,7 @@ public class ValidationResult
   private final IValidationArtefact m_aValidationArtefact;
   private final IErrorList m_aErrorList;
   private final boolean m_bSkipped;
+  private final long m_nDurationMS;
 
   /**
    * Constructor for non-skipped results
@@ -48,10 +50,15 @@ public class ValidationResult
    * @param aErrorList
    *        The list of errors applying the validation artefact. May not be
    *        <code>null</code>.
+   * @param nDurationMS
+   *        The number of milliseconds it took to get the validation results.
+   *        Must be &ge; 0.
    */
-  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact, @Nonnull final IErrorList aErrorList)
+  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
+                           @Nonnull final IErrorList aErrorList,
+                           @Nonnegative final long nDurationMS)
   {
-    this (aValidationArtefact, aErrorList, false);
+    this (aValidationArtefact, aErrorList, false, nDurationMS);
   }
 
   /**
@@ -65,14 +72,23 @@ public class ValidationResult
    *        <code>null</code>.
    * @param bWasSkipped
    *        <code>true</code> if this validation layer was skipped.
+   * @param nDurationMS
+   *        The number of milliseconds it took to get the validation results.
+   *        Must be &ge; 0.
    */
   protected ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
                               @Nonnull final IErrorList aErrorList,
-                              final boolean bWasSkipped)
+                              final boolean bWasSkipped,
+                              @Nonnegative final long nDurationMS)
   {
-    m_aValidationArtefact = ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
-    m_aErrorList = ValueEnforcer.notNull (aErrorList, "ErrorList");
+    ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
+    ValueEnforcer.notNull (aErrorList, "ErrorList");
+    ValueEnforcer.isGE0 (nDurationMS, "DurationMS");
+
+    m_aValidationArtefact = aValidationArtefact;
+    m_aErrorList = aErrorList;
     m_bSkipped = bWasSkipped;
+    m_nDurationMS = nDurationMS;
   }
 
   /**
@@ -96,9 +112,24 @@ public class ValidationResult
     return m_aErrorList;
   }
 
+  /**
+   * @return <code>true</code> if this validation result is based on a skipped
+   *         validation layer, <code>false</code> otherwise.
+   */
   public final boolean isSkipped ()
   {
     return m_bSkipped;
+  }
+
+  /**
+   * @return The duration in milliseconds it took to create this validation
+   *         result. Always &ge; 0.
+   * @since 10.1.0
+   */
+  @Nonnegative
+  public final long getDurationMS ()
+  {
+    return m_nDurationMS;
   }
 
   @Override
@@ -107,6 +138,7 @@ public class ValidationResult
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
                                        .append ("ErrorList", m_aErrorList)
                                        .append ("Skipped", m_bSkipped)
+                                       .append ("DurationMS", m_nDurationMS)
                                        .getToString ();
   }
 
@@ -120,6 +152,6 @@ public class ValidationResult
   @Nonnull
   public static ValidationResult createSkippedResult (@Nonnull final IValidationArtefact aValidationArtefact)
   {
-    return new ValidationResult (aValidationArtefact, new ErrorList (), true);
+    return new ValidationResult (aValidationArtefact, new ErrorList (), true, 0);
   }
 }

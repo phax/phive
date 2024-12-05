@@ -78,6 +78,7 @@ public final class PhiveXMLHelperTest
                   "<artifactType>input-parameter</artifactType>" +
                   "<artifactPath>none</artifactPath>" +
                   "<item><errorLevel>ERROR</errorLevel><errorText>My error</errorText></item>" +
+                  "<durationMS>123</durationMS>" +
                   "</result>" +
                   "<durationMS>123</durationMS></root>",
                   sXML);

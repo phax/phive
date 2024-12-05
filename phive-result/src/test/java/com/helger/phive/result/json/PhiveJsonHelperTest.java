@@ -70,7 +70,7 @@ public final class PhiveJsonHelperTest
     assertEquals ("{\"success\":false," +
                   "\"interrupted\":false," +
                   "\"mostSevereErrorLevel\":\"ERROR\"," +
-                  "\"results\":[{\"success\":\"FALSE\",\"artifactType\":\"input-parameter\",\"artifactPath\":\"none\",\"items\":[{\"errorLevel\":\"ERROR\",\"errorText\":\"My error\"}]}]," +
+                  "\"results\":[{\"success\":\"FALSE\",\"artifactType\":\"input-parameter\",\"artifactPath\":\"none\",\"items\":[{\"errorLevel\":\"ERROR\",\"errorText\":\"My error\"}],\"durationMS\":123}]," +
                   "\"durationMS\":123}",
                   sJson);
   }
