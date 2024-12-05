@@ -51,10 +51,11 @@ public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
   /**
    * @return A validity determinator that marks entries with at least one error
    *         as INVALID and others as VALID. It contains no uncertainty.
+   * @see ValidityDeterminatorRegistry#getValidityOneErrorInvalid(IErrorList)
    */
   static <ST extends IValidationSource> IValidityDeterminator <ST> createCertainOneErrorInvalid ()
   {
-    return (ex, errList) -> errList.containsAtLeastOneError () ? EExtendedValidity.INVALID : EExtendedValidity.VALID;
+    return (vex, errList) -> ValidityDeterminatorRegistry.getValidityOneErrorInvalid (errList);
   }
 
   /**
