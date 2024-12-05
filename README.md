@@ -117,6 +117,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Added new interface `IValidationExecutorSetMutable`
     * Added new class `ValidationExecutorSetAlias` to be able to proxy existing VES with different coordinates
     * Added new class `ValidityDeterminatorRegistry` to support validity determination processes
+    * Added optional `IValidationSource` to `ValidationResultList`
 * v10.0.3 - 2024-12-01
     * Added default XML serialization of validation results
     * Added new `EValidationBaseType` entries

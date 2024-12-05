@@ -28,6 +28,8 @@ import com.helger.commons.annotation.ReturnsMutableCopy;
 import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.error.IError;
 import com.helger.commons.error.list.ErrorList;
+import com.helger.commons.string.ToStringGenerator;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
  * A managed list of {@link ValidationResult} objects.
@@ -36,8 +38,49 @@ import com.helger.commons.error.list.ErrorList;
  */
 public class ValidationResultList extends CommonsArrayList <ValidationResult>
 {
+  private final IValidationSource m_aSource;
+
+  /**
+   * Create a validation result list without a source.
+   */
+  @Deprecated (forRemoval = true, since = "10.0.4")
   public ValidationResultList ()
-  {}
+  {
+    this (null);
+  }
+
+  /**
+   * Create a validation result list with an optional source.
+   *
+   * @param aSource
+   *        The validation source that was used. May be <code>null</code>.
+   * @since 10.0.4
+   */
+  public ValidationResultList (@Nullable final IValidationSource aSource)
+  {
+    m_aSource = aSource;
+  }
+
+  /**
+   * @return <code>true</code> if a validation source is present,
+   *         <code>false</code> if not
+   * @since 10.0.4
+   */
+  public final boolean hasValidationSource ()
+  {
+    return m_aSource != null;
+  }
+
+  /**
+   * @return The validation source this result list is based on. May be
+   *         <code>null</code>.
+   * @since 10.0.4
+   */
+  @Nullable
+  public final IValidationSource getValidationSource ()
+  {
+    return m_aSource;
+  }
 
   /**
    * @return <code>true</code> if this list contains no failure,
@@ -139,5 +182,11 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
 
     for (final ValidationResult aItem : this)
       aItem.getErrorList ().forEach (aConsumer);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("Source", m_aSource).getToString ();
   }
 }

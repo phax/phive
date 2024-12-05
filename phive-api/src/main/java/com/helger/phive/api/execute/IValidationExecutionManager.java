@@ -74,7 +74,7 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
   @Nonnull
   default ValidationResultList executeValidation (@Nonnull final SOURCETYPE aSource, @Nullable final Locale aLocale)
   {
-    final ValidationResultList ret = new ValidationResultList ();
+    final ValidationResultList ret = new ValidationResultList (aSource);
     executeValidation (aSource, ret, aLocale);
     return ret;
   }

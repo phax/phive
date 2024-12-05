@@ -836,7 +836,7 @@ public final class VESLoader
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Start validation of '" + aVESID.getAsSingleID () + "'");
 
-    final ValidationResultList aValidationResultList = new ValidationResultList ();
+    final ValidationResultList aValidationResultList = new ValidationResultList (aValidationSource);
     final Duration aValidateDuration = StopWatch.runMeasured ( () -> {
       aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
     });

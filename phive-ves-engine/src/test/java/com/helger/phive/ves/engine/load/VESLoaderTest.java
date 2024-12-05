@@ -351,7 +351,7 @@ public final class VESLoaderTest
     final IValidationSourceXML aValidationSource = ValidationSourceXML.create (new ClassPathResource ("ves/test1/mini-valid.xml"));
     assertNotNull (aValidationSource.getNode ());
 
-    final ValidationResultList aValidationResultList = new ValidationResultList ();
+    final ValidationResultList aValidationResultList = new ValidationResultList (aValidationSource);
     // Should throw a VESLoadingException
     aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.US);
   }
