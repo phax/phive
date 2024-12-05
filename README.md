@@ -113,6 +113,9 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v10.0.4 - work in progress
+    * Added new interface `IValidationExecutorSetMutable`
+    * Added new class `ValidationExecutorSetAlias`
 * v10.0.3 - 2024-12-01
     * Added default XML serialization of validation results
     * Added new `EValidationBaseType` entries

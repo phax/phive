@@ -45,7 +45,8 @@ import com.helger.phive.api.source.IValidationSource;
  *        The validation source type to be used.
  */
 @NotThreadSafe
-public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implements IValidationExecutorSet <SOURCETYPE>
+public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implements
+                                   IValidationExecutorSetMutable <SOURCETYPE>
 {
   private final DVRCoordinate m_aVESID;
   private final String m_sDisplayName;
@@ -103,13 +104,6 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
     return m_aStatus;
   }
 
-  /**
-   * Add a single executor.
-   *
-   * @param aExecutor
-   *        The executor to be added. May not be <code>null</code>.
-   * @return this for chaining
-   */
   @Nonnull
   public ValidationExecutorSet <SOURCETYPE> addExecutor (@Nonnull final IValidationExecutor <SOURCETYPE> aExecutor)
   {
@@ -125,15 +119,6 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
         ((IValidationExecutorCacheSupport) aExecutor).setCacheArtefact (bCache);
   }
 
-  /**
-   * As some {@link IValidationExecutor} instances may contain a hard reference
-   * to a {@link ClassLoader} this methods removes all executors and allows for
-   * them to be garbage collected.<br>
-   * New executors may be added afterwards but this method is mainly meant for
-   * safe cleanup.
-   *
-   * @return {@link EChange}
-   */
   @Nonnull
   public EChange removeAllExecutors ()
   {
