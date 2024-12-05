@@ -467,6 +467,45 @@ public final class PhiveJsonHelper
   }
 
   /**
+   * Create the VES status as a JSON Object.<br>
+   *
+   * <pre>
+   * {
+   *   "lastModification" : dateTime
+   *   "type" : string,
+   *   "validFrom" : string?,
+   *   "validTo" : string?,
+   *   "deprecationReason" : string?
+   *   "replacementVesid" : string?
+   * }
+   * </pre>
+   *
+   * @param aStatus
+   *        The VES status to use. May not be <code>null</code>.
+   * @return The created JSON object.
+   * @since 10.0.4
+   */
+  @Nonnull
+  public static IJsonObject getJsonVESStatus (@Nonnull final IValidationExecutorSetStatus aStatus)
+  {
+    ValueEnforcer.notNull (aStatus, "Status");
+
+    final IJsonObject aStatusJson = new JsonObject ().add (JSON_STATUS_LAST_MODIFICATION,
+                                                           PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()))
+                                                     .add (JSON_STATUS_TYPE, aStatus.getType ().getID ())
+                                                     .addIfNotNull (JSON_STATUS_VALID_FROM,
+                                                                    PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()))
+                                                     .addIfNotNull (JSON_STATUS_VALID_TO,
+                                                                    PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()))
+                                                     .addIfNotEmpty (JSON_STATUS_DEPRECATION_REASON,
+                                                                     aStatus.getDeprecationReason ());
+    if (aStatus.hasReplacementVESID ())
+      aStatusJson.add (JSON_STATUS_REPLACEMENT_VESID, aStatus.getReplacementVESID ().getAsSingleID ());
+
+    return aStatusJson;
+  }
+
+  /**
    * Create the VES details as a JSON Object.<br>
    *
    * <pre>
@@ -495,22 +534,10 @@ public final class PhiveJsonHelper
     ValueEnforcer.notNull (aVES, "VES");
 
     final IValidationExecutorSetStatus aStatus = aVES.getStatus ();
-    final IJsonObject aStatusJson = new JsonObject ().add (JSON_STATUS_LAST_MODIFICATION,
-                                                           PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()))
-                                                     .add (JSON_STATUS_TYPE, aStatus.getType ().getID ())
-                                                     .addIfNotNull (JSON_STATUS_VALID_FROM,
-                                                                    PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()))
-                                                     .addIfNotNull (JSON_STATUS_VALID_TO,
-                                                                    PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()))
-                                                     .addIfNotEmpty (JSON_STATUS_DEPRECATION_REASON,
-                                                                     aStatus.getDeprecationReason ());
-    if (aStatus.hasReplacementVESID ())
-      aStatusJson.add (JSON_STATUS_REPLACEMENT_VESID, aStatus.getReplacementVESID ().getAsSingleID ());
-
     return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
                             .add (JSON_NAME, aVES.getDisplayName ())
                             .add (JSON_DEPRECATED, aStatus.isDeprecated ())
-                            .addJson (JSON_STATUS, aStatusJson);
+                            .addJson (JSON_STATUS, getJsonVESStatus (aStatus));
   }
 
   /**

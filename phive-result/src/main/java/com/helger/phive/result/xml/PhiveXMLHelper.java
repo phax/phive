@@ -183,9 +183,9 @@ public final class PhiveXMLHelper
     if (aLocation.hasResourceID ())
       ret.appendElement (XML_RESOURCE_ID).appendText (aLocation.getResourceID ());
     if (aLocation.hasLineNumber ())
-      ret.appendElement (XML_LINE_NUM).appendText (Integer.toString (aLocation.getLineNumber ()));
+      ret.appendElement (XML_LINE_NUM).appendText (aLocation.getLineNumber ());
     if (aLocation.hasColumnNumber ())
-      ret.appendElement (XML_COLUMN_NUM).appendText (Integer.toString (aLocation.getColumnNumber ()));
+      ret.appendElement (XML_COLUMN_NUM).appendText (aLocation.getColumnNumber ());
     return ret;
   }
 
@@ -385,6 +385,49 @@ public final class PhiveXMLHelper
   }
 
   /**
+   * Create the VES status details as an XML Object.<br>
+   *
+   * <pre>
+   * &lt;status&gt;
+   *   &lt;lastModification&gt;dateTime&lt;/lastModification&gt;
+   *   &lt;type&gt;string&lt;/type&gt;
+   *   &lt;validFrom&gt;string&lt;/validFrom&gt;?
+   *   &lt;validTo&gt;string&lt;/validTo&gt;?
+   *   &lt;deprecationReason&gt;string&lt;/deprecationReason&gt;?
+   *   &lt;replacementVesid&gt;string&lt;/replacementVesid&gt;?
+   * &lt;/status&gt;
+   * </pre>
+   *
+   * @param aStatus
+   *        The VES status to use. May not be <code>null</code>.
+   * @param sElementName
+   *        The XML element name to use. May neither be <code>null</code> nor
+   *        empty.
+   * @return The created XML object.
+   * @since 10.0.4
+   */
+  @Nonnull
+  public static IMicroElement getXMLVESStatus (@Nonnull final IValidationExecutorSetStatus aStatus,
+                                               @Nonnull @Nonempty final String sElementName)
+  {
+    ValueEnforcer.notNull (aStatus, "Status");
+
+    final IMicroElement ret = new MicroElement (sElementName);
+    ret.appendElement (XML_STATUS_LAST_MODIFICATION)
+       .appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()));
+    ret.appendElement (XML_STATUS_TYPE).appendText (aStatus.getType ().getID ());
+    if (aStatus.hasValidFrom ())
+      ret.appendElement (XML_STATUS_VALID_FROM).appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()));
+    if (aStatus.hasValidTo ())
+      ret.appendElement (XML_STATUS_VALID_TO).appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()));
+    if (aStatus.hasDeprecationReason ())
+      ret.appendElement (XML_STATUS_DEPRECATION_REASON).appendText (aStatus.getDeprecationReason ());
+    if (aStatus.hasReplacementVESID ())
+      ret.appendElement (XML_STATUS_REPLACEMENT_VESID).appendText (aStatus.getReplacementVESID ().getAsSingleID ());
+    return ret;
+  }
+
+  /**
    * Create the VES details as an XML Object.<br>
    *
    * <pre>
@@ -417,25 +460,12 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (aVES, "VES");
 
     final IValidationExecutorSetStatus aStatus = aVES.getStatus ();
-    final IMicroElement eStatus = new MicroElement (XML_STATUS);
-    eStatus.appendElement (XML_STATUS_LAST_MODIFICATION)
-           .appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()));
-    eStatus.appendElement (XML_STATUS_TYPE).appendText (aStatus.getType ().getID ());
-    if (aStatus.hasValidFrom ())
-      eStatus.appendElement (XML_STATUS_VALID_FROM)
-             .appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()));
-    if (aStatus.hasValidTo ())
-      eStatus.appendElement (XML_STATUS_VALID_TO).appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()));
-    if (aStatus.hasDeprecationReason ())
-      eStatus.appendElement (XML_STATUS_DEPRECATION_REASON).appendText (aStatus.getDeprecationReason ());
-    if (aStatus.hasReplacementVESID ())
-      eStatus.appendElement (XML_STATUS_REPLACEMENT_VESID).appendText (aStatus.getReplacementVESID ().getAsSingleID ());
 
     final IMicroElement ret = new MicroElement (sElementName);
     ret.appendElement (XML_VESID).appendText (aVES.getID ().getAsSingleID ());
     ret.appendElement (XML_NAME).appendText (aVES.getDisplayName ());
-    ret.appendElement (XML_DEPRECATED).appendText (Boolean.toString (aStatus.isDeprecated ()));
-    ret.appendChild (eStatus);
+    ret.appendElement (XML_DEPRECATED).appendText (aStatus.isDeprecated ());
+    ret.appendChild (getXMLVESStatus (aStatus, XML_STATUS));
     return ret;
   }
 
@@ -478,8 +508,8 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (sErrorMsg, "ErrorMsg");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
-    aResponse.appendElement (XML_SUCCESS).appendText (Boolean.FALSE.toString ());
-    aResponse.appendElement (XML_INTERRUPTED).appendText (Boolean.FALSE.toString ());
+    aResponse.appendElement (XML_SUCCESS).appendText (false);
+    aResponse.appendElement (XML_INTERRUPTED).appendText (false);
     aResponse.appendElement (XML_MOST_SEVERE_ERROR_LEVEL)
              .appendText (PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
 
@@ -489,7 +519,7 @@ public final class PhiveXMLHelper
     aResult.appendElement (XML_ARTIFACT_PATH).appendText (ARTIFACT_PATH_NONE);
     aResult.appendChild (xmlErrorBuilder (XML_ITEM).errorLevel (EErrorLevel.ERROR).errorText (sErrorMsg).build ());
 
-    aResponse.appendElement (XML_DURATION_MS).appendText (Long.toString (nDurationMilliseconds));
+    aResponse.appendElement (XML_DURATION_MS).appendText (nDurationMilliseconds);
   }
 
   /**
