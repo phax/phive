@@ -113,7 +113,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
-* v10.1.0 - work in progress
+* v10.1.0 - 2024-12-05
     * Requires ph-commons 11.1.11
     * Added new interface `IValidationExecutorSetMutable`
     * Added new class `ValidationExecutorSetAlias` to be able to proxy existing VES with different coordinates
@@ -123,6 +123,7 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
     * Added new class `ValidationSourceXMLReadableResource`
     * Extended `IValidationSource` interface to make content serializable
     * Added the duration in milliseconds per `ValidationResult`
+    * Updated the default JSON and XML validation result list serialization to contain the new elements
 * v10.0.3 - 2024-12-01
     * Added default XML serialization of validation results
     * Added new `EValidationBaseType` entries
