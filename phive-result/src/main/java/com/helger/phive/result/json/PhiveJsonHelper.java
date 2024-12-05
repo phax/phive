@@ -483,7 +483,7 @@ public final class PhiveJsonHelper
    * @param aStatus
    *        The VES status to use. May not be <code>null</code>.
    * @return The created JSON object.
-   * @since 10.0.4
+   * @since 10.1.0
    */
   @Nonnull
   public static IJsonObject getJsonVESStatus (@Nonnull final IValidationExecutorSetStatus aStatus)
@@ -648,7 +648,7 @@ public final class PhiveJsonHelper
    */
   public static void applyValidationResultList (@Nonnull final IJsonObject aResponse,
                                                 @Nullable final IValidationExecutorSet <?> aVES,
-                                                @Nonnull final List <? extends ValidationResult> aValidationResultList,
+                                                @Nonnull final ValidationResultList aValidationResultList,
                                                 @Nonnull final Locale aDisplayLocale,
                                                 @Nonnegative final long nDurationMilliseconds,
                                                 @Nullable final MutableInt aWarningCount,

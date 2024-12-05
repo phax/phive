@@ -27,7 +27,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.error.IError;
@@ -95,7 +94,13 @@ public final class PhiveXMLHelperTest
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
                                                                           "name",
                                                                           ValidationExecutorSetStatus.createValidAt (aNow));
-    PhiveXMLHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
+    PhiveXMLHelper.applyValidationResultList (aObj,
+                                              aVES,
+                                              new ValidationResultList (null),
+                                              aDisplayLocale,
+                                              123,
+                                              null,
+                                              null);
     final String sXML = MicroWriter.getNodeAsString (aObj,
                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
     assertEquals ("<root>" +

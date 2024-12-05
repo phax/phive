@@ -404,7 +404,7 @@ public final class PhiveXMLHelper
    *        The XML element name to use. May neither be <code>null</code> nor
    *        empty.
    * @return The created XML object.
-   * @since 10.0.4
+   * @since 10.1.0
    */
   @Nonnull
   public static IMicroElement getXMLVESStatus (@Nonnull final IValidationExecutorSetStatus aStatus,
@@ -569,7 +569,7 @@ public final class PhiveXMLHelper
    */
   public static void applyValidationResultList (@Nonnull final IMicroElement aResponse,
                                                 @Nullable final IValidationExecutorSet <?> aVES,
-                                                @Nonnull final List <? extends ValidationResult> aValidationResultList,
+                                                @Nonnull final ValidationResultList aValidationResultList,
                                                 @Nonnull final Locale aDisplayLocale,
                                                 @Nonnegative final long nDurationMilliseconds,
                                                 @Nullable final MutableInt aWarningCount,

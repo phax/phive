@@ -27,7 +27,6 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
 import com.helger.commons.datetime.PDTFactory;
 import com.helger.commons.datetime.PDTWebDateHelper;
 import com.helger.commons.error.IError;
@@ -86,7 +85,13 @@ public final class PhiveJsonHelperTest
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
                                                                           "name",
                                                                           ValidationExecutorSetStatus.createValidAt (aNow));
-    PhiveJsonHelper.applyValidationResultList (aObj, aVES, new CommonsArrayList <> (), aDisplayLocale, 123, null, null);
+    PhiveJsonHelper.applyValidationResultList (aObj,
+                                               aVES,
+                                               new ValidationResultList (null),
+                                               aDisplayLocale,
+                                               123,
+                                               null,
+                                               null);
     final String sJson = aObj.getAsJsonString ();
     assertEquals ("{\"ves\":{\"vesid\":\"group:art:1\",\"name\":\"name\",\"deprecated\":false,\"status\":{\"lastModification\":\"" +
                   PDTWebDateHelper.getAsStringXSD (aNow) +

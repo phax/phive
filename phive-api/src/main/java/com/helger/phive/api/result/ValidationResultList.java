@@ -54,7 +54,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    *
    * @param aSource
    *        The validation source that was used. May be <code>null</code>.
-   * @since 10.0.4
+   * @since 10.1.0
    */
   public ValidationResultList (@Nullable final IValidationSource aSource)
   {
@@ -64,7 +64,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   /**
    * @return <code>true</code> if a validation source is present,
    *         <code>false</code> if not
-   * @since 10.0.4
+   * @since 10.1.0
    */
   public final boolean hasValidationSource ()
   {
@@ -74,7 +74,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   /**
    * @return The validation source this result list is based on. May be
    *         <code>null</code>.
-   * @since 10.0.4
+   * @since 10.1.0
    */
   @Nullable
   public final IValidationSource getValidationSource ()

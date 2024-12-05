@@ -26,7 +26,7 @@ import com.helger.commons.error.list.IErrorList;
  * Helper class for validity determination implementations
  *
  * @author Philip Helger
- * @since 10.0.4
+ * @since 10.1.0
  */
 @Immutable
 public final class ValidityDeterminatorRegistry

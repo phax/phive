@@ -16,7 +16,6 @@
  */
 package com.helger.phive.result.json;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -38,6 +37,7 @@ import com.helger.json.JsonArray;
 import com.helger.json.JsonObject;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
 
@@ -145,7 +145,7 @@ public class JsonValidationResultListHelper
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
   public void applyTo (@Nonnull final IJsonObject aResponse,
-                       @Nonnull final List <? extends ValidationResult> aValidationResultList,
+                       @Nonnull final ValidationResultList aValidationResultList,
                        @Nonnull final Locale aDisplayLocale,
                        @Nonnegative final long nDurationMilliseconds)
   {

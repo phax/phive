@@ -16,7 +16,6 @@
  */
 package com.helger.phive.result.xml;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -38,6 +37,7 @@ import com.helger.commons.state.ETriState;
 import com.helger.commons.string.StringHelper;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.xml.microdom.IMicroElement;
@@ -59,10 +59,9 @@ public class XMLValidationResultListHelper
                                                                                                               PhiveXMLHelper.XML_VES);
   private Function <IReadableResource, String> m_aArtifactPathTypeToXML = PhiveResultHelper::getArtifactPathType;
   private Function <IErrorLevel, String> m_aErrorLevelToXML = PhiveResultHelper::getErrorLevelValue;
-  private BiFunction <IError, Locale, IMicroElement> m_aErrorToXML = (err,
-                                                                      loc) -> PhiveXMLHelper.getXMLError (err,
-                                                                                                          loc,
-                                                                                                          PhiveXMLHelper.XML_ITEM);
+  private BiFunction <IError, Locale, IMicroElement> m_aErrorToXML = (err, loc) -> PhiveXMLHelper.getXMLError (err,
+                                                                                                               loc,
+                                                                                                               PhiveXMLHelper.XML_ITEM);
   private MutableInt m_aWarningCount;
   private MutableInt m_aErrorCount;
 
@@ -153,7 +152,7 @@ public class XMLValidationResultListHelper
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
   public void applyTo (@Nonnull final IMicroElement aResponse,
-                       @Nonnull final List <? extends ValidationResult> aValidationResultList,
+                       @Nonnull final ValidationResultList aValidationResultList,
                        @Nonnull final Locale aDisplayLocale,
                        @Nonnegative final long nDurationMilliseconds)
   {
