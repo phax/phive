@@ -76,6 +76,16 @@ public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> i
     return m_sDisplayName;
   }
 
+  /**
+   * @return The source VES this an alias to. Never <code>null</code>.
+   * @since 10.1.1
+   */
+  @Nonnull
+  public final IValidationExecutorSetMutable <SOURCETYPE> getSourceVES ()
+  {
+    return m_aVES;
+  }
+
   @Nonnull
   public final Iterator <IValidationExecutor <SOURCETYPE>> iterator ()
   {
