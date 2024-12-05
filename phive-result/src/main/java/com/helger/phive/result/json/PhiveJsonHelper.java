@@ -116,7 +116,7 @@ public final class PhiveJsonHelper
   public static final String JSON_SOURCE_TYPE_ID = "sourceTypeID";
   public static final String JSON_SYSTEM_ID = "systemID";
   public static final String JSON_PARTIAL_SOURCE = "partialSource";
-  public static final String JSON_PAYLOAD = "payload";
+  public static final String JSON_PAYLOAD_BASE64 = "payloadBase64";
 
   public static final String JSON_VESID = "vesid";
   public static final String JSON_NAME = "name";
@@ -514,7 +514,7 @@ public final class PhiveJsonHelper
       {
         aSource.writeTo (aB64OS);
         aB64OS.flushBase64 ();
-        ret.add (JSON_PAYLOAD, aBAOS.getAsString (StandardCharsets.ISO_8859_1));
+        ret.add (JSON_PAYLOAD_BASE64, aBAOS.getAsString (StandardCharsets.ISO_8859_1));
       }
       catch (final IOException ex)
       {
@@ -790,7 +790,7 @@ public final class PhiveJsonHelper
       final IJsonObject aJsonVS = aJson.getAsObject (PhiveJsonHelper.JSON_VALIDATION_SOURCE);
       if (aJsonVS != null)
       {
-        final String sBase64EncodedPayload = aJsonVS.getAsString (PhiveJsonHelper.JSON_PAYLOAD);
+        final String sBase64EncodedPayload = aJsonVS.getAsString (PhiveJsonHelper.JSON_PAYLOAD_BASE64);
         final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
         if (aPayloadBytes == null)
         {

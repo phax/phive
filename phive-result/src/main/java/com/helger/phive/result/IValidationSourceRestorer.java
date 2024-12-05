@@ -29,6 +29,22 @@ import com.helger.phive.api.source.IValidationSource;
  */
 public interface IValidationSourceRestorer
 {
+  /**
+   * Restore a validation source
+   *
+   * @param sValidationSourceTypeID
+   *        The validation source type ID. Must be non-<code>null</code> to be
+   *        able to restore something.
+   * @param sSystemID
+   *        The system ID of the validation source. May be <code>null</code>.
+   * @param bIsPartialSource
+   *        <code>true</code> if it is a partial source, <code>false</code> if
+   *        it is complete.
+   * @param aPayloadBytes
+   *        The payload bytes to restore the source from. Must be
+   *        non-<code>null</code> to be able to restore something.
+   * @return <code>null</code> if restore failed
+   */
   @Nullable
   IValidationSource restoreValidationSource (@Nullable String sValidationSourceTypeID,
                                              @Nullable String sSystemID,

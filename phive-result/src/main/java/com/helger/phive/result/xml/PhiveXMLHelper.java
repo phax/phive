@@ -101,7 +101,7 @@ public final class PhiveXMLHelper
   public static final String XML_SOURCE_TYPE_ID = "sourceTypeID";
   public static final String XML_SYSTEM_ID = "systemID";
   public static final String XML_PARTIAL_SOURCE = "partialSource";
-  public static final String XML_PAYLOAD = "payload";
+  public static final String XML_PAYLOAD_BASE64 = "payloadBase64";
 
   public static final String XML_VESID = "vesid";
   public static final String XML_NAME = "name";
@@ -439,7 +439,7 @@ public final class PhiveXMLHelper
       {
         aSource.writeTo (aB64OS);
         aB64OS.flushBase64 ();
-        ret.appendElement (XML_PAYLOAD).appendText (aBAOS.getAsString (StandardCharsets.ISO_8859_1));
+        ret.appendElement (XML_PAYLOAD_BASE64).appendText (aBAOS.getAsString (StandardCharsets.ISO_8859_1));
       }
       catch (final IOException ex)
       {
@@ -709,7 +709,7 @@ public final class PhiveXMLHelper
       final IMicroElement eVS = aXML.getFirstChildElement (XML_VALIDATION_SOURCE);
       if (eVS != null)
       {
-        final String sBase64EncodedPayload = MicroHelper.getChildTextContentTrimmed (eVS, XML_PAYLOAD);
+        final String sBase64EncodedPayload = MicroHelper.getChildTextContentTrimmed (eVS, XML_PAYLOAD_BASE64);
         final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
         if (aPayloadBytes == null)
         {
