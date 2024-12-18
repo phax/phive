@@ -219,6 +219,9 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
           ZipEntry aEntry = null;
           while ((aEntry = aZIS.getNextEntry ()) != null)
           {
+            if (aEntry.isDirectory ())
+              continue;
+
             final String sEntryNameUnified = _unifyPath (aEntry.getName ());
             if (sMainUnified.equals (sEntryNameUnified))
               bFoundMain = true;
