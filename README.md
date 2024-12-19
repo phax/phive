@@ -38,9 +38,17 @@ Each layer of the Validation Pyramid reflects a single set of rules.
 
 ## Validation executor set identification
 
-Every set of validation artefacts is uniquely identified based with a [VESID](https://github.com/phax/ph-diver#vesid).
+Every set of validation artefacts is uniquely identified with a **VESID** which is a [DVR Coordinate](https://github.com/phax/ph-diver?tab=readme-ov-file#dvr-coordinate).
 E.g. the "Peppol BIS Billing UBL Invoice release May 2023" is identified with the group ID `eu.peppol.bis3`, the artefact ID is `invoice` and the version number is `2023.5` (representing "May 2023") (without a classifier).
 Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.simplerinvoicing`, the artifact ID `invoice` and the version number `1.2` (also without a classifier).
+
+### Additional Pseudo Versions
+
+Additional to the pseudo versions defined by [ph-diver](https://github.com/phax/ph-diver?tab=readme-ov-file#dvr-pseudo-versions) this library adds the following additional pseudo versions:
+* `latest-active` - always refer to the latest version of an artefact which is currently valid. This includes snapshot and non-snapshot versions.
+* `latest-release-active` - always refer to the latest version of an artefact which is currently valid. This includes snapshot and non-snapshot versions.
+
+Note: These pseudo versions are defined in class `PhivePseudoVersionRegistrarSPIImpl`.
 
 ## How to validate documents with programmatic rules
 
@@ -69,7 +77,7 @@ Validating a business document requires a few more steps.
 
 A basic example can be found in the tests at https://github.com/phax/phive/blob/master/phive-xml/src/test/java/com/helger/phive/api/execute/ValidationExecutionManagerFuncTest.java
 
-## How to validate documents with programmatic rules
+## How to validate documents with declarative rules
 
 TODO The description of this section needs to be written. Please have patience until everything is ready and setup.
 
