@@ -476,6 +476,8 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("Map", m_aMap).getToString ();
+    return new ToStringGenerator (this).append ("Map", m_aMap)
+                                       .append ("ResolvePseudoVersions", m_bResolvePseudoVersions)
+                                       .getToString ();
   }
 }
