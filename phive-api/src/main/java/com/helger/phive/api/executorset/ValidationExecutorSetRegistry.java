@@ -301,8 +301,8 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     if (aMatching != null && aMatching.isNotEmpty ())
     {
       // Make sure we have a non-null check date time
-      final OffsetDateTime aRealCheckDateTime = aCheckDateTime != null ? aCheckDateTime : PDTFactory
-                                                                                                    .getCurrentOffsetDateTime ();
+      final OffsetDateTime aRealCheckDateTime = aCheckDateTime != null ? aCheckDateTime
+                                                                       : PDTFactory.getCurrentOffsetDateTime ();
 
       // Now determine the one with the latest active version
       final IValidationExecutorSet <SOURCETYPE> ret = CollectionHelper.findFirst (aMatching.values (),
