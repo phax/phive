@@ -22,7 +22,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 /**
- * Generic pseudo version resolver interface
+ * Specific pseudo version resolver interface
  *
  * @author Philip Helger
  * @param <RESULTTYPE>
@@ -32,8 +32,8 @@ import javax.annotation.Nullable;
 public interface IPseudoVersionResolver <RESULTTYPE>
 {
   /**
-   * Get the validation executor set with the oldest (lowest) version number
-   * (including snapshots).
+   * Get the element with the oldest (lowest) version number (including
+   * snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
@@ -51,8 +51,8 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                @Nullable Set <String> aVersionsToIgnore);
 
   /**
-   * Get the validation executor set with the oldest (lowest) version number
-   * (excluding snapshots).
+   * Get the element with the oldest (lowest) version number (excluding
+   * snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
@@ -70,7 +70,7 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                       @Nullable Set <String> aVersionsToIgnore);
 
   /**
-   * Get the validation executor set with the latest (highest) version number.
+   * Get the element with the latest (highest) version number.
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
@@ -88,8 +88,8 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                @Nullable Set <String> aVersionsToIgnore);
 
   /**
-   * Get the validation executor set with the latest (highest) version number
-   * (excluding snapshots).
+   * Get the element with the latest (highest) version number (excluding
+   * snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
@@ -107,8 +107,8 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                       @Nullable Set <String> aVersionsToIgnore);
 
   /**
-   * Get the validation executor set with the latest (highest) version number
-   * that has state "active".
+   * Get the element with the latest (highest) version number that has state
+   * "active".
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
@@ -130,8 +130,8 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                      @Nullable OffsetDateTime aCheckDateTime);
 
   /**
-   * Get the validation executor set with the latest (highest) version number
-   * that has state "active" (excluding snapshots).
+   * Get the element with the latest (highest) version number that has state
+   * "active" (excluding snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
