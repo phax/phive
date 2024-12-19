@@ -121,6 +121,8 @@ Please ensure that your stack size is at least 1MB (for Saxon). Using the Oracle
 
 # News and noteworthy
 
+* v10.1.1 - work in progress
+    * Added new classes `IGenericPseudoVersionResolver` and `DefaultGenericPseudoVersionResolver`
 * v10.1.0 - 2024-12-05
     * Requires ph-commons 11.1.11
     * Added new interface `IValidationExecutorSetMutable`
