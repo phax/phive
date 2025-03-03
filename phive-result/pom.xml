@@ -92,8 +92,10 @@
           <instructions>
             <Automatic-Module-Name>com.helger.phive.result</Automatic-Module-Name>
             <Export-Package>
+              com.helger.phive.result,
               com.helger.phive.result.exception,
-              com.helger.phive.result.json
+              com.helger.phive.result.json,
+              com.helger.phive.result.xml
             </Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>

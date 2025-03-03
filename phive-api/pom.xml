@@ -82,11 +82,15 @@
             <Export-Package>
               com.helger.phive.api,
               com.helger.phive.api.artefact,
+              com.helger.phive.api.diver,
               com.helger.phive.api.execute,
+              com.helger.phive.api.executor,
               com.helger.phive.api.executorset,
+              com.helger.phive.api.executorset.status,
               com.helger.phive.api.mock,
               com.helger.phive.api.result,
-              com.helger.phive.api.source
+              com.helger.phive.api.source,
+              com.helger.phive.api.validity
             </Export-Package>
             <Import-Package>!javax.annotation.*,*</Import-Package>
           </instructions>
