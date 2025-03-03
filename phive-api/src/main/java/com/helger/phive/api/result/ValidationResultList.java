@@ -62,8 +62,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   }
 
   /**
-   * @return <code>true</code> if a validation source is present,
-   *         <code>false</code> if not
+   * @return <code>true</code> if a validation source is present, <code>false</code> if not
    * @since 10.1.0
    */
   public final boolean hasValidationSource ()
@@ -72,8 +71,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   }
 
   /**
-   * @return The validation source this result list is based on. May be
-   *         <code>null</code>.
+   * @return The validation source this result list is based on. May be <code>null</code>.
    * @since 10.1.0
    */
   @Nullable
@@ -83,26 +81,24 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   }
 
   /**
-   * @return <code>true</code> if this list contains no failure,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this list contains no failure, <code>false</code> otherwise.
    */
   public boolean containsNoFailure ()
   {
-    return containsOnly (x -> x.getErrorList ().containsNoFailure ());
+    return containsNone (x -> x.getErrorList ().containsAtLeastOneFailure ());
   }
 
   /**
-   * @return <code>true</code> if this list contains no error,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this list contains no error, <code>false</code> otherwise.
    */
   public boolean containsNoError ()
   {
-    return containsOnly (x -> x.getErrorList ().containsNoError ());
+    return containsNone (x -> x.getErrorList ().containsAtLeastOneError ());
   }
 
   /**
-   * @return <code>true</code> if this list contains at least one failure,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this list contains at least one failure, <code>false</code>
+   *         otherwise.
    */
   public boolean containsAtLeastOneFailure ()
   {
@@ -110,8 +106,8 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   }
 
   /**
-   * @return <code>true</code> if this list contains at least one error,
-   *         <code>false</code> otherwise.
+   * @return <code>true</code> if this list contains at least one error, <code>false</code>
+   *         otherwise.
    */
   public boolean containsAtLeastOneError ()
   {
@@ -119,36 +115,31 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   }
 
   /**
-   * @return A flattened list of all failures. In this case the association to
-   *         the different layers is lost. Never <code>null</code> but maybe
-   *         empty. All error levels except
-   *         {@link com.helger.commons.error.level.EErrorLevel#SUCCESS} are
-   *         considered to be a failure!
+   * @return A flattened list of all failures. In this case the association to the different layers
+   *         is lost. Never <code>null</code> but maybe empty. All error levels except
+   *         {@link com.helger.commons.error.level.EErrorLevel#SUCCESS} are considered to be a
+   *         failure!
    */
   @Nonnull
   @ReturnsMutableCopy
   public ErrorList getAllFailures ()
   {
     final ErrorList ret = new ErrorList ();
-    for (final ValidationResult aItem : this)
-      ret.addAll (aItem.getErrorList ().getAllFailures ());
+    forEachFlattened (IError::isFailure, ret::add);
     return ret;
   }
 
   /**
-   * @return A flattened list of all errors. In this case the association to the
-   *         different layers is lost. Never <code>null</code> but maybe empty.
-   *         All error levels &ge; to
-   *         {@link com.helger.commons.error.level.EErrorLevel#ERROR} are
-   *         considered to be an error!
+   * @return A flattened list of all errors. In this case the association to the different layers is
+   *         lost. Never <code>null</code> but maybe empty. All error levels &ge; to
+   *         {@link com.helger.commons.error.level.EErrorLevel#ERROR} are considered to be an error!
    */
   @Nonnull
   @ReturnsMutableCopy
   public ErrorList getAllErrors ()
   {
     final ErrorList ret = new ErrorList ();
-    for (final ValidationResult aItem : this)
-      ret.addAll (aItem.getErrorList ().getAllErrors ());
+    forEachFlattened (IError::isError, ret::add);
     return ret;
   }
 
@@ -172,8 +163,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * Invoke the provided consumer on all items.
    *
    * @param aConsumer
-   *        Consumer to be invoked for each {@link IError}. May not be
-   *        <code>null</code>.
+   *        Consumer to be invoked for each {@link IError}. May not be <code>null</code>.
    * @since 4.0.0
    */
   public void forEachFlattened (@Nonnull final Consumer <? super IError> aConsumer)
@@ -182,6 +172,24 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
 
     for (final ValidationResult aItem : this)
       aItem.getErrorList ().forEach (aConsumer);
+  }
+
+  /**
+   * Invoke the provided consumer on all items.
+   *
+   * @param aFilter
+   *        Optional filter to use. May be <code>null</code>.
+   * @param aConsumer
+   *        Consumer to be invoked for each {@link IError}. May not be <code>null</code>.
+   * @since 10.1.1
+   */
+  public void forEachFlattened (@Nullable final Predicate <? super IError> aFilter,
+                                @Nonnull final Consumer <? super IError> aConsumer)
+  {
+    ValueEnforcer.notNull (aConsumer, "Consumer");
+
+    for (final ValidationResult aItem : this)
+      aItem.getErrorList ().findAll (aFilter, aConsumer);
   }
 
   @Override
