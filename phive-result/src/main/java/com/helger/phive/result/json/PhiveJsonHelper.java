@@ -161,8 +161,8 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Get the JSON string of the error level. One of <code>"ERROR"</code>,
-   * <code>"WARN"</code> or <code>"SUCCESS"</code>.<br>
+   * Get the JSON string of the error level. One of <code>"ERROR"</code>, <code>"WARN"</code> or
+   * <code>"SUCCESS"</code>.<br>
    * See {@link #JSON_ERRORLEVEL_SUCCESS}, {@link #JSON_ERRORLEVEL_WARN},
    * {@link #JSON_ERRORLEVEL_ERROR}
    *
@@ -186,8 +186,8 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Get the tri-state representation of the provided value. Either
-   * {@link #JSON_TRISTATE_TRUE} or {@link #JSON_TRISTATE_FALSE}.
+   * Get the tri-state representation of the provided value. Either {@link #JSON_TRISTATE_TRUE} or
+   * {@link #JSON_TRISTATE_FALSE}.
    *
    * @param b
    *        boolean value to get converted.
@@ -203,9 +203,8 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Get the tri-state representation of the provided value. Either
-   * {@link #JSON_TRISTATE_TRUE}, {@link #JSON_TRISTATE_FALSE} or
-   * {@link #JSON_TRISTATE_UNDEFINED}.
+   * Get the tri-state representation of the provided value. Either {@link #JSON_TRISTATE_TRUE},
+   * {@link #JSON_TRISTATE_FALSE} or {@link #JSON_TRISTATE_UNDEFINED}.
    *
    * @param eTriState
    *        Tri-state value to get converted. May not be <code>null</code>.
@@ -220,9 +219,8 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Convert the provided value into a tri-state value. Must be one of
-   * {@link #JSON_TRISTATE_TRUE}, {@link #JSON_TRISTATE_FALSE} or
-   * {@link #JSON_TRISTATE_UNDEFINED}.
+   * Convert the provided value into a tri-state value. Must be one of {@link #JSON_TRISTATE_TRUE},
+   * {@link #JSON_TRISTATE_FALSE} or {@link #JSON_TRISTATE_UNDEFINED}.
    *
    * @param sTriState
    *        Source value. May be <code>null</code>.
@@ -248,8 +246,7 @@ public final class PhiveJsonHelper
    *
    * @param t
    *        The exception to convert to a JSON object. May be <code>null</code>.
-   * @return <code>null</code> if the parameter is <code>null</code>, the JSON
-   *         object otherwise.
+   * @return <code>null</code> if the parameter is <code>null</code>, the JSON object otherwise.
    * @see PhiveRestoredException for a representation after reading
    */
   @Nullable
@@ -277,8 +274,7 @@ public final class PhiveJsonHelper
    *
    * @param aLocation
    *        The location to convert to a JSON object. May be <code>null</code>.
-   * @return <code>null</code> if the parameter is <code>null</code>, the JSON
-   *         object otherwise.
+   * @return <code>null</code> if the parameter is <code>null</code>, the JSON object otherwise.
    */
   @Nullable
   public static IJsonObject getJsonErrorLocation (@Nullable final ILocation aLocation)
@@ -384,12 +380,10 @@ public final class PhiveJsonHelper
    * @param aError
    *        The structured error. May not be <code>null</code>.
    * @param aDisplayLocale
-   *        The display locale to resolve the error text. May not be
-   *        <code>null</code>.
+   *        The display locale to resolve the error text. May not be <code>null</code>.
    * @return The JSON object with the error. Never <code>null</code>.
    * @see #getJsonStackTrace(Throwable)
-   * @see #getJsonError(IErrorLevel, String, String, ILocation, String, String,
-   *      Throwable)
+   * @see #getJsonError(IErrorLevel, String, String, ILocation, String, String, Throwable)
    */
   @Nonnull
   public static IJsonObject getJsonError (@Nonnull final IError aError, @Nonnull final Locale aDisplayLocale)
@@ -415,8 +409,7 @@ public final class PhiveJsonHelper
    * @param aError
    *        The structured error. May not be <code>null</code>.
    * @param aDisplayLocale
-   *        The display locale to resolve the error text. May not be
-   *        <code>null</code>.
+   *        The display locale to resolve the error text. May not be <code>null</code>.
    * @return Never <code>null</code>.
    * @since 7.2.3
    */
@@ -493,8 +486,7 @@ public final class PhiveJsonHelper
    * @param aSource
    *        The validation source to use. May not be <code>null</code>. empty.
    * @param bWithPayload
-   *        <code>true</code> to include the payload, or <code>false</code> to
-   *        omit it.
+   *        <code>true</code> to include the payload, or <code>false</code> to omit it.
    * @return The created JSON object.
    * @since 10.1.0
    */
@@ -599,9 +591,8 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Add one global error to the response. Afterwards no validation results
-   * should be added. The layout of the response object is very similar to the
-   * one created by
+   * Add one global error to the response. Afterwards no validation results should be added. The
+   * layout of the response object is very similar to the one created by
    * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}.
    * <br>
    *
@@ -663,9 +654,8 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Apply the results of a full validation onto a JSON object.The layout of the
-   * response object is very similar to the one created by
-   * {@link #applyGlobalError(IJsonObject, String, long)}.<br>
+   * Apply the results of a full validation onto a JSON object.The layout of the response object is
+   * very similar to the one created by {@link #applyGlobalError(IJsonObject, String, long)}.<br>
    *
    * <pre>
     * {
@@ -689,21 +679,21 @@ public final class PhiveJsonHelper
    * @param aResponse
    *        The response JSON object to add to. May not be <code>null</code>.
    * @param aVES
-   *        The Validation executor set that was used to perform validation. May
-   *        be <code>null</code>.
+   *        The Validation executor set that was used to perform validation. May be
+   *        <code>null</code>.
    * @param aValidationResultList
-   *        The validation result list containing the validation results per
-   *        layer. May not be <code>null</code>.
+   *        The validation result list containing the validation results per layer. May not be
+   *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
    * @param nDurationMilliseconds
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    * @param aWarningCount
-   *        Optional callback value to store the overall warnings. If not
-   *        <code>null</code> if will contain a &ge; 0 value afterwards.
+   *        Optional callback value to store the overall warnings. If not <code>null</code> if will
+   *        contain a &ge; 0 value afterwards.
    * @param aErrorCount
-   *        Optional callback value to store the overall errors. If not
-   *        <code>null</code> if will contain a &ge; 0 value afterwards.
+   *        Optional callback value to store the overall errors. If not <code>null</code> if will
+   *        contain a &ge; 0 value afterwards.
    */
   public static void applyValidationResultList (@Nonnull final IJsonObject aResponse,
                                                 @Nullable final IValidationExecutorSet <?> aVES,
@@ -762,17 +752,14 @@ public final class PhiveJsonHelper
   }
 
   /**
-   * Try to parse the default JSON structure and convert it back to a
-   * {@link ValidationResultList}.
+   * Try to parse the default JSON structure and convert it back to a {@link ValidationResultList}.
    *
    * @param aJson
    *        The JSON to be read. May be <code>null</code>.
    * @param aValidationTypeResolver
-   *        The validation type resolver to be used. May not be
-   *        <code>null</code>.
+   *        The validation type resolver to be used. May not be <code>null</code>.
    * @param aValidationSourceRestorer
-   *        The function to restore {@link IValidationSource} objects. May not
-   *        be <code>null</code>.
+   *        The function to restore {@link IValidationSource} objects. May not be <code>null</code>.
    * @return <code>null</code> in case reverse operation fails.
    */
   @Nullable
@@ -795,8 +782,11 @@ public final class PhiveJsonHelper
         final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
         if (aPayloadBytes == null)
         {
-          // Error in base64 decoding
-          LOGGER.warn ("Failed to Base64 decode the provided payload");
+          if (StringHelper.hasText (sBase64EncodedPayload))
+          {
+            // Error in base64 decoding
+            LOGGER.warn ("Failed to Base64 decode the provided payload");
+          }
           aValidationSource = null;
         }
         else
