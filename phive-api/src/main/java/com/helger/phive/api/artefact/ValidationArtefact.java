@@ -16,14 +16,14 @@
  */
 package com.helger.phive.api.artefact;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.IValidationType;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Stand-alone implementation of {@link IValidationArtefact}

@@ -19,22 +19,19 @@ package com.helger.phive.ves.engine.load;
 import java.util.Collection;
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsTreeMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.datetime.XMLOffsetDate;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.lang.GenericReflection;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.reflection.GenericReflection;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsTreeMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.datetime.xml.XMLOffsetDate;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.execute.ValidationExecutionManager;
 import com.helger.phive.api.executor.IValidationExecutor;
@@ -48,6 +45,9 @@ import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class represents a single Loaded VES.

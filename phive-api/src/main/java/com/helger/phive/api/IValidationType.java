@@ -16,11 +16,11 @@
  */
 package com.helger.phive.api;
 
-import javax.annotation.Nonnull;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.id.IHasID;
+import com.helger.base.name.IHasName;
 
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.name.IHasName;
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for a validation type. That basically is a combination of syntax,

@@ -22,29 +22,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ELockType;
-import com.helger.commons.annotation.MustBeLocked;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.CollectionHelper;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.CommonsTreeMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.collection.impl.ICommonsNavigableMap;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.concurrent.ELockType;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.MustBeLocked;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.CollectionFind;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.CommonsTreeMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.collection.commons.ICommonsNavigableMap;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRPseudoVersionRegistry;
 import com.helger.diver.api.version.DVRVersion;
@@ -53,16 +50,18 @@ import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * A registry for {@link IValidationExecutorSet} objects. This class is
- * thread-safe and can therefore be used as a singleton.<br>
+ * A registry for {@link IValidationExecutorSet} objects. This class is thread-safe and can
+ * therefore be used as a singleton.<br>
  * Initially all validation artefact providers need to register themselves via
- * {@link #registerValidationExecutorSet(IValidationExecutorSet)}. This needs to
- * be done only once upon initialization before usage.<br>
- * For applying validation of rules onto an XML document,
- * {@link #getOfID(DVRCoordinate)} needs to be invoked to find a matching VES
- * (Validation Executor Set - type `IValidationExecutorSet`). If the returned
- * value is non-<code>null</code> than some rules are registered.
+ * {@link #registerValidationExecutorSet(IValidationExecutorSet)}. This needs to be done only once
+ * upon initialization before usage.<br>
+ * For applying validation of rules onto an XML document, {@link #getOfID(DVRCoordinate)} needs to
+ * be invoked to find a matching VES (Validation Executor Set - type `IValidationExecutorSet`). If
+ * the returned value is non-<code>null</code> than some rules are registered.
  *
  * @author Philip Helger
  * @param <SOURCETYPE>
@@ -125,7 +124,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                     "' of type " +
                     aVES.getClass ().getName () +
                     " with " +
-                    aVES.getCount () +
+                    aVES.size () +
                     " elements");
   }
 
@@ -170,9 +169,9 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                                                                                                         @Nonnull final Predicate <DVRVersion> aVersionsToAccept,
                                                                                                         @Nullable final Comparator <DVRCoordinate> aComparator)
   {
-    if (StringHelper.hasNoText (sGroupID))
+    if (StringHelper.isEmpty (sGroupID))
       return null;
-    if (StringHelper.hasNoText (sArtifactID))
+    if (StringHelper.isEmpty (sArtifactID))
       return null;
 
     // Sorted by key
@@ -301,13 +300,13 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     if (aMatching != null && aMatching.isNotEmpty ())
     {
       // Make sure we have a non-null check date time
-      final OffsetDateTime aRealCheckDateTime = aCheckDateTime != null ? aCheckDateTime
-                                                                       : PDTFactory.getCurrentOffsetDateTime ();
+      final OffsetDateTime aRealCheckDateTime = aCheckDateTime != null ? aCheckDateTime : PDTFactory
+                                                                                                    .getCurrentOffsetDateTime ();
 
       // Now determine the one with the latest active version
-      final IValidationExecutorSet <SOURCETYPE> ret = CollectionHelper.findFirst (aMatching.values (),
-                                                                                  x -> x.getStatus ()
-                                                                                        .isValidPer (aRealCheckDateTime));
+      final IValidationExecutorSet <SOURCETYPE> ret = CollectionFind.findFirst (aMatching.values (),
+                                                                                x -> x.getStatus ()
+                                                                                      .isValidPer (aRealCheckDateTime));
       if (ret != null)
       {
         if (LOGGER.isDebugEnabled ())
@@ -415,11 +414,10 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   /**
-   * This is a cleanup method that frees all resources when they are no longer
-   * needed. This may be helpful because some {@link IValidationExecutor}
-   * implementations contained in the {@link IValidationExecutorSet} contained
-   * in this registry might have strong references to {@link ClassLoader}
-   * instances. By calling this method, you can clear the contained map and
+   * This is a cleanup method that frees all resources when they are no longer needed. This may be
+   * helpful because some {@link IValidationExecutor} implementations contained in the
+   * {@link IValidationExecutorSet} contained in this registry might have strong references to
+   * {@link ClassLoader} instances. By calling this method, you can clear the contained map and
    * invoke {@link ValidationExecutorSet#removeAllExecutors()} if applicable.
    *
    * @return {@link EChange}
@@ -432,16 +430,15 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   }
 
   /**
-   * This is a cleanup method that frees all resources when they are no longer
-   * needed. This removes all registered validators.
+   * This is a cleanup method that frees all resources when they are no longer needed. This removes
+   * all registered validators.
    *
    * @param bCleanVES
-   *        This may be helpful because some {@link IValidationExecutor}
-   *        implementations contained in the {@link IValidationExecutorSet}
-   *        contained in this registry might have strong references to
-   *        {@link ClassLoader} instances. By passing <code>true</code>,
-   *        {@link ValidationExecutorSet#removeAllExecutors()} is invoked on all
-   *        matching validation executor sets.
+   *        This may be helpful because some {@link IValidationExecutor} implementations contained
+   *        in the {@link IValidationExecutorSet} contained in this registry might have strong
+   *        references to {@link ClassLoader} instances. By passing <code>true</code>,
+   *        {@link ValidationExecutorSet#removeAllExecutors()} is invoked on all matching validation
+   *        executor sets.
    * @return {@link EChange}
    * @since 6.0.1
    */

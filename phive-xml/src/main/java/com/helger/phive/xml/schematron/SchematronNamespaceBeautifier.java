@@ -16,14 +16,14 @@
  */
 package com.helger.phive.xml.schematron;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
-import com.helger.commons.concurrent.SimpleReadWriteLock;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.xml.namespace.IIterableNamespaceContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class contains namespace prefixes for Schematron error messages

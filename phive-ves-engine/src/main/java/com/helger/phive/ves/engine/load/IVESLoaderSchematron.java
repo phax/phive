@@ -18,15 +18,15 @@ package com.helger.phive.ves.engine.load;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.error.list.ErrorList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.xml.source.IValidationSourceXML;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This interface is used by {@link VESLoader} create an

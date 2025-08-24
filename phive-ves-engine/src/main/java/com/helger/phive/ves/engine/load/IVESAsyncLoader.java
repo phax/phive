@@ -16,11 +16,11 @@
  */
 package com.helger.phive.ves.engine.load;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.repo.IRepoStorageReadItem;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for an asynchronous on-demand loader for resources.

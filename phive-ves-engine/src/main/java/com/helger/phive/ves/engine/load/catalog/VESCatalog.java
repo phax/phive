@@ -16,17 +16,17 @@
  */
 package com.helger.phive.ves.engine.load.catalog;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.iface.IHasSize;
+import com.helger.base.state.EChange;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsLinkedHashMap;
+import com.helger.collection.commons.ICommonsOrderedMap;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsLinkedHashMap;
-import com.helger.commons.collection.impl.ICommonsOrderedMap;
-import com.helger.commons.lang.IHasSize;
-import com.helger.commons.state.EChange;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * List of {@link VESCatalogEntry} objects with sanity access methods
@@ -68,7 +68,7 @@ public final class VESCatalog implements IHasSize
   @Nullable
   public VESCatalogEntry findEntryByUri (@Nullable final String sNamespaceURI)
   {
-    if (StringHelper.hasText (sNamespaceURI))
+    if (StringHelper.isNotEmpty (sNamespaceURI))
       for (final VESCatalogEntry aEntry : m_aEntries.values ())
         if (aEntry.getType () == EVESCatalogType.PUBLIC)
           if (sNamespaceURI.equals (aEntry.getID ()))
@@ -79,7 +79,7 @@ public final class VESCatalog implements IHasSize
   @Nullable
   public VESCatalogEntry findEntryBySystemID (@Nullable final String sSystemId)
   {
-    if (StringHelper.hasText (sSystemId))
+    if (StringHelper.isNotEmpty (sSystemId))
       for (final VESCatalogEntry aEntry : m_aEntries.values ())
         if (aEntry.getType () == EVESCatalogType.SYSTEM)
           if (sSystemId.equals (aEntry.getID ()))

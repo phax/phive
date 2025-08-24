@@ -19,7 +19,7 @@ package com.helger.phive.api.diver;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 /**
  * Specific pseudo version resolver interface

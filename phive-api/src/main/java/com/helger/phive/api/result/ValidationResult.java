@@ -16,16 +16,16 @@
  */
 package com.helger.phive.api.result;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.diagnostics.error.list.ErrorList;
+import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.artefact.IValidationArtefact;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This class captures the validation result of a single validation layer. It

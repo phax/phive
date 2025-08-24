@@ -20,17 +20,14 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.state.ETriState;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.state.ETriState;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.level.IErrorLevel;
+import com.helger.io.resource.IReadableResource;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonArray;
@@ -43,9 +40,11 @@ import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * A helper class that allows to heavily customize the creation of validation
- * result list JSONs
+ * A helper class that allows to heavily customize the creation of validation result list JSONs
  *
  * @author Philip Helger
  * @since 7.2.3
@@ -123,8 +122,8 @@ public class JsonValidationResultListHelper
   }
 
   /**
-   * Apply the results of a full validation onto a JSON object.The layout of the
-   * response object is very similar to the one created by
+   * Apply the results of a full validation onto a JSON object.The layout of the response object is
+   * very similar to the one created by
    * {@link PhiveJsonHelper#applyGlobalError(IJsonObject, String, long)}.<br>
    *
    * <pre>
@@ -149,8 +148,8 @@ public class JsonValidationResultListHelper
    * @param aResponse
    *        The response JSON object to add to. May not be <code>null</code>.
    * @param aValidationResultList
-   *        The validation result list containing the validation results per
-   *        layer. May not be <code>null</code>.
+   *        The validation result list containing the validation results per layer. May not be
+   *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
    * @param nDurationMilliseconds
@@ -224,7 +223,7 @@ public class JsonValidationResultListHelper
         if (m_aErrorToJson != null)
           aItemArray.add (m_aErrorToJson.apply (aError, aDisplayLocale));
       }
-      aVRT.addJson (PhiveJsonHelper.JSON_ITEMS, aItemArray);
+      aVRT.add (PhiveJsonHelper.JSON_ITEMS, aItemArray);
       aVRT.add (PhiveJsonHelper.JSON_DURATION_MS, aVR.getDurationMS ());
       aResultArray.add (aVRT);
     }
@@ -234,7 +233,7 @@ public class JsonValidationResultListHelper
     aResponse.add (PhiveJsonHelper.JSON_INTERRUPTED, bValidationInterrupted);
     if (m_aErrorLevelToJson != null)
       aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL, m_aErrorLevelToJson.apply (aMostSevere));
-    aResponse.addJson (PhiveJsonHelper.JSON_RESULTS, aResultArray);
+    aResponse.add (PhiveJsonHelper.JSON_RESULTS, aResultArray);
     aResponse.add (PhiveJsonHelper.JSON_DURATION_MS, nDurationMilliseconds);
 
     // Set consumer values

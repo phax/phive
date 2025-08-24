@@ -16,12 +16,12 @@
  */
 package com.helger.phive.api.executorset;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ChangeNextMajorRelease;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.misc.ChangeNextMajorRelease;
+import com.helger.base.state.EChange;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Define a common interface for {@link IValidationExecutorSet} with modifying

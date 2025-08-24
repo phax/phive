@@ -18,26 +18,24 @@ package com.helger.phive.ves.engine.load;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringImplode;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.ves.v10.VesCustomErrorType;
 import com.helger.phive.ves.v10.VesOutputType;
@@ -48,9 +46,11 @@ import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * The default implementation of {@link IVESLoaderSchematron} for Schematron
- * validation.
+ * The default implementation of {@link IVESLoaderSchematron} for Schematron validation.
  *
  * @author Philip Helger
  */
@@ -114,11 +114,11 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
                                        .errorText ("Schematron engine '" +
                                                    sEngine +
                                                    "' is unknown. Valid IDs are: " +
-                                                   StringHelper.imploder ()
-                                                               .source (ESchematronEngine.values (),
-                                                                        x -> "'" + x.getID () + "'")
-                                                               .separator (", ")
-                                                               .build ())
+                                                   StringImplode.imploder ()
+                                                                .source (ESchematronEngine.values (),
+                                                                         x -> "'" + x.getID () + "'")
+                                                                .separator (", ")
+                                                                .build ())
                                        .build ());
             continue;
           }
@@ -142,7 +142,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
         case RESOURCE_TYPE_XSLT:
         {
           // Indicate a potential error
-          if (StringHelper.hasText (aSCH.getEngine ()))
+          if (StringHelper.isNotEmpty (aSCH.getEngine ()))
           {
             aErrorList.add (SingleError.builderWarn ()
                                        .errorText ("Schematron resource type '" +
@@ -177,7 +177,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
           {
             final String sKey = aCustomError.getId ();
             final EErrorLevel eErrorLevel = VESLoader.internalWrapErrorLevel (aCustomError.getLevel ());
-            if (StringHelper.hasText (sKey) && eErrorLevel != null)
+            if (StringHelper.isNotEmpty (sKey) && eErrorLevel != null)
               aCustomErrorDetails.put (sKey,
                                        new CustomErrorDetails (eErrorLevel,
                                                                aCustomError.getErrorTextPrefix (),

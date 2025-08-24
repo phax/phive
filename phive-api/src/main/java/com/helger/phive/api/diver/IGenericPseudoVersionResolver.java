@@ -19,11 +19,11 @@ package com.helger.phive.api.diver;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
+import com.helger.annotation.Nonempty;
 import com.helger.diver.api.version.IDVRPseudoVersion;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Generic pseudo version resolver interface

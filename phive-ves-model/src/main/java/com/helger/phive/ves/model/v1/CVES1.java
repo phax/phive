@@ -16,9 +16,8 @@
  */
 package com.helger.phive.ves.model.v1;
 
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.io.resource.ClassPathResource;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.io.resource.ClassPathResource;
 
 /**
  * Constants for the VES1 data model

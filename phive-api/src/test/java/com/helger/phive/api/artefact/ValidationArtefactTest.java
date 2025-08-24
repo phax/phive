@@ -22,12 +22,12 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
-import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.io.resource.IReadableResource;
+import com.helger.io.resource.inmemory.ReadableResourceByteArray;
 import com.helger.phive.api.EValidationBaseType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.ValidationType;
+import com.helger.unittest.support.TestHelper;
 
 /**
  * Test class for class {@link ValidationArtefact}.
@@ -50,16 +50,16 @@ public final class ValidationArtefactTest
     assertSame (VT, aVA.getValidationType ());
     assertSame (aRes, aVA.getRuleResource ());
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aVA, new ValidationArtefact (VT, aRes));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aVA,
-                                                                           new ValidationArtefact (new ValidationType ("mock",
-                                                                                                                       EValidationBaseType.PDF,
-                                                                                                                       "Other Mock VT",
-                                                                                                                       false,
-                                                                                                                       false),
-                                                                                                   aRes));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aVA,
-                                                                           new ValidationArtefact (VT,
-                                                                                                   new ReadableResourceByteArray ("other validation".getBytes (StandardCharsets.UTF_8))));
+    TestHelper.testDefaultImplementationWithEqualContentObject (aVA, new ValidationArtefact (VT, aRes));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aVA,
+                                                                    new ValidationArtefact (new ValidationType ("mock",
+                                                                                                                EValidationBaseType.PDF,
+                                                                                                                "Other Mock VT",
+                                                                                                                false,
+                                                                                                                false),
+                                                                                            aRes));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aVA,
+                                                                    new ValidationArtefact (VT,
+                                                                                            new ReadableResourceByteArray ("other validation".getBytes (StandardCharsets.UTF_8))));
   }
 }

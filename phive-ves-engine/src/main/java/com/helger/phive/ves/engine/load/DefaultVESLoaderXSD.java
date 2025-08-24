@@ -23,33 +23,31 @@ import java.util.Locale;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.ls.LSResourceResolver;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.misc.SizeHelper;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.resource.inmemory.ReadableResourceInputStream;
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.math.MathHelper;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.timing.StopWatch;
+import com.helger.annotation.Nonempty;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
+import com.helger.base.numeric.BigHelper;
+import com.helger.base.string.StringHelper;
+import com.helger.base.timing.StopWatch;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKey;
 import com.helger.diver.repo.RepoStorageReadableResource;
+import com.helger.io.file.FilenameHelper;
+import com.helger.io.misc.SizeHelper;
+import com.helger.io.resource.IReadableResource;
+import com.helger.io.resource.inmemory.ReadableResourceInputStream;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executor.IValidationExecutor;
@@ -65,9 +63,11 @@ import com.helger.phive.xml.xsd.ValidationExecutorXSD;
 import com.helger.xml.ls.SimpleLSResourceResolver;
 import com.helger.xml.schema.XMLSchemaCache;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * The default implementation of {@link IVESLoaderXSD} for XML Schema
- * validation.
+ * The default implementation of {@link IVESLoaderXSD} for XML Schema validation.
  *
  * @author Philip Helger
  */
@@ -167,7 +167,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       case RESOURCE_TYPE_XSD:
       {
         // Indicate a potential error
-        if (StringHelper.hasText (aXSD.getMain ()))
+        if (StringHelper.isNotEmpty (aXSD.getMain ()))
         {
           aErrorList.add (SingleError.builderWarn ()
                                      .errorText ("XSD resource type '" +
@@ -198,7 +198,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       case RESOURCE_TYPE_ZIP:
       {
         final String sMainUnified = _unifyPath (aXSD.getMain ());
-        if (StringHelper.hasNoText (sMainUnified))
+        if (StringHelper.isEmpty (sMainUnified))
         {
           aErrorList.add (SingleError.builderError ()
                                      .errorText ("XSD resource type '" +
@@ -279,7 +279,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                      " entries; unzipped size is " +
                      aSH.getAsMatching (nUnzippedLen) +
                      " bytes (~" +
-                     MathHelper.getDividedBigDecimal (nUnzippedLen * 100, nSourceLen, 2, RoundingMode.HALF_UP) +
+                     BigHelper.getDividedBigDecimal (nUnzippedLen * 100, nSourceLen, 2, RoundingMode.HALF_UP) +
                      "%)");
 
         // Use a specific Resource Resolver to load entries from within the ZIP
@@ -326,7 +326,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
             if (aCatalogEntries.isNotEmpty ())
             {
               // Check public entries first
-              if (StringHelper.hasText (sNamespaceURI))
+              if (StringHelper.isNotEmpty (sNamespaceURI))
               {
                 final VESCatalogEntry aEntry = aCatalogEntries.findEntryByUri (sNamespaceURI);
                 if (aEntry != null)
@@ -357,7 +357,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 }
               }
 
-              if (StringHelper.hasText (sPublicId))
+              if (StringHelper.isNotEmpty (sPublicId))
               {
                 // TODO implement catalog support
                 final String sMsg = "XSD resource type '" +
@@ -369,7 +369,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
                 aErrorList.add (SingleError.builderWarn ().errorText (sMsg).build ());
               }
 
-              if (StringHelper.hasText (sSystemId))
+              if (StringHelper.isNotEmpty (sSystemId))
               {
                 final VESCatalogEntry aEntry = aCatalogEntries.findEntryBySystemID (sSystemId);
                 if (aEntry != null)
@@ -400,7 +400,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
               }
             }
 
-            if (StringHelper.hasText (sRelativeSystemId))
+            if (StringHelper.isNotEmpty (sRelativeSystemId))
             {
               // Matches in ZIP are the default
               final NonBlockingByteArrayOutputStream aZIPResolved = aZIPContent.get (sRelativeSystemId);

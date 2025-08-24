@@ -16,18 +16,18 @@
  */
 package com.helger.phive.api.executor;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.error.list.IErrorList;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.traits.IGenericImplTrait;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.trait.IGenericImplTrait;
+import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Abstract base implementation of {@link IValidationExecutor}.

@@ -18,31 +18,31 @@ package com.helger.phive.result;
 
 import java.net.MalformedURLException;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.resource.FileSystemResource;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.resource.URLResource;
-import com.helger.commons.io.resource.inmemory.IMemoryReadableResource;
-import com.helger.commons.io.resource.wrapped.IWrappedReadableResource;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.level.IErrorLevel;
+import com.helger.io.resource.ClassPathResource;
+import com.helger.io.resource.FileSystemResource;
+import com.helger.io.resource.IReadableResource;
+import com.helger.io.resource.URLResource;
+import com.helger.io.resource.inmemory.IMemoryReadableResource;
+import com.helger.io.resource.wrapped.IWrappedReadableResource;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.source.IValidationSourceBinary;
 import com.helger.phive.api.source.ValidationSourceBinary;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 import com.helger.xml.serialize.read.DOMReader;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Contains stateless phive result helper methods.
@@ -76,8 +76,8 @@ public final class PhiveResultHelper
   }
 
   /**
-   * Get the string of the error level. One of <code>"ERROR"</code>,
-   * <code>"WARN"</code> or <code>"SUCCESS"</code>.<br>
+   * Get the string of the error level. One of <code>"ERROR"</code>, <code>"WARN"</code> or
+   * <code>"SUCCESS"</code>.<br>
    * See {@link #VALUE_ERRORLEVEL_SUCCESS}, {@link #VALUE_ERRORLEVEL_WARN},
    * {@link #VALUE_ERRORLEVEL_ERROR}
    *
@@ -111,8 +111,8 @@ public final class PhiveResultHelper
   }
 
   /**
-   * Get the tri-state representation of the provided value. Either
-   * {@link #VALUE_TRISTATE_TRUE} or {@link #VALUE_TRISTATE_FALSE}.
+   * Get the tri-state representation of the provided value. Either {@link #VALUE_TRISTATE_TRUE} or
+   * {@link #VALUE_TRISTATE_FALSE}.
    *
    * @param b
    *        boolean value to get converted.
@@ -127,9 +127,8 @@ public final class PhiveResultHelper
   }
 
   /**
-   * Get the tri-state representation of the provided value. Either
-   * {@link #VALUE_TRISTATE_TRUE}, {@link #VALUE_TRISTATE_FALSE} or
-   * {@link #VALUE_TRISTATE_UNDEFINED}.
+   * Get the tri-state representation of the provided value. Either {@link #VALUE_TRISTATE_TRUE},
+   * {@link #VALUE_TRISTATE_FALSE} or {@link #VALUE_TRISTATE_UNDEFINED}.
    *
    * @param eTriState
    *        Tri-state value to get converted. May not be <code>null</code>.
@@ -147,9 +146,8 @@ public final class PhiveResultHelper
   }
 
   /**
-   * Convert the provided value into a tri-state value. Must be one of
-   * {@link #VALUE_TRISTATE_TRUE}, {@link #VALUE_TRISTATE_FALSE} or
-   * {@link #VALUE_TRISTATE_UNDEFINED}.
+   * Convert the provided value into a tri-state value. Must be one of {@link #VALUE_TRISTATE_TRUE},
+   * {@link #VALUE_TRISTATE_FALSE} or {@link #VALUE_TRISTATE_UNDEFINED}.
    *
    * @param sTriState
    *        Source value. May be <code>null</code>.
@@ -188,9 +186,9 @@ public final class PhiveResultHelper
   public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType,
                                                            @Nullable final String sArtefactPath)
   {
-    if (StringHelper.hasNoText (sArtefactPathType))
+    if (StringHelper.isEmpty (sArtefactPathType))
       return null;
-    if (StringHelper.hasNoText (sArtefactPath))
+    if (StringHelper.isEmpty (sArtefactPath))
       return null;
 
     if ("file".equals (sArtefactPathType))
@@ -216,7 +214,7 @@ public final class PhiveResultHelper
                                                           final boolean bIsPartialSource,
                                                           @Nullable final byte [] aPayloadBytes)
   {
-    if (StringHelper.hasNoText (sValidationSourceTypeID))
+    if (StringHelper.isEmpty (sValidationSourceTypeID))
       return null;
     if (aPayloadBytes == null)
       return null;

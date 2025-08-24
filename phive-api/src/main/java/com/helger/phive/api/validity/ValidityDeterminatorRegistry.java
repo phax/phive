@@ -16,11 +16,11 @@
  */
 package com.helger.phive.api.validity;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.diagnostics.error.list.IErrorList;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.error.list.IErrorList;
+import jakarta.annotation.Nonnull;
 
 /**
  * Helper class for validity determination implementations

@@ -16,7 +16,7 @@
  */
 package com.helger.phive.ves.engine.load;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Specific exception when VES loading fails (e.g. on lazy requirement

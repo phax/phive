@@ -16,13 +16,14 @@
  */
 package com.helger.phive.xml.source;
 
-import javax.annotation.Nonnull;
 import javax.xml.transform.Source;
 
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.io.resource.IReadableResource;
 import com.helger.xml.serialize.read.DOMReader;
 import com.helger.xml.transform.TransformSourceFactory;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Special ValidationSourceXML based on a complete {@link IReadableResource}.

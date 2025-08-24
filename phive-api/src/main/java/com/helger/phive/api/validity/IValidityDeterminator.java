@@ -16,12 +16,12 @@
  */
 package com.helger.phive.api.validity;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.error.list.IErrorList;
+import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Generic interface for a decision provider for validation results.

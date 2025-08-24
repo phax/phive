@@ -21,15 +21,12 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.iterate.ReverseListIterator;
-import com.helger.commons.compare.ESortOrder;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.string.StringHelper;
+import com.helger.base.compare.ESortOrder;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.iterator.ReverseListIterator;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRPseudoVersionRegistry;
 import com.helger.diver.api.version.DVRVersion;
@@ -46,9 +43,12 @@ import com.helger.phive.ves.model.v1.VESStatus1Helper;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
 import com.helger.phive.ves.v10.VesStatusType;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * Helper class used by {@link VESLoader} to resolve the pseudo versions based
- * on a repository table of contents and the status objects.
+ * Helper class used by {@link VESLoader} to resolve the pseudo versions based on a repository table
+ * of contents and the status objects.
  *
  * @author Philip Helger
  */
@@ -70,7 +70,7 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
                                                      @Nonnull final ESortOrder eSortOrder,
                                                      @Nullable final Predicate <DVRCoordinate> aResultDecider)
   {
-    if (StringHelper.hasText (sGroupID) && StringHelper.hasText (sArtifactID))
+    if (StringHelper.isNotEmpty (sGroupID) && StringHelper.isNotEmpty (sArtifactID))
     {
       // Get all versions of group and artifact
       final RepoToc aToc = m_aRepo.readTocModel (sGroupID, sArtifactID);
@@ -214,16 +214,16 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
    * Resolve the provided VESID with a pseudo version to a static version.
    *
    * @param aRepo
-   *        The repository that contains the effective versions to be resolved.
-   *        May not be <code>null</code>.
+   *        The repository that contains the effective versions to be resolved. May not be
+   *        <code>null</code>.
    * @param aVESID
    *        The VESID with the pseudo version. May not be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of static versions that should be ignored and not
-   *        returned. May be <code>null</code>.
+   *        An optional set of static versions that should be ignored and not returned. May be
+   *        <code>null</code>.
    * @param aCheckDateTime
-   *        The date and time for which the resolution should be performed. If
-   *        <code>null</code> the current date and time will be used.
+   *        The date and time for which the resolution should be performed. If <code>null</code> the
+   *        current date and time will be used.
    * @return <code>null</code> if the pseudo version could not be resolved.
    * @since 9.2.1
    */

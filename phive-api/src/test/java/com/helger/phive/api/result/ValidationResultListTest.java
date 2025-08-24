@@ -27,10 +27,10 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Test;
 
-import com.helger.commons.error.IError;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.io.resource.inmemory.ReadableResourceByteArray;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.list.ErrorList;
+import com.helger.io.resource.inmemory.ReadableResourceByteArray;
 import com.helger.phive.api.EValidationBaseType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.ValidationType;
@@ -71,7 +71,7 @@ public final class ValidationResultListTest
     assertNotNull (aEL);
     assertTrue (aEL.isEmpty ());
 
-    assertEquals (0, aEL.getCount ());
+    assertEquals (0, aEL.size ());
     assertEquals (0, aEL.getCount (IError::isSuccess));
     assertEquals (0, aEL.getCount (IError::isFailure));
     assertEquals (0, aEL.getCount (IError::isError));
@@ -108,7 +108,7 @@ public final class ValidationResultListTest
     assertFalse (aEL.isEmpty ());
     assertEquals (1, aEL.size ());
 
-    assertEquals (1, aEL.getCount ());
+    assertEquals (1, aEL.size ());
     assertEquals (0, aEL.getCount (IError::isSuccess));
     assertEquals (1, aEL.getCount (IError::isFailure));
     assertEquals (1, aEL.getCount (IError::isError));
@@ -144,7 +144,7 @@ public final class ValidationResultListTest
     assertFalse (aEL.isEmpty ());
     assertEquals (1, aEL.size ());
 
-    assertEquals (1, aEL.getCount ());
+    assertEquals (1, aEL.size ());
     assertEquals (0, aEL.getCount (IError::isSuccess));
     assertEquals (1, aEL.getCount (IError::isFailure));
     assertEquals (0, aEL.getCount (IError::isError));

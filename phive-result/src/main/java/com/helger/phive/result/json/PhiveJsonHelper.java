@@ -22,34 +22,30 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.base64.Base64;
-import com.helger.commons.base64.Base64OutputStream;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.error.text.ConstantHasErrorText;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.location.ILocation;
-import com.helger.commons.location.SimpleLocation;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.codec.base64.Base64;
+import com.helger.base.codec.base64.Base64OutputStream;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
+import com.helger.base.location.ILocation;
+import com.helger.base.location.SimpleLocation;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.rt.StackTraceHelper;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
+import com.helger.datetime.web.PDTWebDateHelper;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.level.IErrorLevel;
+import com.helger.diagnostics.error.list.ErrorList;
+import com.helger.diagnostics.error.text.ConstantHasErrorText;
 import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.io.resource.IReadableResource;
 import com.helger.json.IJson;
 import com.helger.json.IJsonArray;
 import com.helger.json.IJsonObject;
@@ -71,6 +67,9 @@ import com.helger.phive.result.PhiveResultHelper;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
  * A utility class to create a common JSON representation of a PHIVE result. Use
  * {@link #applyGlobalError(IJsonObject, String, long)} or
@@ -83,20 +82,6 @@ import com.helger.schematron.svrl.SVRLResourceError;
 @Immutable
 public final class PhiveJsonHelper
 {
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static final String JSON_ERRORLEVEL_SUCCESS = PhiveResultHelper.VALUE_ERRORLEVEL_SUCCESS;
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static final String JSON_ERRORLEVEL_WARN = PhiveResultHelper.VALUE_ERRORLEVEL_WARN;
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static final String JSON_ERRORLEVEL_ERROR = PhiveResultHelper.VALUE_ERRORLEVEL_ERROR;
-
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static final String JSON_TRISTATE_TRUE = PhiveResultHelper.VALUE_TRISTATE_TRUE;
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static final String JSON_TRISTATE_FALSE = PhiveResultHelper.VALUE_TRISTATE_FALSE;
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static final String JSON_TRISTATE_UNDEFINED = PhiveResultHelper.VALUE_TRISTATE_UNDEFINED;
-
   public static final String JSON_RESOURCE_ID = "resource";
   public static final String JSON_LINE_NUM = "line";
   public static final String JSON_COLUMN_NUM = "col";
@@ -147,91 +132,6 @@ public final class PhiveJsonHelper
 
   private PhiveJsonHelper ()
   {}
-
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static boolean isConsideredError (@Nonnull final IErrorLevel aErrorLevel)
-  {
-    return PhiveResultHelper.isConsideredError (aErrorLevel);
-  }
-
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static boolean isConsideredWarning (@Nonnull final IErrorLevel aErrorLevel)
-  {
-    return PhiveResultHelper.isConsideredWarning (aErrorLevel);
-  }
-
-  /**
-   * Get the JSON string of the error level. One of <code>"ERROR"</code>, <code>"WARN"</code> or
-   * <code>"SUCCESS"</code>.<br>
-   * See {@link #JSON_ERRORLEVEL_SUCCESS}, {@link #JSON_ERRORLEVEL_WARN},
-   * {@link #JSON_ERRORLEVEL_ERROR}
-   *
-   * @param aErrorLevel
-   *        The error level to convert. May not be <code>null</code>.
-   * @return A non-<code>null</code> JSON value string.
-   */
-  @Nonnull
-  @Nonempty
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static String getJsonErrorLevel (@Nonnull final IErrorLevel aErrorLevel)
-  {
-    return PhiveResultHelper.getErrorLevelValue (aErrorLevel);
-  }
-
-  @Nullable
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static IErrorLevel getAsErrorLevel (@Nullable final String sErrorLevel)
-  {
-    return PhiveResultHelper.getAsErrorLevel (sErrorLevel);
-  }
-
-  /**
-   * Get the tri-state representation of the provided value. Either {@link #JSON_TRISTATE_TRUE} or
-   * {@link #JSON_TRISTATE_FALSE}.
-   *
-   * @param b
-   *        boolean value to get converted.
-   * @return A non-<code>null</code> JSON value string.
-   * @see #getJsonTriState(ETriState)
-   */
-  @Nonnull
-  @Nonempty
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static String getJsonTriState (final boolean b)
-  {
-    return PhiveResultHelper.getTriStateValue (b);
-  }
-
-  /**
-   * Get the tri-state representation of the provided value. Either {@link #JSON_TRISTATE_TRUE},
-   * {@link #JSON_TRISTATE_FALSE} or {@link #JSON_TRISTATE_UNDEFINED}.
-   *
-   * @param eTriState
-   *        Tri-state value to get converted. May not be <code>null</code>.
-   * @return A non-<code>null</code> JSON value string.
-   * @see #getJsonTriState(boolean)
-   */
-  @Nonnull
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static String getJsonTriState (@Nonnull final ETriState eTriState)
-  {
-    return PhiveResultHelper.getTriStateValue (eTriState);
-  }
-
-  /**
-   * Convert the provided value into a tri-state value. Must be one of {@link #JSON_TRISTATE_TRUE},
-   * {@link #JSON_TRISTATE_FALSE} or {@link #JSON_TRISTATE_UNDEFINED}.
-   *
-   * @param sTriState
-   *        Source value. May be <code>null</code>.
-   * @return <code>null</code> if the provided value is unknown.
-   */
-  @Nullable
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static ETriState getAsTriState (@Nullable final String sTriState)
-  {
-    return PhiveResultHelper.getAsTriState (sTriState);
-  }
 
   /**
    * Get the JSON representation of a stack trace.<br>
@@ -300,7 +200,7 @@ public final class PhiveJsonHelper
     final String sResourceID = aObj.getAsString (JSON_RESOURCE_ID);
     final int nLineNumber = aObj.getAsInt (JSON_LINE_NUM, -1);
     final int nColumnNumber = aObj.getAsInt (JSON_COLUMN_NUM, -1);
-    if (StringHelper.hasNoText (sResourceID) && nLineNumber < 0 && nColumnNumber < 0)
+    if (StringHelper.isEmpty (sResourceID) && nLineNumber < 0 && nColumnNumber < 0)
       return null;
 
     return new SimpleLocation (sResourceID, nLineNumber, nColumnNumber);
@@ -587,7 +487,7 @@ public final class PhiveJsonHelper
     return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
                             .add (JSON_NAME, aVES.getDisplayName ())
                             .add (JSON_DEPRECATED, aStatus.isDeprecated ())
-                            .addJson (JSON_STATUS, getJsonVESStatus (aStatus));
+                            .add (JSON_STATUS, getJsonVESStatus (aStatus));
   }
 
   /**
@@ -632,25 +532,17 @@ public final class PhiveJsonHelper
     aResultArray.add (new JsonObject ().add (JSON_SUCCESS, PhiveResultHelper.getTriStateValue (false))
                                        .add (JSON_ARTIFACT_TYPE, ARTIFACT_TYPE_INPUT_PARAMETER)
                                        .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
-                                       .addJson (JSON_ITEMS,
-                                                 new JsonArray (jsonErrorBuilder ().errorLevel (EErrorLevel.ERROR)
-                                                                                   .errorText (sErrorMsg)
-                                                                                   .build ()))
+                                       .add (JSON_ITEMS,
+                                             new JsonArray (jsonErrorBuilder ().errorLevel (EErrorLevel.ERROR)
+                                                                               .errorText (sErrorMsg)
+                                                                               .build ()))
                                        .add (JSON_DURATION_MS, nDurationMilliseconds));
 
     aResponse.add (JSON_SUCCESS, false);
     aResponse.add (JSON_INTERRUPTED, false);
     aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
-    aResponse.addJson (JSON_RESULTS, aResultArray);
+    aResponse.add (JSON_RESULTS, aResultArray);
     aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
-  }
-
-  @Nonnull
-  @Nonempty
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static String getArtifactPathType (@Nonnull final IReadableResource aRes)
-  {
-    return PhiveResultHelper.getArtifactPathType (aRes);
   }
 
   /**
@@ -724,7 +616,7 @@ public final class PhiveJsonHelper
         aObj = aJson;
 
       final String sVESID = aObj.getAsString (JSON_VESID);
-      if (StringHelper.hasText (sVESID))
+      if (StringHelper.isNotEmpty (sVESID))
       {
         final DVRCoordinate aVESID = DVRCoordinate.parseOrNull (sVESID);
         if (aVESID != null)
@@ -732,14 +624,6 @@ public final class PhiveJsonHelper
       }
     }
     return null;
-  }
-
-  @Nullable
-  @Deprecated (forRemoval = true, since = "10.0.3")
-  public static IReadableResource getAsValidationResource (@Nullable final String sArtefactPathType,
-                                                           @Nullable final String sArtefactPath)
-  {
-    return PhiveResultHelper.getAsValidationResource (sArtefactPathType, sArtefactPath);
   }
 
   @Nullable
@@ -782,7 +666,7 @@ public final class PhiveJsonHelper
         final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
         if (aPayloadBytes == null)
         {
-          if (StringHelper.hasText (sBase64EncodedPayload))
+          if (StringHelper.isNotEmpty (sBase64EncodedPayload))
           {
             // Error in base64 decoding
             LOGGER.warn ("Failed to Base64 decode the provided payload");

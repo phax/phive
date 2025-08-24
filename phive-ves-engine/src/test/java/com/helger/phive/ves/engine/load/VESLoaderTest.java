@@ -23,20 +23,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.io.file.FilenameHelper;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.stream.StreamHelper;
-import com.helger.commons.state.ESuccess;
+import com.helger.annotation.Nonempty;
+import com.helger.base.io.stream.StreamHelper;
+import com.helger.base.state.ESuccess;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
 import com.helger.diver.repo.ERepoDeletable;
@@ -46,6 +41,9 @@ import com.helger.diver.repo.RepoStorageContentByteArray;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.impl.RepoStorageInMemory;
 import com.helger.diver.repo.toc.IRepoStorageWithToc;
+import com.helger.io.file.FilenameHelper;
+import com.helger.io.resource.ClassPathResource;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
@@ -53,6 +51,8 @@ import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
+
+import jakarta.annotation.Nonnull;
 
 public final class VESLoaderTest
 {

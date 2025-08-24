@@ -22,36 +22,32 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.base64.Base64;
-import com.helger.commons.base64.Base64OutputStream;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.error.text.ConstantHasErrorText;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.io.stream.NonBlockingByteArrayOutputStream;
-import com.helger.commons.lang.StackTraceHelper;
-import com.helger.commons.location.ILocation;
-import com.helger.commons.location.SimpleLocation;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.StringParser;
-import com.helger.commons.typeconvert.TypeConverter;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.codec.base64.Base64;
+import com.helger.base.codec.base64.Base64OutputStream;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
+import com.helger.base.location.ILocation;
+import com.helger.base.location.SimpleLocation;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.rt.StackTraceHelper;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
+import com.helger.base.string.StringParser;
+import com.helger.datetime.web.PDTWebDateHelper;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.level.IErrorLevel;
+import com.helger.diagnostics.error.list.ErrorList;
+import com.helger.diagnostics.error.text.ConstantHasErrorText;
 import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -66,9 +62,13 @@ import com.helger.phive.result.IValidationSourceRestorer;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
+import com.helger.typeconvert.impl.TypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.util.MicroHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A utility class to create a common XML representation of a PHIVE result. Use
@@ -147,10 +147,8 @@ public final class PhiveXMLHelper
    * @param t
    *        The exception to convert to a XML object. May be <code>null</code>.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
-   * @return <code>null</code> if the parameter is <code>null</code>, the XML
-   *         object otherwise.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
+   * @return <code>null</code> if the parameter is <code>null</code>, the XML object otherwise.
    * @see PhiveRestoredException for a representation after reading
    */
   @Nullable
@@ -181,10 +179,8 @@ public final class PhiveXMLHelper
    * @param aLocation
    *        The location to convert to a XML object. May be <code>null</code>.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
-   * @return <code>null</code> if the parameter is <code>null</code>, the XML
-   *         object otherwise.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
+   * @return <code>null</code> if the parameter is <code>null</code>, the XML object otherwise.
    */
   @Nullable
   public static IMicroElement getXMLErrorLocation (@Nullable final ILocation aLocation,
@@ -194,11 +190,11 @@ public final class PhiveXMLHelper
       return null;
     final IMicroElement ret = new MicroElement (sElementName);
     if (aLocation.hasResourceID ())
-      ret.appendElement (XML_RESOURCE_ID).appendText (aLocation.getResourceID ());
+      ret.addElement (XML_RESOURCE_ID).addText (aLocation.getResourceID ());
     if (aLocation.hasLineNumber ())
-      ret.appendElement (XML_LINE_NUM).appendText (aLocation.getLineNumber ());
+      ret.addElement (XML_LINE_NUM).addText (aLocation.getLineNumber ());
     if (aLocation.hasColumnNumber ())
-      ret.appendElement (XML_COLUMN_NUM).appendText (aLocation.getColumnNumber ());
+      ret.addElement (XML_COLUMN_NUM).addText (aLocation.getColumnNumber ());
     return ret;
   }
 
@@ -214,7 +210,7 @@ public final class PhiveXMLHelper
     final int nColumnNumber = StringParser.parseInt (MicroHelper.getChildTextContentTrimmed (aObj, XML_COLUMN_NUM),
                                                      ILocation.ILLEGAL_NUMBER);
 
-    if (StringHelper.hasNoText (sResourceID) && nLineNumber < 0 && nColumnNumber < 0)
+    if (StringHelper.isEmpty (sResourceID) && nLineNumber < 0 && nColumnNumber < 0)
       return null;
 
     return new SimpleLocation (sResourceID, nLineNumber, nColumnNumber);
@@ -250,8 +246,7 @@ public final class PhiveXMLHelper
    * @param t
    *        The optional stack trace of the error. May be <code>null</code>.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return The XML object with the error. Never <code>null</code>.
    * @see #getXMLErrorLocation(ILocation, String)
    * @see #getXMLStackTrace(Throwable, String)
@@ -298,15 +293,12 @@ public final class PhiveXMLHelper
    * @param aError
    *        The structured error. May not be <code>null</code>.
    * @param aDisplayLocale
-   *        The display locale to resolve the error text. May not be
-   *        <code>null</code>.
+   *        The display locale to resolve the error text. May not be <code>null</code>.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return The XML object with the error. Never <code>null</code>.
    * @see #getXMLStackTrace(Throwable, String)
-   * @see #getXMLError(IErrorLevel, String, String, ILocation, String, String,
-   *      Throwable, String)
+   * @see #getXMLError(IErrorLevel, String, String, ILocation, String, String, Throwable, String)
    */
   @Nonnull
   public static IMicroElement getXMLError (@Nonnull final IError aError,
@@ -320,8 +312,7 @@ public final class PhiveXMLHelper
    * Create an empty builder
    *
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return Never <code>null</code>.
    */
   @Nonnull
@@ -336,11 +327,9 @@ public final class PhiveXMLHelper
    * @param aError
    *        The structured error. May not be <code>null</code>.
    * @param aDisplayLocale
-   *        The display locale to resolve the error text. May not be
-   *        <code>null</code>.
+   *        The display locale to resolve the error text. May not be <code>null</code>.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return Never <code>null</code>.
    */
   @Nonnull
@@ -412,11 +401,9 @@ public final class PhiveXMLHelper
    * @param aSource
    *        The validation source to use. May not be <code>null</code>.
    * @param bWithPayload
-   *        <code>true</code> to include the payload, or <code>false</code> to
-   *        omit it.
+   *        <code>true</code> to include the payload, or <code>false</code> to omit it.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return The created XML object.
    * @since 10.1.0
    */
@@ -428,10 +415,10 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (aSource, "Source");
 
     final IMicroElement ret = new MicroElement (sElementName);
-    ret.appendElement (XML_SOURCE_TYPE_ID).appendText (aSource.getValidationSourceTypeID ());
+    ret.addElement (XML_SOURCE_TYPE_ID).addText (aSource.getValidationSourceTypeID ());
     if (aSource.hasSystemID ())
-      ret.appendElement (XML_SYSTEM_ID).appendText (aSource.getSystemID ());
-    ret.appendElement (XML_PARTIAL_SOURCE).appendText (aSource.isPartialSource ());
+      ret.addElement (XML_SYSTEM_ID).addText (aSource.getSystemID ());
+    ret.addElement (XML_PARTIAL_SOURCE).addText (aSource.isPartialSource ());
     if (bWithPayload)
     {
       try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
@@ -439,7 +426,7 @@ public final class PhiveXMLHelper
       {
         aSource.writeTo (aB64OS);
         aB64OS.flushBase64 ();
-        ret.appendElement (XML_PAYLOAD_BASE64).appendText (aBAOS.getAsString (StandardCharsets.ISO_8859_1));
+        ret.addElement (XML_PAYLOAD_BASE64).addText (aBAOS.getAsString (StandardCharsets.ISO_8859_1));
       }
       catch (final IOException ex)
       {
@@ -466,8 +453,7 @@ public final class PhiveXMLHelper
    * @param aStatus
    *        The VES status to use. May not be <code>null</code>.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return The created XML object.
    * @since 10.1.0
    */
@@ -478,17 +464,17 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (aStatus, "Status");
 
     final IMicroElement ret = new MicroElement (sElementName);
-    ret.appendElement (XML_STATUS_LAST_MODIFICATION)
-       .appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()));
-    ret.appendElement (XML_STATUS_TYPE).appendText (aStatus.getType ().getID ());
+    ret.addElement (XML_STATUS_LAST_MODIFICATION)
+       .addText (PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()));
+    ret.addElement (XML_STATUS_TYPE).addText (aStatus.getType ().getID ());
     if (aStatus.hasValidFrom ())
-      ret.appendElement (XML_STATUS_VALID_FROM).appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()));
+      ret.addElement (XML_STATUS_VALID_FROM).addText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()));
     if (aStatus.hasValidTo ())
-      ret.appendElement (XML_STATUS_VALID_TO).appendText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()));
+      ret.addElement (XML_STATUS_VALID_TO).addText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()));
     if (aStatus.hasDeprecationReason ())
-      ret.appendElement (XML_STATUS_DEPRECATION_REASON).appendText (aStatus.getDeprecationReason ());
+      ret.addElement (XML_STATUS_DEPRECATION_REASON).addText (aStatus.getDeprecationReason ());
     if (aStatus.hasReplacementVESID ())
-      ret.appendElement (XML_STATUS_REPLACEMENT_VESID).appendText (aStatus.getReplacementVESID ().getAsSingleID ());
+      ret.addElement (XML_STATUS_REPLACEMENT_VESID).addText (aStatus.getReplacementVESID ().getAsSingleID ());
     return ret;
   }
 
@@ -514,8 +500,7 @@ public final class PhiveXMLHelper
    * @param aVES
    *        The VES to use. May not be <code>null</code>.
    * @param sElementName
-   *        The XML element name to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return The created XML object.
    */
   @Nonnull
@@ -527,17 +512,16 @@ public final class PhiveXMLHelper
     final IValidationExecutorSetStatus aStatus = aVES.getStatus ();
 
     final IMicroElement ret = new MicroElement (sElementName);
-    ret.appendElement (XML_VESID).appendText (aVES.getID ().getAsSingleID ());
-    ret.appendElement (XML_NAME).appendText (aVES.getDisplayName ());
-    ret.appendElement (XML_DEPRECATED).appendText (aStatus.isDeprecated ());
-    ret.appendChild (getXMLVESStatus (aStatus, XML_STATUS));
+    ret.addElement (XML_VESID).addText (aVES.getID ().getAsSingleID ());
+    ret.addElement (XML_NAME).addText (aVES.getDisplayName ());
+    ret.addElement (XML_DEPRECATED).addText (aStatus.isDeprecated ());
+    ret.addChild (getXMLVESStatus (aStatus, XML_STATUS));
     return ret;
   }
 
   /**
-   * Add one global error to the response. Afterwards no validation results
-   * should be added. The layout of the response object is very similar to the
-   * one created by
+   * Add one global error to the response. Afterwards no validation results should be added. The
+   * layout of the response object is very similar to the one created by
    * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}.
    * <br>
    *
@@ -573,27 +557,26 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (sErrorMsg, "ErrorMsg");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
-    aResponse.appendElement (XML_SUCCESS).appendText (false);
-    aResponse.appendElement (XML_INTERRUPTED).appendText (false);
-    aResponse.appendElement (XML_MOST_SEVERE_ERROR_LEVEL)
-             .appendText (PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
+    aResponse.addElement (XML_SUCCESS).addText (false);
+    aResponse.addElement (XML_INTERRUPTED).addText (false);
+    aResponse.addElement (XML_MOST_SEVERE_ERROR_LEVEL)
+             .addText (PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
 
     {
-      final IMicroElement aResult = aResponse.appendElement (XML_RESULT);
-      aResult.appendElement (XML_SUCCESS).appendText (PhiveResultHelper.getTriStateValue (false));
-      aResult.appendElement (XML_ARTIFACT_TYPE).appendText (ARTIFACT_TYPE_INPUT_PARAMETER);
-      aResult.appendElement (XML_ARTIFACT_PATH).appendText (ARTIFACT_PATH_NONE);
-      aResult.appendChild (xmlErrorBuilder (XML_ITEM).errorLevel (EErrorLevel.ERROR).errorText (sErrorMsg).build ());
-      aResult.appendElement (XML_DURATION_MS).appendText (nDurationMilliseconds);
+      final IMicroElement aResult = aResponse.addElement (XML_RESULT);
+      aResult.addElement (XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (false));
+      aResult.addElement (XML_ARTIFACT_TYPE).addText (ARTIFACT_TYPE_INPUT_PARAMETER);
+      aResult.addElement (XML_ARTIFACT_PATH).addText (ARTIFACT_PATH_NONE);
+      aResult.addChild (xmlErrorBuilder (XML_ITEM).errorLevel (EErrorLevel.ERROR).errorText (sErrorMsg).build ());
+      aResult.addElement (XML_DURATION_MS).addText (nDurationMilliseconds);
     }
 
-    aResponse.appendElement (XML_DURATION_MS).appendText (nDurationMilliseconds);
+    aResponse.addElement (XML_DURATION_MS).addText (nDurationMilliseconds);
   }
 
   /**
-   * Apply the results of a full validation onto a XML object.The layout of the
-   * response object is very similar to the one created by
-   * {@link #applyGlobalError(IMicroElement, String, long)}.<br>
+   * Apply the results of a full validation onto a XML object.The layout of the response object is
+   * very similar to the one created by {@link #applyGlobalError(IMicroElement, String, long)}.<br>
    *
    * <pre>
    * &lt;resultList&gt;
@@ -619,21 +602,21 @@ public final class PhiveXMLHelper
    * @param aResponse
    *        The response XML object to add to. May not be <code>null</code>.
    * @param aVES
-   *        The Validation executor set that was used to perform validation. May
-   *        be <code>null</code>.
+   *        The Validation executor set that was used to perform validation. May be
+   *        <code>null</code>.
    * @param aValidationResultList
-   *        The validation result list containing the validation results per
-   *        layer. May not be <code>null</code>.
+   *        The validation result list containing the validation results per layer. May not be
+   *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
    * @param nDurationMilliseconds
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    * @param aWarningCount
-   *        Optional callback value to store the overall warnings. If not
-   *        <code>null</code> if will contain a &ge; 0 value afterwards.
+   *        Optional callback value to store the overall warnings. If not <code>null</code> if will
+   *        contain a &ge; 0 value afterwards.
    * @param aErrorCount
-   *        Optional callback value to store the overall errors. If not
-   *        <code>null</code> if will contain a &ge; 0 value afterwards.
+   *        Optional callback value to store the overall errors. If not <code>null</code> if will
+   *        contain a &ge; 0 value afterwards.
    */
   public static void applyValidationResultList (@Nonnull final IMicroElement aResponse,
                                                 @Nullable final IValidationExecutorSet <?> aVES,
@@ -663,7 +646,7 @@ public final class PhiveXMLHelper
       if (eVes != null)
       {
         final String sVESID = MicroHelper.getChildTextContentTrimmed (eVes, XML_VESID);
-        if (StringHelper.hasText (sVESID))
+        if (StringHelper.isNotEmpty (sVESID))
         {
           final DVRCoordinate aVESID = DVRCoordinate.parseOrNull (sVESID);
           if (aVESID != null)
@@ -684,17 +667,14 @@ public final class PhiveXMLHelper
   }
 
   /**
-   * Try to parse the default XML structure and convert it back to a
-   * {@link ValidationResultList}.
+   * Try to parse the default XML structure and convert it back to a {@link ValidationResultList}.
    *
    * @param aXML
    *        The XML to be read. May be <code>null</code>.
    * @param aValidationTypeResolver
-   *        The validation type resolver to be used. May not be
-   *        <code>null</code>.
+   *        The validation type resolver to be used. May not be <code>null</code>.
    * @param aValidationSourceRestorer
-   *        The function to restore {@link IValidationSource} objects. May not
-   *        be <code>null</code>.
+   *        The function to restore {@link IValidationSource} objects. May not be <code>null</code>.
    * @return <code>null</code> in case reverse operation fails.
    */
   @Nullable

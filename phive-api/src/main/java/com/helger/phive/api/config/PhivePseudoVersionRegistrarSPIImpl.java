@@ -16,17 +16,17 @@
  */
 package com.helger.phive.api.config;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.commons.annotation.UsedViaReflection;
-import com.helger.commons.version.Version;
+import com.helger.annotation.style.IsSPIImplementation;
+import com.helger.annotation.style.UsedViaReflection;
+import com.helger.base.version.Version;
 import com.helger.diver.api.version.DVRPseudoVersion;
 import com.helger.diver.api.version.DVRPseudoVersionRegistry;
 import com.helger.diver.api.version.IDVRPseudoVersion;
 import com.helger.diver.api.version.IDVRPseudoVersionComparable;
 import com.helger.diver.api.version.IDVRPseudoVersionRegistry;
 import com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Default pseudo version registrar
@@ -37,8 +37,8 @@ import com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI;
 public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersionRegistrarSPI
 {
   /**
-   * Latest active indicates the latest version that is valid at a provided
-   * point in time (including snapshots).
+   * Latest active indicates the latest version that is valid at a provided point in time (including
+   * snapshots).
    */
   public static final IDVRPseudoVersion LATEST_ACTIVE;
   static
@@ -65,8 +65,8 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersi
   }
 
   /**
-   * Latest active release indicates the latest version that is valid at a
-   * provided point in time (excluding snapshots).
+   * Latest active release indicates the latest version that is valid at a provided point in time
+   * (excluding snapshots).
    */
   public static final IDVRPseudoVersion LATEST_RELEASE_ACTIVE;
   static

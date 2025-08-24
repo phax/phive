@@ -19,24 +19,24 @@ package com.helger.phive.result.xml;
 import java.time.LocalDateTime;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.builder.IBuilder;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.location.ILocation;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.base.builder.IBuilder;
+import com.helger.base.location.ILocation;
+import com.helger.base.string.StringHelper;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.web.PDTWebDateHelper;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.level.IErrorLevel;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * A flexible builder that can be used to convert data from an {@link IError}
- * object to a XML representation with high degrees of freedom.
+ * A flexible builder that can be used to convert data from an {@link IError} object to a XML
+ * representation with high degrees of freedom.
  *
  * @author Philip Helger
  * @since 10.0.3
@@ -151,33 +151,32 @@ public class XMLErrorBuilder implements IBuilder <IMicroElement>
   {
     final IMicroElement ret = new MicroElement (m_sElementName);
     if (m_aErrorDateTime != null)
-      ret.appendElement (PhiveXMLHelper.XML_ERROR_DATETIME)
-         .appendText (PDTWebDateHelper.getAsStringXSD (m_aErrorDateTime));
+      ret.addElement (PhiveXMLHelper.XML_ERROR_DATETIME).addText (PDTWebDateHelper.getAsStringXSD (m_aErrorDateTime));
     if (m_aErrorLevel != null && m_aErrorLevelToXML != null)
     {
       final String sErrorLevel = m_aErrorLevelToXML.apply (m_aErrorLevel);
-      if (StringHelper.hasText (sErrorLevel))
-        ret.appendElement (PhiveXMLHelper.XML_ERROR_LEVEL).appendText (sErrorLevel);
+      if (StringHelper.isNotEmpty (sErrorLevel))
+        ret.addElement (PhiveXMLHelper.XML_ERROR_LEVEL).addText (sErrorLevel);
     }
     if (m_sErrorID != null)
-      ret.appendElement (PhiveXMLHelper.XML_ERROR_ID).appendText (m_sErrorID);
+      ret.addElement (PhiveXMLHelper.XML_ERROR_ID).addText (m_sErrorID);
     if (m_sErrorFieldName != null)
-      ret.appendElement (PhiveXMLHelper.XML_ERROR_FIELD_NAME).appendText (m_sErrorFieldName);
+      ret.addElement (PhiveXMLHelper.XML_ERROR_FIELD_NAME).addText (m_sErrorFieldName);
     if (m_aErrorLocation != null && m_aErrorLocationToXML != null)
     {
       final IMicroElement eErrorLocation = m_aErrorLocationToXML.apply (m_aErrorLocation);
       if (eErrorLocation != null)
-        ret.appendChild (eErrorLocation);
+        ret.addChild (eErrorLocation);
     }
     if (m_sTest != null)
-      ret.appendElement (PhiveXMLHelper.XML_TEST).appendText (m_sTest);
+      ret.addElement (PhiveXMLHelper.XML_TEST).addText (m_sTest);
     if (m_sErrorText != null)
-      ret.appendElement (PhiveXMLHelper.XML_ERROR_TEXT).appendText (m_sErrorText);
+      ret.addElement (PhiveXMLHelper.XML_ERROR_TEXT).addText (m_sErrorText);
     if (m_aException != null && m_aExceptionToXML != null)
     {
       final IMicroElement eEx = m_aExceptionToXML.apply (m_aException);
       if (eEx != null)
-        ret.appendChild (eEx);
+        ret.addChild (eEx);
     }
     return ret;
   }

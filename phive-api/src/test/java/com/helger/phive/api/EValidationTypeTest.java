@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 
 /**
  * Test class for class {@link EValidationType}.
@@ -35,7 +35,7 @@ public final class EValidationTypeTest
   {
     for (final EValidationType e : EValidationType.values ())
     {
-      assertTrue (StringHelper.hasText (e.getID ()));
+      assertTrue (StringHelper.isNotEmpty (e.getID ()));
       assertSame (e, EValidationType.getFromIDOrNull (e.getID ()));
     }
   }

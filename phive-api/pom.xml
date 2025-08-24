@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger.phive</groupId>
     <artifactId>phive-parent-pom</artifactId>
-    <version>10.1.2-SNAPSHOT</version>
+    <version>11.0.0-SNAPSHOT</version>
   </parent>
   <artifactId>phive-api</artifactId>
   <packaging>bundle</packaging>
@@ -56,7 +56,15 @@
   <dependencies>
     <dependency>
       <groupId>com.helger.commons</groupId>
-      <artifactId>ph-commons</artifactId>
+      <artifactId>ph-io</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-diagnostics</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-datetime</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger.diver</groupId>

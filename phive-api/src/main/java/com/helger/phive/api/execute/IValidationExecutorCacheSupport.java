@@ -16,7 +16,7 @@
  */
 package com.helger.phive.api.execute;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 /**
  * Interface for validation executors that support caching. Each implementation

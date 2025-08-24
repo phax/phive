@@ -19,18 +19,18 @@ package com.helger.phive.result.json;
 import java.time.LocalDateTime;
 import java.util.function.Function;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.builder.IBuilder;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.location.ILocation;
+import com.helger.base.builder.IBuilder;
+import com.helger.base.location.ILocation;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.web.PDTWebDateHelper;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.level.IErrorLevel;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.phive.result.PhiveResultHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A flexible builder that can be used to convert data from an {@link IError}

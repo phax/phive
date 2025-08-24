@@ -16,8 +16,6 @@
  */
 package com.helger.phive.xml.source;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.xml.transform.Source;
 
 import org.w3c.dom.Node;
@@ -25,6 +23,9 @@ import org.w3c.dom.Node;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.transform.TransformSourceFactory;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * XML validation source interface.

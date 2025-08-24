@@ -22,7 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.string.StringHelper;
+import com.helger.base.string.StringHelper;
 
 /**
  * Test class for class {@link EValidationExecutorStatusType}.
@@ -36,7 +36,7 @@ public final class EValidationExecutorStatusTypeTest
   {
     for (final EValidationExecutorStatusType e : EValidationExecutorStatusType.values ())
     {
-      assertTrue (StringHelper.hasText (e.getID ()));
+      assertTrue (StringHelper.isNotEmpty (e.getID ()));
       assertSame (e, EValidationExecutorStatusType.getFromIDOrNull (e.getID ()));
     }
 

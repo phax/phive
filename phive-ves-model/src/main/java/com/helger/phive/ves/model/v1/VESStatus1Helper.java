@@ -18,16 +18,13 @@ package com.helger.phive.ves.model.v1;
 
 import java.time.OffsetDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.XMLOffsetDateTime;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.xml.XMLOffsetDateTime;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
 import com.helger.phive.api.executorset.status.EValidationExecutorStatusType;
@@ -35,6 +32,9 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatusHistoryItem;
 import com.helger.phive.ves.v10.VesStatusType;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Utility class for VES Status v1

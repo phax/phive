@@ -20,8 +20,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 
@@ -31,24 +29,24 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.CommonsHashMap;
-import com.helger.commons.collection.impl.ICommonsMap;
-import com.helger.commons.equals.EqualsHelper;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.hashcode.HashCodeGenerator;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.location.SimpleLocation;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.timing.StopWatch;
-import com.helger.commons.wrapper.Wrapper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.equals.EqualsHelper;
+import com.helger.base.hashcode.HashCodeGenerator;
+import com.helger.base.location.SimpleLocation;
+import com.helger.base.string.StringHelper;
+import com.helger.base.timing.StopWatch;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.base.wrapper.Wrapper;
+import com.helger.collection.commons.CommonsHashMap;
+import com.helger.collection.commons.ICommonsMap;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.level.IErrorLevel;
+import com.helger.diagnostics.error.list.ErrorList;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
@@ -79,6 +77,9 @@ import com.helger.xml.serialize.write.XMLWriter;
 import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
 import com.helger.xml.xpath.XPathExpressionHelper;
 import com.helger.xml.xpath.XPathHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link IValidationExecutor} for Schematron validation.
@@ -113,9 +114,8 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * @return The optional prerequisite XPath expression, that needs to evaluate
-   *         to boolean:true before the Schematron is applied. May be
-   *         <code>null</code>.
+   * @return The optional prerequisite XPath expression, that needs to evaluate to boolean:true
+   *         before the Schematron is applied. May be <code>null</code>.
    */
   @Nullable
   public final String getPrerequisiteXPath ()
@@ -124,8 +124,7 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * @return The namespace context to be used for creating error messages. May
-   *         be <code>null</code>.
+   * @return The namespace context to be used for creating error messages. May be <code>null</code>.
    */
   @Nullable
   @ReturnsMutableObject
@@ -160,14 +159,13 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Add a specific custom error level, that overrides the error level defined
-   * in the Schematron itself.
+   * Add a specific custom error level, that overrides the error level defined in the Schematron
+   * itself.
    *
    * @param sErrorID
    *        The error ID, must match the Schematron assertion ID
    * @param aErrorDetails
-   *        The new error details to use. May be more or less severe than the
-   *        original one.
+   *        The new error details to use. May be more or less severe than the original one.
    * @return this for chaining
    * @see #addCustomErrorDetails(Map)
    */
@@ -185,12 +183,12 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Add multiple specific custom error levels, that overrides the error level
-   * defined in the Schematron itself.
+   * Add multiple specific custom error levels, that overrides the error level defined in the
+   * Schematron itself.
    *
    * @param aCustomErrorLevels
-   *        The map from error ID (the Schematron assertion ID) to the new error
-   *        level to use. May be <code>null</code>.
+   *        The map from error ID (the Schematron assertion ID) to the new error level to use. May
+   *        be <code>null</code>.
    * @return this for chaining
    * @see #addCustomErrorDetail(String, CustomErrorDetails)
    */
@@ -229,7 +227,7 @@ public class ValidationExecutorSchematron extends
     {
       final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
       aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.hasText (aLocale.getLanguage ()))
+      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
       return aSCHSCH;
     }
@@ -237,7 +235,7 @@ public class ValidationExecutorSchematron extends
     {
       final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
       aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.hasText (aLocale.getLanguage ()))
+      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
       return aSCHSCH;
     }
@@ -278,7 +276,7 @@ public class ValidationExecutorSchematron extends
       throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.",
                                        ex);
     }
-    if (StringHelper.hasText (m_sPrerequisiteXPath))
+    if (StringHelper.isNotEmpty (m_sPrerequisiteXPath))
     {
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Using Schematron prerequisite path '" + m_sPrerequisiteXPath + "'");
@@ -509,15 +507,12 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses Pure Schematron
-   * validation.
+   * Create a new instance for a single resource that uses Pure Schematron validation.
    *
    * @param aRes
-   *        The resource pointing to the Schematron rules. May not be
-   *        <code>null</code>.
+   *        The resource pointing to the Schematron rules. May not be <code>null</code>.
    * @param aNamespaceContext
-   *        An optional namespace context for nice error messages. May be
-   *        <code>null</code>.
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
@@ -531,17 +526,14 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the simple Schematron
-   * validation. This is discouraged for speed reasons. It is recommended to
-   * precompile the SCH to XSLT at build time and than use the
-   * {@link #createXSLT(IReadableResource, IIterableNamespaceContext)} instead.
+   * Create a new instance for a single resource that uses the simple Schematron validation. This is
+   * discouraged for speed reasons. It is recommended to precompile the SCH to XSLT at build time
+   * and than use the {@link #createXSLT(IReadableResource, IIterableNamespaceContext)} instead.
    *
    * @param aRes
-   *        The resource pointing to the Schematron rules. May not be
-   *        <code>null</code>.
+   *        The resource pointing to the Schematron rules. May not be <code>null</code>.
    * @param aNamespaceContext
-   *        An optional namespace context for nice error messages. May be
-   *        <code>null</code>.
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
@@ -555,15 +547,13 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the precompiled XSLT
-   * SchXslt Schematron validation.
+   * Create a new instance for a single resource that uses the precompiled XSLT SchXslt Schematron
+   * validation.
    *
    * @param aRes
-   *        The resource pointing to the Schematron rules. May not be
-   *        <code>null</code>.
+   *        The resource pointing to the Schematron rules. May not be <code>null</code>.
    * @param aNamespaceContext
-   *        An optional namespace context for nice error messages. May be
-   *        <code>null</code>.
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
    * @return A new instance and never <code>null</code>.
    * @since 7.1.2
    */
@@ -577,15 +567,13 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the precompiled XSLT
-   * ISO Schematron validation.
+   * Create a new instance for a single resource that uses the precompiled XSLT ISO Schematron
+   * validation.
    *
    * @param aRes
-   *        The resource pointing to the XSLT rules. May not be
-   *        <code>null</code>.
+   *        The resource pointing to the XSLT rules. May not be <code>null</code>.
    * @param aNamespaceContext
-   *        An optional namespace context for nice error messages. May be
-   *        <code>null</code>.
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
@@ -597,19 +585,16 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the precompiled XSLT
-   * ISO Schematron validation.
+   * Create a new instance for a single resource that uses the precompiled XSLT ISO Schematron
+   * validation.
    *
    * @param aRes
-   *        The resource pointing to the XSLT rules. May not be
-   *        <code>null</code>.
+   *        The resource pointing to the XSLT rules. May not be <code>null</code>.
    * @param sPrerequisiteXPath
-   *        An optional XPath expression that needs to be fulfilled in the
-   *        source document to run this validation rules. This can increase the
-   *        execution speed. May be <code>null</code>.
+   *        An optional XPath expression that needs to be fulfilled in the source document to run
+   *        this validation rules. This can increase the execution speed. May be <code>null</code>.
    * @param aNamespaceContext
-   *        An optional namespace context for nice error messages. May be
-   *        <code>null</code>.
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
@@ -624,15 +609,12 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the special OIOUBL
-   * Schematron validation.
+   * Create a new instance for a single resource that uses the special OIOUBL Schematron validation.
    *
    * @param aRes
-   *        The resource pointing to the OIOUBL rules. May not be
-   *        <code>null</code>.
+   *        The resource pointing to the OIOUBL rules. May not be <code>null</code>.
    * @param aNamespaceContext
-   *        An optional namespace context for nice error messages. May be
-   *        <code>null</code>.
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */

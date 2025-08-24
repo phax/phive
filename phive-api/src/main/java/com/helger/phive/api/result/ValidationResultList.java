@@ -19,17 +19,17 @@ package com.helger.phive.api.result;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.CommonsArrayList;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonnegative;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.collection.commons.CommonsArrayList;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * A managed list of {@link ValidationResult} objects.
@@ -39,15 +39,6 @@ import com.helger.phive.api.source.IValidationSource;
 public class ValidationResultList extends CommonsArrayList <ValidationResult>
 {
   private final IValidationSource m_aSource;
-
-  /**
-   * Create a validation result list without a source.
-   */
-  @Deprecated (forRemoval = true, since = "10.0.4")
-  public ValidationResultList ()
-  {
-    this (null);
-  }
 
   /**
    * Create a validation result list with an optional source.

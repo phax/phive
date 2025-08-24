@@ -18,16 +18,16 @@ package com.helger.phive.api.executorset.status;
 
 import java.time.OffsetDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.string.StringHelper;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.diver.api.coord.DVRCoordinate;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Defines the status of a VES.
@@ -38,9 +38,8 @@ import com.helger.diver.api.coord.DVRCoordinate;
 public interface IValidationExecutorSetStatus
 {
   /**
-   * @return The date and time of the last modification of this status.
-   *         Precision is limited to milliseconds. May never be
-   *         <code>null</code>.
+   * @return The date and time of the last modification of this status. Precision is limited to
+   *         milliseconds. May never be <code>null</code>.
    */
   @Nonnull
   OffsetDateTime getStatusLastModification ();
@@ -52,8 +51,7 @@ public interface IValidationExecutorSetStatus
   EValidationExecutorStatusType getType ();
 
   /**
-   * @return <code>true</code> if the status type is deprecated,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if the status type is deprecated, <code>false</code> if not.
    */
   default boolean isDeprecated ()
   {
@@ -66,9 +64,8 @@ public interface IValidationExecutorSetStatus
   }
 
   /**
-   * @return The date and time from which this artefact is valid. Precision is
-   *         limited to milliseconds. May be <code>null</code> to indicate
-   *         "since forever".
+   * @return The date and time from which this artefact is valid. Precision is limited to
+   *         milliseconds. May be <code>null</code> to indicate "since forever".
    */
   @Nullable
   OffsetDateTime getValidFrom ();
@@ -79,9 +76,8 @@ public interface IValidationExecutorSetStatus
   }
 
   /**
-   * @return The date and time until which this artefact is valid. Precision is
-   *         limited to milliseconds. May be <code>null</code> to indicate
-   *         "forever".
+   * @return The date and time until which this artefact is valid. Precision is limited to
+   *         milliseconds. May be <code>null</code> to indicate "forever".
    */
   @Nullable
   OffsetDateTime getValidTo ();
@@ -102,19 +98,18 @@ public interface IValidationExecutorSetStatus
 
   default boolean hasDeprecationReason ()
   {
-    return StringHelper.hasText (getDeprecationReason ());
+    return StringHelper.isNotEmpty (getDeprecationReason ());
   }
 
   /**
-   * @return If this is deprecated, this field may contain a human readable
-   *         description. May be <code>null</code>.
+   * @return If this is deprecated, this field may contain a human readable description. May be
+   *         <code>null</code>.
    */
   @Nullable
   String getDeprecationReason ();
 
   /**
-   * @return <code>true</code> if a replacement VESID is present,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if a replacement VESID is present, <code>false</code> if not.
    */
   default boolean hasReplacementVESID ()
   {
@@ -122,11 +117,10 @@ public interface IValidationExecutorSetStatus
   }
 
   /**
-   * @return The replacement VESID to be used. May be <code>null</code>. If this
-   *         artefact is deprecated and a later version exists, the latest
-   *         version is always considered the appropriate replacement. However
-   *         if group ID or artefact ID changed, it needs to be explicitly
-   *         provided here as a replacement VESID.
+   * @return The replacement VESID to be used. May be <code>null</code>. If this artefact is
+   *         deprecated and a later version exists, the latest version is always considered the
+   *         appropriate replacement. However if group ID or artefact ID changed, it needs to be
+   *         explicitly provided here as a replacement VESID.
    */
   @Nullable
   DVRCoordinate getReplacementVESID ();

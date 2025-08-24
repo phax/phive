@@ -20,23 +20,21 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.xml.validation.Schema;
 
 import org.xml.sax.SAXParseException;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.ArrayHelper;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.location.SimpleLocation;
-import com.helger.commons.string.ToStringGenerator;
-import com.helger.commons.timing.StopWatch;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.array.ArrayHelper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.location.SimpleLocation;
+import com.helger.base.timing.StopWatch;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.list.ErrorList;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
@@ -46,6 +44,9 @@ import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link AbstractValidationExecutor} for XML Schema

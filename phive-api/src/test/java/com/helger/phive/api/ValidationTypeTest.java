@@ -22,7 +22,7 @@ import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.unittest.support.TestHelper;
 
 /**
  * Test class for class {@link ValidationType}.
@@ -41,41 +41,41 @@ public final class ValidationTypeTest
     assertFalse (aVT.isStopValidationOnError ());
     assertFalse (aVT.isContextRequired ());
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aVT,
-                                                                       new ValidationType ("mock",
-                                                                                           EValidationBaseType.PDF,
-                                                                                           "Mock VT",
-                                                                                           false,
-                                                                                           false));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
-                                                                           new ValidationType ("mock2",
-                                                                                               EValidationBaseType.PDF,
-                                                                                               "Mock VT",
-                                                                                               false,
-                                                                                               false));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
-                                                                           new ValidationType ("mock",
-                                                                                               EValidationBaseType.EDIFACT,
-                                                                                               "Mock VT",
-                                                                                               false,
-                                                                                               false));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
-                                                                           new ValidationType ("mock",
-                                                                                               EValidationBaseType.PDF,
-                                                                                               "Other Mock VT",
-                                                                                               false,
-                                                                                               false));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
-                                                                           new ValidationType ("mock",
-                                                                                               EValidationBaseType.PDF,
-                                                                                               "Mock VT",
-                                                                                               true,
-                                                                                               false));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
-                                                                           new ValidationType ("mock",
-                                                                                               EValidationBaseType.PDF,
-                                                                                               "Mock VT",
-                                                                                               false,
-                                                                                               true));
+    TestHelper.testDefaultImplementationWithEqualContentObject (aVT,
+                                                                new ValidationType ("mock",
+                                                                                    EValidationBaseType.PDF,
+                                                                                    "Mock VT",
+                                                                                    false,
+                                                                                    false));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
+                                                                    new ValidationType ("mock2",
+                                                                                        EValidationBaseType.PDF,
+                                                                                        "Mock VT",
+                                                                                        false,
+                                                                                        false));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
+                                                                    new ValidationType ("mock",
+                                                                                        EValidationBaseType.EDIFACT,
+                                                                                        "Mock VT",
+                                                                                        false,
+                                                                                        false));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
+                                                                    new ValidationType ("mock",
+                                                                                        EValidationBaseType.PDF,
+                                                                                        "Other Mock VT",
+                                                                                        false,
+                                                                                        false));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
+                                                                    new ValidationType ("mock",
+                                                                                        EValidationBaseType.PDF,
+                                                                                        "Mock VT",
+                                                                                        true,
+                                                                                        false));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aVT,
+                                                                    new ValidationType ("mock",
+                                                                                        EValidationBaseType.PDF,
+                                                                                        "Mock VT",
+                                                                                        false,
+                                                                                        true));
   }
 }

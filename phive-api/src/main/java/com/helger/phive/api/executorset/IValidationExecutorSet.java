@@ -16,18 +16,18 @@
  */
 package com.helger.phive.api.executorset;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.annotation.ReturnsMutableObject;
-import com.helger.commons.collection.impl.ICommonsIterable;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.name.IHasDisplayName;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.id.IHasID;
+import com.helger.base.name.IHasDisplayName;
+import com.helger.collection.commons.ICommonsIterable;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Read-only interface for a named list of {@link IValidationExecutor}.

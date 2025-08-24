@@ -27,17 +27,16 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.datetime.PDTWebDateHelper;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.text.ConstantHasErrorText;
-import com.helger.commons.io.resource.ClassPathResource;
-import com.helger.commons.location.SimpleLocation;
-import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.base.location.SimpleLocation;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.web.PDTWebDateHelper;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.text.ConstantHasErrorText;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
+import com.helger.io.resource.ClassPathResource;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.json.serialize.JsonWriterSettings;
@@ -53,6 +52,7 @@ import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 import com.helger.phive.xml.xsd.ValidationExecutorXSD;
 import com.helger.schematron.svrl.SVRLResourceError;
+import com.helger.unittest.support.TestHelper;
 
 /**
  * Test class for class {@link PhiveJsonHelper}.
@@ -146,7 +146,7 @@ public final class PhiveJsonHelperTest
 
     assertEquals (aObj.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED),
                   aObj2.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED));
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
+    TestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
   }
 
   @Test
@@ -173,7 +173,7 @@ public final class PhiveJsonHelperTest
     final IError aError2 = PhiveJsonHelper.getAsIError (aJson);
     assertNotNull (aError2);
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
+    TestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
   }
 
   @Test
@@ -201,8 +201,8 @@ public final class PhiveJsonHelperTest
     final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, Locale.US);
     assertNotNull (aJson2);
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
+    TestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
+    TestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
   }
 
   @Test
@@ -230,10 +230,10 @@ public final class PhiveJsonHelperTest
     final IJsonObject aJson2 = PhiveJsonHelper.getJsonError (aError2, Locale.US);
     assertNotNull (aJson2);
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
+    TestHelper.testDefaultImplementationWithEqualContentObject (aJson, aJson2);
     // The objects differ, because of the different exception types
     assertTrue (aError2.getLinkedException () instanceof PhiveRestoredException);
     if (false)
-      CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
+      TestHelper.testDefaultImplementationWithEqualContentObject (aError, aError2);
   }
 }

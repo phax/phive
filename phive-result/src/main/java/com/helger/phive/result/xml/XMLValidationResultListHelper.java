@@ -20,21 +20,18 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.mutable.MutableInt;
-import com.helger.commons.state.ETriState;
-import com.helger.commons.string.StringHelper;
+import com.helger.annotation.Nonnegative;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.numeric.mutable.MutableInt;
+import com.helger.base.state.ETriState;
+import com.helger.base.string.StringHelper;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.level.IErrorLevel;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
@@ -45,9 +42,11 @@ import com.helger.phive.result.PhiveResultHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * A helper class that allows to heavily customize the creation of validation
- * result list XMLs
+ * A helper class that allows to heavily customize the creation of validation result list XMLs
  *
  * @author Philip Helger
  * @since 10.0.3
@@ -130,8 +129,8 @@ public class XMLValidationResultListHelper
   }
 
   /**
-   * Apply the results of a full validation onto a XML object.The layout of the
-   * response object is very similar to the one created by
+   * Apply the results of a full validation onto a XML object.The layout of the response object is
+   * very similar to the one created by
    * {@link PhiveXMLHelper#applyGlobalError(IMicroElement, String, long)}.<br>
    *
    * <pre>
@@ -156,8 +155,8 @@ public class XMLValidationResultListHelper
    * @param aResponse
    *        The response XML object to add to. May not be <code>null</code>.
    * @param aValidationResultList
-   *        The validation result list containing the validation results per
-   *        layer. May not be <code>null</code>.
+   *        The validation result list containing the validation results per layer. May not be
+   *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
    * @param nDurationMilliseconds
@@ -178,14 +177,14 @@ public class XMLValidationResultListHelper
     {
       final IMicroElement eSource = m_aSourceToXML.apply (aValidationResultList.getValidationSource ());
       if (eSource != null)
-        aResponse.appendChild (eSource);
+        aResponse.addChild (eSource);
     }
 
     if (m_aVES != null && m_aVESToXML != null)
     {
       final IMicroElement eVES = m_aVESToXML.apply (m_aVES);
       if (eVES != null)
-        aResponse.appendChild (eVES);
+        aResponse.addChild (eVES);
     }
 
     int nWarnings = 0;
@@ -225,13 +224,13 @@ public class XMLValidationResultListHelper
 
       // Success if the worst that happened is a warning
       // This is an assumption atm
-      aResponse.appendElement (PhiveXMLHelper.XML_SUCCESS).appendText (Boolean.toString (eWorstValidity.isValid ()));
-      aResponse.appendElement (PhiveXMLHelper.XML_INTERRUPTED).appendText (Boolean.toString (bValidationInterrupted));
+      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS).addText (Boolean.toString (eWorstValidity.isValid ()));
+      aResponse.addElement (PhiveXMLHelper.XML_INTERRUPTED).addText (Boolean.toString (bValidationInterrupted));
       if (m_aErrorLevelToXML != null)
       {
         final String sErrorLevel = m_aErrorLevelToXML.apply (aMostSevere);
-        if (StringHelper.hasText (sErrorLevel))
-          aResponse.appendElement (PhiveXMLHelper.XML_MOST_SEVERE_ERROR_LEVEL).appendText (sErrorLevel);
+        if (StringHelper.isNotEmpty (sErrorLevel))
+          aResponse.addElement (PhiveXMLHelper.XML_MOST_SEVERE_ERROR_LEVEL).addText (sErrorLevel);
       }
     }
 
@@ -245,39 +244,38 @@ public class XMLValidationResultListHelper
       // now does the trick
       if (aVR.isSkipped ())
       {
-        aVRT.appendElement (PhiveXMLHelper.XML_SUCCESS)
-            .appendText (PhiveResultHelper.getTriStateValue (ETriState.UNDEFINED));
+        aVRT.addElement (PhiveXMLHelper.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (ETriState.UNDEFINED));
       }
       else
       {
         // Backwards compatible decision
         final boolean bIsValid = aVR.getErrorList ().containsNoError ();
-        aVRT.appendElement (PhiveXMLHelper.XML_SUCCESS).appendText (PhiveResultHelper.getTriStateValue (bIsValid));
+        aVRT.addElement (PhiveXMLHelper.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (bIsValid));
       }
-      aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_TYPE).appendText (aVA.getValidationType ().getID ());
+      aVRT.addElement (PhiveXMLHelper.XML_ARTIFACT_TYPE).addText (aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToXML != null)
       {
         final String sPathType = m_aArtifactPathTypeToXML.apply (aVA.getRuleResource ());
-        if (StringHelper.hasText (sPathType))
-          aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_PATH_TYPE).appendText (sPathType);
+        if (StringHelper.isNotEmpty (sPathType))
+          aVRT.addElement (PhiveXMLHelper.XML_ARTIFACT_PATH_TYPE).addText (sPathType);
       }
-      aVRT.appendElement (PhiveXMLHelper.XML_ARTIFACT_PATH).appendText (aVA.getRuleResourcePath ());
+      aVRT.addElement (PhiveXMLHelper.XML_ARTIFACT_PATH).addText (aVA.getRuleResourcePath ());
 
       for (final IError aError : aVR.getErrorList ())
       {
         final IMicroElement eError = m_aErrorToXML != null ? m_aErrorToXML.apply (aError, aDisplayLocale) : null;
         if (eError != null)
-          aVRT.appendChild (eError);
+          aVRT.addChild (eError);
         else
           LOGGER.warn ("Failed to convert IError to XML");
       }
-      aVRT.appendElement (PhiveXMLHelper.XML_DURATION_MS).appendText (aVR.getDurationMS ());
+      aVRT.addElement (PhiveXMLHelper.XML_DURATION_MS).addText (aVR.getDurationMS ());
 
-      aResponse.appendChild (aVRT);
+      aResponse.addChild (aVRT);
     }
 
     // This is the end of the XML
-    aResponse.appendElement (PhiveXMLHelper.XML_DURATION_MS).appendText (Long.toString (nDurationMilliseconds));
+    aResponse.addElement (PhiveXMLHelper.XML_DURATION_MS).addText (Long.toString (nDurationMilliseconds));
 
     // Set consumer values
     if (m_aWarningCount != null)

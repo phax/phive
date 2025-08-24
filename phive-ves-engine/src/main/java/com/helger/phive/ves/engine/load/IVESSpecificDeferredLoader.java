@@ -16,9 +16,9 @@
  */
 package com.helger.phive.ves.engine.load;
 
-import javax.annotation.Nonnull;
+import com.helger.diagnostics.error.list.ErrorList;
 
-import com.helger.commons.error.list.ErrorList;
+import jakarta.annotation.Nonnull;
 
 /**
  * Internal helper interface

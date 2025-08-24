@@ -21,35 +21,32 @@ import java.time.OffsetDateTime;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.collection.impl.CommonsLinkedHashSet;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.collection.impl.ICommonsSet;
-import com.helger.commons.concurrent.SimpleReadWriteLock;
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.error.IError;
-import com.helger.commons.error.SingleError;
-import com.helger.commons.error.level.EErrorLevel;
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.io.resource.IReadableResource;
-import com.helger.commons.state.ESuccess;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.timing.StopWatch;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.GuardedBy;
+import com.helger.annotation.concurrent.ThreadSafe;
+import com.helger.base.concurrent.SimpleReadWriteLock;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringImplode;
+import com.helger.base.timing.StopWatch;
+import com.helger.collection.commons.CommonsLinkedHashSet;
+import com.helger.collection.commons.ICommonsList;
+import com.helger.collection.commons.ICommonsSet;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.diagnostics.error.IError;
+import com.helger.diagnostics.error.SingleError;
+import com.helger.diagnostics.error.level.EErrorLevel;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
 import com.helger.diver.repo.IRepoStorageReadItem;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.diver.repo.toc.IRepoStorageWithToc;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
@@ -70,12 +67,14 @@ import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
- * This class loads VES data into {@link LoadedVES} objects. It supports dynamic
- * rule creation for each syntax, using the {@link IVESLoaderXSD},
- * {@link IVESLoaderSchematron} and {@link IVESLoaderEdifact} classes. By
- * default only XSD and Schematron are support. Edifact needs to be implemented
- * manually.
+ * This class loads VES data into {@link LoadedVES} objects. It supports dynamic rule creation for
+ * each syntax, using the {@link IVESLoaderXSD}, {@link IVESLoaderSchematron} and
+ * {@link IVESLoaderEdifact} classes. By default only XSD and Schematron are support. Edifact needs
+ * to be implemented manually.
  *
  * @author Philip Helger
  */
@@ -186,8 +185,8 @@ public final class VESLoader
   }
 
   /**
-   * @return <code>true</code> if eager requirement loading is enabled,
-   *         <code>false</code> if lazy loading is enabled.
+   * @return <code>true</code> if eager requirement loading is enabled, <code>false</code> if lazy
+   *         loading is enabled.
    */
   public boolean isUseEagerRequirementLoading ()
   {
@@ -198,8 +197,7 @@ public final class VESLoader
    * User eager or lazy loading of dependent resources.
    *
    * @param b
-   *        <code>true</code> for eager loading, <code>false</code> for lazy
-   *        loading
+   *        <code>true</code> for eager loading, <code>false</code> for lazy loading
    * @return this for chaining
    */
   @Nonnull
@@ -210,9 +208,8 @@ public final class VESLoader
   }
 
   /**
-   * @return <code>true</code> if pseudo versions should be resolved,
-   *         <code>false</code> otherwise. The default is
-   *         {@link #DEFAULT_RESOLVE_PSEUDO_VERSIONS}
+   * @return <code>true</code> if pseudo versions should be resolved, <code>false</code> otherwise.
+   *         The default is {@link #DEFAULT_RESOLVE_PSEUDO_VERSIONS}
    * @since 9.2.1
    */
   @Nonnull
@@ -256,7 +253,7 @@ public final class VESLoader
       final ICommonsList <DVRCoordinate> aList = m_aLoaded.getCopyAsList ();
       if (aLastOne != null)
         aList.add (aLastOne);
-      return StringHelper.imploder ().source (aList, x -> "'" + x.getAsSingleID () + "'").separator (" -> ").build ();
+      return StringImplode.imploder ().source (aList, x -> "'" + x.getAsSingleID () + "'").separator (" -> ").build ();
     }
   }
 
@@ -412,12 +409,15 @@ public final class VESLoader
                                                                  aLoaderStatus,
                                                                  aLocalErrorList);
           if (aLoadedRequirement == null)
+          {
             throw new VESLoadingException ("Failed to load required VESID '" +
                                            aSrcRequiredVES.getRequiredVESID ().getAsSingleID () +
                                            "' [lazy]: " +
-                                           StringHelper.getImplodedMapped ("\n  ",
-                                                                           aLocalErrorList,
-                                                                           IError::getAsStringLocaleIndepdent));
+                                           StringImplode.imploder ()
+                                                        .source (aLocalErrorList, IError::getAsStringLocaleIndepdent)
+                                                        .separator ("\n  ")
+                                                        .build ());
+          }
           return aLoadedRequirement;
         });
       }
@@ -562,11 +562,11 @@ public final class VESLoader
    * @param aVESID
    *        The VESID with the pseudo version. May not be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of static versions that should be ignored and not
-   *        returned. May be <code>null</code>.
+   *        An optional set of static versions that should be ignored and not returned. May be
+   *        <code>null</code>.
    * @param aCheckDateTime
-   *        The date and time for which the resolution should be performed. If
-   *        <code>null</code> the current date and time will be used.
+   *        The date and time for which the resolution should be performed. If <code>null</code> the
+   *        current date and time will be used.
    * @return <code>null</code> if the pseudo version could not be resolved.
    * @since 9.2.1
    */
@@ -579,8 +579,7 @@ public final class VESLoader
   }
 
   /**
-   * Load a VES by the provided VESID and fill all errors into the provided
-   * {@link ErrorList}.
+   * Load a VES by the provided VESID and fill all errors into the provided {@link ErrorList}.
    *
    * @param aVESID
    *        The VESID to load. May not be <code>null</code>.
@@ -595,14 +594,12 @@ public final class VESLoader
   }
 
   /**
-   * Load a VES by the provided VESID and fill all errors into the provided
-   * {@link ErrorList}.
+   * Load a VES by the provided VESID and fill all errors into the provided {@link ErrorList}.
    *
    * @param aVESID
    *        The VESID to load. May not be <code>null</code>.
    * @param aLoaderStatus
-   *        The internal loader status to be used, to make sure no cycles etc.
-   *        are contained
+   *        The internal loader status to be used, to make sure no cycles etc. are contained
    * @param aLoadingErrors
    *        The loading error list to be filled. May not be <code>null</code>.
    * @return <code>null</code> if loading failed
@@ -616,17 +613,15 @@ public final class VESLoader
   }
 
   /**
-   * Load a VES by the provided VESID and fill all errors into the provided
-   * {@link ErrorList}.
+   * Load a VES by the provided VESID and fill all errors into the provided {@link ErrorList}.
    *
    * @param aVESID
-   *        The VESID to load. May be a static version or a pseudo version. May
-   *        not be <code>null</code>.
+   *        The VESID to load. May be a static version or a pseudo version. May not be
+   *        <code>null</code>.
    * @param aLoadingRequiredVES
    *        The required VES that is currently loaded. May be <code>null</code>.
    * @param aLoaderStatus
-   *        The internal loader status to be used, to make sure no cycles etc.
-   *        are contained
+   *        The internal loader status to be used, to make sure no cycles etc. are contained
    * @param aLoadingErrors
    *        The loading error list to be filled. May not be <code>null</code>.
    * @return <code>null</code> if loading failed
@@ -778,9 +773,9 @@ public final class VESLoader
   }
 
   /**
-   * Load the validation rules from an external repository, identified by a
-   * VESID and apply the validation rules onto the provided data to be
-   * validated. All errors occurring are stored in the provided error list.
+   * Load the validation rules from an external repository, identified by a VESID and apply the
+   * validation rules onto the provided data to be validated. All errors occurring are stored in the
+   * provided error list.
    *
    * @param aRepo
    *        Repository to load from. Must not be <code>null</code>.
@@ -789,9 +784,9 @@ public final class VESLoader
    * @param aValidationSource
    *        The data to be validated. Must not be <code>null</code>.
    * @param aLoadingErrors
-   *        The loading error list to be filled. Contains only the loading
-   *        errors - validation errors will be returned in a separate
-   *        {@link ValidationResultList}. Must not be <code>null</code>.
+   *        The loading error list to be filled. Contains only the loading errors - validation
+   *        errors will be returned in a separate {@link ValidationResultList}. Must not be
+   *        <code>null</code>.
    * @return The validation result
    * @throws VESLoadingException
    *         If anything goes wrong
@@ -823,9 +818,10 @@ public final class VESLoader
       throw new VESLoadingException ("Failed to load VES '" +
                                      aVESID.getAsSingleID () +
                                      "': " +
-                                     StringHelper.getImplodedMapped ("\n  ",
-                                                                     aLoadingErrors,
-                                                                     IError::getAsStringLocaleIndepdent));
+                                     StringImplode.imploder ()
+                                                  .separator ("\n  ")
+                                                  .source (aLoadingErrors, IError::getAsStringLocaleIndepdent)
+                                                  .build ());
     }
 
     final Duration aLoadDuration = aSWLoad.getDuration ();

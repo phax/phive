@@ -16,11 +16,11 @@
  */
 package com.helger.phive.api.artefact;
 
-import javax.annotation.Nonnull;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.io.resource.IReadableResource;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.IValidationType;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a validation artefact, consisting of a type and a readable

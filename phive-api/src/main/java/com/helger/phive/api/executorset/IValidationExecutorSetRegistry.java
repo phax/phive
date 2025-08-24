@@ -19,15 +19,15 @@ package com.helger.phive.api.executorset;
 import java.time.OffsetDateTime;
 import java.util.function.Predicate;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.ReturnsMutableCopy;
-import com.helger.commons.collection.impl.ICommonsList;
-import com.helger.commons.state.EChange;
+import com.helger.annotation.style.ReturnsMutableCopy;
+import com.helger.base.state.EChange;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.diver.IPseudoVersionResolver;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Read-only interface for a registry of {@link IValidationExecutorSet} objects.

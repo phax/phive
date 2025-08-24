@@ -19,14 +19,14 @@ package com.helger.phive.api.source;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillNotClose;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.WillNotClose;
+import com.helger.base.array.bytes.ByteArrayWrapper;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.tostring.ToStringGenerator;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.io.ByteArrayWrapper;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IValidationSourceBinary}.

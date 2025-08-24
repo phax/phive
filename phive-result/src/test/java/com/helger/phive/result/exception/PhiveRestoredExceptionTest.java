@@ -23,9 +23,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.helger.commons.mock.CommonsTestHelper;
 import com.helger.json.IJsonObject;
 import com.helger.phive.result.json.PhiveJsonHelper;
+import com.helger.unittest.support.TestHelper;
 
 /**
  * Test class for class {@link PhiveRestoredException}.
@@ -55,7 +55,7 @@ public final class PhiveRestoredExceptionTest
     final IJsonObject aObj2 = aRSS.getAsJson ();
     assertNotNull (aObj2);
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
+    TestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
   }
 
   @Test
@@ -79,6 +79,6 @@ public final class PhiveRestoredExceptionTest
     final IJsonObject aObj2 = aRSS.getAsJson ();
     assertNotNull (aObj2);
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
+    TestHelper.testDefaultImplementationWithEqualContentObject (aObj, aObj2);
   }
 }

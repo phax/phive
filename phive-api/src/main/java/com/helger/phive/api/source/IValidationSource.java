@@ -19,16 +19,15 @@ package com.helger.phive.api.source;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.WillNotClose;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.WillNotClose;
+import com.helger.base.string.StringHelper;
 
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.string.StringHelper;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
- * Abstract validation source interface. This represents an object to be
- * validated.
+ * Abstract validation source interface. This represents an object to be validated.
  *
  * @author Philip Helger
  */
@@ -43,26 +42,24 @@ public interface IValidationSource
   String getValidationSourceTypeID ();
 
   /**
-   * @return <code>true</code> if a system ID is present, <code>false</code> if
-   *         not.
+   * @return <code>true</code> if a system ID is present, <code>false</code> if not.
    * @since 10.1.0
    */
   default boolean hasSystemID ()
   {
-    return StringHelper.hasText (getSystemID ());
+    return StringHelper.isNotEmpty (getSystemID ());
   }
 
   /**
-   * @return The system ID (e.g. filename) of the source to be validated. May be
-   *         <code>null</code>.
+   * @return The system ID (e.g. filename) of the source to be validated. May be <code>null</code>.
    */
   @Nullable
   String getSystemID ();
 
   /**
-   * @return <code>true</code> if this source is partial and <code>false</code>
-   *         if the whole Document should be used. If it is partial there must
-   *         be a way to define the necessary part(s) in the implementation.
+   * @return <code>true</code> if this source is partial and <code>false</code> if the whole
+   *         Document should be used. If it is partial there must be a way to define the necessary
+   *         part(s) in the implementation.
    */
   boolean isPartialSource ();
 

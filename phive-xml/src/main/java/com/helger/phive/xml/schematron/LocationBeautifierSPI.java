@@ -16,12 +16,12 @@
  */
 package com.helger.phive.xml.schematron;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.IsSPIImplementation;
-import com.helger.commons.annotation.UsedViaReflection;
+import com.helger.annotation.style.IsSPIImplementation;
+import com.helger.annotation.style.UsedViaReflection;
 import com.helger.schematron.svrl.ISVRLLocationBeautifierSPI;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This is a {@link SchematronNamespaceBeautifier} implementation of the

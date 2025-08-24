@@ -16,14 +16,14 @@
  */
 package com.helger.phive.ves.engine.load.catalog;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.Nonempty;
-import com.helger.commons.id.IHasID;
-import com.helger.commons.string.ToStringGenerator;
+import com.helger.annotation.Nonempty;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.id.IHasID;
+import com.helger.base.tostring.ToStringGenerator;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * Represent a single XML catalog entry

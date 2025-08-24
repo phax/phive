@@ -18,14 +18,14 @@ package com.helger.phive.api.executor;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.annotation.MustImplementEqualsAndHashcode;
-import com.helger.commons.lang.ICloneable;
+import com.helger.annotation.style.MustImplementEqualsAndHashcode;
+import com.helger.base.clone.ICloneable;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Base interface for performing validation of a single document based on the

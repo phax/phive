@@ -25,10 +25,10 @@ import java.util.Locale;
 
 import org.junit.Test;
 
-import com.helger.commons.error.list.ErrorList;
-import com.helger.commons.io.resource.inmemory.ReadableResourceString;
+import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
+import com.helger.io.resource.inmemory.ReadableResourceString;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;

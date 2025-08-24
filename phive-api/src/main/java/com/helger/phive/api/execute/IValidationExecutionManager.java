@@ -18,13 +18,13 @@ package com.helger.phive.api.execute;
 
 import java.util.Locale;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.helger.commons.state.EValidity;
+import com.helger.base.state.EValidity;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.IValidityDeterminator;
+
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * Interface for an execution manager that applies a set of rules onto an object

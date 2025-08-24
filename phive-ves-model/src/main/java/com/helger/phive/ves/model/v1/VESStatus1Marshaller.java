@@ -16,7 +16,7 @@
  */
 package com.helger.phive.ves.model.v1;
 
-import com.helger.commons.collection.impl.CommonsArrayList;
+import com.helger.collection.commons.CommonsArrayList;
 import com.helger.jaxb.GenericJAXBMarshaller;
 import com.helger.phive.ves.v10.ObjectFactory;
 import com.helger.phive.ves.v10.VesStatusType;

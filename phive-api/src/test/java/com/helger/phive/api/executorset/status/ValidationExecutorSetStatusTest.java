@@ -24,8 +24,8 @@ import java.time.OffsetDateTime;
 
 import org.junit.Test;
 
-import com.helger.commons.datetime.PDTFactory;
-import com.helger.commons.mock.CommonsTestHelper;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.unittest.support.TestHelper;
 
 /**
  * Test class for class {@link ValidationExecutorSetStatus}.
@@ -46,9 +46,9 @@ public final class ValidationExecutorSetStatusTest
     assertNull (aStatus.getDeprecationReason ());
     assertNull (aStatus.getReplacementVESID ());
 
-    CommonsTestHelper.testDefaultImplementationWithEqualContentObject (aStatus,
-                                                                       ValidationExecutorSetStatus.createValidAt (aNow));
-    CommonsTestHelper.testDefaultImplementationWithDifferentContentObject (aStatus,
-                                                                           ValidationExecutorSetStatus.createValidAt (aNow.plusMinutes (1)));
+    TestHelper.testDefaultImplementationWithEqualContentObject (aStatus,
+                                                                ValidationExecutorSetStatus.createValidAt (aNow));
+    TestHelper.testDefaultImplementationWithDifferentContentObject (aStatus,
+                                                                    ValidationExecutorSetStatus.createValidAt (aNow.plusMinutes (1)));
   }
 }

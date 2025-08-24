@@ -24,8 +24,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.commons.io.file.FileSystemIterator;
-import com.helger.commons.io.file.IFileFilter;
+import com.helger.io.file.FileSystemIterator;
+import com.helger.io.file.IFileFilter;
 import com.helger.phive.ves.v10.VesType;
 
 /**

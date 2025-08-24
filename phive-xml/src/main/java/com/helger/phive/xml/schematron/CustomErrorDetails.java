@@ -16,14 +16,14 @@
  */
 package com.helger.phive.xml.schematron;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.Immutable;
+import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
+import com.helger.base.tostring.ToStringGenerator;
+import com.helger.diagnostics.error.level.IErrorLevel;
 
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.error.level.IErrorLevel;
-import com.helger.commons.string.StringHelper;
-import com.helger.commons.string.ToStringGenerator;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 
 /**
  * This class contains the details for a single custom error.
@@ -55,7 +55,7 @@ public final class CustomErrorDetails
 
   public boolean hasErrorTextPrefix ()
   {
-    return StringHelper.hasText (m_sErrorTextPrefix);
+    return StringHelper.isNotEmpty (m_sErrorTextPrefix);
   }
 
   @Nullable
@@ -66,7 +66,7 @@ public final class CustomErrorDetails
 
   public boolean hasErrorTextSuffix ()
   {
-    return StringHelper.hasText (m_sErrorTextSuffix);
+    return StringHelper.isNotEmpty (m_sErrorTextSuffix);
   }
 
   @Nullable

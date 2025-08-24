@@ -19,14 +19,14 @@ package com.helger.phive.ves.engine.load;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
-
-import com.helger.commons.ValueEnforcer;
-import com.helger.commons.annotation.ReturnsMutableObject;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.enforce.ValueEnforcer;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
+
+import jakarta.annotation.Nonnull;
 
 /**
  * This class contains the collected validation results, including metadata on
