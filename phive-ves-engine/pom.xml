@@ -108,7 +108,7 @@
               com.helger.phive.ves.engine.load,
               com.helger.phive.ves.engine.load.catalog
             </Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>

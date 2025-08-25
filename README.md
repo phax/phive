@@ -24,8 +24,6 @@ This project has the following sub-modules:
 
 Note: this library does NOT include an EDIFACT validation. It's a placeholder for local implementations.
 
-Note: please see [README v5](docs/READMEv5.md), [README v6](docs/READMEv6.md) and [README v7/v8](docs/READMEv8.md) for previous documentation.
-
 # Usage guide
 
 Basically this library wraps different XML Schemas and Schematrons in a certain order and under certain constraints and offers the possibility to validate XML documents based on the rules.
@@ -124,7 +122,7 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v11.0.0 - work in progress
+v11.0.0 - 2025-08-25
 * Requires Java 17 as the minimum version
 * Updated to ph-commons 12.0.0
 * Removed all code marked as deprecated for removal

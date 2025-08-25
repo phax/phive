@@ -96,7 +96,7 @@
               com.helger.phive.ves.model.v1,
               com.helger.phive.ves.v10
             </Export-Package>
-            <Import-Package>!javax.annotation.*,*</Import-Package>
+            <Import-Package>!jakarta.annotation.*,*</Import-Package>
           </instructions>
         </configuration>
       </plugin>
@@ -149,6 +149,16 @@
           </dependency>
         </dependencies>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <source>17</source>
+          <sourcepath>
+            ${project.build.sourceDirectory}:${project.build.directory}/generated-sources/xjc
+          </sourcepath>
+        </configuration>
+      </plugin> 
     </plugins>
   </build>
 </project>
