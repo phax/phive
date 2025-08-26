@@ -30,7 +30,6 @@
   <description>phive - Philip Helger Integrative Validation Engine API</description>
   <url>https://github.com/phax/phive/phive-api</url>
   <inceptionYear>2016</inceptionYear>
-  
   <licenses>
     <license>
       <name>Apache 2</name>
@@ -38,12 +37,10 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
   <organization>
     <name>Philip Helger</name>
     <url>http://www.helger.com</url>
   </organization>
-  
   <developers>
     <developer>
       <id>philip</id>
@@ -52,7 +49,6 @@
       <url>http://www.helger.com</url>
     </developer>
   </developers>
-  
   <dependencies>
     <dependency>
       <groupId>com.helger.commons</groupId>
@@ -70,14 +66,12 @@
       <groupId>com.helger.diver</groupId>
       <artifactId>ph-diver-api</artifactId>
     </dependency>
-    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
   <build>
     <plugins>
       <plugin>
@@ -87,8 +81,7 @@
         <configuration>
           <instructions>
             <Automatic-Module-Name>com.helger.phive.api</Automatic-Module-Name>
-            <Export-Package>
-              com.helger.phive.api,
+            <Export-Package>com.helger.phive.api,
               com.helger.phive.api.artefact,
               com.helger.phive.api.diver,
               com.helger.phive.api.execute,
@@ -98,9 +91,10 @@
               com.helger.phive.api.mock,
               com.helger.phive.api.result,
               com.helger.phive.api.source,
-              com.helger.phive.api.validity
-            </Export-Package>
+              com.helger.phive.api.validity</Export-Package>
             <Import-Package>!jakarta.annotation.*,*</Import-Package>
+            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
+            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI</Provide-Capability>
           </instructions>
         </configuration>
       </plugin>
