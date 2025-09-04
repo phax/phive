@@ -1,7 +1,7 @@
 # PHIVE - Integrative Validation Engine
 
-[![javadoc](https://javadoc.io/badge2/com.helger.phive/phive-ves-engine/javadoc.svg)](https://javadoc.io/doc/com.helger.phive/phive-ves-engine)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.helger.phive/phive-parent-pom) 
+[![Maven Central](https://img.shields.io/maven-central/v/com.helger.phive/phive-parent-pom)](https://img.shields.io/maven-central/v/com.helger.phive/phive-parent-pom)
+[![javadoc](https://javadoc.io/badge2/com.helger.phive/phive-api/javadoc.svg)](https://javadoc.io/doc/com.helger.phive/phive-api)
 
 A generic business document validation engine originally developed for Peppol but now also supporting many other document types.
 
