@@ -20,7 +20,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 
 import org.slf4j.Logger;
@@ -265,21 +264,22 @@ public class ValidationExecutorSchematron extends
 
     final StopWatch aSW = StopWatch.createdStarted ();
 
-    // Get source as XML DOM Node
-    Node aNode = null;
-    try
-    {
-      aNode = SchematronResourceHelper.getNodeOfSource (aSource.getAsTransformSource (), new DOMReaderSettings ());
-    }
-    catch (final Exception ex)
-    {
-      throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.",
-                                       ex);
-    }
     if (StringHelper.isNotEmpty (m_sPrerequisiteXPath))
     {
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("Using Schematron prerequisite path '" + m_sPrerequisiteXPath + "'");
+
+      // In this case the Node needs to be resolved
+      Node aNode = null;
+      try
+      {
+        aNode = SchematronResourceHelper.getNodeOfSource (aSource.getAsTransformSource (), new DOMReaderSettings ());
+      }
+      catch (final Exception ex)
+      {
+        throw new IllegalStateException ("For Schematron validation to work, the source must be valid XML which it is not.",
+                                         ex);
+      }
 
       // Check if the artefact can be applied on the given document by
       // checking the prerequisite XPath
@@ -328,7 +328,8 @@ public class ValidationExecutorSchematron extends
     try
     {
       // Main application of Schematron
-      final Document aDoc = aSCH.applySchematronValidation (new DOMSource (aNode));
+      // Use the original source to eventually support streaming
+      final Document aDoc = aSCH.applySchematronValidation (aSource.getAsTransformSource ());
 
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
