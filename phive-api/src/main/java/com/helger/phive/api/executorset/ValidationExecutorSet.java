@@ -19,6 +19,8 @@ package com.helger.phive.api.executorset;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -34,8 +36,6 @@ import com.helger.phive.api.execute.IValidationExecutorCacheSupport;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default implementation of {@link IValidationExecutorSet}.
@@ -53,9 +53,9 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   private final ICommonsList <IValidationExecutor <SOURCETYPE>> m_aList = new CommonsArrayList <> ();
   private final IValidationExecutorSetStatus m_aStatus;
 
-  public ValidationExecutorSet (@Nonnull final DVRCoordinate aVESID,
-                                @Nonnull @Nonempty final String sDisplayName,
-                                @Nonnull final IValidationExecutorSetStatus aStatus)
+  public ValidationExecutorSet (@NonNull final DVRCoordinate aVESID,
+                                @NonNull @Nonempty final String sDisplayName,
+                                @NonNull final IValidationExecutorSetStatus aStatus)
   {
     ValueEnforcer.notNull (aVESID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -65,47 +65,47 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
     m_aStatus = aStatus;
   }
 
-  @Nonnull
+  @NonNull
   public final DVRCoordinate getID ()
   {
     return m_aVESID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getDisplayName ()
   {
     return m_sDisplayName;
   }
 
-  @Nonnull
+  @NonNull
   public final Iterator <IValidationExecutor <SOURCETYPE>> iterator ()
   {
     return m_aList.iterator ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsList <IValidationExecutor <SOURCETYPE>> executors ()
   {
     return m_aList;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ()
   {
     return m_aList.getClone ();
   }
 
-  @Nonnull
+  @NonNull
   public final IValidationExecutorSetStatus getStatus ()
   {
     return m_aStatus;
   }
 
-  @Nonnull
-  public ValidationExecutorSet <SOURCETYPE> addExecutor (@Nonnull final IValidationExecutor <SOURCETYPE> aExecutor)
+  @NonNull
+  public ValidationExecutorSet <SOURCETYPE> addExecutor (@NonNull final IValidationExecutor <SOURCETYPE> aExecutor)
   {
     ValueEnforcer.notNull (aExecutor, "Executor");
     m_aList.add (aExecutor);
@@ -119,7 +119,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
         ((IValidationExecutorCacheSupport) aExecutor).setCacheArtefact (bCache);
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAllExecutors ()
   {
     return m_aList.removeAll ();
@@ -152,12 +152,12 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
                                        .getToString ();
   }
 
-  @Nonnull
+  @NonNull
   @SafeVarargs
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
-                                                                                  @Nonnull @Nonempty final String sDisplayName,
-                                                                                  @Nonnull final IValidationExecutorSetStatus aStatus,
-                                                                                  @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@NonNull final DVRCoordinate aID,
+                                                                                  @NonNull @Nonempty final String sDisplayName,
+                                                                                  @NonNull final IValidationExecutorSetStatus aStatus,
+                                                                                  @NonNull final IValidationExecutor <ST>... aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -172,11 +172,11 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
     return ret;
   }
 
-  @Nonnull
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@Nonnull final DVRCoordinate aID,
-                                                                                  @Nonnull @Nonempty final String sDisplayName,
-                                                                                  @Nonnull final IValidationExecutorSetStatus aStatus,
-                                                                                  @Nonnull final Collection <? extends IValidationExecutor <ST>> aValidationExecutors)
+  @NonNull
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> create (@NonNull final DVRCoordinate aID,
+                                                                                  @NonNull @Nonempty final String sDisplayName,
+                                                                                  @NonNull final IValidationExecutorSetStatus aStatus,
+                                                                                  @NonNull final Collection <? extends IValidationExecutor <ST>> aValidationExecutors)
   {
     ValueEnforcer.notNull (aID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -208,13 +208,13 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
    *        <code>null</code>.
    * @return The newly created VES. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @SafeVarargs
-  public static <ST extends IValidationSource> ValidationExecutorSet <ST> createDerived (@Nonnull final IValidationExecutorSet <ST> aBaseVES,
-                                                                                         @Nonnull final DVRCoordinate aID,
-                                                                                         @Nonnull @Nonempty final String sDisplayName,
-                                                                                         @Nonnull final IValidationExecutorSetStatus aStatus,
-                                                                                         @Nonnull final IValidationExecutor <ST>... aValidationExecutors)
+  public static <ST extends IValidationSource> ValidationExecutorSet <ST> createDerived (@NonNull final IValidationExecutorSet <ST> aBaseVES,
+                                                                                         @NonNull final DVRCoordinate aID,
+                                                                                         @NonNull @Nonempty final String sDisplayName,
+                                                                                         @NonNull final IValidationExecutorSetStatus aStatus,
+                                                                                         @NonNull final IValidationExecutor <ST>... aValidationExecutors)
   {
     ValueEnforcer.notNull (aBaseVES, "BaseVES");
     ValueEnforcer.notNull (aID, "ID");

@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,9 +68,6 @@ import com.helger.typeconvert.impl.TypeConverter;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.util.MicroHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A utility class to create a common XML representation of a PHIVE result. Use
@@ -153,7 +152,7 @@ public final class PhiveXMLHelper
    */
   @Nullable
   public static IMicroElement getXMLStackTrace (@Nullable final Throwable t,
-                                                @Nonnull @Nonempty final String sElementName)
+                                                @NonNull @Nonempty final String sElementName)
   {
     if (t == null)
       return null;
@@ -184,7 +183,7 @@ public final class PhiveXMLHelper
    */
   @Nullable
   public static IMicroElement getXMLErrorLocation (@Nullable final ILocation aLocation,
-                                                   @Nonnull @Nonempty final String sElementName)
+                                                   @NonNull @Nonempty final String sElementName)
   {
     if (aLocation == null || !aLocation.isAnyInformationPresent ())
       return null;
@@ -252,15 +251,15 @@ public final class PhiveXMLHelper
    * @see #getXMLStackTrace(Throwable, String)
    * @see #getXMLError(IError, Locale,String)
    */
-  @Nonnull
-  public static IMicroElement getXMLError (@Nonnull final IErrorLevel aErrorLevel,
+  @NonNull
+  public static IMicroElement getXMLError (@NonNull final IErrorLevel aErrorLevel,
                                            @Nullable final String sErrorID,
                                            @Nullable final String sErrorFieldName,
                                            @Nullable final ILocation aErrorLocation,
                                            @Nullable final String sTest,
-                                           @Nonnull final String sErrorText,
+                                           @NonNull final String sErrorText,
                                            @Nullable final Throwable t,
-                                           @Nonnull @Nonempty final String sElementName)
+                                           @NonNull @Nonempty final String sElementName)
   {
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
     ValueEnforcer.notNull (sErrorText, "ErrorText");
@@ -300,10 +299,10 @@ public final class PhiveXMLHelper
    * @see #getXMLStackTrace(Throwable, String)
    * @see #getXMLError(IErrorLevel, String, String, ILocation, String, String, Throwable, String)
    */
-  @Nonnull
-  public static IMicroElement getXMLError (@Nonnull final IError aError,
-                                           @Nonnull final Locale aDisplayLocale,
-                                           @Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public static IMicroElement getXMLError (@NonNull final IError aError,
+                                           @NonNull final Locale aDisplayLocale,
+                                           @NonNull @Nonempty final String sElementName)
   {
     return xmlErrorBuilder (aError, aDisplayLocale, sElementName).build ();
   }
@@ -315,8 +314,8 @@ public final class PhiveXMLHelper
    *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static XMLErrorBuilder xmlErrorBuilder (@Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public static XMLErrorBuilder xmlErrorBuilder (@NonNull @Nonempty final String sElementName)
   {
     return new XMLErrorBuilder (sElementName);
   }
@@ -332,10 +331,10 @@ public final class PhiveXMLHelper
    *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static XMLErrorBuilder xmlErrorBuilder (@Nonnull final IError aError,
-                                                 @Nonnull final Locale aDisplayLocale,
-                                                 @Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public static XMLErrorBuilder xmlErrorBuilder (@NonNull final IError aError,
+                                                 @NonNull final Locale aDisplayLocale,
+                                                 @NonNull @Nonempty final String sElementName)
   {
     ValueEnforcer.notNull (aError, "Error");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
@@ -352,8 +351,8 @@ public final class PhiveXMLHelper
                                              .exception (aError.getLinkedException ());
   }
 
-  @Nonnull
-  public static IError getAsIError (@Nonnull final IMicroElement aObj)
+  @NonNull
+  public static IError getAsIError (@NonNull final IMicroElement aObj)
   {
     final LocalDateTime aErrorDT = PDTWebDateHelper.getLocalDateTimeFromXSD (MicroHelper.getChildTextContentTrimmed (aObj,
                                                                                                                      XML_ERROR_DATETIME));
@@ -407,10 +406,10 @@ public final class PhiveXMLHelper
    * @return The created XML object.
    * @since 10.1.0
    */
-  @Nonnull
-  public static IMicroElement getXMLValidationSource (@Nonnull final IValidationSource aSource,
+  @NonNull
+  public static IMicroElement getXMLValidationSource (@NonNull final IValidationSource aSource,
                                                       final boolean bWithPayload,
-                                                      @Nonnull @Nonempty final String sElementName)
+                                                      @NonNull @Nonempty final String sElementName)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -457,9 +456,9 @@ public final class PhiveXMLHelper
    * @return The created XML object.
    * @since 10.1.0
    */
-  @Nonnull
-  public static IMicroElement getXMLVESStatus (@Nonnull final IValidationExecutorSetStatus aStatus,
-                                               @Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public static IMicroElement getXMLVESStatus (@NonNull final IValidationExecutorSetStatus aStatus,
+                                               @NonNull @Nonempty final String sElementName)
   {
     ValueEnforcer.notNull (aStatus, "Status");
 
@@ -503,9 +502,9 @@ public final class PhiveXMLHelper
    *        The XML element name to use. May neither be <code>null</code> nor empty.
    * @return The created XML object.
    */
-  @Nonnull
-  public static IMicroElement getXMLVES (@Nonnull final IValidationExecutorSet <?> aVES,
-                                         @Nonnull @Nonempty final String sElementName)
+  @NonNull
+  public static IMicroElement getXMLVES (@NonNull final IValidationExecutorSet <?> aVES,
+                                         @NonNull @Nonempty final String sElementName)
   {
     ValueEnforcer.notNull (aVES, "VES");
 
@@ -549,8 +548,8 @@ public final class PhiveXMLHelper
    * @param nDurationMilliseconds
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
-  public static void applyGlobalError (@Nonnull final IMicroElement aResponse,
-                                       @Nonnull final String sErrorMsg,
+  public static void applyGlobalError (@NonNull final IMicroElement aResponse,
+                                       @NonNull final String sErrorMsg,
                                        @Nonnegative final long nDurationMilliseconds)
   {
     ValueEnforcer.notNull (aResponse, "Response");
@@ -618,10 +617,10 @@ public final class PhiveXMLHelper
    *        Optional callback value to store the overall errors. If not <code>null</code> if will
    *        contain a &ge; 0 value afterwards.
    */
-  public static void applyValidationResultList (@Nonnull final IMicroElement aResponse,
+  public static void applyValidationResultList (@NonNull final IMicroElement aResponse,
                                                 @Nullable final IValidationExecutorSet <?> aVES,
-                                                @Nonnull final ValidationResultList aValidationResultList,
-                                                @Nonnull final Locale aDisplayLocale,
+                                                @NonNull final ValidationResultList aValidationResultList,
+                                                @NonNull final Locale aDisplayLocale,
                                                 @Nonnegative final long nDurationMilliseconds,
                                                 @Nullable final MutableInt aWarningCount,
                                                 @Nullable final MutableInt aErrorCount)
@@ -636,7 +635,7 @@ public final class PhiveXMLHelper
   }
 
   @Nullable
-  public static <T extends IValidationSource> IValidationExecutorSet <T> getAsVES (@Nonnull final ValidationExecutorSetRegistry <T> aRegistry,
+  public static <T extends IValidationSource> IValidationExecutorSet <T> getAsVES (@NonNull final ValidationExecutorSetRegistry <T> aRegistry,
                                                                                    @Nullable final IMicroElement aXML)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
@@ -679,8 +678,8 @@ public final class PhiveXMLHelper
    */
   @Nullable
   public static ValidationResultList getAsValidationResultList (@Nullable final IMicroElement aXML,
-                                                                @Nonnull final Function <String, IValidationType> aValidationTypeResolver,
-                                                                @Nonnull final IValidationSourceRestorer aValidationSourceRestorer)
+                                                                @NonNull final Function <String, IValidationType> aValidationTypeResolver,
+                                                                @NonNull final IValidationSourceRestorer aValidationSourceRestorer)
   {
     ValueEnforcer.notNull (aValidationTypeResolver, "ValidationTypeResolver");
 

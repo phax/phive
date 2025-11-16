@@ -20,6 +20,8 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +43,6 @@ import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A helper class that allows to heavily customize the creation of validation result list XMLs
@@ -72,56 +71,56 @@ public class XMLValidationResultListHelper
   public XMLValidationResultListHelper ()
   {}
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper sourceToXML (@Nullable final Function <IValidationSource, IMicroElement> a)
   {
     m_aSourceToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper ves (@Nullable final IValidationExecutorSet <?> a)
   {
     m_aVES = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper vesToXML (@Nullable final Function <IValidationExecutorSet <?>, IMicroElement> a)
   {
     m_aVESToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper artifactPathTypeToXML (@Nullable final Function <IReadableResource, String> a)
   {
     m_aArtifactPathTypeToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper errorLevelToXML (@Nullable final Function <IErrorLevel, String> a)
   {
     m_aErrorLevelToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper errorToXML (@Nullable final BiFunction <IError, Locale, IMicroElement> a)
   {
     m_aErrorToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper warningCount (@Nullable final MutableInt a)
   {
     m_aWarningCount = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLValidationResultListHelper errorCount (@Nullable final MutableInt a)
   {
     m_aErrorCount = a;
@@ -162,9 +161,9 @@ public class XMLValidationResultListHelper
    * @param nDurationMilliseconds
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
-  public void applyTo (@Nonnull final IMicroElement aResponse,
-                       @Nonnull final ValidationResultList aValidationResultList,
-                       @Nonnull final Locale aDisplayLocale,
+  public void applyTo (@NonNull final IMicroElement aResponse,
+                       @NonNull final ValidationResultList aValidationResultList,
+                       @NonNull final Locale aDisplayLocale,
                        @Nonnegative final long nDurationMilliseconds)
   {
     ValueEnforcer.notNull (aResponse, "Response");

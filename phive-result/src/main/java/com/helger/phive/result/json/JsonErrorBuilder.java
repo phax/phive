@@ -19,6 +19,9 @@ package com.helger.phive.result.json;
 import java.time.LocalDateTime;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.builder.IBuilder;
 import com.helger.base.location.ILocation;
 import com.helger.datetime.helper.PDTFactory;
@@ -28,9 +31,6 @@ import com.helger.diagnostics.error.level.IErrorLevel;
 import com.helger.json.IJsonObject;
 import com.helger.json.JsonObject;
 import com.helger.phive.result.PhiveResultHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A flexible builder that can be used to convert data from an {@link IError}
@@ -56,90 +56,90 @@ public class JsonErrorBuilder implements IBuilder <IJsonObject>
   public JsonErrorBuilder ()
   {}
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorDateTimeNow ()
   {
     return errorDateTime (PDTFactory.getCurrentLocalDateTime ());
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorDateTime (@Nullable final LocalDateTime a)
   {
     m_aErrorDateTime = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorLevel (@Nullable final IErrorLevel a)
   {
     m_aErrorLevel = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorLevelToJson (@Nullable final Function <IErrorLevel, String> a)
   {
     m_aErrorLevelToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorID (@Nullable final String s)
   {
     m_sErrorID = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorFieldName (@Nullable final String s)
   {
     m_sErrorFieldName = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorLocation (@Nullable final ILocation a)
   {
     m_aErrorLocation = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorLocationToJson (@Nullable final Function <ILocation, IJsonObject> a)
   {
     m_aErrorLocationToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder test (@Nullable final String s)
   {
     m_sTest = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder errorText (@Nullable final String s)
   {
     m_sErrorText = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder exception (@Nullable final Throwable a)
   {
     m_aException = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonErrorBuilder exceptionToJson (@Nullable final Function <Throwable, IJsonObject> a)
   {
     m_aExceptionToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public IJsonObject build ()
   {
     final JsonObject ret = new JsonObject ();

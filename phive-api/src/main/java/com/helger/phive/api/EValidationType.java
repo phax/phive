@@ -16,11 +16,11 @@
  */
 package com.helger.phive.api;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Enum with all predefined validation types. Depending on this type, different
@@ -75,29 +75,29 @@ public enum EValidationType implements IValidationType
   private final EValidationBaseType m_eBaseType;
   private final String m_sName;
 
-  EValidationType (@Nonnull @Nonempty final String sID,
-                   @Nonnull final EValidationBaseType eBaseType,
-                   @Nonnull @Nonempty final String sName)
+  EValidationType (@NonNull @Nonempty final String sID,
+                   @NonNull final EValidationBaseType eBaseType,
+                   @NonNull @Nonempty final String sName)
   {
     m_sID = sID;
     m_eBaseType = eBaseType;
     m_sName = sName;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   public EValidationBaseType getBaseType ()
   {
     return m_eBaseType;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {

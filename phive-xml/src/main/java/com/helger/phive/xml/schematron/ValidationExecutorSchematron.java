@@ -22,6 +22,8 @@ import java.util.function.Consumer;
 
 import javax.xml.xpath.XPath;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -77,9 +79,6 @@ import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
 import com.helger.xml.xpath.XPathExpressionHelper;
 import com.helger.xml.xpath.XPathHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Implementation of {@link IValidationExecutor} for Schematron validation.
  *
@@ -99,7 +98,7 @@ public class ValidationExecutorSchematron extends
   private boolean m_bCacheSchematron = IValidationExecutorCacheSupport.DEFAULT_CACHE;
   private ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails;
 
-  public ValidationExecutorSchematron (@Nonnull final IValidationArtefact aValidationArtefact,
+  public ValidationExecutorSchematron (@NonNull final IValidationArtefact aValidationArtefact,
                                        @Nullable final String sPrerequisiteXPath,
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
@@ -137,7 +136,7 @@ public class ValidationExecutorSchematron extends
     return m_bCacheSchematron;
   }
 
-  @Nonnull
+  @NonNull
   public final ValidationExecutorSchematron setCacheArtefact (final boolean bCacheArtefact)
   {
     m_bCacheSchematron = bCacheArtefact;
@@ -168,9 +167,9 @@ public class ValidationExecutorSchematron extends
    * @return this for chaining
    * @see #addCustomErrorDetails(Map)
    */
-  @Nonnull
-  public final ValidationExecutorSchematron addCustomErrorDetail (@Nonnull @Nonempty final String sErrorID,
-                                                                  @Nonnull final CustomErrorDetails aErrorDetails)
+  @NonNull
+  public final ValidationExecutorSchematron addCustomErrorDetail (@NonNull @Nonempty final String sErrorID,
+                                                                  @NonNull final CustomErrorDetails aErrorDetails)
   {
     ValueEnforcer.notEmpty (sErrorID, "ErrorID");
     ValueEnforcer.notNull (aErrorDetails, "ErrorDetails");
@@ -191,7 +190,7 @@ public class ValidationExecutorSchematron extends
    * @return this for chaining
    * @see #addCustomErrorDetail(String, CustomErrorDetails)
    */
-  @Nonnull
+  @NonNull
   public final ValidationExecutorSchematron addCustomErrorDetails (@Nullable final Map <String, ? extends CustomErrorDetails> aCustomErrorLevels)
   {
     if (aCustomErrorLevels != null && !aCustomErrorLevels.isEmpty ())
@@ -203,10 +202,10 @@ public class ValidationExecutorSchematron extends
     return this;
   }
 
-  @Nonnull
+  @NonNull
   private AbstractSchematronResource _createSchematronResource (@Nullable final Locale aLocale,
-                                                                @Nonnull final ErrorList aErrorList,
-                                                                @Nonnull final Consumer <ESchematronOutput> aSpecialOutputHdl)
+                                                                @NonNull final ErrorList aErrorList,
+                                                                @NonNull final Consumer <ESchematronOutput> aSpecialOutputHdl)
   {
     final IValidationArtefact aArtefact = getValidationArtefact ();
 
@@ -255,8 +254,8 @@ public class ValidationExecutorSchematron extends
     throw new IllegalStateException ("Unsupported Schematron validation type: " + aVT);
   }
 
-  @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
+  @NonNull
+  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -457,7 +456,7 @@ public class ValidationExecutorSchematron extends
     return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ValidationExecutorSchematron getClone ()
   {
@@ -517,8 +516,8 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorSchematron createPure (@Nonnull final IReadableResource aRes,
+  @NonNull
+  public static ValidationExecutorSchematron createPure (@NonNull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, aRes),
@@ -538,8 +537,8 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorSchematron createSCH (@Nonnull final IReadableResource aRes,
+  @NonNull
+  public static ValidationExecutorSchematron createSCH (@NonNull final IReadableResource aRes,
                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, aRes),
@@ -558,8 +557,8 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 7.1.2
    */
-  @Nonnull
-  public static ValidationExecutorSchematron createSchXslt (@Nonnull final IReadableResource aRes,
+  @NonNull
+  public static ValidationExecutorSchematron createSchXslt (@NonNull final IReadableResource aRes,
                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT, aRes),
@@ -578,8 +577,8 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorSchematron createXSLT (@Nonnull final IReadableResource aRes,
+  @NonNull
+  public static ValidationExecutorSchematron createXSLT (@NonNull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return createXSLT (aRes, null, aNamespaceContext);
@@ -599,8 +598,8 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorSchematron createXSLT (@Nonnull final IReadableResource aRes,
+  @NonNull
+  public static ValidationExecutorSchematron createXSLT (@NonNull final IReadableResource aRes,
                                                          @Nullable final String sPrerequisiteXPath,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
@@ -619,8 +618,8 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorSchematron createOIOUBL (@Nonnull final IReadableResource aRes,
+  @NonNull
+  public static ValidationExecutorSchematron createOIOUBL (@NonNull final IReadableResource aRes,
                                                            @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL, aRes),

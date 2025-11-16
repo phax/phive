@@ -16,12 +16,12 @@
  */
 package com.helger.phive.xml.schematron;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.schematron.svrl.ISVRLLocationBeautifierSPI;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This is a {@link SchematronNamespaceBeautifier} implementation of the
@@ -38,7 +38,7 @@ public class LocationBeautifierSPI implements ISVRLLocationBeautifierSPI
   {}
 
   @Nullable
-  public String getReplacementText (@Nonnull final String sNamespaceURI, @Nonnull final String sLocalName)
+  public String getReplacementText (@NonNull final String sNamespaceURI, @NonNull final String sLocalName)
   {
     final String sPrefix = SchematronNamespaceBeautifier.getMapping (sNamespaceURI);
     if (sPrefix == null)

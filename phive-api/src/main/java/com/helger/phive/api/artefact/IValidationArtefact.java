@@ -16,11 +16,11 @@
  */
 package com.helger.phive.api.artefact;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.IValidationType;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Base interface for a validation artefact, consisting of a type and a readable
@@ -35,7 +35,7 @@ public interface IValidationArtefact
    * @return The validation artefact type - XSD or Schematron or so. May not be
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IValidationType getValidationType ();
 
   /**
@@ -43,7 +43,7 @@ public interface IValidationArtefact
    *         XSD or Schematron). Never <code>null</code>.
    * @see #getValidationType()
    */
-  @Nonnull
+  @NonNull
   IReadableResource getRuleResource ();
 
   /**
@@ -51,7 +51,7 @@ public interface IValidationArtefact
    *         <code>getRuleResource().getPath ()</code>. Never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
+  @NonNull
   default String getRuleResourcePath ()
   {
     return getRuleResource ().getPath ();

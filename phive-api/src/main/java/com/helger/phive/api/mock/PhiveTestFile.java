@@ -18,6 +18,9 @@ package com.helger.phive.api.mock;
 
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -25,9 +28,6 @@ import com.helger.collection.commons.CommonsHashSet;
 import com.helger.collection.commons.ICommonsSet;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.io.resource.IReadableResource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class describes a simple test file: the path where it resides and the
@@ -42,8 +42,8 @@ public class PhiveTestFile
   private final DVRCoordinate m_aVESID;
   private final ICommonsSet <String> m_aExpectedErrorIDs;
 
-  public PhiveTestFile (@Nonnull final IReadableResource aResource,
-                        @Nonnull final DVRCoordinate aVESID,
+  public PhiveTestFile (@NonNull final IReadableResource aResource,
+                        @NonNull final DVRCoordinate aVESID,
                         @Nullable final Set <String> aExpectedErrorIDs)
   {
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
@@ -55,7 +55,7 @@ public class PhiveTestFile
    * @return The readable resource as passed in the constructor. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IReadableResource getResource ()
   {
     return m_aResource;
@@ -64,7 +64,7 @@ public class PhiveTestFile
   /**
    * @return The VES ID passed in the constructor. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public DVRCoordinate getVESID ()
   {
     return m_aVESID;
@@ -80,16 +80,16 @@ public class PhiveTestFile
     return m_aExpectedErrorIDs.isNotEmpty ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsSet <String> getAllExpectedErrorIDs ()
   {
     return m_aExpectedErrorIDs.getClone ();
   }
 
-  @Nonnull
-  public static PhiveTestFile createGoodCase (@Nonnull final IReadableResource aResource,
-                                              @Nonnull final DVRCoordinate aVESID)
+  @NonNull
+  public static PhiveTestFile createGoodCase (@NonNull final IReadableResource aResource,
+                                              @NonNull final DVRCoordinate aVESID)
   {
     // Good case: no error
     return new PhiveTestFile (aResource, aVESID, null);

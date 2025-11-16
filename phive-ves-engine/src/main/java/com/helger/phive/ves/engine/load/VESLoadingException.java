@@ -16,7 +16,7 @@
  */
 package com.helger.phive.ves.engine.load;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Specific exception when VES loading fails (e.g. on lazy requirement
@@ -26,12 +26,12 @@ import jakarta.annotation.Nonnull;
  */
 public class VESLoadingException extends RuntimeException
 {
-  public VESLoadingException (@Nonnull final String sMsg)
+  public VESLoadingException (@NonNull final String sMsg)
   {
     super (sMsg);
   }
 
-  public VESLoadingException (@Nonnull final String sMsg, @Nonnull final Exception aCause)
+  public VESLoadingException (@NonNull final String sMsg, @NonNull final Exception aCause)
   {
     super (sMsg, aCause);
   }

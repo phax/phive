@@ -16,6 +16,9 @@
  */
 package com.helger.phive.ves.engine.load.catalog;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.iface.IHasSize;
@@ -24,9 +27,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsLinkedHashMap;
 import com.helger.collection.commons.ICommonsOrderedMap;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * List of {@link VESCatalogEntry} objects with sanity access methods
@@ -42,8 +42,8 @@ public final class VESCatalog implements IHasSize
   public VESCatalog ()
   {}
 
-  @Nonnull
-  public EChange addEntry (@Nonnull final VESCatalogEntry aEntry)
+  @NonNull
+  public EChange addEntry (@NonNull final VESCatalogEntry aEntry)
   {
     ValueEnforcer.notNull (aEntry, "Entry");
 

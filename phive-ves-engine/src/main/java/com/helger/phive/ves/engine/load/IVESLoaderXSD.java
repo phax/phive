@@ -16,18 +16,18 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.ves.v10.VesXsdType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
- * This interface is used by {@link VESLoader} create an
- * {@link IValidationExecutor} from the VES XSD requirements.
+ * This interface is used by {@link VESLoader} create an {@link IValidationExecutor} from the VES
+ * XSD requirements.
  *
  * @author Philip Helger
  */
@@ -39,23 +39,21 @@ public interface IVESLoaderXSD
    * @param aRepo
    *        The repository to load the data from. May not be <code>null</code>.
    * @param aXSD
-   *        The JAXB VES XSD object with the details. May not be
-   *        <code>null</code>.
+   *        The JAXB VES XSD object with the details. May not be <code>null</code>.
    * @param aLoadingRequiredVES
-   *        In case the loading was recursively triggered via a "requires"
-   *        (=include), this is the data of the requirements. May be
-   *        <code>null</code>.
+   *        In case the loading was recursively triggered via a "requires" (=include), this is the
+   *        data of the requirements. May be <code>null</code>.
    * @param aErrorList
    *        The error list to be filled. May not be <code>null</code>.
    * @param aAsyncLoader
-   *        The callback to be invoked, if loading this artefacts needs to
-   *        trigger the loading of another artefact.
+   *        The callback to be invoked, if loading this artefacts needs to trigger the loading of
+   *        another artefact.
    * @return The validation executor to be used. May not be <code>null</code>.
    */
-  @Nonnull
-  IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull IRepoStorageBase aRepo,
-                                                      @Nonnull VesXsdType aXSD,
-                                                      @Nullable LoadedVES.RequiredVES aLoadingRequiredVES,
-                                                      @Nonnull ErrorList aErrorList,
-                                                      @Nonnull IVESAsyncLoader aAsyncLoader);
+  @NonNull
+  IValidationExecutor <IValidationSourceXML> loadXSD (@NonNull IRepoStorageBase aRepo,
+                                                      @NonNull VesXsdType aXSD,
+                                                      LoadedVES.@Nullable RequiredVES aLoadingRequiredVES,
+                                                      @NonNull ErrorList aErrorList,
+                                                      @NonNull IVESAsyncLoader aAsyncLoader);
 }

@@ -18,6 +18,9 @@ package com.helger.phive.result.exception;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -29,9 +32,6 @@ import com.helger.json.JsonObject;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.util.MicroHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This is a work around to read "exceptions" from external sources (like JSON) without actually
@@ -51,9 +51,9 @@ public class PhiveRestoredException extends Exception
   private final String m_sMessage;
   private final ICommonsList <String> m_aStackTraceLines;
 
-  public PhiveRestoredException (@Nonnull final String sClassName,
+  public PhiveRestoredException (@NonNull final String sClassName,
                                  @Nullable final String sMessage,
-                                 @Nonnull final List <String> aStackTraceLines)
+                                 @NonNull final List <String> aStackTraceLines)
   {
     ValueEnforcer.notNull (sClassName, "ClassName");
     ValueEnforcer.notNull (aStackTraceLines, "StackTraceLines");
@@ -66,7 +66,7 @@ public class PhiveRestoredException extends Exception
    * @return The fully qualified name of the exception class as in
    *         "java.lang.IllegalArgumentException"
    */
-  @Nonnull
+  @NonNull
   public String getClassName ()
   {
     return m_sClassName;
@@ -87,7 +87,7 @@ public class PhiveRestoredException extends Exception
    * @return A non-null list of all stack trace lines in an arbitrary format. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <String> getAllStackTraceLines ()
   {
@@ -95,9 +95,9 @@ public class PhiveRestoredException extends Exception
   }
 
   @Nullable
-  public static IJsonObject getAsJson (@Nonnull final String sClassName,
+  public static IJsonObject getAsJson (@NonNull final String sClassName,
                                        @Nullable final String sMessage,
-                                       @Nonnull final String sStackTraceLines)
+                                       @NonNull final String sStackTraceLines)
   {
     return new JsonObject ().add (FIELD_CLASS, sClassName)
                             .addIfNotNull (FIELD_MESSAGE, sMessage)
@@ -113,10 +113,10 @@ public class PhiveRestoredException extends Exception
   }
 
   @Nullable
-  public static IMicroElement getAsXML (@Nonnull final String sElementName,
-                                        @Nonnull final String sClassName,
+  public static IMicroElement getAsXML (@NonNull final String sElementName,
+                                        @NonNull final String sClassName,
                                         @Nullable final String sMessage,
-                                        @Nonnull final String sStackTraceLines)
+                                        @NonNull final String sStackTraceLines)
   {
     final IMicroElement ret = new MicroElement (sElementName);
     ret.addElement (FIELD_CLASS).addText (sClassName);
@@ -127,7 +127,7 @@ public class PhiveRestoredException extends Exception
   }
 
   @Nullable
-  public IMicroElement getAsXML (@Nonnull final String sElementName)
+  public IMicroElement getAsXML (@NonNull final String sElementName)
   {
     return getAsXML (sElementName,
                      m_sClassName,

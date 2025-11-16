@@ -18,13 +18,13 @@ package com.helger.phive.xml.xsd;
 
 import javax.xml.xpath.XPathExpression;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class defines the constraints validated in the
@@ -52,7 +52,7 @@ public class XSDPartialContext
    *        Maximum node count that must be present. May be <code>null</code> to
    *        indicate no maximum node count is necessary.
    */
-  public XSDPartialContext (@Nonnull final XPathExpression aXE,
+  public XSDPartialContext (@NonNull final XPathExpression aXE,
                             @Nullable final Integer aMinNodeCount,
                             @Nullable final Integer aMaxNodeCount)
   {
@@ -62,7 +62,7 @@ public class XSDPartialContext
     m_aMaxNodeCount = aMaxNodeCount;
   }
 
-  @Nonnull
+  @NonNull
   public XPathExpression getXPathExpression ()
   {
     return m_aXE;
@@ -106,8 +106,8 @@ public class XSDPartialContext
    * @return The new XSDPartialContext and never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
-  public static XSDPartialContext create (@Nonnull final XPathExpression aXE)
+  @NonNull
+  public static XSDPartialContext create (@NonNull final XPathExpression aXE)
   {
     return new XSDPartialContext (aXE, null, null);
   }
@@ -121,8 +121,8 @@ public class XSDPartialContext
    * @return The new XSDPartialContext and never <code>null</code>.
    * @since 10.0.0
    */
-  @Nonnull
-  public static XSDPartialContext createMandatory (@Nonnull final XPathExpression aXE)
+  @NonNull
+  public static XSDPartialContext createMandatory (@NonNull final XPathExpression aXE)
   {
     return create (aXE, 1, 1);
   }
@@ -140,8 +140,8 @@ public class XSDPartialContext
    * @return The new XSDPartialContext and never <code>null</code>.
    * @since 6.0.4
    */
-  @Nonnull
-  public static XSDPartialContext create (@Nonnull final XPathExpression aXE,
+  @NonNull
+  public static XSDPartialContext create (@NonNull final XPathExpression aXE,
                                           @Nonnegative final int nMinNodeCount,
                                           @Nonnegative final int nMaxNodeCount)
   {

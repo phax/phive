@@ -16,9 +16,9 @@
  */
 package com.helger.phive.api.source;
 
-import com.helger.base.array.bytes.ByteArrayWrapper;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nullable;
+import com.helger.base.array.bytes.ByteArrayWrapper;
 
 /**
  * Binary validation source.

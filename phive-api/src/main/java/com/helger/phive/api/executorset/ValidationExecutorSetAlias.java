@@ -18,6 +18,8 @@ package com.helger.phive.api.executorset;
 
 import java.util.Iterator;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
@@ -31,8 +33,6 @@ import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * An implementation of {@link IValidationExecutorSet} that acts as an alias to
@@ -51,9 +51,9 @@ public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> i
   private final String m_sDisplayName;
   private final IValidationExecutorSetMutable <SOURCETYPE> m_aVES;
 
-  public ValidationExecutorSetAlias (@Nonnull final DVRCoordinate aVESID,
-                                     @Nonnull @Nonempty final String sDisplayName,
-                                     @Nonnull final IValidationExecutorSetMutable <SOURCETYPE> aVES)
+  public ValidationExecutorSetAlias (@NonNull final DVRCoordinate aVESID,
+                                     @NonNull @Nonempty final String sDisplayName,
+                                     @NonNull final IValidationExecutorSetMutable <SOURCETYPE> aVES)
   {
     ValueEnforcer.notNull (aVESID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
@@ -63,13 +63,13 @@ public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> i
     m_aVES = aVES;
   }
 
-  @Nonnull
+  @NonNull
   public final DVRCoordinate getID ()
   {
     return m_aVESID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public final String getDisplayName ()
   {
@@ -80,40 +80,40 @@ public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> i
    * @return The source VES this an alias to. Never <code>null</code>.
    * @since 10.1.1
    */
-  @Nonnull
+  @NonNull
   public final IValidationExecutorSetMutable <SOURCETYPE> getSourceVES ()
   {
     return m_aVES;
   }
 
-  @Nonnull
+  @NonNull
   public final Iterator <IValidationExecutor <SOURCETYPE>> iterator ()
   {
     return m_aVES.iterator ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final ICommonsList <IValidationExecutor <SOURCETYPE>> executors ()
   {
     return m_aVES.executors ();
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public final ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ()
   {
     return m_aVES.getAllExecutors ();
   }
 
-  @Nonnull
+  @NonNull
   public final IValidationExecutorSetStatus getStatus ()
   {
     return m_aVES.getStatus ();
   }
 
-  @Nonnull
-  public ValidationExecutorSetAlias <SOURCETYPE> addExecutor (@Nonnull final IValidationExecutor <SOURCETYPE> aExecutor)
+  @NonNull
+  public ValidationExecutorSetAlias <SOURCETYPE> addExecutor (@NonNull final IValidationExecutor <SOURCETYPE> aExecutor)
   {
     m_aVES.addExecutor (aExecutor);
     return this;
@@ -124,7 +124,7 @@ public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> i
     m_aVES.setValidationExecutorDoCache (bCache);
   }
 
-  @Nonnull
+  @NonNull
   public EChange removeAllExecutors ()
   {
     return m_aVES.removeAllExecutors ();

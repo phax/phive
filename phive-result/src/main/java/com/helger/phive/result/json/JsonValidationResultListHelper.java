@@ -20,6 +20,9 @@ import java.util.Locale;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.numeric.mutable.MutableInt;
@@ -39,9 +42,6 @@ import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A helper class that allows to heavily customize the creation of validation result list JSONs
@@ -65,56 +65,56 @@ public class JsonValidationResultListHelper
   public JsonValidationResultListHelper ()
   {}
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper sourceToJson (@Nullable final Function <IValidationSource, IJsonObject> a)
   {
     m_aSourceToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper ves (@Nullable final IValidationExecutorSet <?> a)
   {
     m_aVES = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper vesToJson (@Nullable final Function <IValidationExecutorSet <?>, IJsonObject> a)
   {
     m_aVESToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper artifactPathTypeToJson (@Nullable final Function <IReadableResource, String> a)
   {
     m_aArtifactPathTypeToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper errorLevelToJson (@Nullable final Function <IErrorLevel, String> a)
   {
     m_aErrorLevelToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper errorToJson (@Nullable final BiFunction <IError, Locale, IJsonObject> a)
   {
     m_aErrorToJson = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper warningCount (@Nullable final MutableInt a)
   {
     m_aWarningCount = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public JsonValidationResultListHelper errorCount (@Nullable final MutableInt a)
   {
     m_aErrorCount = a;
@@ -155,9 +155,9 @@ public class JsonValidationResultListHelper
    * @param nDurationMilliseconds
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
-  public void applyTo (@Nonnull final IJsonObject aResponse,
-                       @Nonnull final ValidationResultList aValidationResultList,
-                       @Nonnull final Locale aDisplayLocale,
+  public void applyTo (@NonNull final IJsonObject aResponse,
+                       @NonNull final ValidationResultList aValidationResultList,
+                       @NonNull final Locale aDisplayLocale,
                        @Nonnegative final long nDurationMilliseconds)
   {
     ValueEnforcer.notNull (aResponse, "Response");

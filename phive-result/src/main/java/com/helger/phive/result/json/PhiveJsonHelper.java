@@ -22,6 +22,8 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,9 +68,6 @@ import com.helger.phive.result.IValidationSourceRestorer;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.phive.result.exception.PhiveRestoredException;
 import com.helger.schematron.svrl.SVRLResourceError;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A utility class to create a common JSON representation of a PHIVE result. Use
@@ -240,13 +239,13 @@ public final class PhiveJsonHelper
    * @see #getJsonStackTrace(Throwable)
    * @see #getJsonError(IError, Locale)
    */
-  @Nonnull
-  public static IJsonObject getJsonError (@Nonnull final IErrorLevel aErrorLevel,
+  @NonNull
+  public static IJsonObject getJsonError (@NonNull final IErrorLevel aErrorLevel,
                                           @Nullable final String sErrorID,
                                           @Nullable final String sErrorFieldName,
                                           @Nullable final ILocation aErrorLocation,
                                           @Nullable final String sTest,
-                                          @Nonnull final String sErrorText,
+                                          @NonNull final String sErrorText,
                                           @Nullable final Throwable t)
   {
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
@@ -285,8 +284,8 @@ public final class PhiveJsonHelper
    * @see #getJsonStackTrace(Throwable)
    * @see #getJsonError(IErrorLevel, String, String, ILocation, String, String, Throwable)
    */
-  @Nonnull
-  public static IJsonObject getJsonError (@Nonnull final IError aError, @Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static IJsonObject getJsonError (@NonNull final IError aError, @NonNull final Locale aDisplayLocale)
   {
     return jsonErrorBuilder (aError, aDisplayLocale).build ();
   }
@@ -297,7 +296,7 @@ public final class PhiveJsonHelper
    * @return Never <code>null</code>.
    * @since 7.2.3
    */
-  @Nonnull
+  @NonNull
   public static JsonErrorBuilder jsonErrorBuilder ()
   {
     return new JsonErrorBuilder ();
@@ -313,8 +312,8 @@ public final class PhiveJsonHelper
    * @return Never <code>null</code>.
    * @since 7.2.3
    */
-  @Nonnull
-  public static JsonErrorBuilder jsonErrorBuilder (@Nonnull final IError aError, @Nonnull final Locale aDisplayLocale)
+  @NonNull
+  public static JsonErrorBuilder jsonErrorBuilder (@NonNull final IError aError, @NonNull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aError, "Error");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
@@ -330,8 +329,8 @@ public final class PhiveJsonHelper
                                   .exception (aError.getLinkedException ());
   }
 
-  @Nonnull
-  public static IError getAsIError (@Nonnull final IJsonObject aObj)
+  @NonNull
+  public static IError getAsIError (@NonNull final IJsonObject aObj)
   {
     final LocalDateTime aErrorDT = PDTWebDateHelper.getLocalDateTimeFromXSD (aObj.getAsString (JSON_ERROR_DATETIME));
     final IErrorLevel aErrorLevel = PhiveResultHelper.getAsErrorLevel (aObj.getAsString (JSON_ERROR_LEVEL));
@@ -390,8 +389,8 @@ public final class PhiveJsonHelper
    * @return The created JSON object.
    * @since 10.1.0
    */
-  @Nonnull
-  public static IJsonObject getJsonValidationSource (@Nonnull final IValidationSource aSource,
+  @NonNull
+  public static IJsonObject getJsonValidationSource (@NonNull final IValidationSource aSource,
                                                      final boolean bWithPayload)
   {
     ValueEnforcer.notNull (aSource, "Source");
@@ -435,8 +434,8 @@ public final class PhiveJsonHelper
    * @return The created JSON object.
    * @since 10.1.0
    */
-  @Nonnull
-  public static IJsonObject getJsonVESStatus (@Nonnull final IValidationExecutorSetStatus aStatus)
+  @NonNull
+  public static IJsonObject getJsonVESStatus (@NonNull final IValidationExecutorSetStatus aStatus)
   {
     ValueEnforcer.notNull (aStatus, "Status");
 
@@ -478,8 +477,8 @@ public final class PhiveJsonHelper
    *        The VES to use. May not be <code>null</code>.
    * @return The created JSON object.
    */
-  @Nonnull
-  public static IJsonObject getJsonVES (@Nonnull final IValidationExecutorSet <?> aVES)
+  @NonNull
+  public static IJsonObject getJsonVES (@NonNull final IValidationExecutorSet <?> aVES)
   {
     ValueEnforcer.notNull (aVES, "VES");
 
@@ -520,8 +519,8 @@ public final class PhiveJsonHelper
    * @param nDurationMilliseconds
    *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
-  public static void applyGlobalError (@Nonnull final IJsonObject aResponse,
-                                       @Nonnull final String sErrorMsg,
+  public static void applyGlobalError (@NonNull final IJsonObject aResponse,
+                                       @NonNull final String sErrorMsg,
                                        @Nonnegative final long nDurationMilliseconds)
   {
     ValueEnforcer.notNull (aResponse, "Response");
@@ -587,10 +586,10 @@ public final class PhiveJsonHelper
    *        Optional callback value to store the overall errors. If not <code>null</code> if will
    *        contain a &ge; 0 value afterwards.
    */
-  public static void applyValidationResultList (@Nonnull final IJsonObject aResponse,
+  public static void applyValidationResultList (@NonNull final IJsonObject aResponse,
                                                 @Nullable final IValidationExecutorSet <?> aVES,
-                                                @Nonnull final ValidationResultList aValidationResultList,
-                                                @Nonnull final Locale aDisplayLocale,
+                                                @NonNull final ValidationResultList aValidationResultList,
+                                                @NonNull final Locale aDisplayLocale,
                                                 @Nonnegative final long nDurationMilliseconds,
                                                 @Nullable final MutableInt aWarningCount,
                                                 @Nullable final MutableInt aErrorCount)
@@ -605,7 +604,7 @@ public final class PhiveJsonHelper
   }
 
   @Nullable
-  public static <T extends IValidationSource> IValidationExecutorSet <T> getAsVES (@Nonnull final ValidationExecutorSetRegistry <T> aRegistry,
+  public static <T extends IValidationSource> IValidationExecutorSet <T> getAsVES (@NonNull final ValidationExecutorSetRegistry <T> aRegistry,
                                                                                    @Nullable final IJsonObject aJson)
   {
     ValueEnforcer.notNull (aRegistry, "Registry");
@@ -648,8 +647,8 @@ public final class PhiveJsonHelper
    */
   @Nullable
   public static ValidationResultList getAsValidationResultList (@Nullable final IJsonObject aJson,
-                                                                @Nonnull final Function <String, IValidationType> aValidationTypeResolver,
-                                                                @Nonnull final IValidationSourceRestorer aValidationSourceRestorer)
+                                                                @NonNull final Function <String, IValidationType> aValidationTypeResolver,
+                                                                @NonNull final IValidationSourceRestorer aValidationSourceRestorer)
   {
     ValueEnforcer.notNull (aValidationTypeResolver, "ValidationTypeResolver");
     ValueEnforcer.notNull (aValidationSourceRestorer, "ValidationSourceRestorer");

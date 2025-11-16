@@ -19,6 +19,9 @@ package com.helger.phive.result.xml;
 import java.time.LocalDateTime;
 import java.util.function.Function;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.builder.IBuilder;
 import com.helger.base.location.ILocation;
@@ -30,9 +33,6 @@ import com.helger.diagnostics.error.level.IErrorLevel;
 import com.helger.phive.result.PhiveResultHelper;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A flexible builder that can be used to convert data from an {@link IError} object to a XML
@@ -58,95 +58,95 @@ public class XMLErrorBuilder implements IBuilder <IMicroElement>
   private Function <Throwable, IMicroElement> m_aExceptionToXML = t -> PhiveXMLHelper.getXMLStackTrace (t,
                                                                                                         PhiveXMLHelper.XML_EXCEPTION);
 
-  public XMLErrorBuilder (@Nonnull @Nonempty final String sElementName)
+  public XMLErrorBuilder (@NonNull @Nonempty final String sElementName)
   {
     m_sElementName = sElementName;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorDateTimeNow ()
   {
     return errorDateTime (PDTFactory.getCurrentLocalDateTime ());
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorDateTime (@Nullable final LocalDateTime a)
   {
     m_aErrorDateTime = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorLevel (@Nullable final IErrorLevel a)
   {
     m_aErrorLevel = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorLevelToXML (@Nullable final Function <IErrorLevel, String> a)
   {
     m_aErrorLevelToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorID (@Nullable final String s)
   {
     m_sErrorID = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorFieldName (@Nullable final String s)
   {
     m_sErrorFieldName = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorLocation (@Nullable final ILocation a)
   {
     m_aErrorLocation = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorLocationToXML (@Nullable final Function <ILocation, IMicroElement> a)
   {
     m_aErrorLocationToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder test (@Nullable final String s)
   {
     m_sTest = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder errorText (@Nullable final String s)
   {
     m_sErrorText = s;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder exception (@Nullable final Throwable a)
   {
     m_aException = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public XMLErrorBuilder exceptionToXML (@Nullable final Function <Throwable, IMicroElement> a)
   {
     m_aExceptionToXML = a;
     return this;
   }
 
-  @Nonnull
+  @NonNull
   public IMicroElement build ()
   {
     final IMicroElement ret = new MicroElement (m_sElementName);

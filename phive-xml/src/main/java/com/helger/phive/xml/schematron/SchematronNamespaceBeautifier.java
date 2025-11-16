@@ -16,14 +16,14 @@
  */
 package com.helger.phive.xml.schematron;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.xml.namespace.IIterableNamespaceContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class contains namespace prefixes for Schematron error messages
@@ -40,7 +40,7 @@ public final class SchematronNamespaceBeautifier
   private SchematronNamespaceBeautifier ()
   {}
 
-  public static void addMapping (@Nonnull final String sPrefix, @Nonnull final String sNamespaceURI)
+  public static void addMapping (@NonNull final String sPrefix, @NonNull final String sNamespaceURI)
   {
     // Allow overwrite!
     RW_LOCK.writeLocked ( () -> NS_CTX.setMapping (sPrefix, sNamespaceURI));
@@ -53,7 +53,6 @@ public final class SchematronNamespaceBeautifier
       RW_LOCK.writeLocked ( () -> NS_CTX.setMappings (aOther));
   }
 
-  @Nonnull
   public static void removeAllMappings ()
   {
     RW_LOCK.writeLocked (NS_CTX::clear);

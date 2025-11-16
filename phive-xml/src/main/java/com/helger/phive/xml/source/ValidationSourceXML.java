@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.function.Supplier;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Node;
 
 import com.helger.annotation.Nonempty;
@@ -29,9 +31,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.resource.IReadableResource;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.serialize.write.XMLWriter;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default implementation of {@link IValidationSourceXML}.
@@ -47,7 +46,7 @@ public class ValidationSourceXML implements IValidationSourceXML
   private Node m_aNode;
 
   public ValidationSourceXML (@Nullable final String sSystemID,
-                              @Nonnull final Node aFixedNode,
+                              @NonNull final Node aFixedNode,
                               final boolean bPartialSource)
   {
     this (sSystemID, () -> aFixedNode, bPartialSource);
@@ -55,7 +54,7 @@ public class ValidationSourceXML implements IValidationSourceXML
   }
 
   public ValidationSourceXML (@Nullable final String sSystemID,
-                              @Nonnull final Supplier <Node> aNodeFactory,
+                              @NonNull final Supplier <Node> aNodeFactory,
                               final boolean bPartialSource)
   {
     ValueEnforcer.notNull (aNodeFactory, "NodeFactory");
@@ -64,7 +63,7 @@ public class ValidationSourceXML implements IValidationSourceXML
     m_bPartialSource = bPartialSource;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getValidationSourceTypeID ()
   {
@@ -94,7 +93,7 @@ public class ValidationSourceXML implements IValidationSourceXML
     return m_bPartialSource;
   }
 
-  public void writeTo (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
+  public void writeTo (@NonNull @WillNotClose final OutputStream aOS) throws IOException
   {
     if (XMLWriter.writeToStream (getNode (), aOS).isFailure ())
       throw new IOException ("Failed write XML node to OutputStream");
@@ -118,8 +117,8 @@ public class ValidationSourceXML implements IValidationSourceXML
    *        The node to use. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static ValidationSourceXML create (@Nullable final String sSystemID, @Nonnull final Node aNode)
+  @NonNull
+  public static ValidationSourceXML create (@Nullable final String sSystemID, @NonNull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
     // Use the owner Document as fixed node
@@ -135,8 +134,8 @@ public class ValidationSourceXML implements IValidationSourceXML
    *        The node to use. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static ValidationSourceXML createPartial (@Nullable final String sSystemID, @Nonnull final Node aNode)
+  @NonNull
+  public static ValidationSourceXML createPartial (@Nullable final String sSystemID, @NonNull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
     return new ValidationSourceXML (sSystemID, aNode, true);
@@ -150,8 +149,8 @@ public class ValidationSourceXML implements IValidationSourceXML
    *        The original resource. May not be <code>null</code>.
    * @return The validation source to be used. Never <code>null</code>.
    */
-  @Nonnull
-  public static ValidationSourceXML create (@Nonnull final IReadableResource aResource)
+  @NonNull
+  public static ValidationSourceXML create (@NonNull final IReadableResource aResource)
   {
     return new ValidationSourceXMLReadableResource (aResource);
   }

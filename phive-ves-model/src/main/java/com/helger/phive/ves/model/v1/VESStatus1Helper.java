@@ -18,6 +18,8 @@ package com.helger.phive.ves.model.v1;
 
 import java.time.OffsetDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,9 +34,6 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatusHistoryItem;
 import com.helger.phive.ves.v10.VesStatusType;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Utility class for VES Status v1
@@ -54,8 +53,8 @@ public final class VESStatus1Helper
     return a == null ? null : a.toOffsetDateTime ();
   }
 
-  @Nonnull
-  public static IValidationExecutorSetStatus convert (@Nonnull final VesStatusType aVESStatus)
+  @NonNull
+  public static IValidationExecutorSetStatus convert (@NonNull final VesStatusType aVESStatus)
   {
     // Determine the status type
     final OffsetDateTime aCheckDT = PDTFactory.getCurrentOffsetDateTime ();

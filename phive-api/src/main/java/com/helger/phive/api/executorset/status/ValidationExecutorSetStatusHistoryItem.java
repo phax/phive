@@ -18,13 +18,13 @@ package com.helger.phive.api.executorset.status;
 
 import java.time.OffsetDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class contains a single history item of a VES status
@@ -40,10 +40,10 @@ public class ValidationExecutorSetStatusHistoryItem
   private final String m_sChangeCode;
   private final String m_sText;
 
-  public ValidationExecutorSetStatusHistoryItem (@Nonnull final OffsetDateTime aChangeDateTime,
-                                                 @Nonnull @Nonempty final String sAuthor,
+  public ValidationExecutorSetStatusHistoryItem (@NonNull final OffsetDateTime aChangeDateTime,
+                                                 @NonNull @Nonempty final String sAuthor,
                                                  @Nullable final String sChangeCode,
-                                                 @Nonnull @Nonempty final String sText)
+                                                 @NonNull @Nonempty final String sText)
   {
     ValueEnforcer.notNull (aChangeDateTime, "ChangeDateTime");
     ValueEnforcer.notEmpty (sAuthor, "Author");
@@ -54,13 +54,13 @@ public class ValidationExecutorSetStatusHistoryItem
     m_sText = sText;
   }
 
-  @Nonnull
+  @NonNull
   public final OffsetDateTime getChangeDateTime ()
   {
     return m_aChangeDateTime;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getAuthor ()
   {
@@ -73,7 +73,7 @@ public class ValidationExecutorSetStatusHistoryItem
     return m_sChangeCode;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getText ()
   {

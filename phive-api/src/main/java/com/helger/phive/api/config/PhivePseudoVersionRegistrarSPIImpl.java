@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.config;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.IsSPIImplementation;
 import com.helger.annotation.style.UsedViaReflection;
 import com.helger.base.version.Version;
@@ -25,8 +27,6 @@ import com.helger.diver.api.version.IDVRPseudoVersion;
 import com.helger.diver.api.version.IDVRPseudoVersionComparable;
 import com.helger.diver.api.version.IDVRPseudoVersionRegistry;
 import com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Default pseudo version registrar
@@ -45,7 +45,7 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersi
   {
     LATEST_ACTIVE = new DVRPseudoVersion ("latest-active", new IDVRPseudoVersionComparable ()
     {
-      public int compareToPseudoVersion (@Nonnull final IDVRPseudoVersion aOtherPseudoVersion)
+      public int compareToPseudoVersion (@NonNull final IDVRPseudoVersion aOtherPseudoVersion)
       {
         // Only LATEST and LATEST_RELEASE are greater
         if (aOtherPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST) ||
@@ -56,7 +56,7 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersi
         return +1;
       }
 
-      public int compareToVersion (@Nonnull final Version aStaticVersion)
+      public int compareToVersion (@NonNull final Version aStaticVersion)
       {
         // LATEST_ACTIVE is always greater
         return +1;
@@ -73,7 +73,7 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersi
   {
     LATEST_RELEASE_ACTIVE = new DVRPseudoVersion ("latest-release-active", new IDVRPseudoVersionComparable ()
     {
-      public int compareToPseudoVersion (@Nonnull final IDVRPseudoVersion aOtherPseudoVersion)
+      public int compareToPseudoVersion (@NonNull final IDVRPseudoVersion aOtherPseudoVersion)
       {
         // Only LATEST, LATEST_RELEASE and LATEST_ACTIVE are greater
         if (aOtherPseudoVersion.equals (DVRPseudoVersionRegistry.LATEST) ||
@@ -85,7 +85,7 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersi
         return +1;
       }
 
-      public int compareToVersion (@Nonnull final Version aStaticVersion)
+      public int compareToVersion (@NonNull final Version aStaticVersion)
       {
         // LATEST_RELEASE_ACTIVE is always greater
         return +1;
@@ -98,7 +98,7 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersi
   public PhivePseudoVersionRegistrarSPIImpl ()
   {}
 
-  public void registerPseudoVersions (@Nonnull final IDVRPseudoVersionRegistry aRegistry)
+  public void registerPseudoVersions (@NonNull final IDVRPseudoVersionRegistry aRegistry)
   {
     aRegistry.registerPseudoVersion (LATEST_ACTIVE);
     aRegistry.registerPseudoVersion (LATEST_RELEASE_ACTIVE);

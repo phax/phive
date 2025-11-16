@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.compare.ESortOrder;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
@@ -43,9 +46,6 @@ import com.helger.phive.ves.model.v1.VESStatus1Helper;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
 import com.helger.phive.ves.v10.VesStatusType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Helper class used by {@link VESLoader} to resolve the pseudo versions based on a repository table
  * of contents and the status objects.
@@ -56,7 +56,7 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
 {
   private final IRepoStorageWithToc m_aRepo;
 
-  public VESLoaderPseudoVersionResolver (@Nonnull final IRepoStorageWithToc aRepo)
+  public VESLoaderPseudoVersionResolver (@NonNull final IRepoStorageWithToc aRepo)
   {
     ValueEnforcer.notNull (aRepo, "Repo");
     m_aRepo = aRepo;
@@ -67,7 +67,7 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
                                                      @Nullable final String sArtifactID,
                                                      @Nullable final Set <String> aVersionsToIgnore,
                                                      final boolean bIncludeSnapshots,
-                                                     @Nonnull final ESortOrder eSortOrder,
+                                                     @NonNull final ESortOrder eSortOrder,
                                                      @Nullable final Predicate <DVRCoordinate> aResultDecider)
   {
     if (StringHelper.isNotEmpty (sGroupID) && StringHelper.isNotEmpty (sArtifactID))
@@ -152,13 +152,13 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
   {
     private final OffsetDateTime m_aRealCheckDateTime;
 
-    VESIDSelectorByStatusValidity (@Nonnull final OffsetDateTime aCheckDateTime)
+    VESIDSelectorByStatusValidity (@NonNull final OffsetDateTime aCheckDateTime)
     {
       // Make sure we have a non-null check date time
       m_aRealCheckDateTime = aCheckDateTime != null ? aCheckDateTime : PDTFactory.getCurrentOffsetDateTime ();
     }
 
-    public boolean test (@Nonnull final DVRCoordinate aVESID)
+    public boolean test (@NonNull final DVRCoordinate aVESID)
     {
       // Check if there is a "status" object available in the repo
       final RepoStorageKeyOfArtefact aRepoKeyStatus = RepoStorageKeyOfArtefact.of (aVESID, VESLoader.FILE_EXT_STATUS);
@@ -228,8 +228,8 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
    * @since 9.2.1
    */
   @Nullable
-  public static DVRCoordinate resolvePseudoVersion (@Nonnull final IRepoStorageWithToc aRepo,
-                                                    @Nonnull final DVRCoordinate aVESID,
+  public static DVRCoordinate resolvePseudoVersion (@NonNull final IRepoStorageWithToc aRepo,
+                                                    @NonNull final DVRCoordinate aVESID,
                                                     @Nullable final Set <String> aVersionsToIgnore,
                                                     @Nullable final OffsetDateTime aCheckDateTime)
   {

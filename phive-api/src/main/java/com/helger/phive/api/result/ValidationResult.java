@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.result;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -24,8 +26,6 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.artefact.IValidationArtefact;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class captures the validation result of a single validation layer. It
@@ -54,8 +54,8 @@ public class ValidationResult
    *        The number of milliseconds it took to get the validation results.
    *        Must be &ge; 0.
    */
-  public ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                           @Nonnull final IErrorList aErrorList,
+  public ValidationResult (@NonNull final IValidationArtefact aValidationArtefact,
+                           @NonNull final IErrorList aErrorList,
                            @Nonnegative final long nDurationMS)
   {
     this (aValidationArtefact, aErrorList, false, nDurationMS);
@@ -76,8 +76,8 @@ public class ValidationResult
    *        The number of milliseconds it took to get the validation results.
    *        Must be &ge; 0.
    */
-  protected ValidationResult (@Nonnull final IValidationArtefact aValidationArtefact,
-                              @Nonnull final IErrorList aErrorList,
+  protected ValidationResult (@NonNull final IValidationArtefact aValidationArtefact,
+                              @NonNull final IErrorList aErrorList,
                               final boolean bWasSkipped,
                               @Nonnegative final long nDurationMS)
   {
@@ -95,7 +95,7 @@ public class ValidationResult
    * @return The validation artefact used to perform validation. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final IValidationArtefact getValidationArtefact ()
   {
     return m_aValidationArtefact;
@@ -105,7 +105,7 @@ public class ValidationResult
    * @return The errors occurred during the validation execution on this layer.
    *         Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public final IErrorList getErrorList ()
   {
@@ -149,8 +149,8 @@ public class ValidationResult
    *        The validation artefact that was ignored.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static ValidationResult createSkippedResult (@Nonnull final IValidationArtefact aValidationArtefact)
+  @NonNull
+  public static ValidationResult createSkippedResult (@NonNull final IValidationArtefact aValidationArtefact)
   {
     return new ValidationResult (aValidationArtefact, new ErrorList (), true, 0);
   }

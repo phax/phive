@@ -21,6 +21,8 @@ import java.time.OffsetDateTime;
 import java.util.Locale;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,9 +69,6 @@ import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class loads VES data into {@link LoadedVES} objects. It supports dynamic rule creation for
  * each syntax, using the {@link IVESLoaderXSD}, {@link IVESLoaderSchematron} and
@@ -109,7 +108,7 @@ public final class VESLoader
   @GuardedBy ("m_aRWLock")
   private boolean m_bResolvePseudoVersions = DEFAULT_RESOLVE_PSEUDO_VERSIONS;
 
-  public VESLoader (@Nonnull final IRepoStorageWithToc aRepo)
+  public VESLoader (@NonNull final IRepoStorageWithToc aRepo)
   {
     ValueEnforcer.notNull (aRepo, "Repo");
     m_aRepo = aRepo;
@@ -131,7 +130,7 @@ public final class VESLoader
    *        The loader to be used. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public VESLoader setLoaderXSD (@Nullable final IVESLoaderXSD aLoader)
   {
     m_aRWLock.writeLocked ( () -> m_aLoaderXSD = aLoader);
@@ -154,7 +153,7 @@ public final class VESLoader
    *        The loader to be used. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public VESLoader setLoaderSchematron (@Nullable final IVESLoaderSchematron aLoader)
   {
     m_aRWLock.writeLocked ( () -> m_aLoaderSchematron = aLoader);
@@ -177,7 +176,7 @@ public final class VESLoader
    *        The loader to be used. May be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public VESLoader setLoaderEdifact (@Nullable final IVESLoaderEdifact aLoader)
   {
     m_aRWLock.writeLocked ( () -> m_aLoaderEdifact = aLoader);
@@ -200,7 +199,7 @@ public final class VESLoader
    *        <code>true</code> for eager loading, <code>false</code> for lazy loading
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public VESLoader setUseEagerRequirementLoading (final boolean b)
   {
     m_aRWLock.writeLocked ( () -> m_bUseEagerRequirementLoading = b);
@@ -212,7 +211,7 @@ public final class VESLoader
    *         The default is {@link #DEFAULT_RESOLVE_PSEUDO_VERSIONS}
    * @since 9.2.1
    */
-  @Nonnull
+  @NonNull
   public boolean isResolvePseudoVersions ()
   {
     return m_aRWLock.readLockedBoolean ( () -> m_bResolvePseudoVersions);
@@ -226,8 +225,8 @@ public final class VESLoader
    * @return this for chaining
    * @since 9.2.1
    */
-  @Nonnull
-  public VESLoader setResolvePseudoVersions (@Nonnull final boolean b)
+  @NonNull
+  public VESLoader setResolvePseudoVersions (@NonNull final boolean b)
   {
     m_aRWLock.writeLocked ( () -> m_bResolvePseudoVersions = b);
     return this;
@@ -240,13 +239,13 @@ public final class VESLoader
     @GuardedBy ("m_aRWLock")
     private final ICommonsSet <DVRCoordinate> m_aLoaded = new CommonsLinkedHashSet <> ();
 
-    @Nonnull
-    public ESuccess addVESID (@Nonnull final DVRCoordinate aVESID)
+    @NonNull
+    public ESuccess addVESID (@NonNull final DVRCoordinate aVESID)
     {
       return ESuccess.valueOf (m_aRWLock.writeLockedBoolean ( () -> m_aLoaded.add (aVESID)));
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getDepedencyChain (@Nullable final DVRCoordinate aLastOne)
     {
@@ -258,7 +257,7 @@ public final class VESLoader
   }
 
   static void internalWrapNamespaceList (@Nullable final VesNamespaceListType aNamespaces,
-                                         @Nonnull final MapBasedNamespaceContext aNSCtx)
+                                         @NonNull final MapBasedNamespaceContext aNSCtx)
   {
     if (aNamespaces != null)
       for (final VesNamespaceType aNamespace : aNamespaces.getNamespace ())
@@ -280,7 +279,7 @@ public final class VESLoader
       }
   }
 
-  @Nonnull
+  @NonNull
   private static MapBasedNamespaceContext _wrap (@Nullable final VesNamespaceListType aNamespaces)
   {
     final MapBasedNamespaceContext ret = new MapBasedNamespaceContext ();
@@ -288,24 +287,19 @@ public final class VESLoader
     return ret;
   }
 
-  @Nonnull
-  static EErrorLevel internalWrapErrorLevel (@Nonnull final VesErrorLevelType e)
+  @NonNull
+  static EErrorLevel internalWrapErrorLevel (@NonNull final VesErrorLevelType e)
   {
-    switch (e)
+    return switch (e)
     {
-      case INFO:
-        return EErrorLevel.INFO;
-      case WARN:
-        return EErrorLevel.WARN;
-      case ERROR:
-        return EErrorLevel.ERROR;
-      default:
-        throw new IllegalStateException ("Unsupported error level " + e);
-    }
+      case INFO -> EErrorLevel.INFO;
+      case WARN -> EErrorLevel.WARN;
+      case ERROR -> EErrorLevel.ERROR;
+      default -> throw new IllegalStateException ("Unsupported error level " + e);
+    };
   }
 
-  @Nonnull
-  private static LoadedVES.OutputType _wrap (@Nullable final VesOutputType aOutput)
+  private static LoadedVES.@NonNull OutputType _wrap (@Nullable final VesOutputType aOutput)
   {
     final LoadedVES.OutputType ret = new LoadedVES.OutputType ();
     if (aOutput != null)
@@ -320,18 +314,18 @@ public final class VESLoader
   }
 
   @Nullable
-  public LoadedVES convertToLoadedVES (@Nonnull final IValidationExecutorSetStatus aStatus,
-                                       @Nonnull final VesType aSrcVes,
-                                       @Nonnull final VESLoaderStatus aLoaderStatus,
-                                       @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
+  public LoadedVES convertToLoadedVES (@NonNull final IValidationExecutorSetStatus aStatus,
+                                       @NonNull final VesType aSrcVes,
+                                       @NonNull final VESLoaderStatus aLoaderStatus,
+                                       @NonNull final ErrorList aLoadingErrors) throws VESLoadingException
   {
     return _convertToLoadedVES (aStatus, null, aSrcVes, aLoaderStatus, aLoadingErrors);
   }
 
-  @Nonnull
-  private static DVRCoordinate _createVESIDUnchecked (@Nonnull @Nonempty final String sGroupID,
-                                                      @Nonnull @Nonempty final String sArtifactID,
-                                                      @Nonnull @Nonempty final String sVersion)
+  @NonNull
+  private static DVRCoordinate _createVESIDUnchecked (@NonNull @Nonempty final String sGroupID,
+                                                      @NonNull @Nonempty final String sArtifactID,
+                                                      @NonNull @Nonempty final String sVersion)
   {
     try
     {
@@ -344,11 +338,11 @@ public final class VESLoader
   }
 
   @Nullable
-  private LoadedVES _convertToLoadedVES (@Nonnull final IValidationExecutorSetStatus aStatus,
-                                         @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
-                                         @Nonnull final VesType aSrcVes,
-                                         @Nonnull final VESLoaderStatus aLoaderStatus,
-                                         @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
+  private LoadedVES _convertToLoadedVES (@NonNull final IValidationExecutorSetStatus aStatus,
+                                         final LoadedVES.@Nullable RequiredVES aLoadingRequiredVES,
+                                         @NonNull final VesType aSrcVes,
+                                         @NonNull final VESLoaderStatus aLoaderStatus,
+                                         @NonNull final ErrorList aLoadingErrors) throws VESLoadingException
   {
     ValueEnforcer.notNull (aStatus, "Status");
     ValueEnforcer.notNull (aSrcVes, "VES");
@@ -504,7 +498,7 @@ public final class VESLoader
   }
 
   @Nullable
-  public LoadedVES loadVESDirect (@Nonnull final IReadableResource aVESRes, @Nonnull final ErrorList aLoadingErrors)
+  public LoadedVES loadVESDirect (@NonNull final IReadableResource aVESRes, @NonNull final ErrorList aLoadingErrors)
   {
     return loadVESDirect (ValidationExecutorSetStatus.createValidNow (),
                           aVESRes,
@@ -513,10 +507,10 @@ public final class VESLoader
   }
 
   @Nullable
-  public LoadedVES loadVESDirect (@Nonnull final IValidationExecutorSetStatus aStatus,
-                                  @Nonnull final IReadableResource aVESRes,
-                                  @Nonnull final VESLoaderStatus aLoaderStatus,
-                                  @Nonnull final ErrorList aLoadingErrors)
+  public LoadedVES loadVESDirect (@NonNull final IValidationExecutorSetStatus aStatus,
+                                  @NonNull final IReadableResource aVESRes,
+                                  @NonNull final VESLoaderStatus aLoaderStatus,
+                                  @NonNull final ErrorList aLoadingErrors)
   {
     ValueEnforcer.notNull (aStatus, "Status");
     ValueEnforcer.notNull (aVESRes, "VESRes");
@@ -571,7 +565,7 @@ public final class VESLoader
    * @since 9.2.1
    */
   @Nullable
-  public DVRCoordinate resolvePseudoVersion (@Nonnull final DVRCoordinate aVESID,
+  public DVRCoordinate resolvePseudoVersion (@NonNull final DVRCoordinate aVESID,
                                              @Nullable final Set <String> aVersionsToIgnore,
                                              @Nullable final OffsetDateTime aCheckDateTime)
   {
@@ -588,7 +582,7 @@ public final class VESLoader
    * @return <code>null</code> if loading failed
    */
   @Nullable
-  public LoadedVES loadVESFromRepo (@Nonnull final DVRCoordinate aVESID, @Nonnull final ErrorList aLoadingErrors)
+  public LoadedVES loadVESFromRepo (@NonNull final DVRCoordinate aVESID, @NonNull final ErrorList aLoadingErrors)
   {
     return _loadVESFromRepo (aVESID, null, new VESLoaderStatus (), aLoadingErrors);
   }
@@ -605,9 +599,9 @@ public final class VESLoader
    * @return <code>null</code> if loading failed
    */
   @Nullable
-  public LoadedVES loadVESFromRepo (@Nonnull final DVRCoordinate aVESID,
-                                    @Nonnull final VESLoaderStatus aLoaderStatus,
-                                    @Nonnull final ErrorList aLoadingErrors)
+  public LoadedVES loadVESFromRepo (@NonNull final DVRCoordinate aVESID,
+                                    @NonNull final VESLoaderStatus aLoaderStatus,
+                                    @NonNull final ErrorList aLoadingErrors)
   {
     return _loadVESFromRepo (aVESID, null, aLoaderStatus, aLoadingErrors);
   }
@@ -627,10 +621,10 @@ public final class VESLoader
    * @return <code>null</code> if loading failed
    */
   @Nullable
-  private LoadedVES _loadVESFromRepo (@Nonnull final DVRCoordinate aVESID,
-                                      @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
-                                      @Nonnull final VESLoaderStatus aLoaderStatus,
-                                      @Nonnull final ErrorList aLoadingErrors)
+  private LoadedVES _loadVESFromRepo (@NonNull final DVRCoordinate aVESID,
+                                      final LoadedVES.@Nullable RequiredVES aLoadingRequiredVES,
+                                      @NonNull final VESLoaderStatus aLoaderStatus,
+                                      @NonNull final ErrorList aLoadingErrors)
   {
     ValueEnforcer.notNull (aVESID, "VESID");
     ValueEnforcer.notNull (aLoaderStatus, "LoaderStatus");
@@ -763,8 +757,8 @@ public final class VESLoader
     }
   }
 
-  @Nonnull
-  static RepoStorageKeyOfArtefact createRepoStorageKey (@Nonnull final VesResourceType aVRT)
+  @NonNull
+  static RepoStorageKeyOfArtefact createRepoStorageKey (@NonNull final VesResourceType aVRT)
   {
     // File extension must start with a dot
     return RepoStorageKeyOfArtefact.of (_createVESIDUnchecked (aVRT.getGroupId (),
@@ -791,11 +785,11 @@ public final class VESLoader
    * @throws VESLoadingException
    *         If anything goes wrong
    */
-  @Nonnull
-  public static VESValidationResult loadVESAndApplyValidation (@Nonnull final IRepoStorageWithToc aRepo,
-                                                               @Nonnull final DVRCoordinate aVESID,
-                                                               @Nonnull final IValidationSource aValidationSource,
-                                                               @Nonnull final ErrorList aLoadingErrors) throws VESLoadingException
+  @NonNull
+  public static VESValidationResult loadVESAndApplyValidation (@NonNull final IRepoStorageWithToc aRepo,
+                                                               @NonNull final DVRCoordinate aVESID,
+                                                               @NonNull final IValidationSource aValidationSource,
+                                                               @NonNull final ErrorList aLoadingErrors) throws VESLoadingException
   {
     ValueEnforcer.notNull (aRepo, "RepoChain");
     ValueEnforcer.notNull (aVESID, "VESID");

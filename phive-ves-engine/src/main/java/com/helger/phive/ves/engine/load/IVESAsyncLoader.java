@@ -16,11 +16,11 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.repo.IRepoStorageReadItem;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for an asynchronous on-demand loader for resources.
@@ -41,5 +41,5 @@ public interface IVESAsyncLoader
    *         (e.g. because no such resource exists).
    */
   @Nullable
-  IRepoStorageReadItem loadResource (@Nonnull DVRCoordinate aVESID, @Nonnull String sFileExt);
+  IRepoStorageReadItem loadResource (@NonNull DVRCoordinate aVESID, @NonNull String sFileExt);
 }

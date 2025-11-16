@@ -16,12 +16,12 @@
  */
 package com.helger.phive.xml.schematron;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Defines the Schematron engine to be used.
@@ -36,12 +36,12 @@ public enum ESchematronEngine implements IHasID <String>
 
   private final String m_sID;
 
-  ESchematronEngine (@Nonnull @Nonempty final String sID)
+  ESchematronEngine (@NonNull @Nonempty final String sID)
   {
     m_sID = sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

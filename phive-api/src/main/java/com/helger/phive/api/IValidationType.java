@@ -16,11 +16,11 @@
  */
 package com.helger.phive.api;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.base.id.IHasID;
 import com.helger.base.name.IHasName;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Interface for a validation type. That basically is a combination of syntax,
@@ -36,7 +36,7 @@ public interface IValidationType extends IHasID <String>, IHasName
   /**
    * @return The validation based type. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EValidationBaseType getBaseType ();
 
   /**

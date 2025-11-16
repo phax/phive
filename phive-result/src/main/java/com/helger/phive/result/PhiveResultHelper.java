@@ -18,6 +18,8 @@ package com.helger.phive.result;
 
 import java.net.MalformedURLException;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,9 +43,6 @@ import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 import com.helger.xml.serialize.read.DOMReader;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Contains stateless phive result helper methods.
  *
@@ -65,12 +64,12 @@ public final class PhiveResultHelper
   private PhiveResultHelper ()
   {}
 
-  public static boolean isConsideredError (@Nonnull final IErrorLevel aErrorLevel)
+  public static boolean isConsideredError (@NonNull final IErrorLevel aErrorLevel)
   {
     return aErrorLevel.isGE (EErrorLevel.ERROR);
   }
 
-  public static boolean isConsideredWarning (@Nonnull final IErrorLevel aErrorLevel)
+  public static boolean isConsideredWarning (@NonNull final IErrorLevel aErrorLevel)
   {
     return aErrorLevel.isGE (EErrorLevel.WARN);
   }
@@ -85,9 +84,9 @@ public final class PhiveResultHelper
    *        The error level to convert. May not be <code>null</code>.
    * @return A non-<code>null</code> value string.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getErrorLevelValue (@Nonnull final IErrorLevel aErrorLevel)
+  public static String getErrorLevelValue (@NonNull final IErrorLevel aErrorLevel)
   {
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
 
@@ -119,7 +118,7 @@ public final class PhiveResultHelper
    * @return A non-<code>null</code> value string.
    * @see #getTriStateValue(ETriState)
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public static String getTriStateValue (final boolean b)
   {
@@ -135,8 +134,8 @@ public final class PhiveResultHelper
    * @return A non-<code>null</code> value string.
    * @see #getTriStateValue(boolean)
    */
-  @Nonnull
-  public static String getTriStateValue (@Nonnull final ETriState eTriState)
+  @NonNull
+  public static String getTriStateValue (@NonNull final ETriState eTriState)
   {
     ValueEnforcer.notNull (eTriState, "TriState");
 
@@ -165,9 +164,9 @@ public final class PhiveResultHelper
     return null;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
-  public static String getArtifactPathType (@Nonnull final IReadableResource aRes)
+  public static String getArtifactPathType (@NonNull final IReadableResource aRes)
   {
     if (aRes instanceof ClassPathResource)
       return "classpath";

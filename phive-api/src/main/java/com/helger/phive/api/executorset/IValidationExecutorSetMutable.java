@@ -16,12 +16,12 @@
  */
 package com.helger.phive.api.executorset;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.misc.ChangeNextMajorRelease;
 import com.helger.base.state.EChange;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Define a common interface for {@link IValidationExecutorSet} with modifying
@@ -42,8 +42,8 @@ public interface IValidationExecutorSetMutable <SOURCETYPE extends IValidationSo
    *        The executor to be added. May not be <code>null</code>.
    * @return this for chaining
    */
-  @Nonnull
-  IValidationExecutorSetMutable <SOURCETYPE> addExecutor (@Nonnull IValidationExecutor <SOURCETYPE> aExecutor);
+  @NonNull
+  IValidationExecutorSetMutable <SOURCETYPE> addExecutor (@NonNull IValidationExecutor <SOURCETYPE> aExecutor);
 
   /**
    * Set the cache status to all contained validation executors, that implement
@@ -65,6 +65,6 @@ public interface IValidationExecutorSetMutable <SOURCETYPE extends IValidationSo
    *
    * @return {@link EChange}
    */
-  @Nonnull
+  @NonNull
   EChange removeAllExecutors ();
 }

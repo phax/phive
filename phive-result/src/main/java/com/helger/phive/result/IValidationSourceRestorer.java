@@ -16,9 +16,9 @@
  */
 package com.helger.phive.result;
 
-import com.helger.phive.api.source.IValidationSource;
+import org.jspecify.annotations.Nullable;
 
-import jakarta.annotation.Nullable;
+import com.helger.phive.api.source.IValidationSource;
 
 /**
  * Callback interface to restore a {@link IValidationSource} from deserialized

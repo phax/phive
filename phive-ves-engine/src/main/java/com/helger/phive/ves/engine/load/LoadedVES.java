@@ -19,6 +19,9 @@ package com.helger.phive.ves.engine.load;
 import java.util.Collection;
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.concurrent.NotThreadSafe;
@@ -46,9 +49,6 @@ import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * This class represents a single Loaded VES.
  *
@@ -65,10 +65,10 @@ public final class LoadedVES
     private final XMLOffsetDate m_aReleased;
     private final EVESSyntax m_eVESSyntax;
 
-    Header (@Nonnull final DVRCoordinate aVESID,
-            @Nonnull @Nonempty final String sName,
+    Header (@NonNull final DVRCoordinate aVESID,
+            @NonNull @Nonempty final String sName,
             @Nullable final XMLOffsetDate aReleased,
-            @Nonnull final EVESSyntax eVESSyntax)
+            @NonNull final EVESSyntax eVESSyntax)
     {
       ValueEnforcer.notNull (aVESID, "VESID");
       ValueEnforcer.notEmpty (sName, "Name");
@@ -79,13 +79,13 @@ public final class LoadedVES
       m_eVESSyntax = eVESSyntax;
     }
 
-    @Nonnull
+    @NonNull
     public DVRCoordinate getVESID ()
     {
       return m_aVESID;
     }
 
-    @Nonnull
+    @NonNull
     @Nonempty
     public String getName ()
     {
@@ -98,7 +98,7 @@ public final class LoadedVES
       return m_aReleased;
     }
 
-    @Nonnull
+    @NonNull
     public EVESSyntax getVESSyntax ()
     {
       return m_eVESSyntax;
@@ -115,7 +115,7 @@ public final class LoadedVES
   {
     private final ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails = new CommonsTreeMap <> ();
 
-    public void addCustomErrorLevel (@Nonnull final String sID, @Nonnull final CustomErrorDetails aErrorDetail)
+    public void addCustomErrorLevel (@NonNull final String sID, @NonNull final CustomErrorDetails aErrorDetail)
     {
       ValueEnforcer.notNull (sID, "ID");
       ValueEnforcer.notNull (aErrorDetail, "ErrorDetail");
@@ -123,14 +123,14 @@ public final class LoadedVES
       m_aCustomErrorDetails.put (sID, aErrorDetail);
     }
 
-    @Nonnull
+    @NonNull
     @ReturnsMutableCopy
     public ICommonsMap <String, CustomErrorDetails> getAllCustomErrorDetails ()
     {
       return m_aCustomErrorDetails.getClone ();
     }
 
-    @Nonnull
+    @NonNull
     @ReturnsMutableObject
     public ICommonsMap <String, CustomErrorDetails> customErrorDetails ()
     {
@@ -151,9 +151,9 @@ public final class LoadedVES
     private final OutputType m_aOutput;
     private final boolean m_bStopOnError;
 
-    RequiredVES (@Nonnull final DVRCoordinate aRequiredVESID,
-                 @Nonnull final MapBasedNamespaceContext aNSCtx,
-                 @Nonnull final OutputType aOutput,
+    RequiredVES (@NonNull final DVRCoordinate aRequiredVESID,
+                 @NonNull final MapBasedNamespaceContext aNSCtx,
+                 @NonNull final OutputType aOutput,
                  final boolean bStopOnError)
     {
       ValueEnforcer.notNull (aRequiredVESID, "RequiredVESID");
@@ -165,19 +165,19 @@ public final class LoadedVES
       m_bStopOnError = bStopOnError;
     }
 
-    @Nonnull
+    @NonNull
     public DVRCoordinate getRequiredVESID ()
     {
       return m_aRequiredVESID;
     }
 
-    @Nonnull
+    @NonNull
     public MapBasedNamespaceContext getNamespaceContext ()
     {
       return m_aNSCtx;
     }
 
-    @Nonnull
+    @NonNull
     public OutputType getOutput ()
     {
       return m_aOutput;
@@ -196,7 +196,7 @@ public final class LoadedVES
   private LoadedVES m_aLoadedRequires;
   private final ICommonsList <IValidationExecutor <? extends IValidationSource>> m_aExecutors = new CommonsArrayList <> ();
 
-  LoadedVES (@Nonnull final Header aHeader, @Nonnull final IValidationExecutorSetStatus aStatus)
+  LoadedVES (@NonNull final Header aHeader, @NonNull final IValidationExecutorSetStatus aStatus)
   {
     ValueEnforcer.notNull (aHeader, "Header");
     ValueEnforcer.notNull (aStatus, "Status");
@@ -207,7 +207,7 @@ public final class LoadedVES
   /**
    * @return The header of the loaded VES. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public Header getHeader ()
   {
     return m_aHeader;
@@ -216,14 +216,14 @@ public final class LoadedVES
   /**
    * @return The status information of the loaded VES. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public IValidationExecutorSetStatus getStatus ()
   {
     return m_aStatus;
   }
 
-  void setLazyRequires (@Nonnull final RequiredVES aRequirement,
-                        @Nonnull final IVESSpecificDeferredLoader aDeferredLoader)
+  void setLazyRequires (@NonNull final RequiredVES aRequirement,
+                        @NonNull final IVESSpecificDeferredLoader aDeferredLoader)
   {
     ValueEnforcer.notNull (aRequirement, "Requirement");
     ValueEnforcer.notNull (aDeferredLoader, "DeferredLoader");
@@ -234,7 +234,7 @@ public final class LoadedVES
     m_aRequiresLoader = aDeferredLoader;
   }
 
-  void setEagerRequires (@Nonnull final RequiredVES aRequirement, @Nonnull final LoadedVES aLoadedVES)
+  void setEagerRequires (@NonNull final RequiredVES aRequirement, @NonNull final LoadedVES aLoadedVES)
   {
     ValueEnforcer.notNull (aRequirement, "Requirement");
     ValueEnforcer.notNull (aLoadedVES, "LoadedVES");
@@ -267,7 +267,7 @@ public final class LoadedVES
         addExecutor (aExecutor);
   }
 
-  @Nonnull
+  @NonNull
   private LoadedVES _getLoadedVESRequiresNotNull ()
   {
     LoadedVES ret = m_aLoadedRequires;
@@ -285,7 +285,7 @@ public final class LoadedVES
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   private ICommonsList <IValidationExecutor <IValidationSource>> _getValidationExecutorsRecursive ()
   {
@@ -307,7 +307,7 @@ public final class LoadedVES
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   public EValidationExecutorStatusType getExecutorStatusType ()
   {
     // Local status first, because in case of failure, this is a quicker break
@@ -323,9 +323,9 @@ public final class LoadedVES
     return _getLoadedVESRequiresNotNull ().getExecutorStatusType ();
   }
 
-  public void applyValidation (@Nonnull final IValidationSource aValidationSource,
-                               @Nonnull final ValidationResultList aValidationResultList,
-                               @Nonnull final Locale aLocale)
+  public void applyValidation (@NonNull final IValidationSource aValidationSource,
+                               @NonNull final ValidationResultList aValidationResultList,
+                               @NonNull final Locale aLocale)
   {
     ValueEnforcer.notNull (aValidationSource, "ValidationSource");
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");

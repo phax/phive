@@ -16,12 +16,12 @@
  */
 package com.helger.phive.api.validity;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Generic interface for a decision provider for validation results.
@@ -45,8 +45,8 @@ public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
    *        empty.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  EExtendedValidity getValidity (@Nullable IValidationExecutor <SOURCETYPE> aExecutor, @Nonnull IErrorList aErrorList);
+  @NonNull
+  EExtendedValidity getValidity (@Nullable IValidationExecutor <SOURCETYPE> aExecutor, @NonNull IErrorList aErrorList);
 
   /**
    * @return A validity determinator that marks entries with at least one error
@@ -62,7 +62,7 @@ public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
    * @return The default determinator. It's
    *         {@link #createCertainOneErrorInvalid()}
    */
-  @Nonnull
+  @NonNull
   static <ST extends IValidationSource> IValidityDeterminator <ST> createDefault ()
   {
     return createCertainOneErrorInvalid ();

@@ -18,6 +18,9 @@ package com.helger.phive.api.executorset.status;
 
 import java.time.OffsetDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
@@ -25,9 +28,6 @@ import com.helger.base.string.StringHelper;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.diver.api.coord.DVRCoordinate;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Defines the status of a VES.
@@ -41,13 +41,13 @@ public interface IValidationExecutorSetStatus
    * @return The date and time of the last modification of this status. Precision is limited to
    *         milliseconds. May never be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   OffsetDateTime getStatusLastModification ();
 
   /**
    * @return The effective status type. May not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   EValidationExecutorStatusType getType ();
 
   /**
@@ -87,7 +87,7 @@ public interface IValidationExecutorSetStatus
     return isValidPer (PDTFactory.getCurrentOffsetDateTime ());
   }
 
-  default boolean isValidPer (@Nonnull final OffsetDateTime aDT)
+  default boolean isValidPer (@NonNull final OffsetDateTime aDT)
   {
     if (hasValidFrom () && aDT.isBefore (getValidFrom ()))
       return false;
@@ -125,12 +125,12 @@ public interface IValidationExecutorSetStatus
   @Nullable
   DVRCoordinate getReplacementVESID ();
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableObject
   ICommonsList <ValidationExecutorSetStatusHistoryItem> historyItems ();
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   ICommonsList <ValidationExecutorSetStatusHistoryItem> getAllHistoryItems ();

@@ -16,13 +16,13 @@
  */
 package com.helger.phive.api;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * The default implementation of custom {@link IValidationType}.
@@ -39,9 +39,9 @@ public class ValidationType implements IValidationType
   private final boolean m_bStopValidationOnError;
   private final boolean m_bContextRequired;
 
-  public ValidationType (@Nonnull @Nonempty final String sID,
-                         @Nonnull final EValidationBaseType eBaseType,
-                         @Nonnull @Nonempty final String sName,
+  public ValidationType (@NonNull @Nonempty final String sID,
+                         @NonNull final EValidationBaseType eBaseType,
+                         @NonNull @Nonempty final String sName,
                          final boolean bStopValidationOnError,
                          final boolean bContextRequired)
   {
@@ -55,20 +55,20 @@ public class ValidationType implements IValidationType
     m_bContextRequired = bContextRequired;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
     return m_sID;
   }
 
-  @Nonnull
+  @NonNull
   public EValidationBaseType getBaseType ()
   {
     return m_eBaseType;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getName ()
   {

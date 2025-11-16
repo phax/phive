@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -52,16 +53,14 @@ import com.helger.phive.ves.v10.VesType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 
-import jakarta.annotation.Nonnull;
-
 public final class VESLoaderTest
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (VESLoaderTest.class);
   private static IRepoStorageWithToc s_aRepoStorage;
 
-  private static void _addResource (@Nonnull final IRepoStorage aRepo,
-                                    @Nonnull final DVRCoordinate aVESID,
-                                    @Nonnull @Nonempty final IReadableResource aRulesPayload)
+  private static void _addResource (@NonNull final IRepoStorage aRepo,
+                                    @NonNull final DVRCoordinate aVESID,
+                                    @NonNull @Nonempty final IReadableResource aRulesPayload)
   {
     // Create StorageKey
     final String sFileExt = "." + FilenameHelper.getExtension (aRulesPayload.getPath ());
@@ -80,8 +79,8 @@ public final class VESLoaderTest
     assertTrue (eSuccess.isSuccess ());
   }
 
-  private static void _addVES (@Nonnull final IRepoStorageWithToc aRepo,
-                               @Nonnull @Nonempty final IReadableResource aVesPayload)
+  private static void _addVES (@NonNull final IRepoStorageWithToc aRepo,
+                               @NonNull @Nonempty final IReadableResource aVesPayload)
   {
     final ErrorList aErrorList = new ErrorList ();
 

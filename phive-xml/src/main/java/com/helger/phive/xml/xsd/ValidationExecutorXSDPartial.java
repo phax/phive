@@ -24,6 +24,8 @@ import javax.xml.validation.Schema;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXParseException;
 
@@ -46,9 +48,6 @@ import com.helger.phive.xml.source.ValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Implementation of {@link AbstractValidationExecutor} for XML Schema
@@ -74,9 +73,9 @@ public class ValidationExecutorXSDPartial extends
    *        nodes to validate. May not be <code>null</code>.
    * @since 6.0.4
    */
-  public ValidationExecutorXSDPartial (@Nonnull final IValidationArtefact aValidationArtefact,
-                                       @Nonnull final Supplier <? extends Schema> aSchemaProvider,
-                                       @Nonnull final XSDPartialContext aPartialContext)
+  public ValidationExecutorXSDPartial (@NonNull final IValidationArtefact aValidationArtefact,
+                                       @NonNull final Supplier <? extends Schema> aSchemaProvider,
+                                       @NonNull final XSDPartialContext aPartialContext)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
@@ -98,14 +97,14 @@ public class ValidationExecutorXSDPartial extends
    * @return The partial execution context as provided in the constructor. May
    *         not be <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public final XSDPartialContext getContext ()
   {
     return m_aPartialContext;
   }
 
-  @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
+  @NonNull
+  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -193,7 +192,7 @@ public class ValidationExecutorXSDPartial extends
     return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ValidationExecutorXSDPartial getClone ()
   {
@@ -239,9 +238,9 @@ public class ValidationExecutorXSDPartial extends
    *         and uses {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorXSDPartial create (@Nonnull final IReadableResource aXSDRes,
-                                                     @Nonnull final XSDPartialContext aPartialContext)
+  @NonNull
+  public static ValidationExecutorXSDPartial create (@NonNull final IReadableResource aXSDRes,
+                                                     @NonNull final XSDPartialContext aPartialContext)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
     return new ValidationExecutorXSDPartial (new ValidationArtefact (EValidationType.PARTIAL_XSD, aXSDRes),
@@ -262,9 +261,9 @@ public class ValidationExecutorXSDPartial extends
    *         {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorXSDPartial create (@Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes,
-                                                     @Nonnull final XSDPartialContext aPartialContext)
+  @NonNull
+  public static ValidationExecutorXSDPartial create (@NonNull @Nonempty final List <? extends IReadableResource> aXSDRes,
+                                                     @NonNull final XSDPartialContext aPartialContext)
   {
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 

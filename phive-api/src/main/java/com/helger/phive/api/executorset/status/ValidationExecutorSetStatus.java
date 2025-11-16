@@ -18,6 +18,9 @@ package com.helger.phive.api.executorset.status;
 
 import java.time.OffsetDateTime;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
@@ -31,9 +34,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.diver.api.coord.DVRCoordinate;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Defines the status of a VES.
@@ -53,8 +53,8 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   private final DVRCoordinate m_aReplacementVESID;
   private final ICommonsList <ValidationExecutorSetStatusHistoryItem> m_aHistoryItems;
 
-  public ValidationExecutorSetStatus (@Nonnull final OffsetDateTime aStatusLastModDT,
-                                      @Nonnull final EValidationExecutorStatusType eType,
+  public ValidationExecutorSetStatus (@NonNull final OffsetDateTime aStatusLastModDT,
+                                      @NonNull final EValidationExecutorStatusType eType,
                                       @Nullable final OffsetDateTime aValidFrom,
                                       @Nullable final OffsetDateTime aValidTo,
                                       @Nullable final String sDeprecationReason,
@@ -73,13 +73,13 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     m_aHistoryItems = new CommonsArrayList <> (aHistoryItems);
   }
 
-  @Nonnull
+  @NonNull
   public final OffsetDateTime getStatusLastModification ()
   {
     return m_aStatusLastModDT;
   }
 
-  @Nonnull
+  @NonNull
   public final EValidationExecutorStatusType getType ()
   {
     return m_eType;
@@ -109,7 +109,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     return m_aReplacementVESID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableObject
   public ICommonsList <ValidationExecutorSetStatusHistoryItem> historyItems ()
@@ -117,7 +117,7 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     return m_aHistoryItems;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   @ReturnsMutableCopy
   public ICommonsList <ValidationExecutorSetStatusHistoryItem> getAllHistoryItems ()
@@ -169,26 +169,26 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
                                        .getToString ();
   }
 
-  @Nonnull
+  @NonNull
   public static ValidationExecutorSetStatus createValidNow ()
   {
     return createDeprecatedNow (false);
   }
 
-  @Nonnull
-  public static ValidationExecutorSetStatus createValidAt (@Nonnull final OffsetDateTime aStatusLastModDT)
+  @NonNull
+  public static ValidationExecutorSetStatus createValidAt (@NonNull final OffsetDateTime aStatusLastModDT)
   {
     return createDeprecated (aStatusLastModDT, false);
   }
 
-  @Nonnull
+  @NonNull
   public static ValidationExecutorSetStatus createDeprecatedNow (final boolean bDeprecated)
   {
     return createDeprecated (PDTFactory.getCurrentOffsetDateTime (), bDeprecated);
   }
 
-  @Nonnull
-  public static ValidationExecutorSetStatus createDeprecated (@Nonnull final OffsetDateTime aStatusLastModDT,
+  @NonNull
+  public static ValidationExecutorSetStatus createDeprecated (@NonNull final OffsetDateTime aStatusLastModDT,
                                                               final boolean bDeprecated)
   {
     return new ValidationExecutorSetStatus (aStatusLastModDT,

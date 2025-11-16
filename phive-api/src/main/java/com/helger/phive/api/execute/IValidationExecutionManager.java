@@ -18,13 +18,13 @@ package com.helger.phive.api.execute;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.base.state.EValidity;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.IValidityDeterminator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Interface for an execution manager that applies a set of rules onto an object
@@ -39,7 +39,7 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
   /**
    * @return The validity determinator to be used. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IValidityDeterminator <SOURCETYPE> getValidityDeterminator ();
 
   /**
@@ -53,8 +53,8 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    *         contained executor a result is added to the result list.
    * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
-  @Nonnull
-  default ValidationResultList executeValidation (@Nonnull final SOURCETYPE aSource)
+  @NonNull
+  default ValidationResultList executeValidation (@NonNull final SOURCETYPE aSource)
   {
     return executeValidation (aSource, (Locale) null);
   }
@@ -71,8 +71,8 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    *         contained executor a result is added to the result list.
    * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
-  @Nonnull
-  default ValidationResultList executeValidation (@Nonnull final SOURCETYPE aSource, @Nullable final Locale aLocale)
+  @NonNull
+  default ValidationResultList executeValidation (@NonNull final SOURCETYPE aSource, @Nullable final Locale aLocale)
   {
     final ValidationResultList ret = new ValidationResultList (aSource);
     executeValidation (aSource, ret, aLocale);
@@ -93,8 +93,8 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    *        <code>null</code> to use the system default locale.
    * @see #executeValidation(IValidationSource, Locale)
    */
-  void executeValidation (@Nonnull SOURCETYPE aSource,
-                          @Nonnull ValidationResultList aValidationResults,
+  void executeValidation (@NonNull SOURCETYPE aSource,
+                          @NonNull ValidationResultList aValidationResults,
                           @Nullable Locale aLocale);
 
   /**
@@ -106,6 +106,6 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    *         {@link EValidity#INVALID} if the document is invalid. Never
    *         <code>null</code>.
    */
-  @Nonnull
-  EValidity executeFastValidation (@Nonnull SOURCETYPE aSource);
+  @NonNull
+  EValidity executeFastValidation (@NonNull SOURCETYPE aSource);
 }

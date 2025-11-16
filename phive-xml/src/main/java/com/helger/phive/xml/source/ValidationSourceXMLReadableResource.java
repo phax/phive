@@ -18,12 +18,12 @@ package com.helger.phive.xml.source;
 
 import javax.xml.transform.Source;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.resource.IReadableResource;
 import com.helger.xml.serialize.read.DOMReader;
 import com.helger.xml.transform.TransformSourceFactory;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Special ValidationSourceXML based on a complete {@link IReadableResource}.
@@ -35,21 +35,21 @@ public class ValidationSourceXMLReadableResource extends ValidationSourceXML
 {
   private final IReadableResource m_aResource;
 
-  public ValidationSourceXMLReadableResource (@Nonnull final IReadableResource aResource)
+  public ValidationSourceXMLReadableResource (@NonNull final IReadableResource aResource)
   {
     // Read on demand only
     super (aResource.getPath (), () -> DOMReader.readXMLDOM (aResource), false);
     m_aResource = aResource;
   }
 
-  @Nonnull
+  @NonNull
   public final IReadableResource getResource ()
   {
     return m_aResource;
   }
 
   @Override
-  @Nonnull
+  @NonNull
   public Source getAsTransformSource ()
   {
     // Use resource as TransformSource to get error line and column

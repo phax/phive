@@ -16,14 +16,14 @@
  */
 package com.helger.phive.api.artefact;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.hashcode.HashCodeGenerator;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.IValidationType;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Stand-alone implementation of {@link IValidationArtefact}
@@ -44,19 +44,19 @@ public class ValidationArtefact implements IValidationArtefact
    * @param aResource
    *        The resource this reflects. May not be <code>null</code>.
    */
-  public ValidationArtefact (@Nonnull final IValidationType eValidationArtefactType, @Nonnull final IReadableResource aResource)
+  public ValidationArtefact (@NonNull final IValidationType eValidationArtefactType, @NonNull final IReadableResource aResource)
   {
     m_aValidationArtefactType = ValueEnforcer.notNull (eValidationArtefactType, "ValidationArtefactType");
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
   }
 
-  @Nonnull
+  @NonNull
   public IValidationType getValidationType ()
   {
     return m_aValidationArtefactType;
   }
 
-  @Nonnull
+  @NonNull
   public IReadableResource getRuleResource ()
   {
     return m_aResource;

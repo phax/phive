@@ -16,12 +16,12 @@
  */
 package com.helger.phive.api.executorset.status;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Defines the overall status of a validation executor.
@@ -51,12 +51,12 @@ public enum EValidationExecutorStatusType implements IHasID <String>
 
   private final String m_sID;
 
-  EValidationExecutorStatusType (@Nonnull @Nonempty final String sID)
+  EValidationExecutorStatusType (@NonNull @Nonempty final String sID)
   {
     m_sID = sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

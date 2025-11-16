@@ -16,18 +16,18 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSourceBinary;
 import com.helger.phive.ves.v10.VesEdifactType;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
- * This interface is used by {@link VESLoader} create an
- * {@link IValidationExecutor} from the VES Edifact requirements.
+ * This interface is used by {@link VESLoader} create an {@link IValidationExecutor} from the VES
+ * Edifact requirements.
  *
  * @author Philip Helger
  */
@@ -39,23 +39,21 @@ public interface IVESLoaderEdifact
    * @param aRepo
    *        The repository to load the data from. May not be <code>null</code>.
    * @param aEDI
-   *        The JAXB VES Edifact object with the details. May not be
-   *        <code>null</code>.
+   *        The JAXB VES Edifact object with the details. May not be <code>null</code>.
    * @param aLoadingRequiredVES
-   *        In case the loading was recursively triggered via a "requires"
-   *        (=include), this is the data of the requirements. May be
-   *        <code>null</code>.
+   *        In case the loading was recursively triggered via a "requires" (=include), this is the
+   *        data of the requirements. May be <code>null</code>.
    * @param aErrorList
    *        The error list to be filled. May not be <code>null</code>.
    * @param aAsyncLoader
-   *        The callback to be invoked, if loading this artefacts needs to
-   *        trigger the loading of another artefact.
+   *        The callback to be invoked, if loading this artefacts needs to trigger the loading of
+   *        another artefact.
    * @return The validation executor to be used. May not be <code>null</code>.
    */
-  @Nonnull
-  IValidationExecutor <IValidationSourceBinary> loadEdifact (@Nonnull IRepoStorageBase aRepo,
-                                                             @Nonnull VesEdifactType aEDI,
-                                                             @Nullable LoadedVES.RequiredVES aLoadingRequiredVES,
-                                                             @Nonnull ErrorList aErrorList,
-                                                             @Nonnull IVESAsyncLoader aAsyncLoader);
+  @NonNull
+  IValidationExecutor <IValidationSourceBinary> loadEdifact (@NonNull IRepoStorageBase aRepo,
+                                                             @NonNull VesEdifactType aEDI,
+                                                             LoadedVES.@Nullable RequiredVES aLoadingRequiredVES,
+                                                             @NonNull ErrorList aErrorList,
+                                                             @NonNull IVESAsyncLoader aAsyncLoader);
 }

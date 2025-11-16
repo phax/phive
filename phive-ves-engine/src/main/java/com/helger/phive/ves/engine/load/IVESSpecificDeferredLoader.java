@@ -16,9 +16,9 @@
  */
 package com.helger.phive.ves.engine.load;
 
-import com.helger.diagnostics.error.list.ErrorList;
+import org.jspecify.annotations.NonNull;
 
-import jakarta.annotation.Nonnull;
+import com.helger.diagnostics.error.list.ErrorList;
 
 /**
  * Internal helper interface
@@ -35,6 +35,6 @@ interface IVESSpecificDeferredLoader
    *        The error list to be filled. May not be <code>null</code>.
    * @return The loaded VES object. Never <code>null</code>.
    */
-  @Nonnull
-  LoadedVES deferredLoad (@Nonnull ErrorList aErrorList);
+  @NonNull
+  LoadedVES deferredLoad (@NonNull ErrorList aErrorList);
 }

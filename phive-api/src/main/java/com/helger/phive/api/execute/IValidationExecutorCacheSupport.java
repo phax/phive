@@ -16,7 +16,7 @@
  */
 package com.helger.phive.api.execute;
 
-import jakarta.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 /**
  * Interface for validation executors that support caching. Each implementation
@@ -43,7 +43,7 @@ public interface IValidationExecutorCacheSupport
    *        it.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   IValidationExecutorCacheSupport setCacheArtefact (boolean bCacheArtefact);
 
   /**

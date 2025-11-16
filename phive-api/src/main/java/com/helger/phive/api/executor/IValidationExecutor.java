@@ -18,14 +18,14 @@ package com.helger.phive.api.executor;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.base.clone.ICloneable;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Base interface for performing validation of a single document based on the
@@ -43,7 +43,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource> exte
    * @return The validation artefact used to validate the document. Never
    *         <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IValidationArtefact getValidationArtefact ();
 
   /**
@@ -63,6 +63,6 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource> exte
    *        <code>null</code> in which case the system default locale is used.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  ValidationResult applyValidation (@Nonnull SOURCETYPE aSource, @Nullable Locale aLocale);
+  @NonNull
+  ValidationResult applyValidation (@NonNull SOURCETYPE aSource, @Nullable Locale aLocale);
 }

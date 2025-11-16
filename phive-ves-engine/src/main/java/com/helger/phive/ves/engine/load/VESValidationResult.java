@@ -19,14 +19,14 @@ package com.helger.phive.ves.engine.load;
 import java.time.Duration;
 import java.time.OffsetDateTime;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * This class contains the collected validation results, including metadata on
@@ -61,12 +61,12 @@ public final class VESValidationResult
    * @param aValidationResultList
    *        The validation result list. May not be <code>null</code>.
    */
-  public VESValidationResult (@Nonnull final DVRCoordinate aVESID,
-                              @Nonnull final IValidationSource aValidationSource,
-                              @Nonnull final OffsetDateTime aStartDateTime,
-                              @Nonnull final Duration aLoadingDuration,
-                              @Nonnull final Duration aValidationDuration,
-                              @Nonnull final ValidationResultList aValidationResultList)
+  public VESValidationResult (@NonNull final DVRCoordinate aVESID,
+                              @NonNull final IValidationSource aValidationSource,
+                              @NonNull final OffsetDateTime aStartDateTime,
+                              @NonNull final Duration aLoadingDuration,
+                              @NonNull final Duration aValidationDuration,
+                              @NonNull final ValidationResultList aValidationResultList)
   {
     ValueEnforcer.notNull (aVESID, "VESID");
     ValueEnforcer.notNull (aValidationSource, "ValidationSource");
@@ -82,37 +82,37 @@ public final class VESValidationResult
     m_aValidationResultList = aValidationResultList;
   }
 
-  @Nonnull
+  @NonNull
   public DVRCoordinate getVESID ()
   {
     return m_aVESID;
   }
 
-  @Nonnull
+  @NonNull
   public IValidationSource getValidationSource ()
   {
     return m_aValidationSource;
   }
 
-  @Nonnull
+  @NonNull
   public OffsetDateTime getStartDateTime ()
   {
     return m_aStartDateTime;
   }
 
-  @Nonnull
+  @NonNull
   public Duration getLoadingDuration ()
   {
     return m_aLoadingDuration;
   }
 
-  @Nonnull
+  @NonNull
   public Duration getValidationDuration ()
   {
     return m_aValidationDuration;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   public ValidationResultList getValidationResultList ()
   {

@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,9 +51,6 @@ import com.helger.diver.api.version.IDVRPseudoVersion;
 import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A registry for {@link IValidationExecutorSet} objects. This class is thread-safe and can
@@ -98,14 +97,14 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   /**
    * @return the internal map. Never <code>null</code>. Must be locked properly.
    */
-  @Nonnull
+  @NonNull
   @MustBeLocked (ELockType.DEPENDS)
   protected final ICommonsMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> internalMap ()
   {
     return m_aMap;
   }
 
-  public void registerValidationExecutorSet (@Nonnull final IValidationExecutorSet <SOURCETYPE> aVES)
+  public void registerValidationExecutorSet (@NonNull final IValidationExecutorSet <SOURCETYPE> aVES)
   {
     ValueEnforcer.notNull (aVES, "VES");
 
@@ -128,7 +127,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                     " elements");
   }
 
-  @Nonnull
+  @NonNull
   public EChange unregisterValidationExecutorSet (@Nullable final DVRCoordinate aDVRCoordinate)
   {
     if (aDVRCoordinate == null)
@@ -143,22 +142,22 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     return ret;
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutorSet <SOURCETYPE>> getAll ()
   {
     return m_aRWLock.readLockedGet (m_aMap::copyOfValues);
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  public ICommonsList <IValidationExecutorSet <SOURCETYPE>> findAll (@Nonnull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
+  public ICommonsList <IValidationExecutorSet <SOURCETYPE>> findAll (@NonNull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
   {
     return m_aRWLock.readLockedGet ( () -> m_aMap.copyOfValues (aFilter));
   }
 
   @Nullable
-  public IValidationExecutorSet <SOURCETYPE> findFirst (@Nonnull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
+  public IValidationExecutorSet <SOURCETYPE> findFirst (@NonNull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
   {
     return m_aRWLock.readLockedGet ( () -> m_aMap.findFirstValue (e -> aFilter.test (e.getValue ())));
   }
@@ -166,7 +165,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   @Nullable
   private ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> _getAllMatchingVES (@Nullable final String sGroupID,
                                                                                                         @Nullable final String sArtifactID,
-                                                                                                        @Nonnull final Predicate <DVRVersion> aVersionsToAccept,
+                                                                                                        @NonNull final Predicate <DVRVersion> aVersionsToAccept,
                                                                                                         @Nullable final Comparator <DVRCoordinate> aComparator)
   {
     if (StringHelper.isEmpty (sGroupID))
@@ -423,7 +422,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
    * @return {@link EChange}
    * @see #removeAll(boolean)
    */
-  @Nonnull
+  @NonNull
   public EChange removeAll ()
   {
     return removeAll (true);
@@ -442,7 +441,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
    * @return {@link EChange}
    * @since 6.0.1
    */
-  @Nonnull
+  @NonNull
   public EChange removeAll (final boolean bCleanVES)
   {
     EChange ret = EChange.UNCHANGED;

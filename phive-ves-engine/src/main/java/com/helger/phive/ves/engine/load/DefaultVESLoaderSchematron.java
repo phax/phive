@@ -18,6 +18,8 @@ package com.helger.phive.ves.engine.load;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,9 +48,6 @@ import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * The default implementation of {@link IVESLoaderSchematron} for Schematron validation.
  *
@@ -63,12 +62,12 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
 
-  @Nonnull
-  public ICommonsList <IValidationExecutor <IValidationSourceXML>> loadSchematrons (@Nonnull final IRepoStorageBase aRepo,
-                                                                                    @Nonnull final List <VesSchematronType> aSCHList,
-                                                                                    @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
-                                                                                    @Nonnull final ErrorList aErrorList,
-                                                                                    @Nonnull final IVESAsyncLoader aAsyncLoader)
+  @NonNull
+  public ICommonsList <IValidationExecutor <IValidationSourceXML>> loadSchematrons (@NonNull final IRepoStorageBase aRepo,
+                                                                                    @NonNull final List <VesSchematronType> aSCHList,
+                                                                                    final LoadedVES.@Nullable RequiredVES aLoadingRequiredVES,
+                                                                                    @NonNull final ErrorList aErrorList,
+                                                                                    @NonNull final IVESAsyncLoader aAsyncLoader)
   {
     ValueEnforcer.notNull (aRepo, "Repo");
     ValueEnforcer.notEmptyNoNullValue (aSCHList, "SCHList");
@@ -123,20 +122,13 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
             continue;
           }
 
-          switch (eEngine)
+          aExecutorSCH = switch (eEngine)
           {
-            case PURE:
-              aExecutorSCH = ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
-              break;
-            case ISO_SCHEMATRON:
-              aExecutorSCH = ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
-              break;
-            case SCHXSLT:
-              aExecutorSCH = ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
-              break;
-            default:
-              throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
-          }
+            case PURE -> ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
+            case ISO_SCHEMATRON -> ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
+            case SCHXSLT -> ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
+            default -> throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
+          };
           break;
         }
         case RESOURCE_TYPE_XSLT:

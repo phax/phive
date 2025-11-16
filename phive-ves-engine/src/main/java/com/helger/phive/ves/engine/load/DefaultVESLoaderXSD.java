@@ -25,6 +25,8 @@ import java.util.zip.ZipInputStream;
 
 import javax.xml.validation.Schema;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.ls.LSResourceResolver;
@@ -63,9 +65,6 @@ import com.helger.phive.xml.xsd.ValidationExecutorXSD;
 import com.helger.xml.ls.SimpleLSResourceResolver;
 import com.helger.xml.schema.XMLSchemaCache;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * The default implementation of {@link IVESLoaderXSD} for XML Schema validation.
  *
@@ -94,12 +93,12 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
     return ret;
   }
 
-  @Nonnull
-  public IValidationExecutor <IValidationSourceXML> loadXSD (@Nonnull final IRepoStorageBase aRepo,
-                                                             @Nonnull final VesXsdType aXSD,
-                                                             @Nullable final LoadedVES.RequiredVES aLoadingRequiredVES,
-                                                             @Nonnull final ErrorList aErrorList,
-                                                             @Nonnull final IVESAsyncLoader aAsyncLoader)
+  @NonNull
+  public IValidationExecutor <IValidationSourceXML> loadXSD (@NonNull final IRepoStorageBase aRepo,
+                                                             @NonNull final VesXsdType aXSD,
+                                                             final LoadedVES.@Nullable RequiredVES aLoadingRequiredVES,
+                                                             @NonNull final ErrorList aErrorList,
+                                                             @NonNull final IVESAsyncLoader aAsyncLoader)
   {
     ValueEnforcer.notNull (aRepo, "Repo");
     ValueEnforcer.notNull (aXSD, "XSD");
@@ -126,9 +125,8 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       for (final Object aItem : aXSD.getCatalog ().getPublicOrSystem ())
       {
         final VESCatalogEntry aEntry;
-        if (aItem instanceof VesXsdCatalogItemPublicType)
+        if (aItem instanceof final VesXsdCatalogItemPublicType aPublic)
         {
-          final VesXsdCatalogItemPublicType aPublic = (VesXsdCatalogItemPublicType) aItem;
           aEntry = new VESCatalogEntry (EVESCatalogType.PUBLIC,
                                         aPublic.getUri (),
                                         VESLoader.createRepoStorageKey (aPublic.getResource ()));
@@ -287,7 +285,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         final LSResourceResolver aResResolver = new SimpleLSResourceResolver ()
         {
           @Override
-          protected IReadableResource internalResolveResource (@Nonnull @Nonempty final String sType,
+          protected IReadableResource internalResolveResource (@NonNull @Nonempty final String sType,
                                                                @Nullable final String sNamespaceURI,
                                                                @Nullable final String sPublicId,
                                                                @Nullable final String sSystemId,

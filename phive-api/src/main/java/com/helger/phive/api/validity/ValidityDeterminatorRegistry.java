@@ -16,11 +16,11 @@
  */
 package com.helger.phive.api.validity;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.diagnostics.error.list.IErrorList;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Helper class for validity determination implementations
@@ -43,8 +43,8 @@ public final class ValidityDeterminatorRegistry
    *        The error list to scan. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
-  @Nonnull
-  public static EExtendedValidity getValidityOneErrorInvalid (@Nonnull final IErrorList aErrorList)
+  @NonNull
+  public static EExtendedValidity getValidityOneErrorInvalid (@NonNull final IErrorList aErrorList)
   {
     ValueEnforcer.notNull (aErrorList, "ErrorList");
     return aErrorList.containsAtLeastOneError () ? EExtendedValidity.INVALID : EExtendedValidity.VALID;

@@ -19,12 +19,12 @@ package com.helger.phive.api.source;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.WillNotClose;
 import com.helger.base.string.StringHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Abstract validation source interface. This represents an object to be validated.
@@ -37,7 +37,7 @@ public interface IValidationSource
    * @return The validation source type ID. Neither <code>null</code> nor empty.
    * @since 10.1.0
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   String getValidationSourceTypeID ();
 
@@ -72,5 +72,5 @@ public interface IValidationSource
    *         In case writing fails
    * @since 10.1.0
    */
-  void writeTo (@Nonnull @WillNotClose OutputStream aOS) throws IOException;
+  void writeTo (@NonNull @WillNotClose OutputStream aOS) throws IOException;
 }

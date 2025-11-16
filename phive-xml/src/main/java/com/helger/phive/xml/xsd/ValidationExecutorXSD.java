@@ -22,6 +22,8 @@ import java.util.function.Supplier;
 
 import javax.xml.validation.Schema;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.xml.sax.SAXParseException;
 
 import com.helger.annotation.Nonempty;
@@ -45,9 +47,6 @@ import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
  * Implementation of {@link AbstractValidationExecutor} for XML Schema
  * validation.
@@ -58,8 +57,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
 {
   private final Supplier <? extends Schema> m_aSchemaProvider;
 
-  public ValidationExecutorXSD (@Nonnull final IValidationArtefact aValidationArtefact,
-                                @Nonnull final Supplier <? extends Schema> aSchemaProvider)
+  public ValidationExecutorXSD (@NonNull final IValidationArtefact aValidationArtefact,
+                                @NonNull final Supplier <? extends Schema> aSchemaProvider)
   {
     super (aValidationArtefact);
     ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
@@ -73,14 +72,14 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     setStopValidationOnError (true);
   }
 
-  @Nonnull
+  @NonNull
   public final Supplier <? extends Schema> getSchemaProvider ()
   {
     return m_aSchemaProvider;
   }
 
-  @Nonnull
-  public ValidationResult applyValidation (@Nonnull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
+  @NonNull
+  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
     final IValidationArtefact aVA = getValidationArtefact ();
@@ -119,7 +118,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
   }
 
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ValidationExecutorXSD getClone ()
   {
@@ -156,8 +155,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    * @return A new validator that uses the supplied resource for the filename
    *         and uses {@link XMLSchemaCache} to resolve the XML Schema object.
    */
-  @Nonnull
-  public static ValidationExecutorXSD create (@Nonnull final IReadableResource aXSDRes)
+  @NonNull
+  public static ValidationExecutorXSD create (@NonNull final IReadableResource aXSDRes)
   {
     ValueEnforcer.notNull (aXSDRes, "XSDRes");
     return new ValidationExecutorXSD (new ValidationArtefact (EValidationType.XSD, aXSDRes),
@@ -174,8 +173,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    *         {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorXSD create (@Nonnull @Nonempty final IReadableResource... aXSDRes)
+  @NonNull
+  public static ValidationExecutorXSD create (@NonNull @Nonempty final IReadableResource... aXSDRes)
   {
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 
@@ -194,8 +193,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    *         {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4
    */
-  @Nonnull
-  public static ValidationExecutorXSD create (@Nonnull @Nonempty final List <? extends IReadableResource> aXSDRes)
+  @NonNull
+  public static ValidationExecutorXSD create (@NonNull @Nonempty final List <? extends IReadableResource> aXSDRes)
   {
     ValueEnforcer.notEmptyNoNullValue (aXSDRes, "XSDRes");
 

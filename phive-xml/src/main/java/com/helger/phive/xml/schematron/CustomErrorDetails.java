@@ -16,14 +16,14 @@
  */
 package com.helger.phive.xml.schematron;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.diagnostics.error.level.IErrorLevel;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * This class contains the details for a single custom error.
@@ -37,7 +37,7 @@ public final class CustomErrorDetails
   private final String m_sErrorTextPrefix;
   private final String m_sErrorTextSuffix;
 
-  public CustomErrorDetails (@Nonnull final IErrorLevel aErrorLevel,
+  public CustomErrorDetails (@NonNull final IErrorLevel aErrorLevel,
                              @Nullable final String sErrorTextPrefix,
                              @Nullable final String sErrorTextSuffix)
   {
@@ -47,7 +47,7 @@ public final class CustomErrorDetails
     m_sErrorTextSuffix = sErrorTextSuffix;
   }
 
-  @Nonnull
+  @NonNull
   public IErrorLevel getErrorLevel ()
   {
     return m_aErrorLevel;
@@ -80,8 +80,8 @@ public final class CustomErrorDetails
     return hasErrorTextPrefix () || hasErrorTextSuffix ();
   }
 
-  @Nonnull
-  public String getWithErrorTextPrefixAndSuffixApplied (@Nonnull final String s)
+  @NonNull
+  public String getWithErrorTextPrefixAndSuffixApplied (@NonNull final String s)
   {
     String ret;
     if (hasErrorTextPrefix ())
@@ -102,8 +102,8 @@ public final class CustomErrorDetails
                                        .getToString ();
   }
 
-  @Nonnull
-  public static CustomErrorDetails of (@Nonnull final IErrorLevel aErrorLevel)
+  @NonNull
+  public static CustomErrorDetails of (@NonNull final IErrorLevel aErrorLevel)
   {
     return new CustomErrorDetails (aErrorLevel, null, null);
   }

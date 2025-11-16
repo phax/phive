@@ -16,14 +16,14 @@
  */
 package com.helger.phive.ves.engine.load.catalog;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.id.IHasID;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.diver.repo.RepoStorageKeyOfArtefact;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Represent a single XML catalog entry
@@ -37,9 +37,9 @@ public final class VESCatalogEntry implements IHasID <String>
   private final String m_sUriOrID;
   private final RepoStorageKeyOfArtefact m_aResourceKey;
 
-  public VESCatalogEntry (@Nonnull final EVESCatalogType eType,
-                          @Nonnull @Nonempty final String sUriOrID,
-                          @Nonnull final RepoStorageKeyOfArtefact aResourceKey)
+  public VESCatalogEntry (@NonNull final EVESCatalogType eType,
+                          @NonNull @Nonempty final String sUriOrID,
+                          @NonNull final RepoStorageKeyOfArtefact aResourceKey)
   {
     ValueEnforcer.notNull (eType, "Type");
     ValueEnforcer.notEmpty (sUriOrID, "ID");
@@ -52,7 +52,7 @@ public final class VESCatalogEntry implements IHasID <String>
   /**
    * @return The catalog entry type. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public EVESCatalogType getType ()
   {
     return m_eType;
@@ -61,7 +61,7 @@ public final class VESCatalogEntry implements IHasID <String>
   /**
    * @return The catalog ID or URI. Neither <code>null</code> nor empty.
    */
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {
@@ -71,7 +71,7 @@ public final class VESCatalogEntry implements IHasID <String>
   /**
    * @return The repository key. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   public RepoStorageKeyOfArtefact getRepoStorageKey ()
   {
     return m_aResourceKey;

@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.executor;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.base.enforce.ValueEnforcer;
@@ -26,8 +28,6 @@ import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Abstract base implementation of {@link IValidationExecutor}.
@@ -47,7 +47,7 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
   private final IValidationArtefact m_aValidationArtefact;
   private boolean m_bStopValidationOnError;
 
-  public AbstractValidationExecutor (@Nonnull final IValidationArtefact aValidationArtefact)
+  public AbstractValidationExecutor (@NonNull final IValidationArtefact aValidationArtefact)
   {
     ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
 
@@ -55,7 +55,7 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
     m_bStopValidationOnError = aValidationArtefact.getValidationType ().isStopValidationOnError ();
   }
 
-  @Nonnull
+  @NonNull
   public final IValidationArtefact getValidationArtefact ()
   {
     return m_aValidationArtefact;
@@ -75,15 +75,15 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
    *        continue anyway.
    * @return this for chaining
    */
-  @Nonnull
+  @NonNull
   public final IMPLTYPE setStopValidationOnError (final boolean bStopValidationOnError)
   {
     m_bStopValidationOnError = bStopValidationOnError;
     return thisAsT ();
   }
 
-  @Nonnull
-  protected final ValidationResult createValidationResult (@Nonnull final IErrorList aErrorList,
+  @NonNull
+  protected final ValidationResult createValidationResult (@NonNull final IErrorList aErrorList,
                                                            @Nonnegative final long nDurationMS)
   {
     return new ValidationResult (m_aValidationArtefact, aErrorList, nDurationMS);

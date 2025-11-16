@@ -16,12 +16,12 @@
  */
 package com.helger.phive.api.validity;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.base.id.IHasID;
 import com.helger.base.lang.EnumHelper;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Extended validity to indicate whether a result is either
@@ -50,12 +50,12 @@ public enum EExtendedValidity implements IHasID <String>
 
   private final String m_sID;
 
-  EExtendedValidity (@Nonnull @Nonempty final String sID)
+  EExtendedValidity (@NonNull @Nonempty final String sID)
   {
     m_sID = sID;
   }
 
-  @Nonnull
+  @NonNull
   @Nonempty
   public String getID ()
   {

@@ -19,6 +19,8 @@ package com.helger.phive.api.diver;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,9 +39,6 @@ import com.helger.phive.api.config.PhivePseudoVersionRegistrarSPIImpl;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSetRegistry;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Default {@link IGenericPseudoVersionResolver} implementation based on a
@@ -66,8 +65,8 @@ public class DefaultGenericPseudoVersionResolver <SOURCETYPE extends IValidation
   public interface INestedPseudoVersionResolver <SOURCETYPE extends IValidationSource>
   {
     @Nullable
-    IValidationExecutorSet <SOURCETYPE> resolve (@Nonnull @Nonempty String sGroupID,
-                                                 @Nonnull @Nonempty String sArtifactID,
+    IValidationExecutorSet <SOURCETYPE> resolve (@NonNull @Nonempty String sGroupID,
+                                                 @NonNull @Nonempty String sArtifactID,
                                                  @Nullable Set <String> aVersionsToIgnore,
                                                  @Nullable OffsetDateTime aCheckDateTime);
   }
@@ -78,7 +77,7 @@ public class DefaultGenericPseudoVersionResolver <SOURCETYPE extends IValidation
   @GuardedBy ("m_aRWLock")
   private final ICommonsMap <IDVRPseudoVersion, INestedPseudoVersionResolver <SOURCETYPE>> m_aMap = new CommonsHashMap <> ();
 
-  public DefaultGenericPseudoVersionResolver (@Nonnull final ValidationExecutorSetRegistry <SOURCETYPE> aVESRegistry)
+  public DefaultGenericPseudoVersionResolver (@NonNull final ValidationExecutorSetRegistry <SOURCETYPE> aVESRegistry)
   {
     ValueEnforcer.notNull (aVESRegistry, "VESRegistry");
     registerResolver (DVRPseudoVersionRegistry.OLDEST,
@@ -92,9 +91,9 @@ public class DefaultGenericPseudoVersionResolver <SOURCETYPE extends IValidation
                       aVESRegistry::getLatestReleaseActiveVersion);
   }
 
-  @Nonnull
-  public final ESuccess registerResolver (@Nonnull final IDVRPseudoVersion aPseudoVersion,
-                                          @Nonnull final INestedPseudoVersionResolver <SOURCETYPE> aNestedResolver)
+  @NonNull
+  public final ESuccess registerResolver (@NonNull final IDVRPseudoVersion aPseudoVersion,
+                                          @NonNull final INestedPseudoVersionResolver <SOURCETYPE> aNestedResolver)
   {
     ValueEnforcer.notNull (aPseudoVersion, "PseudoVersion");
     ValueEnforcer.notNull (aNestedResolver, "NestedResolver");
@@ -112,9 +111,9 @@ public class DefaultGenericPseudoVersionResolver <SOURCETYPE extends IValidation
   }
 
   @Nullable
-  public IValidationExecutorSet <SOURCETYPE> resolvePseudoVersion (@Nonnull final IDVRPseudoVersion aPseudoVersion,
-                                                                   @Nonnull @Nonempty final String sGroupID,
-                                                                   @Nonnull @Nonempty final String sArtifactID,
+  public IValidationExecutorSet <SOURCETYPE> resolvePseudoVersion (@NonNull final IDVRPseudoVersion aPseudoVersion,
+                                                                   @NonNull @Nonempty final String sGroupID,
+                                                                   @NonNull @Nonempty final String sArtifactID,
                                                                    @Nullable final Set <String> aVersionsToIgnore,
                                                                    @Nullable final OffsetDateTime aCheckDateTime)
   {

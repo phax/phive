@@ -18,6 +18,8 @@ package com.helger.phive.api.execute;
 
 import java.util.Locale;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,9 +38,6 @@ import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.api.validity.IValidityDeterminator;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Execute multiple {@link IValidationExecutor}s at once. It is basically a chain of validators with
@@ -64,7 +63,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @param aValidityDeterminator
    *        The validity determinator to be used. May not be <code>null</code>.
    */
-  public ValidationExecutionManager (@Nonnull final IValidityDeterminator <SOURCETYPE> aValidityDeterminator)
+  public ValidationExecutionManager (@NonNull final IValidityDeterminator <SOURCETYPE> aValidityDeterminator)
   {
     ValueEnforcer.notNull (aValidityDeterminator, "ValidityDeterminator");
     m_aValidityDeterminator = aValidityDeterminator;
@@ -79,14 +78,14 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    *        The executors to be added. May be <code>null</code> but may not contain
    *        <code>null</code> values.
    */
-  public ValidationExecutionManager (@Nonnull final IValidityDeterminator <SOURCETYPE> aValidityDeterminator,
+  public ValidationExecutionManager (@NonNull final IValidityDeterminator <SOURCETYPE> aValidityDeterminator,
                                      @Nullable final Iterable <? extends IValidationExecutor <SOURCETYPE>> aExecutors)
   {
     this (aValidityDeterminator);
     addExecutors (aExecutors);
   }
 
-  @Nonnull
+  @NonNull
   public final IValidityDeterminator <SOURCETYPE> getValidityDeterminator ()
   {
     return m_aValidityDeterminator;
@@ -100,8 +99,8 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @return this for chaining
    * @see #addExecutors(Iterable)
    */
-  @Nonnull
-  public final ValidationExecutionManager <SOURCETYPE> addExecutor (@Nonnull final IValidationExecutor <SOURCETYPE> aExecutor)
+  @NonNull
+  public final ValidationExecutionManager <SOURCETYPE> addExecutor (@NonNull final IValidationExecutor <SOURCETYPE> aExecutor)
   {
     ValueEnforcer.notNull (aExecutor, "Executor");
     m_aExecutors.add (aExecutor);
@@ -117,7 +116,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @return this for chaining
    * @see #addExecutor(IValidationExecutor)
    */
-  @Nonnull
+  @NonNull
   public final ValidationExecutionManager <SOURCETYPE> addExecutors (@Nullable final Iterable <? extends IValidationExecutor <SOURCETYPE>> aExecutors)
   {
     if (aExecutors != null)
@@ -138,7 +137,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
   /**
    * @return A copy of the list of the contained executors. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ()
   {
@@ -149,14 +148,14 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @return A read-only iterable with all contained executors. The only difference to
    *         {@link #getAllExecutors()} is that the returned object is not a clone!
    */
-  @Nonnull
+  @NonNull
   public ICommonsIterable <IValidationExecutor <SOURCETYPE>> getExecutors ()
   {
     return m_aExecutors;
   }
 
-  public void executeValidation (@Nonnull final SOURCETYPE aSource,
-                                 @Nonnull final ValidationResultList aValidationResults,
+  public void executeValidation (@NonNull final SOURCETYPE aSource,
+                                 @NonNull final ValidationResultList aValidationResults,
                                  @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
@@ -193,8 +192,8 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
     }
   }
 
-  @Nonnull
-  public EValidity executeFastValidation (@Nonnull final SOURCETYPE aSource)
+  @NonNull
+  public EValidity executeFastValidation (@NonNull final SOURCETYPE aSource)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -230,10 +229,10 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    *        The object to be validated. May not be <code>null</code>.
    * @return The validation result list and never <code>null</code>.
    */
-  @Nonnull
-  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
-                                                                                       @Nonnull final IValidationExecutorSet <ST> aVES,
-                                                                                       @Nonnull final ST aSource)
+  @NonNull
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@NonNull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                                       @NonNull final IValidationExecutorSet <ST> aVES,
+                                                                                       @NonNull final ST aSource)
   {
     return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource);
   }
@@ -252,10 +251,10 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    *        The locale to be used for error messages. May be <code>null</code>.
    * @return The validation result list and never <code>null</code>.
    */
-  @Nonnull
-  public static <ST extends IValidationSource> ValidationResultList executeValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
-                                                                                       @Nonnull final IValidationExecutorSet <ST> aVES,
-                                                                                       @Nonnull final ST aSource,
+  @NonNull
+  public static <ST extends IValidationSource> ValidationResultList executeValidation (@NonNull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                                       @NonNull final IValidationExecutorSet <ST> aVES,
+                                                                                       @NonNull final ST aSource,
                                                                                        @Nullable final Locale aLocale)
   {
     return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource, aLocale);
@@ -277,11 +276,10 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    * @param aLocale
    *        The locale to be used for error messages. May be <code>null</code>.
    */
-  @Nonnull
-  public static <ST extends IValidationSource> void executeValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
-                                                                       @Nonnull final IValidationExecutorSet <ST> aVES,
-                                                                       @Nonnull final ST aSource,
-                                                                       @Nonnull final ValidationResultList aValidationResults,
+  public static <ST extends IValidationSource> void executeValidation (@NonNull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                       @NonNull final IValidationExecutorSet <ST> aVES,
+                                                                       @NonNull final ST aSource,
+                                                                       @NonNull final ValidationResultList aValidationResults,
                                                                        @Nullable final Locale aLocale)
   {
     new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeValidation (aSource,
@@ -301,10 +299,10 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
    *        The object to be validated. May not be <code>null</code>.
    * @return The validity of the validated object and never <code>null</code>.
    */
-  @Nonnull
-  public static <ST extends IValidationSource> EValidity executeFastValidation (@Nonnull final IValidityDeterminator <ST> aValidityDeterminator,
-                                                                                @Nonnull final IValidationExecutorSet <ST> aVES,
-                                                                                @Nonnull final ST aSource)
+  @NonNull
+  public static <ST extends IValidationSource> EValidity executeFastValidation (@NonNull final IValidityDeterminator <ST> aValidityDeterminator,
+                                                                                @NonNull final IValidationExecutorSet <ST> aVES,
+                                                                                @NonNull final ST aSource)
   {
     return new ValidationExecutionManager <> (aValidityDeterminator, aVES).executeFastValidation (aSource);
   }

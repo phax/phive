@@ -122,6 +122,10 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v11.1.0 - 2025-11-16
+* Updated to ph-commons 12.1.0
+* Using JSpecify annotations
+
 v11.0.1 - 2025-09-04
 * Updated the XSLT based Schematron validation as suggested in [ph-schematron#192](https://github.com/phax/ph-schematron/pull/192) - thx @Lukvargen
 

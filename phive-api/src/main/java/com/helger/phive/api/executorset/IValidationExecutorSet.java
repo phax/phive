@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.executorset;
 
+import org.jspecify.annotations.NonNull;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
 import com.helger.base.id.IHasID;
@@ -26,8 +28,6 @@ import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
 
 /**
  * Read-only interface for a named list of {@link IValidationExecutor}.
@@ -45,7 +45,7 @@ public interface IValidationExecutorSet <SOURCETYPE extends IValidationSource> e
    * @return A list with all validation executors. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableObject
   ICommonsList <IValidationExecutor <SOURCETYPE>> executors ();
 
@@ -53,13 +53,13 @@ public interface IValidationExecutorSet <SOURCETYPE extends IValidationSource> e
    * @return A list with all validation executors. Never <code>null</code> but
    *         maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IValidationExecutor <SOURCETYPE>> getAllExecutors ();
 
   /**
    * @return The VES status. Never <code>null</code>.
    */
-  @Nonnull
+  @NonNull
   IValidationExecutorSetStatus getStatus ();
 }

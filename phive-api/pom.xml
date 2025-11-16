@@ -92,7 +92,7 @@
               com.helger.phive.api.result,
               com.helger.phive.api.source,
               com.helger.phive.api.validity</Export-Package>
-            <Import-Package>!jakarta.annotation.*,*</Import-Package>
+            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
             <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
             <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI</Provide-Capability>
           </instructions>

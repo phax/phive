@@ -19,11 +19,11 @@ package com.helger.phive.api.diver;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonempty;
 import com.helger.diver.api.version.IDVRPseudoVersion;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Generic pseudo version resolver interface
@@ -55,9 +55,9 @@ public interface IGenericPseudoVersionResolver <RESULTTYPE>
    * @return <code>null</code> if resolution fails
    */
   @Nullable
-  RESULTTYPE resolvePseudoVersion (@Nonnull IDVRPseudoVersion aPseudoVersion,
-                                   @Nonnull @Nonempty String sGroupID,
-                                   @Nonnull @Nonempty String sArtifactID,
+  RESULTTYPE resolvePseudoVersion (@NonNull IDVRPseudoVersion aPseudoVersion,
+                                   @NonNull @Nonempty String sGroupID,
+                                   @NonNull @Nonempty String sArtifactID,
                                    @Nullable Set <String> aVersionsToIgnore,
                                    @Nullable OffsetDateTime aCheckDateTim);
 }

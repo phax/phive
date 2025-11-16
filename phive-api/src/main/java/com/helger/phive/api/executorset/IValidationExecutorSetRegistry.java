@@ -19,15 +19,15 @@ package com.helger.phive.api.executorset;
 import java.time.OffsetDateTime;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.state.EChange;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.phive.api.diver.IPseudoVersionResolver;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * Read-only interface for a registry of {@link IValidationExecutorSet} objects.
@@ -65,7 +65,7 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    *         If another object with the same ID is already registered in this
    *         registry.
    */
-  void registerValidationExecutorSet (@Nonnull IValidationExecutorSet <SOURCETYPE> aVES);
+  void registerValidationExecutorSet (@NonNull IValidationExecutorSet <SOURCETYPE> aVES);
 
   /**
    * Unregister a validation executor set from this registry. This basically
@@ -78,7 +78,7 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    *         {@link EChange#UNCHANGED} otherwise.
    * @since 6.0.1
    */
-  @Nonnull
+  @NonNull
   default EChange unregisterValidationExecutorSet (@Nullable final IValidationExecutorSet <SOURCETYPE> aVES)
   {
     return aVES == null ? EChange.UNCHANGED : unregisterValidationExecutorSet (aVES.getID ());
@@ -95,14 +95,14 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    *         {@link EChange#UNCHANGED} otherwise.
    * @since 6.0.1
    */
-  @Nonnull
+  @NonNull
   EChange unregisterValidationExecutorSet (@Nullable DVRCoordinate aVESID);
 
   /**
    * @return A list of all contained validation executor sets in this registry.
    *         Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   ICommonsList <IValidationExecutorSet <SOURCETYPE>> getAll ();
 
@@ -114,9 +114,9 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    *        result is the same as {@link #getAll()}.
    * @return Never <code>null</code> but maybe empty.
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
-  ICommonsList <IValidationExecutorSet <SOURCETYPE>> findAll (@Nonnull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
+  ICommonsList <IValidationExecutorSet <SOURCETYPE>> findAll (@NonNull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
 
   /**
    * Find the first validation executor sets that match the provided filter.
@@ -127,7 +127,7 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * @return <code>null</code> if no match was found.
    */
   @Nullable
-  IValidationExecutorSet <SOURCETYPE> findFirst (@Nonnull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
+  IValidationExecutorSet <SOURCETYPE> findFirst (@NonNull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
 
   /**
    * Find the validation executor set with the specified ID. This method

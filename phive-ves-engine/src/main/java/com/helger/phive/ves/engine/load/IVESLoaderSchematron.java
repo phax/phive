@@ -18,6 +18,9 @@ package com.helger.phive.ves.engine.load;
 
 import java.util.List;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.collection.commons.ICommonsList;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.repo.IRepoStorageBase;
@@ -25,12 +28,9 @@ import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
-
 /**
- * This interface is used by {@link VESLoader} create an
- * {@link IValidationExecutor} from the VES Schematron requirements.
+ * This interface is used by {@link VESLoader} create an {@link IValidationExecutor} from the VES
+ * Schematron requirements.
  *
  * @author Philip Helger
  */
@@ -42,24 +42,22 @@ public interface IVESLoaderSchematron
    * @param aRepo
    *        The repository to load the data from. May not be <code>null</code>.
    * @param aSCHList
-   *        The JAXB VES Schematron objects with the details. Order is
-   *        important. May not be <code>null</code>.
-   * @param aLoadingRequiredVES
-   *        In case the loading was recursively triggered via a "requires"
-   *        (=include), this is the data of the requirements. May be
+   *        The JAXB VES Schematron objects with the details. Order is important. May not be
    *        <code>null</code>.
+   * @param aLoadingRequiredVES
+   *        In case the loading was recursively triggered via a "requires" (=include), this is the
+   *        data of the requirements. May be <code>null</code>.
    * @param aErrorList
    *        The error list to be filled. May not be <code>null</code>.
    * @param aAsyncLoader
-   *        The callback to be invoked, if loading this artefacts needs to
-   *        trigger the loading of another artefact.
-   * @return The validation executors to be used. May not be <code>null</code>
-   *         and not be empty.
+   *        The callback to be invoked, if loading this artefacts needs to trigger the loading of
+   *        another artefact.
+   * @return The validation executors to be used. May not be <code>null</code> and not be empty.
    */
-  @Nonnull
-  ICommonsList <IValidationExecutor <IValidationSourceXML>> loadSchematrons (@Nonnull IRepoStorageBase aRepo,
-                                                                             @Nonnull List <VesSchematronType> aSCHList,
-                                                                             @Nullable LoadedVES.RequiredVES aLoadingRequiredVES,
-                                                                             @Nonnull ErrorList aErrorList,
-                                                                             @Nonnull IVESAsyncLoader aAsyncLoader);
+  @NonNull
+  ICommonsList <IValidationExecutor <IValidationSourceXML>> loadSchematrons (@NonNull IRepoStorageBase aRepo,
+                                                                             @NonNull List <VesSchematronType> aSCHList,
+                                                                             LoadedVES.@Nullable RequiredVES aLoadingRequiredVES,
+                                                                             @NonNull ErrorList aErrorList,
+                                                                             @NonNull IVESAsyncLoader aAsyncLoader);
 }

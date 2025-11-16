@@ -18,14 +18,13 @@ package com.helger.phive.xml.source;
 
 import javax.xml.transform.Source;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Node;
 
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.transform.TransformSourceFactory;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * XML validation source interface.
@@ -49,7 +48,7 @@ public interface IValidationSourceXML extends IValidationSource
    * @throws IllegalStateException
    *         If no transform source object can be created.
    */
-  @Nonnull
+  @NonNull
   default Source getAsTransformSource ()
   {
     final Node aNode = getNode ();

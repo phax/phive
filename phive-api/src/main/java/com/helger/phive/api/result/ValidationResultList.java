@@ -19,6 +19,9 @@ package com.helger.phive.api.result;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
@@ -27,9 +30,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.phive.api.source.IValidationSource;
-
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Nullable;
 
 /**
  * A managed list of {@link ValidationResult} objects.
@@ -111,7 +111,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    *         {@link com.helger.diagnostics.error.level.EErrorLevel#SUCCESS} are considered to be a
    *         failure!
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ErrorList getAllFailures ()
   {
@@ -126,7 +126,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    *         {@link com.helger.diagnostics.error.level.EErrorLevel#ERROR} are considered to be an
    *         error!
    */
-  @Nonnull
+  @NonNull
   @ReturnsMutableCopy
   public ErrorList getAllErrors ()
   {
@@ -158,7 +158,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    *        Consumer to be invoked for each {@link IError}. May not be <code>null</code>.
    * @since 4.0.0
    */
-  public void forEachFlattened (@Nonnull final Consumer <? super IError> aConsumer)
+  public void forEachFlattened (@NonNull final Consumer <? super IError> aConsumer)
   {
     ValueEnforcer.notNull (aConsumer, "Consumer");
 
@@ -176,7 +176,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @since 10.1.1
    */
   public void forEachFlattened (@Nullable final Predicate <? super IError> aFilter,
-                                @Nonnull final Consumer <? super IError> aConsumer)
+                                @NonNull final Consumer <? super IError> aConsumer)
   {
     ValueEnforcer.notNull (aConsumer, "Consumer");
 
