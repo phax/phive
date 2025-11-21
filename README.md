@@ -122,6 +122,9 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v11.1.1 - work in progress
+* Extended `ves-1.0.xsd` to include the optional `metadata` element
+
 v11.1.0 - 2025-11-16
 * Updated to ph-commons 12.1.0
 * Using JSpecify annotations
