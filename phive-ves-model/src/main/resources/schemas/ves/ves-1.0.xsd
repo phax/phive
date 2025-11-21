@@ -28,6 +28,8 @@
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
 Version history:
+  * 2025-11-21 - v1.0.0-RC3
+    * Added new "metadata" elements
   * 2024-11-22 - v1.0.0-RC2
     * Added "description" to VesCustomErrorType
   * 2024-05-16 - v1.0.0-RC1
@@ -446,6 +448,26 @@ Version history:
       </xs:extension>
     </xs:simpleContent>    
   </xs:complexType>
+  
+  <xs:complexType name="VesMetadataType">
+    <xs:annotation>
+      <xs:documentation>
+        A single metadata entry, consisting of key (attribute) and value
+      </xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="key" type="xs:string" use="required">
+          <xs:annotation>
+            <xs:documentation>
+              The metadata key. Must be a valid identifier.
+              All keys starting with "ves-" are reserved for use by phive.
+            </xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>    
+  </xs:complexType>
 
   <xs:complexType name="VesType">
     <xs:sequence>
@@ -470,6 +492,15 @@ Version history:
           <xs:documentation>
             Contains the license(s) under which this artefact is published.
             If more then one license is present, it means that the user has to choose one of these licenses.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      
+      <xs:element name="metadata" type="VesMetadataType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Contains optional metadata as key-value-pairs.
+            The 'key' attribute must be globally unique over all metadata elements within this data structure.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
