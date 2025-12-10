@@ -23,51 +23,53 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.lang.EnumHelper;
 
 /**
- * Enum with all predefined validation types. Depending on this type, different
- * implementation logic must be used!
+ * Enum with all predefined validation types. Depending on this type, different implementation logic
+ * must be used!
  *
  * @author Philip Helger
  */
 public enum EValidationType implements IValidationType
 {
   /**
-   * Validate XML syntax by parsing without assigned XSDs. This is the
-   * wellformedness check.
+   * Validate XML syntax by parsing without assigned XSDs. This is the wellformedness check.
    */
   XML ("xml", EValidationBaseType.XML, "XML Syntax"),
   /** Validate XML against the rules of an XML Schema (XSD) */
   XSD ("xsd", EValidationBaseType.XSD, "XML Schema"),
   /**
-   * Validate part of an XML against the rules of an XML Schema (XSD) - e.g. for
-   * extension/plugins. The context object needed for this type is an
+   * Validate part of an XML against the rules of an XML Schema (XSD) - e.g. for extension/plugins.
+   * The context object needed for this type is an
    * <code>ValidationExecutorXSDPartial.ContextData</code>.
    */
   PARTIAL_XSD ("partial-xsd", EValidationBaseType.XSD, "Partial XML Schema"),
   /**
-   * Pure Java implementation of Schematron - can only handle XPath 2 (was
-   * originally called SCHEMATRON)
+   * Pure Java implementation of Schematron - can only handle XPath 2 (was originally called
+   * SCHEMATRON)
    */
   SCHEMATRON_PURE ("schematron-pure", EValidationBaseType.SCHEMATRON, "Schematron (pure; XPath-only)"),
   /**
-   * Schematron implementation that must convert the SCH to XSLT before
-   * validation
+   * Schematron implementation that must convert the SCH to XSLT before validation
    */
   SCHEMATRON_SCH ("schematron-sch", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT2)"),
   /**
-   * Schematron validation with a pre-build XSLT file (e.g. from the Maven
-   * plugin)
+   * Schematron validation to convert SCH to XSLT with SchXslt v1
    *
    * @since 7.0.0
    */
   SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt XSLT2)"),
   /**
-   * Schematron validation with a pre-build XSLT file (e.g. from the Maven
-   * plugin)
+   * Schematron validation to convert SCH to XSLT with SchXslt v2
+   *
+   * @since 11.1.1
+   */
+  SCHEMATRON_SCHXSLT2 ("schematron-schxslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt2)"),
+  /**
+   * Schematron validation with a pre-build XSLT file (e.g. from the Maven plugin)
    */
   SCHEMATRON_XSLT ("schematron-xslt", EValidationBaseType.SCHEMATRON, "Schematron (ISO XSLT2)"),
   /**
-   * Schematron validation with a pre-build XSLT file (e.g. from the Maven
-   * plugin) with different output (for OIOUBL only)
+   * Schematron validation with a pre-build XSLT file (e.g. from the Maven plugin) with different
+   * output (for OIOUBL only)
    */
   SCHEMATRON_OIOUBL ("schematron-xslt-oioubl", EValidationBaseType.SCHEMATRON, "Schematron (OIOUBL XSLT)");
 

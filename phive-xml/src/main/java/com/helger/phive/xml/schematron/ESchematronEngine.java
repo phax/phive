@@ -27,12 +27,14 @@ import com.helger.base.lang.EnumHelper;
  * Defines the Schematron engine to be used.
  *
  * @author Philip Helger
+ * @deprecated Use the same name enumeration from ph-schematron
  */
+@Deprecated (forRemoval = true, since = "11.1.1")
 public enum ESchematronEngine implements IHasID <String>
 {
-  PURE ("pure"),
-  ISO_SCHEMATRON ("iso-schematron"),
-  SCHXSLT ("schxslt");
+  PURE (com.helger.schematron.ESchematronEngine.PURE.getID ()),
+  ISO_SCHEMATRON (com.helger.schematron.ESchematronEngine.ISO_SCHEMATRON.getID ()),
+  SCHXSLT (com.helger.schematron.ESchematronEngine.SCHXSLT1.getID ());
 
   private final String m_sID;
 

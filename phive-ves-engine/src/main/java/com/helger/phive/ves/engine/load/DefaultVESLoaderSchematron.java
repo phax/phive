@@ -43,9 +43,9 @@ import com.helger.phive.ves.v10.VesCustomErrorType;
 import com.helger.phive.ves.v10.VesOutputType;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
-import com.helger.phive.xml.schematron.ESchematronEngine;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
+import com.helger.schematron.ESchematronEngine;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
@@ -126,7 +126,8 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
           {
             case PURE -> ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
             case ISO_SCHEMATRON -> ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
-            case SCHXSLT -> ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
+            case SCHXSLT1 -> ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
+            case SCHXSLT2 -> ValidationExecutorSchematron.createSchXslt2 (aRepoRes, aNSCtx);
             default -> throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
           };
           break;

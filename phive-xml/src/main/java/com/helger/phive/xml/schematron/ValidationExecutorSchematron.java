@@ -63,6 +63,7 @@ import com.helger.schematron.pure.SchematronResourcePure;
 import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
 import com.helger.schematron.sch.SchematronResourceSCH;
 import com.helger.schematron.schxslt.xslt2.SchematronResourceSchXslt_XSLT2;
+import com.helger.schematron.schxslt2.xslt.SchematronResourceSchXslt2;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
@@ -232,6 +233,14 @@ public class ValidationExecutorSchematron extends
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT)
     {
       final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
+      aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
+      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
+        aSCHSCH.setLanguageCode (aLocale.getLanguage ());
+      return aSCHSCH;
+    }
+    if (aVT == EValidationType.SCHEMATRON_SCHXSLT2)
+    {
+      final SchematronResourceSchXslt2 aSCHSCH = new SchematronResourceSchXslt2 (aSCHRes);
       aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
       if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
@@ -547,8 +556,8 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the precompiled XSLT SchXslt Schematron
-   * validation.
+   * Create a new instance for a single resource that uses the precompiled XSLT SchXslt v1
+   * Schematron validation.
    *
    * @param aRes
    *        The resource pointing to the Schematron rules. May not be <code>null</code>.
@@ -562,6 +571,26 @@ public class ValidationExecutorSchematron extends
                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT, aRes),
+                                             null,
+                                             aNamespaceContext);
+  }
+
+  /**
+   * Create a new instance for a single resource that uses the precompiled XSLT SchXslt v2
+   * Schematron validation.
+   *
+   * @param aRes
+   *        The resource pointing to the Schematron rules. May not be <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 11.1.1
+   */
+  @NonNull
+  public static ValidationExecutorSchematron createSchXslt2 (@NonNull final IReadableResource aRes,
+                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT2, aRes),
                                              null,
                                              aNamespaceContext);
   }
