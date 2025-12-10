@@ -124,6 +124,8 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 v11.1.1 - work in progress
 * Extended `ves-1.0.xsd` to include the optional `metadata` element
+* Deprecated class `ESchematronEngine` in favour of the version from ph-schematron
+* Added support for the Schematron Engine "SchXslt2"
 
 v11.1.0 - 2025-11-16
 * Updated to ph-commons 12.1.0
