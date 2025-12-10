@@ -556,8 +556,7 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the precompiled XSLT SchXslt v1
-   * Schematron validation.
+   * Create a new instance for a single resource that uses the SchXslt v1 Schematron validation.
    *
    * @param aRes
    *        The resource pointing to the Schematron rules. May not be <code>null</code>.
@@ -576,8 +575,7 @@ public class ValidationExecutorSchematron extends
   }
 
   /**
-   * Create a new instance for a single resource that uses the precompiled XSLT SchXslt v2
-   * Schematron validation.
+   * Create a new instance for a single resource that uses the SchXslt v2 Schematron validation.
    *
    * @param aRes
    *        The resource pointing to the Schematron rules. May not be <code>null</code>.
