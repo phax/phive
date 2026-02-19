@@ -122,6 +122,9 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v11.1.2 - work in progress
+* Extended VES Status with optional `displayName` element. See [#30](https://github.com/phax/phive/issues/30)
+
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1
 * Extended `ves-1.0.xsd` to include the optional `metadata` element
