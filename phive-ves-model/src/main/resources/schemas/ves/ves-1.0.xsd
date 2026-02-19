@@ -29,7 +29,7 @@ This XML Schema is used to describe "Validation Execution Sets" as used by the p
 
 Version history:
   * 2026-02-19 - v1.0.0-RC4
-    * Added new optional "displayname" element
+    * Added new optional "displayname" element to VES Status
   * 2025-11-21 - v1.0.0-RC3
     * Added new "metadata" elements
   * 2024-11-22 - v1.0.0-RC2
