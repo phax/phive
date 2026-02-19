@@ -49,5 +49,4 @@ public final class VESStatus1MarshallerTest
       assertNotNull (aVESStatus);
     }
   }
-
 }

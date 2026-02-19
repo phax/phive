@@ -58,6 +58,22 @@ public interface IValidationExecutorSetStatus
     return getType ().isDeprecated ();
   }
 
+  /**
+   * @return <code>true</code> if a display name is present, <code>false</code> otherwise.
+   * @since 11.1.2
+   */
+  default boolean hasDisplayName ()
+  {
+    return StringHelper.isNotEmpty (getDisplayName ());
+  }
+
+  /**
+   * @return The display name of this object. May be <code>null</code>.
+   * @since 11.1.2
+   */
+  @Nullable
+  String getDisplayName ();
+
   default boolean hasValidFrom ()
   {
     return getValidFrom () != null;

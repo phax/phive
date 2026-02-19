@@ -38,9 +38,11 @@ public final class ValidationExecutorSetStatusTest
   public void testEmpty ()
   {
     final OffsetDateTime aNow = PDTFactory.getCurrentOffsetDateTimeMillisOnlyUTC ();
+
     final ValidationExecutorSetStatus aStatus = ValidationExecutorSetStatus.createValidAt (aNow);
     assertEquals (aNow, aStatus.getStatusLastModification ());
     assertSame (EValidationExecutorStatusType.VALID, aStatus.getType ());
+    assertNull (aStatus.getDisplayName ());
     assertNull (aStatus.getValidFrom ());
     assertNull (aStatus.getValidTo ());
     assertNull (aStatus.getDeprecationReason ());

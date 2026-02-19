@@ -28,6 +28,8 @@
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
 Version history:
+  * 2026-02-19 - v1.0.0-RC4
+    * Added new optional "displayname" element
   * 2025-11-21 - v1.0.0-RC3
     * Added new "metadata" elements
   * 2024-11-22 - v1.0.0-RC2
@@ -615,6 +617,14 @@ Version history:
           <xs:documentation>The structured VESID of the VES</xs:documentation>
         </xs:annotation>
       </xs:group>
+      <xs:element name="displayName" type="xs:normalizedString" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            A human readable name of this VES.
+            This field is theoretically mutable.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
       <xs:element name="statusLastModified" type="xs:dateTime">
         <xs:annotation>
           <xs:documentation>

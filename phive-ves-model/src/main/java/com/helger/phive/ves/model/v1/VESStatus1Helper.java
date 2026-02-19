@@ -56,11 +56,11 @@ public final class VESStatus1Helper
   @NonNull
   public static IValidationExecutorSetStatus convert (@NonNull final VesStatusType aVESStatus)
   {
+    final EValidationExecutorStatusType eType;
     // Determine the status type
     final OffsetDateTime aCheckDT = PDTFactory.getCurrentOffsetDateTime ();
     final OffsetDateTime aValidFrom = _toODT (aVESStatus.getValidFrom ());
     final OffsetDateTime aValidTo = _toODT (aVESStatus.getValidTo ());
-    final EValidationExecutorStatusType eType;
     // Already valid?
     if (aValidFrom != null && aCheckDT.isBefore (aValidFrom))
       eType = EValidationExecutorStatusType.NOT_YET_ACTIVE;
@@ -74,6 +74,8 @@ public final class VESStatus1Helper
           eType = EValidationExecutorStatusType.DEPRECATED;
         else
           eType = EValidationExecutorStatusType.VALID;
+
+    final String sDisplayName = aVESStatus.getDisplayName ();
 
     // Is a replacement ID present?
     DVRCoordinate aReplacementVESID = null;
@@ -103,6 +105,7 @@ public final class VESStatus1Helper
 
     return new ValidationExecutorSetStatus (_toODT (aVESStatus.getStatusLastModified ()),
                                             eType,
+                                            sDisplayName,
                                             aValidFrom,
                                             aValidTo,
                                             aVESStatus.getDeprecationReason (),
