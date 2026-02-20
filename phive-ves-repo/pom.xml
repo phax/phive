@@ -25,7 +25,7 @@
     <version>11.1.2-SNAPSHOT</version>
   </parent>
   <artifactId>phive-ves-repo</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>phive-ves-repo</name>
   <description>phive - Philip Helger Integrative Validation Engine - VES - Validation Execution Set repository specifics</description>
   <url>https://github.com/phax/phive/phive-ves-repo</url>
@@ -87,23 +87,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Automatic-Module-Name>com.helger.phive.ves.repo</Automatic-Module-Name>
-            <Export-Package>
-              com.helger.phive.ves.repo
-            </Export-Package>
-            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
-          </instructions>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

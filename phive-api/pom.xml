@@ -25,7 +25,7 @@
     <version>11.1.2-SNAPSHOT</version>
   </parent>
   <artifactId>phive-api</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>phive-api</name>
   <description>phive - Philip Helger Integrative Validation Engine API</description>
   <url>https://github.com/phax/phive/phive-api</url>
@@ -81,33 +81,4 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Automatic-Module-Name>com.helger.phive.api</Automatic-Module-Name>
-            <Export-Package>com.helger.phive.api,
-              com.helger.phive.api.artefact,
-              com.helger.phive.api.diver,
-              com.helger.phive.api.execute,
-              com.helger.phive.api.executor,
-              com.helger.phive.api.executorset,
-              com.helger.phive.api.executorset.status,
-              com.helger.phive.api.mock,
-              com.helger.phive.api.result,
-              com.helger.phive.api.source,
-              com.helger.phive.api.validity</Export-Package>
-            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
-            <Require-Capability>osgi.extender; filter:="(osgi.extender=osgi.serviceloader.registrar)"</Require-Capability>
-            <Provide-Capability>osgi.serviceloader; osgi.serviceloader=com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI</Provide-Capability>
-          </instructions>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

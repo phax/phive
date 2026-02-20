@@ -25,7 +25,7 @@
     <version>11.1.2-SNAPSHOT</version>
   </parent>
   <artifactId>phive-ves-engine</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>phive-ves-engine</name>
   <description>phive - Philip Helger Integrative Validation Engine - VES - Validation Execution Set engine</description>
   <url>https://github.com/phax/phive/phive-ves-engine</url>
@@ -98,21 +98,6 @@
   
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Automatic-Module-Name>com.helger.phive.ves.engine</Automatic-Module-Name>
-            <Export-Package>
-              com.helger.phive.ves.engine.load,
-              com.helger.phive.ves.engine.load.catalog
-            </Export-Package>
-            <Import-Package>!org.jspecify.annotations.*,*</Import-Package>
-          </instructions>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>${jaxb-plugin.group}</groupId>
         <artifactId>${jaxb-plugin.artifact}</artifactId>
