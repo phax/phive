@@ -48,7 +48,13 @@ public enum EValidationType implements IValidationType
    */
   SCHEMATRON_PURE ("schematron-pure", EValidationBaseType.SCHEMATRON, "Schematron (pure; XPath-only)"),
   /**
-   * Schematron implementation that must convert the SCH to XSLT before validation
+   * Schematron implementation that must convert the SCH to XSLT v1 before validation
+   *
+   * @since 11.1.2
+   */
+  SCHEMATRON_SCH_XSLT1 ("schematron-sch-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT1)"),
+  /**
+   * Schematron implementation that must convert the SCH to XSLT v2 before validation
    */
   SCHEMATRON_SCH ("schematron-sch", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT2)"),
   /**
@@ -56,13 +62,19 @@ public enum EValidationType implements IValidationType
    *
    * @since 7.0.0
    */
-  SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt XSLT2)"),
+  SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt1 XSLT2)"),
   /**
    * Schematron validation to convert SCH to XSLT with SchXslt v2
    *
    * @since 11.1.1
    */
   SCHEMATRON_SCHXSLT2 ("schematron-schxslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt2)"),
+  /**
+   * Schematron validation with a pre-build XSLT v1 file (e.g. from the Maven plugin)
+   *
+   * @since 11.1.2
+   */
+  SCHEMATRON_XSLT1 ("schematron-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (ISO XSLT1)"),
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven plugin)
    */
