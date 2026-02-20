@@ -95,7 +95,7 @@
       <dependency>
         <groupId>com.helger.diver</groupId>
         <artifactId>ph-diver-parent-pom</artifactId>
-        <version>4.1.0</version>
+        <version>4.2.0-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -108,6 +108,11 @@
       <dependency>
         <groupId>com.helger.phive</groupId>
         <artifactId>phive-ves-model</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.phive</groupId>
+        <artifactId>phive-ves-repo</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -144,13 +149,9 @@
   <modules>
     <module>phive-api</module>
     <module>phive-ves-model</module>
+    <module>phive-ves-repo</module>
     <module>phive-xml</module>
     <module>phive-result</module>
     <module>phive-ves-engine</module>
   </modules>
-  
-  <build>
-    <plugins>
-    </plugins>
-  </build>
 </project>
