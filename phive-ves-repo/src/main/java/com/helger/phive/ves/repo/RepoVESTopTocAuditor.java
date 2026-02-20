@@ -35,6 +35,13 @@ import com.helger.phive.ves.model.v1.VESStatus1Helper;
 import com.helger.phive.ves.model.v1.VESStatus1Marshaller;
 import com.helger.phive.ves.v10.VesStatusType;
 
+/**
+ * A specific implementation of {@link IRepoStorageAuditor} that updates
+ * {@link IRepoVESTopTocService}.
+ *
+ * @author Philip Helger
+ * @since 11.2.0
+ */
 public class RepoVESTopTocAuditor implements IRepoStorageAuditor
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoVESTopTocAuditor.class);

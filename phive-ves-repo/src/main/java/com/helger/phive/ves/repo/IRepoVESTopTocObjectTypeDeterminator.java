@@ -25,6 +25,7 @@ import com.helger.diver.repo.RepoStorageKey;
  * the VES top ToC
  *
  * @author Philip Helger
+ * @since 11.2.0
  */
 public interface IRepoVESTopTocObjectTypeDeterminator
 {
