@@ -42,48 +42,79 @@ public enum EValidationType implements IValidationType
    * <code>ValidationExecutorXSDPartial.ContextData</code>.
    */
   PARTIAL_XSD ("partial-xsd", EValidationBaseType.XSD, "Partial XML Schema"),
+
   /**
    * Pure Java implementation of Schematron - can only handle XPath 2 (was originally called
    * SCHEMATRON)
    */
   SCHEMATRON_PURE ("schematron-pure", EValidationBaseType.SCHEMATRON, "Schematron (pure; XPath-only)"),
+
   /**
    * Schematron implementation that must convert the SCH to XSLT v1 before validation
    *
-   * @since 11.1.2
+   * @since 11.2.0
    */
-  SCHEMATRON_SCH_XSLT1 ("schematron-sch-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT1)"),
+  SCHEMATRON_SCH_ISO_XSLT1 ("schematron-sch-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT1)"),
+
   /**
    * Schematron implementation that must convert the SCH to XSLT v2 before validation
    */
-  SCHEMATRON_SCH ("schematron-sch", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT2)"),
+  SCHEMATRON_SCH_ISO_XSLT2 ("schematron-sch", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT2)"),
+
   /**
-   * Schematron validation to convert SCH to XSLT with SchXslt v1
+   * Schematron validation to convert SCH to XSLT v1 with SchXslt v1
+   *
+   * @since 11.2.0
+   */
+  SCHEMATRON_SCHXSLT1_XSLT1 ("schematron-schxslt-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt1 XSLT1)"),
+
+  /**
+   * Schematron validation to convert SCH to XSLT v2 with SchXslt v1
    *
    * @since 7.0.0
    */
-  SCHEMATRON_SCHXSLT ("schematron-schxslt-xslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt1 XSLT2)"),
+  SCHEMATRON_SCHXSLT1_XSLT2 ("schematron-schxslt-xslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt1 XSLT2)"),
+
   /**
-   * Schematron validation to convert SCH to XSLT with SchXslt v2
+   * Schematron validation to convert SCH to XSLT v3 with SchXslt v2
    *
    * @since 11.1.1
    */
-  SCHEMATRON_SCHXSLT2 ("schematron-schxslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt2)"),
+  SCHEMATRON_SCHXSLT2_XSLT3 ("schematron-schxslt2", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt2)"),
+
   /**
    * Schematron validation with a pre-build XSLT v1 file (e.g. from the Maven plugin)
    *
-   * @since 11.1.2
+   * @since 11.2.0
    */
-  SCHEMATRON_XSLT1 ("schematron-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (ISO XSLT1)"),
+  SCHEMATRON_XSLT1 ("schematron-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (XSLT1)"),
+
   /**
-   * Schematron validation with a pre-build XSLT file (e.g. from the Maven plugin)
+   * Schematron validation with a pre-build XSLT v2 file (e.g. from the Maven plugin)
    */
-  SCHEMATRON_XSLT ("schematron-xslt", EValidationBaseType.SCHEMATRON, "Schematron (ISO XSLT2)"),
+  SCHEMATRON_XSLT2 ("schematron-xslt", EValidationBaseType.SCHEMATRON, "Schematron (XSLT2)"),
+
+  /**
+   * Schematron validation with a pre-build XSLT v3 file (e.g. from the Maven plugin)
+   *
+   * @since 11.2.0
+   */
+  SCHEMATRON_XSLT3 ("schematron-xslt3", EValidationBaseType.SCHEMATRON, "Schematron (XSLT3)"),
+
   /**
    * Schematron validation with a pre-build XSLT file (e.g. from the Maven plugin) with different
    * output (for OIOUBL only)
    */
   SCHEMATRON_OIOUBL ("schematron-xslt-oioubl", EValidationBaseType.SCHEMATRON, "Schematron (OIOUBL XSLT)");
+
+  @Deprecated (forRemoval = true, since = "11.2.0")
+  public static final EValidationType SCHEMATRON_SCH = SCHEMATRON_SCH_ISO_XSLT2;
+  @Deprecated (forRemoval = true, since = "11.2.0")
+  public static final EValidationType SCHEMATRON_SCHXSLT = SCHEMATRON_SCHXSLT1_XSLT2;
+  @Deprecated (forRemoval = true, since = "11.2.0")
+  public static final EValidationType SCHEMATRON_XSLT = SCHEMATRON_XSLT2;
+  @Deprecated (forRemoval = true, since = "11.2.0")
+  public static final EValidationType SCHEMATRON_SCHXSLT2 = SCHEMATRON_SCHXSLT2_XSLT3;
 
   private final String m_sID;
   private final EValidationBaseType m_eBaseType;
