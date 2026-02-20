@@ -35,9 +35,7 @@ public final class MockRepoStorageLocalFileSystem extends RepoStorageLocalFileSy
     super (TEST_REPO_DIR, "unittest-fs", eWriteEnabled, eDeleteEnabled);
 
     // Enable a top-level table of contents on XML basis
-    final RepoVESTopTocServiceCSV aSvc = new RepoVESTopTocServiceCSV ();
-    // aSvc.initForRepo (this);
-    setAuditor (new RepoVESTopTocAuditor (aSvc, new IRepoVESTopTocObjectTypeDeterminator ()
+    setAuditor (new RepoVESTopTocAuditor (new RepoVESTopTocServiceCSV (), new IRepoVESTopTocObjectTypeDeterminator ()
     {
       public boolean isVES (@NonNull final RepoStorageKey aKey)
       {
