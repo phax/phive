@@ -22,7 +22,7 @@ import com.helger.phive.ves.v10.ObjectFactory;
 import com.helger.phive.ves.v10.VesType;
 
 /**
- * A marshaller to read VES v1 declarations.
+ * A JAXB marshaller to read VES v1 declarations.
  *
  * @author Philip Helger
  */
