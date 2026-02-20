@@ -129,6 +129,7 @@ v11.2.0 - 2026-02-20
 * Extended `EValidationType` with XSLT v1 specific enums
 * Renamed some `EvalidationType` enums to be more precise
 * Created new submodule `phive-ves-repo` to contain a specific top-level table of contents for validation artefacts. See [#29](https://github.com/phax/phive/issues/29)
+* The resulting JAR files are no longer provided as OSGI bundles
 
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1
