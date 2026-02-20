@@ -19,7 +19,7 @@ package com.helger.phive.ves.repo;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import com.helger.annotation.Nonnegative;
+import com.helger.annotation.CheckForSigned;
 import com.helger.base.state.EContinue;
 import com.helger.base.state.ESuccess;
 import com.helger.diver.api.coord.DVRCoordinate;
@@ -61,9 +61,9 @@ public interface IRepoVESTopTocService
   void refreshFromRepo ();
 
   /**
-   * @return The number of items contained. Must be &ge; 0.
+   * @return The number of items contained. Any value &lt; 0 means the data is not yet available.
    */
-  @Nonnegative
+  @CheckForSigned
   int getCount ();
 
   /**

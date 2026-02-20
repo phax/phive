@@ -29,7 +29,7 @@ import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.annotation.Nonnegative;
+import com.helger.annotation.CheckForSigned;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -269,12 +269,10 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
     m_aRWLock.writeLocked ( () -> m_aToc = aTmpToc);
   }
 
-  @Nonnegative
+  @CheckForSigned
   public int getCount ()
   {
-    _checkInited ();
-
-    return m_aRWLock.readLockedInt ( () -> m_aToc.m_aItems.size ());
+    return m_aRWLock.readLockedInt ( () -> m_aToc == null ? -1 : m_aToc.m_aItems.size ());
   }
 
   public void iterateAllItems (@NonNull final IIterationCallback aCallback)

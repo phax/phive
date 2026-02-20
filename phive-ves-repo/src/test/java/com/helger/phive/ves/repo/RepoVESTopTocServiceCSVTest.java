@@ -47,8 +47,7 @@ public final class RepoVESTopTocServiceCSVTest
     final String sUploadedPayload = "bla-" + ThreadLocalRandom.current ().nextInt ();
 
     // Service not yet initialized
-    if (false)
-      assertEquals (0, aRepo.getVESTopTocService ().getCount ());
+    assertEquals (-1, aRepo.getVESTopTocService ().getCount ());
 
     final DVRCoordinate aCoord1 = DVRCoordinate.create ("com.ecosio.test", "fs-written", "1");
     final RepoStorageKeyOfArtefact aKey1 = RepoStorageKeyOfArtefact.of (aCoord1, ".ves");
