@@ -29,6 +29,7 @@ import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.GuardedBy;
 import com.helger.annotation.concurrent.Immutable;
 import com.helger.annotation.concurrent.ThreadSafe;
@@ -187,13 +188,11 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
                                                             .getBufferedReader (StandardCharsets.ISO_8859_1)))
       {
         aCSVReader.<Exception> forEachThrowing (aLine -> {
-          if (aLine.size () == 5)
-          {
-            ret.update (DVRCoordinate.create (aLine.get (0), aLine.get (1), aLine.get (2)),
-                        StringParser.parseBool (aLine.get (3), DEFAULT_DEPRECATED),
-                        aLine.get (4));
-          }
-          throw new IllegalStateException ("The CSV line has an invalid amount of columns");
+          if (aLine.size () != 5)
+            throw new IllegalStateException ("The CSV line has an invalid amount of columns (" + aLine.size () + ")");
+          ret.update (DVRCoordinate.create (aLine.get (0), aLine.get (1), aLine.get (2)),
+                      StringParser.parseBool (aLine.get (3), DEFAULT_DEPRECATED),
+                      aLine.get (4));
         });
       }
       catch (final IOException ex)
@@ -270,6 +269,14 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
     m_aRWLock.writeLocked ( () -> m_aToc = aTmpToc);
   }
 
+  @Nonnegative
+  public int getCount ()
+  {
+    _checkInited ();
+
+    return m_aRWLock.readLockedInt ( () -> m_aToc.m_aItems.size ());
+  }
+
   public void iterateAllItems (@NonNull final IIterationCallback aCallback)
   {
     ValueEnforcer.notNull (aCallback, "Callback");
@@ -295,7 +302,7 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
   private ESuccess _writeActionOnToc (final Function <? super Toc, EChange> aAction)
   {
     return m_aRWLock.writeLockedGet ( () -> {
-      if (aAction.apply (m_aToc).isChanged ())
+      if (m_aToc == null || aAction.apply (m_aToc).isChanged ())
       {
         try
         {

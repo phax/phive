@@ -19,6 +19,7 @@ package com.helger.phive.ves.repo;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import com.helger.annotation.Nonnegative;
 import com.helger.base.state.EContinue;
 import com.helger.base.state.ESuccess;
 import com.helger.diver.api.coord.DVRCoordinate;
@@ -58,6 +59,12 @@ public interface IRepoVESTopTocService
    * {@link #initForRepo(IRepoStorageWithToc)}
    */
   void refreshFromRepo ();
+
+  /**
+   * @return The number of items contained. Must be &ge; 0.
+   */
+  @Nonnegative
+  int getCount ();
 
   /**
    * Iterate all items (in undefined order) and invoke the provided callback.

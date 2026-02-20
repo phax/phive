@@ -37,27 +37,32 @@ import com.helger.phive.ves.v10.VesStatusType;
 
 public class RepoVESTopTocAuditor implements IRepoStorageAuditor
 {
-  public interface IVESTopTocObjectTypeDeterminator
-  {
-    boolean isVES (@NonNull RepoStorageKey aKey);
-
-    boolean isStatus (@NonNull RepoStorageKey aKey);
-  }
-
   private static final Logger LOGGER = LoggerFactory.getLogger (RepoVESTopTocAuditor.class);
 
   // Key is the repository ID
   private final ICommonsMap <String, Object> m_aTopTocServiceInitialized = new CommonsConcurrentHashMap <> ();
   private final IRepoVESTopTocService m_aVESTopTocService;
-  private final IVESTopTocObjectTypeDeterminator m_aDeterminator;
+  private final IRepoVESTopTocObjectTypeDeterminator m_aDeterminator;
 
   public RepoVESTopTocAuditor (@NonNull final IRepoVESTopTocService aVESTopTocService,
-                               @NonNull final IVESTopTocObjectTypeDeterminator aDeterminator)
+                               @NonNull final IRepoVESTopTocObjectTypeDeterminator aDeterminator)
   {
     ValueEnforcer.notNull (aVESTopTocService, "VESTopTocService");
     ValueEnforcer.notNull (aDeterminator, "Determinator");
     m_aVESTopTocService = aVESTopTocService;
     m_aDeterminator = aDeterminator;
+  }
+
+  @NonNull
+  public final IRepoVESTopTocService getVESTopTocService ()
+  {
+    return m_aVESTopTocService;
+  }
+
+  @NonNull
+  public final IRepoVESTopTocObjectTypeDeterminator getVESTopTocDeterminator ()
+  {
+    return m_aDeterminator;
   }
 
   @NonNull
