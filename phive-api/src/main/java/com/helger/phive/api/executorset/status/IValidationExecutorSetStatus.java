@@ -60,7 +60,7 @@ public interface IValidationExecutorSetStatus
 
   /**
    * @return <code>true</code> if a display name is present, <code>false</code> otherwise.
-   * @since 11.1.2
+   * @since 11.2.0
    */
   default boolean hasDisplayName ()
   {
@@ -69,7 +69,7 @@ public interface IValidationExecutorSetStatus
 
   /**
    * @return The display name of this object. May be <code>null</code>.
-   * @since 11.1.2
+   * @since 11.2.0
    */
   @Nullable
   String getDisplayName ();
