@@ -222,7 +222,7 @@ public class ValidationExecutorSchematron extends
       // consecutive calls!
       return aPureSCH;
     }
-    if (aVT == EValidationType.SCHEMATRON_SCH)
+    if (aVT == EValidationType.SCHEMATRON_SCH_ISO_XSLT2)
     {
       final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
       aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
@@ -230,7 +230,7 @@ public class ValidationExecutorSchematron extends
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
       return aSCHSCH;
     }
-    if (aVT == EValidationType.SCHEMATRON_SCHXSLT)
+    if (aVT == EValidationType.SCHEMATRON_SCHXSLT1_XSLT2)
     {
       final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
       aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
@@ -238,7 +238,7 @@ public class ValidationExecutorSchematron extends
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
       return aSCHSCH;
     }
-    if (aVT == EValidationType.SCHEMATRON_SCHXSLT2)
+    if (aVT == EValidationType.SCHEMATRON_SCHXSLT2_XSLT3)
     {
       final SchematronResourceSchXslt2 aSCHSCH = new SchematronResourceSchXslt2 (aSCHRes);
       aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
@@ -246,7 +246,7 @@ public class ValidationExecutorSchematron extends
         aSCHSCH.setLanguageCode (aLocale.getLanguage ());
       return aSCHSCH;
     }
-    if (aVT == EValidationType.SCHEMATRON_XSLT)
+    if (aVT == EValidationType.SCHEMATRON_XSLT2)
     {
       final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
       aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
@@ -550,7 +550,7 @@ public class ValidationExecutorSchematron extends
   public static ValidationExecutorSchematron createSCH (@NonNull final IReadableResource aRes,
                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH, aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH_ISO_XSLT2, aRes),
                                              null,
                                              aNamespaceContext);
   }
@@ -569,7 +569,7 @@ public class ValidationExecutorSchematron extends
   public static ValidationExecutorSchematron createSchXslt (@NonNull final IReadableResource aRes,
                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT, aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT1_XSLT2, aRes),
                                              null,
                                              aNamespaceContext);
   }
@@ -588,7 +588,7 @@ public class ValidationExecutorSchematron extends
   public static ValidationExecutorSchematron createSchXslt2 (@NonNull final IReadableResource aRes,
                                                              @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT2, aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT2_XSLT3, aRes),
                                              null,
                                              aNamespaceContext);
   }
@@ -630,7 +630,7 @@ public class ValidationExecutorSchematron extends
                                                          @Nullable final String sPrerequisiteXPath,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT, aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT2, aRes),
                                              sPrerequisiteXPath,
                                              aNamespaceContext);
   }
