@@ -17,7 +17,8 @@ A live version of this engine can be found on [Peppol Practical](http://peppol.h
 
 This project has the following sub-modules:
 * **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
-* **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set. 
+* **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set.
+* **`phive-ves-repo`** (since v11.2.0) - contains phive specific extension for repository management with [ph-diver](https://github.com/phax/ph-diver)
 * **`phive-xml`** (previously `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
 * **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
@@ -122,9 +123,12 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v11.1.2 - work in progress
+v11.2.0 - 2026-02-20
+* Updated to ph-diver 4.2.0
 * Extended VES Status with optional `displayName` element. See [#30](https://github.com/phax/phive/issues/30)
 * Extended `EValidationType` with XSLT v1 specific enums
+* Renamed some `EvalidationType` enums to be more precise
+* Created new submodule `phive-ves-repo` to contain a specific top-level table of contents for validation artefacts. See [#29](https://github.com/phax/phive/issues/29)
 
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1
