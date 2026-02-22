@@ -117,6 +117,12 @@ public final class CPhiveHtmlCss
   /** Source data line content cell */
   public static final String CSS_SOURCE_LINE_CONTENT = "phive-source-line-content";
 
+  /** Report creation timestamp element */
+  public static final String CSS_CREATED_AT = "phive-created-at";
+
+  /** Footer element */
+  public static final String CSS_FOOTER = "phive-footer";
+
   /** The default stylesheet providing a clean, readable layout with pastel colors. */
   public static final String DEFAULT_STYLESHEET = """
       .phive-results {
@@ -314,6 +320,27 @@ public final class CPhiveHtmlCss
       }
       .phive-source-table tr:target {
         background: var(--phive-color-bg-target);
+      }
+      .phive-created-at {
+        margin-bottom: 16px;
+        font-size: 0.9em;
+        color: var(--phive-color-muted);
+      }
+      .phive-footer {
+        margin-top: 24px;
+        padding-top: 12px;
+        border-top: 1px solid var(--phive-color-border);
+        font-size: 0.85em;
+        color: var(--phive-color-muted);
+        text-align: center;
+      }
+      .phive-footer a {
+        color: var(--phive-color-heading-secondary);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .phive-footer a:hover {
+        text-decoration: underline;
       }
       """;
 

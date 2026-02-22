@@ -17,6 +17,8 @@
 package com.helger.phive.result.html;
 
 import java.nio.charset.StandardCharsets;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
@@ -331,6 +333,16 @@ public class PhiveHtmlHelper
     eH1.addText (aLabels.get (EPhiveHtmlLabel.VALIDATION_RESULT));
     eContainer.addChild (eH1);
 
+    // Creation timestamp
+    {
+      final OffsetDateTime aNow = OffsetDateTime.now ();
+      final String sTimestamp = DateTimeFormatter.ofPattern ("yyyy-MM-dd HH:mm:ss xxx").format (aNow);
+      final IMicroElement eCreatedAt = _createDiv (CPhiveHtmlCss.CSS_CREATED_AT);
+      eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.CREATED_AT) + ": "));
+      eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE, sTimestamp));
+      eContainer.addChild (eCreatedAt);
+    }
+
     // VES info
     if (m_aVES != null)
     {
@@ -555,6 +567,17 @@ public class PhiveHtmlHelper
 
       eSource.addChild (eTable);
       eContainer.addChild (eSource);
+    }
+
+    // Footer
+    {
+      final IMicroElement eFooter = _createDiv (CPhiveHtmlCss.CSS_FOOTER);
+      eFooter.addText (aLabels.get (EPhiveHtmlLabel.FOOTER_PREFIX));
+      final IMicroElement eLink = eFooter.addElement ("a");
+      eLink.setAttribute ("href", "https://github.com/phax/phive");
+      eLink.addText ("phive");
+      eFooter.addText (aLabels.get (EPhiveHtmlLabel.FOOTER_SUFFIX));
+      eContainer.addChild (eFooter);
     }
 
     aTarget.addChild (eContainer);

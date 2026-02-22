@@ -84,6 +84,15 @@ public final class PhiveHtmlHelperTest
     assertTrue (sHtml.contains ("group:art:1"));
     assertTrue (sHtml.contains ("My Test VES"));
     assertTrue (sHtml.contains ("Success"));
+
+    // Check creation timestamp
+    assertTrue (sHtml.contains (CPhiveHtmlCss.CSS_CREATED_AT));
+    assertTrue (sHtml.contains ("Created at"));
+
+    // Check footer with phive link
+    assertTrue (sHtml.contains (CPhiveHtmlCss.CSS_FOOTER));
+    assertTrue (sHtml.contains ("href=\"https://github.com/phax/phive\""));
+    assertTrue (sHtml.contains (">phive<"));
   }
 
   @Test

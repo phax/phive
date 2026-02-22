@@ -92,7 +92,13 @@ public enum EPhiveHtmlLabel implements IHasDisplayText
   FALSE ("Falsch", "False"),
   MILLISECONDS_SUFFIX (" ms", " ms"),
   /** "Source Data" section heading */
-  SOURCE_DATA ("Quelldaten", "Source Data");
+  SOURCE_DATA ("Quelldaten", "Source Data"),
+  /** "Created at" label for the report creation timestamp */
+  CREATED_AT ("Erstellt am", "Created at"),
+  /** Footer text before the phive link */
+  FOOTER_PREFIX ("Dieser Bericht wurde mit der ", "This report was created with the "),
+  /** Footer text after the phive link */
+  FOOTER_SUFFIX (" Opensource Bibliothek erstellt", " open source library");
 
   private final IMultilingualText m_aTP;
 
