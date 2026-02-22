@@ -38,7 +38,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
 import com.helger.base.location.ILocation;
 import com.helger.base.location.SimpleLocation;
-import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.rt.StackTraceHelper;
 import com.helger.base.state.ETriState;
 import com.helger.base.string.StringHelper;
@@ -74,7 +73,7 @@ import com.helger.xml.microdom.util.MicroHelper;
 /**
  * A utility class to create a common XML representation of a PHIVE result. Use
  * {@link #applyGlobalError(IMicroElement, String, long)} or
- * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale, MutableInt, MutableInt)}
+ * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale)}
  * to add the result to an arbitrary {@link IMicroElement}.
  *
  * @author Philip Helger
@@ -83,57 +82,6 @@ import com.helger.xml.microdom.util.MicroHelper;
 @Immutable
 public final class PhiveXMLHelper
 {
-  public static final String XML_RESOURCE_ID = "resource";
-  public static final String XML_LINE_NUM = "line";
-  public static final String XML_COLUMN_NUM = "col";
-
-  public static final String XML_ERROR_DATETIME = "errorDateTime";
-  public static final String XML_ERROR_LEVEL = "errorLevel";
-  public static final String XML_ERROR_ID = "errorID";
-  public static final String XML_ERROR_FIELD_NAME = "errorFieldName";
-  public static final String XML_ERROR_LOCATION_OBJ = "errorLocationObj";
-  public static final String XML_ERROR_LOCATION_STR = "errorLocation";
-  public static final String XML_ERROR_TEXT = "errorText";
-  public static final String XML_EXCEPTION = "exception";
-  public static final String XML_TEST = "test";
-
-  // Added in 12.0.0
-  public static final String XML_VALIDATION_DATETIME = "validationDateTime";
-
-  // Added in 10.1.0
-  public static final String XML_VALIDATION_SOURCE = "validationSource";
-  public static final String XML_SOURCE_TYPE_ID = "sourceTypeID";
-  public static final String XML_SYSTEM_ID = "systemID";
-  public static final String XML_PARTIAL_SOURCE = "partialSource";
-  public static final String XML_PAYLOAD_BASE64 = "payloadBase64";
-
-  public static final String XML_VESID = "vesid";
-  public static final String XML_NAME = "name";
-  public static final String XML_DEPRECATED = "deprecated";
-  public static final String XML_STATUS = "status";
-  public static final String XML_STATUS_LAST_MODIFICATION = "lastModification";
-  public static final String XML_STATUS_TYPE = "type";
-  public static final String XML_STATUS_VALID_FROM = "validFrom";
-  public static final String XML_STATUS_VALID_TO = "validTo";
-  public static final String XML_STATUS_DEPRECATION_REASON = "deprecationReason";
-  public static final String XML_STATUS_REPLACEMENT_VESID = "replacementVesid";
-
-  public static final String XML_SUCCESS = "success";
-  // Since 12.0.0
-  public static final String XML_VALIDITY = "validity";
-  public static final String XML_ARTIFACT_TYPE = "artifactType";
-  public static final String XML_ARTIFACT_PATH_TYPE = "artifactPathType";
-  public static final String XML_ARTIFACT_PATH = "artifactPath";
-  public static final String XML_ITEM = "item";
-  public static final String XML_INTERRUPTED = "interrupted";
-  public static final String XML_MOST_SEVERE_ERROR_LEVEL = "mostSevereErrorLevel";
-  public static final String XML_RESULT = "result";
-  public static final String XML_DURATION_MS = "durationMS";
-  public static final String XML_VES = "ves";
-
-  public static final String ARTIFACT_TYPE_INPUT_PARAMETER = "input-parameter";
-  public static final String ARTIFACT_PATH_NONE = "none";
-
   private static final Logger LOGGER = LoggerFactory.getLogger (PhiveXMLHelper.class);
 
   private PhiveXMLHelper ()
@@ -196,11 +144,11 @@ public final class PhiveXMLHelper
       return null;
     final IMicroElement ret = new MicroElement (sElementName);
     if (aLocation.hasResourceID ())
-      ret.addElement (XML_RESOURCE_ID).addText (aLocation.getResourceID ());
+      ret.addElement (CPhiveXML.XML_RESOURCE_ID).addText (aLocation.getResourceID ());
     if (aLocation.hasLineNumber ())
-      ret.addElement (XML_LINE_NUM).addText (aLocation.getLineNumber ());
+      ret.addElement (CPhiveXML.XML_LINE_NUM).addText (aLocation.getLineNumber ());
     if (aLocation.hasColumnNumber ())
-      ret.addElement (XML_COLUMN_NUM).addText (aLocation.getColumnNumber ());
+      ret.addElement (CPhiveXML.XML_COLUMN_NUM).addText (aLocation.getColumnNumber ());
     return ret;
   }
 
@@ -210,10 +158,12 @@ public final class PhiveXMLHelper
     if (aObj == null)
       return null;
 
-    final String sResourceID = MicroHelper.getChildTextContentTrimmed (aObj, XML_RESOURCE_ID);
-    final int nLineNumber = StringParser.parseInt (MicroHelper.getChildTextContentTrimmed (aObj, XML_LINE_NUM),
+    final String sResourceID = MicroHelper.getChildTextContentTrimmed (aObj, CPhiveXML.XML_RESOURCE_ID);
+    final int nLineNumber = StringParser.parseInt (MicroHelper.getChildTextContentTrimmed (aObj,
+                                                                                           CPhiveXML.XML_LINE_NUM),
                                                    ILocation.ILLEGAL_NUMBER);
-    final int nColumnNumber = StringParser.parseInt (MicroHelper.getChildTextContentTrimmed (aObj, XML_COLUMN_NUM),
+    final int nColumnNumber = StringParser.parseInt (MicroHelper.getChildTextContentTrimmed (aObj,
+                                                                                             CPhiveXML.XML_COLUMN_NUM),
                                                      ILocation.ILLEGAL_NUMBER);
 
     if (StringHelper.isEmpty (sResourceID) && nLineNumber < 0 && nColumnNumber < 0)
@@ -361,16 +311,16 @@ public final class PhiveXMLHelper
   public static IError getAsIError (@NonNull final IMicroElement aObj)
   {
     final LocalDateTime aErrorDT = PDTWebDateHelper.getLocalDateTimeFromXSD (MicroHelper.getChildTextContentTrimmed (aObj,
-                                                                                                                     XML_ERROR_DATETIME));
+                                                                                                                     CPhiveXML.XML_ERROR_DATETIME));
     final IErrorLevel aErrorLevel = PhiveResultHelper.getAsErrorLevel (MicroHelper.getChildTextContentTrimmed (aObj,
-                                                                                                               XML_ERROR_LEVEL));
-    final String sErrorID = MicroHelper.getChildTextContentTrimmed (aObj, XML_ERROR_ID);
-    final String sErrorFieldName = MicroHelper.getChildTextContentTrimmed (aObj, XML_ERROR_FIELD_NAME);
+                                                                                                               CPhiveXML.XML_ERROR_LEVEL));
+    final String sErrorID = MicroHelper.getChildTextContentTrimmed (aObj, CPhiveXML.XML_ERROR_ID);
+    final String sErrorFieldName = MicroHelper.getChildTextContentTrimmed (aObj, CPhiveXML.XML_ERROR_FIELD_NAME);
     // Try new structured version
-    final ILocation aErrorLocation = getAsErrorLocation (aObj.getFirstChildElement (XML_ERROR_LOCATION_OBJ));
-    final String sErrorText = MicroHelper.getChildTextContentTrimmed (aObj, XML_ERROR_TEXT);
-    final String sTest = MicroHelper.getChildTextContent (aObj, XML_TEST);
-    final PhiveRestoredException aLinkedException = PhiveRestoredException.createFromXML (aObj.getFirstChildElement (XML_EXCEPTION));
+    final ILocation aErrorLocation = getAsErrorLocation (aObj.getFirstChildElement (CPhiveXML.XML_ERROR_LOCATION_OBJ));
+    final String sErrorText = MicroHelper.getChildTextContentTrimmed (aObj, CPhiveXML.XML_ERROR_TEXT);
+    final String sTest = MicroHelper.getChildTextContent (aObj, CPhiveXML.XML_TEST);
+    final PhiveRestoredException aLinkedException = PhiveRestoredException.createFromXML (aObj.getFirstChildElement (CPhiveXML.XML_EXCEPTION));
 
     if (sTest != null)
       return new SVRLResourceError (aErrorDT,
@@ -420,10 +370,10 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (aSource, "Source");
 
     final IMicroElement ret = new MicroElement (sElementName);
-    ret.addElement (XML_SOURCE_TYPE_ID).addText (aSource.getValidationSourceTypeID ());
+    ret.addElement (CPhiveXML.XML_SOURCE_TYPE_ID).addText (aSource.getValidationSourceTypeID ());
     if (aSource.hasSystemID ())
-      ret.addElement (XML_SYSTEM_ID).addText (aSource.getSystemID ());
-    ret.addElement (XML_PARTIAL_SOURCE).addText (aSource.isPartialSource ());
+      ret.addElement (CPhiveXML.XML_SYSTEM_ID).addText (aSource.getSystemID ());
+    ret.addElement (CPhiveXML.XML_PARTIAL_SOURCE).addText (aSource.isPartialSource ());
     if (bWithPayload)
     {
       try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
@@ -431,7 +381,7 @@ public final class PhiveXMLHelper
       {
         aSource.writeTo (aB64OS);
         aB64OS.flushBase64 ();
-        ret.addElement (XML_PAYLOAD_BASE64).addText (aBAOS.getAsString (StandardCharsets.ISO_8859_1));
+        ret.addElement (CPhiveXML.XML_PAYLOAD_BASE64).addText (aBAOS.getAsString (StandardCharsets.ISO_8859_1));
       }
       catch (final IOException ex)
       {
@@ -469,17 +419,23 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (aStatus, "Status");
 
     final IMicroElement ret = new MicroElement (sElementName);
-    ret.addElement (XML_STATUS_LAST_MODIFICATION)
+    ret.addElement (CPhiveXML.XML_STATUS_LAST_MODIFICATION)
        .addText (PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()));
-    ret.addElement (XML_STATUS_TYPE).addText (aStatus.getType ().getID ());
+    ret.addElement (CPhiveXML.XML_STATUS_TYPE).addText (aStatus.getType ().getID ());
+    if (aStatus.hasDisplayName ())
+    {
+      // Added in 12.0.0
+      ret.addElement (CPhiveXML.XML_STATUS_DISPLAY_NAME).addText (aStatus.getDisplayName ());
+    }
     if (aStatus.hasValidFrom ())
-      ret.addElement (XML_STATUS_VALID_FROM).addText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()));
+      ret.addElement (CPhiveXML.XML_STATUS_VALID_FROM)
+         .addText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()));
     if (aStatus.hasValidTo ())
-      ret.addElement (XML_STATUS_VALID_TO).addText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()));
+      ret.addElement (CPhiveXML.XML_STATUS_VALID_TO).addText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()));
     if (aStatus.hasDeprecationReason ())
-      ret.addElement (XML_STATUS_DEPRECATION_REASON).addText (aStatus.getDeprecationReason ());
+      ret.addElement (CPhiveXML.XML_STATUS_DEPRECATION_REASON).addText (aStatus.getDeprecationReason ());
     if (aStatus.hasReplacementVESID ())
-      ret.addElement (XML_STATUS_REPLACEMENT_VESID).addText (aStatus.getReplacementVESID ().getAsSingleID ());
+      ret.addElement (CPhiveXML.XML_STATUS_REPLACEMENT_VESID).addText (aStatus.getReplacementVESID ().getAsSingleID ());
     return ret;
   }
 
@@ -517,17 +473,17 @@ public final class PhiveXMLHelper
     final IValidationExecutorSetStatus aStatus = aVES.getStatus ();
 
     final IMicroElement ret = new MicroElement (sElementName);
-    ret.addElement (XML_VESID).addText (aVES.getID ().getAsSingleID ());
-    ret.addElement (XML_NAME).addText (aVES.getDisplayName ());
-    ret.addElement (XML_DEPRECATED).addText (aStatus.isDeprecated ());
-    ret.addChild (getXMLVESStatus (aStatus, XML_STATUS));
+    ret.addElement (CPhiveXML.XML_VESID).addText (aVES.getID ().getAsSingleID ());
+    ret.addElement (CPhiveXML.XML_NAME).addText (aVES.getDisplayName ());
+    ret.addElement (CPhiveXML.XML_DEPRECATED).addText (aStatus.isDeprecated ());
+    ret.addChild (getXMLVESStatus (aStatus, CPhiveXML.XML_STATUS));
     return ret;
   }
 
   /**
    * Add one global error to the response. Afterwards no validation results should be added. The
    * layout of the response object is very similar to the one created by
-   * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}.
+   * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale)}.
    * <br>
    *
    * <pre>
@@ -562,22 +518,25 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (sErrorMsg, "ErrorMsg");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
-    aResponse.addElement (XML_SUCCESS).addText (false);
-    aResponse.addElement (XML_INTERRUPTED).addText (false);
-    aResponse.addElement (XML_MOST_SEVERE_ERROR_LEVEL)
+    aResponse.addElement (CPhiveXML.XML_SUCCESS).addText (false);
+    aResponse.addElement (CPhiveXML.XML_INTERRUPTED).addText (false);
+    aResponse.addElement (CPhiveXML.XML_MOST_SEVERE_ERROR_LEVEL)
              .addText (PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
 
     {
-      final IMicroElement aResult = aResponse.addElement (XML_RESULT);
-      aResult.addElement (XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (false));
-      aResult.addElement (XML_VALIDITY).addText (EExtendedValidity.INVALID.getID ());
-      aResult.addElement (XML_ARTIFACT_TYPE).addText (ARTIFACT_TYPE_INPUT_PARAMETER);
-      aResult.addElement (XML_ARTIFACT_PATH).addText (ARTIFACT_PATH_NONE);
-      aResult.addChild (xmlErrorBuilder (XML_ITEM).errorLevel (EErrorLevel.ERROR).errorText (sErrorMsg).build ());
-      aResult.addElement (XML_DURATION_MS).addText (nDurationMilliseconds);
+      final IMicroElement aResult = aResponse.addElement (CPhiveXML.XML_RESULT);
+      aResult.addElement (CPhiveXML.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (false));
+      // Added in 12.0.0
+      aResult.addElement (CPhiveXML.XML_VALIDITY).addText (EExtendedValidity.INVALID.getID ());
+      aResult.addElement (CPhiveXML.XML_ARTIFACT_TYPE).addText (CPhiveXML.ARTIFACT_TYPE_INPUT_PARAMETER);
+      aResult.addElement (CPhiveXML.XML_ARTIFACT_PATH).addText (CPhiveXML.ARTIFACT_PATH_NONE);
+      aResult.addChild (xmlErrorBuilder (CPhiveXML.XML_ITEM).errorLevel (EErrorLevel.ERROR)
+                                                            .errorText (sErrorMsg)
+                                                            .build ());
+      aResult.addElement (CPhiveXML.XML_DURATION_MS).addText (nDurationMilliseconds);
     }
 
-    aResponse.addElement (XML_DURATION_MS).addText (nDurationMilliseconds);
+    aResponse.addElement (CPhiveXML.XML_DURATION_MS).addText (nDurationMilliseconds);
   }
 
   /**
@@ -631,10 +590,10 @@ public final class PhiveXMLHelper
     ValueEnforcer.notNull (aRegistry, "Registry");
     if (aXML != null)
     {
-      final IMicroElement eVes = aXML.getFirstChildElement (XML_VES);
+      final IMicroElement eVes = aXML.getFirstChildElement (CPhiveXML.XML_VES);
       if (eVes != null)
       {
-        final String sVESID = MicroHelper.getChildTextContentTrimmed (eVes, XML_VESID);
+        final String sVESID = MicroHelper.getChildTextContentTrimmed (eVes, CPhiveXML.XML_VESID);
         if (StringHelper.isNotEmpty (sVESID))
         {
           final DVRCoordinate aVESID = DVRCoordinate.parseOrNull (sVESID);
@@ -678,10 +637,10 @@ public final class PhiveXMLHelper
 
     final IValidationSource aValidationSource;
     {
-      final IMicroElement eVS = aXML.getFirstChildElement (XML_VALIDATION_SOURCE);
+      final IMicroElement eVS = aXML.getFirstChildElement (CPhiveXML.XML_VALIDATION_SOURCE);
       if (eVS != null)
       {
-        final String sBase64EncodedPayload = MicroHelper.getChildTextContentTrimmed (eVS, XML_PAYLOAD_BASE64);
+        final String sBase64EncodedPayload = MicroHelper.getChildTextContentTrimmed (eVS, CPhiveXML.XML_PAYLOAD_BASE64);
         final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
         if (aPayloadBytes == null)
         {
@@ -692,11 +651,11 @@ public final class PhiveXMLHelper
         else
         {
           aValidationSource = aValidationSourceRestorer.restoreValidationSource (MicroHelper.getChildTextContentTrimmed (eVS,
-                                                                                                                         XML_SOURCE_TYPE_ID),
+                                                                                                                         CPhiveXML.XML_SOURCE_TYPE_ID),
                                                                                  MicroHelper.getChildTextContentTrimmed (eVS,
-                                                                                                                         XML_SYSTEM_ID),
+                                                                                                                         CPhiveXML.XML_SYSTEM_ID),
                                                                                  TypeConverter.convertToBoolean (MicroHelper.getChildTextContentTrimmed (eVS,
-                                                                                                                                                         XML_PARTIAL_SOURCE),
+                                                                                                                                                         CPhiveXML.XML_PARTIAL_SOURCE),
                                                                                                                  false),
                                                                                  aPayloadBytes);
         }
@@ -706,20 +665,20 @@ public final class PhiveXMLHelper
     }
 
     final OffsetDateTime aValidationDT = PDTWebDateHelper.getOffsetDateTimeFromXSD (MicroHelper.getChildTextContentTrimmed (aXML,
-                                                                                                                            PhiveXMLHelper.XML_VALIDATION_DATETIME));
+                                                                                                                            CPhiveXML.XML_VALIDATION_DATETIME));
 
     final ValidationResultList ret = new ValidationResultList (aValidationSource, aValidationDT);
 
     final long nOverallMillis = TypeConverter.convertToLong (MicroHelper.getChildTextContentTrimmed (aXML,
-                                                                                                     PhiveXMLHelper.XML_DURATION_MS),
+                                                                                                     CPhiveXML.XML_DURATION_MS),
                                                              -1);
     if (nOverallMillis >= 0)
       ret.setValidationDuration (Duration.ofMillis (nOverallMillis));
 
-    for (final IMicroElement eResult : aXML.getAllChildElements (XML_RESULT))
+    for (final IMicroElement eResult : aXML.getAllChildElements (CPhiveXML.XML_RESULT))
     {
       // Fall back to previous status
-      final String sSuccess = MicroHelper.getChildTextContentTrimmed (eResult, XML_SUCCESS);
+      final String sSuccess = MicroHelper.getChildTextContentTrimmed (eResult, CPhiveXML.XML_SUCCESS);
       final ETriState eSuccess = PhiveResultHelper.getAsTriState (sSuccess);
       if (eSuccess == null)
       {
@@ -728,7 +687,7 @@ public final class PhiveXMLHelper
         continue;
       }
 
-      final String sValidity = MicroHelper.getChildTextContentTrimmed (eResult, XML_VALIDITY);
+      final String sValidity = MicroHelper.getChildTextContentTrimmed (eResult, CPhiveXML.XML_VALIDITY);
       EExtendedValidity eValidity = EExtendedValidity.getFromIDOrNull (sValidity);
       if (eValidity == null)
       {
@@ -741,7 +700,7 @@ public final class PhiveXMLHelper
         };
       }
 
-      final String sValidationType = MicroHelper.getChildTextContentTrimmed (eResult, XML_ARTIFACT_TYPE);
+      final String sValidationType = MicroHelper.getChildTextContentTrimmed (eResult, CPhiveXML.XML_ARTIFACT_TYPE);
       final IValidationType aValidationType = aValidationTypeResolver.apply (sValidationType);
       if (aValidationType == null)
       {
@@ -749,8 +708,9 @@ public final class PhiveXMLHelper
           LOGGER.debug ("Failed to resolve ValidationType '" + sValidationType + "'");
         continue;
       }
-      final String sArtefactPathType = MicroHelper.getChildTextContentTrimmed (eResult, XML_ARTIFACT_PATH_TYPE);
-      final String sArtefactPath = MicroHelper.getChildTextContentTrimmed (eResult, XML_ARTIFACT_PATH);
+      final String sArtefactPathType = MicroHelper.getChildTextContentTrimmed (eResult,
+                                                                               CPhiveXML.XML_ARTIFACT_PATH_TYPE);
+      final String sArtefactPath = MicroHelper.getChildTextContentTrimmed (eResult, CPhiveXML.XML_ARTIFACT_PATH);
       final IReadableResource aRes = PhiveResultHelper.getAsValidationResource (sArtefactPathType, sArtefactPath);
       if (aRes == null)
       {
@@ -773,14 +733,14 @@ public final class PhiveXMLHelper
       {
         // We have results
         final ErrorList aErrorList = new ErrorList ();
-        for (final IMicroElement eItem : eResult.getAllChildElements (XML_ITEM))
+        for (final IMicroElement eItem : eResult.getAllChildElements (CPhiveXML.XML_ITEM))
         {
           final IError aError = getAsIError (eItem);
           aErrorList.add (aError);
         }
 
         final long nDurationMS = TypeConverter.convertToLong (MicroHelper.getChildTextContentTrimmed (eResult,
-                                                                                                      XML_DURATION_MS),
+                                                                                                      CPhiveXML.XML_DURATION_MS),
                                                               0);
 
         final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity, nDurationMS);

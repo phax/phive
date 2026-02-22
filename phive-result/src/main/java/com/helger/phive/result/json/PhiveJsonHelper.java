@@ -37,7 +37,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
 import com.helger.base.location.ILocation;
 import com.helger.base.location.SimpleLocation;
-import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.rt.StackTraceHelper;
 import com.helger.base.state.ETriState;
 import com.helger.base.string.StringHelper;
@@ -74,7 +73,7 @@ import com.helger.schematron.svrl.SVRLResourceError;
 /**
  * A utility class to create a common JSON representation of a PHIVE result. Use
  * {@link #applyGlobalError(IJsonObject, String, long)} or
- * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale, MutableInt, MutableInt)}
+ * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale)}
  * to add the result to an arbitrary {@link IJsonObject}.
  *
  * @author Philip Helger
@@ -83,57 +82,6 @@ import com.helger.schematron.svrl.SVRLResourceError;
 @Immutable
 public final class PhiveJsonHelper
 {
-  public static final String JSON_RESOURCE_ID = "resource";
-  public static final String JSON_LINE_NUM = "line";
-  public static final String JSON_COLUMN_NUM = "col";
-
-  public static final String JSON_ERROR_DATETIME = "errorDateTime";
-  public static final String JSON_ERROR_LEVEL = "errorLevel";
-  public static final String JSON_ERROR_ID = "errorID";
-  public static final String JSON_ERROR_FIELD_NAME = "errorFieldName";
-  public static final String JSON_ERROR_LOCATION_OBJ = "errorLocationObj";
-  public static final String JSON_ERROR_LOCATION_STR = "errorLocation";
-  public static final String JSON_ERROR_TEXT = "errorText";
-  public static final String JSON_EXCEPTION = "exception";
-  public static final String JSON_TEST = "test";
-
-  // Added in 12.0.0
-  public static final String JSON_VALIDATION_DATETIME = "validationDateTime";
-
-  // Added in 10.1.0
-  public static final String JSON_VALIDATION_SOURCE = "validationSource";
-  public static final String JSON_SOURCE_TYPE_ID = "sourceTypeID";
-  public static final String JSON_SYSTEM_ID = "systemID";
-  public static final String JSON_PARTIAL_SOURCE = "partialSource";
-  public static final String JSON_PAYLOAD_BASE64 = "payloadBase64";
-
-  public static final String JSON_VESID = "vesid";
-  public static final String JSON_NAME = "name";
-  public static final String JSON_DEPRECATED = "deprecated";
-  public static final String JSON_STATUS = "status";
-  public static final String JSON_STATUS_LAST_MODIFICATION = "lastModification";
-  public static final String JSON_STATUS_TYPE = "type";
-  public static final String JSON_STATUS_VALID_FROM = "validFrom";
-  public static final String JSON_STATUS_VALID_TO = "validTo";
-  public static final String JSON_STATUS_DEPRECATION_REASON = "deprecationReason";
-  public static final String JSON_STATUS_REPLACEMENT_VESID = "replacementVesid";
-
-  public static final String JSON_SUCCESS = "success";
-  // Since 12.0.0
-  public static final String JSON_VALIDITY = "validity";
-  public static final String JSON_ARTIFACT_TYPE = "artifactType";
-  public static final String JSON_ARTIFACT_PATH_TYPE = "artifactPathType";
-  public static final String JSON_ARTIFACT_PATH = "artifactPath";
-  public static final String JSON_ITEMS = "items";
-  public static final String JSON_INTERRUPTED = "interrupted";
-  public static final String JSON_MOST_SEVERE_ERROR_LEVEL = "mostSevereErrorLevel";
-  public static final String JSON_RESULTS = "results";
-  public static final String JSON_DURATION_MS = "durationMS";
-  public static final String JSON_VES = "ves";
-
-  public static final String ARTIFACT_TYPE_INPUT_PARAMETER = "input-parameter";
-  public static final String ARTIFACT_PATH_NONE = "none";
-
   private static final Logger LOGGER = LoggerFactory.getLogger (PhiveJsonHelper.class);
 
   private PhiveJsonHelper ()
@@ -189,11 +137,11 @@ public final class PhiveJsonHelper
       return null;
     final IJsonObject ret = new JsonObject ();
     if (aLocation.hasResourceID ())
-      ret.add (JSON_RESOURCE_ID, aLocation.getResourceID ());
+      ret.add (CPhiveJson.JSON_RESOURCE_ID, aLocation.getResourceID ());
     if (aLocation.hasLineNumber ())
-      ret.add (JSON_LINE_NUM, aLocation.getLineNumber ());
+      ret.add (CPhiveJson.JSON_LINE_NUM, aLocation.getLineNumber ());
     if (aLocation.hasColumnNumber ())
-      ret.add (JSON_COLUMN_NUM, aLocation.getColumnNumber ());
+      ret.add (CPhiveJson.JSON_COLUMN_NUM, aLocation.getColumnNumber ());
     return ret;
   }
 
@@ -203,9 +151,9 @@ public final class PhiveJsonHelper
     if (aObj == null)
       return null;
 
-    final String sResourceID = aObj.getAsString (JSON_RESOURCE_ID);
-    final int nLineNumber = aObj.getAsInt (JSON_LINE_NUM, -1);
-    final int nColumnNumber = aObj.getAsInt (JSON_COLUMN_NUM, -1);
+    final String sResourceID = aObj.getAsString (CPhiveJson.JSON_RESOURCE_ID);
+    final int nLineNumber = aObj.getAsInt (CPhiveJson.JSON_LINE_NUM, -1);
+    final int nColumnNumber = aObj.getAsInt (CPhiveJson.JSON_COLUMN_NUM, -1);
     if (StringHelper.isEmpty (sResourceID) && nLineNumber < 0 && nColumnNumber < 0)
       return null;
 
@@ -338,24 +286,24 @@ public final class PhiveJsonHelper
   @NonNull
   public static IError getAsIError (@NonNull final IJsonObject aObj)
   {
-    final LocalDateTime aErrorDT = PDTWebDateHelper.getLocalDateTimeFromXSD (aObj.getAsString (JSON_ERROR_DATETIME));
-    final IErrorLevel aErrorLevel = PhiveResultHelper.getAsErrorLevel (aObj.getAsString (JSON_ERROR_LEVEL));
-    final String sErrorID = aObj.getAsString (JSON_ERROR_ID);
-    final String sErrorFieldName = aObj.getAsString (JSON_ERROR_FIELD_NAME);
+    final LocalDateTime aErrorDT = PDTWebDateHelper.getLocalDateTimeFromXSD (aObj.getAsString (CPhiveJson.JSON_ERROR_DATETIME));
+    final IErrorLevel aErrorLevel = PhiveResultHelper.getAsErrorLevel (aObj.getAsString (CPhiveJson.JSON_ERROR_LEVEL));
+    final String sErrorID = aObj.getAsString (CPhiveJson.JSON_ERROR_ID);
+    final String sErrorFieldName = aObj.getAsString (CPhiveJson.JSON_ERROR_FIELD_NAME);
     // Try new structured version
-    ILocation aErrorLocation = getAsErrorLocation (aObj.getAsObject (JSON_ERROR_LOCATION_OBJ));
+    ILocation aErrorLocation = getAsErrorLocation (aObj.getAsObject (CPhiveJson.JSON_ERROR_LOCATION_OBJ));
     if (aErrorLocation == null)
     {
-      final IJsonValue aErrorLocationValue = aObj.getAsValue (JSON_ERROR_LOCATION_STR);
+      final IJsonValue aErrorLocationValue = aObj.getAsValue (CPhiveJson.JSON_ERROR_LOCATION_STR);
       if (aErrorLocationValue != null)
       {
         // It's a string - old version
         aErrorLocation = new SimpleLocation (aErrorLocationValue.getAsString ());
       }
     }
-    final String sErrorText = aObj.getAsString (JSON_ERROR_TEXT);
-    final String sTest = aObj.getAsString (JSON_TEST);
-    final PhiveRestoredException aLinkedException = PhiveRestoredException.createFromJson (aObj.getAsObject (JSON_EXCEPTION));
+    final String sErrorText = aObj.getAsString (CPhiveJson.JSON_ERROR_TEXT);
+    final String sTest = aObj.getAsString (CPhiveJson.JSON_TEST);
+    final PhiveRestoredException aLinkedException = PhiveRestoredException.createFromJson (aObj.getAsObject (CPhiveJson.JSON_EXCEPTION));
 
     if (sTest != null)
       return new SVRLResourceError (aErrorDT,
@@ -401,9 +349,9 @@ public final class PhiveJsonHelper
   {
     ValueEnforcer.notNull (aSource, "Source");
 
-    final IJsonObject ret = new JsonObject ().add (JSON_SOURCE_TYPE_ID, aSource.getValidationSourceTypeID ())
-                                             .addIfNotNull (JSON_SYSTEM_ID, aSource.getSystemID ())
-                                             .add (JSON_PARTIAL_SOURCE, aSource.isPartialSource ());
+    final IJsonObject ret = new JsonObject ().add (CPhiveJson.JSON_SOURCE_TYPE_ID, aSource.getValidationSourceTypeID ())
+                                             .addIfNotNull (CPhiveJson.JSON_SYSTEM_ID, aSource.getSystemID ())
+                                             .add (CPhiveJson.JSON_PARTIAL_SOURCE, aSource.isPartialSource ());
     if (bWithPayload)
     {
       try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
@@ -411,7 +359,7 @@ public final class PhiveJsonHelper
       {
         aSource.writeTo (aB64OS);
         aB64OS.flushBase64 ();
-        ret.add (JSON_PAYLOAD_BASE64, aBAOS.getAsString (StandardCharsets.ISO_8859_1));
+        ret.add (CPhiveJson.JSON_PAYLOAD_BASE64, aBAOS.getAsString (StandardCharsets.ISO_8859_1));
       }
       catch (final IOException ex)
       {
@@ -428,6 +376,7 @@ public final class PhiveJsonHelper
    * {
    *   "lastModification" : dateTime,
    *   "type" : string,
+   *   "displayName" : string?,
    *   "validFrom" : string?,
    *   "validTo" : string?,
    *   "deprecationReason" : string?,
@@ -445,17 +394,20 @@ public final class PhiveJsonHelper
   {
     ValueEnforcer.notNull (aStatus, "Status");
 
-    final IJsonObject aStatusJson = new JsonObject ().add (JSON_STATUS_LAST_MODIFICATION,
+    final IJsonObject aStatusJson = new JsonObject ().add (CPhiveJson.JSON_STATUS_LAST_MODIFICATION,
                                                            PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()))
-                                                     .add (JSON_STATUS_TYPE, aStatus.getType ().getID ())
-                                                     .addIfNotNull (JSON_STATUS_VALID_FROM,
+                                                     .add (CPhiveJson.JSON_STATUS_TYPE, aStatus.getType ().getID ())
+                                                     // Added in 12.0.0
+                                                     .addIfNotEmpty (CPhiveJson.JSON_STATUS_DISPLAY_NAME,
+                                                                     aStatus.getDisplayName ())
+                                                     .addIfNotNull (CPhiveJson.JSON_STATUS_VALID_FROM,
                                                                     PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()))
-                                                     .addIfNotNull (JSON_STATUS_VALID_TO,
+                                                     .addIfNotNull (CPhiveJson.JSON_STATUS_VALID_TO,
                                                                     PDTWebDateHelper.getAsStringXSD (aStatus.getValidTo ()))
-                                                     .addIfNotEmpty (JSON_STATUS_DEPRECATION_REASON,
+                                                     .addIfNotEmpty (CPhiveJson.JSON_STATUS_DEPRECATION_REASON,
                                                                      aStatus.getDeprecationReason ());
     if (aStatus.hasReplacementVESID ())
-      aStatusJson.add (JSON_STATUS_REPLACEMENT_VESID, aStatus.getReplacementVESID ().getAsSingleID ());
+      aStatusJson.add (CPhiveJson.JSON_STATUS_REPLACEMENT_VESID, aStatus.getReplacementVESID ().getAsSingleID ());
 
     return aStatusJson;
   }
@@ -489,16 +441,16 @@ public final class PhiveJsonHelper
     ValueEnforcer.notNull (aVES, "VES");
 
     final IValidationExecutorSetStatus aStatus = aVES.getStatus ();
-    return new JsonObject ().add (JSON_VESID, aVES.getID ().getAsSingleID ())
-                            .add (JSON_NAME, aVES.getDisplayName ())
-                            .add (JSON_DEPRECATED, aStatus.isDeprecated ())
-                            .add (JSON_STATUS, getJsonVESStatus (aStatus));
+    return new JsonObject ().add (CPhiveJson.JSON_VESID, aVES.getID ().getAsSingleID ())
+                            .add (CPhiveJson.JSON_NAME, aVES.getDisplayName ())
+                            .add (CPhiveJson.JSON_DEPRECATED, aStatus.isDeprecated ())
+                            .add (CPhiveJson.JSON_STATUS, getJsonVESStatus (aStatus));
   }
 
   /**
    * Add one global error to the response. Afterwards no validation results should be added. The
    * layout of the response object is very similar to the one created by
-   * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}.
+   * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale)}.
    * <br>
    *
    * <pre>
@@ -534,21 +486,22 @@ public final class PhiveJsonHelper
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
     final IJsonArray aResultArray = new JsonArray ();
-    aResultArray.add (new JsonObject ().add (JSON_SUCCESS, PhiveResultHelper.getTriStateValue (false))
-                                       .add (JSON_VALIDITY, EExtendedValidity.INVALID.getID ())
-                                       .add (JSON_ARTIFACT_TYPE, ARTIFACT_TYPE_INPUT_PARAMETER)
-                                       .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
-                                       .add (JSON_ITEMS,
+    aResultArray.add (new JsonObject ().add (CPhiveJson.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (false))
+                                       // Added in 12.0.0
+                                       .add (CPhiveJson.JSON_VALIDITY, EExtendedValidity.INVALID.getID ())
+                                       .add (CPhiveJson.JSON_ARTIFACT_TYPE, CPhiveJson.ARTIFACT_TYPE_INPUT_PARAMETER)
+                                       .add (CPhiveJson.JSON_ARTIFACT_PATH, CPhiveJson.ARTIFACT_PATH_NONE)
+                                       .add (CPhiveJson.JSON_ITEMS,
                                              new JsonArray (jsonErrorBuilder ().errorLevel (EErrorLevel.ERROR)
                                                                                .errorText (sErrorMsg)
                                                                                .build ()))
-                                       .add (JSON_DURATION_MS, nDurationMilliseconds));
+                                       .add (CPhiveJson.JSON_DURATION_MS, nDurationMilliseconds));
 
-    aResponse.add (JSON_SUCCESS, false);
-    aResponse.add (JSON_INTERRUPTED, false);
-    aResponse.add (JSON_MOST_SEVERE_ERROR_LEVEL, PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
-    aResponse.add (JSON_RESULTS, aResultArray);
-    aResponse.add (JSON_DURATION_MS, nDurationMilliseconds);
+    aResponse.add (CPhiveJson.JSON_SUCCESS, false);
+    aResponse.add (CPhiveJson.JSON_INTERRUPTED, false);
+    aResponse.add (CPhiveJson.JSON_MOST_SEVERE_ERROR_LEVEL, PhiveResultHelper.getErrorLevelValue (EErrorLevel.ERROR));
+    aResponse.add (CPhiveJson.JSON_RESULTS, aResultArray);
+    aResponse.add (CPhiveJson.JSON_DURATION_MS, nDurationMilliseconds);
   }
 
   /**
@@ -600,11 +553,11 @@ public final class PhiveJsonHelper
     ValueEnforcer.notNull (aRegistry, "Registry");
     if (aJson != null)
     {
-      IJsonObject aObj = aJson.getAsObject (JSON_VES);
+      IJsonObject aObj = aJson.getAsObject (CPhiveJson.JSON_VES);
       if (aObj == null)
         aObj = aJson;
 
-      final String sVESID = aObj.getAsString (JSON_VESID);
+      final String sVESID = aObj.getAsString (CPhiveJson.JSON_VESID);
       if (StringHelper.isNotEmpty (sVESID))
       {
         final DVRCoordinate aVESID = DVRCoordinate.parseOrNull (sVESID);
@@ -648,10 +601,10 @@ public final class PhiveJsonHelper
 
     final IValidationSource aValidationSource;
     {
-      final IJsonObject aJsonVS = aJson.getAsObject (PhiveJsonHelper.JSON_VALIDATION_SOURCE);
+      final IJsonObject aJsonVS = aJson.getAsObject (CPhiveJson.JSON_VALIDATION_SOURCE);
       if (aJsonVS != null)
       {
-        final String sBase64EncodedPayload = aJsonVS.getAsString (PhiveJsonHelper.JSON_PAYLOAD_BASE64);
+        final String sBase64EncodedPayload = aJsonVS.getAsString (CPhiveJson.JSON_PAYLOAD_BASE64);
         final byte [] aPayloadBytes = Base64.safeDecode (sBase64EncodedPayload);
         if (aPayloadBytes == null)
         {
@@ -664,9 +617,9 @@ public final class PhiveJsonHelper
         }
         else
         {
-          aValidationSource = aValidationSourceRestorer.restoreValidationSource (aJsonVS.getAsString (PhiveJsonHelper.JSON_SOURCE_TYPE_ID),
-                                                                                 aJsonVS.getAsString (PhiveJsonHelper.JSON_SYSTEM_ID),
-                                                                                 aJsonVS.getAsBoolean (PhiveJsonHelper.JSON_PARTIAL_SOURCE,
+          aValidationSource = aValidationSourceRestorer.restoreValidationSource (aJsonVS.getAsString (CPhiveJson.JSON_SOURCE_TYPE_ID),
+                                                                                 aJsonVS.getAsString (CPhiveJson.JSON_SYSTEM_ID),
+                                                                                 aJsonVS.getAsBoolean (CPhiveJson.JSON_PARTIAL_SOURCE,
                                                                                                        false),
                                                                                  aPayloadBytes);
         }
@@ -675,14 +628,14 @@ public final class PhiveJsonHelper
         aValidationSource = null;
     }
 
-    final OffsetDateTime aValidationDT = PDTWebDateHelper.getOffsetDateTimeFromXSD (aJson.getAsString (PhiveJsonHelper.JSON_VALIDATION_DATETIME));
+    final OffsetDateTime aValidationDT = PDTWebDateHelper.getOffsetDateTimeFromXSD (aJson.getAsString (CPhiveJson.JSON_VALIDATION_DATETIME));
     final ValidationResultList ret = new ValidationResultList (aValidationSource, aValidationDT);
 
-    final long nOverallMillis = aJson.getAsLong (PhiveJsonHelper.JSON_DURATION_MS, -1);
+    final long nOverallMillis = aJson.getAsLong (CPhiveJson.JSON_DURATION_MS, -1);
     if (nOverallMillis >= 0)
       ret.setValidationDuration (Duration.ofMillis (nOverallMillis));
 
-    final IJsonArray aResults = aJson.getAsArray (JSON_RESULTS);
+    final IJsonArray aResults = aJson.getAsArray (CPhiveJson.JSON_RESULTS);
     if (aResults == null)
       return null;
 
@@ -692,7 +645,7 @@ public final class PhiveJsonHelper
       if (aResultObj != null)
       {
         // Fall back to previous status
-        final String sSuccess = aResultObj.getAsString (JSON_SUCCESS);
+        final String sSuccess = aResultObj.getAsString (CPhiveJson.JSON_SUCCESS);
         final ETriState eSuccess = PhiveResultHelper.getAsTriState (sSuccess);
         if (eSuccess == null)
         {
@@ -701,7 +654,7 @@ public final class PhiveJsonHelper
           continue;
         }
 
-        final String sValidity = aResultObj.getAsString (JSON_VALIDITY);
+        final String sValidity = aResultObj.getAsString (CPhiveJson.JSON_VALIDITY);
         EExtendedValidity eValidity = EExtendedValidity.getFromIDOrNull (sValidity);
         if (eValidity == null)
         {
@@ -714,7 +667,7 @@ public final class PhiveJsonHelper
           };
         }
 
-        final String sValidationType = aResultObj.getAsString (JSON_ARTIFACT_TYPE);
+        final String sValidationType = aResultObj.getAsString (CPhiveJson.JSON_ARTIFACT_TYPE);
         final IValidationType aValidationType = aValidationTypeResolver.apply (sValidationType);
         if (aValidationType == null)
         {
@@ -722,8 +675,8 @@ public final class PhiveJsonHelper
             LOGGER.debug ("Failed to resolve ValidationType '" + sValidationType + "'");
           continue;
         }
-        final String sArtefactPathType = aResultObj.getAsString (JSON_ARTIFACT_PATH_TYPE);
-        final String sArtefactPath = aResultObj.getAsString (JSON_ARTIFACT_PATH);
+        final String sArtefactPathType = aResultObj.getAsString (CPhiveJson.JSON_ARTIFACT_PATH_TYPE);
+        final String sArtefactPath = aResultObj.getAsString (CPhiveJson.JSON_ARTIFACT_PATH);
         final IReadableResource aRes = PhiveResultHelper.getAsValidationResource (sArtefactPathType, sArtefactPath);
         if (aRes == null)
         {
@@ -745,7 +698,7 @@ public final class PhiveJsonHelper
         else
         {
           // We have results
-          final IJsonArray aItems = aResultObj.getAsArray (JSON_ITEMS);
+          final IJsonArray aItems = aResultObj.getAsArray (CPhiveJson.JSON_ITEMS);
           final ErrorList aErrorList = new ErrorList ();
           for (final IJson aItem : aItems)
           {
@@ -758,7 +711,7 @@ public final class PhiveJsonHelper
             }
           }
 
-          final long nDurationMS = aResultObj.getAsLong (JSON_DURATION_MS);
+          final long nDurationMS = aResultObj.getAsLong (CPhiveJson.JSON_DURATION_MS);
 
           final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity, nDurationMS);
           ret.add (aVR);

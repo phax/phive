@@ -51,12 +51,12 @@ public class XMLErrorBuilder implements IBuilder <IMicroElement>
   private String m_sErrorFieldName;
   private ILocation m_aErrorLocation;
   private Function <ILocation, IMicroElement> m_aErrorLocationToXML = x -> PhiveXMLHelper.getXMLErrorLocation (x,
-                                                                                                               PhiveXMLHelper.XML_ERROR_LOCATION_OBJ);
+                                                                                                               CPhiveXML.XML_ERROR_LOCATION_OBJ);
   private String m_sTest;
   private String m_sErrorText;
   private Throwable m_aException;
   private Function <Throwable, IMicroElement> m_aExceptionToXML = t -> PhiveXMLHelper.getXMLStackTrace (t,
-                                                                                                        PhiveXMLHelper.XML_EXCEPTION);
+                                                                                                        CPhiveXML.XML_EXCEPTION);
 
   public XMLErrorBuilder (@NonNull @Nonempty final String sElementName)
   {
@@ -151,17 +151,17 @@ public class XMLErrorBuilder implements IBuilder <IMicroElement>
   {
     final IMicroElement ret = new MicroElement (m_sElementName);
     if (m_aErrorDateTime != null)
-      ret.addElement (PhiveXMLHelper.XML_ERROR_DATETIME).addText (PDTWebDateHelper.getAsStringXSD (m_aErrorDateTime));
+      ret.addElement (CPhiveXML.XML_ERROR_DATETIME).addText (PDTWebDateHelper.getAsStringXSD (m_aErrorDateTime));
     if (m_aErrorLevel != null && m_aErrorLevelToXML != null)
     {
       final String sErrorLevel = m_aErrorLevelToXML.apply (m_aErrorLevel);
       if (StringHelper.isNotEmpty (sErrorLevel))
-        ret.addElement (PhiveXMLHelper.XML_ERROR_LEVEL).addText (sErrorLevel);
+        ret.addElement (CPhiveXML.XML_ERROR_LEVEL).addText (sErrorLevel);
     }
     if (m_sErrorID != null)
-      ret.addElement (PhiveXMLHelper.XML_ERROR_ID).addText (m_sErrorID);
+      ret.addElement (CPhiveXML.XML_ERROR_ID).addText (m_sErrorID);
     if (m_sErrorFieldName != null)
-      ret.addElement (PhiveXMLHelper.XML_ERROR_FIELD_NAME).addText (m_sErrorFieldName);
+      ret.addElement (CPhiveXML.XML_ERROR_FIELD_NAME).addText (m_sErrorFieldName);
     if (m_aErrorLocation != null && m_aErrorLocationToXML != null)
     {
       final IMicroElement eErrorLocation = m_aErrorLocationToXML.apply (m_aErrorLocation);
@@ -169,9 +169,9 @@ public class XMLErrorBuilder implements IBuilder <IMicroElement>
         ret.addChild (eErrorLocation);
     }
     if (m_sTest != null)
-      ret.addElement (PhiveXMLHelper.XML_TEST).addText (m_sTest);
+      ret.addElement (CPhiveXML.XML_TEST).addText (m_sTest);
     if (m_sErrorText != null)
-      ret.addElement (PhiveXMLHelper.XML_ERROR_TEXT).addText (m_sErrorText);
+      ret.addElement (CPhiveXML.XML_ERROR_TEXT).addText (m_sErrorText);
     if (m_aException != null && m_aExceptionToXML != null)
     {
       final IMicroElement eEx = m_aExceptionToXML.apply (m_aException);

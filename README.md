@@ -151,6 +151,8 @@ v12.0.0 - 2026-02-22
 * Simplified the parameter list of `PhiveXMLHelper.applyValidationResultList`
 * `ValidationResultList` is no longer a CommonsArrayList but has a member list instead
 * Added new class `ValidationSummary`
+* Extracted classes `CPhiveXML` and `CPhiveJson` with all the element/field names
+* Extended the created JSON and XML outputs with new fields (validationDateTime, result-layer.validity, ves.status.displayName)
 
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1

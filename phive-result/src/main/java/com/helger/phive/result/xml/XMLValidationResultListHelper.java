@@ -55,15 +55,15 @@ public class XMLValidationResultListHelper
 
   private Function <IValidationSource, IMicroElement> m_aSourceToXML = src -> PhiveXMLHelper.getXMLValidationSource (src,
                                                                                                                      true,
-                                                                                                                     PhiveXMLHelper.XML_VALIDATION_SOURCE);
+                                                                                                                     CPhiveXML.XML_VALIDATION_SOURCE);
   private IValidationExecutorSet <?> m_aVES;
   private Function <IValidationExecutorSet <?>, IMicroElement> m_aVESToXML = ves -> PhiveXMLHelper.getXMLVES (ves,
-                                                                                                              PhiveXMLHelper.XML_VES);
+                                                                                                              CPhiveXML.XML_VES);
   private Function <IReadableResource, String> m_aArtifactPathTypeToXML = PhiveResultHelper::getArtifactPathType;
   private Function <IErrorLevel, String> m_aErrorLevelToXML = PhiveResultHelper::getErrorLevelValue;
   private BiFunction <IError, Locale, IMicroElement> m_aErrorToXML = (err, loc) -> PhiveXMLHelper.getXMLError (err,
                                                                                                                loc,
-                                                                                                               PhiveXMLHelper.XML_ITEM);
+                                                                                                               CPhiveXML.XML_ITEM);
 
   public XMLValidationResultListHelper ()
   {}
@@ -151,7 +151,7 @@ public class XMLValidationResultListHelper
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     // Added in 12.0.0
-    aResponse.addElement (PhiveXMLHelper.XML_VALIDATION_DATETIME)
+    aResponse.addElement (CPhiveXML.XML_VALIDATION_DATETIME)
              .addText (PDTWebDateHelper.getAsStringXSD (aValidationResultList.getValidationDateTime ()));
 
     // Added in 10.1.0
@@ -174,14 +174,13 @@ public class XMLValidationResultListHelper
 
     // Serialize
     {
-      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS)
-               .addText (aValidationResultList.getOverallValidity ().isValid ());
-      aResponse.addElement (PhiveXMLHelper.XML_INTERRUPTED).addText (aSummary.isValidationInterrupted ());
+      aResponse.addElement (CPhiveXML.XML_SUCCESS).addText (aValidationResultList.getOverallValidity ().isValid ());
+      aResponse.addElement (CPhiveXML.XML_INTERRUPTED).addText (aSummary.isValidationInterrupted ());
       if (m_aErrorLevelToXML != null)
       {
         final String sErrorLevel = m_aErrorLevelToXML.apply (aSummary.getMostSevereErrorLevel ());
         if (StringHelper.isNotEmpty (sErrorLevel))
-          aResponse.addElement (PhiveXMLHelper.XML_MOST_SEVERE_ERROR_LEVEL).addText (sErrorLevel);
+          aResponse.addElement (CPhiveXML.XML_MOST_SEVERE_ERROR_LEVEL).addText (sErrorLevel);
       }
     }
 
@@ -191,28 +190,20 @@ public class XMLValidationResultListHelper
       final IValidationArtefact aVA = aVR.getValidationArtefact ();
       final EExtendedValidity eValidity = aVR.getValidity ();
 
-      final IMicroElement aVRT = new MicroElement (PhiveXMLHelper.XML_RESULT);
+      final IMicroElement aVRT = new MicroElement (CPhiveXML.XML_RESULT);
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
-      if (eValidity.isSkipped ())
-      {
-        aVRT.addElement (PhiveXMLHelper.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (ETriState.UNDEFINED));
-      }
-      else
-      {
-        // Backwards compatible decision
-        aVRT.addElement (PhiveXMLHelper.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (eValidity));
-      }
-      aVRT.addElement (PhiveXMLHelper.XML_VALIDITY).addText (eValidity.getID ());
-
-      aVRT.addElement (PhiveXMLHelper.XML_ARTIFACT_TYPE).addText (aVA.getValidationType ().getID ());
+      aVRT.addElement (CPhiveXML.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (eValidity));
+      // Added in 12.0.0
+      aVRT.addElement (CPhiveXML.XML_VALIDITY).addText (eValidity.getID ());
+      aVRT.addElement (CPhiveXML.XML_ARTIFACT_TYPE).addText (aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToXML != null)
       {
         final String sPathType = m_aArtifactPathTypeToXML.apply (aVA.getRuleResource ());
         if (StringHelper.isNotEmpty (sPathType))
-          aVRT.addElement (PhiveXMLHelper.XML_ARTIFACT_PATH_TYPE).addText (sPathType);
+          aVRT.addElement (CPhiveXML.XML_ARTIFACT_PATH_TYPE).addText (sPathType);
       }
-      aVRT.addElement (PhiveXMLHelper.XML_ARTIFACT_PATH).addText (aVA.getRuleResourcePath ());
+      aVRT.addElement (CPhiveXML.XML_ARTIFACT_PATH).addText (aVA.getRuleResourcePath ());
 
       for (final IError aError : aVR.getErrorList ())
       {
@@ -222,14 +213,14 @@ public class XMLValidationResultListHelper
         else
           LOGGER.warn ("Failed to convert IError to XML");
       }
-      aVRT.addElement (PhiveXMLHelper.XML_DURATION_MS).addText (aVR.getDurationMS ());
+      aVRT.addElement (CPhiveXML.XML_DURATION_MS).addText (aVR.getDurationMS ());
 
       aResponse.addChild (aVRT);
     }
 
     // This is the end of the XML
     if (aValidationResultList.hasValidationDuration ())
-      aResponse.addElement (PhiveXMLHelper.XML_DURATION_MS)
+      aResponse.addElement (CPhiveXML.XML_DURATION_MS)
                .addText (aValidationResultList.getValidationDuration ().toMillis ());
   }
 }

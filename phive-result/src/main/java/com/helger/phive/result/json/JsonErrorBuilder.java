@@ -33,8 +33,8 @@ import com.helger.json.JsonObject;
 import com.helger.phive.result.PhiveResultHelper;
 
 /**
- * A flexible builder that can be used to convert data from an {@link IError}
- * object to a JSON representation with high degrees of freedom.
+ * A flexible builder that can be used to convert data from an {@link IError} object to a JSON
+ * representation with high degrees of freedom.
  *
  * @author Philip Helger
  * @since 7.2.3
@@ -144,21 +144,21 @@ public class JsonErrorBuilder implements IBuilder <IJsonObject>
   {
     final JsonObject ret = new JsonObject ();
     if (m_aErrorDateTime != null)
-      ret.add (PhiveJsonHelper.JSON_ERROR_DATETIME, PDTWebDateHelper.getAsStringXSD (m_aErrorDateTime));
+      ret.add (CPhiveJson.JSON_ERROR_DATETIME, PDTWebDateHelper.getAsStringXSD (m_aErrorDateTime));
     if (m_aErrorLevel != null && m_aErrorLevelToJson != null)
-      ret.addIfNotNull (PhiveJsonHelper.JSON_ERROR_LEVEL, m_aErrorLevelToJson.apply (m_aErrorLevel));
+      ret.addIfNotNull (CPhiveJson.JSON_ERROR_LEVEL, m_aErrorLevelToJson.apply (m_aErrorLevel));
     if (m_sErrorID != null)
-      ret.add (PhiveJsonHelper.JSON_ERROR_ID, m_sErrorID);
+      ret.add (CPhiveJson.JSON_ERROR_ID, m_sErrorID);
     if (m_sErrorFieldName != null)
-      ret.add (PhiveJsonHelper.JSON_ERROR_FIELD_NAME, m_sErrorFieldName);
+      ret.add (CPhiveJson.JSON_ERROR_FIELD_NAME, m_sErrorFieldName);
     if (m_aErrorLocation != null && m_aErrorLocationToJson != null)
-      ret.addIfNotNull (PhiveJsonHelper.JSON_ERROR_LOCATION_OBJ, m_aErrorLocationToJson.apply (m_aErrorLocation));
+      ret.addIfNotNull (CPhiveJson.JSON_ERROR_LOCATION_OBJ, m_aErrorLocationToJson.apply (m_aErrorLocation));
     if (m_sTest != null)
-      ret.add (PhiveJsonHelper.JSON_TEST, m_sTest);
+      ret.add (CPhiveJson.JSON_TEST, m_sTest);
     if (m_sErrorText != null)
-      ret.add (PhiveJsonHelper.JSON_ERROR_TEXT, m_sErrorText);
+      ret.add (CPhiveJson.JSON_ERROR_TEXT, m_sErrorText);
     if (m_aException != null && m_aExceptionToJson != null)
-      ret.addIfNotNull (PhiveJsonHelper.JSON_EXCEPTION, m_aExceptionToJson.apply (m_aException));
+      ret.addIfNotNull (CPhiveJson.JSON_EXCEPTION, m_aExceptionToJson.apply (m_aException));
     return ret;
   }
 }

@@ -145,18 +145,18 @@ public class JsonValidationResultListHelper
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
     // Added in 12.0.0
-    aResponse.add (PhiveJsonHelper.JSON_VALIDATION_DATETIME,
+    aResponse.add (CPhiveJson.JSON_VALIDATION_DATETIME,
                    PDTWebDateHelper.getAsStringXSD (aValidationResultList.getValidationDateTime ()));
 
     // Added in 10.1.0
     if (aValidationResultList.hasValidationSource () && m_aSourceToJson != null)
     {
-      aResponse.addIfNotNull (PhiveJsonHelper.JSON_VALIDATION_SOURCE,
+      aResponse.addIfNotNull (CPhiveJson.JSON_VALIDATION_SOURCE,
                               m_aSourceToJson.apply (aValidationResultList.getValidationSource ()));
     }
 
     if (m_aVES != null && m_aVESToJson != null)
-      aResponse.addIfNotNull (PhiveJsonHelper.JSON_VES, m_aVESToJson.apply (m_aVES));
+      aResponse.addIfNotNull (CPhiveJson.JSON_VES, m_aVESToJson.apply (m_aVES));
 
     final IJsonArray aResultArray = new JsonArray ();
     for (final ValidationResult aVR : aValidationResultList)
@@ -167,13 +167,14 @@ public class JsonValidationResultListHelper
       final IJsonObject aVRT = new JsonObject ();
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
-      aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (eValidity));
-      aVRT.add (PhiveJsonHelper.JSON_VALIDITY, eValidity.getID ());
-      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVA.getValidationType ().getID ());
+      aVRT.add (CPhiveJson.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (eValidity));
+      // Added in 12.0.0
+      aVRT.add (CPhiveJson.JSON_VALIDITY, eValidity.getID ());
+      aVRT.add (CPhiveJson.JSON_ARTIFACT_TYPE, aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToJson != null)
-        aVRT.addIfNotNull (PhiveJsonHelper.JSON_ARTIFACT_PATH_TYPE,
+        aVRT.addIfNotNull (CPhiveJson.JSON_ARTIFACT_PATH_TYPE,
                            m_aArtifactPathTypeToJson.apply (aVA.getRuleResource ()));
-      aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_PATH, aVA.getRuleResourcePath ());
+      aVRT.add (CPhiveJson.JSON_ARTIFACT_PATH, aVA.getRuleResourcePath ());
 
       final IJsonArray aItemArray = new JsonArray ();
       for (final IError aError : aVR.getErrorList ())
@@ -181,21 +182,20 @@ public class JsonValidationResultListHelper
         if (m_aErrorToJson != null)
           aItemArray.add (m_aErrorToJson.apply (aError, aDisplayLocale));
       }
-      aVRT.add (PhiveJsonHelper.JSON_ITEMS, aItemArray);
-      aVRT.add (PhiveJsonHelper.JSON_DURATION_MS, aVR.getDurationMS ());
+      aVRT.add (CPhiveJson.JSON_ITEMS, aItemArray);
+      aVRT.add (CPhiveJson.JSON_DURATION_MS, aVR.getDurationMS ());
       aResultArray.add (aVRT);
     }
 
     // Create the summary elements
     final ValidationSummary aSummary = ValidationSummary.create (aValidationResultList);
-    aResponse.add (PhiveJsonHelper.JSON_SUCCESS, aValidationResultList.getOverallValidity ().isValid ());
-    aResponse.add (PhiveJsonHelper.JSON_INTERRUPTED, aSummary.isValidationInterrupted ());
+    aResponse.add (CPhiveJson.JSON_SUCCESS, aValidationResultList.getOverallValidity ().isValid ());
+    aResponse.add (CPhiveJson.JSON_INTERRUPTED, aSummary.isValidationInterrupted ());
     if (m_aErrorLevelToJson != null)
-      aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL,
+      aResponse.addIfNotNull (CPhiveJson.JSON_MOST_SEVERE_ERROR_LEVEL,
                               m_aErrorLevelToJson.apply (aSummary.getMostSevereErrorLevel ()));
-    aResponse.add (PhiveJsonHelper.JSON_RESULTS, aResultArray);
-
+    aResponse.add (CPhiveJson.JSON_RESULTS, aResultArray);
     if (aValidationResultList.hasValidationDuration ())
-      aResponse.add (PhiveJsonHelper.JSON_DURATION_MS, aValidationResultList.getValidationDuration ().toMillis ());
+      aResponse.add (CPhiveJson.JSON_DURATION_MS, aValidationResultList.getValidationDuration ().toMillis ());
   }
 }

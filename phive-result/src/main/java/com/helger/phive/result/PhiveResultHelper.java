@@ -232,21 +232,20 @@ public final class PhiveResultHelper
     if (aPayloadBytes == null)
       return null;
 
-    switch (sValidationSourceTypeID)
+    return switch (sValidationSourceTypeID)
     {
-      case IValidationSourceBinary.VALIDATION_SOURCE_TYPE ->
-      {
-        return bIsPartialSource ? ValidationSourceBinary.createPartial (sSystemID, aPayloadBytes)
-                                : ValidationSourceBinary.create (sSystemID, aPayloadBytes);
-      }
+      case IValidationSourceBinary.VALIDATION_SOURCE_TYPE -> bIsPartialSource ? ValidationSourceBinary.createPartial (sSystemID,
+                                                                                                                      aPayloadBytes)
+                                                                              : ValidationSourceBinary.create (sSystemID,
+                                                                                                               aPayloadBytes);
       case IValidationSourceXML.VALIDATION_SOURCE_TYPE ->
+          // Parse on demand only
+          new ValidationSourceXML (sSystemID, () -> DOMReader.readXMLDOM (aPayloadBytes), bIsPartialSource);
+      default ->
       {
-        // Parse on demand only
-        return new ValidationSourceXML (sSystemID, () -> DOMReader.readXMLDOM (aPayloadBytes), bIsPartialSource);
+        LOGGER.warn ("Unsupported Validation Source Type ID '" + sValidationSourceTypeID + "'");
+        yield null;
       }
-      default -> LOGGER.warn ("Unsupported Validation Source Type ID '" + sValidationSourceTypeID + "'");
-    }
-
-    return null;
+    };
   }
 }
