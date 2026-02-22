@@ -63,8 +63,10 @@ public enum EPhiveHtmlLabel implements IHasDisplayText
   ARTIFACT_TYPE ("Artifakttyp", "Artifact Type"),
   /** "Artifact Path" label */
   ARTIFACT_PATH ("Artifaktpfad", "Artifact Path"),
-  /** "Error Level" table header */
-  SEVERITY ("Schwere", "Severity"),
+  /** "Severity" table header */
+  SEVERITY ("Schweregrad", "Severity"),
+  /** "Highest Severity" table header */
+  HIGHEST_SEVERITY ("Höchster Schweregrad", "Highest Severity"),
   SEVERITY_SUCCESS ("Erfolgreich", "Success"),
   SEVERITY_WARNING ("Warnung", "Warning"),
   SEVERITY_ERROR ("Fehler", "Error"),
@@ -94,7 +96,7 @@ public enum EPhiveHtmlLabel implements IHasDisplayText
   /** "Source Data" section heading */
   SOURCE_DATA ("Quelldaten", "Source Data"),
   /** "Created at" label for the report creation timestamp */
-  CREATED_AT ("Erstellt am", "Created at"),
+  VALIDATED_AT ("Validiert am", "Validated at"),
   /** Footer text before the phive link */
   FOOTER_PREFIX ("Dieser Bericht wurde mit der ", "This report was created with the "),
   /** Footer text after the phive link */

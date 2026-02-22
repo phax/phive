@@ -118,7 +118,7 @@ public final class CPhiveHtmlCss
   public static final String CSS_SOURCE_LINE_CONTENT = "phive-source-line-content";
 
   /** Report creation timestamp element */
-  public static final String CSS_CREATED_AT = "phive-created-at";
+  public static final String CSS_VALIDATED_AT = "phive-validated-at";
 
   /** Footer element */
   public static final String CSS_FOOTER = "phive-footer";
@@ -321,7 +321,7 @@ public final class CPhiveHtmlCss
       .phive-source-table tr:target {
         background: var(--phive-color-bg-target);
       }
-      .phive-created-at {
+      .phive-validated-at {
         margin-bottom: 16px;
         font-size: 0.9em;
         color: var(--phive-color-muted);

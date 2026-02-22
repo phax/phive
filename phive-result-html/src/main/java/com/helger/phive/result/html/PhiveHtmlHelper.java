@@ -26,7 +26,6 @@ import java.util.function.BiFunction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.location.ILocation;
 import com.helger.base.string.StringHelper;
@@ -62,6 +61,7 @@ public class PhiveHtmlHelper
 {
   private Locale m_aDisplayLocale = Locale.US;
   private OffsetDateTime m_aValidationDT;
+  private long m_nOverallDurationMillis = -1;
   private IValidationExecutorSet <?> m_aVES;
   private String m_sSourceData;
 
@@ -115,6 +115,21 @@ public class PhiveHtmlHelper
   public PhiveHtmlHelper validationDateTime (@Nullable final OffsetDateTime a)
   {
     m_aValidationDT = a;
+    return this;
+  }
+
+  /**
+   * Set the overall duration of the validation in milliseconds. Use a value &lt; 0 to indicate "not
+   * set" (the default). If not set, the overall duration will not be displayed.
+   *
+   * @param nMillis
+   *        The overall duration in milliseconds. Use a negative value to indicate "not set".
+   * @return this for chaining
+   */
+  @NonNull
+  public PhiveHtmlHelper overallDurationMillis (final long nMillis)
+  {
+    m_nOverallDurationMillis = nMillis;
     return this;
   }
 
@@ -210,7 +225,7 @@ public class PhiveHtmlHelper
    * Enable the built-in default stylesheet ({@link CPhiveHtmlCss#DEFAULT_STYLESHEET}). This
    * provides a clean, readable layout with pastel green/red coloring. The stylesheet is added as
    * inline CSS and will only be emitted when generating a full HTML document via
-   * {@link #createHtmlDocument(ValidationResultList, long)}.
+   * {@link #createHtmlDocument(ValidationResultList)}.
    *
    * @return this for chaining
    */
@@ -318,16 +333,11 @@ public class PhiveHtmlHelper
    *        May not be <code>null</code>.
    * @param aValidationResultList
    *        The validation result list. May not be <code>null</code>.
-   * @param nOverallDurationMilliseconds
-   *        The overall duration in milliseconds. Must be &ge; 0.
    */
-  public void applyTo (@NonNull final IMicroElement aTarget,
-                       @NonNull final ValidationResultList aValidationResultList,
-                       @Nonnegative final long nOverallDurationMilliseconds)
+  public void applyTo (@NonNull final IMicroElement aTarget, @NonNull final ValidationResultList aValidationResultList)
   {
     ValueEnforcer.notNull (aTarget, "Target");
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
-    ValueEnforcer.isGE0 (nOverallDurationMilliseconds, "DurationMilliseconds");
 
     final EnumMap <EPhiveHtmlLabel, String> aLabels = m_aLabels;
 
@@ -378,8 +388,8 @@ public class PhiveHtmlHelper
     if (m_aValidationDT != null)
     {
       final String sTimestamp = PDTToString.getAsString (m_aValidationDT, m_aDisplayLocale);
-      final IMicroElement eCreatedAt = _createDiv (CPhiveHtmlCss.CSS_CREATED_AT);
-      eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.CREATED_AT) + ": "));
+      final IMicroElement eCreatedAt = _createDiv (CPhiveHtmlCss.CSS_VALIDATED_AT);
+      eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.VALIDATED_AT) + ": "));
       eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE, sTimestamp));
       eContainer.addChild (eCreatedAt);
     }
@@ -415,13 +425,16 @@ public class PhiveHtmlHelper
                                                                                                       EPhiveHtmlLabel.SEVERITY_ERROR));
       if (bValidationInterrupted)
         _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.INTERRUPTED), aLabels.get (EPhiveHtmlLabel.TRUE));
-      _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.SEVERITY), _getSeverityValue (aMostSevere, aLabels));
+      _addLabelValue (eSummary,
+                      aLabels.get (EPhiveHtmlLabel.HIGHEST_SEVERITY),
+                      _getSeverityValue (aMostSevere, aLabels));
       _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.WARNINGS), Integer.toString (nWarnings));
       _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.ERRORS), Integer.toString (nErrors));
-      _addLabelValue (eSummary,
-                      aLabels.get (EPhiveHtmlLabel.DURATION),
-                      LocaleFormatter.getFormatted (nOverallDurationMilliseconds, m_aDisplayLocale) +
-                                                              aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX));
+      if (m_nOverallDurationMillis >= 0)
+        _addLabelValue (eSummary,
+                        aLabels.get (EPhiveHtmlLabel.DURATION),
+                        LocaleFormatter.getFormatted (m_nOverallDurationMillis, m_aDisplayLocale) +
+                                                                aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX));
       eContainer.addChild (eSummary);
     }
 
@@ -563,12 +576,13 @@ public class PhiveHtmlHelper
       eContainer.addChild (eResult);
     }
 
-    // Overall duration at bottom
+    // Overall duration at bottom (only if set)
+    if (m_nOverallDurationMillis >= 0)
     {
       final IMicroElement eDuration = _createDiv (CPhiveHtmlCss.CSS_DURATION);
       eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.OVERALL_DURATION) + ": "));
       eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE,
-                                       LocaleFormatter.getFormatted (nOverallDurationMilliseconds, m_aDisplayLocale) +
+                                       LocaleFormatter.getFormatted (m_nOverallDurationMillis, m_aDisplayLocale) +
                                                                 aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
       eContainer.addChild (eDuration);
     }
@@ -633,16 +647,12 @@ public class PhiveHtmlHelper
    *
    * @param aValidationResultList
    *        The validation result list. May not be <code>null</code>.
-   * @param nDurationMilliseconds
-   *        The overall duration in milliseconds. Must be &ge; 0.
    * @return The complete HTML document. Never <code>null</code>.
    */
   @NonNull
-  public IMicroDocument createHtmlDocument (@NonNull final ValidationResultList aValidationResultList,
-                                            @Nonnegative final long nDurationMilliseconds)
+  public IMicroDocument createHtmlDocument (@NonNull final ValidationResultList aValidationResultList)
   {
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
-    ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eHtml = aDoc.addElement ("html");
@@ -676,7 +686,7 @@ public class PhiveHtmlHelper
 
     // Body
     final IMicroElement eBody = eHtml.addElement ("body");
-    applyTo (eBody, aValidationResultList, nDurationMilliseconds);
+    applyTo (eBody, aValidationResultList);
 
     return aDoc;
   }
