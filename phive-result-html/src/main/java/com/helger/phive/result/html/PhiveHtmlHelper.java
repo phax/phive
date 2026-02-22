@@ -578,17 +578,6 @@ public class PhiveHtmlHelper
       eContainer.addChild (eResult);
     }
 
-    // Overall duration at bottom (only if set)
-    if (m_nOverallDurationMillis >= 0)
-    {
-      final IMicroElement eDuration = _createDiv (CPhiveHtmlCss.CSS_DURATION);
-      eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.OVERALL_DURATION) + ": "));
-      eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE,
-                                       LocaleFormatter.getFormatted (m_nOverallDurationMillis, m_aDisplayLocale) +
-                                                                aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
-      eContainer.addChild (eDuration);
-    }
-
     // Source data section
     if (StringHelper.isNotEmpty (m_sSourceData))
     {

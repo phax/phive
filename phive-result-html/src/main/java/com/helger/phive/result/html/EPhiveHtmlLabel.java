@@ -55,8 +55,6 @@ public enum EPhiveHtmlLabel implements IHasDisplayText
   ERRORS ("Fehler", "Errors"),
   /** "Duration" label */
   DURATION ("Dauer", "Duration"),
-  /** "Duration overall" label */
-  OVERALL_DURATION ("Gesamtdauer", "Overall Duration"),
   /** Validation layer heading */
   VALIDATION_LAYER ("Validierungsebene", "Validation Layer"),
   /** "Artifact Type" label */
