@@ -50,17 +50,28 @@ import com.helger.phive.result.PhiveResultHelper;
  */
 public class JsonValidationResultListHelper
 {
-  // By default, include source content
-  private Function <IValidationSource, IJsonObject> m_aSourceToJson = vs -> PhiveJsonHelper.getJsonValidationSource (vs,
-                                                                                                                     true);
+  private Function <IValidationSource, IJsonObject> m_aSourceToJson;
   private IValidationExecutorSet <?> m_aVES;
-  private Function <IValidationExecutorSet <?>, IJsonObject> m_aVESToJson = PhiveJsonHelper::getJsonVES;
-  private Function <IReadableResource, String> m_aArtifactPathTypeToJson = PhiveResultHelper::getArtifactPathType;
-  private Function <IErrorLevel, String> m_aErrorLevelToJson = PhiveResultHelper::getErrorLevelValue;
-  private BiFunction <IError, Locale, IJsonObject> m_aErrorToJson = PhiveJsonHelper::getJsonError;
+  private Function <IValidationExecutorSet <?>, IJsonObject> m_aVESToJson;
+  private Function <IReadableResource, String> m_aArtifactPathTypeToJson;
+  private Function <IErrorLevel, String> m_aErrorLevelToJson;
+  private BiFunction <IError, Locale, IJsonObject> m_aErrorToJson;
 
   public JsonValidationResultListHelper ()
-  {}
+  {
+    // By default, include source content
+    sourceToJsonDefault (true);
+    vesToJsonDefault ();
+    artifactPathTypeToJsonDefault ();
+    errorLevelToJsonDefault ();
+    errorToJsonDefault ();
+  }
+
+  @NonNull
+  public JsonValidationResultListHelper sourceToJsonDefault (final boolean bShowSource)
+  {
+    return sourceToJson (vs -> PhiveJsonHelper.getJsonValidationSource (vs, bShowSource));
+  }
 
   @NonNull
   public JsonValidationResultListHelper sourceToJson (@Nullable final Function <IValidationSource, IJsonObject> a)
@@ -77,10 +88,22 @@ public class JsonValidationResultListHelper
   }
 
   @NonNull
+  public JsonValidationResultListHelper vesToJsonDefault ()
+  {
+    return vesToJson (PhiveJsonHelper::getJsonVES);
+  }
+
+  @NonNull
   public JsonValidationResultListHelper vesToJson (@Nullable final Function <IValidationExecutorSet <?>, IJsonObject> a)
   {
     m_aVESToJson = a;
     return this;
+  }
+
+  @NonNull
+  public JsonValidationResultListHelper artifactPathTypeToJsonDefault ()
+  {
+    return artifactPathTypeToJson (PhiveResultHelper::getArtifactPathType);
   }
 
   @NonNull
@@ -91,10 +114,22 @@ public class JsonValidationResultListHelper
   }
 
   @NonNull
+  public JsonValidationResultListHelper errorLevelToJsonDefault ()
+  {
+    return errorLevelToJson (PhiveResultHelper::getErrorLevelValue);
+  }
+
+  @NonNull
   public JsonValidationResultListHelper errorLevelToJson (@Nullable final Function <IErrorLevel, String> a)
   {
     m_aErrorLevelToJson = a;
     return this;
+  }
+
+  @NonNull
+  public JsonValidationResultListHelper errorToJsonDefault ()
+  {
+    return errorToJson (PhiveJsonHelper::getJsonError);
   }
 
   @NonNull

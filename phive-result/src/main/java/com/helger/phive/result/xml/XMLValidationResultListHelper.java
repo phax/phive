@@ -53,26 +53,20 @@ public class XMLValidationResultListHelper
 {
   private static final Logger LOGGER = LoggerFactory.getLogger (XMLValidationResultListHelper.class);
 
-  private Function <IValidationSource, IMicroElement> m_aSourceToXML = src -> PhiveXMLHelper.getXMLValidationSource (src,
-                                                                                                                     true,
-                                                                                                                     CPhiveXML.XML_VALIDATION_SOURCE);
+  private Function <IValidationSource, IMicroElement> m_aSourceToXML;
   private IValidationExecutorSet <?> m_aVES;
-  private Function <IValidationExecutorSet <?>, IMicroElement> m_aVESToXML = ves -> PhiveXMLHelper.getXMLVES (ves,
-                                                                                                              CPhiveXML.XML_VES);
-  private Function <IReadableResource, String> m_aArtifactPathTypeToXML = PhiveResultHelper::getArtifactPathType;
-  private Function <IErrorLevel, String> m_aErrorLevelToXML = PhiveResultHelper::getErrorLevelValue;
-  private BiFunction <IError, Locale, IMicroElement> m_aErrorToXML = (err, loc) -> PhiveXMLHelper.getXMLError (err,
-                                                                                                               loc,
-                                                                                                               CPhiveXML.XML_ITEM);
+  private Function <IValidationExecutorSet <?>, IMicroElement> m_aVESToXML;
+  private Function <IReadableResource, String> m_aArtifactPathTypeToXML;
+  private Function <IErrorLevel, String> m_aErrorLevelToXML;
+  private BiFunction <IError, Locale, IMicroElement> m_aErrorToXML;
 
   public XMLValidationResultListHelper ()
-  {}
-
-  @NonNull
-  public XMLValidationResultListHelper sourceToXML (@Nullable final Function <IValidationSource, IMicroElement> a)
   {
-    m_aSourceToXML = a;
-    return this;
+    sourceToXMLDefault (true);
+    vesToXMLDefault ();
+    artifactPathTypeToXMLDefault ();
+    errorLevelToXMLDefault ();
+    errorToXMLDefault ();
   }
 
   @NonNull
@@ -83,10 +77,37 @@ public class XMLValidationResultListHelper
   }
 
   @NonNull
+  public XMLValidationResultListHelper sourceToXMLDefault (final boolean bShowSource)
+  {
+    return sourceToXML (src -> PhiveXMLHelper.getXMLValidationSource (src,
+                                                                      bShowSource,
+                                                                      CPhiveXML.XML_VALIDATION_SOURCE));
+  }
+
+  @NonNull
+  public XMLValidationResultListHelper sourceToXML (@Nullable final Function <IValidationSource, IMicroElement> a)
+  {
+    m_aSourceToXML = a;
+    return this;
+  }
+
+  @NonNull
+  public XMLValidationResultListHelper vesToXMLDefault ()
+  {
+    return vesToXML (ves -> PhiveXMLHelper.getXMLVES (ves, CPhiveXML.XML_VES));
+  }
+
+  @NonNull
   public XMLValidationResultListHelper vesToXML (@Nullable final Function <IValidationExecutorSet <?>, IMicroElement> a)
   {
     m_aVESToXML = a;
     return this;
+  }
+
+  @NonNull
+  public XMLValidationResultListHelper artifactPathTypeToXMLDefault ()
+  {
+    return artifactPathTypeToXML (PhiveResultHelper::getArtifactPathType);
   }
 
   @NonNull
@@ -97,10 +118,22 @@ public class XMLValidationResultListHelper
   }
 
   @NonNull
+  public XMLValidationResultListHelper errorLevelToXMLDefault ()
+  {
+    return errorLevelToXML (PhiveResultHelper::getErrorLevelValue);
+  }
+
+  @NonNull
   public XMLValidationResultListHelper errorLevelToXML (@Nullable final Function <IErrorLevel, String> a)
   {
     m_aErrorLevelToXML = a;
     return this;
+  }
+
+  @NonNull
+  public XMLValidationResultListHelper errorToXMLDefault ()
+  {
+    return errorToXML ( (err, loc) -> PhiveXMLHelper.getXMLError (err, loc, CPhiveXML.XML_ITEM));
   }
 
   @NonNull
