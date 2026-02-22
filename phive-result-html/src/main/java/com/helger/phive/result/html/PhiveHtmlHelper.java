@@ -49,6 +49,9 @@ import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
 import com.helger.xml.microdom.MicroElement;
+import com.helger.xml.microdom.serialize.MicroWriter;
+import com.helger.xml.serialize.write.EXMLSerializeXMLDeclaration;
+import com.helger.xml.serialize.write.XMLWriterSettings;
 
 /**
  * A helper class that allows to heavily customize the creation of validation result list HTML.
@@ -224,8 +227,7 @@ public class PhiveHtmlHelper
   /**
    * Enable the built-in default stylesheet ({@link CPhiveHtmlCss#DEFAULT_STYLESHEET}). This
    * provides a clean, readable layout with pastel green/red coloring. The stylesheet is added as
-   * inline CSS and will only be emitted when generating a full HTML document via
-   * {@link #createHtmlDocument(ValidationResultList)}.
+   * inline CSS and will only be emitted when generating a full HTML document.
    *
    * @return this for chaining
    */
@@ -689,5 +691,22 @@ public class PhiveHtmlHelper
     applyTo (eBody, aValidationResultList);
 
     return aDoc;
+  }
+
+  @NonNull
+  public String createHtml (@NonNull final ValidationResultList aValidationResultList)
+  {
+    return createHtml (aValidationResultList, new XMLWriterSettings ());
+  }
+
+  @NonNull
+  public String createHtml (@NonNull final ValidationResultList aValidationResultList,
+                            @NonNull final XMLWriterSettings aXWS)
+  {
+    final IMicroDocument aHtml = createHtmlDocument (aValidationResultList);
+    final String ret = MicroWriter.getNodeAsString (aHtml,
+                                                    aXWS.getClone ()
+                                                        .setSerializeXMLDeclaration (EXMLSerializeXMLDeclaration.IGNORE));
+    return "<!DOCTYPE html>" + aXWS.getNewLineString () + ret;
   }
 }

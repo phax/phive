@@ -41,7 +41,6 @@ import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
-import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.serialize.MicroWriter;
@@ -67,7 +66,9 @@ public final class PhiveHtmlHelperTest
                                                                          ValidationExecutorSetStatus.createValidAt (aNow));
 
     final IMicroElement eBody = new MicroElement ("body");
-    new PhiveHtmlHelper (aDisplayLocale).ves (aVES).overallDurationMillis (100).applyTo (eBody, new ValidationResultList (null));
+    new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                        .overallDurationMillis (100)
+                                        .applyTo (eBody, new ValidationResultList (null));
 
     final String sHtml = MicroWriter.getNodeAsString (eBody,
                                                       new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
@@ -186,7 +187,9 @@ public final class PhiveHtmlHelperTest
     final Locale aDisplayLocale = Locale.US;
 
     final IMicroElement eBody = new MicroElement ("body");
-    new PhiveHtmlHelper (aDisplayLocale).ves (null).overallDurationMillis (10).applyTo (eBody, new ValidationResultList (null));
+    new PhiveHtmlHelper (aDisplayLocale).ves (null)
+                                        .overallDurationMillis (10)
+                                        .applyTo (eBody, new ValidationResultList (null));
 
     final String sHtml = MicroWriter.getNodeAsString (eBody,
                                                       new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
@@ -208,13 +211,9 @@ public final class PhiveHtmlHelperTest
                                                                          "Page Test",
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
-    final IMicroDocument aDoc = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                    .overallDurationMillis (100)
-                                                                    .createHtmlDocument (new ValidationResultList (null));
-    assertNotNull (aDoc);
-
-    final String sHtml = MicroWriter.getNodeAsString (aDoc,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .overallDurationMillis (100)
+                                                             .createHtml (new ValidationResultList (null));
     assertNotNull (sHtml);
 
     // Check full page structure
@@ -237,14 +236,10 @@ public final class PhiveHtmlHelperTest
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
     final String sCustomCss = ".phive-results { background: #fff; } .phive-item-error { color: red; }";
-    final IMicroDocument aDoc = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                    .addCssInline (sCustomCss)
-                                                                    .overallDurationMillis (50)
-                                                                    .createHtmlDocument (new ValidationResultList (null));
-    assertNotNull (aDoc);
-
-    final String sHtml = MicroWriter.getNodeAsString (aDoc,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .addCssInline (sCustomCss)
+                                                             .overallDurationMillis (50)
+                                                             .createHtml (new ValidationResultList (null));
     assertTrue (sHtml.contains ("<style>" + sCustomCss + "</style>"));
   }
 
@@ -259,14 +254,10 @@ public final class PhiveHtmlHelperTest
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
     final String sCssUrl = "https://example.com/phive-styles.css";
-    final IMicroDocument aDoc = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                    .addCssLink (sCssUrl)
-                                                                    .overallDurationMillis (50)
-                                                                    .createHtmlDocument (new ValidationResultList (null));
-    assertNotNull (aDoc);
-
-    final String sHtml = MicroWriter.getNodeAsString (aDoc,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .addCssLink (sCssUrl)
+                                                             .overallDurationMillis (50)
+                                                             .createHtml (new ValidationResultList (null));
     assertTrue (sHtml.contains ("rel=\"stylesheet\""));
     assertTrue (sHtml.contains ("href=\"" + sCssUrl + "\""));
   }
@@ -281,17 +272,13 @@ public final class PhiveHtmlHelperTest
                                                                          "Multi CSS Test",
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
-    final IMicroDocument aDoc = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                    .addCssLink ("https://example.com/a.css")
-                                                                    .addCssLink ("https://example.com/b.css")
-                                                                    .addCssInline ("body { margin: 0; }")
-                                                                    .addCssInline ("h1 { color: blue; }")
-                                                                    .overallDurationMillis (50)
-                                                                    .createHtmlDocument (new ValidationResultList (null));
-    assertNotNull (aDoc);
-
-    final String sHtml = MicroWriter.getNodeAsString (aDoc,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .addCssLink ("https://example.com/a.css")
+                                                             .addCssLink ("https://example.com/b.css")
+                                                             .addCssInline ("body { margin: 0; }")
+                                                             .addCssInline ("h1 { color: blue; }")
+                                                             .overallDurationMillis (50)
+                                                             .createHtml (new ValidationResultList (null));
     assertTrue (sHtml.contains ("href=\"https://example.com/a.css\""));
     assertTrue (sHtml.contains ("href=\"https://example.com/b.css\""));
     assertTrue (sHtml.contains ("body { margin: 0; }"));
@@ -415,7 +402,9 @@ public final class PhiveHtmlHelperTest
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
     final IMicroElement eBody = new MicroElement ("body");
-    new PhiveHtmlHelper (aDisplayLocale).ves (aVES).overallDurationMillis (50).applyTo (eBody, new ValidationResultList (null));
+    new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                        .overallDurationMillis (50)
+                                        .applyTo (eBody, new ValidationResultList (null));
 
     final String sHtml = MicroWriter.getNodeAsString (eBody,
                                                       new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
@@ -432,14 +421,10 @@ public final class PhiveHtmlHelperTest
                                                                          "Stylesheet Test",
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
-    final IMicroDocument aDoc = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                    .useDefaultCSS ()
-                                                                    .overallDurationMillis (50)
-                                                                    .createHtmlDocument (new ValidationResultList (null));
-    assertNotNull (aDoc);
-
-    final String sHtml = MicroWriter.getNodeAsString (aDoc,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .useDefaultCSS ()
+                                                             .overallDurationMillis (50)
+                                                             .createHtml (new ValidationResultList (null));
     // Default stylesheet should be present as inline style
     assertTrue (sHtml.contains ("<style>"));
     assertTrue (sHtml.contains (".phive-results"));
@@ -459,11 +444,9 @@ public final class PhiveHtmlHelperTest
                                                                          "No Style Test",
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
-    final IMicroDocument aDoc = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                    .overallDurationMillis (50)
-                                                                    .createHtmlDocument (new ValidationResultList (null));
-    final String sHtml = MicroWriter.getNodeAsString (aDoc,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .overallDurationMillis (50)
+                                                             .createHtml (new ValidationResultList (null));
     // No <style> element should be present
     assertFalse (sHtml.contains ("<style>"));
   }
@@ -478,12 +461,9 @@ public final class PhiveHtmlHelperTest
                                                                          "Lang Test",
                                                                          ValidationExecutorSetStatus.createValidNow ());
 
-    final IMicroDocument aDoc = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                    .overallDurationMillis (50)
-                                                                    .createHtmlDocument (new ValidationResultList (null));
-
-    final String sHtml = MicroWriter.getNodeAsString (aDoc,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .overallDurationMillis (50)
+                                                             .createHtml (new ValidationResultList (null));
     assertTrue (sHtml.contains ("lang=\"fr\""));
   }
 
@@ -506,15 +486,14 @@ public final class PhiveHtmlHelperTest
 
     final String sSourceData = "<invoice>\n" + "  <id>123</id>\n" + "  <total>100.00</total>\n" + "</invoice>";
 
-    final IMicroDocument aHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                                                     .validationDateTimeNow ()
-                                                                     .overallDurationMillis (100)
-                                                                     .sourceData (sSourceData)
-                                                                     .useDefaultCSS ()
-                                                                     .createHtmlDocument (aVRL);
+    final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
+                                                             .validationDateTimeNow ()
+                                                             .overallDurationMillis (100)
+                                                             .sourceData (sSourceData)
+                                                             .useDefaultCSS ()
+                                                             .createHtml (aVRL,
+                                                                          new XMLWriterSettings ().setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
 
-    final String sHtml = MicroWriter.getNodeAsString (aHtml,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
     assertNotNull (sHtml);
 
     SimpleFileIO.writeFile (new File ("target/test-report-success1.html"), sHtml.getBytes (StandardCharsets.UTF_8));
@@ -523,38 +502,41 @@ public final class PhiveHtmlHelperTest
   @Test
   public void testCreatePageWithError () throws DVRVersionException
   {
-    final Locale aDisplayLocale = Locale.US;
-    final DVRCoordinate aVESID = DVRCoordinate.create ("group", "art", "1.0");
+    int nIndex = 1;
+    for (final Locale aDisplayLocale : new Locale [] { Locale.US, Locale.GERMANY, Locale.FRANCE })
+    {
+      final DVRCoordinate aVESID = DVRCoordinate.create ("group", "art", "1.0");
 
-    final ValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
-                                                                         "Test Extractor",
-                                                                         ValidationExecutorSetStatus.createValidNow ());
+      final ValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
+                                                                           "Test Extractor",
+                                                                           ValidationExecutorSetStatus.createValidNow ());
 
-    final ValidationArtefact aVA = new ValidationArtefact (EValidationType.XSD,
-                                                           new ClassPathResource ("test/dummy.xsd"));
-    final ErrorList aErrorList = new ErrorList ();
-    aErrorList.add (SingleError.builderError ()
-                               .errorID ("SCH-01")
-                               .errorText ("Rule violated")
-                               .errorLocation (new SimpleLocation ("doc.xml", 3, 27))
-                               .build ());
-    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, 4321);
-    final ValidationResultList aVRL = new ValidationResultList (null);
-    aVRL.add (aVR);
+      final ValidationArtefact aVA = new ValidationArtefact (EValidationType.XSD,
+                                                             new ClassPathResource ("test/dummy.xsd"));
+      final ErrorList aErrorList = new ErrorList ();
+      aErrorList.add (SingleError.builderError ()
+                                 .errorID ("SCH-01")
+                                 .errorText ("Rule violated")
+                                 .errorLocation (new SimpleLocation ("doc.xml", 3, 27))
+                                 .build ());
+      final ValidationResult aVR = new ValidationResult (aVA, aErrorList, 4321);
+      final ValidationResultList aVRL = new ValidationResultList (null);
+      aVRL.add (aVR);
 
-    final String sSourceData = "<invoice>\n" + "  <id>123</id>\n" + "  <total>100.00</total>\n" + "</invoice>";
+      final String sSourceData = "<invoice>\n" + "  <id>123</id>\n" + "  <total>100.00</total>\n" + "</invoice>";
 
-    final IMicroDocument aHtml = new PhiveHtmlHelper (aDisplayLocale).validationDateTimeNow ()
-                                                                     .ves (aVES)
-                                                                     .overallDurationMillis (12345)
-                                                                     .sourceData (sSourceData)
-                                                                     .useDefaultCSS ()
-                                                                     .createHtmlDocument (aVRL);
+      final String sHtml = new PhiveHtmlHelper (aDisplayLocale).validationDateTimeNow ()
+                                                               .ves (aVES)
+                                                               .overallDurationMillis (12345)
+                                                               .sourceData (sSourceData)
+                                                               .useDefaultCSS ()
+                                                               .createHtml (aVRL,
+                                                                            new XMLWriterSettings ().setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
+      assertNotNull (sHtml);
 
-    final String sHtml = MicroWriter.getNodeAsString (aHtml,
-                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
-    assertNotNull (sHtml);
-
-    SimpleFileIO.writeFile (new File ("target/test-report-error1.html"), sHtml.getBytes (StandardCharsets.UTF_8));
+      SimpleFileIO.writeFile (new File ("target/test-report-error" + nIndex + ".html"),
+                              sHtml.getBytes (StandardCharsets.UTF_8));
+      ++nIndex;
+    }
   }
 }
