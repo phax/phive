@@ -39,6 +39,7 @@ import com.helger.datetime.helper.PDTFactory;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
+import com.helger.phive.api.CPhiveVersion;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
@@ -49,6 +50,7 @@ import com.helger.text.locale.LocaleFormatter;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
+import com.helger.xml.microdom.MicroDocumentType;
 import com.helger.xml.microdom.MicroElement;
 import com.helger.xml.microdom.serialize.MicroWriter;
 import com.helger.xml.serialize.write.EXMLSerializeXMLDeclaration;
@@ -667,8 +669,8 @@ public class PhiveHtmlHelper
 
   /**
    * Create a complete standalone HTML page with the validation results. Includes
-   * <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>
-   * (containing charset, title, CSS), and <code>&lt;body&gt;</code>.
+   * <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> (containing charset, title, CSS), and
+   * <code>&lt;body&gt;</code>.
    *
    * @param aValidationResultList
    *        The validation result list. May not be <code>null</code>.
@@ -680,6 +682,7 @@ public class PhiveHtmlHelper
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
 
     final IMicroDocument aDoc = new MicroDocument ();
+    aDoc.addChild (new MicroDocumentType ("html", null, null));
     final IMicroElement eHtml = aDoc.addElement ("html");
     eHtml.setAttribute ("lang", m_aDisplayLocale.getLanguage ());
 
@@ -688,6 +691,10 @@ public class PhiveHtmlHelper
     {
       final IMicroElement eMeta = eHead.addElement ("meta");
       eMeta.setAttribute ("charset", StandardCharsets.UTF_8.name ());
+    }
+    {
+      final IMicroElement eMeta = eHead.addElement ("meta");
+      eMeta.setAttribute ("generator", "phive v" + CPhiveVersion.BUILD_VERSION);
     }
     {
       final IMicroElement eTitle = eHead.addElement ("title");
@@ -727,9 +734,8 @@ public class PhiveHtmlHelper
                             @NonNull final XMLWriterSettings aXWS)
   {
     final IMicroDocument aHtml = createHtmlDocument (aValidationResultList);
-    final String ret = MicroWriter.getNodeAsString (aHtml,
-                                                    aXWS.getClone ()
-                                                        .setSerializeXMLDeclaration (EXMLSerializeXMLDeclaration.IGNORE));
-    return "<!DOCTYPE html>" + aXWS.getNewLineString () + ret;
+    return MicroWriter.getNodeAsString (aHtml,
+                                        aXWS.getClone ()
+                                            .setSerializeXMLDeclaration (EXMLSerializeXMLDeclaration.IGNORE));
   }
 }
