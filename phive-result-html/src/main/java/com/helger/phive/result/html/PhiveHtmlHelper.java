@@ -26,6 +26,7 @@ import java.util.function.BiFunction;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import com.helger.base.array.ArrayHelper;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.location.ILocation;
 import com.helger.base.string.StringHelper;
@@ -280,10 +281,18 @@ public class PhiveHtmlHelper
   }
 
   @NonNull
-  private static IMicroElement _createSpan (@NonNull final String sCssClass, @NonNull final String sText)
+  private static IMicroElement _createSpan (@NonNull final String @NonNull... aCssClasses)
   {
-    final IMicroElement eSpan = new MicroElement ("span");
-    eSpan.setAttribute ("class", sCssClass);
+    final IMicroElement eDiv = new MicroElement ("span");
+    eDiv.setAttribute ("class",
+                       StringImplode.imploder ().separator (' ').source (aCssClasses).filterNonEmpty ().build ());
+    return eDiv;
+  }
+
+  @NonNull
+  private static IMicroElement _createSpanWithContent (@NonNull final String sCssClass, @NonNull final String sText)
+  {
+    final IMicroElement eSpan = _createSpan (sCssClass);
     eSpan.addText (sText);
     return eSpan;
   }
@@ -306,13 +315,34 @@ public class PhiveHtmlHelper
     return eTd;
   }
 
+  @NonNull
+  private IMicroElement _createLabelSpan (@NonNull final String sLabel)
+  {
+    return _createSpanWithContent (CPhiveHtmlCss.CSS_LABEL, sLabel + ": ");
+  }
+
+  @NonNull
+  private IMicroElement _createValueSpan (@NonNull final String sValue)
+  {
+    return _createSpanWithContent (CPhiveHtmlCss.CSS_VALUE, sValue);
+  }
+
+  @NonNull
+  private IMicroElement _createValueSpan (@NonNull final String sValue, @NonNull final String... aAdditionalCSSClasses)
+  {
+    final IMicroElement eSpan = _createSpan (ArrayHelper.getConcatenated (CPhiveHtmlCss.CSS_VALUE,
+                                                                          aAdditionalCSSClasses));
+    eSpan.addText (sValue);
+    return eSpan;
+  }
+
   private void _addLabelValue (@NonNull final IMicroElement eParent,
                                @NonNull final String sLabel,
                                @NonNull final String sValue)
   {
     final IMicroElement eRow = new MicroElement ("div");
-    eRow.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, sLabel + ": "));
-    eRow.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE, sValue));
+    eRow.addChild (_createLabelSpan (sLabel));
+    eRow.addChild (_createValueSpan (sValue));
     eParent.addChild (eRow);
   }
 
@@ -391,8 +421,8 @@ public class PhiveHtmlHelper
     {
       final String sTimestamp = PDTToString.getAsString (m_aValidationDT, m_aDisplayLocale);
       final IMicroElement eCreatedAt = _createDiv (CPhiveHtmlCss.CSS_VALIDATED_AT);
-      eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.VALIDATED_AT) + ": "));
-      eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE, sTimestamp));
+      eCreatedAt.addChild (_createLabelSpan (aLabels.get (EPhiveHtmlLabel.VALIDATED_AT)));
+      eCreatedAt.addChild (_createValueSpan (sTimestamp));
       eContainer.addChild (eCreatedAt);
     }
 
@@ -469,15 +499,15 @@ public class PhiveHtmlHelper
       _addLabelValue (eResult, aLabels.get (EPhiveHtmlLabel.ARTIFACT_TYPE), aVA.getValidationType ().getName ());
       {
         final IMicroElement eRow = new MicroElement ("div");
-        eRow.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.ARTIFACT_PATH) + ": "));
-        eRow.addChild (_createSpan (CPhiveHtmlCss.CSS_ARTIFACT_PATH, aVA.getRuleResourcePath ()));
+        eRow.addChild (_createLabelSpan (aLabels.get (EPhiveHtmlLabel.ARTIFACT_PATH)));
+        eRow.addChild (_createValueSpan (aVA.getRuleResourcePath (), CPhiveHtmlCss.CSS_ARTIFACT_PATH));
         eResult.addChild (eRow);
       }
 
       // Status
       if (bIsSkipped)
       {
-        final IMicroElement eSkipped = _createSpan (CPhiveHtmlCss.CSS_VALUE, aLabels.get (EPhiveHtmlLabel.SKIPPED));
+        final IMicroElement eSkipped = _createValueSpan (aLabels.get (EPhiveHtmlLabel.SKIPPED));
         eResult.addChild (eSkipped);
       }
       else
@@ -491,10 +521,9 @@ public class PhiveHtmlHelper
       // Duration per layer
       {
         final IMicroElement eDuration = _createDiv (CPhiveHtmlCss.CSS_DURATION);
-        eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.DURATION) + ": "));
-        eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE,
-                                         LocaleFormatter.getFormatted (aVR.getDurationMS (), m_aDisplayLocale) +
-                                                                  aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
+        eDuration.addChild (_createLabelSpan (aLabels.get (EPhiveHtmlLabel.DURATION)));
+        eDuration.addChild (_createValueSpan (LocaleFormatter.getFormatted (aVR.getDurationMS (), m_aDisplayLocale) +
+                                              aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
         eResult.addChild (eDuration);
       }
 

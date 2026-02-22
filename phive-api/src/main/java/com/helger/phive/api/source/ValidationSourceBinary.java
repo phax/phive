@@ -22,7 +22,6 @@ import java.io.OutputStream;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import com.helger.annotation.Nonempty;
 import com.helger.annotation.WillNotClose;
 import com.helger.base.array.bytes.ByteArrayWrapper;
 import com.helger.base.enforce.ValueEnforcer;
@@ -34,38 +33,17 @@ import com.helger.base.tostring.ToStringGenerator;
  * @author Philip Helger
  * @since 7.1.2
  */
-public class ValidationSourceBinary implements IValidationSourceBinary
+public class ValidationSourceBinary extends AbstractValidationSource implements IValidationSourceBinary
 {
-  private final String m_sSystemID;
-  private final boolean m_bPartialSource;
   private final ByteArrayWrapper m_aBAW;
 
   protected ValidationSourceBinary (@Nullable final String sSystemID,
                                     @NonNull final ByteArrayWrapper aBAW,
                                     final boolean bPartialSource)
   {
+    super (VALIDATION_SOURCE_TYPE, sSystemID, bPartialSource);
     ValueEnforcer.notNull (aBAW, "BAW");
-    m_sSystemID = sSystemID;
     m_aBAW = aBAW;
-    m_bPartialSource = bPartialSource;
-  }
-
-  @NonNull
-  @Nonempty
-  public String getValidationSourceTypeID ()
-  {
-    return VALIDATION_SOURCE_TYPE;
-  }
-
-  @Nullable
-  public String getSystemID ()
-  {
-    return m_sSystemID;
-  }
-
-  public boolean isPartialSource ()
-  {
-    return m_bPartialSource;
   }
 
   @Nullable
@@ -83,10 +61,7 @@ public class ValidationSourceBinary implements IValidationSourceBinary
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("SystemID", m_sSystemID)
-                                       .append ("PartialSource", m_bPartialSource)
-                                       .append ("ByteArrayWrapper", m_aBAW)
-                                       .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("ByteArrayWrapper", m_aBAW).getToString ();
   }
 
   /**

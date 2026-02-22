@@ -18,6 +18,7 @@ package com.helger.phive.api.source;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -73,4 +74,15 @@ public interface IValidationSource
    * @since 10.1.0
    */
   void writeTo (@NonNull @WillNotClose OutputStream aOS) throws IOException;
+
+  /**
+   * Get the content of the validation source as a String.
+   *
+   * @param aCharset
+   *        The character set to be used. May not be <code>null</code>.
+   * @return <code>null</code> if conversion fails, e.g. because the source stream cannot be read
+   *         again.
+   */
+  @Nullable
+  String getContentAsString (@NonNull Charset aCharset);
 }

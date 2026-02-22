@@ -24,11 +24,11 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.w3c.dom.Node;
 
-import com.helger.annotation.Nonempty;
 import com.helger.annotation.WillNotClose;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.resource.IReadableResource;
+import com.helger.phive.api.source.AbstractValidationSource;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.serialize.write.XMLWriter;
 
@@ -37,11 +37,9 @@ import com.helger.xml.serialize.write.XMLWriter;
  *
  * @author Philip Helger
  */
-public class ValidationSourceXML implements IValidationSourceXML
+public class ValidationSourceXML extends AbstractValidationSource implements IValidationSourceXML
 {
-  private final String m_sSystemID;
   private final Supplier <Node> m_aNodeFactory;
-  private final boolean m_bPartialSource;
   // Status vars
   private Node m_aNode;
 
@@ -57,23 +55,9 @@ public class ValidationSourceXML implements IValidationSourceXML
                               @NonNull final Supplier <Node> aNodeFactory,
                               final boolean bPartialSource)
   {
+    super (VALIDATION_SOURCE_TYPE, sSystemID, bPartialSource);
     ValueEnforcer.notNull (aNodeFactory, "NodeFactory");
-    m_sSystemID = sSystemID;
     m_aNodeFactory = aNodeFactory;
-    m_bPartialSource = bPartialSource;
-  }
-
-  @NonNull
-  @Nonempty
-  public String getValidationSourceTypeID ()
-  {
-    return VALIDATION_SOURCE_TYPE;
-  }
-
-  @Nullable
-  public String getSystemID ()
-  {
-    return m_sSystemID;
   }
 
   @Nullable
@@ -88,13 +72,9 @@ public class ValidationSourceXML implements IValidationSourceXML
     return ret;
   }
 
-  public boolean isPartialSource ()
-  {
-    return m_bPartialSource;
-  }
-
   public void writeTo (@NonNull @WillNotClose final OutputStream aOS) throws IOException
   {
+    ValueEnforcer.notNull (aOS, "OutputStream");
     if (XMLWriter.writeToStream (getNode (), aOS).isFailure ())
       throw new IOException ("Failed write XML node to OutputStream");
   }
@@ -102,10 +82,7 @@ public class ValidationSourceXML implements IValidationSourceXML
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("SystemID", m_sSystemID)
-                                       .append ("NodeFactory", m_aNodeFactory)
-                                       .append ("PartialSource", m_bPartialSource)
-                                       .getToString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("NodeFactory", m_aNodeFactory).getToString ();
   }
 
   /**
@@ -142,8 +119,8 @@ public class ValidationSourceXML implements IValidationSourceXML
   }
 
   /**
-   * Assume the provided resource as an XML file, parse it and use the contained
-   * DOM Node as the basis for validation.
+   * Assume the provided resource as an XML file, parse it and use the contained DOM Node as the
+   * basis for validation.
    *
    * @param aResource
    *        The original resource. May not be <code>null</code>.
