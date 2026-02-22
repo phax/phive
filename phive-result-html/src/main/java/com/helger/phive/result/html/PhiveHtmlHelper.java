@@ -467,7 +467,12 @@ public class PhiveHtmlHelper
 
       // Artifact info
       _addLabelValue (eResult, aLabels.get (EPhiveHtmlLabel.ARTIFACT_TYPE), aVA.getValidationType ().getName ());
-      _addLabelValue (eResult, aLabels.get (EPhiveHtmlLabel.ARTIFACT_PATH), aVA.getRuleResourcePath ());
+      {
+        final IMicroElement eRow = new MicroElement ("div");
+        eRow.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.ARTIFACT_PATH) + ": "));
+        eRow.addChild (_createSpan (CPhiveHtmlCss.CSS_ARTIFACT_PATH, aVA.getRuleResourcePath ()));
+        eResult.addChild (eRow);
+      }
 
       // Status
       if (bIsSkipped)

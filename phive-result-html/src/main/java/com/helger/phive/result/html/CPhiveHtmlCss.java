@@ -284,6 +284,9 @@ public final class CPhiveHtmlCss
         font-family: var(--phive-font-mono);
         font-size: 0.9em;
       }
+      .phive-artifact-path {
+        font-family: var(--phive-font-mono);
+      }
       .phive-source {
         margin-top: 20px;
       }
