@@ -18,7 +18,6 @@ package com.helger.phive.result.html;
 
 import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
@@ -35,6 +34,8 @@ import com.helger.base.string.StringImplode;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsEnumMap;
 import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.format.PDTToString;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
@@ -44,6 +45,7 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.validity.EExtendedValidity;
+import com.helger.text.locale.LocaleFormatter;
 import com.helger.xml.microdom.IMicroDocument;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroDocument;
@@ -58,17 +60,28 @@ import com.helger.xml.microdom.MicroElement;
  */
 public class PhiveHtmlHelper
 {
+  private Locale m_aDisplayLocale = Locale.US;
+  private OffsetDateTime m_aValidationDT;
   private IValidationExecutorSet <?> m_aVES;
   private String m_sSourceData;
 
   private BiFunction <IError, Locale, String> m_aErrorTestExtractor;
 
-  private final CommonsEnumMap <EPhiveHtmlLabel, String> m_aLabels = EPhiveHtmlLabel.createLabelMapEN ();
+  private final CommonsEnumMap <EPhiveHtmlLabel, String> m_aDefaultLabels;
+  private final CommonsEnumMap <EPhiveHtmlLabel, String> m_aLabels;
   private final ICommonsList <String> m_aCssInlines = new CommonsArrayList <> ();
   private final ICommonsList <String> m_aCssLinks = new CommonsArrayList <> ();
 
-  public PhiveHtmlHelper ()
-  {}
+  public PhiveHtmlHelper (@NonNull final Locale aDisplayLocale)
+  {
+    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
+    m_aDisplayLocale = aDisplayLocale;
+    if ("de".equals (aDisplayLocale.getLanguage ()))
+      m_aDefaultLabels = EPhiveHtmlLabel.createLabelMapDE ();
+    else
+      m_aDefaultLabels = EPhiveHtmlLabel.createLabelMapEN ();
+    m_aLabels = m_aDefaultLabels.getClone ();
+  }
 
   private static boolean _isConsideredError (@NonNull final IErrorLevel aErrorLevel)
   {
@@ -80,6 +93,38 @@ public class PhiveHtmlHelper
     return aErrorLevel.isGE (EErrorLevel.WARN);
   }
 
+  /**
+   * Set the validation date and time when the validation execution started to "now".
+   *
+   * @return this for chaining
+   */
+  @NonNull
+  public PhiveHtmlHelper validationDateTimeNow ()
+  {
+    return validationDateTime (PDTFactory.getCurrentOffsetDateTimeMillisOnly ());
+  }
+
+  /**
+   * Set the validation date and time when the validation execution started.
+   *
+   * @param a
+   *        The date time to set. May be <code>null</code>.
+   * @return this for chaining
+   */
+  @NonNull
+  public PhiveHtmlHelper validationDateTime (@Nullable final OffsetDateTime a)
+  {
+    m_aValidationDT = a;
+    return this;
+  }
+
+  /**
+   * Set the VES that was used to run the execution.
+   *
+   * @param a
+   *        The VES to set. May be <code>null</code>.
+   * @return this for chaining
+   */
   @NonNull
   public PhiveHtmlHelper ves (@Nullable final IValidationExecutorSet <?> a)
   {
@@ -89,8 +134,8 @@ public class PhiveHtmlHelper
 
   /**
    * Set the source data (the validated document content) to be rendered at the bottom of the
-   * report. Each line will be individually addressable via a local HTML anchor (e.g.
-   * <code>#L1</code>, <code>#L2</code>, etc.).
+   * report. Newlines are preserved. Each line will be individually addressable via a local HTML
+   * anchor (e.g. <code>#L1</code>, <code>#L2</code>, etc.).
    *
    * @param sSourceData
    *        The source data text. May be <code>null</code> to not show source data.
@@ -104,7 +149,7 @@ public class PhiveHtmlHelper
   }
 
   /**
-   * Set an optional function to extract the test expression (e.g. Schematron test) from an error.
+   * Set an optional function to extract the "test" expression (e.g. Schematron test) from an error.
    * Since the HTML module does not depend on ph-schematron, this must be provided externally if
    * test expressions should be included. Example:
    *
@@ -127,7 +172,7 @@ public class PhiveHtmlHelper
 
   /**
    * Set all label texts at once. The provided map is copied internally. Any labels not present in
-   * the map will retain their defaults.
+   * the map will retain their English defaults.
    *
    * @param aLabels
    *        The map of labels to use. May not be <code>null</code>.
@@ -138,7 +183,7 @@ public class PhiveHtmlHelper
   {
     ValueEnforcer.notNull (aLabels, "Labels");
     // Start with defaults, then overlay
-    m_aLabels.setAll (EPhiveHtmlLabel.createLabelMapEN ());
+    m_aLabels.setAll (m_aDefaultLabels);
     m_aLabels.putAll (aLabels);
     return this;
   }
@@ -165,7 +210,7 @@ public class PhiveHtmlHelper
    * Enable the built-in default stylesheet ({@link CPhiveHtmlCss#DEFAULT_STYLESHEET}). This
    * provides a clean, readable layout with pastel green/red coloring. The stylesheet is added as
    * inline CSS and will only be emitted when generating a full HTML document via
-   * {@link #createHtmlDocument(ValidationResultList, Locale, long)}.
+   * {@link #createHtmlDocument(ValidationResultList, long)}.
    *
    * @return this for chaining
    */
@@ -273,19 +318,15 @@ public class PhiveHtmlHelper
    *        May not be <code>null</code>.
    * @param aValidationResultList
    *        The validation result list. May not be <code>null</code>.
-   * @param aDisplayLocale
-   *        The display locale. May not be <code>null</code>.
    * @param nOverallDurationMilliseconds
    *        The overall duration in milliseconds. Must be &ge; 0.
    */
   public void applyTo (@NonNull final IMicroElement aTarget,
                        @NonNull final ValidationResultList aValidationResultList,
-                       @NonNull final Locale aDisplayLocale,
                        @Nonnegative final long nOverallDurationMilliseconds)
   {
     ValueEnforcer.notNull (aTarget, "Target");
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
-    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.isGE0 (nOverallDurationMilliseconds, "DurationMilliseconds");
 
     final EnumMap <EPhiveHtmlLabel, String> aLabels = m_aLabels;
@@ -334,9 +375,9 @@ public class PhiveHtmlHelper
     eContainer.addChild (eH1);
 
     // Creation timestamp
+    if (m_aValidationDT != null)
     {
-      final OffsetDateTime aNow = OffsetDateTime.now ();
-      final String sTimestamp = DateTimeFormatter.ofPattern ("yyyy-MM-dd HH:mm:ss xxx").format (aNow);
+      final String sTimestamp = PDTToString.getAsString (m_aValidationDT, m_aDisplayLocale);
       final IMicroElement eCreatedAt = _createDiv (CPhiveHtmlCss.CSS_CREATED_AT);
       eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.CREATED_AT) + ": "));
       eCreatedAt.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE, sTimestamp));
@@ -379,7 +420,8 @@ public class PhiveHtmlHelper
       _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.ERRORS), Integer.toString (nErrors));
       _addLabelValue (eSummary,
                       aLabels.get (EPhiveHtmlLabel.DURATION),
-                      nOverallDurationMilliseconds + aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX));
+                      LocaleFormatter.getFormatted (nOverallDurationMilliseconds, m_aDisplayLocale) +
+                                                              aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX));
       eContainer.addChild (eSummary);
     }
 
@@ -431,7 +473,8 @@ public class PhiveHtmlHelper
         final IMicroElement eDuration = _createDiv (CPhiveHtmlCss.CSS_DURATION);
         eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.DURATION) + ": "));
         eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE,
-                                         aVR.getDurationMS () + aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
+                                         LocaleFormatter.getFormatted (aVR.getDurationMS (), m_aDisplayLocale) +
+                                                                  aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
         eResult.addChild (eDuration);
       }
 
@@ -503,12 +546,12 @@ public class PhiveHtmlHelper
           }
 
           // Error text
-          eRow.addChild (_createTd (CPhiveHtmlCss.CSS_ERROR_TEXT, aError.getErrorText (aDisplayLocale)));
+          eRow.addChild (_createTd (CPhiveHtmlCss.CSS_ERROR_TEXT, aError.getErrorText (m_aDisplayLocale)));
 
           // Test expression (optional)
           if (bHasTestColumn)
           {
-            final String sTest = m_aErrorTestExtractor.apply (aError, aDisplayLocale);
+            final String sTest = m_aErrorTestExtractor.apply (aError, m_aDisplayLocale);
             eRow.addChild (_createTd (CPhiveHtmlCss.CSS_ERROR_TEST, sTest));
           }
 
@@ -525,7 +568,7 @@ public class PhiveHtmlHelper
       final IMicroElement eDuration = _createDiv (CPhiveHtmlCss.CSS_DURATION);
       eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_LABEL, aLabels.get (EPhiveHtmlLabel.OVERALL_DURATION) + ": "));
       eDuration.addChild (_createSpan (CPhiveHtmlCss.CSS_VALUE,
-                                       nOverallDurationMilliseconds +
+                                       LocaleFormatter.getFormatted (nOverallDurationMilliseconds, m_aDisplayLocale) +
                                                                 aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
       eContainer.addChild (eDuration);
     }
@@ -590,24 +633,20 @@ public class PhiveHtmlHelper
    *
    * @param aValidationResultList
    *        The validation result list. May not be <code>null</code>.
-   * @param aDisplayLocale
-   *        The display locale. May not be <code>null</code>.
    * @param nDurationMilliseconds
    *        The overall duration in milliseconds. Must be &ge; 0.
    * @return The complete HTML document. Never <code>null</code>.
    */
   @NonNull
   public IMicroDocument createHtmlDocument (@NonNull final ValidationResultList aValidationResultList,
-                                            @NonNull final Locale aDisplayLocale,
                                             @Nonnegative final long nDurationMilliseconds)
   {
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
-    ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
 
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eHtml = aDoc.addElement ("html");
-    eHtml.setAttribute ("lang", aDisplayLocale.getLanguage ());
+    eHtml.setAttribute ("lang", m_aDisplayLocale.getLanguage ());
 
     // Head
     final IMicroElement eHead = eHtml.addElement ("head");
@@ -637,7 +676,7 @@ public class PhiveHtmlHelper
 
     // Body
     final IMicroElement eBody = eHtml.addElement ("body");
-    applyTo (eBody, aValidationResultList, aDisplayLocale, nDurationMilliseconds);
+    applyTo (eBody, aValidationResultList, nDurationMilliseconds);
 
     return aDoc;
   }
