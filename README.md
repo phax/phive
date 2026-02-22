@@ -134,7 +134,7 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v11.2.0 - 2026-02-20
+v11.2.0 - 2026-02-22
 * Updated to ph-diver 4.2.0
 * Extended VES Status with optional `displayName` element. See [#30](https://github.com/phax/phive/issues/30)
 * Extended `EValidationType` with XSLT v1 specific enums
