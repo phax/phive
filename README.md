@@ -22,6 +22,7 @@ This project has the following sub-modules:
 * **`phive-xml`** (previously `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
 * **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
+* **`phive-result-html`** - library to create standalone HTML validation result reports with translatable labels, custom CSS support, source data display, and an optional built-in stylesheet
 
 Note: this library does NOT include an EDIFACT validation. It's a placeholder for local implementations.
 
@@ -92,12 +93,22 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
 </dependency>
 ```
 
-If you are interested in the validation result transformation you need to also include this artefact.  
+If you are interested in the validation result transformation you need to also include this artefact.
 
 ```xml
 <dependency>
   <groupId>com.helger.phive</groupId>
   <artifactId>phive-result</artifactId>
+  <version>x.y.z</version>
+</dependency>
+```
+
+If you want to create standalone HTML validation reports you need to also include this artefact.
+
+```xml
+<dependency>
+  <groupId>com.helger.phive</groupId>
+  <artifactId>phive-result-html</artifactId>
   <version>x.y.z</version>
 </dependency>
 ```
@@ -130,6 +141,7 @@ v11.2.0 - 2026-02-20
 * Renamed some `EvalidationType` enums to be more precise
 * Created new submodule `phive-ves-repo` to contain a specific top-level table of contents for validation artefacts. See [#29](https://github.com/phax/phive/issues/29)
 * The resulting JAR files are no longer provided as OSGI bundles
+* Created new submodule `phive-result-html` for generating standalone HTML validation result reports
 
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1
