@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.result;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -23,10 +25,12 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonnegative;
+import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.phive.api.source.IValidationSource;
@@ -36,9 +40,12 @@ import com.helger.phive.api.source.IValidationSource;
  *
  * @author Philip Helger
  */
+@NotThreadSafe
 public class ValidationResultList extends CommonsArrayList <ValidationResult>
 {
   private final IValidationSource m_aSource;
+  private final OffsetDateTime m_aValidationDT;
+  private Duration m_aValidationDuration;
 
   /**
    * Create a validation result list with an optional source.
@@ -49,7 +56,22 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    */
   public ValidationResultList (@Nullable final IValidationSource aSource)
   {
+    this (aSource, null);
+  }
+
+  /**
+   * Create a validation result list with an optional source.
+   *
+   * @param aSource
+   *        The validation source that was used. May be <code>null</code>.
+   * @param aValidationDT
+   *        The date and time the validation took place. May be <code>null</code> to indicate "now".
+   * @since 11.2.0
+   */
+  public ValidationResultList (@Nullable final IValidationSource aSource, @Nullable final OffsetDateTime aValidationDT)
+  {
     m_aSource = aSource;
+    m_aValidationDT = aValidationDT != null ? aValidationDT : PDTFactory.getCurrentOffsetDateTime ();
   }
 
   /**
@@ -69,6 +91,51 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   public final IValidationSource getValidationSource ()
   {
     return m_aSource;
+  }
+
+  /**
+   * @return The date and time when the validation was executed. Never <code>null</code> .
+   * @since 11.2.0
+   */
+  @NonNull
+  public final OffsetDateTime getValidationDateTime ()
+  {
+    return m_aValidationDT;
+  }
+
+  /**
+   * @return <code>true</code> if the validation duration is present, <code>false</code> if not.
+   * @since 11.2.0
+   */
+  @Nullable
+  public final boolean hasValidationDuration ()
+  {
+    return m_aValidationDuration != null;
+  }
+
+  /**
+   * @return The duration the validation execution took. May be <code>null</code>.
+   * @since 11.2.0
+   */
+  @Nullable
+  public final Duration getValidationDuration ()
+  {
+    return m_aValidationDuration;
+  }
+
+  /**
+   * Set the validation duration.
+   *
+   * @param a
+   *        The duration to set. May be <code>null</code>.
+   * @return this for chaining
+   * @since 11.2.0
+   */
+  @NonNull
+  public final ValidationResultList setValidationDuration (@Nullable final Duration a)
+  {
+    m_aValidationDuration = a;
+    return this;
   }
 
   /**
@@ -187,6 +254,16 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("Source", m_aSource).getToString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("Source", m_aSource)
+                            .append ("ValidationDT", m_aValidationDT)
+                            .append ("ValidationDuration", m_aValidationDuration)
+                            .getToString ();
+  }
+
+  @NonNull
+  public static ValidationResultList createNoSource ()
+  {
+    return new ValidationResultList (null);
   }
 }

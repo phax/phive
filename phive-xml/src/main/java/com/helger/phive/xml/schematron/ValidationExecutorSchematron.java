@@ -56,6 +56,7 @@ import com.helger.phive.api.execute.IValidationExecutorCacheSupport;
 import com.helger.phive.api.executor.AbstractValidationExecutor;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
@@ -264,7 +265,9 @@ public class ValidationExecutorSchematron extends
   }
 
   @NonNull
-  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource,
+                                           @NonNull final IValidityDeterminator <IValidationSourceXML> aValidityDeterminator,
+                                           @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -319,10 +322,13 @@ public class ValidationExecutorSchematron extends
                                  m_sPrerequisiteXPath +
                                  "' - ignoring validation artefact.";
         LOGGER.error (sErrorMsg, ex);
-        return createValidationResult (new ErrorList (SingleError.builderError ()
-                                                                 .errorText (sErrorMsg)
-                                                                 .linkedException (ex)
-                                                                 .build ()), aSW.stopAndGetMillis ());
+        final ErrorList aErrorList = new ErrorList (SingleError.builderError ()
+                                                               .errorText (sErrorMsg)
+                                                               .linkedException (ex)
+                                                               .build ());
+        return createValidationResult (aErrorList,
+                                       aValidityDeterminator.getValidity (this, aErrorList),
+                                       aSW.stopAndGetMillis ());
       }
     }
     // No prerequisite or prerequisite matched
@@ -462,7 +468,9 @@ public class ValidationExecutorSchematron extends
         }
       }
     }
-    return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
+    return createValidationResult (aErrorList,
+                                   aValidityDeterminator.getValidity (this, aErrorList),
+                                   aSW.stopAndGetMillis ());
   }
 
   @NonNull

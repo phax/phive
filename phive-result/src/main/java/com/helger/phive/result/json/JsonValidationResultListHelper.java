@@ -23,10 +23,10 @@ import java.util.function.Function;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
-import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.state.ETriState;
+import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
@@ -39,6 +39,7 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
@@ -152,18 +153,18 @@ public class JsonValidationResultListHelper
    *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
-   * @param nDurationMilliseconds
-   *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
   public void applyTo (@NonNull final IJsonObject aResponse,
                        @NonNull final ValidationResultList aValidationResultList,
-                       @NonNull final Locale aDisplayLocale,
-                       @Nonnegative final long nDurationMilliseconds)
+                       @NonNull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aResponse, "Response");
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
-    ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
+
+    // Added in 11.2.0
+    aResponse.add (PhiveJsonHelper.JSON_VALIDATION_DATETIME,
+                   PDTWebDateHelper.getAsStringXSD (aValidationResultList.getValidationDateTime ()));
 
     // Added in 10.1.0
     if (aValidationResultList.hasValidationSource () && m_aSourceToJson != null)
@@ -185,23 +186,23 @@ public class JsonValidationResultListHelper
     for (final ValidationResult aVR : aValidationResultList)
     {
       final IValidationArtefact aVA = aVR.getValidationArtefact ();
+      final EExtendedValidity eValidity = aVR.getValidity ();
 
       final IJsonObject aVRT = new JsonObject ();
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
-      if (aVR.isSkipped ())
+      if (eValidity.isSkipped ())
       {
         bValidationInterrupted = true;
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (ETriState.UNDEFINED));
+        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (eValidity));
       }
       else
       {
-        // Backwards compatible decision
-        final boolean bIsValid = aVR.getErrorList ().containsNoError ();
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (bIsValid));
-        if (!bIsValid)
-          eWorstValidity = EExtendedValidity.INVALID;
+        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (eValidity));
+        if (eValidity.isInvalid ())
+          eWorstValidity = eValidity;
       }
+      aVRT.add (PhiveJsonHelper.JSON_VALIDITY, eValidity.getID ());
       aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToJson != null)
         aVRT.addIfNotNull (PhiveJsonHelper.JSON_ARTIFACT_PATH_TYPE,
@@ -214,10 +215,10 @@ public class JsonValidationResultListHelper
         if (aError.getErrorLevel ().isGT (aMostSevere))
           aMostSevere = aError.getErrorLevel ();
 
-        if (PhiveResultHelper.isConsideredError (aError.getErrorLevel ()))
+        if (PhiveSeverityHelper.isConsideredError (aError.getErrorLevel ()))
           nErrors++;
         else
-          if (PhiveResultHelper.isConsideredWarning (aError.getErrorLevel ()))
+          if (PhiveSeverityHelper.isConsideredWarning (aError.getErrorLevel ()))
             nWarnings++;
 
         if (m_aErrorToJson != null)
@@ -234,7 +235,9 @@ public class JsonValidationResultListHelper
     if (m_aErrorLevelToJson != null)
       aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL, m_aErrorLevelToJson.apply (aMostSevere));
     aResponse.add (PhiveJsonHelper.JSON_RESULTS, aResultArray);
-    aResponse.add (PhiveJsonHelper.JSON_DURATION_MS, nDurationMilliseconds);
+
+    if (aValidationResultList.hasValidationDuration ())
+      aResponse.add (PhiveJsonHelper.JSON_DURATION_MS, aValidationResultList.getValidationDuration ().toMillis ());
 
     // Set consumer values
     if (m_aWarningCount != null)

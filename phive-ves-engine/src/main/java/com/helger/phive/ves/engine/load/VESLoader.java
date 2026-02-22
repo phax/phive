@@ -827,9 +827,8 @@ public final class VESLoader
       LOGGER.debug ("Start validation of '" + aVESID.getAsSingleID () + "'");
 
     final ValidationResultList aValidationResultList = new ValidationResultList (aValidationSource);
-    final Duration aValidateDuration = StopWatch.runMeasured ( () -> {
-      aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
-    });
+    aLoadedVES.applyValidation (aValidationSource, aValidationResultList, Locale.ENGLISH);
+    final Duration aValidateDuration = aValidationResultList.getValidationDuration ();
     if (aValidateDuration.compareTo (DURATION_WARN) > 0)
       LOGGER.warn ("Finished validation of '" + aVESID.getAsSingleID () + "' after " + aValidateDuration);
 

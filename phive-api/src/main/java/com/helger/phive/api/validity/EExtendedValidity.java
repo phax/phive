@@ -87,6 +87,11 @@ public enum EExtendedValidity implements IHasID <String>
     return this == VALID || this == INVALID;
   }
 
+  public boolean isUndefined ()
+  {
+    return this == SKIPPED || this == UNCLEAR;
+  }
+
   @Nullable
   public static EExtendedValidity getFromIDOrNull (@Nullable final String sID)
   {

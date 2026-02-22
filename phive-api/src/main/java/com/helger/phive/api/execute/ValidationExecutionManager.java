@@ -28,6 +28,7 @@ import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.EValidity;
+import com.helger.base.timing.StopWatch;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsIterable;
 import com.helger.collection.commons.ICommonsList;
@@ -164,6 +165,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ("Executing validation on source " + aSource + (aLocale == null ? "" : " and locale " + aLocale));
 
+    final StopWatch aSW = StopWatch.createdStarted ();
     boolean bSkipRest = false;
 
     // Run over all executors
@@ -177,7 +179,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
       else
       {
         // Execute validation
-        final ValidationResult aResult = aExecutor.applyValidation (aSource, aLocale);
+        final ValidationResult aResult = aExecutor.applyValidation (aSource, m_aValidityDeterminator, aLocale);
         assert aResult != null;
         aValidationResults.add (aResult);
 
@@ -190,6 +192,9 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
         }
       }
     }
+
+    aSW.stop ();
+    aValidationResults.setValidationDuration (aSW.getDuration ());
   }
 
   @NonNull
@@ -201,7 +206,7 @@ public class ValidationExecutionManager <SOURCETYPE extends IValidationSource> i
     {
       // Execute validation
       // Note: locale doesn't matter because we don't use the texts
-      final ValidationResult aResult = aExecutor.applyValidation (aSource, (Locale) null);
+      final ValidationResult aResult = aExecutor.applyValidation (aSource, m_aValidityDeterminator, (Locale) null);
 
       // Determine validity
       final EExtendedValidity eValidity = m_aValidityDeterminator.getValidity (aExecutor, aResult.getErrorList ());

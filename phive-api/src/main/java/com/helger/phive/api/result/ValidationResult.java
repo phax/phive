@@ -26,10 +26,11 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.artefact.IValidationArtefact;
+import com.helger.phive.api.validity.EExtendedValidity;
 
 /**
- * This class captures the validation result of a single validation layer. It
- * contains the validation artefact and the errors occurred.
+ * This class captures the validation result of a single validation layer. It contains the
+ * validation artefact and the errors occurred.
  *
  * @author Philip Helger
  */
@@ -38,62 +39,39 @@ public class ValidationResult
 {
   private final IValidationArtefact m_aValidationArtefact;
   private final IErrorList m_aErrorList;
-  private final boolean m_bSkipped;
+  private final EExtendedValidity m_eValidity;
   private final long m_nDurationMS;
 
   /**
    * Constructor for non-skipped results
    *
    * @param aValidationArtefact
-   *        The validation artefact that was applied. May not be
-   *        <code>null</code>.
+   *        The validation artefact that was applied. May not be <code>null</code>.
    * @param aErrorList
-   *        The list of errors applying the validation artefact. May not be
-   *        <code>null</code>.
+   *        The list of errors applying the validation artefact. May not be <code>null</code>.
+   * @param eValidity
+   *        The validity determined by a validity determinator. May not be <code>null</code>.
    * @param nDurationMS
-   *        The number of milliseconds it took to get the validation results.
-   *        Must be &ge; 0.
+   *        The number of milliseconds it took to get the validation results. Must be &ge; 0.
    */
   public ValidationResult (@NonNull final IValidationArtefact aValidationArtefact,
                            @NonNull final IErrorList aErrorList,
+                           @NonNull final EExtendedValidity eValidity,
                            @Nonnegative final long nDurationMS)
-  {
-    this (aValidationArtefact, aErrorList, false, nDurationMS);
-  }
-
-  /**
-   * Constructor
-   *
-   * @param aValidationArtefact
-   *        The validation artefact that was applied. May not be
-   *        <code>null</code>.
-   * @param aErrorList
-   *        The list of errors applying the validation artefact. May not be
-   *        <code>null</code>.
-   * @param bWasSkipped
-   *        <code>true</code> if this validation layer was skipped.
-   * @param nDurationMS
-   *        The number of milliseconds it took to get the validation results.
-   *        Must be &ge; 0.
-   */
-  protected ValidationResult (@NonNull final IValidationArtefact aValidationArtefact,
-                              @NonNull final IErrorList aErrorList,
-                              final boolean bWasSkipped,
-                              @Nonnegative final long nDurationMS)
   {
     ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     ValueEnforcer.notNull (aErrorList, "ErrorList");
+    ValueEnforcer.notNull (eValidity, "Validity");
     ValueEnforcer.isGE0 (nDurationMS, "DurationMS");
 
     m_aValidationArtefact = aValidationArtefact;
     m_aErrorList = aErrorList;
-    m_bSkipped = bWasSkipped;
+    m_eValidity = eValidity;
     m_nDurationMS = nDurationMS;
   }
 
   /**
-   * @return The validation artefact used to perform validation. Never
-   *         <code>null</code>.
+   * @return The validation artefact used to perform validation. Never <code>null</code>.
    */
   @NonNull
   public final IValidationArtefact getValidationArtefact ()
@@ -102,8 +80,8 @@ public class ValidationResult
   }
 
   /**
-   * @return The errors occurred during the validation execution on this layer.
-   *         Never <code>null</code> but maybe empty.
+   * @return The errors occurred during the validation execution on this layer. Never
+   *         <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableObject
@@ -113,17 +91,26 @@ public class ValidationResult
   }
 
   /**
-   * @return <code>true</code> if this validation result is based on a skipped
-   *         validation layer, <code>false</code> otherwise.
+   * @return The validity of this layer as provided in the constructor. Never <code>null</code>.
    */
-  public final boolean isSkipped ()
+  @NonNull
+  public final EExtendedValidity getValidity ()
   {
-    return m_bSkipped;
+    return m_eValidity;
   }
 
   /**
-   * @return The duration in milliseconds it took to create this validation
-   *         result. Always &ge; 0.
+   * @return <code>true</code> if this validation result is based on a skipped validation layer,
+   *         <code>false</code> otherwise.
+   */
+  @Deprecated (forRemoval = true, since = "11.2.0")
+  public final boolean isSkipped ()
+  {
+    return m_eValidity.isSkipped ();
+  }
+
+  /**
+   * @return The duration in milliseconds it took to create this validation result. Always &ge; 0.
    * @since 10.1.0
    */
   @Nonnegative
@@ -137,7 +124,7 @@ public class ValidationResult
   {
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
                                        .append ("ErrorList", m_aErrorList)
-                                       .append ("Skipped", m_bSkipped)
+                                       .append ("Validity", m_eValidity)
                                        .append ("DurationMS", m_nDurationMS)
                                        .getToString ();
   }
@@ -152,6 +139,6 @@ public class ValidationResult
   @NonNull
   public static ValidationResult createSkippedResult (@NonNull final IValidationArtefact aValidationArtefact)
   {
-    return new ValidationResult (aValidationArtefact, new ErrorList (), true, 0);
+    return new ValidationResult (aValidationArtefact, new ErrorList (), EExtendedValidity.SKIPPED, 0);
   }
 }

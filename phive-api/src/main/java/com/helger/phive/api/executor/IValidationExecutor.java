@@ -26,10 +26,11 @@ import com.helger.base.clone.ICloneable;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.IValidityDeterminator;
 
 /**
- * Base interface for performing validation of a single document based on the
- * rules of a single validation artefact.
+ * Base interface for performing validation of a single document based on the rules of a single
+ * validation artefact.
  *
  * @author Philip Helger
  * @param <SOURCETYPE>
@@ -40,15 +41,13 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource> exte
                                      ICloneable <IValidationExecutor <SOURCETYPE>>
 {
   /**
-   * @return The validation artefact used to validate the document. Never
-   *         <code>null</code>.
+   * @return The validation artefact used to validate the document. Never <code>null</code>.
    */
   @NonNull
   IValidationArtefact getValidationArtefact ();
 
   /**
-   * @return <code>true</code> if a negative validation stops further
-   *         validations.
+   * @return <code>true</code> if a negative validation stops further validations.
    * @since 5.3.1; previously on validation type level only
    */
   boolean isStopValidationOnError ();
@@ -58,11 +57,15 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource> exte
    *
    * @param aSource
    *        Source to be validated. May not be <code>null</code>.
+   * @param aValidityDeterminator
+   *        The validity determinator to be used. May not be <code>null</code>. Since 11.2.0
    * @param aLocale
-   *        The locale to use for error messages if applicable. May be
-   *        <code>null</code> in which case the system default locale is used.
+   *        The locale to use for error messages if applicable. May be <code>null</code> in which
+   *        case the system default locale is used.
    * @return Never <code>null</code>.
    */
   @NonNull
-  ValidationResult applyValidation (@NonNull SOURCETYPE aSource, @Nullable Locale aLocale);
+  ValidationResult applyValidation (@NonNull SOURCETYPE aSource,
+                                    @NonNull IValidityDeterminator <SOURCETYPE> aValidityDeterminator,
+                                    @Nullable Locale aLocale);
 }

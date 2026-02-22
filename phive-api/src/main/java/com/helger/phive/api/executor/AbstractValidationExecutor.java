@@ -28,6 +28,7 @@ import com.helger.diagnostics.error.list.IErrorList;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.EExtendedValidity;
 
 /**
  * Abstract base implementation of {@link IValidationExecutor}.
@@ -67,12 +68,11 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
   }
 
   /**
-   * Set the "stop on validation" flag for this executor. If the flag is set, no
-   * further validation will be performed.
+   * Set the "stop on validation" flag for this executor. If the flag is set, no further validation
+   * will be performed.
    *
    * @param bStopValidationOnError
-   *        <code>true</code> to stop validation on error, <code>false</code> to
-   *        continue anyway.
+   *        <code>true</code> to stop validation on error, <code>false</code> to continue anyway.
    * @return this for chaining
    */
   @NonNull
@@ -84,9 +84,10 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
 
   @NonNull
   protected final ValidationResult createValidationResult (@NonNull final IErrorList aErrorList,
+                                                           @NonNull final EExtendedValidity eValidity,
                                                            @Nonnegative final long nDurationMS)
   {
-    return new ValidationResult (m_aValidationArtefact, aErrorList, nDurationMS);
+    return new ValidationResult (m_aValidationArtefact, aErrorList, eValidity, nDurationMS);
   }
 
   @Override

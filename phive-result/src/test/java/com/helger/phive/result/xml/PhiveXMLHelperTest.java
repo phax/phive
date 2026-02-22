@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.Locale;
@@ -75,6 +76,7 @@ public final class PhiveXMLHelperTest
                   "<mostSevereErrorLevel>ERROR</mostSevereErrorLevel>" +
                   "<result>" +
                   "<success>FALSE</success>" +
+                  "<validity>invalid</validity>" +
                   "<artifactType>input-parameter</artifactType>" +
                   "<artifactPath>none</artifactPath>" +
                   "<item><errorLevel>ERROR</errorLevel><errorText>My error</errorText></item>" +
@@ -95,16 +97,15 @@ public final class PhiveXMLHelperTest
     final IValidationExecutorSet <?> aVES = new ValidationExecutorSet <> (aVESID,
                                                                           "name",
                                                                           ValidationExecutorSetStatus.createValidAt (aNow));
-    PhiveXMLHelper.applyValidationResultList (aObj,
-                                              aVES,
-                                              new ValidationResultList (null),
-                                              aDisplayLocale,
-                                              123,
-                                              null,
-                                              null);
+    final ValidationResultList aVRL = ValidationResultList.createNoSource ()
+                                                          .setValidationDuration (Duration.ofMillis (123));
+    PhiveXMLHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, null, null);
     final String sXML = MicroWriter.getNodeAsString (aObj,
                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
     assertEquals ("<root>" +
+                  "<validationDateTime>" +
+                  PDTWebDateHelper.getAsStringXSD (aVRL.getValidationDateTime ()) +
+                  "</validationDateTime>" +
                   "<ves><vesid>group:art:1</vesid>" +
                   "<name>name</name>" +
                   "<deprecated>false</deprecated>" +
@@ -143,7 +144,7 @@ public final class PhiveXMLHelperTest
     // To XML
     final Locale aDisplayLocale = Locale.US;
     final IMicroElement aObj = new MicroElement ("root");
-    PhiveXMLHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, 123, null, null);
+    PhiveXMLHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, null, null);
 
     // And back
     final IValidationExecutorSet <IValidationSourceXML> aVES2 = PhiveXMLHelper.getAsVES (aRegistry, aObj);
@@ -159,7 +160,7 @@ public final class PhiveXMLHelperTest
 
     // and forth
     final IMicroElement aObj2 = new MicroElement ("root");
-    PhiveXMLHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, 123, null, null);
+    PhiveXMLHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, null, null);
 
     assertEquals (MicroWriter.getNodeAsString (aObj), MicroWriter.getNodeAsString (aObj2));
   }

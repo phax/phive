@@ -18,7 +18,9 @@ package com.helger.phive.result.json;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
@@ -72,7 +74,7 @@ import com.helger.schematron.svrl.SVRLResourceError;
 /**
  * A utility class to create a common JSON representation of a PHIVE result. Use
  * {@link #applyGlobalError(IJsonObject, String, long)} or
- * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}
+ * {@link #applyValidationResultList(IJsonObject, IValidationExecutorSet, ValidationResultList, Locale, MutableInt, MutableInt)}
  * to add the result to an arbitrary {@link IJsonObject}.
  *
  * @author Philip Helger
@@ -95,6 +97,9 @@ public final class PhiveJsonHelper
   public static final String JSON_EXCEPTION = "exception";
   public static final String JSON_TEST = "test";
 
+  // Added in 11.2.0
+  public static final String JSON_VALIDATION_DATETIME = "validationDateTime";
+
   // Added in 10.1.0
   public static final String JSON_VALIDATION_SOURCE = "validationSource";
   public static final String JSON_SOURCE_TYPE_ID = "sourceTypeID";
@@ -114,6 +119,8 @@ public final class PhiveJsonHelper
   public static final String JSON_STATUS_REPLACEMENT_VESID = "replacementVesid";
 
   public static final String JSON_SUCCESS = "success";
+  // Since 11.2.0
+  public static final String JSON_VALIDITY = "validity";
   public static final String JSON_ARTIFACT_TYPE = "artifactType";
   public static final String JSON_ARTIFACT_PATH_TYPE = "artifactPathType";
   public static final String JSON_ARTIFACT_PATH = "artifactPath";
@@ -323,8 +330,7 @@ public final class PhiveJsonHelper
                                   .errorID (aError.getErrorID ())
                                   .errorFieldName (aError.getErrorFieldName ())
                                   .errorLocation (aError.hasErrorLocation () ? aError.getErrorLocation () : null)
-                                  .test (aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest ()
-                                                                             : null)
+                                  .test (aError instanceof final SVRLResourceError s ? s.getTest () : null)
                                   .errorText (aError.getErrorText (aDisplayLocale))
                                   .exception (aError.getLinkedException ());
   }
@@ -529,6 +535,7 @@ public final class PhiveJsonHelper
 
     final IJsonArray aResultArray = new JsonArray ();
     aResultArray.add (new JsonObject ().add (JSON_SUCCESS, PhiveResultHelper.getTriStateValue (false))
+                                       .add (JSON_VALIDITY, EExtendedValidity.INVALID.getID ())
                                        .add (JSON_ARTIFACT_TYPE, ARTIFACT_TYPE_INPUT_PARAMETER)
                                        .add (JSON_ARTIFACT_PATH, ARTIFACT_PATH_NONE)
                                        .add (JSON_ITEMS,
@@ -577,8 +584,6 @@ public final class PhiveJsonHelper
    *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
-   * @param nDurationMilliseconds
-   *        The duration of the validation in milliseconds. Must be &ge; 0.
    * @param aWarningCount
    *        Optional callback value to store the overall warnings. If not <code>null</code> if will
    *        contain a &ge; 0 value afterwards.
@@ -590,17 +595,13 @@ public final class PhiveJsonHelper
                                                 @Nullable final IValidationExecutorSet <?> aVES,
                                                 @NonNull final ValidationResultList aValidationResultList,
                                                 @NonNull final Locale aDisplayLocale,
-                                                @Nonnegative final long nDurationMilliseconds,
                                                 @Nullable final MutableInt aWarningCount,
                                                 @Nullable final MutableInt aErrorCount)
   {
     new JsonValidationResultListHelper ().ves (aVES)
                                          .warningCount (aWarningCount)
                                          .errorCount (aErrorCount)
-                                         .applyTo (aResponse,
-                                                   aValidationResultList,
-                                                   aDisplayLocale,
-                                                   nDurationMilliseconds);
+                                         .applyTo (aResponse, aValidationResultList, aDisplayLocale);
   }
 
   @Nullable
@@ -685,11 +686,17 @@ public final class PhiveJsonHelper
         aValidationSource = null;
     }
 
+    final OffsetDateTime aValidationDT = PDTWebDateHelper.getOffsetDateTimeFromXSD (aJson.getAsString (PhiveJsonHelper.JSON_VALIDATION_DATETIME));
+    final ValidationResultList ret = new ValidationResultList (aValidationSource, aValidationDT);
+
+    final long nOverallMillis = aJson.getAsLong (PhiveJsonHelper.JSON_DURATION_MS, -1);
+    if (nOverallMillis >= 0)
+      ret.setValidationDuration (Duration.ofMillis (nOverallMillis));
+
     final IJsonArray aResults = aJson.getAsArray (JSON_RESULTS);
     if (aResults == null)
       return null;
 
-    final ValidationResultList ret = new ValidationResultList (aValidationSource);
     for (final IJson aResult : aResults)
     {
       final IJsonObject aResultObj = aResult.getAsObject ();
@@ -704,20 +711,18 @@ public final class PhiveJsonHelper
             LOGGER.debug ("Failed to resolve TriState '" + sSuccess + "'");
           continue;
         }
-        final EExtendedValidity eValidity;
-        switch (eSuccess)
+
+        final String sValidity = aResultObj.getAsString (JSON_VALIDITY);
+        EExtendedValidity eValidity = EExtendedValidity.getFromIDOrNull (sValidity);
+        if (eValidity == null)
         {
-          case TRUE:
-            eValidity = EExtendedValidity.VALID;
-            break;
-          case FALSE:
-            eValidity = EExtendedValidity.INVALID;
-            break;
-          case UNDEFINED:
-            eValidity = EExtendedValidity.SKIPPED;
-            break;
-          default:
-            throw new IllegalStateException ("Oops");
+          // Fallback for old data, where "validity" field is missing
+          eValidity = switch (eSuccess)
+          {
+            case TRUE -> EExtendedValidity.VALID;
+            case FALSE -> EExtendedValidity.INVALID;
+            case UNDEFINED -> EExtendedValidity.SKIPPED;
+          };
         }
 
         final String sValidationType = aResultObj.getAsString (JSON_ARTIFACT_TYPE);
@@ -766,7 +771,7 @@ public final class PhiveJsonHelper
 
           final long nDurationMS = aResultObj.getAsLong (JSON_DURATION_MS);
 
-          final ValidationResult aVR = new ValidationResult (aVA, aErrorList, nDurationMS);
+          final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity, nDurationMS);
           ret.add (aVR);
         }
       }

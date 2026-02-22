@@ -43,6 +43,7 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executor.AbstractValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
@@ -50,8 +51,8 @@ import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
 
 /**
- * Implementation of {@link AbstractValidationExecutor} for XML Schema
- * validation of parts of a source document.
+ * Implementation of {@link AbstractValidationExecutor} for XML Schema validation of parts of a
+ * source document.
  *
  * @author Philip Helger
  */
@@ -69,8 +70,8 @@ public class ValidationExecutorXSDPartial extends
    * @param aSchemaProvider
    *        The XML Schema provider to use. May not be <code>null</code>.
    * @param aPartialContext
-   *        The partial context that defines the rules for finding the correct
-   *        nodes to validate. May not be <code>null</code>.
+   *        The partial context that defines the rules for finding the correct nodes to validate.
+   *        May not be <code>null</code>.
    * @since 6.0.4
    */
   public ValidationExecutorXSDPartial (@NonNull final IValidationArtefact aValidationArtefact,
@@ -94,8 +95,8 @@ public class ValidationExecutorXSDPartial extends
   }
 
   /**
-   * @return The partial execution context as provided in the constructor. May
-   *         not be <code>null</code>.
+   * @return The partial execution context as provided in the constructor. May not be
+   *         <code>null</code>.
    */
   @NonNull
   public final XSDPartialContext getContext ()
@@ -104,7 +105,9 @@ public class ValidationExecutorXSDPartial extends
   }
 
   @NonNull
-  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource,
+                                           @NonNull final IValidityDeterminator <IValidationSourceXML> aValidityDeterminator,
+                                           @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
 
@@ -150,7 +153,9 @@ public class ValidationExecutorXSDPartial extends
     if (nMatchingNodes == 0)
     {
       // No match found - nothing to do
-      return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
+      return createValidationResult (aErrorList,
+                                     aValidityDeterminator.getValidity (this, aErrorList),
+                                     aSW.stopAndGetMillis ());
     }
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
@@ -189,7 +194,9 @@ public class ValidationExecutorXSDPartial extends
       }
     }
     // Build result object
-    return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
+    return createValidationResult (aErrorList,
+                                   aValidityDeterminator.getValidity (this, aErrorList),
+                                   aSW.stopAndGetMillis ());
   }
 
   @NonNull
@@ -232,10 +239,10 @@ public class ValidationExecutorXSDPartial extends
    * @param aXSDRes
    *        The XSD resource to use. May not be <code>null</code>.
    * @param aPartialContext
-   *        The partial context that defines the rules for finding the correct
-   *        nodes to validate. May not be <code>null</code>.
-   * @return A new validator that uses the supplied resource for the filename
-   *         and uses {@link XMLSchemaCache} to resolve the XML Schema object.
+   *        The partial context that defines the rules for finding the correct nodes to validate.
+   *        May not be <code>null</code>.
+   * @return A new validator that uses the supplied resource for the filename and uses
+   *         {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4
    */
   @NonNull
@@ -252,11 +259,10 @@ public class ValidationExecutorXSDPartial extends
    * Create a new instance based on one or more XSDs
    *
    * @param aXSDRes
-   *        The XSD resources to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XSD resources to use. May neither be <code>null</code> nor empty.
    * @param aPartialContext
-   *        The partial context that defines the rules for finding the correct
-   *        nodes to validate. May not be <code>null</code>.
+   *        The partial context that defines the rules for finding the correct nodes to validate.
+   *        May not be <code>null</code>.
    * @return A new validator that uses the last resource for the filename uses
    *         {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4

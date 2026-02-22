@@ -36,9 +36,11 @@ import com.helger.io.resource.IReadableResource;
 import com.helger.io.resource.URLResource;
 import com.helger.io.resource.inmemory.IMemoryReadableResource;
 import com.helger.io.resource.wrapped.IWrappedReadableResource;
+import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.source.IValidationSourceBinary;
 import com.helger.phive.api.source.ValidationSourceBinary;
+import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
 import com.helger.xml.serialize.read.DOMReader;
@@ -64,14 +66,16 @@ public final class PhiveResultHelper
   private PhiveResultHelper ()
   {}
 
+  @Deprecated (forRemoval = true, since = "11.2.0")
   public static boolean isConsideredError (@NonNull final IErrorLevel aErrorLevel)
   {
-    return aErrorLevel.isGE (EErrorLevel.ERROR);
+    return PhiveSeverityHelper.isConsideredError (aErrorLevel);
   }
 
+  @Deprecated (forRemoval = true, since = "11.2.0")
   public static boolean isConsideredWarning (@NonNull final IErrorLevel aErrorLevel)
   {
-    return aErrorLevel.isGE (EErrorLevel.WARN);
+    return PhiveSeverityHelper.isConsideredWarning (aErrorLevel);
   }
 
   /**
@@ -90,9 +94,9 @@ public final class PhiveResultHelper
   {
     ValueEnforcer.notNull (aErrorLevel, "ErrorLevel");
 
-    if (PhiveResultHelper.isConsideredError (aErrorLevel))
+    if (PhiveSeverityHelper.isConsideredError (aErrorLevel))
       return VALUE_ERRORLEVEL_ERROR;
-    if (PhiveResultHelper.isConsideredWarning (aErrorLevel))
+    if (PhiveSeverityHelper.isConsideredWarning (aErrorLevel))
       return VALUE_ERRORLEVEL_WARN;
     return VALUE_ERRORLEVEL_SUCCESS;
   }
@@ -165,6 +169,16 @@ public final class PhiveResultHelper
   }
 
   @NonNull
+  public static String getTriStateValue (@NonNull final EExtendedValidity eValidity)
+  {
+    ValueEnforcer.notNull (eValidity, "TriState");
+
+    if (eValidity.isUndefined ())
+      return VALUE_TRISTATE_UNDEFINED;
+    return getTriStateValue (eValidity.isValid ());
+  }
+
+  @NonNull
   @Nonempty
   public static String getArtifactPathType (@NonNull final IReadableResource aRes)
   {
@@ -220,15 +234,19 @@ public final class PhiveResultHelper
 
     switch (sValidationSourceTypeID)
     {
-      case IValidationSourceBinary.VALIDATION_SOURCE_TYPE:
+      case IValidationSourceBinary.VALIDATION_SOURCE_TYPE ->
+      {
         return bIsPartialSource ? ValidationSourceBinary.createPartial (sSystemID, aPayloadBytes)
                                 : ValidationSourceBinary.create (sSystemID, aPayloadBytes);
-      case IValidationSourceXML.VALIDATION_SOURCE_TYPE:
+      }
+      case IValidationSourceXML.VALIDATION_SOURCE_TYPE ->
+      {
         // Parse on demand only
         return new ValidationSourceXML (sSystemID, () -> DOMReader.readXMLDOM (aPayloadBytes), bIsPartialSource);
-      default:
-        LOGGER.warn ("Unsupported Validation Source Type ID '" + sValidationSourceTypeID + "'");
+      }
+      default -> LOGGER.warn ("Unsupported Validation Source Type ID '" + sValidationSourceTypeID + "'");
     }
+
     return null;
   }
 }

@@ -18,7 +18,9 @@ package com.helger.phive.result.xml;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Locale;
 import java.util.function.Function;
 
@@ -72,7 +74,7 @@ import com.helger.xml.microdom.util.MicroHelper;
 /**
  * A utility class to create a common XML representation of a PHIVE result. Use
  * {@link #applyGlobalError(IMicroElement, String, long)} or
- * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale, long, MutableInt, MutableInt)}
+ * {@link #applyValidationResultList(IMicroElement, IValidationExecutorSet, ValidationResultList, Locale, MutableInt, MutableInt)}
  * to add the result to an arbitrary {@link IMicroElement}.
  *
  * @author Philip Helger
@@ -95,6 +97,9 @@ public final class PhiveXMLHelper
   public static final String XML_EXCEPTION = "exception";
   public static final String XML_TEST = "test";
 
+  // Added in 11.2.0
+  public static final String XML_VALIDATION_DATETIME = "validationDateTime";
+
   // Added in 10.1.0
   public static final String XML_VALIDATION_SOURCE = "validationSource";
   public static final String XML_SOURCE_TYPE_ID = "sourceTypeID";
@@ -114,6 +119,8 @@ public final class PhiveXMLHelper
   public static final String XML_STATUS_REPLACEMENT_VESID = "replacementVesid";
 
   public static final String XML_SUCCESS = "success";
+  // Since 11.2.0
+  public static final String XML_VALIDITY = "validity";
   public static final String XML_ARTIFACT_TYPE = "artifactType";
   public static final String XML_ARTIFACT_PATH_TYPE = "artifactPathType";
   public static final String XML_ARTIFACT_PATH = "artifactPath";
@@ -345,8 +352,7 @@ public final class PhiveXMLHelper
                                              .errorFieldName (aError.getErrorFieldName ())
                                              .errorLocation (aError.hasErrorLocation () ? aError.getErrorLocation ()
                                                                                         : null)
-                                             .test (aError instanceof SVRLResourceError ? ((SVRLResourceError) aError).getTest ()
-                                                                                        : null)
+                                             .test (aError instanceof final SVRLResourceError s ? s.getTest () : null)
                                              .errorText (aError.getErrorText (aDisplayLocale))
                                              .exception (aError.getLinkedException ());
   }
@@ -564,6 +570,7 @@ public final class PhiveXMLHelper
     {
       final IMicroElement aResult = aResponse.addElement (XML_RESULT);
       aResult.addElement (XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (false));
+      aResult.addElement (XML_VALIDITY).addText (EExtendedValidity.INVALID.getID ());
       aResult.addElement (XML_ARTIFACT_TYPE).addText (ARTIFACT_TYPE_INPUT_PARAMETER);
       aResult.addElement (XML_ARTIFACT_PATH).addText (ARTIFACT_PATH_NONE);
       aResult.addChild (xmlErrorBuilder (XML_ITEM).errorLevel (EErrorLevel.ERROR).errorText (sErrorMsg).build ());
@@ -608,8 +615,6 @@ public final class PhiveXMLHelper
    *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
-   * @param nDurationMilliseconds
-   *        The duration of the validation in milliseconds. Must be &ge; 0.
    * @param aWarningCount
    *        Optional callback value to store the overall warnings. If not <code>null</code> if will
    *        contain a &ge; 0 value afterwards.
@@ -621,17 +626,13 @@ public final class PhiveXMLHelper
                                                 @Nullable final IValidationExecutorSet <?> aVES,
                                                 @NonNull final ValidationResultList aValidationResultList,
                                                 @NonNull final Locale aDisplayLocale,
-                                                @Nonnegative final long nDurationMilliseconds,
                                                 @Nullable final MutableInt aWarningCount,
                                                 @Nullable final MutableInt aErrorCount)
   {
     new XMLValidationResultListHelper ().ves (aVES)
                                         .warningCount (aWarningCount)
                                         .errorCount (aErrorCount)
-                                        .applyTo (aResponse,
-                                                  aValidationResultList,
-                                                  aDisplayLocale,
-                                                  nDurationMilliseconds);
+                                        .applyTo (aResponse, aValidationResultList, aDisplayLocale);
   }
 
   @Nullable
@@ -715,7 +716,17 @@ public final class PhiveXMLHelper
         aValidationSource = null;
     }
 
-    final ValidationResultList ret = new ValidationResultList (aValidationSource);
+    final OffsetDateTime aValidationDT = PDTWebDateHelper.getOffsetDateTimeFromXSD (MicroHelper.getChildTextContentTrimmed (aXML,
+                                                                                                                            PhiveXMLHelper.XML_VALIDATION_DATETIME));
+
+    final ValidationResultList ret = new ValidationResultList (aValidationSource, aValidationDT);
+
+    final long nOverallMillis = TypeConverter.convertToLong (MicroHelper.getChildTextContentTrimmed (aXML,
+                                                                                                     PhiveXMLHelper.XML_DURATION_MS),
+                                                             -1);
+    if (nOverallMillis >= 0)
+      ret.setValidationDuration (Duration.ofMillis (nOverallMillis));
+
     for (final IMicroElement eResult : aXML.getAllChildElements (XML_RESULT))
     {
       // Fall back to previous status
@@ -727,20 +738,18 @@ public final class PhiveXMLHelper
           LOGGER.debug ("Failed to resolve TriState '" + sSuccess + "'");
         continue;
       }
-      final EExtendedValidity eValidity;
-      switch (eSuccess)
+
+      final String sValidity = MicroHelper.getChildTextContentTrimmed (eResult, XML_VALIDITY);
+      EExtendedValidity eValidity = EExtendedValidity.getFromIDOrNull (sValidity);
+      if (eValidity == null)
       {
-        case TRUE:
-          eValidity = EExtendedValidity.VALID;
-          break;
-        case FALSE:
-          eValidity = EExtendedValidity.INVALID;
-          break;
-        case UNDEFINED:
-          eValidity = EExtendedValidity.SKIPPED;
-          break;
-        default:
-          throw new IllegalStateException ("Oops");
+        // Fallback for old data, where "validity" field is missing
+        eValidity = switch (eSuccess)
+        {
+          case TRUE -> EExtendedValidity.VALID;
+          case FALSE -> EExtendedValidity.INVALID;
+          case UNDEFINED -> EExtendedValidity.SKIPPED;
+        };
       }
 
       final String sValidationType = MicroHelper.getChildTextContentTrimmed (eResult, XML_ARTIFACT_TYPE);
@@ -785,7 +794,7 @@ public final class PhiveXMLHelper
                                                                                                       XML_DURATION_MS),
                                                               0);
 
-        final ValidationResult aVR = new ValidationResult (aVA, aErrorList, nDurationMS);
+        final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity, nDurationMS);
         ret.add (aVR);
       }
     }

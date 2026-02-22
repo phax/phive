@@ -144,6 +144,8 @@ v11.2.0 - 2026-02-22
 * Renamed some `EvalidationType` enums to be more precise
 * Extracted class `AbstractionValidationSource`
 * Added new class `CPhiveVersion`
+* Extended the `ValidationResultList` to contain the validation date time as well as the validation duration
+* Extracted new class `PhiveSeverityHelper`
 
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1

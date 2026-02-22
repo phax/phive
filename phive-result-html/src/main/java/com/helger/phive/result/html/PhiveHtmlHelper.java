@@ -17,7 +17,6 @@
 package com.helger.phive.result.html;
 
 import java.nio.charset.StandardCharsets;
-import java.time.OffsetDateTime;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
@@ -35,7 +34,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsEnumMap;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.datetime.format.PDTToString;
-import com.helger.datetime.helper.PDTFactory;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
@@ -45,6 +43,7 @@ import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.text.locale.LocaleFormatter;
 import com.helger.xml.microdom.IMicroDocument;
@@ -66,8 +65,6 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
 public class PhiveHtmlHelper
 {
   private Locale m_aDisplayLocale = Locale.US;
-  private OffsetDateTime m_aValidationDT;
-  private long m_nOverallDurationMillis = -1;
   private IValidationExecutorSet <?> m_aVES;
   private String m_sSourceData;
 
@@ -87,56 +84,6 @@ public class PhiveHtmlHelper
     else
       m_aDefaultLabels = EPhiveHtmlLabel.createLabelMapEN ();
     m_aLabels = m_aDefaultLabels.getClone ();
-  }
-
-  private static boolean _isConsideredError (@NonNull final IErrorLevel aErrorLevel)
-  {
-    return aErrorLevel.isGE (EErrorLevel.ERROR);
-  }
-
-  private static boolean _isConsideredWarning (@NonNull final IErrorLevel aErrorLevel)
-  {
-    return aErrorLevel.isGE (EErrorLevel.WARN);
-  }
-
-  /**
-   * Set the validation date and time when the validation execution started to "now".
-   *
-   * @return this for chaining
-   */
-  @NonNull
-  public PhiveHtmlHelper validationDateTimeNow ()
-  {
-    return validationDateTime (PDTFactory.getCurrentOffsetDateTimeMillisOnly ());
-  }
-
-  /**
-   * Set the validation date and time when the validation execution started.
-   *
-   * @param a
-   *        The date time to set. May be <code>null</code>.
-   * @return this for chaining
-   */
-  @NonNull
-  public PhiveHtmlHelper validationDateTime (@Nullable final OffsetDateTime a)
-  {
-    m_aValidationDT = a;
-    return this;
-  }
-
-  /**
-   * Set the overall duration of the validation in milliseconds. Use a value &lt; 0 to indicate "not
-   * set" (the default). If not set, the overall duration will not be displayed.
-   *
-   * @param nMillis
-   *        The overall duration in milliseconds. Use a negative value to indicate "not set".
-   * @return this for chaining
-   */
-  @NonNull
-  public PhiveHtmlHelper overallDurationMillis (final long nMillis)
-  {
-    m_nOverallDurationMillis = nMillis;
-    return this;
   }
 
   /**
@@ -384,15 +331,15 @@ public class PhiveHtmlHelper
 
     for (final ValidationResult aVR : aValidationResultList)
     {
-      if (aVR.isSkipped ())
+      final EExtendedValidity eValidity = aVR.getValidity ();
+      if (eValidity.isSkipped ())
       {
         bValidationInterrupted = true;
       }
       else
       {
-        final boolean bIsValid = aVR.getErrorList ().containsNoError ();
-        if (!bIsValid)
-          eWorstValidity = EExtendedValidity.INVALID;
+        if (eValidity.isInvalid ())
+          eWorstValidity = eValidity;
       }
 
       for (final IError aError : aVR.getErrorList ())
@@ -400,10 +347,10 @@ public class PhiveHtmlHelper
         if (aError.getErrorLevel ().isGT (aMostSevere))
           aMostSevere = aError.getErrorLevel ();
 
-        if (_isConsideredError (aError.getErrorLevel ()))
+        if (PhiveSeverityHelper.isConsideredError (aError.getErrorLevel ()))
           nErrors++;
         else
-          if (_isConsideredWarning (aError.getErrorLevel ()))
+          if (PhiveSeverityHelper.isConsideredWarning (aError.getErrorLevel ()))
             nWarnings++;
       }
     }
@@ -419,9 +366,9 @@ public class PhiveHtmlHelper
     eContainer.addChild (eH1);
 
     // Creation timestamp
-    if (m_aValidationDT != null)
     {
-      final String sTimestamp = PDTToString.getAsString (m_aValidationDT, m_aDisplayLocale);
+      final String sTimestamp = PDTToString.getAsString (aValidationResultList.getValidationDateTime (),
+                                                         m_aDisplayLocale);
       final IMicroElement eCreatedAt = _createDiv (CPhiveHtmlCss.CSS_VALIDATED_AT);
       eCreatedAt.addChild (_createLabelSpan (aLabels.get (EPhiveHtmlLabel.VALIDATED_AT)));
       eCreatedAt.addChild (_createValueSpan (sTimestamp));
@@ -464,10 +411,11 @@ public class PhiveHtmlHelper
                       _getSeverityValue (aMostSevere, aLabels));
       _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.WARNINGS), Integer.toString (nWarnings));
       _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.ERRORS), Integer.toString (nErrors));
-      if (m_nOverallDurationMillis >= 0)
+      if (aValidationResultList.hasValidationDuration ())
         _addLabelValue (eSummary,
                         aLabels.get (EPhiveHtmlLabel.DURATION),
-                        LocaleFormatter.getFormatted (m_nOverallDurationMillis, m_aDisplayLocale) +
+                        LocaleFormatter.getFormatted (aValidationResultList.getValidationDuration ().toMillis (),
+                                                      m_aDisplayLocale) +
                                                                 aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX));
       eContainer.addChild (eSummary);
     }
@@ -478,8 +426,10 @@ public class PhiveHtmlHelper
     {
       nLayerIndex++;
       final IValidationArtefact aVA = aVR.getValidationArtefact ();
-      final boolean bIsSkipped = aVR.isSkipped ();
-      final boolean bIsValid = !bIsSkipped && aVR.getErrorList ().containsNoError ();
+      final EExtendedValidity eValidity = aVR.getValidity ();
+
+      final boolean bIsSkipped = eValidity.isSkipped ();
+      final boolean bIsValid = !bIsSkipped && eValidity.isValid ();
 
       final String sResultCssClass;
       if (bIsSkipped)
@@ -553,10 +503,10 @@ public class PhiveHtmlHelper
         for (final IError aError : aVR.getErrorList ())
         {
           final String sItemCssClass;
-          if (_isConsideredError (aError.getErrorLevel ()))
+          if (PhiveSeverityHelper.isConsideredError (aError.getErrorLevel ()))
             sItemCssClass = CPhiveHtmlCss.CSS_ITEM_ERROR;
           else
-            if (_isConsideredWarning (aError.getErrorLevel ()))
+            if (PhiveSeverityHelper.isConsideredWarning (aError.getErrorLevel ()))
               sItemCssClass = CPhiveHtmlCss.CSS_ITEM_WARNING;
             else
               sItemCssClass = CPhiveHtmlCss.CSS_ITEM_SUCCESS;

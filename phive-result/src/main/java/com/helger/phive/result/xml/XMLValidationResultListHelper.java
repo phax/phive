@@ -25,11 +25,11 @@ import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.state.ETriState;
 import com.helger.base.string.StringHelper;
+import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
@@ -38,6 +38,7 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
@@ -158,18 +159,18 @@ public class XMLValidationResultListHelper
    *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
-   * @param nDurationMilliseconds
-   *        The duration of the validation in milliseconds. Must be &ge; 0.
    */
   public void applyTo (@NonNull final IMicroElement aResponse,
                        @NonNull final ValidationResultList aValidationResultList,
-                       @NonNull final Locale aDisplayLocale,
-                       @Nonnegative final long nDurationMilliseconds)
+                       @NonNull final Locale aDisplayLocale)
   {
     ValueEnforcer.notNull (aResponse, "Response");
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
-    ValueEnforcer.isGE0 (nDurationMilliseconds, "DurationMilliseconds");
+
+    // Added in 11.2.0
+    aResponse.addElement (PhiveXMLHelper.XML_VALIDATION_DATETIME)
+             .addText (PDTWebDateHelper.getAsStringXSD (aValidationResultList.getValidationDateTime ()));
 
     // Added in 10.1.0
     if (aValidationResultList.hasValidationSource () && m_aSourceToXML != null)
@@ -196,16 +197,16 @@ public class XMLValidationResultListHelper
 
       for (final ValidationResult aVR : aValidationResultList)
       {
-        if (aVR.isSkipped ())
+        final EExtendedValidity eValidity = aVR.getValidity ();
+        if (eValidity.isSkipped ())
         {
           bValidationInterrupted = true;
         }
         else
         {
           // Backwards compatible decision
-          final boolean bIsValid = aVR.getErrorList ().containsNoError ();
-          if (!bIsValid)
-            eWorstValidity = EExtendedValidity.INVALID;
+          if (eValidity.isInvalid ())
+            eWorstValidity = eValidity;
         }
 
         for (final IError aError : aVR.getErrorList ())
@@ -213,18 +214,18 @@ public class XMLValidationResultListHelper
           if (aError.getErrorLevel ().isGT (aMostSevere))
             aMostSevere = aError.getErrorLevel ();
 
-          if (PhiveResultHelper.isConsideredError (aError.getErrorLevel ()))
+          if (PhiveSeverityHelper.isConsideredError (aError.getErrorLevel ()))
             nErrors++;
           else
-            if (PhiveResultHelper.isConsideredWarning (aError.getErrorLevel ()))
+            if (PhiveSeverityHelper.isConsideredWarning (aError.getErrorLevel ()))
               nWarnings++;
         }
       }
 
       // Success if the worst that happened is a warning
       // This is an assumption atm
-      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS).addText (Boolean.toString (eWorstValidity.isValid ()));
-      aResponse.addElement (PhiveXMLHelper.XML_INTERRUPTED).addText (Boolean.toString (bValidationInterrupted));
+      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS).addText (eWorstValidity.isValid ());
+      aResponse.addElement (PhiveXMLHelper.XML_INTERRUPTED).addText (bValidationInterrupted);
       if (m_aErrorLevelToXML != null)
       {
         final String sErrorLevel = m_aErrorLevelToXML.apply (aMostSevere);
@@ -237,20 +238,22 @@ public class XMLValidationResultListHelper
     for (final ValidationResult aVR : aValidationResultList)
     {
       final IValidationArtefact aVA = aVR.getValidationArtefact ();
+      final EExtendedValidity eValidity = aVR.getValidity ();
 
       final IMicroElement aVRT = new MicroElement (PhiveXMLHelper.XML_RESULT);
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
-      if (aVR.isSkipped ())
+      if (eValidity.isSkipped ())
       {
         aVRT.addElement (PhiveXMLHelper.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (ETriState.UNDEFINED));
       }
       else
       {
         // Backwards compatible decision
-        final boolean bIsValid = aVR.getErrorList ().containsNoError ();
-        aVRT.addElement (PhiveXMLHelper.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (bIsValid));
+        aVRT.addElement (PhiveXMLHelper.XML_SUCCESS).addText (PhiveResultHelper.getTriStateValue (eValidity));
       }
+      aVRT.addElement (PhiveXMLHelper.XML_VALIDITY).addText (eValidity.getID ());
+
       aVRT.addElement (PhiveXMLHelper.XML_ARTIFACT_TYPE).addText (aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToXML != null)
       {
@@ -274,7 +277,9 @@ public class XMLValidationResultListHelper
     }
 
     // This is the end of the XML
-    aResponse.addElement (PhiveXMLHelper.XML_DURATION_MS).addText (Long.toString (nDurationMilliseconds));
+    if (aValidationResultList.hasValidationDuration ())
+      aResponse.addElement (PhiveXMLHelper.XML_DURATION_MS)
+               .addText (aValidationResultList.getValidationDuration ().toMillis ());
 
     // Set consumer values
     if (m_aWarningCount != null)

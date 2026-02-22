@@ -42,14 +42,14 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executor.AbstractValidationExecutor;
 import com.helger.phive.api.result.ValidationResult;
+import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.xml.sax.AbstractSAXErrorHandler;
 import com.helger.xml.schema.XMLSchemaCache;
 import com.helger.xml.schema.XMLSchemaValidationHelper;
 
 /**
- * Implementation of {@link AbstractValidationExecutor} for XML Schema
- * validation.
+ * Implementation of {@link AbstractValidationExecutor} for XML Schema validation.
  *
  * @author Philip Helger
  */
@@ -79,7 +79,9 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
   }
 
   @NonNull
-  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource, @Nullable final Locale aLocale)
+  public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource,
+                                           @NonNull final IValidityDeterminator <IValidationSourceXML> aValidityDeterminator,
+                                           @Nullable final Locale aLocale)
   {
     ValueEnforcer.notNull (aSource, "Source");
     final IValidationArtefact aVA = getValidationArtefact ();
@@ -100,10 +102,9 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     catch (final IllegalArgumentException ex)
     {
       // Happens when non-XML document is trying to be parsed
-      if (ex.getCause () instanceof SAXParseException)
+      if (ex.getCause () instanceof final SAXParseException aSaxParseEx)
       {
-        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR,
-                                                                  (SAXParseException) ex.getCause ()));
+        aErrorList.add (AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.FATAL_ERROR, aSaxParseEx));
       }
       else
       {
@@ -115,7 +116,9 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
       }
     }
     // Build result object
-    return createValidationResult (aErrorList, aSW.stopAndGetMillis ());
+    return createValidationResult (aErrorList,
+                                   aValidityDeterminator.getValidity (this, aErrorList),
+                                   aSW.stopAndGetMillis ());
   }
 
   @NonNull
@@ -152,8 +155,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    *
    * @param aXSDRes
    *        The XSD resource to use. May not be <code>null</code>.
-   * @return A new validator that uses the supplied resource for the filename
-   *         and uses {@link XMLSchemaCache} to resolve the XML Schema object.
+   * @return A new validator that uses the supplied resource for the filename and uses
+   *         {@link XMLSchemaCache} to resolve the XML Schema object.
    */
   @NonNull
   public static ValidationExecutorXSD create (@NonNull final IReadableResource aXSDRes)
@@ -167,8 +170,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    * Create a new instance based on one or more XSDs
    *
    * @param aXSDRes
-   *        The XSD resources to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XSD resources to use. May neither be <code>null</code> nor empty.
    * @return A new validator that uses the last resource for the filename uses
    *         {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4
@@ -187,8 +189,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
    * Create a new instance based on one or more XSDs
    *
    * @param aXSDRes
-   *        The XSD resources to use. May neither be <code>null</code> nor
-   *        empty.
+   *        The XSD resources to use. May neither be <code>null</code> nor empty.
    * @return A new validator that uses the last resource for the filename uses
    *         {@link XMLSchemaCache} to resolve the XML Schema object.
    * @since 6.0.4

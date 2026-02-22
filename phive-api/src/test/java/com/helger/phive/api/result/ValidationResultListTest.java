@@ -31,12 +31,14 @@ import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.SingleError;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.io.resource.inmemory.ReadableResourceByteArray;
+import com.helger.io.resource.inmemory.ReadableResourceString;
 import com.helger.phive.api.EValidationBaseType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.ValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.source.ValidationSourceBinary;
+import com.helger.phive.api.validity.EExtendedValidity;
 
 /**
  * Test class for class {@link ValidationResultList}.
@@ -54,7 +56,7 @@ public final class ValidationResultListTest
   @Test
   public void testEmpty ()
   {
-    final ValidationResultList aVRL = new ValidationResultList (null);
+    final ValidationResultList aVRL = ValidationResultList.createNoSource ();
     assertFalse (aVRL.hasValidationSource ());
     assertNull (aVRL.getValidationSource ());
 
@@ -91,7 +93,7 @@ public final class ValidationResultListTest
                                                             new ReadableResourceByteArray ("validation".getBytes (StandardCharsets.UTF_8)));
     final ErrorList aErrorList = new ErrorList ();
     aErrorList.add (SingleError.builderError ().errorText ("Something went wrong").build ());
-    assertTrue (aVRL.add (new ValidationResult (aVA, aErrorList, 42)));
+    assertTrue (aVRL.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 42)));
 
     assertFalse (aVRL.containsNoFailure ());
     assertFalse (aVRL.containsNoError ());
@@ -124,11 +126,10 @@ public final class ValidationResultListTest
     assertSame (aVS, aVRL.getValidationSource ());
 
     // Add warning to validation result list
-    final IValidationArtefact aVA = new ValidationArtefact (VT,
-                                                            new ReadableResourceByteArray ("validation".getBytes (StandardCharsets.UTF_8)));
+    final IValidationArtefact aVA = new ValidationArtefact (VT, ReadableResourceString.utf8 ("validation"));
     final ErrorList aErrorList = new ErrorList ();
     aErrorList.add (SingleError.builderWarn ().errorText ("Something went wrong").build ());
-    assertTrue (aVRL.add (new ValidationResult (aVA, aErrorList, 42)));
+    assertTrue (aVRL.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 42)));
 
     assertFalse (aVRL.containsNoFailure ());
     assertTrue (aVRL.containsNoError ());
