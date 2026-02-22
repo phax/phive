@@ -66,13 +66,13 @@ public final class PhiveResultHelper
   private PhiveResultHelper ()
   {}
 
-  @Deprecated (forRemoval = true, since = "11.2.0")
+  @Deprecated (forRemoval = true, since = "12.0.0")
   public static boolean isConsideredError (@NonNull final IErrorLevel aErrorLevel)
   {
     return PhiveSeverityHelper.isConsideredError (aErrorLevel);
   }
 
-  @Deprecated (forRemoval = true, since = "11.2.0")
+  @Deprecated (forRemoval = true, since = "12.0.0")
   public static boolean isConsideredWarning (@NonNull final IErrorLevel aErrorLevel)
   {
     return PhiveSeverityHelper.isConsideredWarning (aErrorLevel);

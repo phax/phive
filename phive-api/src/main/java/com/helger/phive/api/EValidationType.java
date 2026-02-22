@@ -52,7 +52,7 @@ public enum EValidationType implements IValidationType
   /**
    * Schematron implementation that must convert the SCH to XSLT v1 before validation
    *
-   * @since 11.2.0
+   * @since 12.0.0
    */
   SCHEMATRON_SCH_ISO_XSLT1 ("schematron-sch-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (SCH; ISO XSLT1)"),
 
@@ -64,7 +64,7 @@ public enum EValidationType implements IValidationType
   /**
    * Schematron validation to convert SCH to XSLT v1 with SchXslt v1
    *
-   * @since 11.2.0
+   * @since 12.0.0
    */
   SCHEMATRON_SCHXSLT1_XSLT1 ("schematron-schxslt-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (SchXslt1 XSLT1)"),
 
@@ -85,7 +85,7 @@ public enum EValidationType implements IValidationType
   /**
    * Schematron validation with a pre-build XSLT v1 file (e.g. from the Maven plugin)
    *
-   * @since 11.2.0
+   * @since 12.0.0
    */
   SCHEMATRON_XSLT1 ("schematron-xslt1", EValidationBaseType.SCHEMATRON, "Schematron (XSLT1)"),
 
@@ -97,7 +97,7 @@ public enum EValidationType implements IValidationType
   /**
    * Schematron validation with a pre-build XSLT v3 file (e.g. from the Maven plugin)
    *
-   * @since 11.2.0
+   * @since 12.0.0
    */
   SCHEMATRON_XSLT3 ("schematron-xslt3", EValidationBaseType.SCHEMATRON, "Schematron (XSLT3)"),
 
@@ -107,13 +107,13 @@ public enum EValidationType implements IValidationType
    */
   SCHEMATRON_OIOUBL ("schematron-xslt-oioubl", EValidationBaseType.SCHEMATRON, "Schematron (OIOUBL XSLT)");
 
-  @Deprecated (forRemoval = true, since = "11.2.0")
+  @Deprecated (forRemoval = true, since = "12.0.0")
   public static final EValidationType SCHEMATRON_SCH = SCHEMATRON_SCH_ISO_XSLT2;
-  @Deprecated (forRemoval = true, since = "11.2.0")
+  @Deprecated (forRemoval = true, since = "12.0.0")
   public static final EValidationType SCHEMATRON_SCHXSLT = SCHEMATRON_SCHXSLT1_XSLT2;
-  @Deprecated (forRemoval = true, since = "11.2.0")
+  @Deprecated (forRemoval = true, since = "12.0.0")
   public static final EValidationType SCHEMATRON_XSLT = SCHEMATRON_XSLT2;
-  @Deprecated (forRemoval = true, since = "11.2.0")
+  @Deprecated (forRemoval = true, since = "12.0.0")
   public static final EValidationType SCHEMATRON_SCHXSLT2 = SCHEMATRON_SCHXSLT2_XSLT3;
 
   private final String m_sID;

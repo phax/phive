@@ -40,7 +40,7 @@ import com.helger.phive.ves.v10.VesStatusType;
  * {@link IRepoVESTopTocService}.
  *
  * @author Philip Helger
- * @since 11.2.0
+ * @since 12.0.0
  */
 public class RepoVESTopTocAuditor implements IRepoStorageAuditor
 {

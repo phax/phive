@@ -103,7 +103,7 @@ public class ValidationResult
    * @return <code>true</code> if this validation result is based on a skipped validation layer,
    *         <code>false</code> otherwise.
    */
-  @Deprecated (forRemoval = true, since = "11.2.0")
+  @Deprecated (forRemoval = true, since = "12.0.0")
   public final boolean isSkipped ()
   {
     return m_eValidity.isSkipped ();

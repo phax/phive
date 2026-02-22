@@ -10,7 +10,7 @@ import com.helger.diagnostics.error.level.IErrorLevel;
  * Helper class to deal with severities.
  *
  * @author Philip Helger
- * @since 11.2.0
+ * @since 12.0.0
  */
 @Immutable
 public final class PhiveSeverityHelper

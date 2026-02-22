@@ -89,7 +89,7 @@ public final class PhiveJsonHelperTest
                                                                           ValidationExecutorSetStatus.createValidAt (aNow));
     final ValidationResultList aVRL = ValidationResultList.createNoSource ()
                                                           .setValidationDuration (Duration.ofMillis (123));
-    PhiveJsonHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, null, null);
+    PhiveJsonHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale);
     final String sJson = aObj.getAsJsonString ();
     assertEquals ("{\"validationDateTime\":\"" +
                   PDTWebDateHelper.getAsStringXSD (aVRL.getValidationDateTime ()) +
@@ -125,7 +125,7 @@ public final class PhiveJsonHelperTest
     // To JSON
     final Locale aDisplayLocale = Locale.US;
     final IJsonObject aObj = new JsonObject ();
-    PhiveJsonHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, null, null);
+    PhiveJsonHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale);
 
     // And back
     final IValidationExecutorSet <IValidationSourceXML> aVES2 = PhiveJsonHelper.getAsVES (aRegistry, aObj);
@@ -141,7 +141,7 @@ public final class PhiveJsonHelperTest
 
     // and forth
     final IJsonObject aObj2 = new JsonObject ();
-    PhiveJsonHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, null, null);
+    PhiveJsonHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale);
 
     assertEquals (aObj.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED),
                   aObj2.getAsJsonString (JsonWriterSettings.DEFAULT_SETTINGS_FORMATTED));

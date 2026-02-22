@@ -99,7 +99,7 @@ public final class PhiveXMLHelperTest
                                                                           ValidationExecutorSetStatus.createValidAt (aNow));
     final ValidationResultList aVRL = ValidationResultList.createNoSource ()
                                                           .setValidationDuration (Duration.ofMillis (123));
-    PhiveXMLHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, null, null);
+    PhiveXMLHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale);
     final String sXML = MicroWriter.getNodeAsString (aObj,
                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
     assertEquals ("<root>" +
@@ -144,7 +144,7 @@ public final class PhiveXMLHelperTest
     // To XML
     final Locale aDisplayLocale = Locale.US;
     final IMicroElement aObj = new MicroElement ("root");
-    PhiveXMLHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale, null, null);
+    PhiveXMLHelper.applyValidationResultList (aObj, aVES, aVRL, aDisplayLocale);
 
     // And back
     final IValidationExecutorSet <IValidationSourceXML> aVES2 = PhiveXMLHelper.getAsVES (aRegistry, aObj);
@@ -160,7 +160,7 @@ public final class PhiveXMLHelperTest
 
     // and forth
     final IMicroElement aObj2 = new MicroElement ("root");
-    PhiveXMLHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale, null, null);
+    PhiveXMLHelper.applyValidationResultList (aObj2, aVES2, aVRL2, aDisplayLocale);
 
     assertEquals (MicroWriter.getNodeAsString (aObj), MicroWriter.getNodeAsString (aObj2));
   }

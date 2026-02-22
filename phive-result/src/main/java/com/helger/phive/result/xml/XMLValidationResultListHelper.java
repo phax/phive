@@ -26,22 +26,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.state.ETriState;
 import com.helger.base.string.StringHelper;
 import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.diagnostics.error.IError;
-import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
 import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
-import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
+import com.helger.phive.result.summary.ValidationSummary;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
@@ -66,8 +64,6 @@ public class XMLValidationResultListHelper
   private BiFunction <IError, Locale, IMicroElement> m_aErrorToXML = (err, loc) -> PhiveXMLHelper.getXMLError (err,
                                                                                                                loc,
                                                                                                                PhiveXMLHelper.XML_ITEM);
-  private MutableInt m_aWarningCount;
-  private MutableInt m_aErrorCount;
 
   public XMLValidationResultListHelper ()
   {}
@@ -114,20 +110,6 @@ public class XMLValidationResultListHelper
     return this;
   }
 
-  @NonNull
-  public XMLValidationResultListHelper warningCount (@Nullable final MutableInt a)
-  {
-    m_aWarningCount = a;
-    return this;
-  }
-
-  @NonNull
-  public XMLValidationResultListHelper errorCount (@Nullable final MutableInt a)
-  {
-    m_aErrorCount = a;
-    return this;
-  }
-
   /**
    * Apply the results of a full validation onto a XML object.The layout of the response object is
    * very similar to the one created by
@@ -168,7 +150,7 @@ public class XMLValidationResultListHelper
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
-    // Added in 11.2.0
+    // Added in 12.0.0
     aResponse.addElement (PhiveXMLHelper.XML_VALIDATION_DATETIME)
              .addText (PDTWebDateHelper.getAsStringXSD (aValidationResultList.getValidationDateTime ()));
 
@@ -187,48 +169,16 @@ public class XMLValidationResultListHelper
         aResponse.addChild (eVES);
     }
 
-    int nWarnings = 0;
-    int nErrors = 0;
+    // Create summary
+    final ValidationSummary aSummary = ValidationSummary.create (aValidationResultList);
+
+    // Serialize
     {
-      // Calculate overalls
-      boolean bValidationInterrupted = false;
-      IErrorLevel aMostSevere = EErrorLevel.LOWEST;
-      EExtendedValidity eWorstValidity = EExtendedValidity.VALID;
-
-      for (final ValidationResult aVR : aValidationResultList)
-      {
-        final EExtendedValidity eValidity = aVR.getValidity ();
-        if (eValidity.isSkipped ())
-        {
-          bValidationInterrupted = true;
-        }
-        else
-        {
-          // Backwards compatible decision
-          if (eValidity.isInvalid ())
-            eWorstValidity = eValidity;
-        }
-
-        for (final IError aError : aVR.getErrorList ())
-        {
-          if (aError.getErrorLevel ().isGT (aMostSevere))
-            aMostSevere = aError.getErrorLevel ();
-
-          if (PhiveSeverityHelper.isConsideredError (aError.getErrorLevel ()))
-            nErrors++;
-          else
-            if (PhiveSeverityHelper.isConsideredWarning (aError.getErrorLevel ()))
-              nWarnings++;
-        }
-      }
-
-      // Success if the worst that happened is a warning
-      // This is an assumption atm
-      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS).addText (eWorstValidity.isValid ());
-      aResponse.addElement (PhiveXMLHelper.XML_INTERRUPTED).addText (bValidationInterrupted);
+      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS).addText (aSummary.getWorstValidity ().isValid ());
+      aResponse.addElement (PhiveXMLHelper.XML_INTERRUPTED).addText (aSummary.isValidationInterrupted ());
       if (m_aErrorLevelToXML != null)
       {
-        final String sErrorLevel = m_aErrorLevelToXML.apply (aMostSevere);
+        final String sErrorLevel = m_aErrorLevelToXML.apply (aSummary.getMostSevereErrorLevel ());
         if (StringHelper.isNotEmpty (sErrorLevel))
           aResponse.addElement (PhiveXMLHelper.XML_MOST_SEVERE_ERROR_LEVEL).addText (sErrorLevel);
       }
@@ -280,11 +230,5 @@ public class XMLValidationResultListHelper
     if (aValidationResultList.hasValidationDuration ())
       aResponse.addElement (PhiveXMLHelper.XML_DURATION_MS)
                .addText (aValidationResultList.getValidationDuration ().toMillis ());
-
-    // Set consumer values
-    if (m_aWarningCount != null)
-      m_aWarningCount.set (nWarnings);
-    if (m_aErrorCount != null)
-      m_aErrorCount.set (nErrors);
   }
 }

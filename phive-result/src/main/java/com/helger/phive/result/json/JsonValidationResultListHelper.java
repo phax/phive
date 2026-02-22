@@ -24,11 +24,9 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.base.numeric.mutable.MutableInt;
 import com.helger.base.state.ETriState;
 import com.helger.datetime.web.PDTWebDateHelper;
 import com.helger.diagnostics.error.IError;
-import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
 import com.helger.io.resource.IReadableResource;
 import com.helger.json.IJsonArray;
@@ -39,10 +37,10 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
-import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
+import com.helger.phive.result.summary.ValidationSummary;
 
 /**
  * A helper class that allows to heavily customize the creation of validation result list JSONs
@@ -60,8 +58,6 @@ public class JsonValidationResultListHelper
   private Function <IReadableResource, String> m_aArtifactPathTypeToJson = PhiveResultHelper::getArtifactPathType;
   private Function <IErrorLevel, String> m_aErrorLevelToJson = PhiveResultHelper::getErrorLevelValue;
   private BiFunction <IError, Locale, IJsonObject> m_aErrorToJson = PhiveJsonHelper::getJsonError;
-  private MutableInt m_aWarningCount;
-  private MutableInt m_aErrorCount;
 
   public JsonValidationResultListHelper ()
   {}
@@ -108,20 +104,6 @@ public class JsonValidationResultListHelper
     return this;
   }
 
-  @NonNull
-  public JsonValidationResultListHelper warningCount (@Nullable final MutableInt a)
-  {
-    m_aWarningCount = a;
-    return this;
-  }
-
-  @NonNull
-  public JsonValidationResultListHelper errorCount (@Nullable final MutableInt a)
-  {
-    m_aErrorCount = a;
-    return this;
-  }
-
   /**
    * Apply the results of a full validation onto a JSON object.The layout of the response object is
    * very similar to the one created by
@@ -162,7 +144,7 @@ public class JsonValidationResultListHelper
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
 
-    // Added in 11.2.0
+    // Added in 12.0.0
     aResponse.add (PhiveJsonHelper.JSON_VALIDATION_DATETIME,
                    PDTWebDateHelper.getAsStringXSD (aValidationResultList.getValidationDateTime ()));
 
@@ -176,12 +158,6 @@ public class JsonValidationResultListHelper
     if (m_aVES != null && m_aVESToJson != null)
       aResponse.addIfNotNull (PhiveJsonHelper.JSON_VES, m_aVESToJson.apply (m_aVES));
 
-    int nWarnings = 0;
-    int nErrors = 0;
-    boolean bValidationInterrupted = false;
-    IErrorLevel aMostSevere = EErrorLevel.LOWEST;
-    EExtendedValidity eWorstValidity = EExtendedValidity.VALID;
-
     final IJsonArray aResultArray = new JsonArray ();
     for (final ValidationResult aVR : aValidationResultList)
     {
@@ -191,17 +167,7 @@ public class JsonValidationResultListHelper
       final IJsonObject aVRT = new JsonObject ();
       // Success is only contained for backwards compatibility reasons. Validity
       // now does the trick
-      if (eValidity.isSkipped ())
-      {
-        bValidationInterrupted = true;
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (eValidity));
-      }
-      else
-      {
-        aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (eValidity));
-        if (eValidity.isInvalid ())
-          eWorstValidity = eValidity;
-      }
+      aVRT.add (PhiveJsonHelper.JSON_SUCCESS, PhiveResultHelper.getTriStateValue (eValidity));
       aVRT.add (PhiveJsonHelper.JSON_VALIDITY, eValidity.getID ());
       aVRT.add (PhiveJsonHelper.JSON_ARTIFACT_TYPE, aVA.getValidationType ().getID ());
       if (m_aArtifactPathTypeToJson != null)
@@ -212,15 +178,6 @@ public class JsonValidationResultListHelper
       final IJsonArray aItemArray = new JsonArray ();
       for (final IError aError : aVR.getErrorList ())
       {
-        if (aError.getErrorLevel ().isGT (aMostSevere))
-          aMostSevere = aError.getErrorLevel ();
-
-        if (PhiveSeverityHelper.isConsideredError (aError.getErrorLevel ()))
-          nErrors++;
-        else
-          if (PhiveSeverityHelper.isConsideredWarning (aError.getErrorLevel ()))
-            nWarnings++;
-
         if (m_aErrorToJson != null)
           aItemArray.add (m_aErrorToJson.apply (aError, aDisplayLocale));
       }
@@ -228,21 +185,17 @@ public class JsonValidationResultListHelper
       aVRT.add (PhiveJsonHelper.JSON_DURATION_MS, aVR.getDurationMS ());
       aResultArray.add (aVRT);
     }
-    // Success if the worst that happened is a warning
-    // This is an assumption atm
-    aResponse.add (PhiveJsonHelper.JSON_SUCCESS, eWorstValidity.isValid ());
-    aResponse.add (PhiveJsonHelper.JSON_INTERRUPTED, bValidationInterrupted);
+
+    // Create the summary elements
+    final ValidationSummary aSummary = ValidationSummary.create (aValidationResultList);
+    aResponse.add (PhiveJsonHelper.JSON_SUCCESS, aSummary.getWorstValidity ().isValid ());
+    aResponse.add (PhiveJsonHelper.JSON_INTERRUPTED, aSummary.isValidationInterrupted ());
     if (m_aErrorLevelToJson != null)
-      aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL, m_aErrorLevelToJson.apply (aMostSevere));
+      aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL,
+                              m_aErrorLevelToJson.apply (aSummary.getMostSevereErrorLevel ()));
     aResponse.add (PhiveJsonHelper.JSON_RESULTS, aResultArray);
 
     if (aValidationResultList.hasValidationDuration ())
       aResponse.add (PhiveJsonHelper.JSON_DURATION_MS, aValidationResultList.getValidationDuration ().toMillis ());
-
-    // Set consumer values
-    if (m_aWarningCount != null)
-      m_aWarningCount.set (nWarnings);
-    if (m_aErrorCount != null)
-      m_aErrorCount.set (nErrors);
   }
 }

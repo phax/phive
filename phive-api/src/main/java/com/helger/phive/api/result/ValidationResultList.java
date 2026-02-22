@@ -66,7 +66,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    *        The validation source that was used. May be <code>null</code>.
    * @param aValidationDT
    *        The date and time the validation took place. May be <code>null</code> to indicate "now".
-   * @since 11.2.0
+   * @since 12.0.0
    */
   public ValidationResultList (@Nullable final IValidationSource aSource, @Nullable final OffsetDateTime aValidationDT)
   {
@@ -95,7 +95,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
 
   /**
    * @return The date and time when the validation was executed. Never <code>null</code> .
-   * @since 11.2.0
+   * @since 12.0.0
    */
   @NonNull
   public final OffsetDateTime getValidationDateTime ()
@@ -105,7 +105,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
 
   /**
    * @return <code>true</code> if the validation duration is present, <code>false</code> if not.
-   * @since 11.2.0
+   * @since 12.0.0
    */
   @Nullable
   public final boolean hasValidationDuration ()
@@ -115,7 +115,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
 
   /**
    * @return The duration the validation execution took. May be <code>null</code>.
-   * @since 11.2.0
+   * @since 12.0.0
    */
   @Nullable
   public final Duration getValidationDuration ()
@@ -129,7 +129,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @param a
    *        The duration to set. May be <code>null</code>.
    * @return this for chaining
-   * @since 11.2.0
+   * @since 12.0.0
    */
   @NonNull
   public final ValidationResultList setValidationDuration (@Nullable final Duration a)

@@ -30,7 +30,7 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
  * Base interface for a VES specific top-level ToC
  *
  * @author Philip Helger
- * @since 11.2.0
+ * @since 12.0.0
  */
 public interface IRepoVESTopTocService
 {

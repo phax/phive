@@ -97,7 +97,7 @@ public final class PhiveJsonHelper
   public static final String JSON_EXCEPTION = "exception";
   public static final String JSON_TEST = "test";
 
-  // Added in 11.2.0
+  // Added in 12.0.0
   public static final String JSON_VALIDATION_DATETIME = "validationDateTime";
 
   // Added in 10.1.0
@@ -119,7 +119,7 @@ public final class PhiveJsonHelper
   public static final String JSON_STATUS_REPLACEMENT_VESID = "replacementVesid";
 
   public static final String JSON_SUCCESS = "success";
-  // Since 11.2.0
+  // Since 12.0.0
   public static final String JSON_VALIDITY = "validity";
   public static final String JSON_ARTIFACT_TYPE = "artifactType";
   public static final String JSON_ARTIFACT_PATH_TYPE = "artifactPathType";
@@ -584,24 +584,13 @@ public final class PhiveJsonHelper
    *        <code>null</code>.
    * @param aDisplayLocale
    *        The display locale to be used. May not be <code>null</code>.
-   * @param aWarningCount
-   *        Optional callback value to store the overall warnings. If not <code>null</code> if will
-   *        contain a &ge; 0 value afterwards.
-   * @param aErrorCount
-   *        Optional callback value to store the overall errors. If not <code>null</code> if will
-   *        contain a &ge; 0 value afterwards.
    */
   public static void applyValidationResultList (@NonNull final IJsonObject aResponse,
                                                 @Nullable final IValidationExecutorSet <?> aVES,
                                                 @NonNull final ValidationResultList aValidationResultList,
-                                                @NonNull final Locale aDisplayLocale,
-                                                @Nullable final MutableInt aWarningCount,
-                                                @Nullable final MutableInt aErrorCount)
+                                                @NonNull final Locale aDisplayLocale)
   {
-    new JsonValidationResultListHelper ().ves (aVES)
-                                         .warningCount (aWarningCount)
-                                         .errorCount (aErrorCount)
-                                         .applyTo (aResponse, aValidationResultList, aDisplayLocale);
+    new JsonValidationResultListHelper ().ves (aVES).applyTo (aResponse, aValidationResultList, aDisplayLocale);
   }
 
   @Nullable

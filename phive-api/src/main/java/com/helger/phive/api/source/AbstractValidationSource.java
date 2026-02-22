@@ -33,7 +33,7 @@ import com.helger.base.tostring.ToStringGenerator;
  * Abstract base class for {@link IValidationSource} implementations
  *
  * @author Philip Helger
- * @since 11.2.0
+ * @since 12.0.0
  */
 public abstract class AbstractValidationSource implements IValidationSource
 {

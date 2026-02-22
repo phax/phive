@@ -58,7 +58,7 @@ public interface IValidationExecutor <SOURCETYPE extends IValidationSource> exte
    * @param aSource
    *        Source to be validated. May not be <code>null</code>.
    * @param aValidityDeterminator
-   *        The validity determinator to be used. May not be <code>null</code>. Since 11.2.0
+   *        The validity determinator to be used. May not be <code>null</code>. Since 12.0.0
    * @param aLocale
    *        The locale to use for error messages if applicable. May be <code>null</code> in which
    *        case the system default locale is used.
