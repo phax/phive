@@ -1,4 +1,4 @@
-package com.helger.phive.result.summary;
+package com.helger.phive.api.result;
 
 import org.jspecify.annotations.NonNull;
 
@@ -8,8 +8,6 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.level.EErrorLevel;
 import com.helger.diagnostics.error.level.IErrorLevel;
-import com.helger.phive.api.result.ValidationResult;
-import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.validity.EExtendedValidity;
 
@@ -26,19 +24,16 @@ public final class ValidationSummary
   private final int m_nErrors;
   private final boolean m_bValidationInterrupted;
   private final IErrorLevel m_aMostSevere;
-  private final EExtendedValidity m_eWorstValidity;
 
   private ValidationSummary (@Nonnegative final int nWarnings,
                              @Nonnegative final int nErrors,
                              final boolean bValidationInterrupted,
-                             @NonNull final IErrorLevel aMostSevere,
-                             @NonNull final EExtendedValidity eWorstValidity)
+                             @NonNull final IErrorLevel aMostSevere)
   {
     m_nWarnings = nWarnings;
     m_nErrors = nErrors;
     m_bValidationInterrupted = bValidationInterrupted;
     m_aMostSevere = aMostSevere;
-    m_eWorstValidity = eWorstValidity;
   }
 
   @Nonnegative
@@ -65,12 +60,6 @@ public final class ValidationSummary
   }
 
   @NonNull
-  public EExtendedValidity getWorstValidity ()
-  {
-    return m_eWorstValidity;
-  }
-
-  @NonNull
   public static ValidationSummary create (@NonNull final ValidationResultList aValidationResultList)
   {
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
@@ -80,7 +69,6 @@ public final class ValidationSummary
     int nErrors = 0;
     boolean bValidationInterrupted = false;
     IErrorLevel aMostSevere = EErrorLevel.LOWEST;
-    EExtendedValidity eWorstValidity = EExtendedValidity.VALID;
 
     for (final ValidationResult aVR : aValidationResultList)
     {
@@ -88,12 +76,6 @@ public final class ValidationSummary
       if (eValidity.isSkipped ())
       {
         bValidationInterrupted = true;
-      }
-      else
-      {
-        // Backwards compatible decision
-        if (eValidity.isInvalid ())
-          eWorstValidity = eValidity;
       }
 
       for (final IError aError : aVR.getErrorList ())
@@ -109,6 +91,6 @@ public final class ValidationSummary
       }
     }
 
-    return new ValidationSummary (nWarnings, nErrors, bValidationInterrupted, aMostSevere, eWorstValidity);
+    return new ValidationSummary (nWarnings, nErrors, bValidationInterrupted, aMostSevere);
   }
 }

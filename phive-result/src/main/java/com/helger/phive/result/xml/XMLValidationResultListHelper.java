@@ -36,10 +36,10 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.result.ValidationSummary;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
-import com.helger.phive.result.summary.ValidationSummary;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
 
@@ -174,7 +174,8 @@ public class XMLValidationResultListHelper
 
     // Serialize
     {
-      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS).addText (aSummary.getWorstValidity ().isValid ());
+      aResponse.addElement (PhiveXMLHelper.XML_SUCCESS)
+               .addText (aValidationResultList.getOverallValidity ().isValid ());
       aResponse.addElement (PhiveXMLHelper.XML_INTERRUPTED).addText (aSummary.isValidationInterrupted ());
       if (m_aErrorLevelToXML != null)
       {

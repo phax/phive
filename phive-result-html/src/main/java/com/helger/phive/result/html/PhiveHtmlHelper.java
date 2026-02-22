@@ -43,6 +43,7 @@ import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.result.ValidationSummary;
 import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.text.locale.LocaleFormatter;
@@ -320,42 +321,12 @@ public class PhiveHtmlHelper
     ValueEnforcer.notNull (aTarget, "Target");
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
 
+    // More efficient accessor through local var
     final EnumMap <EPhiveHtmlLabel, String> aLabels = m_aLabels;
 
     // Calculate overalls
-    int nWarnings = 0;
-    int nErrors = 0;
-    boolean bValidationInterrupted = false;
-    IErrorLevel aMostSevere = EErrorLevel.LOWEST;
-    EExtendedValidity eWorstValidity = EExtendedValidity.VALID;
-
-    for (final ValidationResult aVR : aValidationResultList)
-    {
-      final EExtendedValidity eValidity = aVR.getValidity ();
-      if (eValidity.isSkipped ())
-      {
-        bValidationInterrupted = true;
-      }
-      else
-      {
-        if (eValidity.isInvalid ())
-          eWorstValidity = eValidity;
-      }
-
-      for (final IError aError : aVR.getErrorList ())
-      {
-        if (aError.getErrorLevel ().isGT (aMostSevere))
-          aMostSevere = aError.getErrorLevel ();
-
-        if (PhiveSeverityHelper.isConsideredError (aError.getErrorLevel ()))
-          nErrors++;
-        else
-          if (PhiveSeverityHelper.isConsideredWarning (aError.getErrorLevel ()))
-            nWarnings++;
-      }
-    }
-
-    final boolean bOverallSuccess = eWorstValidity.isValid ();
+    final ValidationSummary aSummary = ValidationSummary.create (aValidationResultList);
+    final boolean bOverallSuccess = aValidationResultList.getOverallValidity ().isValid ();
 
     // Outer container
     final IMicroElement eContainer = _createDiv (CPhiveHtmlCss.CSS_RESULTS);
@@ -404,13 +375,13 @@ public class PhiveHtmlHelper
                       aLabels.get (EPhiveHtmlLabel.OVERALL_RESULT),
                       bOverallSuccess ? aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS) : aLabels.get (
                                                                                                       EPhiveHtmlLabel.SEVERITY_ERROR));
-      if (bValidationInterrupted)
+      if (aSummary.isValidationInterrupted ())
         _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.INTERRUPTED), aLabels.get (EPhiveHtmlLabel.TRUE));
       _addLabelValue (eSummary,
                       aLabels.get (EPhiveHtmlLabel.HIGHEST_SEVERITY),
-                      _getSeverityValue (aMostSevere, aLabels));
-      _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.WARNINGS), Integer.toString (nWarnings));
-      _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.ERRORS), Integer.toString (nErrors));
+                      _getSeverityValue (aSummary.getMostSevereErrorLevel (), aLabels));
+      _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.WARNINGS), Integer.toString (aSummary.getWarningCount ()));
+      _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.ERRORS), Integer.toString (aSummary.getErrorCount ()));
       if (aValidationResultList.hasValidationDuration ())
         _addLabelValue (eSummary,
                         aLabels.get (EPhiveHtmlLabel.DURATION),

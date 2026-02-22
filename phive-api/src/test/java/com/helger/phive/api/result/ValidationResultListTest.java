@@ -93,7 +93,7 @@ public final class ValidationResultListTest
                                                             new ReadableResourceByteArray ("validation".getBytes (StandardCharsets.UTF_8)));
     final ErrorList aErrorList = new ErrorList ();
     aErrorList.add (SingleError.builderError ().errorText ("Something went wrong").build ());
-    assertTrue (aVRL.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 42)));
+    aVRL.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 42));
 
     assertFalse (aVRL.containsNoFailure ());
     assertFalse (aVRL.containsNoError ());
@@ -129,7 +129,7 @@ public final class ValidationResultListTest
     final IValidationArtefact aVA = new ValidationArtefact (VT, ReadableResourceString.utf8 ("validation"));
     final ErrorList aErrorList = new ErrorList ();
     aErrorList.add (SingleError.builderWarn ().errorText ("Something went wrong").build ());
-    assertTrue (aVRL.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 42)));
+    aVRL.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 42));
 
     assertFalse (aVRL.containsNoFailure ());
     assertTrue (aVRL.containsNoError ());

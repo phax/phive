@@ -37,10 +37,10 @@ import com.helger.phive.api.artefact.IValidationArtefact;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.result.ValidationSummary;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.phive.result.PhiveResultHelper;
-import com.helger.phive.result.summary.ValidationSummary;
 
 /**
  * A helper class that allows to heavily customize the creation of validation result list JSONs
@@ -188,7 +188,7 @@ public class JsonValidationResultListHelper
 
     // Create the summary elements
     final ValidationSummary aSummary = ValidationSummary.create (aValidationResultList);
-    aResponse.add (PhiveJsonHelper.JSON_SUCCESS, aSummary.getWorstValidity ().isValid ());
+    aResponse.add (PhiveJsonHelper.JSON_SUCCESS, aValidationResultList.getOverallValidity ().isValid ());
     aResponse.add (PhiveJsonHelper.JSON_INTERRUPTED, aSummary.isValidationInterrupted ());
     if (m_aErrorLevelToJson != null)
       aResponse.addIfNotNull (PhiveJsonHelper.JSON_MOST_SEVERE_ERROR_LEVEL,

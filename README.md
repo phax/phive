@@ -18,11 +18,11 @@ A live version of this engine can be found on [Peppol Practical](http://peppol.h
 This project has the following sub-modules:
 * **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
 * **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set.
-* **`phive-ves-repo`** (since v11.2.0) - contains phive specific extension for repository management with [ph-diver](https://github.com/phax/ph-diver)
+* **`phive-ves-repo`** (since v12.0.0) - contains phive specific extension for repository management with [ph-diver](https://github.com/phax/ph-diver)
 * **`phive-xml`** (previously `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
 * **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
-* **`phive-result-html`** - library to create standalone HTML validation result reports with translatable labels, custom CSS support, source data display, and an optional built-in stylesheet
+* **`phive-result-html`** (since v12.0.0) - library to create standalone HTML validation result reports with translatable labels, custom CSS support, source data display, and an optional built-in stylesheet
 
 Note: this library does NOT include an EDIFACT validation. It's a placeholder for local implementations.
 
@@ -149,6 +149,8 @@ v12.0.0 - 2026-02-22
 * Extracted new class `PhiveSeverityHelper`
 * Moved the determined "validity" into the class `ValidationResult` for persistence
 * Simplified the parameter list of `PhiveXMLHelper.applyValidationResultList`
+* `ValidationResultList` is no longer a CommonsArrayList but has a member list instead
+* Added new class `ValidationSummary`
 
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1
@@ -231,11 +233,11 @@ v9.0.0 - 2023-09-14
 * Moved classes `[I]ValidationSourceBinary` from `phive-xml` to `phive-api`
 * Renamed class `MockFile` to `TestFile`
 
-v9.0.0-beta2 - 2023-09-06 [don't use in production]
+v9.0.0-beta2 - 2023-09-06 (don't use in production)
 * Reworked the version handling inside class `VESID` so that a strict ordering by version is possible
 * Added specific support for the `SNAPSHOT` version, so that `1.0.0-SNAPSHOT` is lower then `1.0.0`
 
-v9.0.0-beta1 - 2023-08-30 [don't use in production]
+v9.0.0-beta1 - 2023-08-30 (don't use in production)
 * Removed `VOM*` in favour of `VES*`
 * Added new submodule "phive-repo" to be able to retrieve artefacts from remote storage locations
 * Added new submodule "phive-ves-model" that contain the VES data structures

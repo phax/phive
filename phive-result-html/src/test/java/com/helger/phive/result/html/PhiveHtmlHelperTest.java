@@ -18,6 +18,7 @@ package com.helger.phive.result.html;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -128,6 +129,7 @@ public final class PhiveHtmlHelperTest
 
     final ValidationResultList aVRL = _createEmptyVRL ();
     aVRL.add (aVR);
+    assertSame (EExtendedValidity.INVALID, aVRL.getOverallValidity ());
 
     final IMicroElement eBody = new MicroElement ("body");
     new PhiveHtmlHelper (aDisplayLocale).ves (aVES).applyTo (eBody, aVRL);

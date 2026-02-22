@@ -18,6 +18,7 @@ package com.helger.phive.api.result;
 
 import java.time.Duration;
 import java.time.OffsetDateTime;
+import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
@@ -30,10 +31,13 @@ import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
+import com.helger.collection.commons.ICommonsIterable;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.datetime.helper.PDTFactory;
 import com.helger.diagnostics.error.IError;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.phive.api.validity.EExtendedValidity;
 
 /**
  * A managed list of {@link ValidationResult} objects.
@@ -41,11 +45,16 @@ import com.helger.phive.api.source.IValidationSource;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class ValidationResultList extends CommonsArrayList <ValidationResult>
+public final class ValidationResultList implements ICommonsIterable <ValidationResult>
 {
+  private final ICommonsList <ValidationResult> m_aResults = new CommonsArrayList <> ();
   private final IValidationSource m_aSource;
   private final OffsetDateTime m_aValidationDT;
   private Duration m_aValidationDuration;
+  /**
+   * By default assume it is valid. Each ValidationResult added may change this.
+   */
+  private EExtendedValidity m_eValidity = EExtendedValidity.VALID;
 
   /**
    * Create a validation result list with an optional source.
@@ -78,7 +87,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @return <code>true</code> if a validation source is present, <code>false</code> if not
    * @since 10.1.0
    */
-  public final boolean hasValidationSource ()
+  public boolean hasValidationSource ()
   {
     return m_aSource != null;
   }
@@ -88,7 +97,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @since 10.1.0
    */
   @Nullable
-  public final IValidationSource getValidationSource ()
+  public IValidationSource getValidationSource ()
   {
     return m_aSource;
   }
@@ -98,9 +107,28 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @since 12.0.0
    */
   @NonNull
-  public final OffsetDateTime getValidationDateTime ()
+  public OffsetDateTime getValidationDateTime ()
   {
     return m_aValidationDT;
+  }
+
+  @Nonnegative
+  public int size ()
+  {
+    return m_aResults.size ();
+  }
+
+  public void add (@NonNull final ValidationResult aVR)
+  {
+    m_aResults.add (aVR);
+    if (aVR.getValidity ().isInvalid ())
+      m_eValidity = EExtendedValidity.INVALID;
+  }
+
+  @NonNull
+  public ValidationResult get (final int nIndex)
+  {
+    return m_aResults.get (nIndex);
   }
 
   /**
@@ -108,7 +136,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @since 12.0.0
    */
   @Nullable
-  public final boolean hasValidationDuration ()
+  public boolean hasValidationDuration ()
   {
     return m_aValidationDuration != null;
   }
@@ -118,7 +146,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @since 12.0.0
    */
   @Nullable
-  public final Duration getValidationDuration ()
+  public Duration getValidationDuration ()
   {
     return m_aValidationDuration;
   }
@@ -132,10 +160,20 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    * @since 12.0.0
    */
   @NonNull
-  public final ValidationResultList setValidationDuration (@Nullable final Duration a)
+  public ValidationResultList setValidationDuration (@Nullable final Duration a)
   {
     m_aValidationDuration = a;
     return this;
+  }
+
+  /**
+   * @return The overall validity. Never be <code>null</code>.
+   * @since 12.0.0
+   */
+  @NonNull
+  public EExtendedValidity getOverallValidity ()
+  {
+    return m_eValidity;
   }
 
   /**
@@ -143,7 +181,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    */
   public boolean containsNoFailure ()
   {
-    return containsNone (x -> x.getErrorList ().containsAtLeastOneFailure ());
+    return m_aResults.containsNone (x -> x.getErrorList ().containsAtLeastOneFailure ());
   }
 
   /**
@@ -151,7 +189,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    */
   public boolean containsNoError ()
   {
-    return containsNone (x -> x.getErrorList ().containsAtLeastOneError ());
+    return m_aResults.containsNone (x -> x.getErrorList ().containsAtLeastOneError ());
   }
 
   /**
@@ -160,7 +198,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    */
   public boolean containsAtLeastOneFailure ()
   {
-    return containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
+    return m_aResults.containsAny (x -> x.getErrorList ().containsAtLeastOneFailure ());
   }
 
   /**
@@ -169,7 +207,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
    */
   public boolean containsAtLeastOneError ()
   {
-    return containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
+    return m_aResults.containsAny (x -> x.getErrorList ().containsAtLeastOneError ());
   }
 
   /**
@@ -213,7 +251,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   public int getAllCount (@Nullable final Predicate <? super IError> aFilter)
   {
     int ret = 0;
-    for (final ValidationResult aItem : this)
+    for (final ValidationResult aItem : m_aResults)
       ret += aItem.getErrorList ().getCount (aFilter);
     return ret;
   }
@@ -229,7 +267,7 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   {
     ValueEnforcer.notNull (aConsumer, "Consumer");
 
-    for (final ValidationResult aItem : this)
+    for (final ValidationResult aItem : m_aResults)
       aItem.getErrorList ().forEach (aConsumer);
   }
 
@@ -247,18 +285,25 @@ public class ValidationResultList extends CommonsArrayList <ValidationResult>
   {
     ValueEnforcer.notNull (aConsumer, "Consumer");
 
-    for (final ValidationResult aItem : this)
+    for (final ValidationResult aItem : m_aResults)
       aItem.getErrorList ().findAll (aFilter, aConsumer);
+  }
+
+  @NonNull
+  public Iterator <ValidationResult> iterator ()
+  {
+    return m_aResults.iterator ();
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("Source", m_aSource)
-                            .append ("ValidationDT", m_aValidationDT)
-                            .append ("ValidationDuration", m_aValidationDuration)
-                            .getToString ();
+    return new ToStringGenerator (null).append ("Results", m_aResults)
+                                       .append ("Source", m_aSource)
+                                       .append ("ValidationDT", m_aValidationDT)
+                                       .append ("ValidationDuration", m_aValidationDuration)
+                                       .append ("Validity", m_eValidity)
+                                       .getToString ();
   }
 
   @NonNull
