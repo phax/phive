@@ -28,6 +28,7 @@ import com.helger.io.resource.ClassPathResource;
  * Contains the version constants of phive.
  *
  * @author Philip Helger
+ * @since 11.2.0
  */
 @Immutable
 public final class CPhiveVersion

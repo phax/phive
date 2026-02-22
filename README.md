@@ -136,13 +136,14 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 v11.2.0 - 2026-02-22
 * Updated to ph-diver 4.2.0
+* The resulting JAR files are no longer provided as OSGI bundles
+* Created new submodule `phive-ves-repo` to contain a specific top-level table of contents for validation artefacts. See [#29](https://github.com/phax/phive/issues/29)
+* Created new submodule `phive-result-html` for generating standalone HTML validation result reports
 * Extended VES Status with optional `displayName` element. See [#30](https://github.com/phax/phive/issues/30)
 * Extended `EValidationType` with XSLT v1 specific enums
 * Renamed some `EvalidationType` enums to be more precise
-* Created new submodule `phive-ves-repo` to contain a specific top-level table of contents for validation artefacts. See [#29](https://github.com/phax/phive/issues/29)
-* The resulting JAR files are no longer provided as OSGI bundles
-* Created new submodule `phive-result-html` for generating standalone HTML validation result reports
 * Extracted class `AbstractionValidationSource`
+* Added new class `CPhiveVersion`
 
 v11.1.1 - 2025-12-10
 * Updated to ph-schematron 9.1.1
