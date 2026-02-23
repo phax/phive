@@ -134,6 +134,9 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v12.0.1 - work in progress
+* Improved Validation result HTML default CSS to handle long values better 
+
 v12.0.0 - 2026-02-22
 * Updated to ph-diver 4.2.0
 * The resulting JAR files are no longer provided as OSGI bundles

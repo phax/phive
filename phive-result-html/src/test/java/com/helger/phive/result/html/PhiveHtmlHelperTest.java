@@ -504,8 +504,14 @@ public final class PhiveHtmlHelperTest
       final ErrorList aErrorList = new ErrorList ();
       aErrorList.add (SingleError.builderError ()
                                  .errorID ("SCH-01")
-                                 .errorText ("Rule violated")
-                                 .errorLocation (new SimpleLocation ("doc.xml", 3, 27))
+                                 .errorText ("[SAX] cvc-complex-type.2.4.b: Content des Elements 'rsm:ExchangedDo\n" +
+                                             "\"urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessinfol\n" +
+                                             "\"urn:un:unece: uncefact: data standard:ReusableAggregateBusinessinforn\n" +
+                                             "\"urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessinforr\n" +
+                                             "wird erwartet.")
+                                 .errorLocation (new SimpleLocation ("file:///C:/data/anywhere/GitHub/nexus-e-invoice-inbound/target/azure-functions/nexus-e-invoice-inbound-1764342750985/string-22755--1337810674",
+                                                                     1,
+                                                                     1191))
                                  .build ());
       final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 4321);
       final ValidationResultList aVRL = _createEmptyVRL ();

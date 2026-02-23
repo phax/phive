@@ -248,6 +248,8 @@ public final class CPhiveHtmlCss
         border: 1px solid var(--phive-color-border);
         padding: 5px 10px;
         vertical-align: top;
+        overflow-wrap: break-word;
+        word-break: break-word;
       }
       .phive-item-error {
         background: var(--phive-color-bg-error-row);
@@ -278,7 +280,7 @@ public final class CPhiveHtmlCss
       }
       .phive-error-location {
         font-family: var(--phive-font-mono);
-        white-space: nowrap;
+        word-break: break-all;
       }
       .phive-error-test {
         font-family: var(--phive-font-mono);
