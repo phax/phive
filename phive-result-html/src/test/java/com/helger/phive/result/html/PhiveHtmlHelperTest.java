@@ -474,11 +474,30 @@ public final class PhiveHtmlHelperTest
     final ValidationResultList aVRL = _createEmptyVRL ();
     aVRL.add (aVR);
 
-    final String sSourceData = "<invoice>\n" + "  <id>123</id>\n" + "  <total>100.00</total>\n" + "</invoice>";
+    final String sSourceData = """
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!-- This example demonstrates an invoice in Australia that has additional freight charges included at the document level of the invoice -->
+        <Invoice xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2">
+            <cbc:CustomizationID>urn:peppol:pint:billing-1@aunz-1</cbc:CustomizationID>
+            <cbc:ProfileID>urn:peppol:bis:billing</cbc:ProfileID>
+            <cbc:ID>12345554</cbc:ID>
+            <cbc:IssueDate>2021-09-10</cbc:IssueDate>
+            <cbc:DueDate>2021-10-30</cbc:DueDate>
+            <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+            <cbc:Note>Freight Terms</cbc:Note>
+            <cbc:DocumentCurrencyCode>AUD</cbc:DocumentCurrencyCode>
+            <cbc:AccountingCost>4025:123:4343</cbc:AccountingCost>
+            <cbc:BuyerReference>Your reference 123</cbc:BuyerReference>
+               <cac:OrderReference>
+               <cbc:ID>PurchaseOrderReference</cbc:ID>
+            </cac:OrderReference>
+        </Invoice>""";
 
     final String sHtml = new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
                                                              .sourceData (sSourceData)
                                                              .useDefaultCSS ()
+                                                             // .addCssInline (".phive-source-table
+                                                             // { font-size: 20pt !important;}")
                                                              .createHtml (aVRL,
                                                                           new XMLWriterSettings ().setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
 
