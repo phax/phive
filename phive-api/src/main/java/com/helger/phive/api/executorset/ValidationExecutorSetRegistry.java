@@ -289,7 +289,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
                                                                        final boolean bIncludeSnapshots,
                                                                        @Nullable final OffsetDateTime aCheckDateTime)
   {
-    // Sorted by key
+    // Sorted by key (latest version comes first)
     final ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aMatching = _getAllMatchingVES (sGroupID,
                                                                                                                     sArtifactID,
                                                                                                                     DVRVersion.getStaticVersionAcceptor (aVersionsToIgnore,
