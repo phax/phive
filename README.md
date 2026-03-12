@@ -134,8 +134,9 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v12.0.1 - work in progress
-* Improved Validation result HTML default CSS to handle long values better 
+v12.0.1 - 2026-03-12
+* Improved Validation result HTML default CSS to handle long values better
+* Removed the displayname from the VES Status again, as it is already contained in the VES itself
 
 v12.0.0 - 2026-02-22
 * Updated to ph-diver 4.2.0
