@@ -397,9 +397,6 @@ public final class PhiveJsonHelper
     final IJsonObject aStatusJson = new JsonObject ().add (CPhiveJson.JSON_STATUS_LAST_MODIFICATION,
                                                            PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()))
                                                      .add (CPhiveJson.JSON_STATUS_TYPE, aStatus.getType ().getID ())
-                                                     // Added in 12.0.0
-                                                     .addIfNotEmpty (CPhiveJson.JSON_STATUS_DISPLAY_NAME,
-                                                                     aStatus.getDisplayName ())
                                                      .addIfNotNull (CPhiveJson.JSON_STATUS_VALID_FROM,
                                                                     PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()))
                                                      .addIfNotNull (CPhiveJson.JSON_STATUS_VALID_TO,

@@ -75,8 +75,6 @@ public final class VESStatus1Helper
         else
           eType = EValidationExecutorStatusType.VALID;
 
-    final String sDisplayName = aVESStatus.getDisplayName ();
-
     // Is a replacement ID present?
     DVRCoordinate aReplacementVESID = null;
     if (aVESStatus.getReplacement () != null)
@@ -105,7 +103,6 @@ public final class VESStatus1Helper
 
     return new ValidationExecutorSetStatus (_toODT (aVESStatus.getStatusLastModified ()),
                                             eType,
-                                            sDisplayName,
                                             aValidFrom,
                                             aValidTo,
                                             aVESStatus.getDeprecationReason (),

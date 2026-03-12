@@ -42,7 +42,6 @@ public final class ValidationExecutorSetStatusTest
     final ValidationExecutorSetStatus aStatus = ValidationExecutorSetStatus.createValidAt (aNow);
     assertEquals (aNow, aStatus.getStatusLastModification ());
     assertSame (EValidationExecutorStatusType.VALID, aStatus.getType ());
-    assertNull (aStatus.getDisplayName ());
     assertNull (aStatus.getValidFrom ());
     assertNull (aStatus.getValidTo ());
     assertNull (aStatus.getDeprecationReason ());

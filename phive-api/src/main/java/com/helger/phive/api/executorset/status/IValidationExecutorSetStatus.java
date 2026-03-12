@@ -62,6 +62,7 @@ public interface IValidationExecutorSetStatus
    * @return <code>true</code> if a display name is present, <code>false</code> otherwise.
    * @since 12.0.0
    */
+  @Deprecated (forRemoval = true, since = "12.0.1")
   default boolean hasDisplayName ()
   {
     return StringHelper.isNotEmpty (getDisplayName ());
@@ -72,7 +73,11 @@ public interface IValidationExecutorSetStatus
    * @since 12.0.0
    */
   @Nullable
-  String getDisplayName ();
+  @Deprecated (forRemoval = true, since = "12.0.1")
+  default String getDisplayName ()
+  {
+    return null;
+  }
 
   default boolean hasValidFrom ()
   {

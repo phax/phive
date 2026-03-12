@@ -73,14 +73,32 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
   private static final class Item
   {
     private final DVRCoordinate m_aCoord;
-    private final boolean m_bDeprecated;
-    private final String m_sDisplayName;
+    private boolean m_bDeprecated;
+    private String m_sDisplayName;
 
     public Item (@NonNull final DVRCoordinate aCoord, final boolean bDeprecated, @Nullable final String sDisplayName)
     {
       m_aCoord = aCoord;
       m_bDeprecated = bDeprecated;
       m_sDisplayName = sDisplayName;
+    }
+
+    @NonNull
+    EChange setDeprecated (final boolean b)
+    {
+      if (b == m_bDeprecated)
+        return EChange.UNCHANGED;
+      m_bDeprecated = b;
+      return EChange.CHANGED;
+    }
+
+    @NonNull
+    EChange setDisplayName (@Nullable final String s)
+    {
+      if (EqualsHelper.equals (m_sDisplayName, s))
+        return EChange.UNCHANGED;
+      m_sDisplayName = s;
+      return EChange.CHANGED;
     }
 
     @Override
@@ -104,6 +122,12 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
                                          .append (m_sDisplayName)
                                          .getHashCode ();
     }
+
+    @NonNull
+    public static Item createDefault (@NonNull final DVRCoordinate aCoord)
+    {
+      return new Item (aCoord, DEFAULT_DEPRECATED, null);
+    }
   }
 
   /**
@@ -116,19 +140,36 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
   {
     private final CommonsConcurrentHashMap <String, Item> m_aItems = new CommonsConcurrentHashMap <> ();
 
-    @NonNull
-    private EChange _update (@NonNull final Item aNewItem)
+    private EChange _update (@NonNull final DVRCoordinate aCoord,
+                             @NonNull final Function <? super Item, EChange> aItemModifier)
     {
-      ValueEnforcer.notNull (aNewItem, "Item");
+      ValueEnforcer.notNull (aCoord, "Coord");
+      ValueEnforcer.isFalse (aCoord.hasClassifier (), "Coordinates are not allowed to have a Classifier");
+      ValueEnforcer.notNull (aItemModifier, "ItemModifier");
 
-      final String sKey = aNewItem.m_aCoord.getAsSingleID ();
+      final String sKey = aCoord.getAsSingleID ();
 
-      final Item aOldItem = m_aItems.get (sKey);
-      if (aOldItem != null && aOldItem.equals (aNewItem))
-        return EChange.UNCHANGED;
+      final Item aItem = m_aItems.computeIfAbsent (sKey, k -> Item.createDefault (aCoord));
+      return aItemModifier.apply (aItem);
+    }
 
-      m_aItems.put (sKey, aNewItem);
-      return EChange.CHANGED;
+    @NonNull
+    public EChange create (@NonNull final DVRCoordinate aCoord)
+    {
+      return _update (aCoord, x -> EChange.CHANGED);
+    }
+
+    @NonNull
+    public EChange updateStatus (@NonNull final DVRCoordinate aCoord,
+                                 @NonNull final IValidationExecutorSetStatus aStatus)
+    {
+      return _update (aCoord, x -> x.setDeprecated (aStatus.isDeprecated ()));
+    }
+
+    @NonNull
+    public EChange updateDisplayName (@NonNull final DVRCoordinate aCoord, @Nullable final String sDisplayName)
+    {
+      return _update (aCoord, x -> x.setDisplayName (sDisplayName));
     }
 
     @NonNull
@@ -136,17 +177,7 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
                            final boolean bDeprecated,
                            @Nullable final String sDisplayName)
     {
-      ValueEnforcer.notNull (aCoord, "Coord");
-      ValueEnforcer.isFalse (aCoord.hasClassifier (), "Coordinates are not allowed to have a Classifier");
-
-      return _update (new Item (aCoord, bDeprecated, sDisplayName));
-    }
-
-    @NonNull
-    public EChange updateStatus (@NonNull final DVRCoordinate aCoord,
-                                 @NonNull final IValidationExecutorSetStatus aStatus)
-    {
-      return update (aCoord, aStatus.isDeprecated (), aStatus.getDisplayName ());
+      return _update (aCoord, x -> x.setDeprecated (bDeprecated).or (x.setDisplayName (sDisplayName)));
     }
 
     @NonNull
@@ -333,7 +364,7 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
     ValueEnforcer.notNull (aCoord, "Coord");
     _checkInited ();
 
-    return _writeActionOnToc (toc -> toc.update (aCoord, DEFAULT_DEPRECATED, null));
+    return _writeActionOnToc (toc -> toc.create (aCoord));
   }
 
   public @NonNull ESuccess deleteVES (@NonNull final DVRCoordinate aCoord)

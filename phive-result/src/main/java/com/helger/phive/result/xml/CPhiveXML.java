@@ -58,6 +58,7 @@ public final class CPhiveXML
   public static final String XML_STATUS_LAST_MODIFICATION = "lastModification";
   public static final String XML_STATUS_TYPE = "type";
   // Since 12.0.0
+  @Deprecated (forRemoval = true, since = "12.0.1")
   public static final String XML_STATUS_DISPLAY_NAME = "displayName";
   public static final String XML_STATUS_VALID_FROM = "validFrom";
   public static final String XML_STATUS_VALID_TO = "validTo";

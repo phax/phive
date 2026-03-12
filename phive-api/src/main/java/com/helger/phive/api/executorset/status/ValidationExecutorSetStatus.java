@@ -47,7 +47,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
 {
   private final OffsetDateTime m_aStatusLastModDT;
   private final EValidationExecutorStatusType m_eType;
-  private final String m_sDisplayName;
   private final OffsetDateTime m_aValidFrom;
   private final OffsetDateTime m_aValidTo;
   private final String m_sDeprecationReason;
@@ -56,7 +55,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
 
   public ValidationExecutorSetStatus (@NonNull final OffsetDateTime aStatusLastModDT,
                                       @NonNull final EValidationExecutorStatusType eType,
-                                      @Nullable final String sDisplayName,
                                       @Nullable final OffsetDateTime aValidFrom,
                                       @Nullable final OffsetDateTime aValidTo,
                                       @Nullable final String sDeprecationReason,
@@ -68,7 +66,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
 
     m_aStatusLastModDT = PDTFactory.getWithMillisOnly (aStatusLastModDT);
     m_eType = eType;
-    m_sDisplayName = sDisplayName;
     m_aValidFrom = PDTFactory.getWithMillisOnly (aValidFrom);
     m_aValidTo = PDTFactory.getWithMillisOnly (aValidTo);
     m_sDeprecationReason = sDeprecationReason;
@@ -86,12 +83,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   public final EValidationExecutorStatusType getType ()
   {
     return m_eType;
-  }
-
-  @Nullable
-  public final String getDisplayName ()
-  {
-    return m_sDisplayName;
   }
 
   @Nullable
@@ -146,7 +137,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     final ValidationExecutorSetStatus rhs = (ValidationExecutorSetStatus) o;
     return m_aStatusLastModDT.equals (rhs.m_aStatusLastModDT) &&
            m_eType.equals (rhs.m_eType) &&
-           EqualsHelper.equals (m_sDisplayName, rhs.m_sDisplayName) &&
            EqualsHelper.equals (m_aValidFrom, rhs.m_aValidFrom) &&
            EqualsHelper.equals (m_aValidTo, rhs.m_aValidTo) &&
            EqualsHelper.equals (m_sDeprecationReason, rhs.m_sDeprecationReason) &&
@@ -159,7 +149,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     // History items are not contained on purpose
     return new HashCodeGenerator (this).append (m_aStatusLastModDT)
                                        .append (m_eType)
-                                       .append (m_sDisplayName)
                                        .append (m_aValidFrom)
                                        .append (m_aValidTo)
                                        .append (m_sDeprecationReason)
@@ -172,7 +161,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   {
     return new ToStringGenerator (null).append ("StatusLastModDT", m_aStatusLastModDT)
                                        .append ("Type", m_eType)
-                                       .append ("DisplayName", m_sDisplayName)
                                        .append ("ValidFrom", m_aValidFrom)
                                        .append ("ValidTo", m_aValidTo)
                                        .append ("DeprecationReason", m_sDeprecationReason)
@@ -206,7 +194,6 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
     return new ValidationExecutorSetStatus (aStatusLastModDT,
                                             bDeprecated ? EValidationExecutorStatusType.DEPRECATED
                                                         : EValidationExecutorStatusType.VALID,
-                                            (String) null,
                                             (OffsetDateTime) null,
                                             (OffsetDateTime) null,
                                             (String) null,

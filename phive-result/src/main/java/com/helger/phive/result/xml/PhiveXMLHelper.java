@@ -422,11 +422,6 @@ public final class PhiveXMLHelper
     ret.addElement (CPhiveXML.XML_STATUS_LAST_MODIFICATION)
        .addText (PDTWebDateHelper.getAsStringXSD (aStatus.getStatusLastModification ()));
     ret.addElement (CPhiveXML.XML_STATUS_TYPE).addText (aStatus.getType ().getID ());
-    if (aStatus.hasDisplayName ())
-    {
-      // Added in 12.0.0
-      ret.addElement (CPhiveXML.XML_STATUS_DISPLAY_NAME).addText (aStatus.getDisplayName ());
-    }
     if (aStatus.hasValidFrom ())
       ret.addElement (CPhiveXML.XML_STATUS_VALID_FROM)
          .addText (PDTWebDateHelper.getAsStringXSD (aStatus.getValidFrom ()));
