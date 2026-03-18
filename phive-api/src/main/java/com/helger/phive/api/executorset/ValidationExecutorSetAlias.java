@@ -57,7 +57,7 @@ public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> i
   {
     ValueEnforcer.notNull (aVESID, "ID");
     ValueEnforcer.notEmpty (sDisplayName, "DisplayName");
-    ValueEnforcer.notNull (aVES, "Status");
+    ValueEnforcer.notNull (aVES, "VES");
     m_aVESID = aVESID;
     m_sDisplayName = sDisplayName;
     m_aVES = aVES;
