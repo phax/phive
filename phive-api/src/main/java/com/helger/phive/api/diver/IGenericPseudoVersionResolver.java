@@ -49,7 +49,7 @@ public interface IGenericPseudoVersionResolver <RESULTTYPE>
    *        An optional set of Version numbers not to consider. This may be used
    *        to exclude certain versions from being returned. May be
    *        <code>null</code>.
-   * @param aCheckDateTim
+   * @param aCheckDateTime
    *        The effective date for which a check should be performed. May be
    *        <code>null</code> to indicate "current date time".
    * @return <code>null</code> if resolution fails
@@ -59,5 +59,5 @@ public interface IGenericPseudoVersionResolver <RESULTTYPE>
                                    @NonNull @Nonempty String sGroupID,
                                    @NonNull @Nonempty String sArtifactID,
                                    @Nullable Set <String> aVersionsToIgnore,
-                                   @Nullable OffsetDateTime aCheckDateTim);
+                                   @Nullable OffsetDateTime aCheckDateTime);
 }
