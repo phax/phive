@@ -141,7 +141,7 @@ public class ValidationExecutorXSDPartial extends
     if (m_aPartialContext.hasMaxNodeCount ())
       if (nMatchingNodes > m_aPartialContext.getMaxNodeCount ())
       {
-        // Too little matches found
+        // Too many matches found
         aErrorList.add (SingleError.builderFatalError ()
                                    .errorLocation (aVA.getRuleResourcePath ())
                                    .errorText ("The maximum number of result nodes (" +
