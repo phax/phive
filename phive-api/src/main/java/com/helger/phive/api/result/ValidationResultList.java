@@ -120,13 +120,34 @@ public final class ValidationResultList implements ICommonsIterable <ValidationR
 
   public void add (@NonNull final ValidationResult aVR)
   {
+    ValueEnforcer.notNull (aVR, "ValidationResult");
+
     m_aResults.add (aVR);
     if (aVR.getValidity ().isInvalid ())
       m_eValidity = EExtendedValidity.INVALID;
   }
 
+  /**
+   * Add a validation result at a specific index
+   *
+   * @param nIndex
+   *        The index to add at. Must be &ge; 0.
+   * @param aVR
+   *        The object to add. May not be <code>null</code>.
+   * @since 12.0.2
+   */
+  public void addAt (@Nonnegative final int nIndex, @NonNull final ValidationResult aVR)
+  {
+    ValueEnforcer.isGE0 (nIndex, "Index");
+    ValueEnforcer.notNull (aVR, "ValidationResult");
+
+    m_aResults.add (nIndex, aVR);
+    if (aVR.getValidity ().isInvalid ())
+      m_eValidity = EExtendedValidity.INVALID;
+  }
+
   @NonNull
-  public ValidationResult get (final int nIndex)
+  public ValidationResult get (@Nonnegative final int nIndex)
   {
     return m_aResults.get (nIndex);
   }
