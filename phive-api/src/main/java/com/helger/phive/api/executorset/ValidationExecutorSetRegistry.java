@@ -464,7 +464,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     }
     if (ret.isChanged ())
       if (LOGGER.isDebugEnabled ())
-        LOGGER.debug ("Successfully removed all validatione executor sets" +
+        LOGGER.debug ("Successfully removed all validation executor sets" +
                       (bCleanVES ? " and cleaned all VES." : "."));
     return ret;
   }
