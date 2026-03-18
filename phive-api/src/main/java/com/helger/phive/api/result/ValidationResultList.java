@@ -156,7 +156,6 @@ public final class ValidationResultList implements ICommonsIterable <ValidationR
    * @return <code>true</code> if the validation duration is present, <code>false</code> if not.
    * @since 12.0.0
    */
-  @Nullable
   public boolean hasValidationDuration ()
   {
     return m_aValidationDuration != null;
