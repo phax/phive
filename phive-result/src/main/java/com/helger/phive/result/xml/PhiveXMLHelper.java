@@ -626,6 +626,7 @@ public final class PhiveXMLHelper
                                                                 @NonNull final IValidationSourceRestorer aValidationSourceRestorer)
   {
     ValueEnforcer.notNull (aValidationTypeResolver, "ValidationTypeResolver");
+    ValueEnforcer.notNull (aValidationSourceRestorer, "ValidationSourceRestorer");
 
     if (aXML == null)
       return null;

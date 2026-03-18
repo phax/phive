@@ -171,7 +171,7 @@ public final class PhiveResultHelper
   @NonNull
   public static String getTriStateValue (@NonNull final EExtendedValidity eValidity)
   {
-    ValueEnforcer.notNull (eValidity, "TriState");
+    ValueEnforcer.notNull (eValidity, "Validity");
 
     if (eValidity.isUndefined ())
       return VALUE_TRISTATE_UNDEFINED;
