@@ -335,10 +335,7 @@ public class VesXmlBuilder
    * Add a Schematron validation executor.
    *
    * @param aSchematron
-   *        The Schematron executor, typically created via
-   *        {@link PhiveRulesUBLHelper#createXSLT_UBL21(IReadableResource)},
-   *        {@link PhiveRulesCIIHelper#createXSLT_CII_D16B(IReadableResource)} or similar helper
-   *        methods. May not be <code>null</code>.
+   *        The Schematron executor. May not be <code>null</code>.
    * @return this for chaining
    */
   @NonNull
