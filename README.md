@@ -136,8 +136,9 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v12.0.2 - work in progress
+v12.0.2 - 2026-04-02
 * Added new method `ValidationResultList.addAt`
+* Added new class `VesXmlBuilder` to build `ValidationExecutorSet <IValidationSourceXML>` more fluently
 
 v12.0.1 - 2026-03-12
 * Improved Validation result HTML default CSS to handle long values better
