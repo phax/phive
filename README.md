@@ -136,6 +136,10 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v12.0.3 - work in progress
+* Added new class `ValidationExecutorSchematronBuilder` as a fluent builder for `ValidationExecutorSchematron`
+* Fixed SVRL generation for partial validation sources (child nodes) in XSLT-based Schematron validation. When validating a node extracted from an envelope (e.g. SBDH unwrap) via `ValidationSourceXML.createPartial`, the XSLT transformation now receives a proper Document node.
+
 v12.0.2 - 2026-04-02
 * Added new method `ValidationResultList.addAt`
 * Added new class `VesXmlBuilder` to build `ValidationExecutorSet <IValidationSourceXML>` more fluently
