@@ -20,9 +20,11 @@ import javax.xml.transform.Source;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 import com.helger.phive.api.source.IValidationSource;
+import com.helger.xml.XMLFactory;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.transform.TransformSourceFactory;
 
@@ -57,7 +59,22 @@ public interface IValidationSourceXML extends IValidationSource
 
     final Source ret;
     if (isPartialSource ())
-      ret = TransformSourceFactory.create (aNode);
+    {
+      if (aNode instanceof Document)
+      {
+        // Already a Document - use as-is
+        ret = TransformSourceFactory.create (aNode);
+      }
+      else
+      {
+        // Child element (e.g. unwrapped from an SBDH envelope).
+        // XSLT-based Schematron requires a Document node to produce valid
+        // SVRL output. Import the element into a new standalone Document.
+        final Document aNewDoc = XMLFactory.newDocument ();
+        aNewDoc.appendChild (aNewDoc.importNode (aNode, true));
+        ret = TransformSourceFactory.create (aNewDoc);
+      }
+    }
     else
     {
       // Always use the Document node! Otherwise this may lead to weird XSLT
