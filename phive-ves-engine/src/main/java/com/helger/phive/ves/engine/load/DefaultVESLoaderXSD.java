@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.net.URI;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.ls.LSResourceResolver;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
 import com.helger.base.numeric.BigHelper;
@@ -77,13 +79,39 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   public static final String RESOURCE_TYPE_XSD = "xsd";
   public static final String FILE_EXT_XSD = '.' + RESOURCE_TYPE_XSD;
 
+  /** Default maximum unzipped size: 50 MB */
+  public static final long DEFAULT_MAX_UNZIPPED_SIZE = 50L * 1024 * 1024;
+
+  private static final AtomicLong MAX_UNZIPPED_SIZE = new AtomicLong (DEFAULT_MAX_UNZIPPED_SIZE);
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
+  /**
+   * @return The maximum allowed unzipped size in bytes. Defaults to
+   *         {@link #DEFAULT_MAX_UNZIPPED_SIZE}.
+   */
+  @Nonnegative
+  public static long getMaxUnzippedSize ()
+  {
+    return MAX_UNZIPPED_SIZE.get ();
+  }
+
+  /**
+   * Set the maximum allowed unzipped size in bytes. This is a safeguard against ZIP bomb attacks.
+   *
+   * @param nMaxUnzippedSize
+   *        The maximum unzipped size in bytes. Must be &gt; 0.
+   */
+  public static void setMaxUnzippedSize (@Nonnegative final long nMaxUnzippedSize)
+  {
+    ValueEnforcer.isGT0 (nMaxUnzippedSize, "MaxUnzippedSize");
+    MAX_UNZIPPED_SIZE.set (nMaxUnzippedSize);
+  }
+
   @Nullable
-  private static final String _unifyPath (@Nullable final String x)
+  private static final String _unifyPath (@Nullable final String sPath)
   {
     // Convert any "\" to "/"
-    String ret = FilenameHelper.getPathUsingUnixSeparator (x);
+    String ret = FilenameHelper.getPathUsingUnixSeparator (sPath);
     if (ret != null)
     {
       // Make absolute to simply LS resource resolving
@@ -225,13 +253,23 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
               bFoundMain = true;
 
             // Read ZIP entry
+            final long nMaxLen = getMaxUnzippedSize ();
             try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ())
             {
               int nLen;
               while ((nLen = aZIS.read (aBuffer)) > 0)
               {
-                aBAOS.write (aBuffer, 0, nLen);
                 nUnzippedLen += nLen;
+                if (nUnzippedLen > nMaxLen)
+                {
+                  aErrorList.add (SingleError.builderError ()
+                                             .errorText ("XSD ZIP file exceeds maximum unzipped size of " +
+                                                         SizeHelper.getSizeHelperOfLocale (Locale.ROOT)
+                                                                   .getAsMatching (nMaxLen))
+                                             .build ());
+                  return null;
+                }
+                aBAOS.write (aBuffer, 0, nLen);
               }
 
               // Remember ZIP entry in map
