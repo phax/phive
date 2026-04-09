@@ -309,22 +309,26 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
 
   public void iterateAllItems (@NonNull final IIterationCallback aCallback)
   {
+    _checkInited ();
     ValueEnforcer.notNull (aCallback, "Callback");
 
     m_aRWLock.readLocked ( () -> {
-      for (final Item aItem : m_aToc.m_aItems.values ())
-        aCallback.onItem (aItem.m_aCoord, aItem.m_bDeprecated, aItem.m_sDisplayName);
+      if (m_aToc != null)
+        for (final Item aItem : m_aToc.m_aItems.values ())
+          aCallback.onItem (aItem.m_aCoord, aItem.m_bDeprecated, aItem.m_sDisplayName);
     });
   }
 
   public void iterateAllItemsBreakable (@NonNull final IIterationCallbackBreakable aCallback)
   {
+    _checkInited ();
     ValueEnforcer.notNull (aCallback, "Callback");
 
     m_aRWLock.readLocked ( () -> {
-      for (final Item aItem : m_aToc.m_aItems.values ())
-        if (aCallback.onItem (aItem.m_aCoord, aItem.m_bDeprecated, aItem.m_sDisplayName).isBreak ())
-          break;
+      if (m_aToc != null)
+        for (final Item aItem : m_aToc.m_aItems.values ())
+          if (aCallback.onItem (aItem.m_aCoord, aItem.m_bDeprecated, aItem.m_sDisplayName).isBreak ())
+            break;
     });
   }
 
