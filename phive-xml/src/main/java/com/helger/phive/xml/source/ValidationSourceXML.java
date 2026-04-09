@@ -29,6 +29,7 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.source.AbstractValidationSource;
+import com.helger.xml.XMLHelper;
 import com.helger.xml.serialize.write.XMLWriter;
 
 /**
@@ -97,8 +98,8 @@ public class ValidationSourceXML extends AbstractValidationSource implements IVa
   public static ValidationSourceXML create (@Nullable final String sSystemID, @NonNull final Node aNode)
   {
     ValueEnforcer.notNull (aNode, "Node");
-    // < 12.0.2 this was using the owner document - but that breaks wrapped validations
-    return new ValidationSourceXML (sSystemID, aNode, false);
+    // Use the owner Document as fixed node
+    return new ValidationSourceXML (sSystemID, XMLHelper.getOwnerDocument (aNode), false);
   }
 
   /**
