@@ -126,7 +126,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
           {
             case PURE -> ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
             case ISO_SCHEMATRON -> ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
-            case SCHXSLT1 -> ValidationExecutorSchematron.createSchXslt (aRepoRes, aNSCtx);
+            case SCHXSLT1 -> ValidationExecutorSchematron.createSchXslt1 (aRepoRes, aNSCtx);
             case SCHXSLT2 -> ValidationExecutorSchematron.createSchXslt2 (aRepoRes, aNSCtx);
             default -> throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
           };

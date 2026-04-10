@@ -572,10 +572,29 @@ public class ValidationExecutorSchematron extends
    *        An optional namespace context for nice error messages. May be <code>null</code>.
    * @return A new instance and never <code>null</code>.
    * @since 7.1.2
+   * @deprecated Use {@link #createSchXslt1(IReadableResource,IIterableNamespaceContext)} instead
    */
+  @Deprecated (forRemoval = true, since = "12.0.3")
   @NonNull
   public static ValidationExecutorSchematron createSchXslt (@NonNull final IReadableResource aRes,
                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
+  {
+    return createSchXslt1 (aRes, aNamespaceContext);
+  }
+
+  /**
+   * Create a new instance for a single resource that uses the SchXslt v1 Schematron validation.
+   *
+   * @param aRes
+   *        The resource pointing to the Schematron rules. May not be <code>null</code>.
+   * @param aNamespaceContext
+   *        An optional namespace context for nice error messages. May be <code>null</code>.
+   * @return A new instance and never <code>null</code>.
+   * @since 12.0.3
+   */
+  @NonNull
+  public static ValidationExecutorSchematron createSchXslt1 (@NonNull final IReadableResource aRes,
+                                                             @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT1_XSLT2, aRes),
                                              null,
