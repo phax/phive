@@ -20,8 +20,8 @@ A live version of this engine can be found on [Peppol Practical](http://peppol.h
 This project has the following sub-modules:
 * **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
 * **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set.
-* **`phive-ves-repo`** (since v12.0.0) - contains phive specific extension for repository management with [ph-diver](https://github.com/phax/ph-diver)
-* **`phive-xml`** (previously `phive-engine`) - contains the support for validating XML source document via XML Schema and Schematron 
+* **`phive-ves-repo`** (since v12.0.0) - contains phive specific extensions for repository management with [ph-diver](https://github.com/phax/ph-diver)
+* **`phive-xml`** (previously `phive-engine`) - contains the support for validating XML source documents via XML Schema and Schematron
 * **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
 * **`phive-result-html`** (since v12.0.0) - library to create standalone HTML validation result reports with translatable labels, custom CSS support, source data display, and an optional built-in stylesheet
@@ -48,7 +48,7 @@ Another example is "SimplerInvoicing 1.2 invoice" which has the group ID `org.si
 
 Additional to the pseudo versions defined by [ph-diver](https://github.com/phax/ph-diver?tab=readme-ov-file#dvr-pseudo-versions) this library adds the following additional pseudo versions:
 * `latest-active` - always refer to the latest version of an artefact which is currently valid. This includes snapshot and non-snapshot versions.
-* `latest-release-active` - always refer to the latest version of an artefact which is currently valid. This includes snapshot and non-snapshot versions.
+* `latest-release-active` - always refer to the latest version of an artefact which is currently valid. This includes only non-snapshot versions.
 
 Note: These pseudo versions are defined in class `PhivePseudoVersionRegistrarSPIImpl`.
 
@@ -56,7 +56,7 @@ Note: These pseudo versions are defined in class `PhivePseudoVersionRegistrarSPI
 
 At least the `phive-xml` project and one library with rule sets (like e.g. `phive-rules-peppol` from https://github.com/phax/phive-rules) 
   is needed in your application. See the section on usage in a Maven project below.
-All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply created via `new`).
+All available VES must be registered in an instance of class `ValidationExecutorSetRegistry` (which can simply be created via `new`).
 Depending on the used domain specific libraries, initialization calls for registration into the registry must be performed.
 Example for registering (only) Peppol validation artefacts:
 
@@ -66,18 +66,18 @@ PeppolValidation.initStandard (aVESRegistry);
 ```
 
 The instance of class `ValidationExecutorSetRegistry` can be kept as a (static) singleton - it is thread-safe.
-Therefore the registration process need to be performed only once.
+Therefore the registration process needs to be performed only once.
 
 Validating a business document requires a few more steps.
 1. Access to the registry is needed.
 1. A specific `VESID` instance (e.g. `PeppolValidation2024_05.VID_OPENPEPPOL_INVOICE_UBL_V3` - from `phive-rules`) - there are constants available for all VES identifiers defined in this project.
 1. The `ValidationExecutionManager` is an in-between class that can be used to customize the execution. But it is created very quickly, so there is no harm on creating it on the fly every time.
-1. An instance of class `ValidationSourceXML` to identify the document to be validate. Class `ValidationSourceXML` has factory methods for the default cases (having an `org.w3c.dom.Node` or having an `com.helger.commons.io.resource.IReadableResource`).
+1. An instance of class `ValidationSourceXML` to identify the document to be validated. Class `ValidationSourceXML` has factory methods for the default cases (having an `org.w3c.dom.Node` or having an `com.helger.commons.io.resource.IReadableResource`).
 1. The validation results are stored in an instance of class `ValidationResultList`. This class is a list of `ValidationResult` instances - each `ValidationResult` represents the result of a single level of validation.
-1. Your application logic than needs to define what to do with the results. 
+1. Your application logic then needs to define what to do with the results.
 
 
-A basic example can be found in the tests at https://github.com/phax/phive/blob/master/phive-xml/src/test/java/com/helger/phive/api/execute/ValidationExecutionManagerFuncTest.java
+A basic example can be found in the tests at https://github.com/phax/phive/blob/master/phive-xml/src/test/java/com/helger/phive/xml/ValidationExecutionManagerFuncTest.java
 
 ## How to validate documents with declarative rules
 
@@ -140,6 +140,8 @@ v12.0.3 - 2026-04-10
 * Added new class `ValidationExecutorSchematronBuilder` as a fluent builder for `ValidationExecutorSchematron`
 * Fixed SVRL generation for partial validation sources (child nodes) in XSLT-based Schematron validation. When validating a node extracted from an envelope (e.g. SBDH unwrap) via `ValidationSourceXML.createPartial`, the XSLT transformation now receives a proper Document node.
 * Added ZIP bomb protection in `DefaultVESLoaderXSD` with a configurable maximum unzipped size (default 50 MB) via `setMaxUnzippedSize`/`getMaxUnzippedSize`
+* Renamed method `ValidationExecutorSchematron.createSchXslt` to `createSchXslt1` for naming consistency. The old method is deprecated.
+* Fixed potential `NullPointerException` in `RepoVESTopTocServiceCSV.iterateAllItems` and `iterateAllItemsBreakable` when called before initialization
 
 v12.0.2 - 2026-04-02
 * Added new method `ValidationResultList.addAt`
@@ -147,7 +149,7 @@ v12.0.2 - 2026-04-02
 
 v12.0.1 - 2026-03-12
 * Improved Validation result HTML default CSS to handle long values better
-* Removed the displayname from the VES Status again, as it is already contained in the VES itself
+* Removed the `displayName` from the VES Status again, as it is already contained in the VES itself
 
 v12.0.0 - 2026-02-22
 * Updated to ph-diver 4.2.0
@@ -157,8 +159,8 @@ v12.0.0 - 2026-02-22
 * Removed deprecated methods marked for removal
 * Extended VES Status with optional `displayName` element. See [#30](https://github.com/phax/phive/issues/30)
 * Extended `EValidationType` with XSLT v1 specific enums
-* Renamed some `EvalidationType` enums to be more precise
-* Extracted class `AbstractionValidationSource`
+* Renamed some `EValidationType` enums to be more precise
+* Extracted class `AbstractValidationSource`
 * Added new class `CPhiveVersion`
 * Extended the `ValidationResultList` to contain the validation date time as well as the validation duration
 * Extracted new class `PhiveSeverityHelper`
@@ -252,16 +254,16 @@ v9.0.0 - 2023-09-14
 
 v9.0.0-beta2 - 2023-09-06 (don't use in production)
 * Reworked the version handling inside class `VESID` so that a strict ordering by version is possible
-* Added specific support for the `SNAPSHOT` version, so that `1.0.0-SNAPSHOT` is lower then `1.0.0`
+* Added specific support for the `SNAPSHOT` version, so that `1.0.0-SNAPSHOT` is lower than `1.0.0`
 
 v9.0.0-beta1 - 2023-08-30 (don't use in production)
 * Removed `VOM*` in favour of `VES*`
 * Added new submodule "phive-repo" to be able to retrieve artefacts from remote storage locations
-* Added new submodule "phive-ves-model" that contain the VES data structures
-* Added new submodule "phive-ves-engine" that contain the VES execution engine
-* Renamed the submodule "phive-engine" to "phive-xml" to indicate, that this is the part dealing with XML validation only. This also lead to new package names.
-* Renamed the submodule "phive-json" to "phive-result" to indicate, that this is deals with validation results in general. The JSON stuff got its own package in there.
-* Initial version for declaration VES rules for XSD and Schematron
+* Added new submodule "phive-ves-model" that contains the VES data structures
+* Added new submodule "phive-ves-engine" that contains the VES execution engine
+* Renamed the submodule "phive-engine" to "phive-xml" to indicate, that this is the part dealing with XML validation only. This also led to new package names.
+* Renamed the submodule "phive-json" to "phive-result" to indicate, that this deals with validation results in general. The JSON stuff got its own package in there.
+* Initial version for declarative VES rules for XSD and Schematron
 
 v8.0.1 - 2023-03-17
 * Added support for resolving the pseudo version `latest` in `ValidationExecutorSetRegistry`. See [issue #16](https://github.com/phax/phive/issues/16) - thx @adammscisz
@@ -476,7 +478,7 @@ v5.0.2 - 2018-06-26
 * Added EN 16931 validation artefacts version 1.1.0, deprecated the old 1.0.0 version
 
 v5.0.1 - 2018-06-15
-* Fixed marking of OpenPEPPOL 3.5.0 artefatcs as "deprecated"
+* Fixed marking of OpenPEPPOL 3.5.0 artefacts as "deprecated"
 * Added support for Peppol Billing BIS 3 document types
 * Added support for EN 16931 UBL CreditNote validation
 
@@ -496,13 +498,13 @@ v4.0.4 - 2018-02-22
 
 v4.0.3 - 2018-02-07
 * Added OIOUBL 2.0.2 support (new artefact `ph-bdve-oioubl`)
-* EN 16031 rules were updated
+* EN 16931 rules were updated
 
 v4.0.2 - 2018-02-03
 * Added support for Dutch Energie eFactuur 2.0.0 (new artefact `ph-bdve-energieefactuur`) - based on SimplerInvoicing 1.2 
 * Updated to ph-commons 9.0.1 (Locale specific XSD error messages)
 * Schematron error messages are more easily readable
-* EN 16031 rules were updated
+* EN 16931 rules were updated
 * CII validation was heavily improved
 
 v4.0.1 - 2018-01-23
