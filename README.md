@@ -83,6 +83,230 @@ A basic example can be found in the tests at https://github.com/phax/phive/blob/
 
 TODO The description of this section needs to be written. Please have patience until everything is ready and setup.
 
+# Validation result data structure
+
+The outcome of running a `ValidationExecutionManager` is a `ValidationResultList` - a top level container that holds the per-layer results plus some metadata about the run as a whole.
+The `phive-result` module additionally provides serializers to convert this data structure to and from JSON or XML.
+
+## Java data structures
+
+### `ValidationResultList` (`phive-api`, package `com.helger.phive.api.result`)
+
+Represents the complete outcome of a single validation run. It is a list of `ValidationResult` instances - one per executed validation layer - together with run-level metadata.
+
+| Member | Type | Description |
+|--------|------|-------------|
+| results | `List <ValidationResult>` | The per-layer results, in execution order. Iterable directly via the `ValidationResultList` itself. |
+| validationSource | `IValidationSource` (nullable) | The source document that was validated. Optional - since v10.1.0. |
+| validationDateTime | `OffsetDateTime` | When validation started. Defaults to "now" if not provided. Since v12.0.0. |
+| validationDuration | `Duration` (nullable) | Wall clock time spent in the overall validation. Since v12.0.0. |
+| overallValidity | `EExtendedValidity` | Aggregated validity of the whole run. Starts as `VALID` and flips to `INVALID` as soon as any added `ValidationResult` is `INVALID`. Since v12.0.0. |
+
+Convenience methods:
+* `containsNoFailure ()` / `containsAtLeastOneFailure ()` - any error level above `SUCCESS` counts as failure
+* `containsNoError ()` / `containsAtLeastOneError ()` - error levels `ERROR` and above count as error
+* `getAllFailures ()` / `getAllErrors ()` - flattened `ErrorList` losing the per-layer association
+* `getAllCount (Predicate <? super IError>)` - count items matching a predicate
+* `forEachFlattened (Consumer)` and `forEachFlattened (Predicate, Consumer)` - iterate across all errors
+
+Note: the class is mutable (results are added via `add (ValidationResult)` or `addAt (int, ValidationResult)`) and **not** thread-safe.
+Since v12.0.0 it no longer extends `CommonsArrayList`; the result list is an internal field.
+
+### `ValidationResult` (`phive-api`, package `com.helger.phive.api.result`)
+
+Captures the outcome of a single validation layer. Immutable.
+
+| Member | Type | Description |
+|--------|------|-------------|
+| validationArtefact | `IValidationArtefact` | Which artefact was applied (validation type + rule resource). |
+| errorList | `IErrorList` | All `IError` items produced by this layer. May be empty. |
+| validity | `EExtendedValidity` | The validity for this layer as decided by an `IValidityDeterminator`. Since v12.0.0 stored on the result itself. |
+| durationMS | `long` (>= 0) | Time it took to execute this layer. Since v10.1.0. |
+
+Skipped layers are represented via the static factory `ValidationResult.createSkippedResult (IValidationArtefact)` which produces a result with `validity = SKIPPED`, an empty error list and `durationMS = 0`.
+
+### `IValidationArtefact` (`phive-api`, package `com.helger.phive.api.artefact`)
+
+| Method | Type | Description |
+|--------|------|-------------|
+| `getValidationType ()` | `IValidationType` | The kind of validation - one of `EValidationType` values such as `xml`, `xsd`, `partial-xsd`, `schematron-pure`, the various Schematron-XSLT flavours, etc. |
+| `getRuleResource ()` | `IReadableResource` | The rules resource (XSD file, Schematron file, ...). |
+| `getRuleResourcePath ()` | `String` | Path of the rule resource. Defaults to `getRuleResource ().getPath ()`. |
+
+### `EExtendedValidity` (`phive-api`, package `com.helger.phive.api.validity`)
+
+The validity of a layer or the overall run.
+
+| Constant | ID | Meaning |
+|----------|----|---------|
+| `SKIPPED` | `skipped` | Layer was not executed (e.g. previous layer aborted further execution). |
+| `VALID` | `valid` | Document complies with the rules of this layer. |
+| `INVALID` | `invalid` | Document does not comply with the rules of this layer. |
+| `UNCLEAR` | `unclear` | Cannot be decided - needs further evaluation. |
+
+### `ValidationSummary` (`phive-api`, package `com.helger.phive.api.result`, since v12.0.0)
+
+Helper for derived counters across an entire `ValidationResultList`. Created via `ValidationSummary.create (ValidationResultList)`.
+
+| Member | Type | Description |
+|--------|------|-------------|
+| warningCount | `int` | Number of items considered a warning according to `PhiveSeverityHelper`. |
+| errorCount | `int` | Number of items considered an error according to `PhiveSeverityHelper`. |
+| validationInterrupted | `boolean` | `true` if any layer was `SKIPPED`. |
+| mostSevereErrorLevel | `IErrorLevel` | The highest error level seen across all layers. |
+
+## JSON binding (`phive-result`)
+
+The class `com.helger.phive.result.json.PhiveJsonHelper` writes a `ValidationResultList` to a `IJsonObject` and reads it back.
+For full customization use `JsonValidationResultListHelper` (return value of `new JsonValidationResultListHelper ()`), which is what `applyValidationResultList` uses internally.
+All field names are constants in `com.helger.phive.result.json.CPhiveJson`.
+
+### Top level
+
+```json
+{
+  "validationDateTime": "2026-04-10T14:15:23.456+02:00",
+  "validationSource": { ... },
+  "ves":              { ... },
+  "success":               true,
+  "interrupted":           false,
+  "mostSevereErrorLevel":  "SUCCESS",
+  "results":               [ ... ],
+  "durationMS":            123
+}
+```
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `validationDateTime` | string (XSD date-time) | Since v12.0.0. From `ValidationResultList.getValidationDateTime ()`. |
+| `validationSource` | object | Optional. Only written if a source is present and the helper was configured to emit it. Since v10.1.0. |
+| `ves` | object | Optional. Only written if a `IValidationExecutorSet` was passed in. |
+| `success` | boolean | `true` if `overallValidity` is `VALID`. Note: the per-result entries use a tri-state string in the same field name. |
+| `interrupted` | boolean | `true` if any layer was skipped (mirrors `ValidationSummary.isValidationInterrupted ()`). |
+| `mostSevereErrorLevel` | string | One of `"SUCCESS"`, `"WARN"`, `"ERROR"` - see `PhiveResultHelper#getErrorLevelValue`. |
+| `results` | array | One entry per `ValidationResult`. See below. |
+| `durationMS` | number | Overall duration; only written when `validationDuration` is set. |
+
+### `validationSource`
+
+```json
+{
+  "sourceTypeID":  "xml",
+  "systemID":      "uri-or-name-of-the-input",
+  "partialSource": false,
+  "payloadBase64": "..."
+}
+```
+
+`payloadBase64` is only emitted when the helper is configured with `sourceToJsonDefault (true)` (the default). Pass `false` to omit the binary payload.
+
+### `ves`
+
+```json
+{
+  "vesid":      "eu.peppol.bis3:invoice:2023.5",
+  "name":       "Peppol BIS Billing UBL Invoice release May 2023",
+  "deprecated": false,
+  "status": {
+    "lastModification":  "2026-01-15T08:00:00Z",
+    "type":              "valid",
+    "validFrom":         "2023-05-15",
+    "validTo":           "2026-12-31",
+    "deprecationReason": "...",
+    "replacementVesid":  "..."
+  }
+}
+```
+
+### `results[]`
+
+One object per validation layer:
+
+```json
+{
+  "success":          "TRUE",
+  "validity":         "valid",
+  "artifactType":     "xsd",
+  "artifactPathType": "classpath",
+  "artifactPath":     "schemas/maindoc/UBL-Invoice-2.1.xsd",
+  "items":            [ ... ],
+  "durationMS":       42
+}
+```
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `success` | string | Tri-state: `"TRUE"`, `"FALSE"`, `"UNDEFINED"`. Kept for backwards compatibility - prefer `validity`. |
+| `validity` | string | One of the `EExtendedValidity` IDs (`valid`, `invalid`, `skipped`, `unclear`). Since v12.0.0. |
+| `artifactType` | string | The `IValidationType` ID, e.g. `xml`, `xsd`, `partial-xsd`, `schematron-pure`, `schematron-xslt2`, ... For the synthetic global error result it is `input-parameter`. |
+| `artifactPathType` | string | Optional. Resource kind: `classpath`, `file`, `url`, `in-memory`, `wrapped`, `unknown`, or `none` for global errors. |
+| `artifactPath` | string | Path of the rule resource. |
+| `items` | array | Errors produced by this layer. Empty for skipped layers. |
+| `durationMS` | number | Per-layer execution time. |
+
+### `items[]` (single error)
+
+```json
+{
+  "errorDateTime":  "2026-04-10T14:15:23.500",
+  "errorLevel":     "ERROR",
+  "errorID":        "BR-CO-15",
+  "errorFieldName": "cbc:DocumentCurrencyCode",
+  "errorLocationObj": {
+    "resource": "Invoice.xml",
+    "line":     42,
+    "col":      17
+  },
+  "test":      "cbc:DocumentCurrencyCode = 'EUR'",
+  "errorText": "Document currency must be EUR",
+  "exception": {
+    "class":      "java.lang.RuntimeException",
+    "message":    "...",
+    "stackTrace": "..."
+  }
+}
+```
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `errorDateTime` | string (XSD date-time) | Optional. |
+| `errorLevel` | string | One of `"SUCCESS"`, `"WARN"`, `"ERROR"`. |
+| `errorID` | string | Optional. Schematron rule ID, XSD error code, etc. |
+| `errorFieldName` | string | Optional. Affected field/element. |
+| `errorLocationObj` | object | Optional. Structured location with `resource`, `line`, `col`. |
+| `errorLocation` | string | Legacy form (still read for backwards compatibility - new payloads use `errorLocationObj`). |
+| `test` | string | Optional. The Schematron `test=` expression that failed - presence of this field promotes the deserialized error to an `SVRLResourceError`. |
+| `errorText` | string | The localized human-readable message. |
+| `exception` | object | Optional. See below. |
+
+### `exception`
+
+```json
+{
+  "class":      "java.lang.IllegalStateException",
+  "message":    "...",
+  "stackTrace": "..."
+}
+```
+
+When read back, exceptions are restored as `PhiveRestoredException` - the original class is not re-instantiated.
+
+### Global errors
+
+`PhiveJsonHelper.applyGlobalError (response, errorMsg, durationMS)` is used when validation could not even start (e.g. unparseable input). It produces a single result entry with `artifactType = "input-parameter"`, `artifactPath = "none"` and a single error item, plus `success = false` and `mostSevereErrorLevel = "ERROR"`.
+
+### Round-tripping
+
+`PhiveJsonHelper.getAsValidationResultList (IJsonObject)` reverses the serialization. Caveats:
+* The `ves` object is not part of `ValidationResultList`; use `getAsVES (registry, json)` to look it up against a registry.
+* Validation source bytes are restored only for the source types `IValidationSourceXML.VALIDATION_SOURCE_TYPE` and `IValidationSourceBinary.VALIDATION_SOURCE_TYPE`. For other source types, supply a custom `IValidationSourceRestorer`.
+* Custom `IValidationType` IDs need a custom resolver - the default uses `EValidationType::getFromIDOrNull`.
+* If `validity` is missing (older payloads) it is inferred from `success` - `TRUE` -> `VALID`, `FALSE` -> `INVALID`, `UNDEFINED` -> `SKIPPED`.
+
+## XML binding (`phive-result`)
+
+The class `com.helger.phive.result.xml.PhiveXMLHelper` (since v10.0.3) provides the same conversion onto `IMicroElement`, with `XMLValidationResultListHelper` as the customizable counterpart. Element names are constants in `com.helger.phive.result.xml.CPhiveXML` and mirror the JSON field names. The structural difference is that `results[]` becomes one `<result>` element per layer and `items[]` becomes one `<item>` element per error - everything else maps 1:1.
+
 # Maven usage
 
 Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with the latest version:
