@@ -109,7 +109,7 @@ public final class PhiveResultHelper
     if (VALUE_ERRORLEVEL_WARN.equals (sErrorLevel))
       return EErrorLevel.WARN;
     if (VALUE_ERRORLEVEL_SUCCESS.equals (sErrorLevel))
-      return EErrorLevel.SUCCESS;
+      return EErrorLevel.INFO;
     return null;
   }
 
