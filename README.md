@@ -3,6 +3,8 @@
 <!-- ph-badge-start -->
 [![Sonatype Central](https://maven-badges.sml.io/sonatype-central/com.helger.phive/phive-parent-pom/badge.svg)](https://maven-badges.sml.io/sonatype-central/com.helger.phive/phive-parent-pom/)
 [![javadoc](https://javadoc.io/badge2/com.helger.phive/phive-api/javadoc.svg)](https://javadoc.io/doc/com.helger.phive/phive-api)
+
+> If this project saved you some time or made your day a little easier, a star would mean a lot — it helps others find it too.
 <!-- ph-badge-end -->
 
 A generic business document validation engine originally developed for Peppol but now also supporting many other document types.
