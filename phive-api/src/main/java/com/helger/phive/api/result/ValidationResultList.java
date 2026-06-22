@@ -233,7 +233,7 @@ public final class ValidationResultList implements ICommonsIterable <ValidationR
   /**
    * @return A flattened list of all failures. In this case the association to the different layers
    *         is lost. Never <code>null</code> but maybe empty. All error levels except
-   *         {@link com.helger.diagnostics.error.level.EErrorLevel#SUCCESS} are considered to be a
+   *         {@link com.helger.diagnostics.error.level.EErrorLevel#INFO} are considered to be a
    *         failure!
    */
   @NonNull
