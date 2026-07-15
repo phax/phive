@@ -246,8 +246,7 @@ public final class LoadedVES
   }
 
   /**
-   * @return <code>true</code> if a validation executor is present,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if a validation executor is present, <code>false</code> if not.
    */
   public boolean hasExecutor ()
   {
@@ -323,6 +322,19 @@ public final class LoadedVES
     return _getLoadedVESRequiresNotNull ().getExecutorStatusType ();
   }
 
+  @NonNull
+  public IValidationExecutorSet <IValidationSource> createVES ()
+  {
+    if (!hasExecutor ())
+      throw new VESLoadingException ("The loaded VES has no Executor and can therefore not be used for validating objects");
+
+    // Build executors
+    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
+
+    // Assemble VES
+    return ValidationExecutorSet.create (m_aHeader.getVESID (), m_aHeader.getName (), m_aStatus, aExecutors);
+  }
+
   public void applyValidation (@NonNull final IValidationSource aValidationSource,
                                @NonNull final ValidationResultList aValidationResultList,
                                @NonNull final Locale aLocale)
@@ -331,17 +343,8 @@ public final class LoadedVES
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
     ValueEnforcer.notNull (aLocale, "Locale");
 
-    if (!hasExecutor ())
-      throw new VESLoadingException ("The loaded VES has no Executor and can therefore not be used for validating objects");
-
-    // Build executors
-    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = _getValidationExecutorsRecursive ();
-
     // Assemble VES
-    final IValidationExecutorSet <IValidationSource> aVES = ValidationExecutorSet.create (m_aHeader.getVESID (),
-                                                                                          m_aHeader.getName (),
-                                                                                          m_aStatus,
-                                                                                          aExecutors);
+    final IValidationExecutorSet <IValidationSource> aVES = createVES ();
 
     // Validate
     ValidationExecutionManager.executeValidation (IValidityDeterminator.createDefault (),
