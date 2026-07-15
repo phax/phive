@@ -322,6 +322,11 @@ public final class LoadedVES
     return _getLoadedVESRequiresNotNull ().getExecutorStatusType ();
   }
 
+  /**
+   * @return A new {@link IValidationExecutorSet} that can be used to perform validation. Never
+   *         <code>null</code>.
+   * @since 12.0.4
+   */
   @NonNull
   public IValidationExecutorSet <IValidationSource> createVES ()
   {
