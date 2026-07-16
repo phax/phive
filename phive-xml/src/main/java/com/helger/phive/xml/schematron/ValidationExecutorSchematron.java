@@ -92,12 +92,19 @@ public class ValidationExecutorSchematron extends
                                           IValidationExecutorCacheSupport
 {
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
+  /**
+   * By default the SVRL created by the Schematron engine is <b>not</b> validated against the SVRL
+   * XML Schema, so that SVRL created by XSLTs built with a different ph-schematron version can still
+   * be read.
+   */
+  public static final boolean DEFAULT_VALIDATE_SVRL = false;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
   private final String m_sPrerequisiteXPath;
   private final MapBasedNamespaceContext m_aNamespaceContext;
   private boolean m_bCacheSchematron = IValidationExecutorCacheSupport.DEFAULT_CACHE;
+  private boolean m_bValidateSVRL = DEFAULT_VALIDATE_SVRL;
   private ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails;
 
   public ValidationExecutorSchematron (@NonNull final IValidationArtefact aValidationArtefact,
@@ -142,6 +149,35 @@ public class ValidationExecutorSchematron extends
   public final ValidationExecutorSchematron setCacheArtefact (final boolean bCacheArtefact)
   {
     m_bCacheSchematron = bCacheArtefact;
+    return this;
+  }
+
+  /**
+   * @return <code>true</code> if the SVRL created by the Schematron engine is validated against the
+   *         SVRL XML Schema, <code>false</code> if not. The default is
+   *         {@link #DEFAULT_VALIDATE_SVRL}.
+   * @since 12.0.4
+   */
+  public final boolean isValidateSVRL ()
+  {
+    return m_bValidateSVRL;
+  }
+
+  /**
+   * Enable or disable the validation of the created SVRL against the SVRL XML Schema. This must be
+   * disabled (the default) if the Schematron XSLT was created with a different ph-schematron version
+   * that emits SVRL not matching the currently bundled SVRL XML Schema.
+   *
+   * @param bValidateSVRL
+   *        <code>true</code> to validate the SVRL against the XML Schema, <code>false</code> to skip
+   *        the SVRL schema validation.
+   * @return this for chaining
+   * @since 12.0.4
+   */
+  @NonNull
+  public final ValidationExecutorSchematron setValidateSVRL (final boolean bValidateSVRL)
+  {
+    m_bValidateSVRL = bValidateSVRL;
     return this;
   }
 
@@ -359,7 +395,8 @@ public class ValidationExecutorSchematron extends
         case SVRL:
         {
           final SchematronOutputType aSVRL = aDoc == null || aDoc.getDocumentElement () == null ? null
-                                                                                                : new SVRLMarshaller ().read (aDoc);
+                                                                                                : new SVRLMarshaller ().setUseSchema (m_bValidateSVRL)
+                                                                                                                       .read (aDoc);
           if (aSVRL != null)
           {
             // Valid Schematron - interpret result
@@ -489,6 +526,7 @@ public class ValidationExecutorSchematron extends
                                                                                m_aNamespaceContext);
     ret.setStopValidationOnError (isStopValidationOnError ());
     ret.setCacheArtefact (m_bCacheSchematron);
+    ret.setValidateSVRL (m_bValidateSVRL);
     if (m_aCustomErrorDetails != null)
       ret.addCustomErrorDetails (m_aCustomErrorDetails.getClone ());
     return ret;
@@ -503,6 +541,7 @@ public class ValidationExecutorSchematron extends
       return false;
     final ValidationExecutorSchematron rhs = (ValidationExecutorSchematron) o;
     return m_bCacheSchematron == rhs.m_bCacheSchematron &&
+           m_bValidateSVRL == rhs.m_bValidateSVRL &&
            EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath) &&
            EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
            EqualsHelper.equals (m_aCustomErrorDetails, rhs.m_aCustomErrorDetails);
@@ -513,6 +552,7 @@ public class ValidationExecutorSchematron extends
   {
     return HashCodeGenerator.getDerived (super.hashCode ())
                             .append (m_bCacheSchematron)
+                            .append (m_bValidateSVRL)
                             .append (m_sPrerequisiteXPath)
                             .append (m_aNamespaceContext)
                             .append (m_aCustomErrorDetails)
@@ -524,6 +564,7 @@ public class ValidationExecutorSchematron extends
   {
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("CacheSchematron", m_bCacheSchematron)
+                            .append ("ValidateSVRL", m_bValidateSVRL)
                             .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
                             .appendIfNotNull ("NamespaceContext", m_aNamespaceContext)
                             .appendIfNotNull ("CustomErrorLevels", m_aCustomErrorDetails)
