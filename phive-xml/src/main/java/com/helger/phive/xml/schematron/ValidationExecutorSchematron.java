@@ -60,8 +60,8 @@ import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
-import com.helger.schematron.pure.SchematronResourcePure;
-import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
+import com.helger.schematron.errorhandler.WrappedCollectingPSErrorHandler;
+import com.helger.schematron.pure.SchematronResourcePureXPath;
 import com.helger.schematron.sch.SchematronResourceSCH;
 import com.helger.schematron.schxslt.xslt2.SchematronResourceSchXslt_XSLT2;
 import com.helger.schematron.schxslt2.xslt.SchematronResourceSchXslt2;
@@ -105,8 +105,8 @@ public class ValidationExecutorSchematron extends
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isSchematron (),
-                           "Artifact is not a Schematron");
+    ValueEnforcer.isTrue (() -> aValidationArtefact.getValidationType ().getBaseType ().isSchematron (),
+                          "Artifact is not a Schematron");
 
     m_sPrerequisiteXPath = sPrerequisiteXPath;
     // Create a copy on demand
@@ -149,8 +149,7 @@ public class ValidationExecutorSchematron extends
   {
     if (m_bCacheSchematron)
     {
-      final AbstractSchematronResource aRes = _createSchematronResource (null, new ErrorList (), x -> {});
-      aRes.setUseCache (true);
+      final AbstractSchematronResource aRes = _createSchematronResource (null, new ErrorList (), true, x -> {});
       aRes.isValidSchematron ();
       LOGGER.debug ("ValidationExecutorSchematron " +
                     getValidationArtefact ().getRuleResourcePath () +
@@ -207,6 +206,7 @@ public class ValidationExecutorSchematron extends
   @NonNull
   private AbstractSchematronResource _createSchematronResource (@Nullable final Locale aLocale,
                                                                 @NonNull final ErrorList aErrorList,
+                                                                final boolean bUseCache,
                                                                 @NonNull final Consumer <ESchematronOutput> aSpecialOutputHdl)
   {
     final IValidationArtefact aArtefact = getValidationArtefact ();
@@ -214,52 +214,59 @@ public class ValidationExecutorSchematron extends
     // get the Schematron resource to be used for this validation artefact
     final IReadableResource aSCHRes = aArtefact.getRuleResource ();
 
+    final String sLanguageCode = aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()) ? aLocale
+                                                                                                              .getLanguage ()
+                                                                                                     : null;
+
     final IValidationType aVT = aArtefact.getValidationType ();
     if (aVT == EValidationType.SCHEMATRON_PURE)
     {
-      final SchematronResourcePure aPureSCH = new SchematronResourcePure (aSCHRes);
-      aPureSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
       // Don't cache to avoid that errors in the Schematron are hidden on
       // consecutive calls!
-      return aPureSCH;
+      return SchematronResourcePureXPath.builder (aSCHRes)
+                                        .errorHandler (new WrappedCollectingPSErrorHandler (aErrorList))
+                                        .useCache (bUseCache)
+                                        .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_SCH_ISO_XSLT2)
     {
-      final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
-      aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
-        aSCHSCH.setLanguageCode (aLocale.getLanguage ());
-      return aSCHSCH;
+      return SchematronResourceSCH.builder (aSCHRes)
+                                  .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                  .languageCode (sLanguageCode)
+                                  .useCache (bUseCache)
+                                  .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT1_XSLT2)
     {
-      final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
-      aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
-        aSCHSCH.setLanguageCode (aLocale.getLanguage ());
-      return aSCHSCH;
+      return SchematronResourceSchXslt_XSLT2.builder (aSCHRes)
+                                            .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                            .languageCode (sLanguageCode)
+                                            .useCache (bUseCache)
+                                            .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT2_XSLT3)
     {
-      final SchematronResourceSchXslt2 aSCHSCH = new SchematronResourceSchXslt2 (aSCHRes);
-      aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
-        aSCHSCH.setLanguageCode (aLocale.getLanguage ());
-      return aSCHSCH;
+      return SchematronResourceSchXslt2.builder (aSCHRes)
+                                       .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                       .languageCode (sLanguageCode)
+                                       .useCache (bUseCache)
+                                       .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_XSLT2)
     {
-      final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
-      aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      return aSCHXSLT;
+      return SchematronResourceXSLT.builder (aSCHRes)
+                                   .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                   .useCache (bUseCache)
+                                   .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_OIOUBL)
     {
-      final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
-      aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
       // Special output layout
       aSpecialOutputHdl.accept (ESchematronOutput.OIOUBL);
-      return aSCHXSLT;
+      return SchematronResourceXSLT.builder (aSCHRes)
+                                   .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                   .useCache (bUseCache)
+                                   .build ();
     }
     throw new IllegalStateException ("Unsupported Schematron validation type: " + aVT);
   }
@@ -334,11 +341,11 @@ public class ValidationExecutorSchematron extends
     // No prerequisite or prerequisite matched
     final ErrorList aErrorList = new ErrorList ();
     final Wrapper <ESchematronOutput> aOutput = new Wrapper <> (ESchematronOutput.SVRL);
-    final AbstractSchematronResource aSCH = _createSchematronResource (aLocale, aErrorList, aOutput::set);
+    final AbstractSchematronResource aSCH = _createSchematronResource (aLocale,
+                                                                       aErrorList,
+                                                                       m_bCacheSchematron,
+                                                                       aOutput::set);
 
-    // Don't cache to avoid that errors in the Schematron are hidden on
-    // consecutive calls!
-    aSCH.setUseCache (m_bCacheSchematron);
     try
     {
       // Main application of Schematron

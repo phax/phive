@@ -124,7 +124,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 
           aExecutorSCH = switch (eEngine)
           {
-            case PURE -> ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
+            case PURE_XPATH -> ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
             case ISO_SCHEMATRON -> ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
             case SCHXSLT1 -> ValidationExecutorSchematron.createSchXslt1 (aRepoRes, aNSCtx);
             case SCHXSLT2 -> ValidationExecutorSchematron.createSchXslt2 (aRepoRes, aNSCtx);
