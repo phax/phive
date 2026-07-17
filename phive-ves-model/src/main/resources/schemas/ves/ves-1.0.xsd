@@ -28,6 +28,8 @@
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
 Version history:
+  * 2026-07-17 - v1.0.0-RC6
+    * Added the optional classifier to the "VesCoordinateGroup" group
   * 2026-03-12 - v1.0.0-RC5
     * Reverted the RC4 changes again - the displayname is part of the VES anyway
   * 2026-02-19 - v1.0.0-RC4
@@ -59,6 +61,11 @@ Version history:
       <xs:element name="version" type="xs:string">
         <xs:annotation>
           <xs:documentation>The version number of an artifact within a group. This MUST follow the semantic versioning principle.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="classifier" type="xs:string" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>The optional classifier of an artifact within a group.</xs:documentation>
         </xs:annotation>
       </xs:element>
     </xs:sequence>

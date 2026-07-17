@@ -120,7 +120,7 @@ public final class VESLoader
   @Nullable
   public IVESLoaderXSD getLoaderXSD ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aLoaderXSD);
+    return m_aRWLock.readLockedGet (() -> m_aLoaderXSD);
   }
 
   /**
@@ -133,7 +133,7 @@ public final class VESLoader
   @NonNull
   public VESLoader setLoaderXSD (@Nullable final IVESLoaderXSD aLoader)
   {
-    m_aRWLock.writeLocked ( () -> m_aLoaderXSD = aLoader);
+    m_aRWLock.writeLocked (() -> m_aLoaderXSD = aLoader);
     return this;
   }
 
@@ -143,7 +143,7 @@ public final class VESLoader
   @Nullable
   public IVESLoaderSchematron getLoaderSchematron ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aLoaderSchematron);
+    return m_aRWLock.readLockedGet (() -> m_aLoaderSchematron);
   }
 
   /**
@@ -156,7 +156,7 @@ public final class VESLoader
   @NonNull
   public VESLoader setLoaderSchematron (@Nullable final IVESLoaderSchematron aLoader)
   {
-    m_aRWLock.writeLocked ( () -> m_aLoaderSchematron = aLoader);
+    m_aRWLock.writeLocked (() -> m_aLoaderSchematron = aLoader);
     return this;
   }
 
@@ -166,7 +166,7 @@ public final class VESLoader
   @Nullable
   public IVESLoaderEdifact getLoaderEdifact ()
   {
-    return m_aRWLock.readLockedGet ( () -> m_aLoaderEdifact);
+    return m_aRWLock.readLockedGet (() -> m_aLoaderEdifact);
   }
 
   /**
@@ -179,7 +179,7 @@ public final class VESLoader
   @NonNull
   public VESLoader setLoaderEdifact (@Nullable final IVESLoaderEdifact aLoader)
   {
-    m_aRWLock.writeLocked ( () -> m_aLoaderEdifact = aLoader);
+    m_aRWLock.writeLocked (() -> m_aLoaderEdifact = aLoader);
     return this;
   }
 
@@ -189,7 +189,7 @@ public final class VESLoader
    */
   public boolean isUseEagerRequirementLoading ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bUseEagerRequirementLoading);
+    return m_aRWLock.readLockedBoolean (() -> m_bUseEagerRequirementLoading);
   }
 
   /**
@@ -202,7 +202,7 @@ public final class VESLoader
   @NonNull
   public VESLoader setUseEagerRequirementLoading (final boolean b)
   {
-    m_aRWLock.writeLocked ( () -> m_bUseEagerRequirementLoading = b);
+    m_aRWLock.writeLocked (() -> m_bUseEagerRequirementLoading = b);
     return this;
   }
 
@@ -214,7 +214,7 @@ public final class VESLoader
   @NonNull
   public boolean isResolvePseudoVersions ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bResolvePseudoVersions);
+    return m_aRWLock.readLockedBoolean (() -> m_bResolvePseudoVersions);
   }
 
   /**
@@ -228,7 +228,7 @@ public final class VESLoader
   @NonNull
   public VESLoader setResolvePseudoVersions (@NonNull final boolean b)
   {
-    m_aRWLock.writeLocked ( () -> m_bResolvePseudoVersions = b);
+    m_aRWLock.writeLocked (() -> m_bResolvePseudoVersions = b);
     return this;
   }
 
@@ -242,7 +242,7 @@ public final class VESLoader
     @NonNull
     public ESuccess addVESID (@NonNull final DVRCoordinate aVESID)
     {
-      return ESuccess.valueOf (m_aRWLock.writeLockedBoolean ( () -> m_aLoaded.add (aVESID)));
+      return ESuccess.valueOf (m_aRWLock.writeLockedBoolean (() -> m_aLoaded.add (aVESID)));
     }
 
     @NonNull
@@ -325,11 +325,12 @@ public final class VESLoader
   @NonNull
   private static DVRCoordinate _createVESIDUnchecked (@NonNull @Nonempty final String sGroupID,
                                                       @NonNull @Nonempty final String sArtifactID,
-                                                      @NonNull @Nonempty final String sVersion)
+                                                      @NonNull @Nonempty final String sVersion,
+                                                      @Nullable final String sClassifier)
   {
     try
     {
-      return DVRCoordinate.create (sGroupID, sArtifactID, sVersion);
+      return DVRCoordinate.create (sGroupID, sArtifactID, sVersion, sClassifier);
     }
     catch (final DVRVersionException ex)
     {
@@ -356,7 +357,8 @@ public final class VESLoader
     // Extract data
     final LoadedVES.Header aHeader = new LoadedVES.Header (_createVESIDUnchecked (aSrcVes.getGroupId (),
                                                                                   aSrcVes.getArtifactId (),
-                                                                                  aSrcVes.getVersion ()),
+                                                                                  aSrcVes.getVersion (),
+                                                                                  aSrcVes.getClassifier ()),
                                                            aSrcVes.getName (),
                                                            aSrcVes.getReleased (),
                                                            eSyntax);
@@ -366,7 +368,8 @@ public final class VESLoader
       final VesRequiresType aSrcReq = aSrcVes.getRequires ();
       final LoadedVES.RequiredVES aSrcRequiredVES = new LoadedVES.RequiredVES (_createVESIDUnchecked (aSrcReq.getGroupId (),
                                                                                                       aSrcReq.getArtifactId (),
-                                                                                                      aSrcReq.getVersion ()),
+                                                                                                      aSrcReq.getVersion (),
+                                                                                                      aSrcReq.getClassifier ()),
                                                                                _wrap (aSrcReq.getNamespaces ()),
                                                                                _wrap (aSrcReq.getOutput ()),
                                                                                aSrcReq.isStopOnError ());
@@ -530,7 +533,10 @@ public final class VESLoader
     }
 
     // Build VESID
-    final DVRCoordinate aVESID = _createVESIDUnchecked (aVES.getGroupId (), aVES.getArtifactId (), aVES.getVersion ());
+    final DVRCoordinate aVESID = _createVESIDUnchecked (aVES.getGroupId (),
+                                                        aVES.getArtifactId (),
+                                                        aVES.getVersion (),
+                                                        aVES.getClassifier ());
 
     LOGGER.info ("Trying to read VESID '" + aVESID.getAsSingleID () + "' directly");
 
@@ -763,7 +769,8 @@ public final class VESLoader
     // File extension must start with a dot
     return RepoStorageKeyOfArtefact.of (_createVESIDUnchecked (aVRT.getGroupId (),
                                                                aVRT.getArtifactId (),
-                                                               aVRT.getVersion ()), "." + aVRT.getType ());
+                                                               aVRT.getVersion (),
+                                                               aVRT.getClassifier ()), "." + aVRT.getType ());
   }
 
   /**
