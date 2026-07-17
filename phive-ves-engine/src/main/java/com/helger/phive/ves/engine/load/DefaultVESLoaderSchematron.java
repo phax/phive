@@ -188,6 +188,11 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       if (aCustomErrorDetails.isNotEmpty ())
         aExecutorSCH.addCustomErrorDetails (aCustomErrorDetails);
 
+      // Optionally override the validation type specific "stop on error" default
+      final Boolean aStopOnError = aSCH.isStopOnError ();
+      if (aStopOnError != null)
+        aExecutorSCH.setStopValidationOnError (aStopOnError.booleanValue ());
+
       LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
                    sResourceType +
                    "' and path '" +

@@ -17,6 +17,7 @@
 package com.helger.phive.ves.engine.load;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import com.helger.annotation.Nonempty;
 import com.helger.base.io.stream.StreamHelper;
 import com.helger.base.state.ESuccess;
+import com.helger.collection.commons.ICommonsList;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
@@ -45,8 +47,10 @@ import com.helger.diver.repo.toc.IRepoStorageWithToc;
 import com.helger.io.file.FilenameHelper;
 import com.helger.io.resource.ClassPathResource;
 import com.helger.io.resource.IReadableResource;
+import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
@@ -138,6 +142,10 @@ public final class VESLoaderTest
                     new ClassPathResource ("ves/test1/sch3.status"));
       // Upload SCH VES #4 with snapshot version
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch4-snapshot.ves"));
+      // Upload XSD VES with stopOnError="false"
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/xsd-nostop.ves"));
+      // Upload SCH VES with stopOnError="true"
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch-stop.ves"));
     }
 
     // test2
@@ -299,6 +307,70 @@ public final class VESLoaderTest
                 aValidationResultList.get (1).getErrorList ().containsNoError ());
     assertTrue (aValidationResultList.get (2).getErrorList ().toString (),
                 aValidationResultList.get (2).getErrorList ().containsNoError ());
+  }
+
+  @Test
+  public void testXsdStopOnErrorDefaultTrue ()
+  {
+    // No "stopOnError" attribute -> XSD validation type default is "stop"
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_xsd:1.0");
+
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (aVESID, aErrorList);
+    assertNotNull (aLoaded);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
+    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = aLoaded.createVES ().getAllExecutors ();
+    assertEquals (1, aExecutors.size ());
+    assertTrue (aExecutors.get (0).isStopValidationOnError ());
+  }
+
+  @Test
+  public void testXsdStopOnErrorOverrideFalse ()
+  {
+    // "stopOnError=false" overrides the XSD validation type default of "stop"
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_xsd_nostop:1.0");
+
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (aVESID, aErrorList);
+    assertNotNull (aLoaded);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
+    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = aLoaded.createVES ().getAllExecutors ();
+    assertEquals (1, aExecutors.size ());
+    assertFalse (aExecutors.get (0).isStopValidationOnError ());
+  }
+
+  @Test
+  public void testSchStopOnErrorDefaultFalse ()
+  {
+    // No "stopOnError" attribute -> Schematron validation type default is "continue"
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch:1.0");
+
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (aVESID, aErrorList);
+    assertNotNull (aLoaded);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
+    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = aLoaded.createVES ().getAllExecutors ();
+    assertEquals (1, aExecutors.size ());
+    assertFalse (aExecutors.get (0).isStopValidationOnError ());
+  }
+
+  @Test
+  public void testSchStopOnErrorOverrideTrue ()
+  {
+    // "stopOnError=true" overrides the Schematron validation type default of "continue"
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch_stop:1.0");
+
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (aVESID, aErrorList);
+    assertNotNull (aLoaded);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+
+    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = aLoaded.createVES ().getAllExecutors ();
+    assertEquals (1, aExecutors.size ());
+    assertTrue (aExecutors.get (0).isStopValidationOnError ());
   }
 
   @Test

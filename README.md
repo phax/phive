@@ -363,6 +363,7 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 # News and noteworthy
 
 v12.1.0 - work in progress
+* Added the optional `stopOnError` attribute to the `xsd` and `schematron` elements of the VES XML (schema v1.0.0-RC7), so the "stop on error" behaviour can be customized per validation. The `DefaultVESLoaderXSD` and `DefaultVESLoaderSchematron` apply it to the created executors. See [#26](https://github.com/phax/phive/issues/26)
 * Added new builder classes `ValidationExecutorXSDBuilder` and `ValidationExecutorXSDPartialBuilder` as fluent builders for `ValidationExecutorXSD` and `ValidationExecutorXSDPartial`
 * Added new method `ValidationExecutorXSDPartial.getSchemaProvider`
 * Updated to ph-schematron v10.x

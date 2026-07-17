@@ -486,6 +486,11 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
     }
 
+    // Optionally override the validation type specific "stop on error" default
+    final Boolean aStopOnError = aXSD.isStopOnError ();
+    if (aStopOnError != null)
+      aExecutorXSD.setStopValidationOnError (aStopOnError.booleanValue ());
+
     aSW.stop ();
     LOGGER.info ("Loaded ValidationExecutorXSD using resource type '" +
                  sResourceType +
