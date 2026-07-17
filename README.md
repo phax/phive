@@ -362,18 +362,23 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v12.1.0 - work in progress
-* Added the optional `stopOnError` attribute to the `xsd` and `schematron` elements of the VES XML (schema v1.0.0-RC7), so the "stop on error" behaviour can be customized per validation. The `DefaultVESLoaderXSD` and `DefaultVESLoaderSchematron` apply it to the created executors. See [#26](https://github.com/phax/phive/issues/26)
+v12.1.0 - 2026-07-17
+* Updated to ph-schematron v10.x
+* Added the optional `stopOnError` attribute to the `xsd` and `schematron` elements of the VES XML, so the "stop on error" behaviour can be customized per validation.
+  The `DefaultVESLoaderXSD` and `DefaultVESLoaderSchematron` apply it to the created executors.
+  See [#26](https://github.com/phax/phive/issues/26)
 * Added new builder classes `ValidationExecutorXSDBuilder` and `ValidationExecutorXSDPartialBuilder` as fluent builders for `ValidationExecutorXSD` and `ValidationExecutorXSDPartial`
 * Added new method `ValidationExecutorXSDPartial.getSchemaProvider`
-* Updated to ph-schematron v10.x
-* Extended `IValidationType` with a new method `getSchematronEngine` returning the `ESchematronEngine` for Schematron based validation types, or `null` for all others. Requires ph-schematron v10. See [#32](https://github.com/phax/phive/issues/32)
+* Extended `IValidationType` with a new method `getSchematronEngine` returning the `ESchematronEngine` for Schematron based validation types, or `null` for all others.
+  Requires ph-schematron v10.
+  See [#32](https://github.com/phax/phive/issues/32)
 * Added new method `LoadedVES.createVES`
 * ValidationResult now takes `Duration` as parameter instead of "number of milliseconds"
 
 v12.0.3 - 2026-04-10
 * Added new class `ValidationExecutorSchematronBuilder` as a fluent builder for `ValidationExecutorSchematron`
-* Fixed SVRL generation for partial validation sources (child nodes) in XSLT-based Schematron validation. When validating a node extracted from an envelope (e.g. SBDH unwrap) via `ValidationSourceXML.createPartial`, the XSLT transformation now receives a proper Document node.
+* Fixed SVRL generation for partial validation sources (child nodes) in XSLT-based Schematron validation.
+  When validating a node extracted from an envelope (e.g. SBDH unwrap) via `ValidationSourceXML.createPartial`, the XSLT transformation now receives a proper Document node.
 * Added ZIP bomb protection in `DefaultVESLoaderXSD` with a configurable maximum unzipped size (default 50 MB) via `setMaxUnzippedSize`/`getMaxUnzippedSize`
 * Renamed method `ValidationExecutorSchematron.createSchXslt` to `createSchXslt1` for naming consistency. The old method is deprecated.
 * Fixed potential `NullPointerException` in `RepoVESTopTocServiceCSV.iterateAllItems` and `iterateAllItemsBreakable` when called before initialization
