@@ -18,6 +18,8 @@ package com.helger.phive.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
@@ -77,5 +79,17 @@ public final class ValidationTypeTest
                                                                                         "Mock VT",
                                                                                         false,
                                                                                         true));
+  }
+
+  @Test
+  public void testSchematronEngine ()
+  {
+    for (final EValidationType eVT : EValidationType.values ())
+      if (eVT.getBaseType () == EValidationBaseType.SCHEMATRON)
+        assertNotNull ("Schematron validation type '" + eVT.getID () + "' must have a Schematron engine",
+                       eVT.getSchematronEngine ());
+      else
+        assertNull ("Non-Schematron validation type '" + eVT.getID () + "' must not have a Schematron engine",
+                    eVT.getSchematronEngine ());
   }
 }

@@ -23,8 +23,8 @@ import com.helger.base.id.IHasID;
 import com.helger.base.name.IHasName;
 
 /**
- * Interface for a validation type. That basically is a combination of syntax,
- * rule language and result layout.
+ * Interface for a validation type. That basically is a combination of syntax, rule language and
+ * result layout.
  *
  * @author Philip Helger
  * @since 7.1.0
@@ -40,15 +40,15 @@ public interface IValidationType extends IHasID <String>, IHasName
   EValidationBaseType getBaseType ();
 
   /**
-   * @return <code>true</code> to stop validation if an error occurs when using
-   *         this validation type. This is helpful to avoid running Schematron
-   *         validations when the XML/XSD validations already failed.
+   * @return <code>true</code> to stop validation if an error occurs when using this validation
+   *         type. This is helpful to avoid running Schematron validations when the XML/XSD
+   *         validations already failed.
    */
   boolean isStopValidationOnError ();
 
   /**
-   * @return <code>true</code> if the application of this validation type
-   *         requires additional context parameters.
+   * @return <code>true</code> if the application of this validation type requires additional
+   *         context parameters.
    */
   boolean isContextRequired ();
 }
