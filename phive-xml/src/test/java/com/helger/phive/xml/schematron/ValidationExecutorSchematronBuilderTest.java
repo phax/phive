@@ -43,11 +43,11 @@ public class ValidationExecutorSchematronBuilderTest
   @Test
   public void testMinimal ()
   {
-    final ValidationExecutorSchematron aExec = new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE)
+    final ValidationExecutorSchematron aExec = new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE_XPATH2)
                                                                                          .resource (RES)
                                                                                          .build ();
     assertNotNull (aExec);
-    assertEquals (EValidationType.SCHEMATRON_PURE, aExec.getValidationArtefact ().getValidationType ());
+    assertEquals (EValidationType.SCHEMATRON_PURE_XPATH2, aExec.getValidationArtefact ().getValidationType ());
     assertEquals (RES, aExec.getValidationArtefact ().getRuleResource ());
     assertNull (aExec.getPrerequisiteXPath ());
     assertNull (aExec.getNamespaceContext ());
@@ -82,7 +82,7 @@ public class ValidationExecutorSchematronBuilderTest
   {
     final ValidationExecutorSchematron aExec = ValidationExecutorSchematronBuilder.pure (RES).build ();
     assertNotNull (aExec);
-    assertEquals (EValidationType.SCHEMATRON_PURE, aExec.getValidationArtefact ().getValidationType ());
+    assertEquals (EValidationType.SCHEMATRON_PURE_XPATH2, aExec.getValidationArtefact ().getValidationType ());
   }
 
   @Test
@@ -128,14 +128,14 @@ public class ValidationExecutorSchematronBuilderTest
   @Test
   public void testCopyConstructor ()
   {
-    final ValidationExecutorSchematron aOriginal = new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE)
+    final ValidationExecutorSchematron aOriginal = new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE_XPATH2)
                                                                                              .resource (RES)
                                                                                              .prerequisiteXPath ("/test")
                                                                                              .cacheSchematron (false)
                                                                                              .build ();
     final ValidationExecutorSchematron aCopy = new ValidationExecutorSchematronBuilder (aOriginal).build ();
     assertNotNull (aCopy);
-    assertEquals (EValidationType.SCHEMATRON_PURE, aCopy.getValidationArtefact ().getValidationType ());
+    assertEquals (EValidationType.SCHEMATRON_PURE_XPATH2, aCopy.getValidationArtefact ().getValidationType ());
     assertEquals ("/test", aCopy.getPrerequisiteXPath ());
     assertFalse (aCopy.isCacheArtefact ());
   }
@@ -149,7 +149,7 @@ public class ValidationExecutorSchematronBuilderTest
   @Test (expected = IllegalStateException.class)
   public void testBuildMissingResource ()
   {
-    new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE).build ();
+    new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE_XPATH2).build ();
   }
 
   @Test

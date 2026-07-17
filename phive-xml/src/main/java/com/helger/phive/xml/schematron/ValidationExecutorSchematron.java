@@ -255,7 +255,7 @@ public class ValidationExecutorSchematron extends
                                                                                                      : null;
 
     final IValidationType aVT = aArtefact.getValidationType ();
-    if (aVT == EValidationType.SCHEMATRON_PURE)
+    if (aVT == EValidationType.SCHEMATRON_PURE_XPATH2)
     {
       // Don't cache to avoid that errors in the Schematron are hidden on
       // consecutive calls!
@@ -585,7 +585,7 @@ public class ValidationExecutorSchematron extends
   public static ValidationExecutorSchematron createPure (@NonNull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE, aRes),
+    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE_XPATH2, aRes),
                                              null,
                                              aNamespaceContext);
   }

@@ -223,7 +223,8 @@ public class ValidationExecutorSchematronBuilder implements IBuilder <Validation
   }
 
   /**
-   * Create a new builder with the validation type set to {@link EValidationType#SCHEMATRON_PURE}.
+   * Create a new builder with the validation type set to
+   * {@link EValidationType#SCHEMATRON_PURE_XPATH2}.
    *
    * @param aRes
    *        The resource pointing to the Schematron rules. May not be <code>null</code>.
@@ -232,7 +233,8 @@ public class ValidationExecutorSchematronBuilder implements IBuilder <Validation
   @NonNull
   public static ValidationExecutorSchematronBuilder pure (@NonNull final IReadableResource aRes)
   {
-    return new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE).resource (aRes);
+    return new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE_XPATH2)
+                                                     .resource (aRes);
   }
 
   /**

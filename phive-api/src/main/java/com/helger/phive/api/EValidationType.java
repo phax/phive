@@ -20,6 +20,7 @@ import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
+import com.helger.annotation.misc.ContainsSoftMigration;
 import com.helger.base.lang.EnumHelper;
 import com.helger.schematron.ESchematronEngine;
 
@@ -45,13 +46,15 @@ public enum EValidationType implements IValidationType
   PARTIAL_XSD ("partial-xsd", EValidationBaseType.XSD, "Partial XML Schema", null),
 
   /**
-   * Pure Java implementation of Schematron - can only handle XPath 2 (was originally called
-   * SCHEMATRON)
+   * Pure Java implementation of Schematron - can only handle XPath 2<br>
+   * enum constant was originally called <code>SCHEMATRON</code> and then
+   * <code>SCHEMATRON_PURE</code><br>
+   * Original ID was "schematron-pure"
    */
-  SCHEMATRON_PURE ("schematron-pure",
-                   EValidationBaseType.SCHEMATRON,
-                   "Schematron (pure; XPath-only)",
-                   ESchematronEngine.PURE_XPATH),
+  SCHEMATRON_PURE_XPATH2 ("schematron-pure-xpath2",
+                          EValidationBaseType.SCHEMATRON,
+                          "Schematron (pure; XPath 2.0)",
+                          ESchematronEngine.PURE_XPATH),
 
   /**
    * Pure Java implementation of Schematron to XSLT 1.0 converter.
@@ -90,45 +93,47 @@ public enum EValidationType implements IValidationType
    */
   SCHEMATRON_SCH_ISO_XSLT1 ("schematron-sch-xslt1",
                             EValidationBaseType.SCHEMATRON,
-                            "Schematron (SCH; ISO XSLT1)",
+                            "Schematron (ISO Schematron; XSLT 1.0)",
                             ESchematronEngine.ISO_SCHEMATRON),
 
   /**
-   * Convert Schematron to XSLT using ISO Schematron with XSLT 2.0 output
+   * Convert Schematron to XSLT using ISO Schematron with XSLT 2.0 output.<br>
+   * Original ID was "schematron-sch"
    */
-  SCHEMATRON_SCH_ISO_XSLT2 ("schematron-sch",
+  SCHEMATRON_SCH_ISO_XSLT2 ("schematron-sch-xslt2",
                             EValidationBaseType.SCHEMATRON,
-                            "Schematron (SCH; ISO XSLT2)",
+                            "Schematron (ISO Schematron; XSLT 2.0)",
                             ESchematronEngine.ISO_SCHEMATRON),
 
   /**
-   * Schematron validation to convert SCH to XSLT v1 with SchXslt v1
+   * Convert Schematron to XSLT using SchXslt1 with XSLT 1.0 output
    *
    * @since 12.0.0
    */
   SCHEMATRON_SCHXSLT1_XSLT1 ("schematron-schxslt-xslt1",
                              EValidationBaseType.SCHEMATRON,
-                             "Schematron (SchXslt1 XSLT1)",
+                             "Schematron (SchXslt1; XSLT 1.0)",
                              ESchematronEngine.SCHXSLT1),
 
   /**
-   * Schematron validation to convert SCH to XSLT v2 with SchXslt v1
+   * Convert Schematron to XSLT using SchXslt1 with XSLT 2.0 output
    *
    * @since 7.0.0
    */
   SCHEMATRON_SCHXSLT1_XSLT2 ("schematron-schxslt-xslt2",
                              EValidationBaseType.SCHEMATRON,
-                             "Schematron (SchXslt1 XSLT2)",
+                             "Schematron (SchXslt1; XSLT 2.0)",
                              ESchematronEngine.SCHXSLT1),
 
   /**
-   * Schematron validation to convert SCH to XSLT v3 with SchXslt v2
+   * Convert Schematron to XSLT using SchXslt2 with XSLT 3.0 output<br>
+   * Original ID was "schematron-schxslt2"
    *
    * @since 11.1.1
    */
-  SCHEMATRON_SCHXSLT2_XSLT3 ("schematron-schxslt2",
+  SCHEMATRON_SCHXSLT2_XSLT3 ("schematron-schxslt2-xslt3",
                              EValidationBaseType.SCHEMATRON,
-                             "Schematron (SchXslt2)",
+                             "Schematron (SchXslt2; XSLT 3.0)",
                              ESchematronEngine.SCHXSLT2),
 
   /**
@@ -138,15 +143,16 @@ public enum EValidationType implements IValidationType
    */
   SCHEMATRON_XSLT1 ("schematron-xslt1",
                     EValidationBaseType.SCHEMATRON,
-                    "Schematron (XSLT1)",
+                    "Schematron (XSLT 1.0)",
                     ESchematronEngine.XSLT_PREBUILT),
 
   /**
-   * Schematron validation with a pre-build XSLT v2 file (e.g. from the Maven plugin)
+   * Schematron validation with a pre-build XSLT v2 file (e.g. from the Maven plugin)<br>
+   * Original ID: "schematron-xslt"
    */
-  SCHEMATRON_XSLT2 ("schematron-xslt",
+  SCHEMATRON_XSLT2 ("schematron-xslt2",
                     EValidationBaseType.SCHEMATRON,
-                    "Schematron (XSLT2)",
+                    "Schematron (XSLT 2.0)",
                     ESchematronEngine.XSLT_PREBUILT),
 
   /**
@@ -156,7 +162,7 @@ public enum EValidationType implements IValidationType
    */
   SCHEMATRON_XSLT3 ("schematron-xslt3",
                     EValidationBaseType.SCHEMATRON,
-                    "Schematron (XSLT3)",
+                    "Schematron (XSLT 3.0)",
                     ESchematronEngine.XSLT_PREBUILT),
 
   /**
@@ -176,6 +182,8 @@ public enum EValidationType implements IValidationType
   public static final EValidationType SCHEMATRON_XSLT = SCHEMATRON_XSLT2;
   @Deprecated (forRemoval = true, since = "12.0.0")
   public static final EValidationType SCHEMATRON_SCHXSLT2 = SCHEMATRON_SCHXSLT2_XSLT3;
+  @Deprecated (forRemoval = true, since = "12.1.0")
+  public static final EValidationType SCHEMATRON_PURE = SCHEMATRON_PURE_XPATH2;
 
   private final String m_sID;
   private final EValidationBaseType m_eBaseType;
@@ -236,8 +244,21 @@ public enum EValidationType implements IValidationType
   }
 
   @Nullable
+  @ContainsSoftMigration
   public static EValidationType getFromIDOrNull (@Nullable final String sID)
   {
+    if ("schematron-pure".equals (sID))
+      return SCHEMATRON_PURE_XPATH2;
+
+    if ("schematron-sch".equals (sID))
+      return SCHEMATRON_SCH_ISO_XSLT2;
+
+    if ("schematron-xslt".equals (sID))
+      return SCHEMATRON_XSLT2;
+
+    if ("schematron-schxslt2".equals (sID))
+      return SCHEMATRON_SCHXSLT2_XSLT3;
+
     return EnumHelper.getFromIDOrNull (EValidationType.class, sID);
   }
 }
