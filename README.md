@@ -363,6 +363,8 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 # News and noteworthy
 
 v12.1.0 - work in progress
+* Added new builder classes `ValidationExecutorXSDBuilder` and `ValidationExecutorXSDPartialBuilder` as fluent builders for `ValidationExecutorXSD` and `ValidationExecutorXSDPartial`
+* Added new method `ValidationExecutorXSDPartial.getSchemaProvider`
 * Updated to ph-schematron v10.x
 * Extended `IValidationType` with a new method `getSchematronEngine` returning the `ESchematronEngine` for Schematron based validation types, or `null` for all others. Requires ph-schematron v10. See [#32](https://github.com/phax/phive/issues/32)
 * Added new method `LoadedVES.createVES`

@@ -95,6 +95,16 @@ public class ValidationExecutorXSDPartial extends
   }
 
   /**
+   * @return The XML Schema provider as provided in the constructor. May not be <code>null</code>.
+   * @since 12.1.0
+   */
+  @NonNull
+  public final Supplier <? extends Schema> getSchemaProvider ()
+  {
+    return m_aSchemaProvider;
+  }
+
+  /**
    * @return The partial execution context as provided in the constructor. May not be
    *         <code>null</code>.
    */
