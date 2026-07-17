@@ -60,8 +60,8 @@ import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
-import com.helger.schematron.pure.SchematronResourcePure;
-import com.helger.schematron.pure.errorhandler.WrappedCollectingPSErrorHandler;
+import com.helger.schematron.errorhandler.WrappedCollectingPSErrorHandler;
+import com.helger.schematron.pure.SchematronResourcePureXPath;
 import com.helger.schematron.sch.SchematronResourceSCH;
 import com.helger.schematron.schxslt.xslt2.SchematronResourceSchXslt_XSLT2;
 import com.helger.schematron.schxslt2.xslt.SchematronResourceSchXslt2;
@@ -92,12 +92,19 @@ public class ValidationExecutorSchematron extends
                                           IValidationExecutorCacheSupport
 {
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
+  /**
+   * By default the SVRL created by the Schematron engine is <b>not</b> validated against the SVRL
+   * XML Schema, so that SVRL created by XSLTs built with a different ph-schematron version can still
+   * be read.
+   */
+  public static final boolean DEFAULT_VALIDATE_SVRL = false;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (ValidationExecutorSchematron.class);
 
   private final String m_sPrerequisiteXPath;
   private final MapBasedNamespaceContext m_aNamespaceContext;
   private boolean m_bCacheSchematron = IValidationExecutorCacheSupport.DEFAULT_CACHE;
+  private boolean m_bValidateSVRL = DEFAULT_VALIDATE_SVRL;
   private ICommonsMap <String, CustomErrorDetails> m_aCustomErrorDetails;
 
   public ValidationExecutorSchematron (@NonNull final IValidationArtefact aValidationArtefact,
@@ -105,8 +112,8 @@ public class ValidationExecutorSchematron extends
                                        @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isSchematron (),
-                           "Artifact is not a Schematron");
+    ValueEnforcer.isTrue (() -> aValidationArtefact.getValidationType ().getBaseType ().isSchematron (),
+                          "Artifact is not a Schematron");
 
     m_sPrerequisiteXPath = sPrerequisiteXPath;
     // Create a copy on demand
@@ -145,12 +152,40 @@ public class ValidationExecutorSchematron extends
     return this;
   }
 
+  /**
+   * @return <code>true</code> if the SVRL created by the Schematron engine is validated against the
+   *         SVRL XML Schema, <code>false</code> if not. The default is
+   *         {@link #DEFAULT_VALIDATE_SVRL}.
+   * @since 12.0.4
+   */
+  public final boolean isValidateSVRL ()
+  {
+    return m_bValidateSVRL;
+  }
+
+  /**
+   * Enable or disable the validation of the created SVRL against the SVRL XML Schema. This must be
+   * disabled (the default) if the Schematron XSLT was created with a different ph-schematron version
+   * that emits SVRL not matching the currently bundled SVRL XML Schema.
+   *
+   * @param bValidateSVRL
+   *        <code>true</code> to validate the SVRL against the XML Schema, <code>false</code> to skip
+   *        the SVRL schema validation.
+   * @return this for chaining
+   * @since 12.0.4
+   */
+  @NonNull
+  public final ValidationExecutorSchematron setValidateSVRL (final boolean bValidateSVRL)
+  {
+    m_bValidateSVRL = bValidateSVRL;
+    return this;
+  }
+
   public void ensureItemIsInCache ()
   {
     if (m_bCacheSchematron)
     {
-      final AbstractSchematronResource aRes = _createSchematronResource (null, new ErrorList (), x -> {});
-      aRes.setUseCache (true);
+      final AbstractSchematronResource aRes = _createSchematronResource (null, new ErrorList (), true, x -> {});
       aRes.isValidSchematron ();
       LOGGER.debug ("ValidationExecutorSchematron " +
                     getValidationArtefact ().getRuleResourcePath () +
@@ -207,6 +242,7 @@ public class ValidationExecutorSchematron extends
   @NonNull
   private AbstractSchematronResource _createSchematronResource (@Nullable final Locale aLocale,
                                                                 @NonNull final ErrorList aErrorList,
+                                                                final boolean bUseCache,
                                                                 @NonNull final Consumer <ESchematronOutput> aSpecialOutputHdl)
   {
     final IValidationArtefact aArtefact = getValidationArtefact ();
@@ -214,52 +250,59 @@ public class ValidationExecutorSchematron extends
     // get the Schematron resource to be used for this validation artefact
     final IReadableResource aSCHRes = aArtefact.getRuleResource ();
 
+    final String sLanguageCode = aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()) ? aLocale
+                                                                                                              .getLanguage ()
+                                                                                                     : null;
+
     final IValidationType aVT = aArtefact.getValidationType ();
     if (aVT == EValidationType.SCHEMATRON_PURE)
     {
-      final SchematronResourcePure aPureSCH = new SchematronResourcePure (aSCHRes);
-      aPureSCH.setErrorHandler (new WrappedCollectingPSErrorHandler (aErrorList));
       // Don't cache to avoid that errors in the Schematron are hidden on
       // consecutive calls!
-      return aPureSCH;
+      return SchematronResourcePureXPath.builder (aSCHRes)
+                                        .errorHandler (new WrappedCollectingPSErrorHandler (aErrorList))
+                                        .useCache (bUseCache)
+                                        .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_SCH_ISO_XSLT2)
     {
-      final SchematronResourceSCH aSCHSCH = new SchematronResourceSCH (aSCHRes);
-      aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
-        aSCHSCH.setLanguageCode (aLocale.getLanguage ());
-      return aSCHSCH;
+      return SchematronResourceSCH.builder (aSCHRes)
+                                  .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                  .languageCode (sLanguageCode)
+                                  .useCache (bUseCache)
+                                  .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT1_XSLT2)
     {
-      final SchematronResourceSchXslt_XSLT2 aSCHSCH = new SchematronResourceSchXslt_XSLT2 (aSCHRes);
-      aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
-        aSCHSCH.setLanguageCode (aLocale.getLanguage ());
-      return aSCHSCH;
+      return SchematronResourceSchXslt_XSLT2.builder (aSCHRes)
+                                            .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                            .languageCode (sLanguageCode)
+                                            .useCache (bUseCache)
+                                            .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT2_XSLT3)
     {
-      final SchematronResourceSchXslt2 aSCHSCH = new SchematronResourceSchXslt2 (aSCHRes);
-      aSCHSCH.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      if (aLocale != null && StringHelper.isNotEmpty (aLocale.getLanguage ()))
-        aSCHSCH.setLanguageCode (aLocale.getLanguage ());
-      return aSCHSCH;
+      return SchematronResourceSchXslt2.builder (aSCHRes)
+                                       .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                       .languageCode (sLanguageCode)
+                                       .useCache (bUseCache)
+                                       .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_XSLT2)
     {
-      final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
-      aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
-      return aSCHXSLT;
+      return SchematronResourceXSLT.builder (aSCHRes)
+                                   .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                   .useCache (bUseCache)
+                                   .build ();
     }
     if (aVT == EValidationType.SCHEMATRON_OIOUBL)
     {
-      final SchematronResourceXSLT aSCHXSLT = new SchematronResourceXSLT (aSCHRes);
-      aSCHXSLT.setErrorListener (new WrappedCollectingTransformErrorListener (aErrorList));
       // Special output layout
       aSpecialOutputHdl.accept (ESchematronOutput.OIOUBL);
-      return aSCHXSLT;
+      return SchematronResourceXSLT.builder (aSCHRes)
+                                   .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
+                                   .useCache (bUseCache)
+                                   .build ();
     }
     throw new IllegalStateException ("Unsupported Schematron validation type: " + aVT);
   }
@@ -334,11 +377,11 @@ public class ValidationExecutorSchematron extends
     // No prerequisite or prerequisite matched
     final ErrorList aErrorList = new ErrorList ();
     final Wrapper <ESchematronOutput> aOutput = new Wrapper <> (ESchematronOutput.SVRL);
-    final AbstractSchematronResource aSCH = _createSchematronResource (aLocale, aErrorList, aOutput::set);
+    final AbstractSchematronResource aSCH = _createSchematronResource (aLocale,
+                                                                       aErrorList,
+                                                                       m_bCacheSchematron,
+                                                                       aOutput::set);
 
-    // Don't cache to avoid that errors in the Schematron are hidden on
-    // consecutive calls!
-    aSCH.setUseCache (m_bCacheSchematron);
     try
     {
       // Main application of Schematron
@@ -352,7 +395,8 @@ public class ValidationExecutorSchematron extends
         case SVRL:
         {
           final SchematronOutputType aSVRL = aDoc == null || aDoc.getDocumentElement () == null ? null
-                                                                                                : new SVRLMarshaller ().read (aDoc);
+                                                                                                : new SVRLMarshaller ().setUseSchema (m_bValidateSVRL)
+                                                                                                                       .read (aDoc);
           if (aSVRL != null)
           {
             // Valid Schematron - interpret result
@@ -482,6 +526,7 @@ public class ValidationExecutorSchematron extends
                                                                                m_aNamespaceContext);
     ret.setStopValidationOnError (isStopValidationOnError ());
     ret.setCacheArtefact (m_bCacheSchematron);
+    ret.setValidateSVRL (m_bValidateSVRL);
     if (m_aCustomErrorDetails != null)
       ret.addCustomErrorDetails (m_aCustomErrorDetails.getClone ());
     return ret;
@@ -496,6 +541,7 @@ public class ValidationExecutorSchematron extends
       return false;
     final ValidationExecutorSchematron rhs = (ValidationExecutorSchematron) o;
     return m_bCacheSchematron == rhs.m_bCacheSchematron &&
+           m_bValidateSVRL == rhs.m_bValidateSVRL &&
            EqualsHelper.equals (m_sPrerequisiteXPath, rhs.m_sPrerequisiteXPath) &&
            EqualsHelper.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
            EqualsHelper.equals (m_aCustomErrorDetails, rhs.m_aCustomErrorDetails);
@@ -506,6 +552,7 @@ public class ValidationExecutorSchematron extends
   {
     return HashCodeGenerator.getDerived (super.hashCode ())
                             .append (m_bCacheSchematron)
+                            .append (m_bValidateSVRL)
                             .append (m_sPrerequisiteXPath)
                             .append (m_aNamespaceContext)
                             .append (m_aCustomErrorDetails)
@@ -517,6 +564,7 @@ public class ValidationExecutorSchematron extends
   {
     return ToStringGenerator.getDerived (super.toString ())
                             .append ("CacheSchematron", m_bCacheSchematron)
+                            .append ("ValidateSVRL", m_bValidateSVRL)
                             .appendIfNotNull ("PrerequisiteXPath", m_sPrerequisiteXPath)
                             .appendIfNotNull ("NamespaceContext", m_aNamespaceContext)
                             .appendIfNotNull ("CustomErrorLevels", m_aCustomErrorDetails)

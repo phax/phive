@@ -64,6 +64,10 @@
     </dependency>
     <dependency>
       <groupId>com.helger.schematron</groupId>
+      <artifactId>ph-schematron-isosch</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.schematron</groupId>
       <artifactId>ph-schematron-schxslt</artifactId>
     </dependency>
     <dependency>
