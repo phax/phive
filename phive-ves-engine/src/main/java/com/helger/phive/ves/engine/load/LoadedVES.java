@@ -325,7 +325,7 @@ public final class LoadedVES
   /**
    * @return A new {@link IValidationExecutorSet} that can be used to perform validation. Never
    *         <code>null</code>.
-   * @since 12.0.4
+   * @since 12.1.0
    */
   @NonNull
   public IValidationExecutorSet <IValidationSource> createVES ()

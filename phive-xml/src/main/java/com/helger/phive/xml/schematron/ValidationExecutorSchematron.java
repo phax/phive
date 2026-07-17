@@ -94,8 +94,8 @@ public class ValidationExecutorSchematron extends
   public static final String IN_MEMORY_RESOURCE_NAME = "in-memory-data";
   /**
    * By default the SVRL created by the Schematron engine is <b>not</b> validated against the SVRL
-   * XML Schema, so that SVRL created by XSLTs built with a different ph-schematron version can still
-   * be read.
+   * XML Schema, so that SVRL created by XSLTs built with a different ph-schematron version can
+   * still be read.
    */
   public static final boolean DEFAULT_VALIDATE_SVRL = false;
 
@@ -156,7 +156,7 @@ public class ValidationExecutorSchematron extends
    * @return <code>true</code> if the SVRL created by the Schematron engine is validated against the
    *         SVRL XML Schema, <code>false</code> if not. The default is
    *         {@link #DEFAULT_VALIDATE_SVRL}.
-   * @since 12.0.4
+   * @since 12.1.0
    */
   public final boolean isValidateSVRL ()
   {
@@ -165,14 +165,14 @@ public class ValidationExecutorSchematron extends
 
   /**
    * Enable or disable the validation of the created SVRL against the SVRL XML Schema. This must be
-   * disabled (the default) if the Schematron XSLT was created with a different ph-schematron version
-   * that emits SVRL not matching the currently bundled SVRL XML Schema.
+   * disabled (the default) if the Schematron XSLT was created with a different ph-schematron
+   * version that emits SVRL not matching the currently bundled SVRL XML Schema.
    *
    * @param bValidateSVRL
-   *        <code>true</code> to validate the SVRL against the XML Schema, <code>false</code> to skip
-   *        the SVRL schema validation.
+   *        <code>true</code> to validate the SVRL against the XML Schema, <code>false</code> to
+   *        skip the SVRL schema validation.
    * @return this for chaining
-   * @since 12.0.4
+   * @since 12.1.0
    */
   @NonNull
   public final ValidationExecutorSchematron setValidateSVRL (final boolean bValidateSVRL)
