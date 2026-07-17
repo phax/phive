@@ -125,7 +125,10 @@ public final class PhiveHtmlHelperTest
                                .errorLocation (new SimpleLocation ("test.xml", 10, 5))
                                .build ());
     aErrorList.add (SingleError.builderWarn ().errorID ("WARN-001").errorText ("Deprecated element used").build ());
-    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 42);
+    final ValidationResult aVR = new ValidationResult (aVA,
+                                                       aErrorList,
+                                                       EExtendedValidity.INVALID,
+                                                       Duration.ofMillis (42));
 
     final ValidationResultList aVRL = _createEmptyVRL ();
     aVRL.add (aVR);
@@ -329,13 +332,16 @@ public final class PhiveHtmlHelperTest
                                .errorText ("Rule violated")
                                .errorLocation (new SimpleLocation ("doc.xml", 5, 10))
                                .build ());
-    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 30);
+    final ValidationResult aVR = new ValidationResult (aVA,
+                                                       aErrorList,
+                                                       EExtendedValidity.INVALID,
+                                                       Duration.ofMillis (30));
     final ValidationResultList aVRL = _createEmptyVRL ();
     aVRL.add (aVR);
 
     final IMicroElement eBody = new MicroElement ("body");
     new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                        .errorTestExtractor ( (err, loc) -> "//invoice/id != ''")
+                                        .errorTestExtractor ((err, loc) -> "//invoice/id != ''")
                                         .applyTo (eBody, aVRL);
 
     final String sHtml = MicroWriter.getNodeAsString (eBody,
@@ -470,7 +476,10 @@ public final class PhiveHtmlHelperTest
     final ValidationArtefact aVA = new ValidationArtefact (EValidationType.XSD,
                                                            new ClassPathResource ("test/dummy.xsd"));
     final ErrorList aErrorList = new ErrorList ();
-    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.VALID, 30);
+    final ValidationResult aVR = new ValidationResult (aVA,
+                                                       aErrorList,
+                                                       EExtendedValidity.VALID,
+                                                       Duration.ofMillis (30));
     final ValidationResultList aVRL = _createEmptyVRL ();
     aVRL.add (aVR);
 
@@ -532,7 +541,10 @@ public final class PhiveHtmlHelperTest
                                                                      1,
                                                                      1191))
                                  .build ());
-      final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 4321);
+      final ValidationResult aVR = new ValidationResult (aVA,
+                                                         aErrorList,
+                                                         EExtendedValidity.INVALID,
+                                                         Duration.ofMillis (4321));
       final ValidationResultList aVRL = _createEmptyVRL ();
       aVRL.add (aVR);
 

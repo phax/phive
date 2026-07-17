@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.executor;
 
+import java.time.Duration;
+
 import org.jspecify.annotations.NonNull;
 
 import com.helger.annotation.Nonnegative;
@@ -83,11 +85,20 @@ public abstract class AbstractValidationExecutor <SOURCETYPE extends IValidation
   }
 
   @NonNull
+  @Deprecated (since = "12.1.0", forRemoval = true)
   protected final ValidationResult createValidationResult (@NonNull final IErrorList aErrorList,
                                                            @NonNull final EExtendedValidity eValidity,
                                                            @Nonnegative final long nDurationMS)
   {
-    return new ValidationResult (m_aValidationArtefact, aErrorList, eValidity, nDurationMS);
+    return createValidationResult (aErrorList, eValidity, Duration.ofMillis (nDurationMS));
+  }
+
+  @NonNull
+  protected final ValidationResult createValidationResult (@NonNull final IErrorList aErrorList,
+                                                           @NonNull final EExtendedValidity eValidity,
+                                                           @NonNull final Duration aDuration)
+  {
+    return new ValidationResult (m_aValidationArtefact, aErrorList, eValidity, aDuration);
   }
 
   @Override

@@ -79,10 +79,10 @@ public class ValidationExecutorXSDPartial extends
                                        @NonNull final XSDPartialContext aPartialContext)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
-                           "Artifact is not an XSD");
-    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().isContextRequired (),
-                           "Artifact must require a validation context");
+    ValueEnforcer.isTrue (() -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
+                          "Artifact is not an XSD");
+    ValueEnforcer.isTrue (() -> aValidationArtefact.getValidationType ().isContextRequired (),
+                          "Artifact must require a validation context");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
     ValueEnforcer.notNull (aPartialContext, "PartialContext");
 
@@ -155,7 +155,7 @@ public class ValidationExecutorXSDPartial extends
       // No match found - nothing to do
       return createValidationResult (aErrorList,
                                      aValidityDeterminator.getValidity (this, aErrorList),
-                                     aSW.stopAndGetMillis ());
+                                     aSW.stopAndGetDuration ());
     }
     // Find the XML schema required for validation
     // as we don't have a node, we need to trust the implementation class
@@ -196,7 +196,7 @@ public class ValidationExecutorXSDPartial extends
     // Build result object
     return createValidationResult (aErrorList,
                                    aValidityDeterminator.getValidity (this, aErrorList),
-                                   aSW.stopAndGetMillis ());
+                                   aSW.stopAndGetDuration ());
   }
 
   @NonNull

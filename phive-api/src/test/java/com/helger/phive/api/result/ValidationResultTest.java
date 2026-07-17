@@ -23,6 +23,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 
 import org.jspecify.annotations.NonNull;
 import org.junit.Test;
@@ -63,7 +64,10 @@ public final class ValidationResultTest
     final ErrorList aErrorList = new ErrorList ();
     aErrorList.add (SingleError.builderError ().errorText ("Test error").build ());
 
-    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, 100);
+    final ValidationResult aVR = new ValidationResult (aVA,
+                                                       aErrorList,
+                                                       EExtendedValidity.INVALID,
+                                                       Duration.ofMillis (100));
     assertSame (aVA, aVR.getValidationArtefact ());
     assertSame (aErrorList, aVR.getErrorList ());
     assertSame (EExtendedValidity.INVALID, aVR.getValidity ());
@@ -78,7 +82,7 @@ public final class ValidationResultTest
     final IValidationArtefact aVA = _createVA ();
     final ErrorList aErrorList = new ErrorList ();
 
-    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.VALID, 0);
+    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.VALID, Duration.ZERO);
     assertSame (EExtendedValidity.VALID, aVR.getValidity ());
     assertEquals (0, aVR.getDurationMS ());
     assertFalse (aVR.getValidity ().isSkipped ());
@@ -104,7 +108,10 @@ public final class ValidationResultTest
     final IValidationArtefact aVA = _createVA ();
     final ErrorList aErrorList = new ErrorList ();
 
-    final ValidationResult aVR = new ValidationResult (aVA, aErrorList, EExtendedValidity.UNCLEAR, 5);
+    final ValidationResult aVR = new ValidationResult (aVA,
+                                                       aErrorList,
+                                                       EExtendedValidity.UNCLEAR,
+                                                       Duration.ofMillis (5));
     assertSame (EExtendedValidity.UNCLEAR, aVR.getValidity ());
     assertFalse (aVR.getValidity ().isSkipped ());
   }

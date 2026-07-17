@@ -115,8 +115,8 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   public void setValidationExecutorDoCache (final boolean bCache)
   {
     for (final IValidationExecutor <SOURCETYPE> aExecutor : m_aList)
-      if (aExecutor instanceof IValidationExecutorCacheSupport)
-        ((IValidationExecutorCacheSupport) aExecutor).setCacheArtefact (bCache);
+      if (aExecutor instanceof final IValidationExecutorCacheSupport aVECS)
+        aVECS.setCacheArtefact (bCache);
   }
 
   @NonNull
@@ -192,8 +192,8 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
   }
 
   /**
-   * Create a derived VES from an existing VES. This means that only Schematrons
-   * can be added, but the XSDs are taken from the base VES only.
+   * Create a derived VES from an existing VES. This means that only Schematrons can be added, but
+   * the XSDs are taken from the base VES only.
    *
    * @param aBaseVES
    *        The base VES to copy from. May not be <code>null</code>.
@@ -204,8 +204,7 @@ public class ValidationExecutorSet <SOURCETYPE extends IValidationSource> implem
    * @param aStatus
    *        The status of the VES. May not be <code>null</code>.
    * @param aValidationExecutors
-   *        The resources to be associated with the VES. May not be
-   *        <code>null</code>.
+   *        The resources to be associated with the VES. May not be <code>null</code>.
    * @return The newly created VES. Never <code>null</code>.
    */
   @NonNull

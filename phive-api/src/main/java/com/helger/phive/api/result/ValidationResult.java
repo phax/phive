@@ -16,6 +16,8 @@
  */
 package com.helger.phive.api.result;
 
+import java.time.Duration;
+
 import org.jspecify.annotations.NonNull;
 
 import com.helger.annotation.Nonnegative;
@@ -40,7 +42,7 @@ public class ValidationResult
   private final IValidationArtefact m_aValidationArtefact;
   private final IErrorList m_aErrorList;
   private final EExtendedValidity m_eValidity;
-  private final long m_nDurationMS;
+  private final Duration m_aDuration;
 
   /**
    * Constructor for non-skipped results
@@ -54,20 +56,42 @@ public class ValidationResult
    * @param nDurationMS
    *        The number of milliseconds it took to get the validation results. Must be &ge; 0.
    */
+  @Deprecated (since = "12.1.0", forRemoval = true)
   public ValidationResult (@NonNull final IValidationArtefact aValidationArtefact,
                            @NonNull final IErrorList aErrorList,
                            @NonNull final EExtendedValidity eValidity,
                            @Nonnegative final long nDurationMS)
   {
+    this (aValidationArtefact, aErrorList, eValidity, Duration.ofMillis (nDurationMS));
+  }
+
+  /**
+   * Constructor for non-skipped results
+   *
+   * @param aValidationArtefact
+   *        The validation artefact that was applied. May not be <code>null</code>.
+   * @param aErrorList
+   *        The list of errors applying the validation artefact. May not be <code>null</code>.
+   * @param eValidity
+   *        The validity determined by a validity determinator. May not be <code>null</code>.
+   * @param aDuration
+   *        The duration it took to get the validation results. May not be <code>null</code>.
+   * @since 12.1.0
+   */
+  public ValidationResult (@NonNull final IValidationArtefact aValidationArtefact,
+                           @NonNull final IErrorList aErrorList,
+                           @NonNull final EExtendedValidity eValidity,
+                           @NonNull final Duration aDuration)
+  {
     ValueEnforcer.notNull (aValidationArtefact, "ValidationArtefact");
     ValueEnforcer.notNull (aErrorList, "ErrorList");
     ValueEnforcer.notNull (eValidity, "Validity");
-    ValueEnforcer.isGE0 (nDurationMS, "DurationMS");
+    ValueEnforcer.notNull (aDuration, "Duration");
 
     m_aValidationArtefact = aValidationArtefact;
     m_aErrorList = aErrorList;
     m_eValidity = eValidity;
-    m_nDurationMS = nDurationMS;
+    m_aDuration = aDuration;
   }
 
   /**
@@ -110,13 +134,23 @@ public class ValidationResult
   }
 
   /**
+   * @return The duration it took to create this validation result. Never <code>null</code>.
+   * @since 12.1.0
+   */
+  @NonNull
+  public final Duration getDuration ()
+  {
+    return m_aDuration;
+  }
+
+  /**
    * @return The duration in milliseconds it took to create this validation result. Always &ge; 0.
    * @since 10.1.0
    */
   @Nonnegative
   public final long getDurationMS ()
   {
-    return m_nDurationMS;
+    return m_aDuration.toMillis ();
   }
 
   @Override
@@ -125,7 +159,7 @@ public class ValidationResult
     return new ToStringGenerator (this).append ("ValidationArtefact", m_aValidationArtefact)
                                        .append ("ErrorList", m_aErrorList)
                                        .append ("Validity", m_eValidity)
-                                       .append ("DurationMS", m_nDurationMS)
+                                       .append ("Duration", m_aDuration)
                                        .getToString ();
   }
 
@@ -139,6 +173,6 @@ public class ValidationResult
   @NonNull
   public static ValidationResult createSkippedResult (@NonNull final IValidationArtefact aValidationArtefact)
   {
-    return new ValidationResult (aValidationArtefact, new ErrorList (), EExtendedValidity.SKIPPED, 0);
+    return new ValidationResult (aValidationArtefact, new ErrorList (), EExtendedValidity.SKIPPED, Duration.ZERO);
   }
 }

@@ -710,7 +710,10 @@ public final class PhiveJsonHelper
 
           final long nDurationMS = aResultObj.getAsLong (CPhiveJson.JSON_DURATION_MS);
 
-          final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity, nDurationMS);
+          final ValidationResult aVR = new ValidationResult (aVA,
+                                                             aErrorList,
+                                                             eValidity,
+                                                             Duration.ofMillis (nDurationMS));
           ret.add (aVR);
         }
       }

@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 
 import org.jspecify.annotations.NonNull;
 import org.junit.Test;
@@ -75,7 +76,7 @@ public final class ValidationSummaryTest
     final ErrorList aErrorList = new ErrorList ();
     aErrorList.add (SingleError.builderError ().errorText ("Error 1").build ());
     aErrorList.add (SingleError.builderError ().errorText ("Error 2").build ());
-    aVRL.add (new ValidationResult (_createVA (), aErrorList, EExtendedValidity.INVALID, 10));
+    aVRL.add (new ValidationResult (_createVA (), aErrorList, EExtendedValidity.INVALID, Duration.ofMillis (10)));
 
     final ValidationSummary aSummary = ValidationSummary.create (aVRL);
     assertEquals (0, aSummary.getWarningCount ());
@@ -90,7 +91,7 @@ public final class ValidationSummaryTest
     final ValidationResultList aVRL = ValidationResultList.createNoSource ();
     final ErrorList aErrorList = new ErrorList ();
     aErrorList.add (SingleError.builderWarn ().errorText ("Warn 1").build ());
-    aVRL.add (new ValidationResult (_createVA (), aErrorList, EExtendedValidity.VALID, 5));
+    aVRL.add (new ValidationResult (_createVA (), aErrorList, EExtendedValidity.VALID, Duration.ofMillis (5)));
 
     final ValidationSummary aSummary = ValidationSummary.create (aVRL);
     assertEquals (1, aSummary.getWarningCount ());
@@ -106,11 +107,11 @@ public final class ValidationSummaryTest
 
     final ErrorList aErrorList1 = new ErrorList ();
     aErrorList1.add (SingleError.builderWarn ().errorText ("Warn").build ());
-    aVRL.add (new ValidationResult (_createVA (), aErrorList1, EExtendedValidity.VALID, 5));
+    aVRL.add (new ValidationResult (_createVA (), aErrorList1, EExtendedValidity.VALID, Duration.ofMillis (5)));
 
     final ErrorList aErrorList2 = new ErrorList ();
     aErrorList2.add (SingleError.builderError ().errorText ("Error").build ());
-    aVRL.add (new ValidationResult (_createVA (), aErrorList2, EExtendedValidity.INVALID, 10));
+    aVRL.add (new ValidationResult (_createVA (), aErrorList2, EExtendedValidity.INVALID, Duration.ofMillis (10)));
 
     final ValidationSummary aSummary = ValidationSummary.create (aVRL);
     // warn is also considered a warning, but error is also >= warn so it counts as warning too

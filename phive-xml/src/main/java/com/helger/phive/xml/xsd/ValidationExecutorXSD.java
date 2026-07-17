@@ -61,8 +61,8 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
                                 @NonNull final Supplier <? extends Schema> aSchemaProvider)
   {
     super (aValidationArtefact);
-    ValueEnforcer.isTrue ( () -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
-                           "Artifact is not an XSD");
+    ValueEnforcer.isTrue (() -> aValidationArtefact.getValidationType ().getBaseType ().isXSD (),
+                          "Artifact is not an XSD");
     ValueEnforcer.notNull (aSchemaProvider, "SchemaProvider");
 
     m_aSchemaProvider = aSchemaProvider;
@@ -118,7 +118,7 @@ public class ValidationExecutorXSD extends AbstractValidationExecutor <IValidati
     // Build result object
     return createValidationResult (aErrorList,
                                    aValidityDeterminator.getValidity (this, aErrorList),
-                                   aSW.stopAndGetMillis ());
+                                   aSW.stopAndGetDuration ());
   }
 
   @NonNull

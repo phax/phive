@@ -371,7 +371,7 @@ public class ValidationExecutorSchematron extends
                                                                .build ());
         return createValidationResult (aErrorList,
                                        aValidityDeterminator.getValidity (this, aErrorList),
-                                       aSW.stopAndGetMillis ());
+                                       aSW.stopAndGetDuration ());
       }
     }
     // No prerequisite or prerequisite matched
@@ -514,7 +514,7 @@ public class ValidationExecutorSchematron extends
     }
     return createValidationResult (aErrorList,
                                    aValidityDeterminator.getValidity (this, aErrorList),
-                                   aSW.stopAndGetMillis ());
+                                   aSW.stopAndGetDuration ());
   }
 
   @NonNull

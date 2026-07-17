@@ -739,7 +739,7 @@ public final class PhiveXMLHelper
                                                                                                       CPhiveXML.XML_DURATION_MS),
                                                               0);
 
-        final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity, nDurationMS);
+        final ValidationResult aVR = new ValidationResult (aVA, aErrorList, eValidity, Duration.ofMillis (nDurationMS));
         ret.add (aVR);
       }
     }
