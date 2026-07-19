@@ -101,8 +101,8 @@ public final class ValidationExecutorSchematronPartialSourceFuncTest
     aVESRegistry.registerValidationExecutorSet (ValidationExecutorSet.create (aVESID,
                                                                               "Schematron Partial Source Test",
                                                                               ValidationExecutorSetStatus.createValidNow (),
-                                                                              ValidationExecutorSchematron.createSCH (new ClassPathResource ("test-schematron/check-invoice.sch"),
-                                                                                                                      null)));
+                                                                              ValidationExecutorSchematronBuilder.schIso (new ClassPathResource ("test-schematron/check-invoice.sch"))
+                                                                                                                 .build ()));
     final IValidationExecutorSet <IValidationSourceXML> aVES = aVESRegistry.getOfID (aVESID);
     assertNotNull (aVES);
     return aVES;

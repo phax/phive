@@ -229,9 +229,25 @@ public class ValidationExecutorSchematronBuilder implements IBuilder <Validation
    * @param aRes
    *        The resource pointing to the Schematron rules. May not be <code>null</code>.
    * @return A new builder instance. Never <code>null</code>.
+   * @deprecated Use {@link #pureXPath2(IReadableResource)} instead
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematronBuilder pure (@NonNull final IReadableResource aRes)
+  {
+    return pureXPath2 (aRes);
+  }
+
+  /**
+   * Create a new builder with the validation type set to
+   * {@link EValidationType#SCHEMATRON_PURE_XPATH2}.
+   *
+   * @param aRes
+   *        The resource pointing to the Schematron rules. May not be <code>null</code>.
+   * @return A new builder instance. Never <code>null</code>.
+   */
+  @NonNull
+  public static ValidationExecutorSchematronBuilder pureXPath2 (@NonNull final IReadableResource aRes)
   {
     return new ValidationExecutorSchematronBuilder ().validationType (EValidationType.SCHEMATRON_PURE_XPATH2)
                                                      .resource (aRes);

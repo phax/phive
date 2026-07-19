@@ -51,7 +51,6 @@ import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.IValidationType;
 import com.helger.phive.api.artefact.IValidationArtefact;
-import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.execute.IValidationExecutorCacheSupport;
 import com.helger.phive.api.executor.AbstractValidationExecutor;
 import com.helger.phive.api.executor.IValidationExecutor;
@@ -581,13 +580,12 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematron createPure (@NonNull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_PURE_XPATH2, aRes),
-                                             null,
-                                             aNamespaceContext);
+    return ValidationExecutorSchematronBuilder.pureXPath2 (aRes).namespaceContext (aNamespaceContext).build ();
   }
 
   /**
@@ -602,13 +600,12 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematron createSCH (@NonNull final IReadableResource aRes,
                                                         @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCH_ISO_XSLT2, aRes),
-                                             null,
-                                             aNamespaceContext);
+    return ValidationExecutorSchematronBuilder.schIso (aRes).namespaceContext (aNamespaceContext).build ();
   }
 
   /**
@@ -640,13 +637,12 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 12.0.3
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematron createSchXslt1 (@NonNull final IReadableResource aRes,
                                                              @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT1_XSLT2, aRes),
-                                             null,
-                                             aNamespaceContext);
+    return ValidationExecutorSchematronBuilder.schXslt1 (aRes).namespaceContext (aNamespaceContext).build ();
   }
 
   /**
@@ -659,13 +655,12 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 11.1.1
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematron createSchXslt2 (@NonNull final IReadableResource aRes,
                                                              @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_SCHXSLT2_XSLT3, aRes),
-                                             null,
-                                             aNamespaceContext);
+    return ValidationExecutorSchematronBuilder.schXslt2 (aRes).namespaceContext (aNamespaceContext).build ();
   }
 
   /**
@@ -679,6 +674,7 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematron createXSLT (@NonNull final IReadableResource aRes,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
@@ -700,14 +696,16 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematron createXSLT (@NonNull final IReadableResource aRes,
                                                          @Nullable final String sPrerequisiteXPath,
                                                          @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_XSLT2, aRes),
-                                             sPrerequisiteXPath,
-                                             aNamespaceContext);
+    return ValidationExecutorSchematronBuilder.xslt2 (aRes)
+                                              .prerequisiteXPath (sPrerequisiteXPath)
+                                              .namespaceContext (aNamespaceContext)
+                                              .build ();
   }
 
   /**
@@ -720,12 +718,11 @@ public class ValidationExecutorSchematron extends
    * @return A new instance and never <code>null</code>.
    * @since 6.0.4
    */
+  @Deprecated (forRemoval = true, since = "12.1.1")
   @NonNull
   public static ValidationExecutorSchematron createOIOUBL (@NonNull final IReadableResource aRes,
                                                            @Nullable final IIterableNamespaceContext aNamespaceContext)
   {
-    return new ValidationExecutorSchematron (new ValidationArtefact (EValidationType.SCHEMATRON_OIOUBL, aRes),
-                                             null,
-                                             aNamespaceContext);
+    return ValidationExecutorSchematronBuilder.oioubl (aRes).namespaceContext (aNamespaceContext).build ();
   }
 }

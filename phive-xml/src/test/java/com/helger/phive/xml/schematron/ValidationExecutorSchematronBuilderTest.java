@@ -80,7 +80,7 @@ public class ValidationExecutorSchematronBuilderTest
   @Test
   public void testStaticFactoryPure ()
   {
-    final ValidationExecutorSchematron aExec = ValidationExecutorSchematronBuilder.pure (RES).build ();
+    final ValidationExecutorSchematron aExec = ValidationExecutorSchematronBuilder.pureXPath2 (RES).build ();
     assertNotNull (aExec);
     assertEquals (EValidationType.SCHEMATRON_PURE_XPATH2, aExec.getValidationArtefact ().getValidationType ());
   }
@@ -155,7 +155,7 @@ public class ValidationExecutorSchematronBuilderTest
   @Test
   public void testMultipleCustomErrorDetails ()
   {
-    final ValidationExecutorSchematron aExec = ValidationExecutorSchematronBuilder.pure (RES)
+    final ValidationExecutorSchematron aExec = ValidationExecutorSchematronBuilder.pureXPath2 (RES)
                                                                                   .customErrorDetail ("err1",
                                                                                                       CustomErrorDetails.of (EErrorLevel.WARN))
                                                                                   .customErrorDetail ("err2",
@@ -166,12 +166,13 @@ public class ValidationExecutorSchematronBuilderTest
     assertNotNull (aExec);
   }
 
+  @SuppressWarnings ("removal")
   @Test
   public void testEquivalenceWithStaticFactoryMethods ()
   {
     // Builder-created should be equivalent to static factory-created
     final ValidationExecutorSchematron aFromFactory = ValidationExecutorSchematron.createPure (RES, null);
-    final ValidationExecutorSchematron aFromBuilder = ValidationExecutorSchematronBuilder.pure (RES).build ();
+    final ValidationExecutorSchematron aFromBuilder = ValidationExecutorSchematronBuilder.pureXPath2 (RES).build ();
     assertEquals (aFromFactory, aFromBuilder);
   }
 }

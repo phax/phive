@@ -44,6 +44,7 @@ import com.helger.phive.ves.v10.VesOutputType;
 import com.helger.phive.ves.v10.VesSchematronType;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
+import com.helger.phive.xml.schematron.ValidationExecutorSchematronBuilder;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.ESchematronEngine;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
@@ -124,10 +125,14 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
 
           aExecutorSCH = switch (eEngine)
           {
-            case PURE_XPATH -> ValidationExecutorSchematron.createPure (aRepoRes, aNSCtx);
-            case ISO_SCHEMATRON -> ValidationExecutorSchematron.createSCH (aRepoRes, aNSCtx);
-            case SCHXSLT1 -> ValidationExecutorSchematron.createSchXslt1 (aRepoRes, aNSCtx);
-            case SCHXSLT2 -> ValidationExecutorSchematron.createSchXslt2 (aRepoRes, aNSCtx);
+            case PURE_XPATH -> ValidationExecutorSchematronBuilder.pureXPath2 (aRepoRes)
+                                                                  .namespaceContext (aNSCtx)
+                                                                  .build ();
+            case ISO_SCHEMATRON -> ValidationExecutorSchematronBuilder.schIso (aRepoRes)
+                                                                      .namespaceContext (aNSCtx)
+                                                                      .build ();
+            case SCHXSLT1 -> ValidationExecutorSchematronBuilder.schXslt1 (aRepoRes).namespaceContext (aNSCtx).build ();
+            case SCHXSLT2 -> ValidationExecutorSchematronBuilder.schXslt2 (aRepoRes).namespaceContext (aNSCtx).build ();
             default -> throw new IllegalStateException ("Unsupported Schematron engine " + eEngine);
           };
           break;
@@ -145,7 +150,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
           }
 
           // Simple
-          aExecutorSCH = ValidationExecutorSchematron.createXSLT (aRepoRes, aNSCtx);
+          aExecutorSCH = ValidationExecutorSchematronBuilder.xslt2 (aRepoRes).namespaceContext (aNSCtx).build ();
           break;
         }
         default:

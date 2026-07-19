@@ -362,6 +362,9 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v12.1.1 - work in progress
+* Deprecated static `ValidationExecutorSchematron.create...` methods in favour of `ValidationExecutorSchematronBuilder` 
+
 v12.1.0 - 2026-07-17
 * Updated to ph-schematron v10.x
 * Added the optional `stopOnError` attribute to the `xsd` and `schematron` elements of the VES XML, so the "stop on error" behaviour can be customized per validation.
