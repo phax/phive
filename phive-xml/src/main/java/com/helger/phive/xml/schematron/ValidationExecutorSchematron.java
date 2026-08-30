@@ -59,24 +59,17 @@ import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
-import com.helger.schematron.errorhandler.WrappedCollectingPSErrorHandler;
-import com.helger.schematron.pure.SchematronResourcePureXPath;
-import com.helger.schematron.sch.SchematronResourceSCH;
-import com.helger.schematron.schxslt.xslt2.SchematronResourceSchXslt_XSLT2;
-import com.helger.schematron.schxslt2.xslt.SchematronResourceSchXslt2;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
 import com.helger.schematron.svrl.SVRLResourceError.SVRLErrorBuilder;
 import com.helger.schematron.svrl.SVRLSuccessfulReport;
 import com.helger.schematron.svrl.jaxb.SchematronOutputType;
-import com.helger.schematron.xslt.SchematronResourceXSLT;
 import com.helger.xml.XMLHelper;
 import com.helger.xml.namespace.IIterableNamespaceContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 import com.helger.xml.serialize.read.DOMReaderSettings;
 import com.helger.xml.serialize.write.XMLWriter;
-import com.helger.xml.transform.WrappedCollectingTransformErrorListener;
 import com.helger.xml.xpath.XPathExpressionHelper;
 import com.helger.xml.xpath.XPathHelper;
 
@@ -258,50 +251,29 @@ public class ValidationExecutorSchematron extends
     {
       // Don't cache to avoid that errors in the Schematron are hidden on
       // consecutive calls!
-      return SchematronResourcePureXPath.builder (aSCHRes)
-                                        .errorHandler (new WrappedCollectingPSErrorHandler (aErrorList))
-                                        .useCache (bUseCache)
-                                        .build ();
+      return SchematronResourceCreators.Pure.create (aSCHRes, aErrorList, bUseCache);
     }
     if (aVT == EValidationType.SCHEMATRON_SCH_ISO_XSLT2)
     {
-      return SchematronResourceSCH.builder (aSCHRes)
-                                  .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
-                                  .languageCode (sLanguageCode)
-                                  .useCache (bUseCache)
-                                  .build ();
+      return SchematronResourceCreators.ISO.create (aSCHRes, aErrorList, sLanguageCode, bUseCache);
     }
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT1_XSLT2)
     {
-      return SchematronResourceSchXslt_XSLT2.builder (aSCHRes)
-                                            .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
-                                            .languageCode (sLanguageCode)
-                                            .useCache (bUseCache)
-                                            .build ();
+      return SchematronResourceCreators.SchXslt1.create (aSCHRes, aErrorList, sLanguageCode, bUseCache);
     }
     if (aVT == EValidationType.SCHEMATRON_SCHXSLT2_XSLT3)
     {
-      return SchematronResourceSchXslt2.builder (aSCHRes)
-                                       .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
-                                       .languageCode (sLanguageCode)
-                                       .useCache (bUseCache)
-                                       .build ();
+      return SchematronResourceCreators.SchXslt2.create (aSCHRes, aErrorList, sLanguageCode, bUseCache);
     }
     if (aVT == EValidationType.SCHEMATRON_XSLT2)
     {
-      return SchematronResourceXSLT.builder (aSCHRes)
-                                   .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
-                                   .useCache (bUseCache)
-                                   .build ();
+      return SchematronResourceCreators.XSLT.create (aSCHRes, aErrorList, bUseCache);
     }
     if (aVT == EValidationType.SCHEMATRON_OIOUBL)
     {
       // Special output layout
       aSpecialOutputHdl.accept (ESchematronOutput.OIOUBL);
-      return SchematronResourceXSLT.builder (aSCHRes)
-                                   .errorListener (new WrappedCollectingTransformErrorListener (aErrorList))
-                                   .useCache (bUseCache)
-                                   .build ();
+      return SchematronResourceCreators.XSLT.create (aSCHRes, aErrorList, bUseCache);
     }
     throw new IllegalStateException ("Unsupported Schematron validation type: " + aVT);
   }
