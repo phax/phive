@@ -35,9 +35,8 @@ public final class ValidityDeterminatorRegistry
   {}
 
   /**
-   * Calculate the validity of an error list like this: if at least one entry of
-   * error level "error" or more severe is contained, the overall validity is
-   * invalid.
+   * Calculate the validity of an error list like this: if at least one entry of error level "error"
+   * or more severe is contained, the overall validity is invalid.
    *
    * @param aErrorList
    *        The error list to scan. May not be <code>null</code>.

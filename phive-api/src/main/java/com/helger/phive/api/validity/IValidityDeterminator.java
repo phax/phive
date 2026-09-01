@@ -37,20 +37,19 @@ public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
    * Get the validity of the provided error list.
    *
    * @param aExecutor
-   *        The validation executor for which the validity state should be
-   *        determined. This gives access to the underlying rule resource and
-   *        the respective validation type. May be <code>null</code>.
+   *        The validation executor for which the validity state should be determined. This gives
+   *        access to the underlying rule resource and the respective validation type. May be
+   *        <code>null</code>.
    * @param aErrorList
-   *        The error list to be evaluated. May not be <code>null</code> but
-   *        empty.
+   *        The error list to be evaluated. May not be <code>null</code> but empty.
    * @return Never <code>null</code>.
    */
   @NonNull
   EExtendedValidity getValidity (@Nullable IValidationExecutor <SOURCETYPE> aExecutor, @NonNull IErrorList aErrorList);
 
   /**
-   * @return A validity determinator that marks entries with at least one error
-   *         as INVALID and others as VALID. It contains no uncertainty.
+   * @return A validity determinator that marks entries with at least one error as INVALID and
+   *         others as VALID. It contains no uncertainty.
    * @see ValidityDeterminatorRegistry#getValidityOneErrorInvalid(IErrorList)
    */
   static <ST extends IValidationSource> IValidityDeterminator <ST> createCertainOneErrorInvalid ()
@@ -59,8 +58,7 @@ public interface IValidityDeterminator <SOURCETYPE extends IValidationSource>
   }
 
   /**
-   * @return The default determinator. It's
-   *         {@link #createCertainOneErrorInvalid()}
+   * @return The default determinator. It's {@link #createCertainOneErrorInvalid()}
    */
   @NonNull
   static <ST extends IValidationSource> IValidityDeterminator <ST> createDefault ()

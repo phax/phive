@@ -29,8 +29,7 @@ import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 
 /**
- * This class contains the collected validation results, including metadata on
- * the execution.
+ * This class contains the collected validation results, including metadata on the execution.
  *
  * @author Philip Helger
  */
@@ -52,8 +51,8 @@ public final class VESValidationResult
    * @param aValidationSource
    *        The source that was validated. May not be <code>null</code>.
    * @param aStartDateTime
-   *        When did it all start. This is the timestamp when loading begins.
-   *        May not be <code>null</code>.
+   *        When did it all start. This is the timestamp when loading begins. May not be
+   *        <code>null</code>.
    * @param aLoadingDuration
    *        The loading duration. May not be <code>null</code>.
    * @param aValidationDuration

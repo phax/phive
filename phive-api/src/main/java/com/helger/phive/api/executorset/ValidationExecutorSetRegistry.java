@@ -86,12 +86,12 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
 
   public final boolean isResolvePseudoVersions ()
   {
-    return m_aRWLock.readLockedBoolean ( () -> m_bResolvePseudoVersions);
+    return m_aRWLock.readLockedBoolean (() -> m_bResolvePseudoVersions);
   }
 
   public final void setResolvePseudoVersions (final boolean b)
   {
-    m_aRWLock.writeLocked ( () -> m_bResolvePseudoVersions = b);
+    m_aRWLock.writeLocked (() -> m_bResolvePseudoVersions = b);
   }
 
   /**
@@ -109,7 +109,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     ValueEnforcer.notNull (aVES, "VES");
 
     final DVRCoordinate aKey = aVES.getID ();
-    m_aRWLock.writeLocked ( () -> {
+    m_aRWLock.writeLocked (() -> {
       if (m_aMap.containsKey (aKey))
         throw new IllegalStateException ("Another validation executor set with the ID '" +
                                          aKey.getAsSingleID () +
@@ -133,7 +133,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     if (aDVRCoordinate == null)
       return EChange.UNCHANGED;
 
-    final EChange ret = m_aRWLock.writeLockedGet ( () -> m_aMap.removeObject (aDVRCoordinate));
+    final EChange ret = m_aRWLock.writeLockedGet (() -> m_aMap.removeObject (aDVRCoordinate));
     if (LOGGER.isDebugEnabled ())
       LOGGER.debug ((ret.isChanged () ? "Successfully unregistered" : "Failed to unregister") +
                     " validation executor set '" +
@@ -153,13 +153,13 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
   @ReturnsMutableCopy
   public ICommonsList <IValidationExecutorSet <SOURCETYPE>> findAll (@NonNull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aMap.copyOfValues (aFilter));
+    return m_aRWLock.readLockedGet (() -> m_aMap.copyOfValues (aFilter));
   }
 
   @Nullable
   public IValidationExecutorSet <SOURCETYPE> findFirst (@NonNull final Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter)
   {
-    return m_aRWLock.readLockedGet ( () -> m_aMap.findFirstValue (e -> aFilter.test (e.getValue ())));
+    return m_aRWLock.readLockedGet (() -> m_aMap.findFirstValue (e -> aFilter.test (e.getValue ())));
   }
 
   @Nullable
@@ -177,7 +177,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
     final ICommonsNavigableMap <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aMatching = new CommonsTreeMap <> (aComparator);
 
     // Get all versions matching Group ID and Artifact ID only
-    m_aRWLock.readLocked ( () -> {
+    m_aRWLock.readLocked (() -> {
       for (final Map.Entry <DVRCoordinate, IValidationExecutorSet <SOURCETYPE>> aEntry : m_aMap.entrySet ())
       {
         final DVRCoordinate aDVRCoordinate = aEntry.getKey ();
@@ -354,7 +354,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
       return null;
 
     // Try exact match first
-    IValidationExecutorSet <SOURCETYPE> ret = m_aRWLock.readLockedGet ( () -> m_aMap.get (aDVRCoordinate));
+    IValidationExecutorSet <SOURCETYPE> ret = m_aRWLock.readLockedGet (() -> m_aMap.get (aDVRCoordinate));
 
     // No exact match - check if it is a pseudo version
     if (ret == null && aDVRCoordinate.getVersionObj ().isPseudoVersion ())

@@ -123,9 +123,9 @@ public class PhiveHtmlHelper
    * test expressions should be included. Example:
    *
    * <pre>
-   * helper.errorTestExtractor ( (error, locale) -&gt; error instanceof SVRLResourceError ? ((SVRLResourceError) error)
-   *                                                                                                                .getTest ()
-   *                                                                                   : null);
+   * helper.errorTestExtractor ((error, locale) -&gt; error instanceof SVRLResourceError ? ((SVRLResourceError) error)
+   *                                                                                                               .getTest ()
+   *                                                                                  : null);
    * </pre>
    *
    * @param a

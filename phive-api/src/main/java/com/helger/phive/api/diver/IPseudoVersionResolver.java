@@ -32,17 +32,15 @@ import org.jspecify.annotations.Nullable;
 public interface IPseudoVersionResolver <RESULTTYPE>
 {
   /**
-   * Get the element with the oldest (lowest) version number (including
-   * snapshots).
+   * Get the element with the oldest (lowest) version number (including snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
    * @param sArtifactID
    *        VES Artefact ID to use. May be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
+   *        An optional set of Version numbers not to consider. This may be used to exclude certain
+   *        versions from being returned. May be <code>null</code>.
    * @return <code>null</code> if no matching version was found.
    */
   @Nullable
@@ -51,17 +49,15 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                @Nullable Set <String> aVersionsToIgnore);
 
   /**
-   * Get the element with the oldest (lowest) version number (excluding
-   * snapshots).
+   * Get the element with the oldest (lowest) version number (excluding snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
    * @param sArtifactID
    *        VES Artefact ID to use. May be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
+   *        An optional set of Version numbers not to consider. This may be used to exclude certain
+   *        versions from being returned. May be <code>null</code>.
    * @return <code>null</code> if no matching version was found.
    */
   @Nullable
@@ -77,9 +73,8 @@ public interface IPseudoVersionResolver <RESULTTYPE>
    * @param sArtifactID
    *        VES Artefact ID to use. May be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
+   *        An optional set of Version numbers not to consider. This may be used to exclude certain
+   *        versions from being returned. May be <code>null</code>.
    * @return <code>null</code> if no matching version was found.
    */
   @Nullable
@@ -88,17 +83,15 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                @Nullable Set <String> aVersionsToIgnore);
 
   /**
-   * Get the element with the latest (highest) version number (excluding
-   * snapshots).
+   * Get the element with the latest (highest) version number (excluding snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
    * @param sArtifactID
    *        VES Artefact ID to use. May be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
+   *        An optional set of Version numbers not to consider. This may be used to exclude certain
+   *        versions from being returned. May be <code>null</code>.
    * @return <code>null</code> if no matching version was found.
    */
   @Nullable
@@ -107,20 +100,17 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                       @Nullable Set <String> aVersionsToIgnore);
 
   /**
-   * Get the element with the latest (highest) version number that has state
-   * "active".
+   * Get the element with the latest (highest) version number that has state "active".
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
    * @param sArtifactID
    *        VES Artefact ID to use. May be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
+   *        An optional set of Version numbers not to consider. This may be used to exclude certain
+   *        versions from being returned. May be <code>null</code>.
    * @param aCheckDateTime
-   *        The relevant date time for which the status should be checked. May
-   *        be <code>null</code>.
+   *        The relevant date time for which the status should be checked. May be <code>null</code>.
    * @return <code>null</code> if no matching version was found.
    */
   @Nullable
@@ -130,20 +120,18 @@ public interface IPseudoVersionResolver <RESULTTYPE>
                                      @Nullable OffsetDateTime aCheckDateTime);
 
   /**
-   * Get the element with the latest (highest) version number that has state
-   * "active" (excluding snapshots).
+   * Get the element with the latest (highest) version number that has state "active" (excluding
+   * snapshots).
    *
    * @param sGroupID
    *        VES Group ID to use. May be <code>null</code>.
    * @param sArtifactID
    *        VES Artefact ID to use. May be <code>null</code>.
    * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
+   *        An optional set of Version numbers not to consider. This may be used to exclude certain
+   *        versions from being returned. May be <code>null</code>.
    * @param aCheckDateTime
-   *        The relevant date time for which the status should be checked. May
-   *        be <code>null</code>.
+   *        The relevant date time for which the status should be checked. May be <code>null</code>.
    * @return <code>null</code> if no matching version was found.
    */
   @Nullable

@@ -35,10 +35,10 @@ public interface IVESAsyncLoader
    * @param aVESID
    *        The VESID to load. May not be <code>null</code>.
    * @param sFileExt
-   *        The file extension to load. Must neither be <code>null</code> nor
-   *        empty. Must start with a dot (<code>.</code>).
-   * @return <code>null</code> if loading the resource behind the VESID failed
-   *         (e.g. because no such resource exists).
+   *        The file extension to load. Must neither be <code>null</code> nor empty. Must start with
+   *        a dot (<code>.</code>).
+   * @return <code>null</code> if loading the resource behind the VESID failed (e.g. because no such
+   *         resource exists).
    */
   @Nullable
   IRepoStorageReadItem loadResource (@NonNull DVRCoordinate aVESID, @NonNull String sFileExt);

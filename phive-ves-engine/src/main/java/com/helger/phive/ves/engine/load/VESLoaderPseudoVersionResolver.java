@@ -235,7 +235,7 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
   {
     ValueEnforcer.notNull (aRepo, "Repo");
     ValueEnforcer.notNull (aVESID, "VESID");
-    ValueEnforcer.isTrue ( () -> aVESID.getVersionObj ().isPseudoVersion (), "VESID Version must be a pseudo version");
+    ValueEnforcer.isTrue (() -> aVESID.getVersionObj ().isPseudoVersion (), "VESID Version must be a pseudo version");
 
     final IDVRPseudoVersion aPseudoVersion = aVESID.getVersionObj ().getPseudoVersion ();
     final VESLoaderPseudoVersionResolver aResolver = new VESLoaderPseudoVersionResolver (aRepo);

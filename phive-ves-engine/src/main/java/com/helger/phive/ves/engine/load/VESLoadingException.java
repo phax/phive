@@ -19,8 +19,7 @@ package com.helger.phive.ves.engine.load;
 import org.jspecify.annotations.NonNull;
 
 /**
- * Specific exception when VES loading fails (e.g. on lazy requirement
- * resolution)
+ * Specific exception when VES loading fails (e.g. on lazy requirement resolution)
  *
  * @author Philip Helger
  */

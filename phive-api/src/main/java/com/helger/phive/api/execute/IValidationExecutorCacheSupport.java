@@ -19,8 +19,8 @@ package com.helger.phive.api.execute;
 import org.jspecify.annotations.NonNull;
 
 /**
- * Interface for validation executors that support caching. Each implementation
- * of IValidationExecutor is free to also implement this interface.
+ * Interface for validation executors that support caching. Each implementation of
+ * IValidationExecutor is free to also implement this interface.
  *
  * @author Philip Helger
  * @since 3.1.1
@@ -39,8 +39,7 @@ public interface IValidationExecutorCacheSupport
    * Enable or disable caching.
    *
    * @param bCacheArtefact
-   *        <code>true</code> to enable caching, <code>false</code> to disable
-   *        it.
+   *        <code>true</code> to enable caching, <code>false</code> to disable it.
    * @return this for chaining
    */
   @NonNull

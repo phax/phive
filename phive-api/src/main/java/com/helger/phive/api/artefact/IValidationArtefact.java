@@ -23,8 +23,7 @@ import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.IValidationType;
 
 /**
- * Base interface for a validation artefact, consisting of a type and a readable
- * resource.
+ * Base interface for a validation artefact, consisting of a type and a readable resource.
  *
  * @author Philip Helger
  */
@@ -32,15 +31,14 @@ import com.helger.phive.api.IValidationType;
 public interface IValidationArtefact
 {
   /**
-   * @return The validation artefact type - XSD or Schematron or so. May not be
-   *         <code>null</code>.
+   * @return The validation artefact type - XSD or Schematron or so. May not be <code>null</code>.
    */
   @NonNull
   IValidationType getValidationType ();
 
   /**
-   * @return The resource that contains the rules depending on the type (like
-   *         XSD or Schematron). Never <code>null</code>.
+   * @return The resource that contains the rules depending on the type (like XSD or Schematron).
+   *         Never <code>null</code>.
    * @see #getValidationType()
    */
   @NonNull

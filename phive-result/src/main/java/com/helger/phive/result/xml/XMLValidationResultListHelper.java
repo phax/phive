@@ -133,7 +133,7 @@ public class XMLValidationResultListHelper
   @NonNull
   public XMLValidationResultListHelper errorToXMLDefault ()
   {
-    return errorToXML ( (err, loc) -> PhiveXMLHelper.getXMLError (err, loc, CPhiveXML.XML_ITEM));
+    return errorToXML ((err, loc) -> PhiveXMLHelper.getXMLError (err, loc, CPhiveXML.XML_ITEM));
   }
 
   @NonNull

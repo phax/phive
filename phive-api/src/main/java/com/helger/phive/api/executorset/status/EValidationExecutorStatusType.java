@@ -32,8 +32,7 @@ import com.helger.base.lang.EnumHelper;
 public enum EValidationExecutorStatusType implements IHasID <String>
 {
   /**
-   * The executor is explicitly deprecated. Most likely a replacement is
-   * available.
+   * The executor is explicitly deprecated. Most likely a replacement is available.
    */
   DEPRECATED ("deprecated"),
   /**
@@ -64,8 +63,7 @@ public enum EValidationExecutorStatusType implements IHasID <String>
   }
 
   /**
-   * @return <code>true</code> if the status type is deprecated,
-   *         <code>false</code> if not.
+   * @return <code>true</code> if the status type is deprecated, <code>false</code> if not.
    */
   public boolean isDeprecated ()
   {

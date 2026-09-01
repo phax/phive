@@ -30,8 +30,8 @@ import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.io.resource.IReadableResource;
 
 /**
- * This class describes a simple test file: the path where it resides and the
- * validation ID to be used.
+ * This class describes a simple test file: the path where it resides and the validation ID to be
+ * used.
  *
  * @author Philip Helger
  */
@@ -52,8 +52,7 @@ public class PhiveTestFile
   }
 
   /**
-   * @return The readable resource as passed in the constructor. Never
-   *         <code>null</code>.
+   * @return The readable resource as passed in the constructor. Never <code>null</code>.
    */
   @NonNull
   public IReadableResource getResource ()

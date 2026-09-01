@@ -27,8 +27,8 @@ import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.IValidityDeterminator;
 
 /**
- * Interface for an execution manager that applies a set of rules onto an object
- * to be validated (validation source).
+ * Interface for an execution manager that applies a set of rules onto an object to be validated
+ * (validation source).
  *
  * @author Philip Helger
  * @param <SOURCETYPE>
@@ -43,14 +43,13 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
   IValidityDeterminator <SOURCETYPE> getValidityDeterminator ();
 
   /**
-   * Perform a validation with all the contained executors and the system
-   * default locale.
+   * Perform a validation with all the contained executors and the system default locale.
    *
    * @param aSource
-   *        The source artefact to be validated. May not be <code>null</code>.
-   *        contained executor a result is added to the result list.
-   * @return The validation result list. Never <code>null</code>. For each
-   *         contained executor a result is added to the result list.
+   *        The source artefact to be validated. May not be <code>null</code>. contained executor a
+   *        result is added to the result list.
+   * @return The validation result list. Never <code>null</code>. For each contained executor a
+   *         result is added to the result list.
    * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
   @NonNull
@@ -65,10 +64,10 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    * @param aSource
    *        The source artefact to be validated. May not be <code>null</code>.
    * @param aLocale
-   *        Custom locale to use e.g. for error messages. May be
-   *        <code>null</code> to use the system default locale.
-   * @return The validation result list. Never <code>null</code>. For each
-   *         contained executor a result is added to the result list.
+   *        Custom locale to use e.g. for error messages. May be <code>null</code> to use the system
+   *        default locale.
+   * @return The validation result list. Never <code>null</code>. For each contained executor a
+   *         result is added to the result list.
    * @see #executeValidation(IValidationSource, ValidationResultList, Locale)
    */
   @NonNull
@@ -85,12 +84,11 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    * @param aSource
    *        The source artefact to be validated. May not be <code>null</code>.
    * @param aValidationResults
-   *        The result list to be filled. May not be <code>null</code>. Note:
-   *        this list is NOT altered before start. For each contained executor a
-   *        result is added to the result list.
+   *        The result list to be filled. May not be <code>null</code>. Note: this list is NOT
+   *        altered before start. For each contained executor a result is added to the result list.
    * @param aLocale
-   *        Custom locale to use e.g. for error messages. May be
-   *        <code>null</code> to use the system default locale.
+   *        Custom locale to use e.g. for error messages. May be <code>null</code> to use the system
+   *        default locale.
    * @see #executeValidation(IValidationSource, Locale)
    */
   void executeValidation (@NonNull SOURCETYPE aSource,
@@ -102,9 +100,8 @@ public interface IValidationExecutionManager <SOURCETYPE extends IValidationSour
    *
    * @param aSource
    *        The source artefact to be validated. May not be <code>null</code>.
-   * @return {@link EValidity#VALID} if the document is valid,
-   *         {@link EValidity#INVALID} if the document is invalid. Never
-   *         <code>null</code>.
+   * @return {@link EValidity#VALID} if the document is valid, {@link EValidity#INVALID} if the
+   *         document is invalid. Never <code>null</code>.
    */
   @NonNull
   EValidity executeFastValidation (@NonNull SOURCETYPE aSource);

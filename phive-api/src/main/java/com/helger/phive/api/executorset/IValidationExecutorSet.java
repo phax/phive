@@ -42,16 +42,14 @@ public interface IValidationExecutorSet <SOURCETYPE extends IValidationSource> e
                                         ICommonsIterable <IValidationExecutor <SOURCETYPE>>
 {
   /**
-   * @return A list with all validation executors. Never <code>null</code> but
-   *         maybe empty.
+   * @return A list with all validation executors. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableObject
   ICommonsList <IValidationExecutor <SOURCETYPE>> executors ();
 
   /**
-   * @return A list with all validation executors. Never <code>null</code> but
-   *         maybe empty.
+   * @return A list with all validation executors. Never <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy

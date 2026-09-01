@@ -35,8 +35,8 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
 
 /**
- * An implementation of {@link IValidationExecutorSet} that acts as an alias to
- * another {@link IValidationExecutorSet} with a different ID.
+ * An implementation of {@link IValidationExecutorSet} that acts as an alias to another
+ * {@link IValidationExecutorSet} with a different ID.
  *
  * @author Philip Helger
  * @param <SOURCETYPE>

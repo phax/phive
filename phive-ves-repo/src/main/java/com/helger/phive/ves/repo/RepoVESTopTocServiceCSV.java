@@ -283,7 +283,7 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
 
     // Initial read
     final Toc aTmpToc = _readTopToc (true);
-    m_aRWLock.writeLocked ( () -> m_aToc = aTmpToc);
+    m_aRWLock.writeLocked (() -> m_aToc = aTmpToc);
   }
 
   private void _checkInited ()
@@ -298,13 +298,13 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
 
     // Re-read and atomic assign
     final Toc aTmpToc = _readTopToc (true);
-    m_aRWLock.writeLocked ( () -> m_aToc = aTmpToc);
+    m_aRWLock.writeLocked (() -> m_aToc = aTmpToc);
   }
 
   @CheckForSigned
   public int getCount ()
   {
-    return m_aRWLock.readLockedInt ( () -> m_aToc == null ? -1 : m_aToc.m_aItems.size ());
+    return m_aRWLock.readLockedInt (() -> m_aToc == null ? -1 : m_aToc.m_aItems.size ());
   }
 
   public void iterateAllItems (@NonNull final IIterationCallback aCallback)
@@ -312,7 +312,7 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
     _checkInited ();
     ValueEnforcer.notNull (aCallback, "Callback");
 
-    m_aRWLock.readLocked ( () -> {
+    m_aRWLock.readLocked (() -> {
       if (m_aToc != null)
         for (final Item aItem : m_aToc.m_aItems.values ())
           aCallback.onItem (aItem.m_aCoord, aItem.m_bDeprecated, aItem.m_sDisplayName);
@@ -324,7 +324,7 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
     _checkInited ();
     ValueEnforcer.notNull (aCallback, "Callback");
 
-    m_aRWLock.readLocked ( () -> {
+    m_aRWLock.readLocked (() -> {
       if (m_aToc != null)
         for (final Item aItem : m_aToc.m_aItems.values ())
           if (aCallback.onItem (aItem.m_aCoord, aItem.m_bDeprecated, aItem.m_sDisplayName).isBreak ())
@@ -335,7 +335,7 @@ public class RepoVESTopTocServiceCSV implements IRepoVESTopTocService
   @NonNull
   private ESuccess _writeActionOnToc (final Function <? super Toc, EChange> aAction)
   {
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       if (m_aToc == null || aAction.apply (m_aToc).isChanged ())
       {
         try

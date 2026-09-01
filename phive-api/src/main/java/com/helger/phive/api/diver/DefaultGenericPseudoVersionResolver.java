@@ -98,7 +98,7 @@ public class DefaultGenericPseudoVersionResolver <SOURCETYPE extends IValidation
     ValueEnforcer.notNull (aPseudoVersion, "PseudoVersion");
     ValueEnforcer.notNull (aNestedResolver, "NestedResolver");
 
-    return m_aRWLock.writeLockedGet ( () -> {
+    return m_aRWLock.writeLockedGet (() -> {
       final var aOldNestedResolver = m_aMap.get (aPseudoVersion);
       if (aOldNestedResolver != null)
       {
@@ -121,7 +121,7 @@ public class DefaultGenericPseudoVersionResolver <SOURCETYPE extends IValidation
     ValueEnforcer.notEmpty (sGroupID, "GroupID");
     ValueEnforcer.notEmpty (sArtifactID, "ArtifactID");
 
-    final var aResolver = m_aRWLock.readLockedGet ( () -> m_aMap.get (aPseudoVersion));
+    final var aResolver = m_aRWLock.readLockedGet (() -> m_aMap.get (aPseudoVersion));
     return aResolver != null ? aResolver.resolve (sGroupID, sArtifactID, aVersionsToIgnore, aCheckDateTime) : null;
   }
 

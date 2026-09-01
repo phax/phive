@@ -41,8 +41,8 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
                                                 IPseudoVersionResolver <IValidationExecutorSet <SOURCETYPE>>
 {
   /**
-   * @return <code>true</code> if the resolution of pseudo versions (like e.g.
-   *         "latest") should be performed or not. By default this is enabled.
+   * @return <code>true</code> if the resolution of pseudo versions (like e.g. "latest") should be
+   *         performed or not. By default this is enabled.
    * @since 8.0.1
    */
   boolean isResolvePseudoVersions ();
@@ -62,20 +62,19 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * @param aVES
    *        The object to register. May not be <code>null</code>.
    * @throws IllegalStateException
-   *         If another object with the same ID is already registered in this
-   *         registry.
+   *         If another object with the same ID is already registered in this registry.
    */
   void registerValidationExecutorSet (@NonNull IValidationExecutorSet <SOURCETYPE> aVES);
 
   /**
-   * Unregister a validation executor set from this registry. This basically
-   * removes the VES from the internal map. The removed VES are not modified in
-   * any way and can theoretically be re-registered afterwards.
+   * Unregister a validation executor set from this registry. This basically removes the VES from
+   * the internal map. The removed VES are not modified in any way and can theoretically be
+   * re-registered afterwards.
    *
    * @param aVES
    *        The object to unregister. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if the removal was successful,
-   *         {@link EChange#UNCHANGED} otherwise.
+   * @return {@link EChange#CHANGED} if the removal was successful, {@link EChange#UNCHANGED}
+   *         otherwise.
    * @since 6.0.1
    */
   @NonNull
@@ -85,22 +84,22 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
   }
 
   /**
-   * Unregister a validation executor set from this registry. This basically
-   * removes the VES from the internal map. The removed VES are not modified in
-   * any way and can theoretically be re-registered afterwards.
+   * Unregister a validation executor set from this registry. This basically removes the VES from
+   * the internal map. The removed VES are not modified in any way and can theoretically be
+   * re-registered afterwards.
    *
    * @param aVESID
    *        The VESID of the object to unregister. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if the removal was successful,
-   *         {@link EChange#UNCHANGED} otherwise.
+   * @return {@link EChange#CHANGED} if the removal was successful, {@link EChange#UNCHANGED}
+   *         otherwise.
    * @since 6.0.1
    */
   @NonNull
   EChange unregisterValidationExecutorSet (@Nullable DVRCoordinate aVESID);
 
   /**
-   * @return A list of all contained validation executor sets in this registry.
-   *         Never <code>null</code> but maybe empty.
+   * @return A list of all contained validation executor sets in this registry. Never
+   *         <code>null</code> but maybe empty.
    */
   @NonNull
   @ReturnsMutableCopy
@@ -110,8 +109,8 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * Find all validation executor sets that match the provided filter.
    *
    * @param aFilter
-   *        The filter to be used. May be <code>null</code> in which case the
-   *        result is the same as {@link #getAll()}.
+   *        The filter to be used. May be <code>null</code> in which case the result is the same as
+   *        {@link #getAll()}.
    * @return Never <code>null</code> but maybe empty.
    */
   @NonNull
@@ -122,16 +121,15 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
    * Find the first validation executor sets that match the provided filter.
    *
    * @param aFilter
-   *        The filter to be used. May be <code>null</code> in which case the
-   *        result is the same as {@link #getAll()}.
+   *        The filter to be used. May be <code>null</code> in which case the result is the same as
+   *        {@link #getAll()}.
    * @return <code>null</code> if no match was found.
    */
   @Nullable
   IValidationExecutorSet <SOURCETYPE> findFirst (@NonNull Predicate <? super IValidationExecutorSet <SOURCETYPE>> aFilter);
 
   /**
-   * Find the validation executor set with the specified ID. This method
-   * supports pseudo version.
+   * Find the validation executor set with the specified ID. This method supports pseudo version.
    *
    * @param aVESID
    *        The VESID to search. May be <code>null</code>.
@@ -141,14 +139,14 @@ public interface IValidationExecutorSetRegistry <SOURCETYPE extends IValidationS
   IValidationExecutorSet <SOURCETYPE> getOfID (@Nullable DVRCoordinate aVESID);
 
   /**
-   * Find the validation executor set with the specified ID for the provided
-   * point in time. This method supports pseudo version.
+   * Find the validation executor set with the specified ID for the provided point in time. This
+   * method supports pseudo version.
    *
    * @param aVESID
    *        The VESID to search. May be <code>null</code>.
    * @param aCheckDateTime
-   *        The date and time for which the version should be resolved. If
-   *        <code>null</code> if provided, the current point in time is used.
+   *        The date and time for which the version should be resolved. If <code>null</code> if
+   *        provided, the current point in time is used.
    * @return <code>null</code> if no such validation executor set is registered.
    * @since 9.2.1
    */

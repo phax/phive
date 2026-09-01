@@ -36,8 +36,7 @@ import com.helger.diver.api.version.IDVRPseudoVersion;
 public interface IGenericPseudoVersionResolver <RESULTTYPE>
 {
   /**
-   * Get the element that matches the provided group ID, artifact ID and pseudo
-   * version.
+   * Get the element that matches the provided group ID, artifact ID and pseudo version.
    *
    * @param aPseudoVersion
    *        The pseudo version to resolve. May not be <code>null</code>.
@@ -46,12 +45,11 @@ public interface IGenericPseudoVersionResolver <RESULTTYPE>
    * @param sArtifactID
    *        VES Artefact ID to use. May neither be <code>null</code> nor empty.
    * @param aVersionsToIgnore
-   *        An optional set of Version numbers not to consider. This may be used
-   *        to exclude certain versions from being returned. May be
-   *        <code>null</code>.
+   *        An optional set of Version numbers not to consider. This may be used to exclude certain
+   *        versions from being returned. May be <code>null</code>.
    * @param aCheckDateTime
-   *        The effective date for which a check should be performed. May be
-   *        <code>null</code> to indicate "current date time".
+   *        The effective date for which a check should be performed. May be <code>null</code> to
+   *        indicate "current date time".
    * @return <code>null</code> if resolution fails
    */
   @Nullable

@@ -44,7 +44,8 @@ public class ValidationArtefact implements IValidationArtefact
    * @param aResource
    *        The resource this reflects. May not be <code>null</code>.
    */
-  public ValidationArtefact (@NonNull final IValidationType eValidationArtefactType, @NonNull final IReadableResource aResource)
+  public ValidationArtefact (@NonNull final IValidationType eValidationArtefactType,
+                             @NonNull final IReadableResource aResource)
   {
     m_aValidationArtefactType = ValueEnforcer.notNull (eValidationArtefactType, "ValidationArtefactType");
     m_aResource = ValueEnforcer.notNull (aResource, "Resource");
