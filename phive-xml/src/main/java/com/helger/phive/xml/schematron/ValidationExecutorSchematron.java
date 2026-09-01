@@ -358,16 +358,19 @@ public class ValidationExecutorSchematron extends
       // Main application of Schematron
       // Use the original source to eventually support streaming
       final Document aDoc = aSCH.applySchematronValidation (aSource.getAsTransformSource ());
+      final boolean bHasResultDoc = aDoc != null && aDoc.getDocumentElement () != null;
 
       if (LOGGER.isDebugEnabled ())
         LOGGER.debug ("SVRL: " + XMLWriter.getNodeAsString (aDoc));
+
       switch (aOutput.get ())
       {
         case SVRL:
         {
-          final SchematronOutputType aSVRL = aDoc == null || aDoc.getDocumentElement () == null ? null
-                                                                                                : new SVRLMarshaller ().setUseSchema (m_bValidateSVRL)
-                                                                                                                       .read (aDoc);
+          final ErrorList aSvrlErrors = new ErrorList ();
+          final SchematronOutputType aSVRL = bHasResultDoc ? new SVRLMarshaller ().setUseSchema (m_bValidateSVRL)
+                                                                                  .setCollectErrors (aSvrlErrors)
+                                                                                  .read (aDoc) : null;
           if (aSVRL != null)
           {
             // Valid Schematron - interpret result
@@ -388,12 +391,14 @@ public class ValidationExecutorSchematron extends
                                        .errorText ("Internal error interpreting Schematron result")
                                        .errorFieldName (aDoc != null ? XMLWriter.getNodeAsString (aDoc) : null)
                                        .build ());
+            // Add all JAXB error collected during SVRL parsing
+            aErrorList.addAll (aSvrlErrors);
           }
           break;
         }
         case OIOUBL:
         {
-          if (aDoc != null && aDoc.getDocumentElement () != null)
+          if (bHasResultDoc)
           {
             // interpret result
             /**
@@ -443,10 +448,11 @@ public class ValidationExecutorSchematron extends
       // Usually an error in the Schematron
       aErrorList.add (SingleError.builderError ()
                                  .errorLocation (aArtefact.getRuleResourcePath ())
-                                 .errorText (ex.getMessage ())
+                                 .errorText ("Internal error evaluating Schematron result: " + ex.getMessage ())
                                  .linkedException (ex)
                                  .build ());
     }
+
     // Apply custom levels
     if (m_aCustomErrorDetails != null && aErrorList.isNotEmpty ())
     {
