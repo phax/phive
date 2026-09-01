@@ -38,15 +38,14 @@ public interface IValidationSourceXML extends IValidationSource
   String VALIDATION_SOURCE_TYPE = "xml";
 
   /**
-   * @return The source node to be validated. This may either be the whole DOM
-   *         Document or a single DOM Element. May be <code>null</code>.
+   * @return The source node to be validated. This may either be the whole DOM Document or a single
+   *         DOM Element. May be <code>null</code>.
    */
   @Nullable
   Node getNode ();
 
   /**
-   * @return This validation source as a `javax.xml.transform.Source`. Never
-   *         <code>null</code>.
+   * @return This validation source as a `javax.xml.transform.Source`. Never <code>null</code>.
    * @throws IllegalStateException
    *         If no transform source object can be created.
    */

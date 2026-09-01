@@ -27,8 +27,7 @@ import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
 
 /**
- * This class defines the constraints validated in the
- * {@link ValidationExecutorXSDPartial}
+ * This class defines the constraints validated in the {@link ValidationExecutorXSDPartial}
  *
  * @author Philip Helger
  */
@@ -43,14 +42,13 @@ public class XSDPartialContext
    * Constructor
    *
    * @param aXE
-   *        {@link XPathExpression} that must be satisfied. May not be
-   *        <code>null</code>.
+   *        {@link XPathExpression} that must be satisfied. May not be <code>null</code>.
    * @param aMinNodeCount
-   *        Minimum node count that must be present. May be <code>null</code> to
-   *        indicate no minimum node count is necessary.
+   *        Minimum node count that must be present. May be <code>null</code> to indicate no minimum
+   *        node count is necessary.
    * @param aMaxNodeCount
-   *        Maximum node count that must be present. May be <code>null</code> to
-   *        indicate no maximum node count is necessary.
+   *        Maximum node count that must be present. May be <code>null</code> to indicate no maximum
+   *        node count is necessary.
    */
   public XSDPartialContext (@NonNull final XPathExpression aXE,
                             @Nullable final Integer aMinNodeCount,
@@ -101,8 +99,7 @@ public class XSDPartialContext
    * Create a new XSD partial context without a min and max node constraint.
    *
    * @param aXE
-   *        {@link XPathExpression} that must be satisfied. May not be
-   *        <code>null</code>.
+   *        {@link XPathExpression} that must be satisfied. May not be <code>null</code>.
    * @return The new XSDPartialContext and never <code>null</code>.
    * @since 6.0.4
    */
@@ -116,8 +113,7 @@ public class XSDPartialContext
    * Create a new XSD partial context with a min and max node constraint of 1.
    *
    * @param aXE
-   *        {@link XPathExpression} that must be satisfied. May not be
-   *        <code>null</code>.
+   *        {@link XPathExpression} that must be satisfied. May not be <code>null</code>.
    * @return The new XSDPartialContext and never <code>null</code>.
    * @since 10.0.0
    */
@@ -131,8 +127,7 @@ public class XSDPartialContext
    * Create a new XSD partial context with a min and max node constraint.
    *
    * @param aXE
-   *        {@link XPathExpression} that must be satisfied. May not be
-   *        <code>null</code>.
+   *        {@link XPathExpression} that must be satisfied. May not be <code>null</code>.
    * @param nMinNodeCount
    *        Minimum node count that must be present. Should be &gt; 0.
    * @param nMaxNodeCount

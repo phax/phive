@@ -43,14 +43,14 @@ public final class SchematronNamespaceBeautifier
   public static void addMapping (@NonNull final String sPrefix, @NonNull final String sNamespaceURI)
   {
     // Allow overwrite!
-    RW_LOCK.writeLocked ( () -> NS_CTX.setMapping (sPrefix, sNamespaceURI));
+    RW_LOCK.writeLocked (() -> NS_CTX.setMapping (sPrefix, sNamespaceURI));
   }
 
   public static void addMappings (@Nullable final IIterableNamespaceContext aOther)
   {
     // Allow overwrite!
     if (aOther != null)
-      RW_LOCK.writeLocked ( () -> NS_CTX.setMappings (aOther));
+      RW_LOCK.writeLocked (() -> NS_CTX.setMappings (aOther));
   }
 
   public static void removeAllMappings ()
@@ -61,6 +61,6 @@ public final class SchematronNamespaceBeautifier
   @Nullable
   public static String getMapping (@Nullable final String sNamespaceURI)
   {
-    return RW_LOCK.readLockedGet ( () -> NS_CTX.getPrefix (sNamespaceURI));
+    return RW_LOCK.readLockedGet (() -> NS_CTX.getPrefix (sNamespaceURI));
   }
 }
