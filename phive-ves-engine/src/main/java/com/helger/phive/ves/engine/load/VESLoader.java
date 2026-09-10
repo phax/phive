@@ -350,9 +350,9 @@ public final class VESLoader
     ValueEnforcer.notNull (aLoaderStatus, "LoaderStatus");
     ValueEnforcer.notNull (aLoadingErrors, "LoadingErrors");
 
-    final EVESSyntax eSyntax = aSrcVes.getXsd () != null ? EVESSyntax.XSD : !aSrcVes.getSchematron ().isEmpty ()
-                                                                                                                 ? EVESSyntax.SCHEMATRON
-                                                                                                                 : EVESSyntax.EDIFACT;
+    final EVESSyntax eSyntax = aSrcVes.getXsd () != null ? EVESSyntax.XSD
+                                                         : !aSrcVes.getSchematron ().isEmpty () ? EVESSyntax.SCHEMATRON
+                                                                                                : EVESSyntax.EDIFACT;
 
     // Extract data
     final LoadedVES.Header aHeader = new LoadedVES.Header (_createVESIDUnchecked (aSrcVes.getGroupId (),

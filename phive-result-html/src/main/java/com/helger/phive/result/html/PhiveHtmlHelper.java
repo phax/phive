@@ -373,8 +373,8 @@ public class PhiveHtmlHelper
 
       _addLabelValue (eSummary,
                       aLabels.get (EPhiveHtmlLabel.OVERALL_RESULT),
-                      bOverallSuccess ? aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS) : aLabels.get (
-                                                                                                      EPhiveHtmlLabel.SEVERITY_ERROR));
+                      bOverallSuccess ? aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS)
+                                      : aLabels.get (EPhiveHtmlLabel.SEVERITY_ERROR));
       if (aSummary.isValidationInterrupted ())
         _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.INTERRUPTED), aLabels.get (EPhiveHtmlLabel.TRUE));
       _addLabelValue (eSummary,
@@ -437,8 +437,8 @@ public class PhiveHtmlHelper
       {
         _addLabelValue (eResult,
                         aLabels.get (EPhiveHtmlLabel.OVERALL_RESULT),
-                        bIsValid ? aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS) : aLabels.get (
-                                                                                                 EPhiveHtmlLabel.SEVERITY_ERROR));
+                        bIsValid ? aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS)
+                                 : aLabels.get (EPhiveHtmlLabel.SEVERITY_ERROR));
       }
 
       // Duration per layer

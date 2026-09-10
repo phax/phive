@@ -63,8 +63,8 @@ public class ValidationExecutorXSDBuilderTest
   public void testAddResource ()
   {
     final ValidationExecutorXSD aExec = new ValidationExecutorXSDBuilder ().addResource (RES)
-                                                                          .addResource (RES2)
-                                                                          .build ();
+                                                                           .addResource (RES2)
+                                                                           .build ();
     assertNotNull (aExec);
     assertEquals (RES2, aExec.getValidationArtefact ().getRuleResource ());
   }
@@ -73,8 +73,8 @@ public class ValidationExecutorXSDBuilderTest
   public void testStopValidationOnError ()
   {
     final ValidationExecutorXSD aExec = new ValidationExecutorXSDBuilder ().resource (RES)
-                                                                          .stopValidationOnError (false)
-                                                                          .build ();
+                                                                           .stopValidationOnError (false)
+                                                                           .build ();
     assertNotNull (aExec);
     assertFalse (aExec.isStopValidationOnError ());
   }
@@ -83,8 +83,8 @@ public class ValidationExecutorXSDBuilderTest
   public void testExplicitArtefactResource ()
   {
     final ValidationExecutorXSD aExec = new ValidationExecutorXSDBuilder ().resource (RES)
-                                                                          .artefactResource (RES2)
-                                                                          .build ();
+                                                                           .artefactResource (RES2)
+                                                                           .build ();
     assertNotNull (aExec);
     assertEquals (RES2, aExec.getValidationArtefact ().getRuleResource ());
   }
@@ -101,8 +101,8 @@ public class ValidationExecutorXSDBuilderTest
   public void testCopyConstructor ()
   {
     final ValidationExecutorXSD aOriginal = new ValidationExecutorXSDBuilder ().resource (RES)
-                                                                              .stopValidationOnError (false)
-                                                                              .build ();
+                                                                               .stopValidationOnError (false)
+                                                                               .build ();
     final ValidationExecutorXSD aCopy = new ValidationExecutorXSDBuilder (aOriginal).build ();
     assertNotNull (aCopy);
     assertEquals (EValidationType.XSD, aCopy.getValidationArtefact ().getValidationType ());

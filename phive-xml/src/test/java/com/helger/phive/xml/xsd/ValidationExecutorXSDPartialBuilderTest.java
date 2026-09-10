@@ -54,8 +54,8 @@ public class ValidationExecutorXSDPartialBuilderTest
   {
     final XSDPartialContext aCtx = _ctx ();
     final ValidationExecutorXSDPartial aExec = new ValidationExecutorXSDPartialBuilder ().resource (RES)
-                                                                                        .partialContext (aCtx)
-                                                                                        .build ();
+                                                                                         .partialContext (aCtx)
+                                                                                         .build ();
     assertNotNull (aExec);
     assertEquals (EValidationType.PARTIAL_XSD, aExec.getValidationArtefact ().getValidationType ());
     assertEquals (RES, aExec.getValidationArtefact ().getRuleResource ());
@@ -69,8 +69,8 @@ public class ValidationExecutorXSDPartialBuilderTest
   public void testMultipleResourcesUsesLastForName () throws XPathExpressionException
   {
     final ValidationExecutorXSDPartial aExec = new ValidationExecutorXSDPartialBuilder ().resources (RES, RES2)
-                                                                                        .partialContext (_ctx ())
-                                                                                        .build ();
+                                                                                         .partialContext (_ctx ())
+                                                                                         .build ();
     assertNotNull (aExec);
     // The last resource is the important one for the name
     assertEquals (RES2, aExec.getValidationArtefact ().getRuleResource ());
@@ -80,9 +80,9 @@ public class ValidationExecutorXSDPartialBuilderTest
   public void testStopValidationOnError () throws XPathExpressionException
   {
     final ValidationExecutorXSDPartial aExec = new ValidationExecutorXSDPartialBuilder ().resource (RES)
-                                                                                        .partialContext (_ctx ())
-                                                                                        .stopValidationOnError (false)
-                                                                                        .build ();
+                                                                                         .partialContext (_ctx ())
+                                                                                         .stopValidationOnError (false)
+                                                                                         .build ();
     assertNotNull (aExec);
     assertFalse (aExec.isStopValidationOnError ());
   }
@@ -100,9 +100,9 @@ public class ValidationExecutorXSDPartialBuilderTest
   {
     final XSDPartialContext aCtx = _ctx ();
     final ValidationExecutorXSDPartial aOriginal = new ValidationExecutorXSDPartialBuilder ().resource (RES)
-                                                                                            .partialContext (aCtx)
-                                                                                            .stopValidationOnError (false)
-                                                                                            .build ();
+                                                                                             .partialContext (aCtx)
+                                                                                             .stopValidationOnError (false)
+                                                                                             .build ();
     final ValidationExecutorXSDPartial aCopy = new ValidationExecutorXSDPartialBuilder (aOriginal).build ();
     assertNotNull (aCopy);
     assertEquals (EValidationType.PARTIAL_XSD, aCopy.getValidationArtefact ().getValidationType ());
