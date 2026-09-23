@@ -365,6 +365,8 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 v12.1.1 - work in progress
 * Deprecated static `ValidationExecutorSchematron.create...` methods in favour of `ValidationExecutorSchematronBuilder`
 * Less JAXB errors in log file when SVRL parsing encouters unsupported elements (as e.g. in ZATCA 3.4.6 rules)
+* Added new nested builder class `ValidationExecutorSetStatus.ValidationExecutorSetStatusBuilder` and the new factory method `ValidationExecutorSetStatus.builder ()`
+* Added new nested builder class `ValidationExecutorSetStatusHistoryItem.ValidationExecutorSetStatusHistoryItemBuilder` and the new factory method `ValidationExecutorSetStatusHistoryItem.builder ()`
 
 v12.1.0 - 2026-07-17
 * Updated to ph-schematron v10.x

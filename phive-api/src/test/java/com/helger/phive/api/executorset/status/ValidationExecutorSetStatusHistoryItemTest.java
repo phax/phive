@@ -37,10 +37,12 @@ public final class ValidationExecutorSetStatusHistoryItemTest
   public void testBasic ()
   {
     final OffsetDateTime aNow = PDTFactory.getCurrentOffsetDateTimeMillisOnlyUTC ();
-    final ValidationExecutorSetStatusHistoryItem aItem = new ValidationExecutorSetStatusHistoryItem (aNow,
-                                                                                                     "TestAuthor",
-                                                                                                     "CODE1",
-                                                                                                     "Some change happened");
+    final ValidationExecutorSetStatusHistoryItem aItem = ValidationExecutorSetStatusHistoryItem.builder ()
+                                                                                               .changeDateTime (aNow)
+                                                                                               .author ("TestAuthor")
+                                                                                               .changeCode ("CODE1")
+                                                                                               .text ("Some change happened")
+                                                                                               .build ();
     assertEquals (aNow, aItem.getChangeDateTime ());
     assertEquals ("TestAuthor", aItem.getAuthor ());
     assertEquals ("CODE1", aItem.getChangeCode ());
@@ -52,12 +54,64 @@ public final class ValidationExecutorSetStatusHistoryItemTest
   public void testWithNullChangeCode ()
   {
     final OffsetDateTime aNow = PDTFactory.getCurrentOffsetDateTimeMillisOnlyUTC ();
-    final ValidationExecutorSetStatusHistoryItem aItem = new ValidationExecutorSetStatusHistoryItem (aNow,
-                                                                                                     "Author",
-                                                                                                     null,
-                                                                                                     "Text");
+    final ValidationExecutorSetStatusHistoryItem aItem = ValidationExecutorSetStatusHistoryItem.builder ()
+                                                                                               .changeDateTime (aNow)
+                                                                                               .author ("Author")
+                                                                                               .text ("Text")
+                                                                                               .build ();
     assertNull (aItem.getChangeCode ());
     assertEquals ("Author", aItem.getAuthor ());
     assertEquals ("Text", aItem.getText ());
+  }
+
+  @Test
+  public void testBuilder ()
+  {
+    final OffsetDateTime aNow = PDTFactory.getCurrentOffsetDateTimeMillisOnlyUTC ();
+
+    final ValidationExecutorSetStatusHistoryItem aItem = ValidationExecutorSetStatusHistoryItem.builder ()
+                                                                                               .changeDateTime (aNow)
+                                                                                               .author ("TestAuthor")
+                                                                                               .changeCode ("CODE1")
+                                                                                               .text ("Some change happened")
+                                                                                               .build ();
+    assertEquals (aNow, aItem.getChangeDateTime ());
+    assertEquals ("TestAuthor", aItem.getAuthor ());
+    assertEquals ("CODE1", aItem.getChangeCode ());
+    assertEquals ("Some change happened", aItem.getText ());
+  }
+
+  @Test
+  public void testBuilderDefaults ()
+  {
+    // The change date time defaults to "now" and the change code is optional
+    final ValidationExecutorSetStatusHistoryItem aItem = ValidationExecutorSetStatusHistoryItem.builder ()
+                                                                                               .author ("Author")
+                                                                                               .text ("Text")
+                                                                                               .build ();
+    assertNotNull (aItem.getChangeDateTime ());
+    assertNull (aItem.getChangeCode ());
+  }
+
+  @Test (expected = IllegalStateException.class)
+  public void testBuilderNoChangeDateTime ()
+  {
+    ValidationExecutorSetStatusHistoryItem.builder ()
+                                          .changeDateTime ((OffsetDateTime) null)
+                                          .author ("Author")
+                                          .text ("Text")
+                                          .build ();
+  }
+
+  @Test (expected = IllegalStateException.class)
+  public void testBuilderNoAuthor ()
+  {
+    ValidationExecutorSetStatusHistoryItem.builder ().text ("Text").build ();
+  }
+
+  @Test (expected = IllegalStateException.class)
+  public void testBuilderNoText ()
+  {
+    ValidationExecutorSetStatusHistoryItem.builder ().author ("Author").build ();
   }
 }

@@ -31,7 +31,6 @@ import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.CommonsHashMap;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.collection.commons.ICommonsMap;
-import com.helger.datetime.helper.PDTFactory;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.io.resource.IReadableResource;
 import com.helger.phive.api.EValidationType;
@@ -44,7 +43,6 @@ import com.helger.phive.api.executorset.ValidationExecutorSetAlias;
 import com.helger.phive.api.executorset.status.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
-import com.helger.phive.api.executorset.status.ValidationExecutorSetStatusHistoryItem;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
@@ -405,14 +403,13 @@ public class VesXmlBuilder
     final String sName = _resolveDisplayName ();
 
     // Build the status
-    final IValidationExecutorSetStatus aStatus = new ValidationExecutorSetStatus (PDTFactory.getCurrentOffsetDateTime (),
-                                                                                  m_bIsDeprecated ? EValidationExecutorStatusType.DEPRECATED
-                                                                                                  : EValidationExecutorStatusType.VALID,
-                                                                                  m_aValidFrom,
-                                                                                  m_aValidTo,
-                                                                                  (String) null,
-                                                                                  (DVRCoordinate) null,
-                                                                                  (ICommonsList <ValidationExecutorSetStatusHistoryItem>) null);
+    final IValidationExecutorSetStatus aStatus = ValidationExecutorSetStatus.builder ()
+                                                                            .statusLastModificationNow ()
+                                                                            .type (m_bIsDeprecated ? EValidationExecutorStatusType.DEPRECATED
+                                                                                                   : EValidationExecutorStatusType.VALID)
+                                                                            .validFrom (m_aValidFrom)
+                                                                            .validTo (m_aValidTo)
+                                                                            .build ();
     final ValidationExecutorSet <IValidationSourceXML> aVES = new ValidationExecutorSet <> (m_aVESID, sName, aStatus);
 
     if (m_aBaseVES != null)

@@ -95,18 +95,22 @@ public final class VESStatus1Helper
     final ICommonsList <ValidationExecutorSetStatusHistoryItem> aHistoryItems = new CommonsArrayList <> ();
     for (final var aHI : aVESStatus.getHistory ().getHistoryItem ())
     {
-      aHistoryItems.add (new ValidationExecutorSetStatusHistoryItem (aHI.getChangeDateTime ().toOffsetDateTime (),
-                                                                     aHI.getAuthor (),
-                                                                     aHI.getChangeCode (),
-                                                                     aHI.getValue ()));
+      aHistoryItems.add (ValidationExecutorSetStatusHistoryItem.builder ()
+                                                               .changeDateTime (aHI.getChangeDateTime ())
+                                                               .author (aHI.getAuthor ())
+                                                               .changeCode (aHI.getChangeCode ())
+                                                               .text (aHI.getValue ())
+                                                               .build ());
     }
 
-    return new ValidationExecutorSetStatus (_toODT (aVESStatus.getStatusLastModified ()),
-                                            eType,
-                                            aValidFrom,
-                                            aValidTo,
-                                            aVESStatus.getDeprecationReason (),
-                                            aReplacementVESID,
-                                            aHistoryItems);
+    return ValidationExecutorSetStatus.builder ()
+                                      .statusLastModification (aVESStatus.getStatusLastModified ())
+                                      .type (eType)
+                                      .validFrom (aValidFrom)
+                                      .validTo (aValidTo)
+                                      .deprecationReason (aVESStatus.getDeprecationReason ())
+                                      .replacementVESID (aReplacementVESID)
+                                      .historyItems (aHistoryItems)
+                                      .build ();
   }
 }

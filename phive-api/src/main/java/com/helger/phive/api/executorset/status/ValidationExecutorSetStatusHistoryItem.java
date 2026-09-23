@@ -23,8 +23,13 @@ import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
+import com.helger.base.string.StringHelper;
 import com.helger.base.tostring.ToStringGenerator;
+import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.xml.XMLOffsetDateTime;
 
 /**
  * This class contains a single history item of a VES status
@@ -88,5 +93,131 @@ public class ValidationExecutorSetStatusHistoryItem
                                        .append ("ChangeCode", m_sChangeCode)
                                        .append ("Text", m_sText)
                                        .getToString ();
+  }
+
+  /**
+   * @return A new builder for {@link ValidationExecutorSetStatusHistoryItem} objects. Never
+   *         <code>null</code>.
+   * @since 12.1.1
+   */
+  @NonNull
+  public static ValidationExecutorSetStatusHistoryItemBuilder builder ()
+  {
+    return new ValidationExecutorSetStatusHistoryItemBuilder ();
+  }
+
+  /**
+   * Builder class for {@link ValidationExecutorSetStatusHistoryItem} objects.
+   *
+   * @author Philip Helger
+   * @since 12.1.1
+   */
+  @NotThreadSafe
+  public static class ValidationExecutorSetStatusHistoryItemBuilder implements
+                                                                    IBuilder <ValidationExecutorSetStatusHistoryItem>
+  {
+    private OffsetDateTime m_aChangeDateTime = PDTFactory.getCurrentOffsetDateTime ();
+    private String m_sAuthor;
+    private String m_sChangeCode;
+    private String m_sText;
+
+    public ValidationExecutorSetStatusHistoryItemBuilder ()
+    {}
+
+    /**
+     * Set the date and time when the change happened. By default this is the date and time at which
+     * this builder was created.
+     *
+     * @param a
+     *        The change date and time. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusHistoryItemBuilder changeDateTime (@Nullable final OffsetDateTime a)
+    {
+      m_aChangeDateTime = a;
+      return this;
+    }
+
+    /**
+     * Set the date and time when the change happened. By default this is the date and time at which
+     * this builder was created.
+     *
+     * @param a
+     *        The change date and time. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusHistoryItemBuilder changeDateTime (@Nullable final XMLOffsetDateTime a)
+    {
+      return changeDateTime (a == null ? null : a.toOffsetDateTime ());
+    }
+
+    /**
+     * Set the change date and time to the current date and time.
+     *
+     * @return this for chaining
+     * @see #changeDateTime(OffsetDateTime)
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusHistoryItemBuilder changeDateTimeNow ()
+    {
+      return changeDateTime (PDTFactory.getCurrentOffsetDateTime ());
+    }
+
+    /**
+     * Set the author of the change. This field is required.
+     *
+     * @param s
+     *        The author. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusHistoryItemBuilder author (@Nullable final String s)
+    {
+      m_sAuthor = s;
+      return this;
+    }
+
+    /**
+     * Set the optional machine readable change code.
+     *
+     * @param s
+     *        The change code. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusHistoryItemBuilder changeCode (@Nullable final String s)
+    {
+      m_sChangeCode = s;
+      return this;
+    }
+
+    /**
+     * Set the human readable text of the change. This field is required.
+     *
+     * @param s
+     *        The text. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusHistoryItemBuilder text (@Nullable final String s)
+    {
+      m_sText = s;
+      return this;
+    }
+
+    @NonNull
+    public ValidationExecutorSetStatusHistoryItem build ()
+    {
+      if (m_aChangeDateTime == null)
+        throw new IllegalStateException ("The change date time is required");
+      if (StringHelper.isEmpty (m_sAuthor))
+        throw new IllegalStateException ("The author is required");
+      if (StringHelper.isEmpty (m_sText))
+        throw new IllegalStateException ("The text is required");
+
+      return new ValidationExecutorSetStatusHistoryItem (m_aChangeDateTime, m_sAuthor, m_sChangeCode, m_sText);
+    }
   }
 }

@@ -23,9 +23,11 @@ import org.jspecify.annotations.Nullable;
 
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.NotThreadSafe;
 import com.helger.annotation.style.MustImplementEqualsAndHashcode;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.annotation.style.ReturnsMutableObject;
+import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.equals.EqualsHelper;
 import com.helger.base.hashcode.HashCodeGenerator;
@@ -33,7 +35,9 @@ import com.helger.base.tostring.ToStringGenerator;
 import com.helger.collection.commons.CommonsArrayList;
 import com.helger.collection.commons.ICommonsList;
 import com.helger.datetime.helper.PDTFactory;
+import com.helger.datetime.xml.XMLOffsetDateTime;
 import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.phive.api.executorset.status.ValidationExecutorSetStatusHistoryItem.ValidationExecutorSetStatusHistoryItemBuilder;
 
 /**
  * Defines the status of a VES.
@@ -172,32 +176,252 @@ public class ValidationExecutorSetStatus implements IValidationExecutorSetStatus
   @NonNull
   public static ValidationExecutorSetStatus createValidNow ()
   {
-    return createDeprecatedNow (false);
+    return builder ().statusLastModificationNow ().build ();
   }
 
   @NonNull
   public static ValidationExecutorSetStatus createValidAt (@NonNull final OffsetDateTime aStatusLastModDT)
   {
-    return createDeprecated (aStatusLastModDT, false);
+    return builder ().statusLastModification (aStatusLastModDT).build ();
   }
 
   @NonNull
   public static ValidationExecutorSetStatus createDeprecatedNow (final boolean bDeprecated)
   {
-    return createDeprecated (PDTFactory.getCurrentOffsetDateTime (), bDeprecated);
+    return builder ().type (bDeprecated ? EValidationExecutorStatusType.DEPRECATED
+                                        : EValidationExecutorStatusType.VALID).statusLastModificationNow ().build ();
   }
 
   @NonNull
   public static ValidationExecutorSetStatus createDeprecated (@NonNull final OffsetDateTime aStatusLastModDT,
                                                               final boolean bDeprecated)
   {
-    return new ValidationExecutorSetStatus (aStatusLastModDT,
-                                            bDeprecated ? EValidationExecutorStatusType.DEPRECATED
-                                                        : EValidationExecutorStatusType.VALID,
-                                            (OffsetDateTime) null,
-                                            (OffsetDateTime) null,
-                                            (String) null,
-                                            (DVRCoordinate) null,
-                                            (ICommonsList <ValidationExecutorSetStatusHistoryItem>) null);
+    return builder ().type (bDeprecated ? EValidationExecutorStatusType.DEPRECATED
+                                        : EValidationExecutorStatusType.VALID)
+                     .statusLastModification (aStatusLastModDT)
+                     .build ();
+  }
+
+  /**
+   * @return A new builder for {@link ValidationExecutorSetStatus} objects. Never <code>null</code>.
+   * @since 12.1.1
+   */
+  @NonNull
+  public static ValidationExecutorSetStatusBuilder builder ()
+  {
+    return new ValidationExecutorSetStatusBuilder ();
+  }
+
+  /**
+   * Builder class for {@link ValidationExecutorSetStatus} objects.
+   *
+   * @author Philip Helger
+   * @since 12.1.1
+   */
+  @NotThreadSafe
+  public static class ValidationExecutorSetStatusBuilder implements IBuilder <ValidationExecutorSetStatus>
+  {
+    public static final EValidationExecutorStatusType DEFAULT_TYPE = EValidationExecutorStatusType.VALID;
+
+    private OffsetDateTime m_aStatusLastModDT = PDTFactory.getCurrentOffsetDateTime ();
+    private EValidationExecutorStatusType m_eType = DEFAULT_TYPE;
+    private OffsetDateTime m_aValidFrom;
+    private OffsetDateTime m_aValidTo;
+    private String m_sDeprecationReason;
+    private DVRCoordinate m_aReplacementVESID;
+    private final ICommonsList <ValidationExecutorSetStatusHistoryItem> m_aHistoryItems = new CommonsArrayList <> ();
+
+    public ValidationExecutorSetStatusBuilder ()
+    {}
+
+    /**
+     * Set the date and time when the status was last modified. By default this is the date and time
+     * at which this builder was created.
+     *
+     * @param a
+     *        The status last modification date and time. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder statusLastModification (@Nullable final OffsetDateTime a)
+    {
+      m_aStatusLastModDT = a;
+      return this;
+    }
+
+    /**
+     * Set the date and time when the status was last modified. By default this is the date and time
+     * at which this builder was created.
+     *
+     * @param a
+     *        The status last modification date and time. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder statusLastModification (@Nullable final XMLOffsetDateTime a)
+    {
+      return statusLastModification (a == null ? null : a.toOffsetDateTime ());
+    }
+
+    /**
+     * Set the status last modification date and time to the current date and time.
+     *
+     * @return this for chaining
+     * @see #statusLastModification(OffsetDateTime)
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder statusLastModificationNow ()
+    {
+      return statusLastModification (PDTFactory.getCurrentOffsetDateTime ());
+    }
+
+    /**
+     * Set the overall status type. Defaults to {@link #DEFAULT_TYPE}.
+     *
+     * @param e
+     *        The status type to use. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder type (@Nullable final EValidationExecutorStatusType e)
+    {
+      m_eType = e;
+      return this;
+    }
+
+    /**
+     * Set the date and time from which on the VES is valid.
+     *
+     * @param a
+     *        The valid from date and time. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder validFrom (@Nullable final OffsetDateTime a)
+    {
+      m_aValidFrom = a;
+      return this;
+    }
+
+    /**
+     * Set the date and time until which the VES is valid.
+     *
+     * @param a
+     *        The valid to date and time. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder validTo (@Nullable final OffsetDateTime a)
+    {
+      m_aValidTo = a;
+      return this;
+    }
+
+    /**
+     * Set the human readable reason why the VES was deprecated.
+     *
+     * @param s
+     *        The deprecation reason. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder deprecationReason (@Nullable final String s)
+    {
+      m_sDeprecationReason = s;
+      return this;
+    }
+
+    /**
+     * Set the VES ID that replaces this VES.
+     *
+     * @param a
+     *        The replacement VES ID. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder replacementVESID (@Nullable final DVRCoordinate a)
+    {
+      m_aReplacementVESID = a;
+      return this;
+    }
+
+    /**
+     * Set all history items, overwriting all previously contained ones.
+     *
+     * @param a
+     *        The history items to use. May be <code>null</code> to remove all existing ones.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder historyItems (@Nullable final Iterable <? extends ValidationExecutorSetStatusHistoryItem> a)
+    {
+      if (a == null)
+        m_aHistoryItems.clear ();
+      else
+        m_aHistoryItems.setAll (a);
+      return this;
+    }
+
+    /**
+     * Add a single history item.
+     *
+     * @param a
+     *        The history item to be added. May be <code>null</code> in which case it is ignored.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder addHistoryItem (@Nullable final ValidationExecutorSetStatusHistoryItem a)
+    {
+      if (a != null)
+        m_aHistoryItems.add (a);
+      return this;
+    }
+
+    /**
+     * Add a single history item.
+     *
+     * @param a
+     *        The history item builder to be added. May be <code>null</code> in which case it is
+     *        ignored.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder addHistoryItem (@Nullable final ValidationExecutorSetStatusHistoryItemBuilder a)
+    {
+      return addHistoryItem (a == null ? null : a.build ());
+    }
+
+    /**
+     * Add multiple history items.
+     *
+     * @param a
+     *        The history items to be added. May be <code>null</code> in which case they are
+     *        ignored.
+     * @return this for chaining
+     */
+    @NonNull
+    public final ValidationExecutorSetStatusBuilder addHistoryItems (@Nullable final Iterable <? extends ValidationExecutorSetStatusHistoryItem> a)
+    {
+      if (a != null)
+        m_aHistoryItems.addAll (a);
+      return this;
+    }
+
+    @NonNull
+    public ValidationExecutorSetStatus build ()
+    {
+      if (m_aStatusLastModDT == null)
+        throw new IllegalStateException ("The status last modification date time is required");
+      if (m_eType == null)
+        throw new IllegalStateException ("The status type is required");
+
+      return new ValidationExecutorSetStatus (m_aStatusLastModDT,
+                                              m_eType,
+                                              m_aValidFrom,
+                                              m_aValidTo,
+                                              m_sDeprecationReason,
+                                              m_aReplacementVESID,
+                                              m_aHistoryItems);
+    }
   }
 }
