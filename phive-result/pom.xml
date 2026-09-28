@@ -72,7 +72,7 @@
     </dependency>
     <dependency>
       <groupId>com.helger.phive</groupId>
-      <artifactId>phive-xml</artifactId>
+      <artifactId>phive-xml-source</artifactId>
     </dependency>
     
     <dependency>
@@ -83,6 +83,11 @@
     <dependency>
       <groupId>com.helger.commons</groupId>
       <artifactId>ph-unittest-support-ext</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.phive</groupId>
+      <artifactId>phive-xml</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
