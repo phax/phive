@@ -22,7 +22,7 @@
   <parent>
     <groupId>com.helger.phive</groupId>
     <artifactId>phive-parent-pom</artifactId>
-    <version>12.1.1-SNAPSHOT</version>
+    <version>12.2.0-SNAPSHOT</version>
   </parent>
   <artifactId>phive-result</artifactId>
   <packaging>jar</packaging>
@@ -61,6 +61,10 @@
     <dependency>
       <groupId>com.helger.commons</groupId>
       <artifactId>ph-json</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.helger.commons</groupId>
+      <artifactId>ph-xml</artifactId>
     </dependency>
     <dependency>
       <groupId>com.helger.phive</groupId>

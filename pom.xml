@@ -26,7 +26,7 @@
   </parent>
   <groupId>com.helger.phive</groupId>
   <artifactId>phive-parent-pom</artifactId>
-  <version>12.1.1-SNAPSHOT</version>
+  <version>12.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>phive-parent-pom</name>
   <description>Base POM to build phive - the Philip Helger Integrative Validation Engine</description>
@@ -88,7 +88,7 @@
       <dependency>
         <groupId>com.helger.schematron</groupId>
         <artifactId>ph-schematron-parent-pom</artifactId>
-        <version>10.1.0</version>
+        <version>10.2.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -113,6 +113,11 @@
       <dependency>
         <groupId>com.helger.phive</groupId>
         <artifactId>phive-ves-repo</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.helger.phive</groupId>
+        <artifactId>phive-xml-source</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -153,6 +158,7 @@
   
   <modules>
     <module>phive-api</module>
+    <module>phive-xml-source</module>
     <module>phive-ves-model</module>
     <module>phive-ves-repo</module>
     <module>phive-xml</module>

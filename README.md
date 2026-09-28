@@ -23,6 +23,7 @@ This project has the following sub-modules:
 * **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
 * **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set.
 * **`phive-ves-repo`** (since v12.0.0) - contains phive specific extensions for repository management with [ph-diver](https://github.com/phax/ph-diver)
+* **`phive-xml-source`** (since v12.2.0) - contains the data structures that represent an XML document to be validated (`IValidationSourceXML` and friends). Split out of `phive-xml` so that a consumer who only needs to create or restore an XML validation source needs neither Saxon nor any Schematron engine.
 * **`phive-xml`** (previously `phive-engine`) - contains the support for validating XML source documents via XML Schema and Schematron
 * **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
@@ -321,6 +322,16 @@ Add the following to your `pom.xml` to use this artifact, replacing `x.y.z` with
 </dependency>
 ```
 
+If you only need to *create* or *restore* an XML validation source, but never *run* an XSD or Schematron validation yourself, this smaller artefact is sufficient. It is a dependency of `phive-xml`, so don't add both.
+
+```xml
+<dependency>
+  <groupId>com.helger.phive</groupId>
+  <artifactId>phive-xml-source</artifactId>
+  <version>x.y.z</version>
+</dependency>
+```
+
 If you are interested in the validation result transformation you need to also include this artefact.
 
 ```xml
@@ -362,11 +373,16 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v12.1.1 - work in progress
+v12.2.0 - work in progress
 * Deprecated static `ValidationExecutorSchematron.create...` methods in favour of `ValidationExecutorSchematronBuilder`
 * Less JAXB errors in log file when SVRL parsing encouters unsupported elements (as e.g. in ZATCA 3.4.6 rules)
 * Added new nested builder class `ValidationExecutorSetStatus.ValidationExecutorSetStatusBuilder` and the new factory method `ValidationExecutorSetStatus.builder ()`
 * Added new nested builder class `ValidationExecutorSetStatusHistoryItem.ValidationExecutorSetStatusHistoryItemBuilder` and the new factory method `ValidationExecutorSetStatusHistoryItem.builder ()`
+* Updated to ph-schematron v10.2.0, in which `ph-schematron-api` is free of Saxon
+* Added new submodule `phive-xml-source` containing the package `com.helger.phive.xml.source`.
+  It depends on `phive-api` and `ph-xml` only, and needs neither Saxon nor any Schematron engine.
+  `phive-xml` depends on it, so all existing `phive-xml` consumers continue to work unchanged.
+* `phive-result` now declares its direct `ph-xml` dependency explicitly instead of relying on a transitive one
 
 v12.1.0 - 2026-07-17
 * Updated to ph-schematron v10.x
