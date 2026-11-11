@@ -39,7 +39,7 @@ import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.IValidationExecutorSetRegistry;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
-import com.helger.phive.api.executorset.ValidationExecutorSetAlias;
+import com.helger.phive.api.executorset.ValidationExecutorSetAliasReadOnly;
 import com.helger.phive.api.executorset.status.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
@@ -364,8 +364,8 @@ public class VesXmlBuilder
   /**
    * Add an alias registration that will be created when
    * {@link #registerInto(IValidationExecutorSetRegistry)} is called. The alias is a
-   * {@link ValidationExecutorSetAlias} pointing to the same VES under a different ID and display
-   * name.
+   * {@link ValidationExecutorSetAliasReadOnly} pointing to the same VES under a different ID and
+   * display name.
    *
    * @param aAlias
    *        The alias definition. May not be <code>null</code>.
@@ -458,9 +458,9 @@ public class VesXmlBuilder
     // Finally register also all aliases (e.g. for Zugferd)
     for (final Alias aAlias : m_aAliases)
     {
-      aRegistry.registerValidationExecutorSet (new ValidationExecutorSetAlias <> (aAlias.vesID (),
-                                                                                  aAlias.displayName (),
-                                                                                  aVES));
+      aRegistry.registerValidationExecutorSet (new ValidationExecutorSetAliasReadOnly <> (aAlias.vesID (),
+                                                                                          aAlias.displayName (),
+                                                                                          aVES));
     }
   }
 }
