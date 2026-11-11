@@ -373,6 +373,12 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v12.3.0 - work in progress
+* Added new interface `IValidationExecutorSetAlias` as the common base of all VES aliases, offering `getSourceVES ()`.
+  `ValidationExecutorSetAlias` implements it.
+  **Breaking:** code checking for aliases with `instanceof ValidationExecutorSetAlias` must switch to `instanceof IValidationExecutorSetAlias`, as otherwise read-only aliases are not recognised.
+* Added new class `ValidationExecutorSetAliasReadOnly` that can alias any `IValidationExecutorSet`, without requiring the source VES to be mutable
+
 v12.2.0 - 2026-09-28
 * Deprecated static `ValidationExecutorSchematron.create...` methods in favour of `ValidationExecutorSchematronBuilder`
 * Less JAXB errors in log file when SVRL parsing encouters unsupported elements (as e.g. in ZATCA 3.4.6 rules)
