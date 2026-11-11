@@ -35,8 +35,10 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.source.IValidationSource;
 
 /**
- * An implementation of {@link IValidationExecutorSet} that acts as an alias to another
- * {@link IValidationExecutorSet} with a different ID.
+ * An implementation of {@link IValidationExecutorSetAlias} that acts as a mutable alias to another
+ * {@link IValidationExecutorSetMutable} with a different ID. All modifications are passed to the
+ * source VES. For aliasing a read-only {@link IValidationExecutorSet} use
+ * {@link ValidationExecutorSetAliasReadOnly}.
  *
  * @author Philip Helger
  * @param <SOURCETYPE>
@@ -45,7 +47,8 @@ import com.helger.phive.api.source.IValidationSource;
  */
 @NotThreadSafe
 public class ValidationExecutorSetAlias <SOURCETYPE extends IValidationSource> implements
-                                        IValidationExecutorSetMutable <SOURCETYPE>
+                                        IValidationExecutorSetMutable <SOURCETYPE>,
+                                        IValidationExecutorSetAlias <SOURCETYPE>
 {
   private final DVRCoordinate m_aVESID;
   private final String m_sDisplayName;

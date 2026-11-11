@@ -242,7 +242,7 @@ public final class ValidationExecutorSetRegistryTest
     final IValidationExecutorSet <IValidationSource> ret = aRegistry.getOfID (aCoord, CHECK_DT);
     assertNotNull ("Failed to resolve pseudo version '" + sPseudoVersion + "'", ret);
     // Must be the alias and not the source VES
-    assertTrue (ret instanceof ValidationExecutorSetAlias);
+    assertTrue (ret instanceof IValidationExecutorSetAlias);
     assertEquals (GROUP_ALIAS, ret.getID ().getGroupID ());
     assertEquals (ART_ALIAS, ret.getID ().getArtifactID ());
     return ret;
@@ -296,7 +296,7 @@ public final class ValidationExecutorSetRegistryTest
                                                                                                         ART_SRC,
                                                                                                         "latest"));
     assertNotNull (aSource);
-    assertSame (aSource, ((ValidationExecutorSetAlias <IValidationSource>) aAlias).getSourceVES ());
+    assertSame (aSource, ((IValidationExecutorSetAlias <IValidationSource>) aAlias).getSourceVES ());
     assertEquals ("Alias 1.1-SNAPSHOT", aAlias.getDisplayName ());
     assertEquals ("Source 2.6-SNAPSHOT", aSource.getDisplayName ());
   }
@@ -309,5 +309,36 @@ public final class ValidationExecutorSetRegistryTest
     assertNull (aRegistry.getOfID (DVRCoordinate.create (GROUP_ALIAS, ART_ALIAS, "latest")));
     // The static version still works
     assertNotNull (aRegistry.getOfID (DVRCoordinate.create (GROUP_ALIAS, ART_ALIAS, "1.0.5")));
+  }
+
+  @Test
+  public void testReadOnlyAliasForAllVersions () throws Exception
+  {
+    final ValidationExecutorSetRegistry <IValidationSource> aRegistry = _createRegistryWithAliases ();
+    final String sGroupRO = "ro-group";
+    final String sArtRO = "art-ro";
+
+    // Register a read-only alias for every version of the source
+    for (final IValidationExecutorSet <IValidationSource> aVES : aRegistry.findAll (x -> x.getID ()
+                                                                                         .getGroupID ()
+                                                                                         .equals (GROUP_SRC) &&
+                                                                                        x.getID ()
+                                                                                         .getArtifactID ()
+                                                                                         .equals (ART_SRC)))
+      aRegistry.registerValidationExecutorSet (new ValidationExecutorSetAliasReadOnly <> (DVRCoordinate.create (sGroupRO,
+                                                                                                                sArtRO,
+                                                                                                                aVES.getID ()
+                                                                                                                    .getVersionString ()),
+                                                                                          aVES.getDisplayName (),
+                                                                                          aVES));
+
+    final IValidationExecutorSet <IValidationSource> aAlias = aRegistry.getOfID (DVRCoordinate.create (sGroupRO,
+                                                                                                       sArtRO,
+                                                                                                       "latest-release-active"),
+                                                                                 CHECK_DT);
+    assertNotNull (aAlias);
+    assertTrue (aAlias instanceof ValidationExecutorSetAliasReadOnly);
+    assertEquals ("2.1", aAlias.getID ().getVersionString ());
+    assertEquals ("2.1", ((IValidationExecutorSetAlias <IValidationSource>) aAlias).getSourceVES ().getID ().getVersionString ());
   }
 }
