@@ -378,6 +378,9 @@ v12.3.0 - work in progress
   `ValidationExecutorSetAlias` implements it.
   **Breaking:** code checking for aliases with `instanceof ValidationExecutorSetAlias` must switch to `instanceof IValidationExecutorSetAlias`, as otherwise read-only aliases are not recognised.
 * Added new class `ValidationExecutorSetAliasReadOnly` that can alias any `IValidationExecutorSet`, without requiring the source VES to be mutable
+* Added new generic class `ValidationExecutorPartial` that applies any other XML validation executor (XML Schema, Schematron, ...) on the parts of a document selected by an XPath expression (e.g. the business document inside an SBDH envelope), with an optional prerequisite XPath expression
+* Added new method `VesXmlBuilder.addPartialVES` to apply all executors of an existing VES on the selected parts of a document
+* Added new nested builder class `XSDPartialContext.XSDPartialContextBuilder` and the new factory methods `XSDPartialContext.builder ()` and `XSDPartialContext.builder (XSDPartialContext)`
 
 v12.2.0 - 2026-09-28
 * Deprecated static `ValidationExecutorSchematron.create...` methods in favour of `ValidationExecutorSchematronBuilder`

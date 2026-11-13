@@ -22,7 +22,7 @@ Requires Java 17+ and Maven 3.9+. Tested on Java 17, 21, and 25.
 Six Maven modules, layered bottom-up:
 
 - **phive-api** — Core interfaces and types: `IValidationSource`, `IValidationExecutor`, `IValidationArtefact`, `ValidationResult`, `ValidationResultList`, `ValidationExecutorSetRegistry`, `VESID`
-- **phive-xml** — XML-specific validation executors: `ValidationExecutorXSD`, `ValidationExecutorSchematron`. Supports Schematron engines: XSLT, SchXslt, SchXslt2, Pure
+- **phive-xml** — XML-specific validation executors: `ValidationExecutorXSD`, `ValidationExecutorSchematron`, and `ValidationExecutorPartial` (applies any wrapped executor on XPath-selected parts of a document, e.g. the payload of an SBDH envelope). Supports Schematron engines: XSLT, SchXslt, SchXslt2, Pure
 - **phive-result** — Result serialization to JSON (`PhiveJsonHelper`) and XML (`PhiveXMLHelper`)
 - **phive-ves-model** — VES (Validation Execution Set) XML data model with JAXB-generated classes (generated from `src/main/resources/schemas/`)
 - **phive-ves-repo** — Repository management extensions integrating with ph-diver

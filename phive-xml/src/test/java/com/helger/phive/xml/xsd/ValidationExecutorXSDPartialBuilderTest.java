@@ -46,7 +46,7 @@ public class ValidationExecutorXSDPartialBuilderTest
   private static XSDPartialContext _ctx () throws XPathExpressionException
   {
     final XPathExpression aXE = XPathHelper.createNewXPath ().compile ("/root/child");
-    return XSDPartialContext.create (aXE);
+    return XSDPartialContext.builder ().xpathExpression (aXE).build ();
   }
 
   @Test

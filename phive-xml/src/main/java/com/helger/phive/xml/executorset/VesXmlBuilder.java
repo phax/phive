@@ -20,6 +20,8 @@ import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import javax.xml.xpath.XPathExpression;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -43,10 +45,12 @@ import com.helger.phive.api.executorset.ValidationExecutorSetAliasReadOnly;
 import com.helger.phive.api.executorset.status.EValidationExecutorStatusType;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
+import com.helger.phive.xml.partial.ValidationExecutorPartial;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.xsd.ValidationExecutorXSD;
+import com.helger.phive.xml.xsd.XSDPartialContext;
 import com.helger.xml.schema.XMLSchemaCache;
 
 /**
@@ -358,6 +362,35 @@ public class VesXmlBuilder
   {
     ValueEnforcer.notEmptyNoNullValue (aExecutors, "Executors");
     m_aExecutors.addAll (aExecutors);
+    return this;
+  }
+
+  /**
+   * Add all executors of another VES, but applied on parts of the source document only. Each
+   * executor of the other VES is wrapped in a {@link ValidationExecutorPartial} using the provided
+   * partial context and prerequisite. Use this e.g. to validate a business document contained in an
+   * envelope (like the SBDH) with the existing VES of that business document.
+   *
+   * @param aVES
+   *        The VES whose executors should be applied on the parts. May not be <code>null</code>.
+   * @param aPartialContext
+   *        The partial context that defines the rules for finding the parts to validate. May not be
+   *        <code>null</code>.
+   * @param aPrerequisiteXPath
+   *        The optional prerequisite XPath expression that must evaluate to <code>true</code> on
+   *        the complete source document for the executors to be applied. May be <code>null</code>.
+   * @return this for chaining
+   * @since 12.3.0
+   */
+  @NonNull
+  public VesXmlBuilder addPartialVES (@NonNull final IValidationExecutorSet <IValidationSourceXML> aVES,
+                                      @NonNull final XSDPartialContext aPartialContext,
+                                      @Nullable final XPathExpression aPrerequisiteXPath)
+  {
+    ValueEnforcer.notNull (aVES, "VES");
+    ValueEnforcer.notNull (aPartialContext, "PartialContext");
+    for (final IValidationExecutor <IValidationSourceXML> aVE : aVES)
+      m_aExecutors.add (new ValidationExecutorPartial (aVE, aPartialContext, aPrerequisiteXPath));
     return this;
   }
 
