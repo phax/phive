@@ -16,18 +16,24 @@
  */
 package com.helger.phive.xml.xsd;
 
+import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
+import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.annotation.concurrent.Immutable;
+import com.helger.annotation.concurrent.NotThreadSafe;
+import com.helger.base.builder.IBuilder;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.tostring.ToStringGenerator;
+import com.helger.xml.xpath.XPathHelper;
 
 /**
- * This class defines the constraints validated in the {@link ValidationExecutorXSDPartial}
+ * This class defines the constraints validated in the {@link ValidationExecutorXSDPartial} and the
+ * {@link com.helger.phive.xml.partial.ValidationExecutorPartial}
  *
  * @author Philip Helger
  */
@@ -104,9 +110,10 @@ public class XSDPartialContext
    * @since 6.0.4
    */
   @NonNull
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static XSDPartialContext create (@NonNull final XPathExpression aXE)
   {
-    return new XSDPartialContext (aXE, null, null);
+    return builder ().xpathExpression (aXE).build ();
   }
 
   /**
@@ -118,9 +125,10 @@ public class XSDPartialContext
    * @since 10.0.0
    */
   @NonNull
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static XSDPartialContext createMandatory (@NonNull final XPathExpression aXE)
   {
-    return create (aXE, 1, 1);
+    return builder ().xpathExpression (aXE).exactNodeCount (1).build ();
   }
 
   /**
@@ -136,10 +144,200 @@ public class XSDPartialContext
    * @since 6.0.4
    */
   @NonNull
+  @Deprecated (forRemoval = true, since = "12.3.0")
   public static XSDPartialContext create (@NonNull final XPathExpression aXE,
                                           @Nonnegative final int nMinNodeCount,
                                           @Nonnegative final int nMaxNodeCount)
   {
-    return new XSDPartialContext (aXE, Integer.valueOf (nMinNodeCount), Integer.valueOf (nMaxNodeCount));
+    return builder ().xpathExpression (aXE).minNodeCount (nMinNodeCount).maxNodeCount (nMaxNodeCount).build ();
+  }
+
+  /**
+   * @return A new builder for {@link XSDPartialContext} objects. Never <code>null</code>.
+   * @since 12.3.0
+   */
+  @NonNull
+  public static XSDPartialContextBuilder builder ()
+  {
+    return new XSDPartialContextBuilder ();
+  }
+
+  /**
+   * Create a new builder that is pre-filled with the values of the provided context.
+   *
+   * @param aSrc
+   *        The source context to copy from. May not be <code>null</code>.
+   * @return A new builder for {@link XSDPartialContext} objects. Never <code>null</code>.
+   * @since 12.3.0
+   */
+  @NonNull
+  public static XSDPartialContextBuilder builder (@NonNull final XSDPartialContext aSrc)
+  {
+    return new XSDPartialContextBuilder (aSrc);
+  }
+
+  /**
+   * Builder class for {@link XSDPartialContext} objects.
+   *
+   * @author Philip Helger
+   * @since 12.3.0
+   */
+  @NotThreadSafe
+  public static class XSDPartialContextBuilder implements IBuilder <XSDPartialContext>
+  {
+    private XPathExpression m_aXE;
+    private Integer m_aMinNodeCount;
+    private Integer m_aMaxNodeCount;
+
+    public XSDPartialContextBuilder ()
+    {}
+
+    /**
+     * Copy constructor from an existing {@link XSDPartialContext}.
+     *
+     * @param aSrc
+     *        The source context to copy from. May not be <code>null</code>.
+     */
+    public XSDPartialContextBuilder (@NonNull final XSDPartialContext aSrc)
+    {
+      ValueEnforcer.notNull (aSrc, "Src");
+      m_aXE = aSrc.m_aXE;
+      m_aMinNodeCount = aSrc.m_aMinNodeCount;
+      m_aMaxNodeCount = aSrc.m_aMaxNodeCount;
+    }
+
+    /**
+     * Set the XPath expression that selects the nodes to validate.
+     *
+     * @param a
+     *        The XPath expression to use. May be <code>null</code>.
+     * @return this for chaining
+     */
+    @NonNull
+    public final XSDPartialContextBuilder xpathExpression (@Nullable final XPathExpression a)
+    {
+      m_aXE = a;
+      return this;
+    }
+
+    /**
+     * Compile the provided XPath string with the provided {@link XPath} object (that also defines
+     * the namespace context) and use it as the XPath expression that selects the nodes to validate.
+     *
+     * @param aXPath
+     *        The XPath object used to compile the expression. May not be <code>null</code>.
+     * @param sXPath
+     *        The XPath expression to compile. May neither be <code>null</code> nor empty.
+     * @return this for chaining
+     * @throws IllegalArgumentException
+     *         if the XPath expression cannot be compiled
+     */
+    @NonNull
+    public final XSDPartialContextBuilder xpathExpression (@NonNull final XPath aXPath,
+                                                           @NonNull @Nonempty final String sXPath)
+    {
+      return xpathExpression (XPathHelper.createNewXPathExpression (aXPath, sXPath));
+    }
+
+    /**
+     * Set the minimum number of nodes that must be selected.
+     *
+     * @param a
+     *        The minimum node count. May be <code>null</code> to indicate that no minimum node
+     *        count is required.
+     * @return this for chaining
+     */
+    @NonNull
+    public final XSDPartialContextBuilder minNodeCount (@Nullable final Integer a)
+    {
+      m_aMinNodeCount = a;
+      return this;
+    }
+
+    /**
+     * Set the minimum number of nodes that must be selected.
+     *
+     * @param n
+     *        The minimum node count. Must be &ge; 0.
+     * @return this for chaining
+     */
+    @NonNull
+    public final XSDPartialContextBuilder minNodeCount (@Nonnegative final int n)
+    {
+      return minNodeCount (Integer.valueOf (n));
+    }
+
+    /**
+     * Set the maximum number of nodes that may be selected.
+     *
+     * @param a
+     *        The maximum node count. May be <code>null</code> to indicate that no maximum node
+     *        count is required.
+     * @return this for chaining
+     */
+    @NonNull
+    public final XSDPartialContextBuilder maxNodeCount (@Nullable final Integer a)
+    {
+      m_aMaxNodeCount = a;
+      return this;
+    }
+
+    /**
+     * Set the maximum number of nodes that may be selected.
+     *
+     * @param n
+     *        The maximum node count. Must be &ge; 0.
+     * @return this for chaining
+     */
+    @NonNull
+    public final XSDPartialContextBuilder maxNodeCount (@Nonnegative final int n)
+    {
+      return maxNodeCount (Integer.valueOf (n));
+    }
+
+    /**
+     * Set the minimum and maximum number of nodes to the same value.
+     *
+     * @param n
+     *        The exact node count. Must be &ge; 0.
+     * @return this for chaining
+     */
+    @NonNull
+    public final XSDPartialContextBuilder exactNodeCount (@Nonnegative final int n)
+    {
+      return minNodeCount (n).maxNodeCount (n);
+    }
+
+    /**
+     * Remove the minimum and maximum node count constraints.
+     *
+     * @return this for chaining
+     */
+    @NonNull
+    public final XSDPartialContextBuilder noNodeCountConstraint ()
+    {
+      return minNodeCount ((Integer) null).maxNodeCount ((Integer) null);
+    }
+
+    @NonNull
+    public XSDPartialContext build ()
+    {
+      if (m_aXE == null)
+        throw new IllegalStateException ("XPath expression is missing");
+      if (m_aMinNodeCount != null && m_aMinNodeCount.intValue () < 0)
+        throw new IllegalStateException ("The minimum node count may not be negative");
+      if (m_aMaxNodeCount != null && m_aMaxNodeCount.intValue () < 0)
+        throw new IllegalStateException ("The maximum node count may not be negative");
+      if (m_aMinNodeCount != null &&
+          m_aMaxNodeCount != null &&
+          m_aMinNodeCount.intValue () > m_aMaxNodeCount.intValue ())
+        throw new IllegalStateException ("The minimum node count (" +
+                                         m_aMinNodeCount +
+                                         ") may not be greater than the maximum node count (" +
+                                         m_aMaxNodeCount +
+                                         ")");
+
+      return new XSDPartialContext (m_aXE, m_aMinNodeCount, m_aMaxNodeCount);
+    }
   }
 }
