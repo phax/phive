@@ -24,7 +24,7 @@ Six Maven modules, layered bottom-up:
 - **phive-api** — Core interfaces and types: `IValidationSource`, `IValidationExecutor`, `IValidationArtefact`, `ValidationResult`, `ValidationResultList`, `ValidationExecutorSetRegistry`, `VESID`
 - **phive-xml** — XML-specific validation executors: `ValidationExecutorXSD`, `ValidationExecutorSchematron`, and `ValidationExecutorPartial` (applies any wrapped executor on XPath-selected parts of a document, e.g. the payload of an SBDH envelope). Supports Schematron engines: XSLT, SchXslt, SchXslt2, Pure
 - **phive-result** — Result serialization to JSON (`PhiveJsonHelper`) and XML (`PhiveXMLHelper`)
-- **phive-ves-model** — VES (Validation Execution Set) XML data model with JAXB-generated classes (generated from `src/main/resources/schemas/`)
+- **phive-ves-model** — VES (Validation Execution Set) XML data model with JAXB-generated classes (generated from `src/main/resources/schemas/`; a `schematron` element with a `partial` child (`DefaultVESLoaderSchematron`) and the `partialRequires` elements (`VESLoader`/`LoadedVES`, executed after `requires`) are mapped onto `ValidationExecutorPartial`. Changes to `ves-1.0.xsd` get a new RC entry in its version history. `phive-ves-engine` test resources `ves/test4` contain a complete VES chain for a Peppol BIS Invoice inside an SBDH)
 - **phive-ves-repo** — Repository management extensions integrating with ph-diver
 - **phive-ves-engine** — VES execution engine that loads and runs VES definitions
 

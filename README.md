@@ -381,6 +381,11 @@ v12.3.0 - work in progress
 * Added new generic class `ValidationExecutorPartial` that applies any other XML validation executor (XML Schema, Schematron, ...) on the parts of a document selected by an XPath expression (e.g. the business document inside an SBDH envelope), with an optional prerequisite XPath expression
 * Added new method `VesXmlBuilder.addPartialVES` to apply all executors of an existing VES on the selected parts of a document
 * Added new nested builder class `XSDPartialContext.XSDPartialContextBuilder` and the new factory methods `XSDPartialContext.builder ()` and `XSDPartialContext.builder (XSDPartialContext)`
+* Extended `ves-1.0.xsd` (v1.0.0-RC7) to apply validation artefacts on parts of a document only (e.g. the business document inside an SBDH envelope), using the new type `VesXmlPartialType` (`xpath`, `minNodeCount`, `maxNodeCount`):
+    * The `schematron` element has the new optional `partial` element
+    * The `ves` element has the new optional `partialRequires` elements (0..n), that apply a complete other VES on the selected parts. They are executed after `requires` and before the VES' own artefacts.
+    * The VES engine maps both onto `ValidationExecutorPartial`. A `precondition` of the same element is evaluated on the complete document.
+* The VES engine now applies the `precondition` of `schematron` elements. Previously it was silently ignored.
 
 v12.2.0 - 2026-09-28
 * Deprecated static `ValidationExecutorSchematron.create...` methods in favour of `ValidationExecutorSchematronBuilder`
