@@ -22,6 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import org.jspecify.annotations.NonNull;
@@ -54,8 +55,12 @@ import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.ves.engine.load.VESLoader.VESLoaderStatus;
 import com.helger.phive.ves.model.v1.VES1Marshaller;
 import com.helger.phive.ves.v10.VesType;
+import com.helger.phive.xml.partial.ValidationExecutorPartial;
+import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.source.ValidationSourceXML;
+import com.helger.phive.xml.xsd.ValidationExecutorXSD;
+import com.helger.xml.serialize.read.DOMReader;
 
 public final class VESLoaderTest
 {
@@ -146,6 +151,16 @@ public final class VESLoaderTest
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/xsd-nostop.ves"));
       // Upload SCH VES with stopOnError="true"
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch-stop.ves"));
+      // Upload SCH for partial validation
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("com.helger.phive.test", "mini-sch-partial", "2023.8"),
+                    new ClassPathResource ("ves/test1/mini-partial.sch"));
+      // Upload SCH VES with partial validation
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test1/sch-partial.ves"));
+      // Upload SCH VES with invalid partial validation - not via _addVES as it does not load
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("com.helger.phive.test", "test_sch_partial_invalid", "1.0"),
+                    new ClassPathResource ("ves/test1/sch-partial-invalid.ves"));
     }
 
     // test2
@@ -163,6 +178,32 @@ public final class VESLoaderTest
                     new ClassPathResource ("ves/test3/mini.xsd"));
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd1.ves"));
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd2.ves"));
+    }
+
+    // test4 - Peppol BIS Billing Invoice inside an SBDH
+    {
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("org.oasis-open", "ubl-xsdrt", "2.1"),
+                    new ClassPathResource ("ves/test2/UBL-2.1-xsdrt.zip"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/ubl-invoice-2.1.ves"));
+
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("eu.peppol.bis3", "cen-en16931-ubl", "2026.5"),
+                    new ClassPathResource ("ves/test4/CEN-EN16931-UBL.xslt"));
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("eu.peppol.bis3", "peppol-en16931-ubl", "2026.5"),
+                    new ClassPathResource ("ves/test4/PEPPOL-EN16931-UBL.xslt"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/peppol-bis-invoice-2026.5.ves"));
+
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("un.unece.uncefact", "sbdh-xsd", "1.3"),
+                    new ClassPathResource ("ves/test4/sbdh-1.3.zip"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/sbdh-1.3.ves"));
+
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("org.peppol.bis3.sbdh-envelope", "envelope-rules", "2026.5"),
+                    new ClassPathResource ("ves/test4/PeppolBIS-Envelope-Rules.xslt"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/peppol-sbdh-invoice-2026.5.ves"));
     }
 
     // No chain needed - use repo as is
@@ -371,6 +412,202 @@ public final class VESLoaderTest
     final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = aLoaded.createVES ().getAllExecutors ();
     assertEquals (1, aExecutors.size ());
     assertTrue (aExecutors.get (0).isStopValidationOnError ());
+  }
+
+  @NonNull
+  private static ValidationResultList _validatePartial (@NonNull final String sType, @NonNull final String sParts)
+  {
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch_partial:1.0");
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (null,
+                                                                               DOMReader.readXMLDOM ("<envelope xmlns='urn:env' xmlns:a='urn:a'><header><type>" +
+                                                                                                     sType +
+                                                                                                     "</type></header>" +
+                                                                                                     sParts +
+                                                                                                     "</envelope>"));
+    final ErrorList aErrorList = new ErrorList ();
+    final ValidationResultList ret = VESLoader.loadVESAndApplyValidation (s_aRepoStorage,
+                                                                          aVESID,
+                                                                          aValidationSource,
+                                                                          aErrorList).getValidationResultList ();
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+    assertNotNull (ret);
+    assertEquals (1, ret.size ());
+    return ret;
+  }
+
+  @Test
+  public void testSchPartial ()
+  {
+    final String sValidPart = "<a:root><a:a>Hallo</a:a></a:root>";
+    final String sInvalidPart = "<a:root><a:b>Hallo</a:b></a:root>";
+
+    // Executor is wrapped
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch_partial:1.0"),
+                                                                              aErrorList);
+    assertNotNull (aLoaded);
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+    final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = aLoaded.createVES ().getAllExecutors ();
+    assertEquals (1, aExecutors.size ());
+    assertEquals (ValidationExecutorPartial.class, aExecutors.get (0).getClass ());
+    // Schematron default is kept
+    assertFalse (aExecutors.get (0).isStopValidationOnError ());
+
+    // One valid part
+    ValidationResultList aResults = _validatePartial ("a", sValidPart);
+    assertTrue (aResults.getAllErrors ().toString (), aResults.containsNoError ());
+
+    // Two parts, one invalid
+    aResults = _validatePartial ("a", sValidPart + sInvalidPart);
+    assertEquals (aResults.getAllErrors ().toString (), 1, aResults.getAllErrors ().size ());
+    assertTrue (aResults.getAllErrors ().getFirstOrNull ().getErrorText (Locale.ROOT).contains ("'a' is missing"));
+
+    // No part
+    aResults = _validatePartial ("a", "");
+    assertEquals (aResults.getAllErrors ().toString (), 1, aResults.getAllErrors ().size ());
+    assertTrue (aResults.getAllErrors ().getFirstOrNull ().getErrorText (Locale.ROOT).contains ("minimum number"));
+
+    // Too many parts
+    aResults = _validatePartial ("a", sValidPart + sValidPart + sValidPart);
+    assertEquals (aResults.getAllErrors ().toString (), 1, aResults.getAllErrors ().size ());
+    assertTrue (aResults.getAllErrors ().getFirstOrNull ().getErrorText (Locale.ROOT).contains ("maximum number"));
+
+    // Precondition not fulfilled
+    aResults = _validatePartial ("b", sInvalidPart);
+    assertTrue (aResults.get (0).getValidity ().isSkipped ());
+    assertTrue (aResults.getAllErrors ().toString (), aResults.containsNoError ());
+  }
+
+  @Test
+  public void testSchPartialInvalid ()
+  {
+    // min node count > max node count
+    final ErrorList aErrorList = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (DVRCoordinate.parseOrNull ("com.helger.phive.test:test_sch_partial_invalid:1.0"),
+                                                                              aErrorList);
+    if (aLoaded != null)
+      aLoaded.createVES ();
+    assertTrue (aErrorList.toString (), aErrorList.containsAtLeastOneError ());
+  }
+
+  @NonNull
+  private static String _readPeppolSbdh ()
+  {
+    return new String (StreamHelper.getAllBytes (new ClassPathResource ("ves/test4/sbdh-base-example.xml")),
+                       StandardCharsets.UTF_8);
+  }
+
+  @NonNull
+  private static ValidationResultList _validatePeppolSbdh (@NonNull final String sXML)
+  {
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("org.peppol.bis3.sbdh-envelope:invoice:2026.5");
+    final IValidationSourceXML aValidationSource = ValidationSourceXML.create (null, DOMReader.readXMLDOM (sXML));
+    assertNotNull (aValidationSource.getNode ());
+
+    final ErrorList aErrorList = new ErrorList ();
+    final ValidationResultList ret = VESLoader.loadVESAndApplyValidation (s_aRepoStorage,
+                                                                          aVESID,
+                                                                          aValidationSource,
+                                                                          aErrorList).getValidationResultList ();
+    assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+    assertNotNull (ret);
+    return ret;
+  }
+
+  @Test
+  public void test4PeppolSbdhStructure ()
+  {
+    final DVRCoordinate aVESID = DVRCoordinate.parseOrNull ("org.peppol.bis3.sbdh-envelope:invoice:2026.5");
+    for (final boolean bEager : new boolean [] { false, true })
+    {
+      final ErrorList aErrorList = new ErrorList ();
+      final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).setUseEagerRequirementLoading (bEager)
+                                                              .loadVESFromRepo (aVESID, aErrorList);
+      assertNotNull (aLoaded);
+      assertEquals (aErrorList.toString (), 0, aErrorList.size ());
+      assertEquals (1, aLoaded.getAllPartialRequires ().size ());
+
+      // SBDH XSD, partial (UBL XSD, CEN, Peppol), envelope rules
+      final ICommonsList <IValidationExecutor <IValidationSource>> aExecutors = aLoaded.createVES ().getAllExecutors ();
+      assertEquals (5, aExecutors.size ());
+      assertEquals (ValidationExecutorXSD.class, aExecutors.get (0).getClass ());
+      for (int i = 1; i <= 3; ++i)
+        assertEquals (ValidationExecutorPartial.class, aExecutors.get (i).getClass ());
+      assertEquals (ValidationExecutorXSD.class,
+                    ((ValidationExecutorPartial) (IValidationExecutor <?>) aExecutors.get (1)).getWrappedExecutor ()
+                                                                                              .getClass ());
+      assertEquals (ValidationExecutorSchematron.class, aExecutors.get (4).getClass ());
+    }
+  }
+
+  @Test
+  public void test4PeppolSbdhValid ()
+  {
+    final ValidationResultList aResults = _validatePeppolSbdh (_readPeppolSbdh ());
+    assertEquals (5, aResults.size ());
+    assertTrue (aResults.getAllErrors ().toString (), aResults.containsNoError ());
+    // All layers were executed
+    for (int i = 0; i < aResults.size (); ++i)
+      assertFalse (aResults.get (i).getValidity ().isSkipped ());
+  }
+
+  @Test
+  public void test4PeppolSbdhReceiverMismatch ()
+  {
+    // Envelope rules
+    final String sXML = _readPeppolSbdh ().replace (">0002:FR23342</Identifier>", ">0002:FR99999</Identifier>");
+    final ErrorList aErrors = _validatePeppolSbdh (sXML).getAllErrors ();
+    assertEquals (aErrors.toString (), 1, aErrors.size ());
+    assertTrue (aErrors.toString (), aErrors.getFirstOrNull ().getErrorText (Locale.ROOT).contains ("[BR-SBDH-1]"));
+  }
+
+  @Test
+  public void test4PeppolSbdhInvalidPayload ()
+  {
+    // Peppol BIS rules on the payload
+    final String sXML = _readPeppolSbdh ().replaceAll ("<cbc:BuyerReference>[^<]*</cbc:BuyerReference>", "");
+    final ErrorList aErrors = _validatePeppolSbdh (sXML).getAllErrors ();
+    assertEquals (aErrors.toString (), 1, aErrors.size ());
+    assertEquals (aErrors.toString (), "PEPPOL-EN16931-R003", aErrors.getFirstOrNull ().getErrorID ());
+  }
+
+  @Test
+  public void test4PeppolSbdhPreconditionNotMet ()
+  {
+    // Not BIS Billing - the envelope rules are not applied
+    final String sXML = _readPeppolSbdh ().replace ("poacc:billing:3.0</cbc:CustomizationID>",
+                                                    "poacc:other:3.0</cbc:CustomizationID>");
+    final ValidationResultList aResults = _validatePeppolSbdh (sXML);
+    assertEquals (5, aResults.size ());
+    assertFalse (aResults.get (3).getValidity ().isSkipped ());
+    assertTrue (aResults.get (4).getValidity ().isSkipped ());
+  }
+
+  @Test
+  public void test4PeppolSbdhInvalidPayloadXSD ()
+  {
+    // UBL XML Schema on the payload - stops the validation
+    final String sXML = _readPeppolSbdh ().replace ("<cbc:BuyerReference>", "<cbc:Unknown/><cbc:BuyerReference>");
+    final ValidationResultList aResults = _validatePeppolSbdh (sXML);
+    assertTrue (aResults.get (0).getErrorList ().containsNoError ());
+    assertTrue (aResults.get (1).getErrorList ().containsAtLeastOneError ());
+    // Everything afterwards is skipped
+    for (int i = 2; i < aResults.size (); ++i)
+      assertTrue (aResults.get (i).getValidity ().isSkipped ());
+  }
+
+  @Test
+  public void test4PeppolSbdhMissingEnvelope ()
+  {
+    // The business document without the envelope
+    final String sSBDH = _readPeppolSbdh ();
+    final String sXML = sSBDH.substring (sSBDH.indexOf ("<Invoice "),
+                                         sSBDH.indexOf ("</Invoice>") + "</Invoice>".length ());
+    final ValidationResultList aResults = _validatePeppolSbdh (sXML);
+    // SBDH XML Schema fails and stops the validation
+    assertTrue (aResults.get (0).getErrorList ().containsAtLeastOneError ());
+    for (int i = 1; i < aResults.size (); ++i)
+      assertTrue (aResults.get (i).getValidity ().isSkipped ());
   }
 
   @Test

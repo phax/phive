@@ -28,6 +28,9 @@
 This XML Schema is used to describe "Validation Execution Sets" as used by the phive validation library.
 
 Version history:
+  * 2026-11-13 - v1.0.0-RC7
+    * Added the optional "partial" element to the "VesSchematronType" type, to apply a Schematron on parts of a document only
+    * Added the optional "partialRequires" elements to the "VesType" type, to apply other VES on parts of a document only
   * 2026-07-17 - v1.0.0-RC6
     * Added the optional classifier to the "VesCoordinateGroup" group
     * Added the optional "stopOnError" attribute to the "VesXsdType" and "VesSchematronType" types
@@ -266,6 +269,78 @@ Version history:
     </xs:simpleContent>
   </xs:complexType>
 
+  <xs:simpleType name="VesNodeCountType">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="VesXmlPartialType">
+    <xs:annotation>
+      <xs:documentation>
+        Defines the parts (nodes) of the complete XML instance a validation artefact is applied on.
+        Each selected node is validated on its own, as if it was the root element of a standalone XML document.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="xpath" type="xs:string">
+        <xs:annotation>
+          <xs:documentation>
+            The XPath expression that selects the parts of the complete XML instance. The namespace prefixes
+            used in the XPath expression must be declared in the namespaces of the surrounding element.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="minNodeCount" type="VesNodeCountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The minimum number of nodes the XPath expression must select.
+            If absent, no minimum is required.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="maxNodeCount" type="VesNodeCountType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            The maximum number of nodes the XPath expression may select. Must not be less than "minNodeCount".
+            If absent, no maximum is required.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="VesPartialRequiresType">
+    <xs:annotation>
+      <xs:documentation>
+        Defines a dependency to a different VES, that is applied on parts of the XML instance only
+        (e.g. the business document inside an envelope).
+        Since v1.0.0-RC7.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="VesRequiresType">
+        <xs:sequence>
+          <xs:element name="partial" type="VesXmlPartialType">
+            <xs:annotation>
+              <xs:documentation>
+                The parts of the XML instance the referenced VES is applied on.
+                The namespace prefixes are taken from the "namespaces" element.
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="precondition" type="VesXmlPreconditionType" minOccurs="0">
+            <xs:annotation>
+              <xs:documentation>
+                Optional precondition that MUST be fulfilled on the complete XML instance to apply the referenced VES
+              </xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="VesXsdType">
     <xs:annotation>
       <xs:documentation>
@@ -363,7 +438,18 @@ Version history:
       <xs:element name="precondition" type="VesXmlPreconditionType" minOccurs="0">
         <xs:annotation>
           <xs:documentation>
-            Optional precondition that MUST be fulfilled to execute this validation artefact on an XML instance 
+            Optional precondition that MUST be fulfilled to execute this validation artefact on an XML instance.
+            If a "partial" element is present, the precondition is evaluated on the complete XML instance.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="partial" type="VesXmlPartialType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            Optional definition of the parts of the XML instance this Schematron is applied on (e.g. the business
+            document inside an envelope). If absent, the Schematron is applied on the complete XML instance.
+            Since v1.0.0-RC7.
           </xs:documentation>
         </xs:annotation>
       </xs:element>
@@ -544,6 +630,16 @@ Version history:
       <xs:element name="requires" type="VesRequiresType" minOccurs="0">
         <xs:annotation>
           <xs:documentation>An optional reference to an existing validation artefact (VES) that must be executed prior to this validation artefact.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+
+      <xs:element name="partialRequires" type="VesPartialRequiresType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>
+            Optional references to existing validation artefacts (VES) that are applied on parts of the XML instance only.
+            They are executed after the "requires" element and prior to this validation artefact, in the provided order.
+            Since v1.0.0-RC7.
+          </xs:documentation>
         </xs:annotation>
       </xs:element>
       

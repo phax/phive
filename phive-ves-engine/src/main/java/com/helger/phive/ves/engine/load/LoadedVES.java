@@ -19,6 +19,8 @@ package com.helger.phive.ves.engine.load;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.xml.xpath.XPathExpression;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 
@@ -46,7 +48,10 @@ import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.source.IValidationSource;
 import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.ves.model.v1.EVESSyntax;
+import com.helger.phive.xml.partial.ValidationExecutorPartial;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
+import com.helger.phive.xml.source.IValidationSourceXML;
+import com.helger.phive.xml.xsd.XSDPartialContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
 /**
@@ -189,11 +194,89 @@ public final class LoadedVES
     }
   }
 
+  /**
+   * VES that is applied on parts of the validated document only
+   *
+   * @author Philip Helger
+   * @since 12.3.0
+   */
+  @NotThreadSafe
+  public static final class PartialRequiredVES
+  {
+    private final RequiredVES m_aRequiredVES;
+    private final XSDPartialContext m_aPartialContext;
+    private final XPathExpression m_aPrerequisiteXPath;
+    private IVESSpecificDeferredLoader m_aLoader;
+    private LoadedVES m_aLoaded;
+
+    PartialRequiredVES (@NonNull final RequiredVES aRequiredVES,
+                        @NonNull final XSDPartialContext aPartialContext,
+                        @Nullable final XPathExpression aPrerequisiteXPath)
+    {
+      ValueEnforcer.notNull (aRequiredVES, "RequiredVES");
+      ValueEnforcer.notNull (aPartialContext, "PartialContext");
+      m_aRequiredVES = aRequiredVES;
+      m_aPartialContext = aPartialContext;
+      m_aPrerequisiteXPath = aPrerequisiteXPath;
+    }
+
+    /**
+     * @return The details of the required VES. Never <code>null</code>.
+     */
+    @NonNull
+    public RequiredVES getRequiredVES ()
+    {
+      return m_aRequiredVES;
+    }
+
+    /**
+     * @return The partial context that selects the parts of the document. Never
+     *         <code>null</code>.
+     */
+    @NonNull
+    public XSDPartialContext getPartialContext ()
+    {
+      return m_aPartialContext;
+    }
+
+    /**
+     * @return The optional prerequisite XPath expression that is evaluated on the complete
+     *         document. May be <code>null</code>.
+     */
+    @Nullable
+    public XPathExpression getPrerequisiteXPath ()
+    {
+      return m_aPrerequisiteXPath;
+    }
+
+    @NonNull
+    private LoadedVES _getLoadedVESNotNull ()
+    {
+      LoadedVES ret = m_aLoaded;
+      if (ret == null)
+      {
+        final ErrorList aErrorList = new ErrorList ();
+        m_aLoaded = ret = m_aLoader.deferredLoad (aErrorList);
+        if (ret == null)
+          throw new VESLoadingException ("Failed to load partially required VES '" +
+                                         m_aRequiredVES.getRequiredVESID ().getAsSingleID () +
+                                         "': " +
+                                         aErrorList.getAllFailures ());
+      }
+      if (ret.getHeader ().getVESSyntax () == EVESSyntax.EDIFACT)
+        throw new VESLoadingException ("The partially required VES '" +
+                                       m_aRequiredVES.getRequiredVESID ().getAsSingleID () +
+                                       "' must be XML based");
+      return ret;
+    }
+  }
+
   private final Header m_aHeader;
   private final IValidationExecutorSetStatus m_aStatus;
   private RequiredVES m_aRequires;
   private IVESSpecificDeferredLoader m_aRequiresLoader;
   private LoadedVES m_aLoadedRequires;
+  private final ICommonsList <PartialRequiredVES> m_aPartialRequires = new CommonsArrayList <> ();
   private final ICommonsList <IValidationExecutor <? extends IValidationSource>> m_aExecutors = new CommonsArrayList <> ();
 
   LoadedVES (@NonNull final Header aHeader, @NonNull final IValidationExecutorSetStatus aStatus)
@@ -243,6 +326,37 @@ public final class LoadedVES
     m_aRequires = aRequirement;
     m_aLoadedRequires = aLoadedVES;
     m_aRequiresLoader = null;
+  }
+
+  void addLazyPartialRequires (@NonNull final PartialRequiredVES aRequirement,
+                               @NonNull final IVESSpecificDeferredLoader aDeferredLoader)
+  {
+    ValueEnforcer.notNull (aRequirement, "Requirement");
+    ValueEnforcer.notNull (aDeferredLoader, "DeferredLoader");
+    aRequirement.m_aLoaded = null;
+    aRequirement.m_aLoader = aDeferredLoader;
+    m_aPartialRequires.add (aRequirement);
+  }
+
+  void addEagerPartialRequires (@NonNull final PartialRequiredVES aRequirement, @NonNull final LoadedVES aLoadedVES)
+  {
+    ValueEnforcer.notNull (aRequirement, "Requirement");
+    ValueEnforcer.notNull (aLoadedVES, "LoadedVES");
+    aRequirement.m_aLoaded = aLoadedVES;
+    aRequirement.m_aLoader = null;
+    m_aPartialRequires.add (aRequirement);
+  }
+
+  /**
+   * @return A copy of all VES that are applied on parts of the validated document only. Never
+   *         <code>null</code> but maybe empty.
+   * @since 12.3.0
+   */
+  @NonNull
+  @ReturnsMutableCopy
+  public ICommonsList <PartialRequiredVES> getAllPartialRequires ()
+  {
+    return m_aPartialRequires.getClone ();
   }
 
   /**
@@ -300,6 +414,17 @@ public final class LoadedVES
       ret = _getLoadedVESRequiresNotNull ()._getValidationExecutorsRecursive ();
     }
 
+    // Add the executors of the partially required VES, applied on the parts only
+    for (final PartialRequiredVES aPartialRequires : m_aPartialRequires)
+      for (final IValidationExecutor <IValidationSource> aExecutor : aPartialRequires._getLoadedVESNotNull ()
+                                                                                     ._getValidationExecutorsRecursive ())
+      {
+        final IValidationExecutor <IValidationSourceXML> aExecutorXML = GenericReflection.uncheckedCast (aExecutor);
+        ret.add (GenericReflection.uncheckedCast (new ValidationExecutorPartial (aExecutorXML,
+                                                                                 aPartialRequires.getPartialContext (),
+                                                                                 aPartialRequires.getPrerequisiteXPath ())));
+      }
+
     // Add our executors
     for (final IValidationExecutor <?> aExecutor : m_aExecutors)
       ret.add (GenericReflection.uncheckedCast (aExecutor));
@@ -314,12 +439,24 @@ public final class LoadedVES
     if (!ret.isValid ())
       return ret;
 
-    // No requirement
-    if (m_aRequires == null)
-      return EValidationExecutorStatusType.VALID;
-
     // Requirement present
-    return _getLoadedVESRequiresNotNull ().getExecutorStatusType ();
+    if (m_aRequires != null)
+    {
+      final EValidationExecutorStatusType eRequires = _getLoadedVESRequiresNotNull ().getExecutorStatusType ();
+      if (!eRequires.isValid ())
+        return eRequires;
+    }
+
+    // Partial requirements present
+    for (final PartialRequiredVES aPartialRequires : m_aPartialRequires)
+    {
+      final EValidationExecutorStatusType ePartialRequires = aPartialRequires._getLoadedVESNotNull ()
+                                                                             .getExecutorStatusType ();
+      if (!ePartialRequires.isValid ())
+        return ePartialRequires;
+    }
+
+    return EValidationExecutorStatusType.VALID;
   }
 
   /**

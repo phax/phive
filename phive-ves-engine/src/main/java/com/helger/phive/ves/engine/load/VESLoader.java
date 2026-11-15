@@ -21,6 +21,9 @@ import java.time.OffsetDateTime;
 import java.util.Locale;
 import java.util.Set;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
@@ -32,6 +35,7 @@ import com.helger.annotation.concurrent.ThreadSafe;
 import com.helger.base.concurrent.SimpleReadWriteLock;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.state.ESuccess;
+import com.helger.base.string.StringHelper;
 import com.helger.base.string.StringImplode;
 import com.helger.base.timing.StopWatch;
 import com.helger.collection.commons.CommonsLinkedHashSet;
@@ -62,12 +66,17 @@ import com.helger.phive.ves.v10.VesErrorLevelType;
 import com.helger.phive.ves.v10.VesNamespaceListType;
 import com.helger.phive.ves.v10.VesNamespaceType;
 import com.helger.phive.ves.v10.VesOutputType;
+import com.helger.phive.ves.v10.VesPartialRequiresType;
 import com.helger.phive.ves.v10.VesRequiresType;
 import com.helger.phive.ves.v10.VesResourceType;
 import com.helger.phive.ves.v10.VesStatusType;
 import com.helger.phive.ves.v10.VesType;
+import com.helger.phive.ves.v10.VesXmlPartialType;
+import com.helger.phive.ves.v10.VesXmlPreconditionType;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
+import com.helger.phive.xml.xsd.XSDPartialContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
+import com.helger.xml.xpath.XPathHelper;
 
 /**
  * This class loads VES data into {@link LoadedVES} objects. It supports dynamic rule creation for
@@ -88,6 +97,9 @@ public final class VESLoader
    * File extension for status files
    */
   public static final String FILE_EXT_STATUS = ".status";
+
+  /** The only supported precondition type */
+  public static final String PRECONDITION_TYPE_XPATH = "xpath";
 
   public static final boolean DEFAULT_USE_EAGER_REQUIREMENT_LOADING = false;
   public static final boolean DEFAULT_RESOLVE_PSEUDO_VERSIONS = true;
@@ -279,6 +291,132 @@ public final class VESLoader
       }
   }
 
+  /**
+   * Create a new XPath object using the provided namespace context.
+   *
+   * @param aNSCtx
+   *        The namespace context to use. May not be <code>null</code>.
+   * @return A new XPath object. Never <code>null</code>.
+   */
+  @NonNull
+  static XPath internalCreateXPath (@NonNull final MapBasedNamespaceContext aNSCtx)
+  {
+    final XPath ret = XPathHelper.createNewXPath ();
+    ret.setNamespaceContext (aNSCtx);
+    return ret;
+  }
+
+  /**
+   * Convert the VES partial definition into a {@link XSDPartialContext}.
+   *
+   * @param aPartial
+   *        The VES partial definition. May not be <code>null</code>.
+   * @param aXPath
+   *        The XPath object used to compile the XPath expression. May not be <code>null</code>.
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if the definition is invalid
+   */
+  @Nullable
+  static XSDPartialContext internalCreatePartialContext (@NonNull final VesXmlPartialType aPartial,
+                                                         @NonNull final XPath aXPath,
+                                                         @NonNull final ErrorList aErrorList)
+  {
+    final String sXPath = StringHelper.trim (aPartial.getXpath ());
+    if (StringHelper.isEmpty (sXPath))
+    {
+      aErrorList.add (SingleError.builderError ()
+                                 .errorText ("The 'partial' element must contain an XPath expression")
+                                 .build ());
+      return null;
+    }
+
+    try
+    {
+      return XSDPartialContext.builder ()
+                              .xpathExpression (aXPath, sXPath)
+                              .minNodeCount (aPartial.getMinNodeCount ())
+                              .maxNodeCount (aPartial.getMaxNodeCount ())
+                              .build ();
+    }
+    catch (final IllegalArgumentException | IllegalStateException ex)
+    {
+      aErrorList.add (SingleError.builderError ()
+                                 .errorText ("The 'partial' element is invalid: " + ex.getMessage ())
+                                 .linkedException (ex)
+                                 .build ());
+      return null;
+    }
+  }
+
+  /**
+   * Get the XPath expression of a VES precondition.
+   *
+   * @param aPrecondition
+   *        The VES precondition. May not be <code>null</code>.
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if the precondition type is not supported or the expression is empty
+   */
+  @Nullable
+  static String internalGetPreconditionXPath (@NonNull final VesXmlPreconditionType aPrecondition,
+                                              @NonNull final ErrorList aErrorList)
+  {
+    if (!PRECONDITION_TYPE_XPATH.equals (aPrecondition.getType ()))
+    {
+      aErrorList.add (SingleError.builderError ()
+                                 .errorText ("The precondition type '" +
+                                             aPrecondition.getType () +
+                                             "' is not supported. Only '" +
+                                             PRECONDITION_TYPE_XPATH +
+                                             "' is supported.")
+                                 .build ());
+      return null;
+    }
+
+    final String ret = StringHelper.trim (aPrecondition.getValue ());
+    if (StringHelper.isEmpty (ret))
+    {
+      aErrorList.add (SingleError.builderError ().errorText ("The precondition must contain an XPath expression").build ());
+      return null;
+    }
+    return ret;
+  }
+
+  /**
+   * Compile the XPath expression of a VES precondition.
+   *
+   * @param aPrecondition
+   *        The VES precondition. May not be <code>null</code>.
+   * @param aXPath
+   *        The XPath object used to compile the XPath expression. May not be <code>null</code>.
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if the precondition is invalid
+   */
+  @Nullable
+  static XPathExpression internalCreatePreconditionXPath (@NonNull final VesXmlPreconditionType aPrecondition,
+                                                          @NonNull final XPath aXPath,
+                                                          @NonNull final ErrorList aErrorList)
+  {
+    final String sXPath = internalGetPreconditionXPath (aPrecondition, aErrorList);
+    if (sXPath == null)
+      return null;
+
+    try
+    {
+      return XPathHelper.createNewXPathExpression (aXPath, sXPath);
+    }
+    catch (final IllegalArgumentException ex)
+    {
+      aErrorList.add (SingleError.builderError ()
+                                 .errorText ("The precondition is invalid: " + ex.getMessage ())
+                                 .linkedException (ex)
+                                 .build ());
+      return null;
+    }
+  }
+
   @NonNull
   private static MapBasedNamespaceContext _wrap (@Nullable final VesNamespaceListType aNamespaces)
   {
@@ -408,6 +546,78 @@ public final class VESLoader
           if (aLoadedRequirement == null)
           {
             throw new VESLoadingException ("Failed to load required VESID '" +
+                                           aSrcRequiredVES.getRequiredVESID ().getAsSingleID () +
+                                           "' [lazy]: " +
+                                           StringImplode.imploder ()
+                                                        .source (aLocalErrorList, IError::getAsStringLocaleIndepdent)
+                                                        .separator ("\n  ")
+                                                        .build ());
+          }
+          return aLoadedRequirement;
+        });
+      }
+    }
+
+    // Optional VES that are applied on parts of the document only
+    for (final VesPartialRequiresType aSrcPartialReq : aSrcVes.getPartialRequires ())
+    {
+      final LoadedVES.RequiredVES aSrcRequiredVES = new LoadedVES.RequiredVES (_createVESIDUnchecked (aSrcPartialReq.getGroupId (),
+                                                                                                      aSrcPartialReq.getArtifactId (),
+                                                                                                      aSrcPartialReq.getVersion (),
+                                                                                                      aSrcPartialReq.getClassifier ()),
+                                                                               _wrap (aSrcPartialReq.getNamespaces ()),
+                                                                               _wrap (aSrcPartialReq.getOutput ()),
+                                                                               aSrcPartialReq.isStopOnError ());
+
+      // The namespaces of the partial requirement are used for all XPath expressions
+      final XPath aXPath = internalCreateXPath (aSrcRequiredVES.getNamespaceContext ());
+      final XSDPartialContext aPartialContext = internalCreatePartialContext (aSrcPartialReq.getPartial (),
+                                                                              aXPath,
+                                                                              aLoadingErrors);
+      if (aPartialContext == null)
+        return null;
+
+      XPathExpression aPrerequisiteXPath = null;
+      if (aSrcPartialReq.getPrecondition () != null)
+      {
+        aPrerequisiteXPath = internalCreatePreconditionXPath (aSrcPartialReq.getPrecondition (), aXPath, aLoadingErrors);
+        if (aPrerequisiteXPath == null)
+          return null;
+      }
+
+      final LoadedVES.PartialRequiredVES aPartialRequiredVES = new LoadedVES.PartialRequiredVES (aSrcRequiredVES,
+                                                                                                 aPartialContext,
+                                                                                                 aPrerequisiteXPath);
+      if (isUseEagerRequirementLoading ())
+      {
+        // Eager loading
+        final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
+                                                               aSrcRequiredVES,
+                                                               aLoaderStatus,
+                                                               aLoadingErrors);
+        if (aLoadedRequirement == null)
+        {
+          aLoadingErrors.add (SingleError.builderError ()
+                                         .errorText ("Failed to load partially required VESID '" +
+                                                     aSrcRequiredVES.getRequiredVESID ().getAsSingleID () +
+                                                     "' [eager]")
+                                         .build ());
+          return null;
+        }
+
+        ret.addEagerPartialRequires (aPartialRequiredVES, aLoadedRequirement);
+      }
+      else
+      {
+        // Lazy loading
+        ret.addLazyPartialRequires (aPartialRequiredVES, aLocalErrorList -> {
+          final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
+                                                                 aSrcRequiredVES,
+                                                                 aLoaderStatus,
+                                                                 aLocalErrorList);
+          if (aLoadedRequirement == null)
+          {
+            throw new VESLoadingException ("Failed to load partially required VESID '" +
                                            aSrcRequiredVES.getRequiredVESID ().getAsSingleID () +
                                            "' [lazy]: " +
                                            StringImplode.imploder ()

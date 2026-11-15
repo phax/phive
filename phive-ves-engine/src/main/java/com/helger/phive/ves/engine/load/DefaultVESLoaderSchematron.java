@@ -18,6 +18,9 @@ package com.helger.phive.ves.engine.load;
 
 import java.util.List;
 
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
@@ -42,10 +45,14 @@ import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.ves.v10.VesCustomErrorType;
 import com.helger.phive.ves.v10.VesOutputType;
 import com.helger.phive.ves.v10.VesSchematronType;
+import com.helger.phive.ves.v10.VesXmlPartialType;
+import com.helger.phive.ves.v10.VesXmlPreconditionType;
+import com.helger.phive.xml.partial.ValidationExecutorPartial;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.schematron.ValidationExecutorSchematronBuilder;
 import com.helger.phive.xml.source.IValidationSourceXML;
+import com.helger.phive.xml.xsd.XSDPartialContext;
 import com.helger.schematron.ESchematronEngine;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
 
@@ -62,6 +69,48 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
   public static final String FILE_EXT_XSLT = '.' + RESOURCE_TYPE_XSLT;
 
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderSchematron.class);
+
+  /**
+   * Wrap the provided Schematron executor so that it is only applied on the parts of the document
+   * selected by the VES "partial" element. An optional precondition is evaluated on the complete
+   * document.
+   *
+   * @param aExecutorSCH
+   *        The fully configured Schematron executor to wrap. May not be <code>null</code>.
+   * @param aPartial
+   *        The VES partial definition. May not be <code>null</code>.
+   * @param aPrecondition
+   *        The optional VES precondition. May be <code>null</code>.
+   * @param aNSCtx
+   *        The namespace context of the Schematron, used to compile the XPath expressions. May not
+   *        be <code>null</code>.
+   * @param aErrorList
+   *        The error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if the definition is invalid
+   */
+  @Nullable
+  private static ValidationExecutorPartial _createPartialExecutor (@NonNull final ValidationExecutorSchematron aExecutorSCH,
+                                                                   @NonNull final VesXmlPartialType aPartial,
+                                                                   @Nullable final VesXmlPreconditionType aPrecondition,
+                                                                   @NonNull final MapBasedNamespaceContext aNSCtx,
+                                                                   @NonNull final ErrorList aErrorList)
+  {
+    final XPath aXPath = VESLoader.internalCreateXPath (aNSCtx);
+    final XSDPartialContext aPartialContext = VESLoader.internalCreatePartialContext (aPartial, aXPath, aErrorList);
+    if (aPartialContext == null)
+      return null;
+
+    // The precondition is evaluated on the complete document
+    XPathExpression aPrerequisiteXPath = null;
+    if (aPrecondition != null)
+    {
+      aPrerequisiteXPath = VESLoader.internalCreatePreconditionXPath (aPrecondition, aXPath, aErrorList);
+      if (aPrerequisiteXPath == null)
+        return null;
+    }
+
+    return new ValidationExecutorPartial (aExecutorSCH, aPartialContext, aPrerequisiteXPath);
+  }
 
   @NonNull
   public ICommonsList <IValidationExecutor <IValidationSourceXML>> loadSchematrons (@NonNull final IRepoStorageBase aRepo,
@@ -99,7 +148,7 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       final MapBasedNamespaceContext aNSCtx = new MapBasedNamespaceContext ();
       VESLoader.internalWrapNamespaceList (aSCH.getNamespaces (), aNSCtx);
 
-      final ValidationExecutorSchematron aExecutorSCH;
+      ValidationExecutorSchematron aExecutorSCH;
       final String sResourceType = aSCH.getResource ().getType ();
       switch (sResourceType)
       {
@@ -162,6 +211,16 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
         }
       }
 
+      // A precondition without partial is evaluated by the Schematron executor itself
+      if (aSCH.getPrecondition () != null && aSCH.getPartial () == null)
+      {
+        final String sPrerequisiteXPath = VESLoader.internalGetPreconditionXPath (aSCH.getPrecondition (), aErrorList);
+        if (sPrerequisiteXPath == null)
+          continue;
+        aExecutorSCH = new ValidationExecutorSchematronBuilder (aExecutorSCH).prerequisiteXPath (sPrerequisiteXPath)
+                                                                              .build ();
+      }
+
       final ICommonsMap <String, CustomErrorDetails> aCustomErrorDetails = new CommonsHashMap <> ();
 
       // Is something defined at the Schematron itself?
@@ -198,12 +257,36 @@ public class DefaultVESLoaderSchematron implements IVESLoaderSchematron
       if (aStopOnError != null)
         aExecutorSCH.setStopValidationOnError (aStopOnError.booleanValue ());
 
-      LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
-                   sResourceType +
-                   "' and path '" +
-                   aSCHKey.getPath () +
-                   "'");
-      ret.add (aExecutorSCH);
+      // Optionally apply the Schematron only on parts of the document
+      final VesXmlPartialType aPartial = aSCH.getPartial ();
+      if (aPartial != null)
+      {
+        final ValidationExecutorPartial aExecutorPartial = _createPartialExecutor (aExecutorSCH,
+                                                                                   aPartial,
+                                                                                   aSCH.getPrecondition (),
+                                                                                   aNSCtx,
+                                                                                   aErrorList);
+        if (aExecutorPartial == null)
+          continue;
+
+        LOGGER.info ("Loaded partial ValidationExecutorSchematron using resource type '" +
+                     sResourceType +
+                     "' and path '" +
+                     aSCHKey.getPath () +
+                     "' applied on '" +
+                     aPartial.getXpath () +
+                     "'");
+        ret.add (aExecutorPartial);
+      }
+      else
+      {
+        LOGGER.info ("Loaded ValidationExecutorSchematron using resource type '" +
+                     sResourceType +
+                     "' and path '" +
+                     aSCHKey.getPath () +
+                     "'");
+        ret.add (aExecutorSCH);
+      }
     }
 
     return ret;
