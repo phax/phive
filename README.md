@@ -20,6 +20,7 @@ This project is licensed under the Apache 2 license.
 A live version of this engine can be found on [Peppol Practical](http://peppol.helger.com/public/menuitem-validation-upload) and at [ecosio](https://ecosio.com/en/peppol-and-xml-document-validator/).
 
 This project has the following sub-modules:
+* **`phive-bom`** (since v12.3.0) - a Maven Bill of Materials (BOM) that manages the versions of all phive artefacts
 * **`phive-api`** - a generic API that is independent of the effective validation logic. It contains the interfaces for validation sources, validation artefacts, validation execution and validation results.
 * **`phive-ves-model`** - contains the XML representation of a *VES*, a Validation Execution Set.
 * **`phive-ves-repo`** (since v12.0.0) - contains phive specific extensions for repository management with [ph-diver](https://github.com/phax/ph-diver)
@@ -352,17 +353,20 @@ If you want to create standalone HTML validation reports you need to also includ
 </dependency>
 ```
 
-Alternate usage as a Maven BOM:
+Alternate usage as a Maven BOM (since v12.3.0) - add it to the `<dependencyManagement>` section and omit the versions of the phive artefacts in your `<dependencies>`:
 
 ```xml
 <dependency>
   <groupId>com.helger.phive</groupId>
-  <artifactId>phive-parent-pom</artifactId>
+  <artifactId>phive-bom</artifactId>
   <version>x.y.z</version>
   <type>pom</type>
   <scope>import</scope>
 </dependency>
 ```
+
+`phive-bom` only manages the versions of the phive artefacts.
+Before v12.3.0, `phive-parent-pom` had to be imported instead, which also manages the versions of many third-party dependencies.
 
 ## Potential issues
 
@@ -373,7 +377,7 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v12.3.0 - work in progress
+v12.3.0 - 2026-11-15
 * Added new interface `IValidationExecutorSetAlias` as the common base of all VES aliases, offering `getSourceVES ()`.
   `ValidationExecutorSetAlias` implements it.
   **Breaking:** code checking for aliases with `instanceof ValidationExecutorSetAlias` must switch to `instanceof IValidationExecutorSetAlias`, as otherwise read-only aliases are not recognised.
@@ -386,6 +390,7 @@ v12.3.0 - work in progress
     * The `ves` element has the new optional `partialRequires` elements (0..n), that apply a complete other VES on the selected parts. They are executed after `requires` and before the VES' own artefacts.
     * The VES engine maps both onto `ValidationExecutorPartial`. A `precondition` of the same element is evaluated on the complete document.
 * The VES engine now applies the `precondition` of `schematron` elements. Previously it was silently ignored.
+* Added new submodule `phive-bom` - a Maven Bill of Materials (BOM) for all phive artefacts. Use it instead of importing `phive-parent-pom`.
 
 v12.2.0 - 2026-09-28
 * Deprecated static `ValidationExecutorSchematron.create...` methods in favour of `ValidationExecutorSchematronBuilder`

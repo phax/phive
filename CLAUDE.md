@@ -19,8 +19,9 @@ Requires Java 17+ and Maven 3.9+. Tested on Java 17, 21, and 25.
 
 ## Module Architecture
 
-Six Maven modules, layered bottom-up:
+Maven modules, layered bottom-up:
 
+- **phive-bom** — Maven Bill of Materials managing the versions of all phive artefacts (no code; keep its `dependencyManagement` in sync when adding a module)
 - **phive-api** — Core interfaces and types: `IValidationSource`, `IValidationExecutor`, `IValidationArtefact`, `ValidationResult`, `ValidationResultList`, `ValidationExecutorSetRegistry`, `VESID`
 - **phive-xml** — XML-specific validation executors: `ValidationExecutorXSD`, `ValidationExecutorSchematron`, and `ValidationExecutorPartial` (applies any wrapped executor on XPath-selected parts of a document, e.g. the payload of an SBDH envelope). Supports Schematron engines: XSLT, SchXslt, SchXslt2, Pure
 - **phive-result** — Result serialization to JSON (`PhiveJsonHelper`) and XML (`PhiveXMLHelper`)
