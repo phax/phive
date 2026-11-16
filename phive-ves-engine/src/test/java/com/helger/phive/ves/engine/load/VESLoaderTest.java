@@ -185,25 +185,25 @@ public final class VESLoaderTest
       _addResource (aInMemoryRepo,
                     DVRCoordinate.create ("org.oasis-open", "ubl-xsdrt", "2.1"),
                     new ClassPathResource ("ves/test2/UBL-2.1-xsdrt.zip"));
-      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/ubl-invoice-2.1.ves"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("external/test4/ubl-invoice-2.1.ves"));
 
       _addResource (aInMemoryRepo,
                     DVRCoordinate.create ("eu.peppol.bis3", "cen-en16931-ubl", "2026.5"),
-                    new ClassPathResource ("ves/test4/CEN-EN16931-UBL.xslt"));
+                    new ClassPathResource ("external/test4/CEN-EN16931-UBL.xslt"));
       _addResource (aInMemoryRepo,
                     DVRCoordinate.create ("eu.peppol.bis3", "peppol-en16931-ubl", "2026.5"),
-                    new ClassPathResource ("ves/test4/PEPPOL-EN16931-UBL.xslt"));
-      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/peppol-bis-invoice-2026.5.ves"));
+                    new ClassPathResource ("external/test4/PEPPOL-EN16931-UBL.xslt"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("external/test4/peppol-bis-invoice-2026.5.ves"));
 
       _addResource (aInMemoryRepo,
                     DVRCoordinate.create ("un.unece.uncefact", "sbdh-xsd", "1.3"),
-                    new ClassPathResource ("ves/test4/sbdh-1.3.zip"));
-      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/sbdh-1.3.ves"));
+                    new ClassPathResource ("external/test4/sbdh-1.3.zip"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("external/test4/sbdh-1.3.ves"));
 
       _addResource (aInMemoryRepo,
                     DVRCoordinate.create ("org.peppol.bis3.sbdh-envelope", "envelope-rules", "2026.5"),
-                    new ClassPathResource ("ves/test4/PeppolBIS-Envelope-Rules.xslt"));
-      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test4/peppol-sbdh-invoice-2026.5.ves"));
+                    new ClassPathResource ("external/test4/PeppolBIS-Envelope-Rules.xslt"));
+      _addVES (aInMemoryRepo, new ClassPathResource ("external/test4/peppol-sbdh-invoice-2026.5.ves"));
     }
 
     // No chain needed - use repo as is
@@ -493,7 +493,7 @@ public final class VESLoaderTest
   @NonNull
   private static String _readPeppolSbdh ()
   {
-    return new String (StreamHelper.getAllBytes (new ClassPathResource ("ves/test4/sbdh-base-example.xml")),
+    return new String (StreamHelper.getAllBytes (new ClassPathResource ("external/test4/sbdh-base-example.xml")),
                        StandardCharsets.UTF_8);
   }
 
