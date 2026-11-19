@@ -16,13 +16,11 @@
  */
 package com.helger.phive.ves.engine.load;
 
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.net.URI;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import javax.xml.validation.Schema;
 
@@ -37,6 +35,7 @@ import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
 import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
 import com.helger.base.numeric.BigHelper;
+import com.helger.base.state.EContinue;
 import com.helger.base.string.StringHelper;
 import com.helger.base.timing.StopWatch;
 import com.helger.collection.commons.CommonsHashMap;
@@ -52,6 +51,10 @@ import com.helger.io.file.FilenameHelper;
 import com.helger.io.misc.SizeHelper;
 import com.helger.io.resource.IReadableResource;
 import com.helger.io.resource.inmemory.ReadableResourceInputStream;
+import com.helger.io.zip.IZipWalkerCallback;
+import com.helger.io.zip.ZipWalkResult;
+import com.helger.io.zip.ZipWalker;
+import com.helger.io.zip.ZipWalkerSettings;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executor.IValidationExecutor;
@@ -81,8 +84,15 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
 
   /** Default maximum unzipped size: 50 MB */
   public static final long DEFAULT_MAX_UNZIPPED_SIZE = 50L * 1024 * 1024;
+  /**
+   * Default maximum number of entries of a ZIP file: 10.000
+   *
+   * @since 12.3.1
+   */
+  public static final int DEFAULT_MAX_ZIP_ENTRY_COUNT = 10_000;
 
   private static final AtomicLong MAX_UNZIPPED_SIZE = new AtomicLong (DEFAULT_MAX_UNZIPPED_SIZE);
+  private static final AtomicInteger MAX_ZIP_ENTRY_COUNT = new AtomicInteger (DEFAULT_MAX_ZIP_ENTRY_COUNT);
   private static final Logger LOGGER = LoggerFactory.getLogger (DefaultVESLoaderXSD.class);
 
   /**
@@ -105,6 +115,31 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   {
     ValueEnforcer.isGT0 (nMaxUnzippedSize, "MaxUnzippedSize");
     MAX_UNZIPPED_SIZE.set (nMaxUnzippedSize);
+  }
+
+  /**
+   * @return The maximum allowed number of entries of a ZIP file. Defaults to
+   *         {@link #DEFAULT_MAX_ZIP_ENTRY_COUNT}.
+   * @since 12.3.1
+   */
+  @Nonnegative
+  public static int getMaxZipEntryCount ()
+  {
+    return MAX_ZIP_ENTRY_COUNT.get ();
+  }
+
+  /**
+   * Set the maximum allowed number of entries of a ZIP file. This is a safeguard against ZIP files
+   * with a huge number of (small) entries, because all entries are kept in memory.
+   *
+   * @param nMaxZipEntryCount
+   *        The maximum number of entries. Must be &gt; 0.
+   * @since 12.3.1
+   */
+  public static void setMaxZipEntryCount (@Nonnegative final int nMaxZipEntryCount)
+  {
+    ValueEnforcer.isGT0 (nMaxZipEntryCount, "MaxZipEntryCount");
+    MAX_ZIP_ENTRY_COUNT.set (nMaxZipEntryCount);
   }
 
   @Nullable
@@ -237,54 +272,68 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         // Read ZIP file as a whole
         final ICommonsMap <String, NonBlockingByteArrayOutputStream> aZIPContent = new CommonsHashMap <> ();
         final long nSourceLen = aXSDItem.getContent ().getLength ();
-        long nUnzippedLen = 0;
-        final byte [] aBuffer = new byte [4096];
-        boolean bFoundMain = false;
-        try (final ZipInputStream aZIS = new ZipInputStream (aRepoRes.getInputStream ()))
-        {
-          ZipEntry aEntry = null;
-          while ((aEntry = aZIS.getNextEntry ()) != null)
+        // XSD ZIPs are not nested
+        final ZipWalkerSettings aZipSettings = new ZipWalkerSettings ().setMaxNestingDepth (0)
+                                                                       .setMaxEntryCount (getMaxZipEntryCount ())
+                                                                       .setMaxTotalUncompressedBytes (getMaxUnzippedSize ());
+        final IZipWalkerCallback aZipCallback = (sPath, aEntry, nDepth, aIS) -> {
+          final String sEntryNameUnified = _unifyPath (sPath);
+          if (aZIPContent.containsKey (sEntryNameUnified))
           {
-            if (aEntry.isDirectory ())
-              continue;
-
-            final String sEntryNameUnified = _unifyPath (aEntry.getName ());
-            if (sMainUnified.equals (sEntryNameUnified))
-              bFoundMain = true;
-
-            // Read ZIP entry
-            final long nMaxLen = getMaxUnzippedSize ();
-            try (final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ())
-            {
-              int nLen;
-              while ((nLen = aZIS.read (aBuffer)) > 0)
-              {
-                nUnzippedLen += nLen;
-                if (nUnzippedLen > nMaxLen)
-                {
-                  aErrorList.add (SingleError.builderError ()
-                                             .errorText ("XSD ZIP file exceeds maximum unzipped size of " +
-                                                         SizeHelper.getSizeHelperOfLocale (Locale.ROOT)
-                                                                   .getAsMatching (nMaxLen))
-                                             .build ());
-                  return null;
-                }
-                aBAOS.write (aBuffer, 0, nLen);
-              }
-
-              // Remember ZIP entry in map
-              aZIPContent.put (sEntryNameUnified, aBAOS);
-            }
+            // Would silently replace the previous entry
+            aErrorList.add (SingleError.builderError ()
+                                       .errorText ("XSD resource type '" +
+                                                   sResourceType +
+                                                   "' contains the entry '" +
+                                                   sEntryNameUnified +
+                                                   "' more than once")
+                                       .build ());
+            return EContinue.BREAK;
           }
-        }
-        catch (final IOException ex)
+
+          // Remember ZIP entry in map
+          final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
+          aIS.transferTo (aBAOS);
+          aZIPContent.put (sEntryNameUnified, aBAOS);
+          return EContinue.CONTINUE;
+        };
+        final ZipWalkResult aZipResult = ZipWalker.walk (aRepoRes.getInputStream (), aZipSettings, aZipCallback);
+        switch (aZipResult.getResult ())
         {
-          aErrorList.add (SingleError.builderError ()
-                                     .errorText ("XSD resource type '" + sResourceType + "' seems to be a broken ZIP")
-                                     .linkedException (ex)
-                                     .build ());
-          return null;
+          case SUCCESS:
+            break;
+          case STOPPED_BY_CALLBACK:
+            // Error was already added
+            return null;
+          case NOT_A_ZIP:
+            aErrorList.add (SingleError.builderError ()
+                                       .errorText ("XSD resource type '" + sResourceType + "' is not a ZIP archive")
+                                       .build ());
+            return null;
+          case MAX_ENTRY_COUNT_EXCEEDED:
+            aErrorList.add (SingleError.builderError ()
+                                       .errorText ("XSD ZIP file contains more than " +
+                                                   aZipSettings.getMaxEntryCount () +
+                                                   " entries")
+                                       .build ());
+            return null;
+          case MAX_TOTAL_UNCOMPRESSED_BYTES_EXCEEDED:
+            aErrorList.add (SingleError.builderError ()
+                                       .errorText ("XSD ZIP file exceeds maximum unzipped size of " +
+                                                   SizeHelper.getSizeHelperOfLocale (Locale.ROOT)
+                                                             .getAsMatching (aZipSettings.getMaxTotalUncompressedBytes ()))
+                                       .build ());
+            return null;
+          default:
+            // BROKEN, or a nested ZIP
+            aErrorList.add (SingleError.builderError ()
+                                       .errorText ("XSD resource type '" + sResourceType + "' seems to be a broken ZIP")
+                                       .linkedException (aZipResult.getException ())
+                                       .build ());
+            return null;
         }
+        final long nUnzippedLen = aZipResult.getTotalUncompressedBytes ();
+        final boolean bFoundMain = aZIPContent.containsKey (sMainUnified);
 
         if (!bFoundMain)
         {

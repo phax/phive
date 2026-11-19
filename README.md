@@ -377,6 +377,11 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
+v12.3.1 - work in progress
+* Requires at least ph-commons 12.7.2
+* `DefaultVESLoaderXSD` now reads XSD ZIP files with `ZipWalker` from ph-commons: content that is not a ZIP archive is reported as such (previously as missing main element), a ZIP file with an entry contained more than once is refused (previously the later entry silently replaced the earlier one), and the number of entries is limited
+* Added `DefaultVESLoaderXSD.getMaxZipEntryCount ()` and `setMaxZipEntryCount (int)` with the default `DEFAULT_MAX_ZIP_ENTRY_COUNT` (10.000)
+
 v12.3.0 - 2026-11-15
 * Added new interface `IValidationExecutorSetAlias` as the common base of all VES aliases, offering `getSourceVES ()`.
   `ValidationExecutorSetAlias` implements it.
