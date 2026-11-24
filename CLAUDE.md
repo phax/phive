@@ -42,7 +42,7 @@ Dependency flow: `phive-api` → `phive-xml` → `phive-result` → `phive-ves-m
 ## Key Dependencies
 
 - **ph-commons** (12.7.2-SNAPSHOT, for `ZipWalker` in `ph-io`) — Core utilities, error handling, collections. `DefaultVESLoaderXSD` reads XSD ZIP files with `com.helger.io.zip.ZipWalker`; the limits are the static `setMaxUnzippedSize` / `setMaxZipEntryCount`
-- **ph-schematron** (9.1.1) — Schematron validation engines
+- **ph-schematron** (10.3.3) — Schematron validation engines. `ValidationExecutorSchematron` wraps DOM sources in `SaxonDOMSource` (`ph-schematron-saxon`) so Saxon builds a native tree; a plain `DOMSource` makes sibling-axis rules quadratic in document size (issue #37)
 - **ph-diver** (4.2.0) — DVR coordinate handling and repository management
 - **JAXB 4.0** — XML binding for VES model
 

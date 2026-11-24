@@ -20,6 +20,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 
 import org.jspecify.annotations.NonNull;
@@ -59,6 +61,7 @@ import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
+import com.helger.schematron.saxon.SaxonDOMSource;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
@@ -278,6 +281,24 @@ public class ValidationExecutorSchematron extends
     throw new IllegalStateException ("Unsupported Schematron validation type: " + aVT);
   }
 
+  /**
+   * Wrap a DOM source into a {@link SaxonDOMSource} so that Saxon builds its native tree once,
+   * instead of navigating the wrapped DOM. With the wrapped DOM every sibling axis step is linear in
+   * the number of siblings, which makes rules over large documents quadratic. Other XSLT processors
+   * and the pure engine treat it like a regular {@link DOMSource}.
+   *
+   * @param aSource
+   *        The source to be validated. May not be <code>null</code>.
+   * @return The source to be used for Schematron validation. Never <code>null</code>.
+   */
+  @NonNull
+  private static Source _getAsNativeTreeSource (@NonNull final Source aSource)
+  {
+    if (aSource instanceof final DOMSource aDOMSource && !(aSource instanceof SaxonDOMSource))
+      return new SaxonDOMSource (aDOMSource.getNode (), aDOMSource.getSystemId ());
+    return aSource;
+  }
+
   @NonNull
   public ValidationResult applyValidation (@NonNull final IValidationSourceXML aSource,
                                            @NonNull final IValidityDeterminator <IValidationSourceXML> aValidityDeterminator,
@@ -357,7 +378,7 @@ public class ValidationExecutorSchematron extends
     {
       // Main application of Schematron
       // Use the original source to eventually support streaming
-      final Document aDoc = aSCH.applySchematronValidation (aSource.getAsTransformSource ());
+      final Document aDoc = aSCH.applySchematronValidation (_getAsNativeTreeSource (aSource.getAsTransformSource ()));
       final boolean bHasResultDoc = aDoc != null && aDoc.getDocumentElement () != null;
 
       if (LOGGER.isDebugEnabled ())
