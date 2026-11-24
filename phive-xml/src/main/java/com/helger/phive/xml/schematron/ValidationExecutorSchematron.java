@@ -20,6 +20,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 
 import org.jspecify.annotations.NonNull;
@@ -59,6 +61,7 @@ import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.schematron.AbstractSchematronResource;
 import com.helger.schematron.SchematronResourceHelper;
+import com.helger.schematron.saxon.SaxonDOMSource;
 import com.helger.schematron.svrl.SVRLFailedAssert;
 import com.helger.schematron.svrl.SVRLHelper;
 import com.helger.schematron.svrl.SVRLMarshaller;
@@ -231,6 +234,21 @@ public class ValidationExecutorSchematron extends
     return this;
   }
 
+  /**
+   * Saxon evaluates XPath against a wrapped W3C DOM with a per-step cost that grows with the
+   * number of siblings, which makes rules such as the Peppol BIS Billing ones quadratic in the
+   * number of invoice lines. A {@link SaxonDOMSource} makes the XSLT based engines build Saxon's
+   * native tree once per validation instead; the other engines treat it as a plain
+   * {@link DOMSource}. XSD validation keeps using the original DOM.
+   */
+  @NonNull
+  private static Source _asNativeTreeSource (@NonNull final Source aSource)
+  {
+    if (aSource instanceof final DOMSource aDOMSource && !(aSource instanceof SaxonDOMSource))
+      return new SaxonDOMSource (aDOMSource.getNode (), aDOMSource.getSystemId ());
+    return aSource;
+  }
+
   @NonNull
   private AbstractSchematronResource _createSchematronResource (@Nullable final Locale aLocale,
                                                                 @NonNull final ErrorList aErrorList,
@@ -357,7 +375,7 @@ public class ValidationExecutorSchematron extends
     {
       // Main application of Schematron
       // Use the original source to eventually support streaming
-      final Document aDoc = aSCH.applySchematronValidation (aSource.getAsTransformSource ());
+      final Document aDoc = aSCH.applySchematronValidation (_asNativeTreeSource (aSource.getAsTransformSource ()));
       final boolean bHasResultDoc = aDoc != null && aDoc.getDocumentElement () != null;
 
       if (LOGGER.isDebugEnabled ())
