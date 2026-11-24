@@ -27,7 +27,7 @@
   </parent>
   <groupId>com.helger.phive</groupId>
   <artifactId>phive-bom</artifactId>
-  <version>1.3.2</version>
+  <version>1.3.3-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>phive-bom</name>
   <description>Bill of Materials for all phive artifacts</description>
@@ -96,8 +96,4 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <scm>
-    <tag>phive-parent-pom-1.3.2</tag>
-  </scm>
 </project>
