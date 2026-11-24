@@ -377,9 +377,11 @@ With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
 
-v12.3.2 - work in progress
-* Added `IValidationExecutorSetStatus.isActivePer (OffsetDateTime)` and `isActivePerNow ()`: active means not deprecated and within the validity period. `isValidPer` keeps its meaning and only checks the validity period
-* The pseudo versions `latest-active` and `latest-release-active` no longer resolve to deprecated VES, both in `ValidationExecutorSetRegistry` and in `VESLoaderPseudoVersionResolver`. See [issue #36](https://github.com/phax/phive/issues/36)
+v12.3.2 - 2026-11-24
+* Added `IValidationExecutorSetStatus.isActivePer (OffsetDateTime)` and `isActivePerNow ()`: active means not deprecated and within the validity period.
+  `isValidPer` keeps its meaning and only checks the validity period
+* The pseudo versions `latest-active` and `latest-release-active` no longer resolve to deprecated VES, both in `ValidationExecutorSetRegistry` and in `VESLoaderPseudoVersionResolver`.
+  See [issue #36](https://github.com/phax/phive/issues/36)
 
 v12.3.1 - 2026-11-24
 * Requires at least ph-commons 12.7.2
