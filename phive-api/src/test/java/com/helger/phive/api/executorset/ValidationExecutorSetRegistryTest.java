@@ -288,6 +288,47 @@ public final class ValidationExecutorSetRegistryTest
   }
 
   @Test
+  public void testPseudoVersionActiveIgnoresDeprecated () throws Exception
+  {
+    final ValidationExecutorSetRegistry <IValidationSource> aRegistry = new ValidationExecutorSetRegistry <> ();
+    aRegistry.registerValidationExecutorSet (new ValidationExecutorSet <> (DVRCoordinate.create (GROUP_SRC,
+                                                                                                 ART_SRC,
+                                                                                                 "1.1"),
+                                                                           "VES 1.1",
+                                                                           ValidationExecutorSetStatus.createValidNow ()));
+    aRegistry.registerValidationExecutorSet (new ValidationExecutorSet <> (DVRCoordinate.create (GROUP_SRC,
+                                                                                                 ART_SRC,
+                                                                                                 "2.2"),
+                                                                           "VES 2.2",
+                                                                           ValidationExecutorSetStatus.createDeprecatedNow (true)));
+    aRegistry.registerValidationExecutorSet (new ValidationExecutorSet <> (DVRCoordinate.create (GROUP_SRC,
+                                                                                                 ART_SRC,
+                                                                                                 "2.3-SNAPSHOT"),
+                                                                           "VES 2.3-SNAPSHOT",
+                                                                           ValidationExecutorSetStatus.createDeprecatedNow (true)));
+
+    // Deprecated versions are considered by the non-active pseudo versions
+    assertEquals ("2.3-SNAPSHOT",
+                  aRegistry.getOfID (DVRCoordinate.create (GROUP_SRC, ART_SRC, "latest"), CHECK_DT)
+                           .getID ()
+                           .getVersionString ());
+    assertEquals ("2.2",
+                  aRegistry.getOfID (DVRCoordinate.create (GROUP_SRC, ART_SRC, "latest-release"), CHECK_DT)
+                           .getID ()
+                           .getVersionString ());
+
+    // Deprecated versions are never active
+    assertEquals ("1.1",
+                  aRegistry.getOfID (DVRCoordinate.create (GROUP_SRC, ART_SRC, "latest-active"), CHECK_DT)
+                           .getID ()
+                           .getVersionString ());
+    assertEquals ("1.1",
+                  aRegistry.getOfID (DVRCoordinate.create (GROUP_SRC, ART_SRC, "latest-release-active"), CHECK_DT)
+                           .getID ()
+                           .getVersionString ());
+  }
+
+  @Test
   public void testPseudoVersionWithAliasResolvesToSourceVES () throws Exception
   {
     final ValidationExecutorSetRegistry <IValidationSource> aRegistry = _createRegistryWithAliases ();

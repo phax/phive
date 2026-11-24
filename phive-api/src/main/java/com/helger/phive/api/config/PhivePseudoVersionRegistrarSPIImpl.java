@@ -37,8 +37,9 @@ import com.helger.diver.api.version.spi.IDVRPseudoVersionRegistrarSPI;
 public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersionRegistrarSPI
 {
   /**
-   * Latest active indicates the latest version that is valid at a provided point in time (including
-   * snapshots).
+   * Latest active indicates the latest version that is active at a provided point in time
+   * (including snapshots). Active means that the VES is not deprecated and that the point in time
+   * is within its validity period. A VES without a status is considered active.
    */
   public static final IDVRPseudoVersion LATEST_ACTIVE;
   static
@@ -65,8 +66,9 @@ public final class PhivePseudoVersionRegistrarSPIImpl implements IDVRPseudoVersi
   }
 
   /**
-   * Latest active release indicates the latest version that is valid at a provided point in time
-   * (excluding snapshots).
+   * Latest active release indicates the latest version that is active at a provided point in time
+   * (excluding snapshots). Active means that the VES is not deprecated and that the point in time
+   * is within its validity period. A VES without a status is considered active.
    */
   public static final IDVRPseudoVersion LATEST_RELEASE_ACTIVE;
   static

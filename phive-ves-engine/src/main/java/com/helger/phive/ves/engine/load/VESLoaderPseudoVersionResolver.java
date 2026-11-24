@@ -170,6 +170,12 @@ public final class VESLoaderPseudoVersionResolver implements IPseudoVersionResol
                                                                                                             aRepoContentStatus.getContent ()));
         if (aVESStatus != null)
         {
+          // Deprecated VES are never active. The flag is taken from the JAXB model, because the
+          // converted status type is determined for the current date and time, and an expired or
+          // not yet active VES would not report as deprecated there.
+          if (aVESStatus.isDeprecated () != null && aVESStatus.isDeprecated ().booleanValue ())
+            return false;
+
           // Convert JAXB data model to Java date model
           final IValidationExecutorSetStatus aStatus = VESStatus1Helper.convert (aVESStatus);
           return aStatus.isValidPer (m_aRealCheckDateTime);

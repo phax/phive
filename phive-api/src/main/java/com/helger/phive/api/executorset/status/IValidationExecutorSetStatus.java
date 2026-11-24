@@ -103,11 +103,27 @@ public interface IValidationExecutorSetStatus
   @Nullable
   OffsetDateTime getValidTo ();
 
+  /**
+   * Check if the current date and time is within the validity period. The deprecation state is not
+   * considered. See {@link #isActivePerNow()} for that.
+   *
+   * @return <code>true</code> if the current date and time is within the validity period,
+   *         <code>false</code> if not.
+   */
   default boolean isValidPerNow ()
   {
     return isValidPer (PDTFactory.getCurrentOffsetDateTime ());
   }
 
+  /**
+   * Check if the provided date and time is within the validity period. The deprecation state is
+   * not considered. See {@link #isActivePer(OffsetDateTime)} for that.
+   *
+   * @param aDT
+   *        The date and time to check. May not be <code>null</code>.
+   * @return <code>true</code> if the provided date and time is within the validity period,
+   *         <code>false</code> if not.
+   */
   default boolean isValidPer (@NonNull final OffsetDateTime aDT)
   {
     if (hasValidFrom () && aDT.isBefore (getValidFrom ()))
@@ -115,6 +131,35 @@ public interface IValidationExecutorSetStatus
     if (hasValidTo () && aDT.isAfter (getValidTo ()))
       return false;
     return true;
+  }
+
+  /**
+   * Check if this status is active at the current date and time. Active means not deprecated and
+   * within the validity period.
+   *
+   * @return <code>true</code> if active, <code>false</code> if not.
+   * @see #isActivePer(OffsetDateTime)
+   * @since 12.3.2
+   */
+  default boolean isActivePerNow ()
+  {
+    return isActivePer (PDTFactory.getCurrentOffsetDateTime ());
+  }
+
+  /**
+   * Check if this status is active at the provided date and time. Active means not deprecated and
+   * within the validity period.
+   *
+   * @param aDT
+   *        The date and time to check. May not be <code>null</code>.
+   * @return <code>true</code> if active, <code>false</code> if not.
+   * @see #isDeprecated()
+   * @see #isValidPer(OffsetDateTime)
+   * @since 12.3.2
+   */
+  default boolean isActivePer (@NonNull final OffsetDateTime aDT)
+  {
+    return !isDeprecated () && isValidPer (aDT);
   }
 
   default boolean hasDeprecationReason ()

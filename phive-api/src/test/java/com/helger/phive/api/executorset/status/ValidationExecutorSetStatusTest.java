@@ -17,6 +17,7 @@
 package com.helger.phive.api.executorset.status;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -141,6 +142,45 @@ public final class ValidationExecutorSetStatusTest
                                                                            .build ();
     assertEquals (1, aStatus.historyItems ().size ());
     assertSame (aHistoryItem2, aStatus.historyItems ().getFirstOrNull ());
+  }
+
+  @Test
+  public void testIsActivePer ()
+  {
+    final OffsetDateTime aNow = PDTFactory.getCurrentOffsetDateTimeMillisOnlyUTC ();
+    final OffsetDateTime aFrom = aNow.minusDays (10);
+    final OffsetDateTime aTo = aNow.plusDays (10);
+
+    // Valid and not deprecated
+    ValidationExecutorSetStatus aStatus = ValidationExecutorSetStatus.builder ()
+                                                                     .statusLastModification (aNow)
+                                                                     .validFrom (aFrom)
+                                                                     .validTo (aTo)
+                                                                     .build ();
+    assertTrue (aStatus.isValidPer (aNow));
+    assertTrue (aStatus.isActivePer (aNow));
+    assertTrue (aStatus.isActivePerNow ());
+    assertFalse (aStatus.isValidPer (aFrom.minusDays (1)));
+    assertFalse (aStatus.isActivePer (aFrom.minusDays (1)));
+    assertFalse (aStatus.isValidPer (aTo.plusDays (1)));
+    assertFalse (aStatus.isActivePer (aTo.plusDays (1)));
+
+    // Deprecated - still valid, but never active
+    aStatus = ValidationExecutorSetStatus.builder ()
+                                         .statusLastModification (aNow)
+                                         .type (EValidationExecutorStatusType.DEPRECATED)
+                                         .validFrom (aFrom)
+                                         .validTo (aTo)
+                                         .build ();
+    assertTrue (aStatus.isValidPer (aNow));
+    assertTrue (aStatus.isValidPerNow ());
+    assertFalse (aStatus.isActivePer (aNow));
+    assertFalse (aStatus.isActivePerNow ());
+
+    // Deprecated without validity period
+    aStatus = ValidationExecutorSetStatus.createDeprecatedNow (true);
+    assertTrue (aStatus.isValidPerNow ());
+    assertFalse (aStatus.isActivePerNow ());
   }
 
   @Test (expected = IllegalStateException.class)

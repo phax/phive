@@ -23,6 +23,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Month;
+import java.time.OffsetDateTime;
 import java.util.Locale;
 
 import org.jspecify.annotations.NonNull;
@@ -35,6 +37,7 @@ import com.helger.annotation.Nonempty;
 import com.helger.base.io.stream.StreamHelper;
 import com.helger.base.state.ESuccess;
 import com.helger.collection.commons.ICommonsList;
+import com.helger.datetime.helper.PDTFactory;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
 import com.helger.diver.api.version.DVRVersionException;
@@ -180,6 +183,25 @@ public final class VESLoaderTest
       _addVES (aInMemoryRepo, new ClassPathResource ("ves/test3/xsd2.ves"));
     }
 
+    // test5 - deprecated versions
+    {
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("com.helger.phive.test5", "mini", "1.0"),
+                    new ClassPathResource ("ves/test5/mini.xsd"));
+      // No status
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test5/xsd-1.0.ves"));
+      // Deprecated and expired
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test5/xsd-1.1.ves"));
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("com.helger.phive.test5", "xsd", "1.1"),
+                    new ClassPathResource ("ves/test5/xsd-1.1.status"));
+      // Deprecated without validity period
+      _addVES (aInMemoryRepo, new ClassPathResource ("ves/test5/xsd-2.0.ves"));
+      _addResource (aInMemoryRepo,
+                    DVRCoordinate.create ("com.helger.phive.test5", "xsd", "2.0"),
+                    new ClassPathResource ("ves/test5/xsd-2.0.status"));
+    }
+
     // test4 - Peppol BIS Billing Invoice inside an SBDH
     {
       _addResource (aInMemoryRepo,
@@ -258,6 +280,41 @@ public final class VESLoaderTest
                                                                               aLoadingErrors);
     assertNotNull (aLoaded);
     assertEquals ("com.helger.phive.test:test_sch:4-SNAPSHOT", aLoaded.getHeader ().getVESID ().getAsSingleID ());
+  }
+
+  @Test
+  public void testPseudoVersionActiveIgnoresDeprecated ()
+  {
+    final DVRCoordinate aLatest = DVRCoordinate.parseOrNull ("com.helger.phive.test5:xsd:latest");
+    final DVRCoordinate aLatestActive = DVRCoordinate.parseOrNull ("com.helger.phive.test5:xsd:latest-active");
+    final DVRCoordinate aLatestReleaseActive = DVRCoordinate.parseOrNull ("com.helger.phive.test5:xsd:latest-release-active");
+
+    // Deprecated versions are considered by "latest"
+    assertEquals ("com.helger.phive.test5:xsd:2",
+                  VESLoaderPseudoVersionResolver.resolvePseudoVersion (s_aRepoStorage, aLatest, null, null)
+                                                .getAsSingleID ());
+
+    // 2.0 is deprecated, 1.1 is deprecated and expired
+    assertEquals ("com.helger.phive.test5:xsd:1",
+                  VESLoaderPseudoVersionResolver.resolvePseudoVersion (s_aRepoStorage, aLatestActive, null, null)
+                                                .getAsSingleID ());
+    assertEquals ("com.helger.phive.test5:xsd:1",
+                  VESLoaderPseudoVersionResolver.resolvePseudoVersion (s_aRepoStorage,
+                                                                       aLatestReleaseActive,
+                                                                       null,
+                                                                       null)
+                                                .getAsSingleID ());
+
+    // 1.1 is within its validity period at that point in time, but still deprecated
+    final OffsetDateTime aCheckDT = PDTFactory.createOffsetDateTimeUTC (2023, Month.JUNE, 1);
+    assertEquals ("com.helger.phive.test5:xsd:1",
+                  VESLoaderPseudoVersionResolver.resolvePseudoVersion (s_aRepoStorage, aLatestActive, null, aCheckDT)
+                                                .getAsSingleID ());
+
+    final ErrorList aLoadingErrors = new ErrorList ();
+    final LoadedVES aLoaded = new VESLoader (s_aRepoStorage).loadVESFromRepo (aLatestActive, aLoadingErrors);
+    assertNotNull (aLoaded);
+    assertEquals ("com.helger.phive.test5:xsd:1", aLoaded.getHeader ().getVESID ().getAsSingleID ());
   }
 
   @Test

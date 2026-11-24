@@ -305,7 +305,7 @@ public class ValidationExecutorSetRegistry <SOURCETYPE extends IValidationSource
       // Now determine the one with the latest active version
       final IValidationExecutorSet <SOURCETYPE> ret = CollectionFind.findFirst (aMatching.values (),
                                                                                 x -> x.getStatus ()
-                                                                                      .isValidPer (aRealCheckDateTime));
+                                                                                      .isActivePer (aRealCheckDateTime));
       if (ret != null)
       {
         if (LOGGER.isDebugEnabled ())
