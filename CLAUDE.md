@@ -40,6 +40,8 @@ Dependency flow: `phive-api` → `phive-xml` → `phive-result` → `phive-ves-m
 4. Collect `ValidationResultList` containing per-layer results
 5. Optionally transform results via `PhiveJsonHelper` or `PhiveXMLHelper`
 
+Requirements (`requires` / `partialRequires`) are loaded from the repository first; only if it has no `.ves` for the (pseudo version resolved) VESID, the optional `IVESRequirementResolver` of `VESLoader` may supply an `IValidationExecutorSet` (wrapped via `LoadedVES.createForExecutorSet`, custom error levels applied to Schematron clones). `stopOnError` of a requirement (default `true`) is applied in `LoadedVES._getValidationExecutorsRecursive` by setting "stop on error" on (clones of) all executors of the required VES, so `ValidationExecutionManager` skips the remaining layers.
+
 The pseudo versions `latest-active` / `latest-release-active` select the newest VES whose status `isActivePer` the check date (not deprecated and within the validity period). `VESLoaderPseudoVersionResolver` reads the `deprecated` flag from the JAXB status directly, because `VESStatus1Helper.convert` derives the status type for the current date and reports an expired deprecated VES as `EXPIRED`.
 
 ## Key Dependencies

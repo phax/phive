@@ -103,7 +103,7 @@
       <dependency>
         <groupId>com.helger</groupId>
         <artifactId>ph-pdf-layout-bom</artifactId>
-        <version>8.4.4</version>
+        <version>8.4.5</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

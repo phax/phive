@@ -38,7 +38,9 @@ import com.helger.collection.commons.ICommonsMap;
 import com.helger.datetime.xml.XMLOffsetDate;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
+import com.helger.phive.api.EValidationBaseType;
 import com.helger.phive.api.execute.ValidationExecutionManager;
+import com.helger.phive.api.executor.AbstractValidationExecutor;
 import com.helger.phive.api.executor.IValidationExecutor;
 import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.ValidationExecutorSet;
@@ -50,6 +52,7 @@ import com.helger.phive.api.validity.IValidityDeterminator;
 import com.helger.phive.ves.model.v1.EVESSyntax;
 import com.helger.phive.xml.partial.ValidationExecutorPartial;
 import com.helger.phive.xml.schematron.CustomErrorDetails;
+import com.helger.phive.xml.schematron.ValidationExecutorSchematron;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.xsd.XSDPartialContext;
 import com.helger.xml.namespace.MapBasedNamespaceContext;
@@ -263,7 +266,7 @@ public final class LoadedVES
                                          "': " +
                                          aErrorList.getAllFailures ());
       }
-      if (ret.getHeader ().getVESSyntax () == EVESSyntax.EDIFACT)
+      if (ret.getHeader ().getVESSyntax () == EVESSyntax.EDIFACT || (ret.m_bFromExecutorSet && !ret._isXMLBased ()))
         throw new VESLoadingException ("The partially required VES '" +
                                        m_aRequiredVES.getRequiredVESID ().getAsSingleID () +
                                        "' must be XML based");
@@ -279,12 +282,66 @@ public final class LoadedVES
   private final ICommonsList <PartialRequiredVES> m_aPartialRequires = new CommonsArrayList <> ();
   private final ICommonsList <IValidationExecutor <? extends IValidationSource>> m_aExecutors = new CommonsArrayList <> ();
 
+  private boolean m_bFromExecutorSet = false;
+
   LoadedVES (@NonNull final Header aHeader, @NonNull final IValidationExecutorSetStatus aStatus)
   {
     ValueEnforcer.notNull (aHeader, "Header");
     ValueEnforcer.notNull (aStatus, "Status");
     m_aHeader = aHeader;
     m_aStatus = aStatus;
+  }
+
+  @NonNull
+  private static EVESSyntax _getVESSyntax (@NonNull final IValidationExecutorSet <? extends IValidationSource> aVES)
+  {
+    boolean bSchematron = false;
+    for (final IValidationExecutor <? extends IValidationSource> aExecutor : aVES)
+    {
+      final EValidationBaseType eBaseType = aExecutor.getValidationArtefact ().getValidationType ().getBaseType ();
+      if (eBaseType.isEdifact ())
+        return EVESSyntax.EDIFACT;
+      if (eBaseType.isSchematron ())
+        bSchematron = true;
+    }
+    return bSchematron ? EVESSyntax.SCHEMATRON : EVESSyntax.XSD;
+  }
+
+  /**
+   * Create a loaded VES for a requirement that was resolved to an executor set by an
+   * {@link IVESRequirementResolver}. The executors of the set are used as they are. Only if the
+   * requirement contains custom error levels, the Schematron executors are cloned to apply them.
+   *
+   * @param aVES
+   *        The executor set provided by the resolver. May not be <code>null</code>.
+   * @param aRequiredVES
+   *        The requirement that was resolved. May not be <code>null</code>.
+   * @return The new loaded VES. Never <code>null</code>.
+   */
+  @NonNull
+  static LoadedVES createForExecutorSet (@NonNull final IValidationExecutorSet <? extends IValidationSource> aVES,
+                                         @NonNull final RequiredVES aRequiredVES)
+  {
+    ValueEnforcer.notNull (aVES, "VES");
+    ValueEnforcer.notNull (aRequiredVES, "RequiredVES");
+
+    final Header aHeader = new Header (aVES.getID (), aVES.getDisplayName (), null, _getVESSyntax (aVES));
+    final LoadedVES ret = new LoadedVES (aHeader, aVES.getStatus ());
+    ret.m_bFromExecutorSet = true;
+
+    final ICommonsMap <String, CustomErrorDetails> aCustomErrorDetails = aRequiredVES.getOutput ()
+                                                                                     .customErrorDetails ();
+    for (final IValidationExecutor <? extends IValidationSource> aExecutor : aVES)
+    {
+      if (aCustomErrorDetails.isNotEmpty () && aExecutor instanceof final ValidationExecutorSchematron aExecutorSCH)
+      {
+        // Don't modify the executor of the caller
+        ret.addExecutor (aExecutorSCH.getClone ().addCustomErrorDetails (aCustomErrorDetails));
+      }
+      else
+        ret.addExecutor (aExecutor);
+    }
+    return ret;
   }
 
   /**
@@ -360,6 +417,16 @@ public final class LoadedVES
   }
 
   /**
+   * @return <code>true</code> if this VES was not loaded from the repository but was resolved to an
+   *         executor set by an {@link IVESRequirementResolver}.
+   * @since 12.4.0
+   */
+  public boolean isFromExecutorSet ()
+  {
+    return m_bFromExecutorSet;
+  }
+
+  /**
    * @return <code>true</code> if a validation executor is present, <code>false</code> if not.
    */
   public boolean hasExecutor ()
@@ -398,6 +465,44 @@ public final class LoadedVES
     return ret;
   }
 
+  /**
+   * @return <code>true</code> if all own executors are XML based. Requirements are not considered.
+   */
+  private boolean _isXMLBased ()
+  {
+    for (final IValidationExecutor <?> aExecutor : m_aExecutors)
+    {
+      final EValidationBaseType eBaseType = aExecutor.getValidationArtefact ().getValidationType ().getBaseType ();
+      if (!eBaseType.isXML () && !eBaseType.isXSD () && !eBaseType.isSchematron ())
+        return false;
+    }
+    return true;
+  }
+
+  /**
+   * Make sure that the validation stops after the passed executor, if it creates an error. The
+   * passed executor is not modified.
+   *
+   * @param aExecutor
+   *        The executor to use. May not be <code>null</code>.
+   * @return The passed executor, if it already stops on error, or a clone of it that stops on error
+   */
+  @NonNull
+  private static IValidationExecutor <IValidationSource> _getStoppingOnError (@NonNull final IValidationExecutor <IValidationSource> aExecutor)
+  {
+    if (aExecutor.isStopValidationOnError ())
+      return aExecutor;
+
+    final IValidationExecutor <IValidationSource> ret = aExecutor.getClone ();
+    if (ret instanceof final AbstractValidationExecutor <?, ?> aAbstractExecutor)
+      aAbstractExecutor.setStopValidationOnError (true);
+    else
+      throw new VESLoadingException ("The validation executor " +
+                                     aExecutor.getClass ().getName () +
+                                     " does not support setting 'stop on error'");
+    return ret;
+  }
+
   @NonNull
   @ReturnsMutableObject
   private ICommonsList <IValidationExecutor <IValidationSource>> _getValidationExecutorsRecursive ()
@@ -412,6 +517,10 @@ public final class LoadedVES
     {
       // Take the one from required
       ret = _getLoadedVESRequiresNotNull ()._getValidationExecutorsRecursive ();
+
+      // All subsequent executors are skipped, if one of the required ones creates an error
+      if (m_aRequires.isStopOnError ())
+        ret.replaceAll (LoadedVES::_getStoppingOnError);
     }
 
     // Add the executors of the partially required VES, applied on the parts only
@@ -420,9 +529,14 @@ public final class LoadedVES
                                                                                      ._getValidationExecutorsRecursive ())
       {
         final IValidationExecutor <IValidationSourceXML> aExecutorXML = GenericReflection.uncheckedCast (aExecutor);
-        ret.add (GenericReflection.uncheckedCast (new ValidationExecutorPartial (aExecutorXML,
-                                                                                 aPartialRequires.getPartialContext (),
-                                                                                 aPartialRequires.getPrerequisiteXPath ())));
+        final ValidationExecutorPartial aExecutorPartial = new ValidationExecutorPartial (aExecutorXML,
+                                                                                          aPartialRequires.getPartialContext (),
+                                                                                          aPartialRequires.getPrerequisiteXPath ());
+        // All subsequent executors are skipped, if one of the partially required ones creates an
+        // error
+        if (aPartialRequires.getRequiredVES ().isStopOnError ())
+          aExecutorPartial.setStopValidationOnError (true);
+        ret.add (GenericReflection.uncheckedCast (aExecutorPartial));
       }
 
     // Add our executors

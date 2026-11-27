@@ -53,6 +53,7 @@ import com.helger.diver.repo.RepoStorageKeyOfArtefact;
 import com.helger.diver.repo.RepoStorageReadableResource;
 import com.helger.diver.repo.toc.IRepoStorageWithToc;
 import com.helger.io.resource.IReadableResource;
+import com.helger.phive.api.executorset.IValidationExecutorSet;
 import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResultList;
@@ -119,6 +120,8 @@ public final class VESLoader
   private boolean m_bUseEagerRequirementLoading = DEFAULT_USE_EAGER_REQUIREMENT_LOADING;
   @GuardedBy ("m_aRWLock")
   private boolean m_bResolvePseudoVersions = DEFAULT_RESOLVE_PSEUDO_VERSIONS;
+  @GuardedBy ("m_aRWLock")
+  private IVESRequirementResolver m_aRequirementResolver;
 
   public VESLoader (@NonNull final IRepoStorageWithToc aRepo)
   {
@@ -241,6 +244,35 @@ public final class VESLoader
   public VESLoader setResolvePseudoVersions (@NonNull final boolean b)
   {
     m_aRWLock.writeLocked (() -> m_bResolvePseudoVersions = b);
+    return this;
+  }
+
+  /**
+   * @return The resolver for requirements that are not contained in the repository. May be
+   *         <code>null</code>.
+   * @since 12.4.0
+   */
+  @Nullable
+  public IVESRequirementResolver getRequirementResolver ()
+  {
+    return m_aRWLock.readLockedGet (() -> m_aRequirementResolver);
+  }
+
+  /**
+   * Set the resolver for <code>requires</code> and <code>partialRequires</code> that are not
+   * contained in the repository. It is only called, if the repository contains no VES for the
+   * required VESID (after resolving a pseudo version).
+   *
+   * @param aRequirementResolver
+   *        The resolver to use. May be <code>null</code> to only load requirements from the
+   *        repository.
+   * @return this for chaining
+   * @since 12.4.0
+   */
+  @NonNull
+  public VESLoader setRequirementResolver (@Nullable final IVESRequirementResolver aRequirementResolver)
+  {
+    m_aRWLock.writeLocked (() -> m_aRequirementResolver = aRequirementResolver);
     return this;
   }
 
@@ -516,10 +548,7 @@ public final class VESLoader
         // Eager loading
 
         // Recursive load required artefact; required to have this in scope
-        final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
-                                                               aSrcRequiredVES,
-                                                               aLoaderStatus,
-                                                               aLoadingErrors);
+        final LoadedVES aLoadedRequirement = _loadRequiredVES (aSrcRequiredVES, aLoaderStatus, aLoadingErrors);
         if (aLoadedRequirement == null)
         {
           aLoadingErrors.add (SingleError.builderError ()
@@ -539,10 +568,7 @@ public final class VESLoader
           // Use this deferred loader, to ensure the same surrounding VESLoader
           // instance is used
           // Recursive load required artefact; required to have this in scope
-          final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
-                                                                 aSrcRequiredVES,
-                                                                 aLoaderStatus,
-                                                                 aLocalErrorList);
+          final LoadedVES aLoadedRequirement = _loadRequiredVES (aSrcRequiredVES, aLoaderStatus, aLocalErrorList);
           if (aLoadedRequirement == null)
           {
             throw new VESLoadingException ("Failed to load required VESID '" +
@@ -591,10 +617,7 @@ public final class VESLoader
       if (isUseEagerRequirementLoading ())
       {
         // Eager loading
-        final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
-                                                               aSrcRequiredVES,
-                                                               aLoaderStatus,
-                                                               aLoadingErrors);
+        final LoadedVES aLoadedRequirement = _loadRequiredVES (aSrcRequiredVES, aLoaderStatus, aLoadingErrors);
         if (aLoadedRequirement == null)
         {
           aLoadingErrors.add (SingleError.builderError ()
@@ -611,10 +634,7 @@ public final class VESLoader
       {
         // Lazy loading
         ret.addLazyPartialRequires (aPartialRequiredVES, aLocalErrorList -> {
-          final LoadedVES aLoadedRequirement = _loadVESFromRepo (aSrcRequiredVES.getRequiredVESID (),
-                                                                 aSrcRequiredVES,
-                                                                 aLoaderStatus,
-                                                                 aLocalErrorList);
+          final LoadedVES aLoadedRequirement = _loadRequiredVES (aSrcRequiredVES, aLoaderStatus, aLocalErrorList);
           if (aLoadedRequirement == null)
           {
             throw new VESLoadingException ("Failed to load partially required VESID '" +
@@ -971,6 +991,62 @@ public final class VESLoader
         else
           LOGGER.info ("Successfully finished loading VESID '" + aStaticVESID.getAsSingleID () + "' from repository");
     }
+  }
+
+  /**
+   * Load a required VES. It is loaded from the repository if it is contained there. Otherwise the
+   * requirement resolver is asked, if one is present.
+   *
+   * @param aRequiredVES
+   *        The requirement to load. May not be <code>null</code>.
+   * @param aLoaderStatus
+   *        The internal loader status to be used, to make sure no cycles etc. are contained
+   * @param aLoadingErrors
+   *        The loading error list to be filled. May not be <code>null</code>.
+   * @return <code>null</code> if loading failed
+   */
+  @Nullable
+  private LoadedVES _loadRequiredVES (final LoadedVES.@NonNull RequiredVES aRequiredVES,
+                                      @NonNull final VESLoaderStatus aLoaderStatus,
+                                      @NonNull final ErrorList aLoadingErrors)
+  {
+    final IVESRequirementResolver aRequirementResolver = getRequirementResolver ();
+    if (aRequirementResolver == null)
+    {
+      // Repository only - as before
+      return _loadVESFromRepo (aRequiredVES.getRequiredVESID (), aRequiredVES, aLoaderStatus, aLoadingErrors);
+    }
+
+    // Is the VES contained in the repository?
+    final DVRCoordinate aVESID = aRequiredVES.getRequiredVESID ();
+    DVRCoordinate aStaticVESID = null;
+    if (aVESID.getVersionObj ().isStaticVersion ())
+      aStaticVESID = aVESID;
+    else
+      if (isResolvePseudoVersions ())
+        aStaticVESID = resolvePseudoVersion (aVESID, null, null);
+    if (aStaticVESID != null && m_aRepo.exists (RepoStorageKeyOfArtefact.of (aStaticVESID, FILE_EXT_VES)))
+      return _loadVESFromRepo (aStaticVESID, aRequiredVES, aLoaderStatus, aLoadingErrors);
+
+    // Not in the repository - ask the resolver
+    final IValidationExecutorSet <? extends IValidationSource> aResolvedVES = aRequirementResolver.resolveRequirement (aRequiredVES,
+                                                                                                                       aLoadingErrors);
+    if (aResolvedVES == null)
+    {
+      aLoadingErrors.add (SingleError.builderError ()
+                                     .errorText ("The required VESID '" +
+                                                 aVESID.getAsSingleID () +
+                                                 "' is neither contained in the repository nor could it be resolved by the requirement resolver")
+                                     .build ());
+      return null;
+    }
+
+    LOGGER.info ("Resolved the required VESID '" +
+                 aVESID.getAsSingleID () +
+                 "' via the requirement resolver to the executor set '" +
+                 aResolvedVES.getID ().getAsSingleID () +
+                 "'");
+    return LoadedVES.createForExecutorSet (aResolvedVES, aRequiredVES);
   }
 
   @NonNull
