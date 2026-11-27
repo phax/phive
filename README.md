@@ -29,6 +29,7 @@ This project has the following sub-modules:
 * **`phive-ves-engine`** - the validation engine that takes the data structures from `phive-ves-model`, loads external resources via [ph-diver](https://github.com/phax/ph-diver) and validates business documents via `phive-xml`.
 * **`phive-result`** (previously `phive-json`) - library to support converting validation results to different output formats (e.g. JSON)
 * **`phive-result-html`** (since v12.0.0) - library to create standalone HTML validation result reports with translatable labels, custom CSS support, source data display, and an optional built-in stylesheet
+* **`phive-result-pdf`** (since v12.4.0) - library to create PDF validation result reports with the same layout and labels as the HTML reports, using [ph-pdf-layout](https://github.com/phax/ph-pdf-layout). Supports PDF/A (2b, 2u, 3b, 3u, 3a) and PDF/UA
 
 Note: this library does NOT include an EDIFACT validation. It's a placeholder for local implementations.
 
@@ -353,6 +354,16 @@ If you want to create standalone HTML validation reports you need to also includ
 </dependency>
 ```
 
+If you want to create PDF validation reports you need to also include this artefact.
+
+```xml
+<dependency>
+  <groupId>com.helger.phive</groupId>
+  <artifactId>phive-result-pdf</artifactId>
+  <version>x.y.z</version>
+</dependency>
+```
+
 Alternate usage as a Maven BOM (since v12.3.0) - add it to the `<dependencyManagement>` section and omit the versions of the phive artefacts in your `<dependencies>`:
 
 ```xml
@@ -376,6 +387,13 @@ This only seems to be a problem when running 32bit Java.
 With 64bit Java, the default stack size of the Oracle JVM is already 1MB.
 
 # News and noteworthy
+
+v12.4.0 - work in progress
+* Created new submodule `phive-result-pdf` for generating PDF validation result reports (`PhivePdfHelper`), with optional PDF/A (all levels supported by ph-pdf-layout) and PDF/UA. The fonts (Open Sans and Kurinto Mono) are embedded. The styling can be changed in a subclass. See [issue #39](https://github.com/phax/phive/issues/39)
+* Added the shared label enumeration `EPhiveResultLabel` in `phive-api`, used by the HTML and the PDF output. `EPhiveHtmlLabel` and the `PhiveHtmlHelper` methods using it are deprecated; use `PhiveHtmlHelper.label (EPhiveResultLabel, String)` and `allLabels (Map)` instead
+* `PhiveHtmlHelper` no longer shows the column "Location" of an error table if no error of that validation layer has a location
+* Added `PhiveHtmlHelper.vendor (String, String)` to show the vendor that performed the validation ("Validated by ...")
+* Added `PhiveHtmlHelper.showFooter (boolean)` to hide the footer with the link to phive
 
 v12.3.2 - 2026-11-24
 * Added `IValidationExecutorSetStatus.isActivePer (OffsetDateTime)` and `isActivePerNow ()`: active means not deprecated and within the validity period.

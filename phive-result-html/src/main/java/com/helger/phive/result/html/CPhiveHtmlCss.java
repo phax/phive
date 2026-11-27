@@ -120,6 +120,9 @@ public final class CPhiveHtmlCss
   /** Report creation timestamp element */
   public static final String CSS_VALIDATED_AT = "phive-validated-at";
 
+  /** Vendor information ("Validated by") element */
+  public static final String CSS_VALIDATED_BY = "phive-validated-by";
+
   /** Footer element */
   public static final String CSS_FOOTER = "phive-footer";
 
@@ -330,6 +333,15 @@ public final class CPhiveHtmlCss
         margin-bottom: 16px;
         font-size: 0.9em;
         color: var(--phive-color-muted);
+      }
+      .phive-validated-by {
+        margin-top: -12px;
+        margin-bottom: 16px;
+        font-size: 0.9em;
+        color: var(--phive-color-muted);
+      }
+      .phive-validated-by a {
+        color: var(--phive-color-heading-secondary);
       }
       .phive-footer {
         margin-top: 24px;

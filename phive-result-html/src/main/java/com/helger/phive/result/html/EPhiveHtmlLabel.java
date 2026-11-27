@@ -25,6 +25,7 @@ import org.jspecify.annotations.NonNull;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.style.ReturnsMutableCopy;
 import com.helger.collection.commons.CommonsEnumMap;
+import com.helger.phive.api.result.label.EPhiveResultLabel;
 import com.helger.text.IMultilingualText;
 import com.helger.text.display.IHasDisplayText;
 import com.helger.text.resolve.DefaultTextResolver;
@@ -36,7 +37,9 @@ import com.helger.text.util.TextHelper;
  * language.
  *
  * @author Philip Helger
+ * @deprecated Use {@link EPhiveResultLabel} instead, which is shared with the PDF output
  */
+@Deprecated (forRemoval = true, since = "12.4.0")
 public enum EPhiveHtmlLabel implements IHasDisplayText
 {
   /** Overall page/section title */
@@ -105,6 +108,17 @@ public enum EPhiveHtmlLabel implements IHasDisplayText
   EPhiveHtmlLabel (@NonNull final String sDE, @NonNull final String sEN)
   {
     m_aTP = TextHelper.create_DE_EN (sDE, sEN);
+  }
+
+  /**
+   * @return The matching label of the shared {@link EPhiveResultLabel} enumeration. Never
+   *         <code>null</code>.
+   * @since 12.4.0
+   */
+  @NonNull
+  public EPhiveResultLabel getResultLabel ()
+  {
+    return EPhiveResultLabel.valueOf (name ());
   }
 
   @NonNull

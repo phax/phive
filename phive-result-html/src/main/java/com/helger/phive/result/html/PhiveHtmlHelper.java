@@ -44,6 +44,7 @@ import com.helger.phive.api.executorset.status.IValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
 import com.helger.phive.api.result.ValidationSummary;
+import com.helger.phive.api.result.label.EPhiveResultLabel;
 import com.helger.phive.api.severity.PhiveSeverityHelper;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.text.locale.LocaleFormatter;
@@ -65,14 +66,20 @@ import com.helger.xml.serialize.write.XMLWriterSettings;
  */
 public class PhiveHtmlHelper
 {
+  /** By default the footer with the link to phive is shown */
+  public static final boolean DEFAULT_SHOW_FOOTER = true;
+
   private Locale m_aDisplayLocale = Locale.US;
   private IValidationExecutorSet <?> m_aVES;
   private String m_sSourceData;
+  private String m_sVendorName;
+  private String m_sVendorURL;
+  private boolean m_bShowFooter = DEFAULT_SHOW_FOOTER;
 
   private BiFunction <IError, Locale, String> m_aErrorTestExtractor;
 
-  private final CommonsEnumMap <EPhiveHtmlLabel, String> m_aDefaultLabels;
-  private final CommonsEnumMap <EPhiveHtmlLabel, String> m_aLabels;
+  private final CommonsEnumMap <EPhiveResultLabel, String> m_aDefaultLabels;
+  private final CommonsEnumMap <EPhiveResultLabel, String> m_aLabels;
   private final ICommonsList <String> m_aCssInlines = new CommonsArrayList <> ();
   private final ICommonsList <String> m_aCssLinks = new CommonsArrayList <> ();
 
@@ -80,10 +87,7 @@ public class PhiveHtmlHelper
   {
     ValueEnforcer.notNull (aDisplayLocale, "DisplayLocale");
     m_aDisplayLocale = aDisplayLocale;
-    if ("de".equals (aDisplayLocale.getLanguage ()))
-      m_aDefaultLabels = EPhiveHtmlLabel.createLabelMapDE ();
-    else
-      m_aDefaultLabels = EPhiveHtmlLabel.createLabelMapEN ();
+    m_aDefaultLabels = EPhiveResultLabel.createLabelMap (aDisplayLocale);
     m_aLabels = m_aDefaultLabels.getClone ();
   }
 
@@ -118,6 +122,43 @@ public class PhiveHtmlHelper
   }
 
   /**
+   * Set the optional vendor information, that is shown as "Validated by ..." below the validation
+   * timestamp.
+   *
+   * @param sName
+   *        The name of the vendor that performed the validation. May be <code>null</code> to not
+   *        show vendor information.
+   * @param sURL
+   *        The optional URL of the vendor. If present, the name is rendered as a link. May be
+   *        <code>null</code>.
+   * @return this for chaining
+   * @since 12.4.0
+   */
+  @NonNull
+  public PhiveHtmlHelper vendor (@Nullable final String sName, @Nullable final String sURL)
+  {
+    m_sVendorName = sName;
+    m_sVendorURL = sURL;
+    return this;
+  }
+
+  /**
+   * Define whether the footer with the link to the phive open source library should be shown or
+   * not. The default is {@link #DEFAULT_SHOW_FOOTER}.
+   *
+   * @param bShowFooter
+   *        <code>true</code> to show the footer, <code>false</code> to hide it.
+   * @return this for chaining
+   * @since 12.4.0
+   */
+  @NonNull
+  public PhiveHtmlHelper showFooter (final boolean bShowFooter)
+  {
+    m_bShowFooter = bShowFooter;
+    return this;
+  }
+
+  /**
    * Set an optional function to extract the "test" expression (e.g. Schematron test) from an error.
    * Since the HTML module does not depend on ph-schematron, this must be provided externally if
    * test expressions should be included. Example:
@@ -146,14 +187,55 @@ public class PhiveHtmlHelper
    * @param aLabels
    *        The map of labels to use. May not be <code>null</code>.
    * @return this for chaining
+   * @since 12.4.0
    */
   @NonNull
-  public PhiveHtmlHelper labels (@NonNull final Map <EPhiveHtmlLabel, String> aLabels)
+  public PhiveHtmlHelper allLabels (@NonNull final Map <EPhiveResultLabel, String> aLabels)
   {
     ValueEnforcer.notNull (aLabels, "Labels");
     // Start with defaults, then overlay
     m_aLabels.setAll (m_aDefaultLabels);
     m_aLabels.putAll (aLabels);
+    return this;
+  }
+
+  /**
+   * Set all label texts at once. The provided map is copied internally. Any labels not present in
+   * the map will retain their English defaults.
+   *
+   * @param aLabels
+   *        The map of labels to use. May not be <code>null</code>.
+   * @return this for chaining
+   * @deprecated Use {@link #allLabels(Map)} instead
+   */
+  @NonNull
+  @Deprecated (forRemoval = true, since = "12.4.0")
+  @SuppressWarnings ("removal")
+  public PhiveHtmlHelper labels (@NonNull final Map <EPhiveHtmlLabel, String> aLabels)
+  {
+    ValueEnforcer.notNull (aLabels, "Labels");
+    final CommonsEnumMap <EPhiveResultLabel, String> aNewLabels = new CommonsEnumMap <> (EPhiveResultLabel.class);
+    for (final Map.Entry <EPhiveHtmlLabel, String> aEntry : aLabels.entrySet ())
+      aNewLabels.put (aEntry.getKey ().getResultLabel (), aEntry.getValue ());
+    return allLabels (aNewLabels);
+  }
+
+  /**
+   * Override a single label text.
+   *
+   * @param eLabel
+   *        The label key. May not be <code>null</code>.
+   * @param sText
+   *        The text to use. May not be <code>null</code>.
+   * @return this for chaining
+   * @since 12.4.0
+   */
+  @NonNull
+  public PhiveHtmlHelper label (@NonNull final EPhiveResultLabel eLabel, @NonNull final String sText)
+  {
+    ValueEnforcer.notNull (eLabel, "Label");
+    ValueEnforcer.notNull (sText, "Text");
+    m_aLabels.put (eLabel, sText);
     return this;
   }
 
@@ -165,14 +247,15 @@ public class PhiveHtmlHelper
    * @param sText
    *        The text to use. May not be <code>null</code>.
    * @return this for chaining
+   * @deprecated Use {@link #label(EPhiveResultLabel, String)} instead
    */
   @NonNull
+  @Deprecated (forRemoval = true, since = "12.4.0")
+  @SuppressWarnings ("removal")
   public PhiveHtmlHelper label (@NonNull final EPhiveHtmlLabel eLabel, @NonNull final String sText)
   {
     ValueEnforcer.notNull (eLabel, "Label");
-    ValueEnforcer.notNull (sText, "Text");
-    m_aLabels.put (eLabel, sText);
-    return this;
+    return label (eLabel.getResultLabel (), sText);
   }
 
   /**
@@ -297,13 +380,34 @@ public class PhiveHtmlHelper
   }
 
   private @NonNull String _getSeverityValue (@NonNull final IErrorLevel aErrorLevel,
-                                             @NonNull final EnumMap <EPhiveHtmlLabel, String> aLabels)
+                                             @NonNull final EnumMap <EPhiveResultLabel, String> aLabels)
   {
     if (aErrorLevel.isGE (EErrorLevel.ERROR))
-      return aLabels.get (EPhiveHtmlLabel.SEVERITY_ERROR);
+      return aLabels.get (EPhiveResultLabel.SEVERITY_ERROR);
     if (aErrorLevel.isGE (EErrorLevel.WARN))
-      return aLabels.get (EPhiveHtmlLabel.SEVERITY_WARNING);
-    return aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS);
+      return aLabels.get (EPhiveResultLabel.SEVERITY_WARNING);
+    return aLabels.get (EPhiveResultLabel.SEVERITY_SUCCESS);
+  }
+
+  @Nullable
+  private static String _getLocationText (@NonNull final IError aError)
+  {
+    if (!aError.hasErrorLocation ())
+      return null;
+
+    final ILocation aLoc = aError.getErrorLocation ();
+    final StringBuilder aSB = new StringBuilder ();
+    if (aLoc.hasResourceID ())
+      aSB.append (aLoc.getResourceID ());
+    if (aLoc.hasLineNumber ())
+    {
+      if (aSB.length () > 0)
+        aSB.append (':');
+      aSB.append (aLoc.getLineNumber ());
+      if (aLoc.hasColumnNumber ())
+        aSB.append (':').append (aLoc.getColumnNumber ());
+    }
+    return aSB.toString ();
   }
 
   /**
@@ -322,7 +426,7 @@ public class PhiveHtmlHelper
     ValueEnforcer.notNull (aValidationResultList, "ValidationResultList");
 
     // More efficient accessor through local var
-    final EnumMap <EPhiveHtmlLabel, String> aLabels = m_aLabels;
+    final EnumMap <EPhiveResultLabel, String> aLabels = m_aLabels;
 
     // Calculate overalls
     final ValidationSummary aSummary = ValidationSummary.create (aValidationResultList);
@@ -333,7 +437,7 @@ public class PhiveHtmlHelper
 
     // Title
     final IMicroElement eH1 = new MicroElement ("h1");
-    eH1.addText (aLabels.get (EPhiveHtmlLabel.VALIDATION_RESULT));
+    eH1.addText (aLabels.get (EPhiveResultLabel.VALIDATION_RESULT));
     eContainer.addChild (eH1);
 
     // Creation timestamp
@@ -341,9 +445,27 @@ public class PhiveHtmlHelper
       final String sTimestamp = PDTToString.getAsString (aValidationResultList.getValidationDateTime (),
                                                          m_aDisplayLocale);
       final IMicroElement eCreatedAt = _createDiv (CPhiveHtmlCss.CSS_VALIDATED_AT);
-      eCreatedAt.addChild (_createLabelSpan (aLabels.get (EPhiveHtmlLabel.VALIDATED_AT)));
+      eCreatedAt.addChild (_createLabelSpan (aLabels.get (EPhiveResultLabel.VALIDATED_AT)));
       eCreatedAt.addChild (_createValueSpan (sTimestamp));
       eContainer.addChild (eCreatedAt);
+    }
+
+    // Vendor
+    if (StringHelper.isNotEmpty (m_sVendorName))
+    {
+      final IMicroElement eValidatedBy = _createDiv (CPhiveHtmlCss.CSS_VALIDATED_BY);
+      eValidatedBy.addChild (_createLabelSpan (aLabels.get (EPhiveResultLabel.VALIDATED_BY)));
+      if (StringHelper.isNotEmpty (m_sVendorURL))
+      {
+        final IMicroElement eValue = _createSpan (CPhiveHtmlCss.CSS_VALUE);
+        final IMicroElement eLink = eValue.addElement ("a");
+        eLink.setAttribute ("href", m_sVendorURL);
+        eLink.addText (m_sVendorName);
+        eValidatedBy.addChild (eValue);
+      }
+      else
+        eValidatedBy.addChild (_createValueSpan (m_sVendorName));
+      eContainer.addChild (eValidatedBy);
     }
 
     // VES info
@@ -353,12 +475,12 @@ public class PhiveHtmlHelper
       final IMicroElement eVes = _createDiv (CPhiveHtmlCss.CSS_VES,
                                              aStatus.isDeprecated () ? CPhiveHtmlCss.CSS_VES_DEPRECATED : "");
       final IMicroElement eVesH2 = new MicroElement ("h2");
-      eVesH2.addText (aLabels.get (EPhiveHtmlLabel.VALIDATION_EXECUTOR_SET));
+      eVesH2.addText (aLabels.get (EPhiveResultLabel.VALIDATION_EXECUTOR_SET));
       eVes.addChild (eVesH2);
-      _addLabelValue (eVes, aLabels.get (EPhiveHtmlLabel.VESID), m_aVES.getID ().getAsSingleID ());
-      _addLabelValue (eVes, aLabels.get (EPhiveHtmlLabel.NAME), m_aVES.getDisplayName ());
+      _addLabelValue (eVes, aLabels.get (EPhiveResultLabel.VESID), m_aVES.getID ().getAsSingleID ());
+      _addLabelValue (eVes, aLabels.get (EPhiveResultLabel.NAME), m_aVES.getDisplayName ());
       if (aStatus.isDeprecated ())
-        _addLabelValue (eVes, aLabels.get (EPhiveHtmlLabel.DEPRECATED), aLabels.get (EPhiveHtmlLabel.TRUE));
+        _addLabelValue (eVes, aLabels.get (EPhiveResultLabel.DEPRECATED), aLabels.get (EPhiveResultLabel.TRUE));
       eContainer.addChild (eVes);
     }
 
@@ -368,26 +490,28 @@ public class PhiveHtmlHelper
                                                  bOverallSuccess ? CPhiveHtmlCss.CSS_SUMMARY_SUCCESS
                                                                  : CPhiveHtmlCss.CSS_SUMMARY_FAILURE);
       final IMicroElement eSummaryH2 = new MicroElement ("h2");
-      eSummaryH2.addText (aLabels.get (EPhiveHtmlLabel.OVERALL_RESULT));
+      eSummaryH2.addText (aLabels.get (EPhiveResultLabel.OVERALL_RESULT));
       eSummary.addChild (eSummaryH2);
 
       _addLabelValue (eSummary,
-                      aLabels.get (EPhiveHtmlLabel.OVERALL_RESULT),
-                      bOverallSuccess ? aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS)
-                                      : aLabels.get (EPhiveHtmlLabel.SEVERITY_ERROR));
+                      aLabels.get (EPhiveResultLabel.OVERALL_RESULT),
+                      bOverallSuccess ? aLabels.get (EPhiveResultLabel.SEVERITY_SUCCESS)
+                                      : aLabels.get (EPhiveResultLabel.SEVERITY_ERROR));
       if (aSummary.isValidationInterrupted ())
-        _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.INTERRUPTED), aLabels.get (EPhiveHtmlLabel.TRUE));
+        _addLabelValue (eSummary, aLabels.get (EPhiveResultLabel.INTERRUPTED), aLabels.get (EPhiveResultLabel.TRUE));
       _addLabelValue (eSummary,
-                      aLabels.get (EPhiveHtmlLabel.HIGHEST_SEVERITY),
+                      aLabels.get (EPhiveResultLabel.HIGHEST_SEVERITY),
                       _getSeverityValue (aSummary.getMostSevereErrorLevel (), aLabels));
-      _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.WARNINGS), Integer.toString (aSummary.getWarningCount ()));
-      _addLabelValue (eSummary, aLabels.get (EPhiveHtmlLabel.ERRORS), Integer.toString (aSummary.getErrorCount ()));
+      _addLabelValue (eSummary,
+                      aLabels.get (EPhiveResultLabel.WARNINGS),
+                      Integer.toString (aSummary.getWarningCount ()));
+      _addLabelValue (eSummary, aLabels.get (EPhiveResultLabel.ERRORS), Integer.toString (aSummary.getErrorCount ()));
       if (aValidationResultList.hasValidationDuration ())
         _addLabelValue (eSummary,
-                        aLabels.get (EPhiveHtmlLabel.DURATION),
+                        aLabels.get (EPhiveResultLabel.DURATION),
                         LocaleFormatter.getFormatted (aValidationResultList.getValidationDuration ().toMillis (),
                                                       m_aDisplayLocale) +
-                                                                aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX));
+                                                                  aLabels.get (EPhiveResultLabel.MILLISECONDS_SUFFIX));
       eContainer.addChild (eSummary);
     }
 
@@ -415,14 +539,14 @@ public class PhiveHtmlHelper
 
       // Layer heading
       final IMicroElement eH3 = new MicroElement ("h3");
-      eH3.addText (aLabels.get (EPhiveHtmlLabel.VALIDATION_LAYER) + " #" + nLayerIndex);
+      eH3.addText (aLabels.get (EPhiveResultLabel.VALIDATION_LAYER) + " #" + nLayerIndex);
       eResult.addChild (eH3);
 
       // Artifact info
-      _addLabelValue (eResult, aLabels.get (EPhiveHtmlLabel.ARTIFACT_TYPE), aVA.getValidationType ().getName ());
+      _addLabelValue (eResult, aLabels.get (EPhiveResultLabel.ARTIFACT_TYPE), aVA.getValidationType ().getName ());
       {
         final IMicroElement eRow = new MicroElement ("div");
-        eRow.addChild (_createLabelSpan (aLabels.get (EPhiveHtmlLabel.ARTIFACT_PATH)));
+        eRow.addChild (_createLabelSpan (aLabels.get (EPhiveResultLabel.ARTIFACT_PATH)));
         eRow.addChild (_createValueSpan (aVA.getRuleResourcePath (), CPhiveHtmlCss.CSS_ARTIFACT_PATH));
         eResult.addChild (eRow);
       }
@@ -430,23 +554,23 @@ public class PhiveHtmlHelper
       // Status
       if (bIsSkipped)
       {
-        final IMicroElement eSkipped = _createValueSpan (aLabels.get (EPhiveHtmlLabel.SKIPPED));
+        final IMicroElement eSkipped = _createValueSpan (aLabels.get (EPhiveResultLabel.SKIPPED));
         eResult.addChild (eSkipped);
       }
       else
       {
         _addLabelValue (eResult,
-                        aLabels.get (EPhiveHtmlLabel.OVERALL_RESULT),
-                        bIsValid ? aLabels.get (EPhiveHtmlLabel.SEVERITY_SUCCESS)
-                                 : aLabels.get (EPhiveHtmlLabel.SEVERITY_ERROR));
+                        aLabels.get (EPhiveResultLabel.OVERALL_RESULT),
+                        bIsValid ? aLabels.get (EPhiveResultLabel.SEVERITY_SUCCESS)
+                                 : aLabels.get (EPhiveResultLabel.SEVERITY_ERROR));
       }
 
       // Duration per layer
       {
         final IMicroElement eDuration = _createDiv (CPhiveHtmlCss.CSS_DURATION);
-        eDuration.addChild (_createLabelSpan (aLabels.get (EPhiveHtmlLabel.DURATION)));
+        eDuration.addChild (_createLabelSpan (aLabels.get (EPhiveResultLabel.DURATION)));
         eDuration.addChild (_createValueSpan (LocaleFormatter.getFormatted (aVR.getDurationMS (), m_aDisplayLocale) +
-                                              aLabels.get (EPhiveHtmlLabel.MILLISECONDS_SUFFIX)));
+                                              aLabels.get (EPhiveResultLabel.MILLISECONDS_SUFFIX)));
         eResult.addChild (eDuration);
       }
 
@@ -454,6 +578,9 @@ public class PhiveHtmlHelper
       if (!bIsSkipped && aVR.getErrorList ().isNotEmpty ())
       {
         final boolean bHasTestColumn = m_aErrorTestExtractor != null;
+        // Only show the location column if at least one item has a location
+        final boolean bHasLocationColumn = aVR.getErrorList ()
+                                              .containsAny (x -> StringHelper.isNotEmpty (_getLocationText (x)));
 
         final IMicroElement eTable = new MicroElement ("table");
         eTable.setAttribute ("class", CPhiveHtmlCss.CSS_ITEMS);
@@ -461,13 +588,14 @@ public class PhiveHtmlHelper
         // Table header
         final IMicroElement eThead = eTable.addElement ("thead");
         final IMicroElement eHeaderRow = eThead.addElement ("tr");
-        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveHtmlLabel.SEVERITY)));
-        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveHtmlLabel.ERROR_ID)));
-        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveHtmlLabel.FIELD)));
-        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveHtmlLabel.LOCATION)));
-        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveHtmlLabel.ERROR_TEXT)));
+        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveResultLabel.SEVERITY)));
+        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveResultLabel.ERROR_ID)));
+        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveResultLabel.FIELD)));
+        if (bHasLocationColumn)
+          eHeaderRow.addChild (_createTh (aLabels.get (EPhiveResultLabel.LOCATION)));
+        eHeaderRow.addChild (_createTh (aLabels.get (EPhiveResultLabel.ERROR_TEXT)));
         if (bHasTestColumn)
-          eHeaderRow.addChild (_createTh (aLabels.get (EPhiveHtmlLabel.TEST)));
+          eHeaderRow.addChild (_createTh (aLabels.get (EPhiveResultLabel.TEST)));
 
         // Table body
         final IMicroElement eTbody = eTable.addElement ("tbody");
@@ -496,26 +624,8 @@ public class PhiveHtmlHelper
           eRow.addChild (_createTd (CPhiveHtmlCss.CSS_ERROR_FIELD, aError.getErrorFieldName ()));
 
           // Location
-          {
-            String sLocation = null;
-            if (aError.hasErrorLocation ())
-            {
-              final ILocation aLoc = aError.getErrorLocation ();
-              final StringBuilder aSB = new StringBuilder ();
-              if (aLoc.hasResourceID ())
-                aSB.append (aLoc.getResourceID ());
-              if (aLoc.hasLineNumber ())
-              {
-                if (aSB.length () > 0)
-                  aSB.append (':');
-                aSB.append (aLoc.getLineNumber ());
-                if (aLoc.hasColumnNumber ())
-                  aSB.append (':').append (aLoc.getColumnNumber ());
-              }
-              sLocation = aSB.toString ();
-            }
-            eRow.addChild (_createTd (CPhiveHtmlCss.CSS_ERROR_LOCATION, sLocation));
-          }
+          if (bHasLocationColumn)
+            eRow.addChild (_createTd (CPhiveHtmlCss.CSS_ERROR_LOCATION, _getLocationText (aError)));
 
           // Error text
           eRow.addChild (_createTd (CPhiveHtmlCss.CSS_ERROR_TEXT, aError.getErrorText (m_aDisplayLocale)));
@@ -541,7 +651,7 @@ public class PhiveHtmlHelper
       final IMicroElement eSource = _createDiv (CPhiveHtmlCss.CSS_SOURCE);
 
       final IMicroElement eSourceH2 = new MicroElement ("h2");
-      eSourceH2.addText (aLabels.get (EPhiveHtmlLabel.SOURCE_DATA));
+      eSourceH2.addText (aLabels.get (EPhiveResultLabel.SOURCE_DATA));
       eSource.addChild (eSourceH2);
 
       final IMicroElement eTable = new MicroElement ("table");
@@ -575,13 +685,14 @@ public class PhiveHtmlHelper
     }
 
     // Footer
+    if (m_bShowFooter)
     {
       final IMicroElement eFooter = _createDiv (CPhiveHtmlCss.CSS_FOOTER);
-      eFooter.addText (aLabels.get (EPhiveHtmlLabel.FOOTER_PREFIX));
+      eFooter.addText (aLabels.get (EPhiveResultLabel.FOOTER_PREFIX));
       final IMicroElement eLink = eFooter.addElement ("a");
       eLink.setAttribute ("href", "https://github.com/phax/phive");
       eLink.addText ("phive");
-      eFooter.addText (aLabels.get (EPhiveHtmlLabel.FOOTER_SUFFIX));
+      eFooter.addText (aLabels.get (EPhiveResultLabel.FOOTER_SUFFIX));
       eContainer.addChild (eFooter);
     }
 
@@ -619,7 +730,7 @@ public class PhiveHtmlHelper
     }
     {
       final IMicroElement eTitle = eHead.addElement ("title");
-      eTitle.addText (m_aLabels.get (EPhiveHtmlLabel.VALIDATION_RESULT));
+      eTitle.addText (m_aLabels.get (EPhiveResultLabel.VALIDATION_RESULT));
     }
 
     // CSS links

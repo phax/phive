@@ -44,6 +44,7 @@ import com.helger.phive.api.executorset.ValidationExecutorSet;
 import com.helger.phive.api.executorset.status.ValidationExecutorSetStatus;
 import com.helger.phive.api.result.ValidationResult;
 import com.helger.phive.api.result.ValidationResultList;
+import com.helger.phive.api.result.label.EPhiveResultLabel;
 import com.helger.phive.api.validity.EExtendedValidity;
 import com.helger.xml.microdom.IMicroElement;
 import com.helger.xml.microdom.MicroElement;
@@ -302,9 +303,9 @@ public final class PhiveHtmlHelperTest
 
     final IMicroElement eBody = new MicroElement ("body");
     new PhiveHtmlHelper (aDisplayLocale).ves (aVES)
-                                        .label (EPhiveHtmlLabel.VALIDATION_RESULT, "ValRes1")
-                                        .label (EPhiveHtmlLabel.OVERALL_RESULT, "OverallRes1")
-                                        .label (EPhiveHtmlLabel.SEVERITY_SUCCESS, "Success1")
+                                        .label (EPhiveResultLabel.VALIDATION_RESULT, "ValRes1")
+                                        .label (EPhiveResultLabel.OVERALL_RESULT, "OverallRes1")
+                                        .label (EPhiveResultLabel.SEVERITY_SUCCESS, "Success1")
                                         .applyTo (eBody, _createEmptyVRL ());
 
     final String sHtml = MicroWriter.getNodeAsString (eBody,
@@ -561,5 +562,77 @@ public final class PhiveHtmlHelperTest
                               sHtml.getBytes (StandardCharsets.UTF_8));
       ++nIndex;
     }
+  }
+
+  @Test
+  @SuppressWarnings ("removal")
+  public void testDeprecatedLabels ()
+  {
+    for (final EPhiveHtmlLabel e : EPhiveHtmlLabel.values ())
+      assertSame (e, EPhiveHtmlLabel.valueOf (e.getResultLabel ().name ()));
+
+    final IMicroElement eBody = new MicroElement ("body");
+    new PhiveHtmlHelper (Locale.US).label (EPhiveHtmlLabel.VALIDATION_RESULT, "ValRes1")
+                                   .applyTo (eBody, _createEmptyVRL ());
+    final String sHtml = MicroWriter.getNodeAsString (eBody,
+                                                      new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    assertTrue (sHtml.contains ("ValRes1"));
+  }
+
+  @Test
+  public void testVendorAndFooter ()
+  {
+    final IMicroElement eBody = new MicroElement ("body");
+    new PhiveHtmlHelper (Locale.US).vendor ("ACME Validator", "https://acme.example.org")
+                                   .showFooter (false)
+                                   .applyTo (eBody, _createEmptyVRL ());
+    String sHtml = MicroWriter.getNodeAsString (eBody, new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    assertTrue (sHtml.contains (CPhiveHtmlCss.CSS_VALIDATED_BY));
+    assertTrue (sHtml.contains ("Validated by"));
+    assertTrue (sHtml.contains ("href=\"https://acme.example.org\""));
+    assertTrue (sHtml.contains (">ACME Validator<"));
+    assertFalse (sHtml.contains (CPhiveHtmlCss.CSS_FOOTER));
+
+    // Vendor without URL and with footer
+    final IMicroElement eBody2 = new MicroElement ("body");
+    new PhiveHtmlHelper (Locale.GERMANY).vendor ("ACME Validator", null).applyTo (eBody2, _createEmptyVRL ());
+    sHtml = MicroWriter.getNodeAsString (eBody2, new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    assertTrue (sHtml.contains ("Validiert durch"));
+    assertTrue (sHtml.contains (">ACME Validator<"));
+    assertFalse (sHtml.contains ("acme.example.org"));
+    assertTrue (sHtml.contains (CPhiveHtmlCss.CSS_FOOTER));
+  }
+
+  @Test
+  public void testLocationColumnOnlyIfPresent ()
+  {
+    final ValidationArtefact aVA = new ValidationArtefact (EValidationType.XSD,
+                                                           new ClassPathResource ("test/dummy.xsd"));
+    final ErrorList aErrorList = new ErrorList ();
+    aErrorList.add (SingleError.builderError ().errorID ("ERR-001").errorText ("Value is missing").build ());
+    aErrorList.add (SingleError.builderWarn ().errorID ("WARN-001").errorText ("Deprecated element used").build ());
+    final ValidationResultList aVRL = _createEmptyVRL ();
+    aVRL.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, Duration.ofMillis (42)));
+
+    IMicroElement eBody = new MicroElement ("body");
+    new PhiveHtmlHelper (Locale.US).applyTo (eBody, aVRL);
+    String sHtml = MicroWriter.getNodeAsString (eBody, new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    assertTrue (sHtml.contains ("ERR-001"));
+    assertFalse (sHtml.contains (">Location<"));
+    assertFalse (sHtml.contains (CPhiveHtmlCss.CSS_ERROR_LOCATION));
+
+    // Only one item with a location is enough to show the column
+    aErrorList.add (SingleError.builderWarn ()
+                               .errorID ("WARN-002")
+                               .errorText ("Other")
+                               .errorLocation (new SimpleLocation ("test.xml", 10, 5))
+                               .build ());
+    final ValidationResultList aVRL2 = _createEmptyVRL ();
+    aVRL2.add (new ValidationResult (aVA, aErrorList, EExtendedValidity.INVALID, Duration.ofMillis (42)));
+    eBody = new MicroElement ("body");
+    new PhiveHtmlHelper (Locale.US).applyTo (eBody, aVRL2);
+    sHtml = MicroWriter.getNodeAsString (eBody, new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+    assertTrue (sHtml.contains (">Location<"));
+    assertTrue (sHtml.contains ("test.xml:10:5"));
   }
 }
