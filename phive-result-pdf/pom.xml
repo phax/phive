@@ -61,13 +61,6 @@
     <dependency>
       <groupId>com.helger</groupId>
       <artifactId>ph-pdf-layout</artifactId>
-      <exclusions>
-        <!-- Only ph-pdf-layout's own tests use it: not needed at runtime -->
-        <exclusion>
-          <groupId>de.redsix</groupId>
-          <artifactId>pdfcompare</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- The default fonts: PDF/A requires embedded fonts -->
     <dependency>
