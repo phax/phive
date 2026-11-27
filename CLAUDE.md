@@ -23,7 +23,7 @@ Maven modules, layered bottom-up:
 
 - **phive-bom** — Maven Bill of Materials managing the versions of all phive artefacts (no code; keep its `dependencyManagement` in sync when adding a module)
 - **phive-api** — Core interfaces and types: `IValidationSource`, `IValidationExecutor`, `IValidationArtefact`, `ValidationResult`, `ValidationResultList`, `ValidationExecutorSetRegistry`, `VESID`
-- **phive-xml** — XML-specific validation executors: `ValidationExecutorXSD`, `ValidationExecutorSchematron`, and `ValidationExecutorPartial` (applies any wrapped executor on XPath-selected parts of a document, e.g. the payload of an SBDH envelope). Supports Schematron engines: XSLT, SchXslt, SchXslt2, Pure
+- **phive-xml** — XML-specific validation executors: `ValidationExecutorXSD`, `ValidationExecutorSchematron`, and `ValidationExecutorPartial` (applies any wrapped executor on XPath-selected parts of a document, e.g. the payload of an SBDH envelope). Supports Schematron engines: XSLT, SchXslt, SchXslt2, Pure. `InMemoryZipContent` (`.xml.zip`) reads a ZIP into memory with limits and unified paths (leading `/`, `/` separator); `DefaultVESLoaderXSD` uses it. `SchematronZipResolver` resolves a Schematron in a ZIP into one preprocessed `PSSchema`, with includes only from the ZIP entries (needs `ISchematronIncludeResolver.getResolvedSchematronResource (String, IReadableResource)` from ph-schematron 10.3.4)
 - **phive-result** — Result serialization to JSON (`PhiveJsonHelper`) and XML (`PhiveXMLHelper`)
 - **phive-result-html** / **phive-result-pdf** — Human readable reports (`PhiveHtmlHelper`, `PhivePdfHelper`) with the same layout. Both depend only on `phive-api` and share the labels `EPhiveResultLabel` (`phive-api`, package `.api.result.label`; `EPhiveHtmlLabel` is deprecated). The PDF uses ph-pdf-layout with embedded fonts (Open Sans, Kurinto Mono with the `hhea` line height) so that PDF/A works; `pdfcompare` is excluded from ph-pdf-layout. Styling is changed in a subclass (`getPreloadFont`, `getColor`, `getFontSpec`, the `create...` methods). Tests check every PDF/A level and PDF/UA with veraPDF and write the PDFs to `target/pdf`
 - **phive-ves-model** — VES (Validation Execution Set) XML data model with JAXB-generated classes (generated from `src/main/resources/schemas/`; a `schematron` element with a `partial` child (`DefaultVESLoaderSchematron`) and the `partialRequires` elements (`VESLoader`/`LoadedVES`, executed after `requires`) are mapped onto `ValidationExecutorPartial`. Changes to `ves-1.0.xsd` get a new RC entry in its version history. `phive-ves-engine` test resources `ves/test4` contain a complete VES chain for a Peppol BIS Invoice inside an SBDH)
@@ -44,9 +44,9 @@ The pseudo versions `latest-active` / `latest-release-active` select the newest 
 
 ## Key Dependencies
 
-- **ph-commons** (12.7.2-SNAPSHOT, for `ZipWalker` in `ph-io`) — Core utilities, error handling, collections. `DefaultVESLoaderXSD` reads XSD ZIP files with `com.helger.io.zip.ZipWalker`; the limits are the static `setMaxUnzippedSize` / `setMaxZipEntryCount`
-- **ph-schematron** (10.3.3) — Schematron validation engines. `ValidationExecutorSchematron` wraps DOM sources in `SaxonDOMSource` (`ph-schematron-saxon`) so Saxon builds a native tree; a plain `DOMSource` makes sibling-axis rules quadratic in document size (issue #37)
-- **ph-diver** (4.2.0) — DVR coordinate handling and repository management
+- **ph-commons** (12.8.0) — Core utilities, error handling, collections. `InMemoryZipContent` reads ZIP files with `com.helger.io.zip.ZipWalker`; the limits of `DefaultVESLoaderXSD` are the static `setMaxUnzippedSize` / `setMaxZipEntryCount`
+- **ph-schematron** (10.3.4-SNAPSHOT, branch `v10`; 11.x is not used) — Schematron validation engines. `ValidationExecutorSchematron` wraps DOM sources in `SaxonDOMSource` (`ph-schematron-saxon`) so Saxon builds a native tree; a plain `DOMSource` makes sibling-axis rules quadratic in document size (issue #37)
+- **ph-diver** (4.4.0) — DVR coordinate handling and repository management
 - **JAXB 4.0** — XML binding for VES model
 
 ## Conventions

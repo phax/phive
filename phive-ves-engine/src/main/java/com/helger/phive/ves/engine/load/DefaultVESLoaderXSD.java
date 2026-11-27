@@ -16,6 +16,7 @@
  */
 package com.helger.phive.ves.engine.load;
 
+import java.io.InputStream;
 import java.math.RoundingMode;
 import java.net.URI;
 import java.util.Locale;
@@ -33,13 +34,9 @@ import org.w3c.dom.ls.LSResourceResolver;
 import com.helger.annotation.Nonempty;
 import com.helger.annotation.Nonnegative;
 import com.helger.base.enforce.ValueEnforcer;
-import com.helger.base.io.nonblocking.NonBlockingByteArrayOutputStream;
 import com.helger.base.numeric.BigHelper;
-import com.helger.base.state.EContinue;
 import com.helger.base.string.StringHelper;
 import com.helger.base.timing.StopWatch;
-import com.helger.collection.commons.CommonsHashMap;
-import com.helger.collection.commons.ICommonsMap;
 import com.helger.diagnostics.error.SingleError;
 import com.helger.diagnostics.error.list.ErrorList;
 import com.helger.diver.api.coord.DVRCoordinate;
@@ -51,10 +48,6 @@ import com.helger.io.file.FilenameHelper;
 import com.helger.io.misc.SizeHelper;
 import com.helger.io.resource.IReadableResource;
 import com.helger.io.resource.inmemory.ReadableResourceInputStream;
-import com.helger.io.zip.IZipWalkerCallback;
-import com.helger.io.zip.ZipWalkResult;
-import com.helger.io.zip.ZipWalker;
-import com.helger.io.zip.ZipWalkerSettings;
 import com.helger.phive.api.EValidationType;
 import com.helger.phive.api.artefact.ValidationArtefact;
 import com.helger.phive.api.executor.IValidationExecutor;
@@ -67,6 +60,7 @@ import com.helger.phive.ves.v10.VesXsdCatalogItemSystemType;
 import com.helger.phive.ves.v10.VesXsdType;
 import com.helger.phive.xml.source.IValidationSourceXML;
 import com.helger.phive.xml.xsd.ValidationExecutorXSD;
+import com.helger.phive.xml.zip.InMemoryZipContent;
 import com.helger.xml.ls.SimpleLSResourceResolver;
 import com.helger.xml.schema.XMLSchemaCache;
 
@@ -83,13 +77,13 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   public static final String FILE_EXT_XSD = '.' + RESOURCE_TYPE_XSD;
 
   /** Default maximum unzipped size: 50 MB */
-  public static final long DEFAULT_MAX_UNZIPPED_SIZE = 50L * 1024 * 1024;
+  public static final long DEFAULT_MAX_UNZIPPED_SIZE = InMemoryZipContent.DEFAULT_MAX_UNZIPPED_SIZE;
   /**
    * Default maximum number of entries of a ZIP file: 10.000
    *
    * @since 12.3.1
    */
-  public static final int DEFAULT_MAX_ZIP_ENTRY_COUNT = 10_000;
+  public static final int DEFAULT_MAX_ZIP_ENTRY_COUNT = InMemoryZipContent.DEFAULT_MAX_ZIP_ENTRY_COUNT;
 
   private static final AtomicLong MAX_UNZIPPED_SIZE = new AtomicLong (DEFAULT_MAX_UNZIPPED_SIZE);
   private static final AtomicInteger MAX_ZIP_ENTRY_COUNT = new AtomicInteger (DEFAULT_MAX_ZIP_ENTRY_COUNT);
@@ -140,20 +134,6 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
   {
     ValueEnforcer.isGT0 (nMaxZipEntryCount, "MaxZipEntryCount");
     MAX_ZIP_ENTRY_COUNT.set (nMaxZipEntryCount);
-  }
-
-  @Nullable
-  private static final String _unifyPath (@Nullable final String sPath)
-  {
-    // Convert any "\" to "/"
-    String ret = FilenameHelper.getPathUsingUnixSeparator (sPath);
-    if (ret != null)
-    {
-      // Make absolute to simply LS resource resolving
-      if (!ret.startsWith ("/"))
-        ret = '/' + ret;
-    }
-    return ret;
   }
 
   @NonNull
@@ -258,7 +238,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
       }
       case RESOURCE_TYPE_ZIP:
       {
-        final String sMainUnified = _unifyPath (aXSD.getMain ());
+        final String sMainUnified = InMemoryZipContent.getUnifiedPath (aXSD.getMain ());
         if (StringHelper.isEmpty (sMainUnified))
         {
           aErrorList.add (SingleError.builderError ()
@@ -270,70 +250,20 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         }
 
         // Read ZIP file as a whole
-        final ICommonsMap <String, NonBlockingByteArrayOutputStream> aZIPContent = new CommonsHashMap <> ();
         final long nSourceLen = aXSDItem.getContent ().getLength ();
         // XSD ZIPs are not nested
-        final ZipWalkerSettings aZipSettings = new ZipWalkerSettings ().setMaxNestingDepth (0)
-                                                                       .setMaxEntryCount (getMaxZipEntryCount ())
-                                                                       .setMaxTotalUncompressedBytes (getMaxUnzippedSize ());
-        final IZipWalkerCallback aZipCallback = (sPath, aEntry, nDepth, aIS) -> {
-          final String sEntryNameUnified = _unifyPath (sPath);
-          if (aZIPContent.containsKey (sEntryNameUnified))
-          {
-            // Would silently replace the previous entry
-            aErrorList.add (SingleError.builderError ()
-                                       .errorText ("XSD resource type '" +
-                                                   sResourceType +
-                                                   "' contains the entry '" +
-                                                   sEntryNameUnified +
-                                                   "' more than once")
-                                       .build ());
-            return EContinue.BREAK;
-          }
-
-          // Remember ZIP entry in map
-          final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-          aIS.transferTo (aBAOS);
-          aZIPContent.put (sEntryNameUnified, aBAOS);
-          return EContinue.CONTINUE;
-        };
-        final ZipWalkResult aZipResult = ZipWalker.walk (aRepoRes.getInputStream (), aZipSettings, aZipCallback);
-        switch (aZipResult.getResult ())
+        final InMemoryZipContent aZIPContent = InMemoryZipContent.readZip (aRepoRes.getInputStream (),
+                                                                           getMaxUnzippedSize (),
+                                                                           getMaxZipEntryCount (),
+                                                                           "XSD resource type '" + sResourceType + "'",
+                                                                           aErrorList);
+        if (aZIPContent == null)
         {
-          case SUCCESS:
-            break;
-          case STOPPED_BY_CALLBACK:
-            // Error was already added
-            return null;
-          case NOT_A_ZIP:
-            aErrorList.add (SingleError.builderError ()
-                                       .errorText ("XSD resource type '" + sResourceType + "' is not a ZIP archive")
-                                       .build ());
-            return null;
-          case MAX_ENTRY_COUNT_EXCEEDED:
-            aErrorList.add (SingleError.builderError ()
-                                       .errorText ("XSD ZIP file contains more than " +
-                                                   aZipSettings.getMaxEntryCount () +
-                                                   " entries")
-                                       .build ());
-            return null;
-          case MAX_TOTAL_UNCOMPRESSED_BYTES_EXCEEDED:
-            aErrorList.add (SingleError.builderError ()
-                                       .errorText ("XSD ZIP file exceeds maximum unzipped size of " +
-                                                   SizeHelper.getSizeHelperOfLocale (Locale.ROOT)
-                                                             .getAsMatching (aZipSettings.getMaxTotalUncompressedBytes ()))
-                                       .build ());
-            return null;
-          default:
-            // BROKEN, or a nested ZIP
-            aErrorList.add (SingleError.builderError ()
-                                       .errorText ("XSD resource type '" + sResourceType + "' seems to be a broken ZIP")
-                                       .linkedException (aZipResult.getException ())
-                                       .build ());
-            return null;
+          // Error was already added
+          return null;
         }
-        final long nUnzippedLen = aZipResult.getTotalUncompressedBytes ();
-        final boolean bFoundMain = aZIPContent.containsKey (sMainUnified);
+        final long nUnzippedLen = aZIPContent.getTotalUncompressedBytes ();
+        final boolean bFoundMain = aZIPContent.containsEntry (sMainUnified);
 
         if (!bFoundMain)
         {
@@ -360,7 +290,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         LOGGER.info ("Loaded ZIP with " +
                      aSH.getAsMatching (nSourceLen) +
                      " with " +
-                     aZIPContent.size () +
+                     aZIPContent.getEntryCount () +
                      " entries; unzipped size is " +
                      aSH.getAsMatching (nUnzippedLen) +
                      " bytes (~" +
@@ -488,12 +418,12 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
             if (StringHelper.isNotEmpty (sRelativeSystemId))
             {
               // Matches in ZIP are the default
-              final NonBlockingByteArrayOutputStream aZIPResolved = aZIPContent.get (sRelativeSystemId);
+              final InputStream aZIPResolved = aZIPContent.getEntryInputStream (sRelativeSystemId);
               if (aZIPResolved != null)
               {
                 if (LOGGER.isDebugEnabled ())
                   LOGGER.debug ("  Successfully resolved '" + sRelativeSystemId + "' to ZIP file content");
-                return new ReadableResourceInputStream (sRelativeSystemId, aZIPResolved.getAsInputStream ());
+                return new ReadableResourceInputStream (sRelativeSystemId, aZIPResolved);
               }
               LOGGER.warn ("  Failed to resolve System ID '" + sRelativeSystemId + "' in ZIP content");
             }
@@ -516,8 +446,7 @@ public class DefaultVESLoaderXSD implements IVESLoaderXSD
         // Now create the parsed XML Schema using a ResourceResolver and an
         // InputStream based on the Main file of the ZIP
         final ReadableResourceInputStream aRes = new ReadableResourceInputStream (sMainUnified,
-                                                                                  aZIPContent.get (sMainUnified)
-                                                                                             .getAsInputStream ());
+                                                                                  aZIPContent.getEntryInputStream (sMainUnified));
         final Schema aSchema = new XMLSchemaCache (aResResolver).getSchema (aRes);
         if (aSchema == null)
           throw new IllegalStateException ("Failed to resolve XML Schema from ZIP");

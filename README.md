@@ -394,6 +394,9 @@ v12.4.0 - work in progress
 * `PhiveHtmlHelper` no longer shows the column "Location" of an error table if no error of that validation layer has a location
 * Added `PhiveHtmlHelper.vendor (String, String)` to show the vendor that performed the validation ("Validated by ...")
 * Added `PhiveHtmlHelper.showFooter (boolean)` to hide the footer with the link to phive
+* Added `SchematronZipResolver` in `phive-xml` that resolves a Schematron in a ZIP file, including all files it includes, in memory into one self-contained, preprocessed Schematron (abstract patterns resolved, reports, diagnostics and titles kept). Includes are only resolved from the ZIP entries, relative to the including file. See [issue #40](https://github.com/phax/phive/issues/40)
+* Added `InMemoryZipContent` in `phive-xml` that reads a ZIP file with limits for the unzipped size and the number of entries into memory. `DefaultVESLoaderXSD` uses it; the error messages for too many entries and a too large unzipped size now start with "XSD resource type 'zip'" instead of "XSD ZIP file"
+* Updated to ph-schematron 10.3.4
 
 v12.3.2 - 2026-11-24
 * Added `IValidationExecutorSetStatus.isActivePer (OffsetDateTime)` and `isActivePerNow ()`: active means not deprecated and within the validity period.
